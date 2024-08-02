@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Serilog;
 
 namespace FSH.Framework.Infrastructure.Persistence;
@@ -15,10 +16,13 @@ public static class Extensions
     {
         return dbProvider.ToUpperInvariant() switch
         {
-            DbProviders.PostgreSQL => builder.UseNpgsql(connectionString, e =>
-                                 e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
+            DbProviders.PostgreSQL => builder.UseNpgsql(connectionString, e => 
+                e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
             DbProviders.MSSQL => builder.UseSqlServer(connectionString, e =>
-                                e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MSSQL")),
+                e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MSSQL")),
+            DbProviders.MySQL => builder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), e =>
+                e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MySQL")
+                    .SchemaBehavior(MySqlSchemaBehavior.Ignore)),
             _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
         };
     }

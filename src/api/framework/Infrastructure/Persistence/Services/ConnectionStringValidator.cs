@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MySqlConnector;
 using Npgsql;
 
 namespace FSH.Framework.Infrastructure.Persistence.Services;
@@ -27,6 +28,10 @@ internal sealed class ConnectionStringValidator(IOptions<DatabaseOptions> dbSett
                 case DbProviders.MSSQL:
                     _ = new SqlConnectionStringBuilder(connectionString);
                     break;
+                case DbProviders.MySQL:
+                    _ = new MySqlConnectionStringBuilder(connectionString);
+                    break;
+                
                 default:
                     break;
             }

@@ -3,6 +3,7 @@ using FSH.Framework.Core.Jobs;
 using FSH.Framework.Core.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
 using Hangfire;
+using Hangfire.MySql;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -39,9 +40,13 @@ internal static class Extensions
                 case DbProviders.MSSQL:
                     config.UseSqlServerStorage(dbOptions.ConnectionString);
                     break;
-
+                
+                case DbProviders.MySQL:
+                    config.UseStorage(new MySqlStorage(dbOptions.ConnectionString, new MySqlStorageOptions()));
+                    break;
+                    
                 default:
-                    throw new FshException($"hangfire storage provider {dbOptions.Provider} is not supported");
+                    throw new FshException($"Hangfire storage provider {dbOptions.Provider} is not supported");
             }
 
             config.UseFilter(new FshJobFilter(provider));
