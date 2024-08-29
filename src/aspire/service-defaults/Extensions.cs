@@ -84,7 +84,7 @@ public static class Extensions
                        .AddProcessInstrumentation()
                        .AddMeter(MetricsConstants.Todos)
                        .AddMeter(MetricsConstants.Catalog);
-                       //.AddConsoleExporter();
+                //.AddConsoleExporter();
             })
             .WithTracing(tracing =>
             {
@@ -97,7 +97,7 @@ public static class Extensions
                        .AddAspNetCoreInstrumentation(nci => nci.RecordException = true)
                        .AddHttpClientInstrumentation()
                        .AddEntityFrameworkCoreInstrumentation();
-                       //.AddConsoleExporter();
+                //.AddConsoleExporter();
             });
 
         builder.AddOpenTelemetryExporters();
@@ -143,20 +143,14 @@ public static class Extensions
                 if (context.Request.Path != "/metrics") return false;
                 return true;
             });
-
-        // Adding health checks endpoints to applications in non-development environments has security implications.
-        // See https://aka.ms/dotnet/aspire/healthchecks for details before enabling these endpoints in non-development environments.
-        if (app.Environment.IsDevelopment())
+        
+        // All health checks must pass for app to be considered ready to accept traffic after starting
+        app.MapHealthChecks("/health").AllowAnonymous();
+        // Only health checks tagged with the "live" tag must pass for app to be considered alive
+        app.MapHealthChecks("/alive", new HealthCheckOptions
         {
-            // All health checks must pass for app to be considered ready to accept traffic after starting
-            app.MapHealthChecks("/health").AllowAnonymous();
-
-            // Only health checks tagged with the "live" tag must pass for app to be considered alive
-            app.MapHealthChecks("/alive", new HealthCheckOptions
-            {
-                Predicate = r => r.Tags.Contains("live")
-            }).AllowAnonymous();
-        }
+            Predicate = r => r.Tags.Contains("live")
+        }).AllowAnonymous();
 
         return app;
     }

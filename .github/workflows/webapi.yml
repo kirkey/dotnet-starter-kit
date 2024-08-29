@@ -1,15 +1,21 @@
-name: webapi
+name: WebAPI
 
 on:
   workflow_dispatch:
 
   push:
-    branches: ["main"]
-    paths: ["src/api/**"]
+    branches:
+      - main
+    paths:
+      - "src/api/**"
+      - "src/Directory.Packages.props"
 
   pull_request:
-    branches: ["main"]
-    paths: ["src/api/**"]
+    branches:
+      - main
+    paths:
+      - "src/api/**"
+      - "src/Directory.Packages.props"
 
 jobs:
   build:
@@ -29,7 +35,7 @@ jobs:
 
   publish:
     needs: build
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
