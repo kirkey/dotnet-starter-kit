@@ -10,6 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Blazored.LocalStorage" />
+		<PackageReference Include="Blazored.SessionStorage" />
 		<PackageReference Include="MediatR" />
 		<PackageReference Include="MediatR.Courier" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />

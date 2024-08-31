@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using FSH.Starter.Blazor.Infrastructure.Auth;
 using FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
@@ -25,6 +26,7 @@ public static class Extensions
             configuration.SnackbarConfiguration.ShowCloseIcon = false;
         });
         services.AddBlazoredLocalStorage();
+        services.AddBlazoredSessionStorage();
         services.AddAuthentication(config);
         services.AddTransient<IApiClient, ApiClient>();
         services.AddHttpClient(ClientName, client =>
