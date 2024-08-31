@@ -5,8 +5,8 @@
 <EntityTable @ref="_table" TEntity="ProductResponse" TId="Guid" TRequest="ProductViewModel" Context="@Context">
 
     <AdvancedSearchContent>
-        <MudSlider T="decimal" @bind-value="SearchMinimumRate" Min="0" Max="9999" Step="100">Minimum Rate: @_searchMinimumRate.ToString()</MudSlider>
-        <MudSlider T="decimal" @bind-value="SearchMaximumRate" Min="0" Max="9999" Step="100">Maximum Rate: @_searchMaximumRate.ToString()</MudSlider>
+        <MudSlider T="decimal" @bind-value="SearchMinimumRate" Min="0" Max="9999" Step="100">Minimum Rate: @_searchMinimumRate.ToString(CultureInfo.InvariantCulture)</MudSlider>
+        <MudSlider T="decimal" @bind-value="SearchMaximumRate" Min="0" Max="9999" Step="100">Maximum Rate: @_searchMaximumRate.ToString(CultureInfo.InvariantCulture)</MudSlider>
     </AdvancedSearchContent>
 
     <EditFormContent>
