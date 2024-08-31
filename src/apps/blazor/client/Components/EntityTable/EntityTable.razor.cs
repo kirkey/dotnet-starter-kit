@@ -98,7 +98,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
                 () => Context.ClientContext.LoadDataFunc(), Toast, Navigation)
-            is List<TEntity> result)
+            is { } result)
         {
             _entityList = result;
         }
@@ -173,18 +173,20 @@ public partial class EntityTable<TEntity, TId, TRequest>
             PageSize = state.PageSize,
             PageNumber = state.Page + 1,
             Keyword = SearchString,
-            OrderBy = orderings ?? Array.Empty<string>()
+            OrderBy = orderings ?? []
         };
 
-        if (!Context.AllColumnsChecked)
+        if (Context.AllColumnsChecked)
         {
-            filter.AdvancedSearch = new()
-            {
-                Fields = Context.SearchFields,
-                Keyword = filter.Keyword
-            };
-            filter.Keyword = null;
+            return filter;
         }
+
+        filter.AdvancedSearch = new Search
+        {
+            Fields = Context.SearchFields,
+            Keyword = filter.Keyword
+        };
+        filter.Keyword = null;
 
         return filter;
     }
