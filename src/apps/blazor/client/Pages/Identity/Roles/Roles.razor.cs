@@ -26,12 +26,12 @@ public partial class Roles
         var state = await AuthState;
         _canViewRoleClaims = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.RoleClaims);
 
-        Context = new(
+        Context = new EntityClientTableContext<RoleDto, string, CreateOrUpdateRoleCommand>(
             entityName: "Role",
             entityNamePlural: "Roles",
             entityResource: FshResources.Roles,
             searchAction: FshActions.View,
-            fields: new()
+            fields: new List<EntityField<RoleDto>>
             {
                 new(role => role.Id, "Id"),
                 new(role => role.Name,"Name"),

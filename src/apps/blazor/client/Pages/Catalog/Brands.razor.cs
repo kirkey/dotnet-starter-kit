@@ -16,11 +16,11 @@ public partial class Brands
     private EntityTable<BrandResponse, Guid, BrandViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new(
+        Context = new EntityServerTableContext<BrandResponse, Guid, BrandViewModel>(
             entityName: "Brand",
             entityNamePlural: "Brands",
             entityResource: FshResources.Brands,
-            fields: new()
+            fields: new List<EntityField<BrandResponse>>
             {
                 new(brand => brand.Id, "Id", "Id"),
                 new(brand => brand.Name, "Name", "Name"),

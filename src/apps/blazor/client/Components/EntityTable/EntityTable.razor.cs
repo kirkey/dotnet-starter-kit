@@ -178,7 +178,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
         if (!Context.AllColumnsChecked)
         {
-            filter.AdvancedSearch = new()
+            filter.AdvancedSearch = new Search
             {
                 Fields = Context.SearchFields,
                 Keyword = filter.Keyword

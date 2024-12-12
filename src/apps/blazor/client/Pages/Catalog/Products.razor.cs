@@ -19,11 +19,11 @@ public partial class Products
 
     protected override async Task OnInitializedAsync()
     {
-        Context = new(
+        Context = new EntityServerTableContext<ProductResponse, Guid, ProductViewModel>(
             entityName: "Product",
             entityNamePlural: "Products",
             entityResource: FshResources.Products,
-            fields: new()
+            fields: new List<EntityField<ProductResponse>>
             {
                 new(prod => prod.Id,"Id", "Id"),
                 new(prod => prod.Name,"Name", "Name"),

@@ -40,14 +40,14 @@ public partial class Users
         _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.UserRoles);
         _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails);
 
-        Context = new(
+        Context = new EntityClientTableContext<UserDetail, Guid, RegisterUserCommand>(
             entityName: "User",
             entityNamePlural: "Users",
             entityResource: FshResources.Users,
             searchAction: FshActions.View,
             updateAction: string.Empty,
             deleteAction: string.Empty,
-            fields: new()
+            fields: new List<EntityField<UserDetail>>
             {
                 new(user => user.FirstName,"First Name"),
                 new(user => user.LastName, "Last Name"),

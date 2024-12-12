@@ -22,7 +22,7 @@ public class CustomValidation : ComponentBase
                 $"inside an {nameof(EditForm)}.");
         }
 
-        _messageStore = new(CurrentEditContext);
+        _messageStore = new ValidationMessageStore(CurrentEditContext);
 
         CurrentEditContext.OnValidationRequested += (s, e) =>
             _messageStore?.Clear();

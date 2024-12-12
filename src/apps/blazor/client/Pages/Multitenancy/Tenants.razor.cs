@@ -29,14 +29,14 @@ public partial class Tenants
 
     protected override async Task OnInitializedAsync()
     {
-        Context = new(
+        Context = new EntityClientTableContext<TenantViewModel, Guid, CreateTenantCommand>(
             entityName: "Tenant",
             entityNamePlural: "Tenants",
             entityResource: FshResources.Tenants,
             searchAction: FshActions.View,
             deleteAction: string.Empty,
             updateAction: string.Empty,
-            fields: new()
+            fields: new List<EntityField<TenantViewModel>>
             {
                 new(tenant => tenant.Id, "Id"),
                 new(tenant => tenant.Name, "Name"),

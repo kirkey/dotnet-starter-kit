@@ -16,11 +16,11 @@ public partial class Todos
     private EntityTable<GetTodoResponse, Guid, TodoViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new(
+        Context = new EntityServerTableContext<GetTodoResponse, Guid, TodoViewModel>(
             entityName: "Todos",
             entityNamePlural: "Todos",
             entityResource: FshResources.Todos,
-            fields: new()
+            fields: new List<EntityField<GetTodoResponse>>
             {
                 new(prod => prod.Id,"Id", "Id"),
                 new(prod => prod.Title,"Title", "Title"),

@@ -46,10 +46,10 @@ public partial class Audit
             }
         }
         _subHeader = $"Audit Trail for User {Id}";
-        Context = new(
+        Context = new EntityClientTableContext<RelatedAuditTrail, Guid, object>(
             entityNamePlural: "Trails",
             searchAction: true.ToString(),
-            fields: new()
+            fields: new List<EntityField<RelatedAuditTrail>>
             {
                 new(audit => audit.Id,"Id"),
                 new(audit => audit.Entity, "Entity"),
