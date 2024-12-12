@@ -13,6 +13,6 @@ builder.AddProject<Projects.Server>("webapi");
 
 builder.AddProject<Projects.Client>("blazor");
 
-using var app = builder.Build();
+await using var app = builder.Build();
 
 await app.RunAsync();
