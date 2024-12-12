@@ -16,7 +16,7 @@ public class Brand : AuditableEntity, IAggregateRoot
             Description = description
         };
 
-        brand.QueueDomainEvent(new BrandCreated() { Brand = brand });
+        brand.QueueDomainEvent(new BrandCreated { Brand = brand });
 
         return brand;
     }
@@ -26,7 +26,7 @@ public class Brand : AuditableEntity, IAggregateRoot
         if (name is not null && Name?.Equals(name, StringComparison.OrdinalIgnoreCase) is not true) Name = name;
         if (description is not null && Description?.Equals(description, StringComparison.OrdinalIgnoreCase) is not true) Description = description;
 
-        this.QueueDomainEvent(new BrandUpdated() { Brand = this });
+        this.QueueDomainEvent(new BrandUpdated { Brand = this });
 
         return this;
     }
@@ -40,7 +40,7 @@ public class Brand : AuditableEntity, IAggregateRoot
             Description = description
         };
 
-        brand.QueueDomainEvent(new BrandUpdated() { Brand = brand });
+        brand.QueueDomainEvent(new BrandUpdated { Brand = brand });
 
         return brand;
     }

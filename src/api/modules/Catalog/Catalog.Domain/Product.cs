@@ -3,24 +3,26 @@ using FSH.Framework.Core.Domain.Contracts;
 using FSH.Starter.WebApi.Catalog.Domain.Events;
 
 namespace FSH.Starter.WebApi.Catalog.Domain;
-public class Product : AuditableEntity, IAggregateRoot
+public sealed class Product : AuditableEntity, IAggregateRoot
 {
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
     public decimal Price { get; private set; }
     public Guid? BrandId { get; private set; }
-    public virtual Brand Brand { get; private set; } = default!;
+    public Brand Brand { get; private set; } = default!;
 
     public static Product Create(string name, string? description, decimal price, Guid? brandId)
     {
-        var product = new Product();
+        var product = new Product
 
-        product.Name = name;
-        product.Description = description;
-        product.Price = price;
-        product.BrandId = brandId;
+        {
+            Name = name,
+            Description = description,
+            Price = price,
+            BrandId = brandId 
+        };
 
-        product.QueueDomainEvent(new ProductCreated() { Product = product });
+        product.QueueDomainEvent(new ProductCreated { Product = product });
 
         return product;
     }
@@ -32,7 +34,7 @@ public class Product : AuditableEntity, IAggregateRoot
         if (price.HasValue && Price != price) Price = price.Value;
         if (brandId.HasValue && brandId.Value != Guid.Empty && !BrandId.Equals(brandId.Value)) BrandId = brandId.Value;
 
-        this.QueueDomainEvent(new ProductUpdated() { Product = this });
+        this.QueueDomainEvent(new ProductUpdated { Product = this });
         return this;
     }
 
@@ -47,7 +49,7 @@ public class Product : AuditableEntity, IAggregateRoot
             BrandId = brandId
         };
 
-        product.QueueDomainEvent(new ProductUpdated() { Product = product });
+        product.QueueDomainEvent(new ProductUpdated { Product = product });
 
         return product;
     }

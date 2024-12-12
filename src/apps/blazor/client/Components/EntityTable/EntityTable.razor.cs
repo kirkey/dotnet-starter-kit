@@ -193,7 +193,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
     {
         bool isCreate = entity is null;
 
-        var parameters = new DialogParameters()
+        var parameters = new DialogParameters
         {
             { nameof(AddEditModal<TRequest>.ChildContent), EditFormContent },
             { nameof(AddEditModal<TRequest>.OnInitializedFunc), Context.EditFormInitializedFunc },

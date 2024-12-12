@@ -63,8 +63,8 @@ public sealed class TenantService : ITenantService
 
         // Then set current tenant so the right connection string is used
         scope.ServiceProvider.GetRequiredService<IMultiTenantContextSetter>()
-            .MultiTenantContext = new MultiTenantContext<FshTenantInfo>()
-            {
+            .MultiTenantContext = new MultiTenantContext<FshTenantInfo>
+        {
                 TenantInfo = tenant
             };
 

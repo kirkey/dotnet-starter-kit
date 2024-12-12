@@ -80,7 +80,7 @@ public partial class RolePermissions
     {
         var allPermissions = _groupedRoleClaims.Values.SelectMany(a => a);
         var selectedPermissions = allPermissions.Where(a => a.Enabled);
-        var request = new UpdatePermissionsCommand()
+        var request = new UpdatePermissionsCommand
         {
             RoleId = Id,
             Permissions = selectedPermissions.Where(x => x.Enabled).Select(x => x.Name).ToList(),
