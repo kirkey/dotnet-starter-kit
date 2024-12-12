@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.Catalog.Application.Products.Get.v1;
 using FSH.Starter.WebApi.Catalog.Domain;
 
 namespace FSH.Starter.WebApi.Catalog.Application.Products.Search.v1;
-public class SearchProductSpecs : EntitiesByPaginationFilterSpec<Product, ProductResponse>
+public sealed class SearchProductSpecs : EntitiesByPaginationFilterSpec<Product, ProductResponse>
 {
     public SearchProductSpecs(SearchProductsCommand command)
         : base(command) =>
