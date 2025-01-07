@@ -7,14 +7,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FSH.Framework.Infrastructure.Auth.Jwt;
-public class ConfigureJwtBearerOptions : IConfigureNamedOptions<JwtBearerOptions>
+public class ConfigureJwtBearerOptions(IOptions<JwtOptions> options) : IConfigureNamedOptions<JwtBearerOptions>
 {
-    private readonly JwtOptions _options;
-
-    public ConfigureJwtBearerOptions(IOptions<JwtOptions> options)
-    {
-        _options = options.Value;
-    }
+    private readonly JwtOptions _options = options.Value;
 
     public void Configure(JwtBearerOptions options)
     {
