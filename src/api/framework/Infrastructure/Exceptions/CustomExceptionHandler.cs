@@ -12,8 +12,7 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IE
     {
         ArgumentNullException.ThrowIfNull(httpContext);
         ArgumentNullException.ThrowIfNull(exception);
-        var problemDetails = new ProblemDetails();
-        problemDetails.Instance = httpContext.Request.Path;
+        var problemDetails = new ProblemDetails { Instance = httpContext.Request.Path };
 
         if (exception is FluentValidation.ValidationException fluentException)
         {

@@ -57,14 +57,14 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
     protected override async Task OnInitializedAsync()
     {
-        var state = await AuthState;
-        _canSearch = await CanDoActionAsync(Context.SearchAction, state);
-        _canCreate = await CanDoActionAsync(Context.CreateAction, state);
-        _canUpdate = await CanDoActionAsync(Context.UpdateAction, state);
-        _canDelete = await CanDoActionAsync(Context.DeleteAction, state);
-        _canExport = await CanDoActionAsync(Context.ExportAction, state);
+        var state = await AuthState.ConfigureAwait(false);
+        _canSearch = await CanDoActionAsync(Context.SearchAction, state).ConfigureAwait(false);
+        _canCreate = await CanDoActionAsync(Context.CreateAction, state).ConfigureAwait(false);
+        _canUpdate = await CanDoActionAsync(Context.UpdateAction, state).ConfigureAwait(false);
+        _canDelete = await CanDoActionAsync(Context.DeleteAction, state).ConfigureAwait(false);
+        _canExport = await CanDoActionAsync(Context.ExportAction, state).ConfigureAwait(false);
 
-        await LocalLoadDataAsync();
+        await LocalLoadDataAsync().ConfigureAwait(false);
     }
 
     public Task ReloadDataAsync() =>
@@ -75,7 +75,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
     private async Task<bool> CanDoActionAsync(string? action, AuthenticationState state) =>
         !string.IsNullOrWhiteSpace(action) &&
             (bool.TryParse(action, out bool isTrue) && isTrue || // check if action equals "True", then it's allowed
-            Context.EntityResource is { } resource && await AuthService.HasPermissionAsync(state.User, action, resource));
+            Context.EntityResource is { } resource && await AuthService.HasPermissionAsync(state.User, action, resource).ConfigureAwait(false));
 
     private bool HasActions => _canUpdate || _canDelete || Context.HasExtraActionsFunc is not null && Context.HasExtraActionsFunc();
     private bool CanUpdateEntity(TEntity entity) => _canUpdate && (Context.CanUpdateEntityFunc is null || Context.CanUpdateEntityFunc(entity));
@@ -97,7 +97,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         Loading = true;
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.ClientContext.LoadDataFunc(), Toast, Navigation)
+                () => Context.ClientContext.LoadDataFunc(), Toast, Navigation).ConfigureAwait(false)
             is List<TEntity> result)
         {
             _entityList = result;
@@ -110,16 +110,16 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
     private async Task OnSearchStringChanged(string? text = null)
     {
-        await SearchStringChanged.InvokeAsync(SearchString);
+        await SearchStringChanged.InvokeAsync(SearchString).ConfigureAwait(false);
 
-        await ServerLoadDataAsync();
+        await ServerLoadDataAsync().ConfigureAwait(false);
     }
 
     private async Task ServerLoadDataAsync()
     {
         if (Context.IsServerContext)
         {
-            await _table.ReloadServerData();
+            await _table.ReloadServerData().ConfigureAwait(false);
         }
     }
 
@@ -144,7 +144,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
             var filter = GetPaginationFilter(state);
 
             if (await ApiHelper.ExecuteCallGuardedAsync(
-                    () => Context.ServerContext.SearchFunc(filter), Toast, Navigation)
+                    () => Context.ServerContext.SearchFunc(filter), Toast, Navigation).ConfigureAwait(false)
                 is { } result)
             {
                 _totalItems = result.TotalCount;
@@ -213,7 +213,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
             requestModel =
                 Context.GetDefaultsFunc is not null
                     && await ApiHelper.ExecuteCallGuardedAsync(
-                            () => Context.GetDefaultsFunc(), Toast, Navigation)
+                            () => Context.GetDefaultsFunc(), Toast, Navigation).ConfigureAwait(false)
                         is { } defaultsResult
                 ? defaultsResult
                 : new TRequest();
@@ -234,7 +234,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
                 Context.GetDetailsFunc is not null
                     && await ApiHelper.ExecuteCallGuardedAsync(
                             () => Context.GetDetailsFunc(id!),
-                            Toast, Navigation)
+                            Toast, Navigation).ConfigureAwait(false)
                         is { } detailsResult
                 ? detailsResult
                 : entity!.Adapt<TRequest>();
@@ -252,11 +252,11 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
         Context.SetAddEditModalRef(dialog);
 
-        var result = await dialog.Result;
+        var result = await dialog.Result.ConfigureAwait(false);
 
         if (!result!.Canceled)
         {
-            await ReloadDataAsync();
+            await ReloadDataAsync().ConfigureAwait(false);
         }
     }
 
@@ -272,16 +272,16 @@ public partial class EntityTable<TEntity, TId, TRequest>
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = false };
         var dialog = DialogService.Show<DeleteConfirmation>("Delete", parameters, options);
-        var result = await dialog.Result;
+        var result = await dialog.Result.ConfigureAwait(false);
         if (!result!.Canceled)
         {
             _ = Context.DeleteFunc ?? throw new InvalidOperationException("DeleteFunc can't be null!");
 
             await ApiHelper.ExecuteCallGuardedAsync(
                 () => Context.DeleteFunc(id),
-                Toast);
+                Toast).ConfigureAwait(false);
 
-            await ReloadDataAsync();
+            await ReloadDataAsync().ConfigureAwait(false);
         }
     }
 }

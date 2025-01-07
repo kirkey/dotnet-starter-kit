@@ -44,7 +44,7 @@ public partial class Tenants
                 new(tenant => tenant.ValidUpto.ToString("MMM dd, yyyy"), "Valid Upto"),
                 new(tenant => tenant.IsActive, "Active", Type: typeof(bool))
             },
-            loadDataFunc: async () => _tenants = (await ApiClient.GetTenantsEndpointAsync()).Adapt<List<TenantViewModel>>(),
+            loadDataFunc: async () => _tenants = (await ApiClient.GetTenantsEndpointAsync().ConfigureAwait(false)).Adapt<List<TenantViewModel>>(),
             searchFunc: (searchString, tenantDto) =>
                 string.IsNullOrWhiteSpace(searchString)
                     || tenantDto.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase),
@@ -52,9 +52,9 @@ public partial class Tenants
             hasExtraActionsFunc: () => true,
             exportAction: string.Empty);
 
-        var state = await AuthState;
-        _canUpgrade = await AuthService.HasPermissionAsync(state.User, FshActions.UpgradeSubscription, FshResources.Tenants);
-        _canModify = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Tenants);
+        var state = await AuthState.ConfigureAwait(false);
+        _canUpgrade = await AuthService.HasPermissionAsync(state.User, FshActions.UpgradeSubscription, FshResources.Tenants).ConfigureAwait(false);
+        _canModify = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Tenants).ConfigureAwait(false);
     }
 
     private void ViewTenantDetails(string id)
@@ -83,34 +83,34 @@ public partial class Tenants
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = false };
         var dialog = DialogService.Show<UpgradeSubscriptionModal>("Upgrade Subscription", parameters, options);
-        var result = await dialog.Result;
+        var result = await dialog.Result.ConfigureAwait(false);
         if (!result.Canceled)
         {
-            await EntityTable.ReloadDataAsync();
+            await EntityTable.ReloadDataAsync().ConfigureAwait(false);
         }
     }
 
     private async Task DeactivateTenantAsync(string id)
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => ApiClient.DisableTenantEndpointAsync(id),
-            Toast, Navigation,
-            null,
-            "Tenant Deactivated.") is not null)
+                () => ApiClient.DisableTenantEndpointAsync(id),
+                Toast, Navigation,
+                null,
+                "Tenant Deactivated.").ConfigureAwait(false) is not null)
         {
-            await EntityTable.ReloadDataAsync();
+            await EntityTable.ReloadDataAsync().ConfigureAwait(false);
         }
     }
 
     private async Task ActivateTenantAsync(string id)
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => ApiClient.ActivateTenantEndpointAsync(id),
-            Toast, Navigation,
-            null,
-            "Tenant Activated.") is not null)
+                () => ApiClient.ActivateTenantEndpointAsync(id),
+                Toast, Navigation,
+                null,
+                "Tenant Activated.").ConfigureAwait(false) is not null)
         {
-            await EntityTable.ReloadDataAsync();
+            await EntityTable.ReloadDataAsync().ConfigureAwait(false);
         }
     }
 

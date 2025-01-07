@@ -89,7 +89,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthState;
+        var authState = await AuthState.ConfigureAwait(false);
         Claims = authState.User.Claims;
     }
 }

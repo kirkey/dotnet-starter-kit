@@ -55,15 +55,14 @@ internal static class Extensions
     internal static IApplicationBuilder UseJobDashboard(this IApplicationBuilder app, IConfiguration config)
     {
         var hangfireOptions = config.GetSection(nameof(HangfireOptions)).Get<HangfireOptions>() ?? new HangfireOptions();
-        var dashboardOptions = new DashboardOptions();
-        dashboardOptions.AppPath = "https://fullstackhero.net/";
-        dashboardOptions.Authorization = new[]
-        {
-           new HangfireCustomBasicAuthenticationFilter
-           {
-                User = hangfireOptions.UserName!,
-                Pass = hangfireOptions.Password!
-           }
+        var dashboardOptions = new DashboardOptions { AppPath = "https://fullstackhero.net/", Authorization = new[]
+            {
+                new HangfireCustomBasicAuthenticationFilter
+                {
+                    User = hangfireOptions.UserName!,
+                    Pass = hangfireOptions.Password!
+                }
+            }
         };
 
         return app.UseHangfireDashboard(hangfireOptions.Route, dashboardOptions);

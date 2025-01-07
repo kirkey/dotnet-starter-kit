@@ -17,10 +17,10 @@ public partial class Security
     private async Task ChangePasswordAsync()
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => PersonalClient.ChangePasswordEndpointAsync(_passwordModel),
-            Toast,
-            _customValidation,
-            "Password Changed!"))
+                () => PersonalClient.ChangePasswordEndpointAsync(_passwordModel),
+                Toast,
+                _customValidation,
+                "Password Changed!").ConfigureAwait(false))
         {
             _passwordModel.Password = string.Empty;
             _passwordModel.NewPassword = string.Empty;

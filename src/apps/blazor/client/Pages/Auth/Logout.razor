@@ -5,7 +5,7 @@
 @code{
     protected override async Task OnInitializedAsync()
     {
-        await AuthService.LogoutAsync();
+        await AuthService.LogoutAsync().ConfigureAwait(false);
         Toast.Add("Logged out", Severity.Error);
     }
 }

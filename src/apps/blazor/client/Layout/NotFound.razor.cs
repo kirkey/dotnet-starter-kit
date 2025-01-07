@@ -12,7 +12,7 @@ public partial class NotFound
 
     protected override async Task OnInitializedAsync()
     {
-        _themePreference = await ClientPreferences.GetPreference() as ClientPreference;
+        _themePreference = await ClientPreferences.GetPreference().ConfigureAwait(false) as ClientPreference;
         if (_themePreference == null) _themePreference = new ClientPreference();
         SetCurrentTheme(_themePreference);
     }

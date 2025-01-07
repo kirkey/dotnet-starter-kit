@@ -35,10 +35,10 @@ public partial class Users
 
     protected override async Task OnInitializedAsync()
     {
-        var user = (await AuthState).User;
-        _canExportUsers = await AuthService.HasPermissionAsync(user, FshActions.Export, FshResources.Users);
-        _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.UserRoles);
-        _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails);
+        var user = (await AuthState.ConfigureAwait(false)).User;
+        _canExportUsers = await AuthService.HasPermissionAsync(user, FshActions.Export, FshResources.Users).ConfigureAwait(false);
+        _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.UserRoles).ConfigureAwait(false);
+        _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails).ConfigureAwait(false);
 
         Context = new EntityClientTableContext<UserDetail, Guid, RegisterUserCommand>(
             entityName: "User",
@@ -58,7 +58,7 @@ public partial class Users
                 new(user => user.IsActive, "Active", Type: typeof(bool))
             },
             idFunc: user => user.Id,
-            loadDataFunc: async () => (await UsersClient.GetUsersListEndpointAsync()).ToList(),
+            loadDataFunc: async () => (await UsersClient.GetUsersListEndpointAsync().ConfigureAwait(false)).ToList(),
             searchFunc: (searchString, user) =>
                 string.IsNullOrWhiteSpace(searchString)
                     || user.FirstName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true

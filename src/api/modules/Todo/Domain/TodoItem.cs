@@ -11,10 +11,11 @@ public class TodoItem : AuditableEntity, IAggregateRoot
 
     public static TodoItem Create(string title, string note)
     {
-        var item = new TodoItem();
-
-        item.Title = title;
-        item.Note = note;
+        var item = new TodoItem
+        {
+            Title = title,
+            Note = note 
+        };
 
         item.QueueDomainEvent(new TodoItemCreated(item.Id, item.Title, item.Note));
 

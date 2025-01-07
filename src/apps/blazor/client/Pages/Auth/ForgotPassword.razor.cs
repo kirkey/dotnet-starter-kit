@@ -23,7 +23,7 @@ public partial class ForgotPassword
         await ApiHelper.ExecuteCallGuardedAsync(
             () => UsersClient.ForgotPasswordEndpointAsync(Tenant, _forgotPasswordRequest),
             Toast,
-            _customValidation);
+            _customValidation).ConfigureAwait(false);
 
         BusySubmitting = false;
     }

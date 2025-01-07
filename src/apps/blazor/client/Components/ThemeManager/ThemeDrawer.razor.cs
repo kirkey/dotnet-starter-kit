@@ -27,7 +27,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.PrimaryColor = color;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 
@@ -36,7 +36,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.SecondaryColor = color;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 
@@ -45,7 +45,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.BorderRadius = radius;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 
@@ -54,7 +54,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.IsDarkMode = isDarkMode;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 
@@ -63,7 +63,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.TablePreference.IsDense = isDense;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 
@@ -72,7 +72,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.TablePreference.IsStriped = isStriped;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 
@@ -81,7 +81,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.TablePreference.HasBorder = hasBorder;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 
@@ -90,7 +90,7 @@ public partial class ThemeDrawer
         if (ThemePreference is not null)
         {
             ThemePreference.TablePreference.IsHoverable = isHoverable;
-            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference).ConfigureAwait(false);
         }
     }
 }

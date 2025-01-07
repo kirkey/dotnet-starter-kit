@@ -16,7 +16,7 @@ public class FshTable<T> : MudTable<T>
 
     protected override async Task OnInitializedAsync()
     {
-        if (await ClientPreferences.GetPreference() is ClientPreference clientPreference)
+        if (await ClientPreferences.GetPreference().ConfigureAwait(false) is ClientPreference clientPreference)
         {
             SetTablePreference(clientPreference.TablePreference);
         }
@@ -27,7 +27,7 @@ public class FshTable<T> : MudTable<T>
             StateHasChanged();
         });
 
-        await base.OnInitializedAsync();
+        await base.OnInitializedAsync().ConfigureAwait(false);
     }
 
     private void SetTablePreference(FshTablePreference tablePreference)

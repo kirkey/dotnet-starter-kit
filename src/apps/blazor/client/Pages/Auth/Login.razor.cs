@@ -24,7 +24,7 @@ public partial class Login()
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthState;
+        var authState = await AuthState.ConfigureAwait(false);
         if (authState.User.Identity?.IsAuthenticated is true)
         {
             Navigation.NavigateTo("/");
@@ -59,9 +59,9 @@ public partial class Login()
         BusySubmitting = true;
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => authService.LoginAsync(TenantId, _tokenRequest),
-            Toast,
-            _customValidation))
+                () => authService.LoginAsync(TenantId, _tokenRequest),
+                Toast,
+                _customValidation).ConfigureAwait(false))
         {
             Toast.Add($"Logged in as {_tokenRequest.Email}", Severity.Info);
         }

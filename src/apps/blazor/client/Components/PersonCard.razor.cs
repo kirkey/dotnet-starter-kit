@@ -23,13 +23,13 @@ public partial class PersonCard
     {
         if (firstRender)
         {
-            await LoadUserData();
+            await LoadUserData().ConfigureAwait(false);
         }
     }
 
     private async Task LoadUserData()
     {
-        var user = (await AuthState).User;
+        var user = (await AuthState.ConfigureAwait(false)).User;
         if (user.Identity?.IsAuthenticated == true && string.IsNullOrEmpty(UserId))
         {
             FullName = user.GetFullName();

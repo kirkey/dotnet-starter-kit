@@ -38,7 +38,7 @@ public partial class UserProfile
     private async Task ToggleUserStatus()
     {
         var request = new ToggleUserStatusCommand { ActivateUser = _active, UserId = Id };
-        await ApiHelper.ExecuteCallGuardedAsync(() => UsersClient.ToggleUserStatusEndpointAsync(Id!, request), Toast);
+        await ApiHelper.ExecuteCallGuardedAsync(() => UsersClient.ToggleUserStatusEndpointAsync(Id!, request), Toast).ConfigureAwait(false);
         Navigation.NavigateTo("/identity/users");
     }
 
@@ -48,7 +48,7 @@ public partial class UserProfile
     protected override async Task OnInitializedAsync()
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation)
+                () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation).ConfigureAwait(false)
             is UserDetail user)
         {
             _firstName = user.FirstName;
@@ -66,8 +66,8 @@ public partial class UserProfile
             }
         }
 
-        var state = await AuthState;
-        _canToggleUserStatus = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Users);
+        var state = await AuthState.ConfigureAwait(false);
+        _canToggleUserStatus = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Users).ConfigureAwait(false);
         _loaded = true;
     }
 }

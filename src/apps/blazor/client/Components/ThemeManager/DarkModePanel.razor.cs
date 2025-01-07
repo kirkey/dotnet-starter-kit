@@ -9,7 +9,7 @@ public partial class DarkModePanel
 
     protected override async Task OnInitializedAsync()
     {
-        if (await ClientPreferences.GetPreference() is not ClientPreference themePreference) themePreference = new ClientPreference();
+        if (await ClientPreferences.GetPreference().ConfigureAwait(false) is not ClientPreference themePreference) themePreference = new ClientPreference();
         _isDarkMode = themePreference.IsDarkMode;
     }
 
@@ -19,6 +19,6 @@ public partial class DarkModePanel
     private async Task ToggleDarkMode()
     {
         _isDarkMode = !_isDarkMode;
-        await OnIconClicked.InvokeAsync(_isDarkMode);
+        await OnIconClicked.InvokeAsync(_isDarkMode).ConfigureAwait(false);
     }
 }

@@ -21,7 +21,7 @@ public partial class TableCustomizationPanel
 
     protected override async Task OnInitializedAsync()
     {
-        if (await ClientPreferences.GetPreference() is ClientPreference clientPreference)
+        if (await ClientPreferences.GetPreference().ConfigureAwait(false) is ClientPreference clientPreference)
         {
             _tablePreference = clientPreference.TablePreference;
         }
@@ -47,28 +47,28 @@ public partial class TableCustomizationPanel
     private async Task ToggleDenseSwitch()
     {
         _tablePreference.IsDense = !_tablePreference.IsDense;
-        await OnDenseSwitchToggled.InvokeAsync(_tablePreference.IsDense);
-        await Notifications.PublishAsync(_tablePreference);
+        await OnDenseSwitchToggled.InvokeAsync(_tablePreference.IsDense).ConfigureAwait(false);
+        await Notifications.PublishAsync(_tablePreference).ConfigureAwait(false);
     }
 
     private async Task ToggleStripedSwitch()
     {
         _tablePreference.IsStriped = !_tablePreference.IsStriped;
-        await OnStripedSwitchToggled.InvokeAsync(_tablePreference.IsStriped);
-        await Notifications.PublishAsync(_tablePreference);
+        await OnStripedSwitchToggled.InvokeAsync(_tablePreference.IsStriped).ConfigureAwait(false);
+        await Notifications.PublishAsync(_tablePreference).ConfigureAwait(false);
     }
 
     private async Task ToggleBorderedSwitch()
     {
         _tablePreference.HasBorder = !_tablePreference.HasBorder;
-        await OnBorderdedSwitchToggled.InvokeAsync(_tablePreference.HasBorder);
-        await Notifications.PublishAsync(_tablePreference);
+        await OnBorderdedSwitchToggled.InvokeAsync(_tablePreference.HasBorder).ConfigureAwait(false);
+        await Notifications.PublishAsync(_tablePreference).ConfigureAwait(false);
     }
 
     private async Task ToggleHoverableSwitch()
     {
         _tablePreference.IsHoverable = !_tablePreference.IsHoverable;
-        await OnHoverableSwitchToggled.InvokeAsync(_tablePreference.IsHoverable);
-        await Notifications.PublishAsync(_tablePreference);
+        await OnHoverableSwitchToggled.InvokeAsync(_tablePreference.IsHoverable).ConfigureAwait(false);
+        await Notifications.PublishAsync(_tablePreference).ConfigureAwait(false);
     }
 }

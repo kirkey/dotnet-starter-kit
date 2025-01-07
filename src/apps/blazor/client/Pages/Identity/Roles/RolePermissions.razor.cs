@@ -36,13 +36,13 @@ public partial class RolePermissions
 
     protected override async Task OnInitializedAsync()
     {
-        var state = await AuthState;
+        var state = await AuthState.ConfigureAwait(false);
 
-        _canEditRoleClaims = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.RoleClaims);
-        _canSearchRoleClaims = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.RoleClaims);
+        _canEditRoleClaims = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.RoleClaims).ConfigureAwait(false);
+        _canSearchRoleClaims = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.RoleClaims).ConfigureAwait(false);
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => RolesClient.GetRolePermissionsEndpointAsync(Id), Toast, Navigation)
+                    () => RolesClient.GetRolePermissionsEndpointAsync(Id), Toast, Navigation).ConfigureAwait(false)
             is RoleDto role && role.Permissions is not null)
         {
             _title = string.Format("{0} Permissions", role.Name);
@@ -86,9 +86,9 @@ public partial class RolePermissions
             Permissions = selectedPermissions.Where(x => x.Enabled).Select(x => x.Name).ToList(),
         };
         await ApiHelper.ExecuteCallGuardedAsync(
-                () => RolesClient.UpdateRolePermissionsEndpointAsync(request.RoleId, request),
-                Toast,
-                successMessage: "Updated Permissions.");
+            () => RolesClient.UpdateRolePermissionsEndpointAsync(request.RoleId, request),
+            Toast,
+            successMessage: "Updated Permissions.").ConfigureAwait(false);
         Navigation.NavigateTo("/identity/roles");
     }
 

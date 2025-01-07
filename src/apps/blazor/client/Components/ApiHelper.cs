@@ -16,7 +16,7 @@ public static class ApiHelper
         customValidation?.ClearErrors();
         try
         {
-            var result = await call();
+            var result = await call().ConfigureAwait(false);
 
             if (!string.IsNullOrWhiteSpace(successMessage))
             {
@@ -51,7 +51,7 @@ public static class ApiHelper
         customValidation?.ClearErrors();
         try
         {
-            await call();
+            await call().ConfigureAwait(false);
 
             if (!string.IsNullOrWhiteSpace(successMessage))
             {

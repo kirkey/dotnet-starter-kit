@@ -18,7 +18,7 @@ public partial class MainLayout
 
     protected override async Task OnInitializedAsync()
     {
-        if (await ClientPreferences.GetPreference() is ClientPreference preferences)
+        if (await ClientPreferences.GetPreference().ConfigureAwait(false) is ClientPreference preferences)
         {
             _drawerOpen = preferences.IsDrawerOpen;
             _isDarkMode = preferences.IsDarkMode;
@@ -28,12 +28,12 @@ public partial class MainLayout
     public async Task ToggleDarkMode()
     {
         _isDarkMode = !_isDarkMode;
-        await OnDarkModeToggle.InvokeAsync(_isDarkMode);
+        await OnDarkModeToggle.InvokeAsync(_isDarkMode).ConfigureAwait(false);
     }
 
     private async Task DrawerToggle()
     {
-        _drawerOpen = await ClientPreferences.ToggleDrawerAsync();
+        _drawerOpen = await ClientPreferences.ToggleDrawerAsync().ConfigureAwait(false);
     }
     private void Logout()
     {

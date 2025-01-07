@@ -32,20 +32,20 @@ public partial class UserRoles
 
     protected override async Task OnInitializedAsync()
     {
-        var state = await AuthState;
+        var state = await AuthState.ConfigureAwait(false);
 
-        _canEditUsers = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Users);
-        _canSearchRoles = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.UserRoles);
+        _canEditUsers = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Users).ConfigureAwait(false);
+        _canSearchRoles = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.UserRoles).ConfigureAwait(false);
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation)
+                () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation).ConfigureAwait(false)
             is UserDetail user)
         {
             _title = $"{user.FirstName} {user.LastName}'s Roles";
             _description = string.Format("Manage {0} {1}'s Roles", user.FirstName, user.LastName);
 
             if (await ApiHelper.ExecuteCallGuardedAsync(
-                    () => UsersClient.GetUserRolesEndpointAsync(user.Id.ToString()), Toast, Navigation)
+                    () => UsersClient.GetUserRolesEndpointAsync(user.Id.ToString()), Toast, Navigation).ConfigureAwait(false)
                 is ICollection<UserRoleDetail> response)
             {
                 _userRolesList = response.ToList();
@@ -65,9 +65,9 @@ public partial class UserRoles
         Console.WriteLine($"roles : {request.UserRoles.Count}");
 
         await ApiHelper.ExecuteCallGuardedAsync(
-                () => UsersClient.AssignRolesToUserEndpointAsync(Id, request),
-                Toast,
-                successMessage: "updated user roles");
+            () => UsersClient.AssignRolesToUserEndpointAsync(Id, request),
+            Toast,
+            successMessage: "updated user roles").ConfigureAwait(false);
 
         Navigation.NavigateTo("/identity/users");
     }

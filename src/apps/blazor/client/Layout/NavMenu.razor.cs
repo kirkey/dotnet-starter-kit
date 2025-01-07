@@ -26,15 +26,15 @@ public partial class NavMenu
 
     protected override async Task OnParametersSetAsync()
     {
-        var user = (await AuthState).User;
-        _canViewHangfire = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Hangfire);
-        _canViewDashboard = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Dashboard);
-        _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Roles);
-        _canViewUsers = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Users);
-        _canViewProducts = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Products);
-        _canViewBrands = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Brands);
-        _canViewTodos = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Todos);
-        _canViewTenants = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Tenants);
-        _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails);
+        var user = (await AuthState.ConfigureAwait(false)).User;
+        _canViewHangfire = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Hangfire).ConfigureAwait(false);
+        _canViewDashboard = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Dashboard).ConfigureAwait(false);
+        _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Roles).ConfigureAwait(false);
+        _canViewUsers = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Users).ConfigureAwait(false);
+        _canViewProducts = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Products).ConfigureAwait(false);
+        _canViewBrands = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Brands).ConfigureAwait(false);
+        _canViewTodos = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Todos).ConfigureAwait(false);
+        _canViewTenants = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Tenants).ConfigureAwait(false);
+        _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails).ConfigureAwait(false);
     }
 }

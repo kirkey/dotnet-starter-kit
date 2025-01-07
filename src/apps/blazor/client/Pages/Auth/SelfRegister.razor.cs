@@ -28,7 +28,7 @@ public partial class SelfRegister
         var response = await ApiHelper.ExecuteCallGuardedAsync(
             () => UsersClient.SelfRegisterUserEndpointAsync(Tenant, _createUserRequest),
             Toast, Navigation,
-            _customValidation);
+            _customValidation).ConfigureAwait(false);
 
         if (response != null)
         {

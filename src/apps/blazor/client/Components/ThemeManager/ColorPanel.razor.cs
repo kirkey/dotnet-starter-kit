@@ -19,6 +19,6 @@ public partial class ColorPanel
 
     protected async Task ColorClicked(string color)
     {
-        await OnColorClicked.InvokeAsync(color);
+        await OnColorClicked.InvokeAsync(color).ConfigureAwait(false);
     }
 }

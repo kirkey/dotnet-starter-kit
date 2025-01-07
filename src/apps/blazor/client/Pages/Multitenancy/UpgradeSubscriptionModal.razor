@@ -41,10 +41,10 @@
     {
         Request.ExtendedExpiryDate = date.HasValue ? date.Value : Request.ExtendedExpiryDate;
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => TenantsClient.UpgradeSubscriptionEndpointAsync(Request),
-            Toast, Navigation,
-            null,
-            "Upgraded Subscription.") is not null)
+                () => TenantsClient.UpgradeSubscriptionEndpointAsync(Request),
+                Toast, Navigation,
+                null,
+                "Upgraded Subscription.").ConfigureAwait(false) is not null)
         {
             MudDialog.Close();
         }

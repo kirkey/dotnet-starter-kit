@@ -14,7 +14,7 @@ public partial class BaseLayout
 
     protected override async Task OnInitializedAsync()
     {
-        _themePreference = await ClientPreferences.GetPreference() as ClientPreference;
+        _themePreference = await ClientPreferences.GetPreference().ConfigureAwait(false) as ClientPreference;
         if (_themePreference == null) _themePreference = new ClientPreference();
         SetCurrentTheme(_themePreference);
 
@@ -37,14 +37,14 @@ public partial class BaseLayout
         if (_themePreference is not null)
         {
             _themePreference.IsDarkMode = isDarkMode;
-            await ThemePreferenceChanged(_themePreference);
+            await ThemePreferenceChanged(_themePreference).ConfigureAwait(false);
         }
     }
 
     private async Task ThemePreferenceChanged(ClientPreference themePreference)
     {
         SetCurrentTheme(themePreference);
-        await ClientPreferences.SetPreference(themePreference);
+        await ClientPreferences.SetPreference(themePreference).ConfigureAwait(false);
     }
 
     private void SetCurrentTheme(ClientPreference themePreference)

@@ -169,7 +169,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// gets product by id
         /// </summary>
         /// <remarks>
-        /// gets prodct by id
+        /// gets product by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -181,7 +181,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// gets product by id
         /// </summary>
         /// <remarks>
-        /// gets prodct by id
+        /// gets product by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -1635,7 +1635,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// gets product by id
         /// </summary>
         /// <remarks>
-        /// gets prodct by id
+        /// gets product by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -1650,7 +1650,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// gets product by id
         /// </summary>
         /// <remarks>
-        /// gets prodct by id
+        /// gets product by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>

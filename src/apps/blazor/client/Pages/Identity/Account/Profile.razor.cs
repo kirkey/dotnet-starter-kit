@@ -29,7 +29,7 @@ public partial class Profile
 
     protected override async Task OnInitializedAsync()
     {
-        if ((await AuthState).User is { } user)
+        if ((await AuthState.ConfigureAwait(false)).User is { } user)
         {
             _userId = user.GetUserId();
             _profileModel.Email = user.GetEmail() ?? string.Empty;
@@ -52,10 +52,10 @@ public partial class Profile
     private async Task UpdateProfileAsync()
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => PersonalClient.UpdateUserEndpointAsync(_profileModel), Toast, _customValidation))
+                () => PersonalClient.UpdateUserEndpointAsync(_profileModel), Toast, _customValidation).ConfigureAwait(false))
         {
             Toast.Add("Your Profile has been updated. Please Login again to Continue.", Severity.Success);
-            await AuthService.ReLoginAsync(Navigation.Uri);
+            await AuthService.ReLoginAsync(Navigation.Uri).ConfigureAwait(false);
         }
     }
 
@@ -73,13 +73,13 @@ public partial class Profile
 
             string? fileName = $"{_userId}-{Guid.NewGuid():N}";
             fileName = fileName[..Math.Min(fileName.Length, 90)];
-            var imageFile = await file.RequestImageFileAsync(AppConstants.StandardImageFormat, AppConstants.MaxImageWidth, AppConstants.MaxImageHeight);
+            var imageFile = await file.RequestImageFileAsync(AppConstants.StandardImageFormat, AppConstants.MaxImageWidth, AppConstants.MaxImageHeight).ConfigureAwait(false);
             byte[]? buffer = new byte[imageFile.Size];
-            await imageFile.OpenReadStream(AppConstants.MaxAllowedSize).ReadAsync(buffer);
+            await imageFile.OpenReadStream(AppConstants.MaxAllowedSize).ReadAsync(buffer).ConfigureAwait(false);
             string? base64String = $"data:{AppConstants.StandardImageFormat};base64,{Convert.ToBase64String(buffer)}";
             _profileModel.Image = new FileUploadCommand { Name = fileName, Data = base64String, Extension = extension };
 
-            await UpdateProfileAsync();
+            await UpdateProfileAsync().ConfigureAwait(false);
         }
     }
 
@@ -91,12 +91,12 @@ public partial class Profile
             { nameof(DeleteConfirmation.ContentText), deleteContent }
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = false };
-        var dialog = await DialogService.ShowAsync<DeleteConfirmation>("Delete", parameters, options);
-        var result = await dialog.Result;
+        var dialog = await DialogService.ShowAsync<DeleteConfirmation>("Delete", parameters, options).ConfigureAwait(false);
+        var result = await dialog.Result.ConfigureAwait(false);
         if (!result!.Canceled)
         {
             _profileModel.DeleteCurrentImage = true;
-            await UpdateProfileAsync();
+            await UpdateProfileAsync().ConfigureAwait(false);
         }
     }
 }

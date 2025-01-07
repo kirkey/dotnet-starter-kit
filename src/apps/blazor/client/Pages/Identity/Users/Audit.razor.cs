@@ -39,7 +39,7 @@ public partial class Audit
     {
         if (Id == Guid.Empty)
         {
-            var state = await AuthState;
+            var state = await AuthState.ConfigureAwait(false);
             if (state != null)
             {
                 Id = new Guid(state.User.GetUserId()!);
@@ -56,7 +56,7 @@ public partial class Audit
                 new(audit => audit.DateTime, "Date", Template: DateFieldTemplate),
                 new(audit => audit.Operation, "Operation")
             },
-            loadDataFunc: async () => _trails = (await ApiClient.GetUserAuditTrailEndpointAsync(Id)).Adapt<List<RelatedAuditTrail>>(),
+            loadDataFunc: async () => _trails = (await ApiClient.GetUserAuditTrailEndpointAsync(Id).ConfigureAwait(false)).Adapt<List<RelatedAuditTrail>>(),
             searchFunc: (searchString, trail) =>
                 (string.IsNullOrWhiteSpace(searchString) // check Search String
                     || trail.Entity?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
