@@ -54,7 +54,7 @@ namespace FSH.Framework.Infrastructure.Storage.Files
                     fullPath = NextAvailableFilename(fullPath);
                 }
 
-                using var stream = new FileStream(fullPath, FileMode.Create);
+                await using var stream = new FileStream(fullPath, FileMode.Create);
                 await streamData.CopyToAsync(stream, cancellationToken);
                 var path = dbPath.Replace("\\", "/", StringComparison.Ordinal);
                 var imageUri = new Uri(originSettings.Value.OriginUrl!, path);
