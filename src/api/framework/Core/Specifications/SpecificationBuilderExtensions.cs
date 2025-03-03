@@ -38,12 +38,12 @@ public static class SpecificationBuilderExtensions
             .OrderBy(filter.OrderBy);
     }
 
-    public static IOrderedSpecificationBuilder<T> SearchByKeyword<T>(
+    private static IOrderedSpecificationBuilder<T> SearchByKeyword<T>(
         this ISpecificationBuilder<T> specificationBuilder,
         string? keyword) =>
         specificationBuilder.AdvancedSearch(new Search { Keyword = keyword });
 
-    public static IOrderedSpecificationBuilder<T> AdvancedSearch<T>(
+    private static IOrderedSpecificationBuilder<T> AdvancedSearch<T>(
         this ISpecificationBuilder<T> specificationBuilder,
         Search? search)
     {
@@ -120,7 +120,7 @@ public static class SpecificationBuilderExtensions
             .Add(new SearchExpressionInfo<T>(selector, searchTerm, 1));
     }
 
-    public static IOrderedSpecificationBuilder<T> AdvancedFilter<T>(
+    private static IOrderedSpecificationBuilder<T> AdvancedFilter<T>(
         this ISpecificationBuilder<T> specificationBuilder,
         Filter? filter)
     {
@@ -281,7 +281,7 @@ public static class SpecificationBuilderExtensions
         return Expression.Constant(ChangeType(((JsonElement)value).GetRawText(), propertyType), propertyType);
     }
 
-    public static dynamic? ChangeType(object value, Type conversion)
+    private static dynamic? ChangeType(object value, Type conversion)
     {
         var t = conversion;
 
@@ -305,7 +305,7 @@ public static class SpecificationBuilderExtensions
         return filter;
     }
 
-    public static IOrderedSpecificationBuilder<T> OrderBy<T>(
+    private static IOrderedSpecificationBuilder<T> OrderBy<T>(
         this ISpecificationBuilder<T> specificationBuilder,
         string[]? orderByFields)
     {
