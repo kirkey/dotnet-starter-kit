@@ -20,7 +20,7 @@ public sealed class GetTodoHandler(
             {
                 var todoItem = await repository.GetByIdAsync(request.Id, cancellationToken);
                 if (todoItem == null) throw new TodoItemNotFoundException(request.Id);
-                return new GetTodoResponse(todoItem.Id, todoItem.Title!, todoItem.Note!);
+                return new GetTodoResponse(todoItem.Id, todoItem.Title, todoItem.Note);
             },
             cancellationToken: cancellationToken);
         return item!;

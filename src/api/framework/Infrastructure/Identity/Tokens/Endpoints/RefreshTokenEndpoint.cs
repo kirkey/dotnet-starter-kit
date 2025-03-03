@@ -15,10 +15,11 @@ public static class RefreshTokenEndpoint
             [FromHeader(Name = TenantConstants.Identifier)] string tenant,
             ITokenService service,
             HttpContext context,
+            string? deviceType,
             CancellationToken cancellationToken) =>
         {
             string ip = context.GetIpAddress();
-            return service.RefreshTokenAsync(request, ip!, cancellationToken);
+            return service.RefreshTokenAsync(request, ip, deviceType, cancellationToken);
         })
         .WithName(nameof(RefreshTokenEndpoint))
         .WithSummary("refresh JWTs")

@@ -25,7 +25,7 @@ internal static class Extensions
             options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions
             {
                 AbortOnConnectFail = true,
-                EndPoints = { cacheOptions.Redis! }
+                EndPoints = { cacheOptions.Redis }
             };
         });
 

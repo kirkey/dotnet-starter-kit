@@ -5,7 +5,8 @@ using FSH.Starter.Shared.Authorization;
 namespace FSH.Framework.Core.Identity.Tokens.Features.Generate;
 public record TokenGenerationCommand(
     [property: DefaultValue(TenantConstants.Root.EmailAddress)] string Email,
-    [property: DefaultValue(TenantConstants.DefaultPassword)] string Password);
+    [property: DefaultValue(TenantConstants.DefaultPassword)] string Password,
+    [property: DefaultValue(TenantConstants.Root.EmailAddress)] string? DeviceType);
 
 public class GenerateTokenValidator : AbstractValidator<TokenGenerationCommand>
 {

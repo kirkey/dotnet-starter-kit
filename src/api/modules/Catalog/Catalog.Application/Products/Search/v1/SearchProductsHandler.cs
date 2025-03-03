@@ -20,7 +20,7 @@ public sealed class SearchProductsHandler(
         var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        return new PagedList<ProductResponse>(items, request!.PageNumber, request!.PageSize, totalCount);
+        return new PagedList<ProductResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

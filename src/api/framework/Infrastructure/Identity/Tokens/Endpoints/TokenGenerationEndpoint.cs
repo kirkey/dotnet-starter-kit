@@ -15,10 +15,11 @@ public static class TokenGenerationEndpoint
             [FromHeader(Name = TenantConstants.Identifier)] string tenant,
             ITokenService service,
             HttpContext context,
+            string? deviceType,
             CancellationToken cancellationToken) =>
         {
             string ip = context.GetIpAddress();
-            return service.GenerateTokenAsync(request, ip!, cancellationToken);
+            return service.GenerateTokenAsync(request, ip, deviceType, cancellationToken);
         })
         .WithName(nameof(TokenGenerationEndpoint))
         .WithSummary("generate JWTs")

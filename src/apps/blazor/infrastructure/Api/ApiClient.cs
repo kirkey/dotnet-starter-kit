@@ -6026,6 +6026,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("password")]
         public string? Password { get; set; } = "123Pa$$word!";
+        
+        [System.Text.Json.Serialization.JsonPropertyName("deviceType")]
+        public string? DeviceType { get; set; } = "Web";
 
     }
 

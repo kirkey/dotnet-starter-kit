@@ -32,7 +32,7 @@ internal static class Extensions
                     if (context.MultiTenantContext.StoreInfo is null) return;
                     if (context.MultiTenantContext.StoreInfo.StoreType != typeof(DistributedCacheStore<FshTenantInfo>))
                     {
-                        var sp = ((HttpContext)context.Context!).RequestServices;
+                        var sp = ((HttpContext)context.Context).RequestServices;
                         var distributedCacheStore = sp
                             .GetService<IEnumerable<IMultiTenantStore<FshTenantInfo>>>()!
                             .FirstOrDefault(s => s.GetType() == typeof(DistributedCacheStore<FshTenantInfo>));

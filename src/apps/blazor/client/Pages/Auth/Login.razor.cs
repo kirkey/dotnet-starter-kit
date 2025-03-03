@@ -4,7 +4,7 @@ using FSH.Starter.Shared.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
-
+ 
 namespace FSH.Starter.Blazor.Client.Pages.Auth;
 
 public partial class Login()

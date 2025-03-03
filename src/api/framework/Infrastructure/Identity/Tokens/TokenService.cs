@@ -20,23 +20,19 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FSH.Framework.Infrastructure.Identity.Tokens;
-public sealed class TokenService : ITokenService
+public sealed class TokenService(
+    IOptions<JwtOptions> jwtOptions,
+    UserManager<FshUser> userManager,
+    IMultiTenantContextAccessor<FshTenantInfo>? multiTenantContextAccessor,
+    IPublisher publisher)
+    : ITokenService
 {
-    private readonly UserManager<FshUser> _userManager;
-    private readonly IMultiTenantContextAccessor<FshTenantInfo>? _multiTenantContextAccessor;
-    private readonly JwtOptions _jwtOptions;
-    private readonly IPublisher _publisher;
-    public TokenService(IOptions<JwtOptions> jwtOptions, UserManager<FshUser> userManager, IMultiTenantContextAccessor<FshTenantInfo>? multiTenantContextAccessor, IPublisher publisher)
-    {
-        _jwtOptions = jwtOptions.Value;
-        _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-        _multiTenantContextAccessor = multiTenantContextAccessor;
-        _publisher = publisher;
-    }
+    private readonly UserManager<FshUser> _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    public async Task<TokenResponse> GenerateTokenAsync(TokenGenerationCommand request, string ipAddress, CancellationToken cancellationToken)
+    public async Task<TokenResponse> GenerateTokenAsync(TokenGenerationCommand request, string ipAddress, string? deviceType, CancellationToken cancellationToken)
     {
-        var currentTenant = _multiTenantContextAccessor!.MultiTenantContext.TenantInfo;
+        var currentTenant = multiTenantContextAccessor!.MultiTenantContext.TenantInfo;
         if (currentTenant == null) throw new UnauthorizedException();
         if (string.IsNullOrWhiteSpace(currentTenant.Id)
            || await _userManager.FindByEmailAsync(request.Email.Trim().Normalize()) is not { } user
@@ -68,11 +64,11 @@ public sealed class TokenService : ITokenService
             }
         }
 
-        return await GenerateTokensAndUpdateUser(user, ipAddress);
+        return await GenerateTokensAndUpdateUser(user, ipAddress, deviceType);
     }
 
 
-    public async Task<TokenResponse> RefreshTokenAsync(RefreshTokenCommand request, string ipAddress, CancellationToken cancellationToken)
+    public async Task<TokenResponse> RefreshTokenAsync(RefreshTokenCommand request, string ipAddress, string? deviceType, CancellationToken cancellationToken)
     {
         var userPrincipal = GetPrincipalFromExpiredToken(request.Token);
         var userId = _userManager.GetUserId(userPrincipal)!;
@@ -87,18 +83,21 @@ public sealed class TokenService : ITokenService
             throw new UnauthorizedException("Invalid Refresh Token");
         }
 
-        return await GenerateTokensAndUpdateUser(user, ipAddress);
+        return await GenerateTokensAndUpdateUser(user, ipAddress, deviceType);
     }
-    private async Task<TokenResponse> GenerateTokensAndUpdateUser(FshUser user, string ipAddress)
+    private async Task<TokenResponse> GenerateTokensAndUpdateUser(FshUser user, string ipAddress, string? deviceType = null)
     {
         string token = GenerateJwt(user, ipAddress);
 
         user.RefreshToken = GenerateRefreshToken();
         user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_jwtOptions.RefreshTokenExpirationInDays);
+        user.LastLoginDateTime = DateTime.Now;
+        user.LastLoginIp = ipAddress;
+        user.LastLoginDeviceType = deviceType;
 
         await _userManager.UpdateAsync(user);
 
-        await _publisher.Publish(new AuditPublishedEvent(new()
+        await publisher.Publish(new AuditPublishedEvent(new()
         {
             new()
             {
@@ -146,7 +145,7 @@ public sealed class TokenService : ITokenService
             new(FshClaims.Fullname, $"{user.FirstName} {user.LastName}"),
             new(ClaimTypes.Surname, user.LastName ?? string.Empty),
             new(FshClaims.IpAddress, ipAddress),
-            new(FshClaims.Tenant, _multiTenantContextAccessor!.MultiTenantContext.TenantInfo!.Id),
+            new(FshClaims.Tenant, multiTenantContextAccessor!.MultiTenantContext.TenantInfo!.Id),
             new(FshClaims.ImageUrl, user.ImageUrl == null ? string.Empty : user.ImageUrl.ToString())
         };
     private static string GenerateRefreshToken()

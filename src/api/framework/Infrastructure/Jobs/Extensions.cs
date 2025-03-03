@@ -61,8 +61,8 @@ internal static class Extensions
         {
            new HangfireCustomBasicAuthenticationFilter
            {
-                User = hangfireOptions.UserName!,
-                Pass = hangfireOptions.Password!
+                User = hangfireOptions.UserName,
+                Pass = hangfireOptions.Password
            }
         };
 
