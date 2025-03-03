@@ -10,7 +10,8 @@ public abstract class BaseEntity<TId> : IEntity<TId>
     public TId Id { get; protected init; } = default!;
     [NotMapped]
     public Collection<DomainEvent> DomainEvents { get; } = new Collection<DomainEvent>();
-    public void QueueDomainEvent(DomainEvent @event)
+
+    protected void QueueDomainEvent(DomainEvent @event)
     {
         if (!DomainEvents.Contains(@event))
             DomainEvents.Add(@event);
