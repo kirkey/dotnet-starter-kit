@@ -1,8 +1,8 @@
 ﻿namespace FSH.Framework.Core.Audit;
 public class AuditTrail
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public DefaultIdType Id { get; set; }
+    public DefaultIdType UserId { get; set; }
     public string? Operation { get; set; }
     public string? Entity { get; set; }
     public DateTimeOffset DateTime { get; set; }

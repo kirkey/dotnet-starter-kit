@@ -17,7 +17,7 @@ public abstract class BaseEntity<TId> : IEntity<TId>
     }
 }
 
-public abstract class BaseEntity : BaseEntity<Guid>
+public abstract class BaseEntity : BaseEntity<DefaultIdType>
 {
-    protected BaseEntity() => Id = Guid.NewGuid();
+    protected BaseEntity() => Id = DefaultIdType.NewGuid();
 }

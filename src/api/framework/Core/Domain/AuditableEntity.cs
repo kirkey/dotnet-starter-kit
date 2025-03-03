@@ -38,6 +38,7 @@ public abstract class AuditableEntityWithApproval<TId> : AuditableEntity<TId>
     public string? Request { get; set; }
     [Column(TypeName = "VARCHAR(64)")]
     public string? Feedback { get; set; }
+
     public DefaultIdType? PreparedBy { get; set; }
     [Column(TypeName = "VARCHAR(1024)")]
     public string? PreparerName { get; set; }

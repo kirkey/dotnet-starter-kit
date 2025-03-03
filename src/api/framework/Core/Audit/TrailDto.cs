@@ -4,9 +4,9 @@ using System.Text.Json;
 namespace FSH.Framework.Core.Audit;
 public class TrailDto()
 {
-    public Guid Id { get; set; }
+    public DefaultIdType Id { get; set; }
     public DateTimeOffset DateTime { get; set; }
-    public Guid UserId { get; set; }
+    public DefaultIdType UserId { get; set; }
     public Dictionary<string, object?> KeyValues { get; } = [];
     public Dictionary<string, object?> OldValues { get; } = [];
     public Dictionary<string, object?> NewValues { get; } = [];
@@ -23,7 +23,7 @@ public class TrailDto()
     {
         return new()
         {
-            Id = Guid.NewGuid(),
+            Id = DefaultIdType.NewGuid(),
             UserId = UserId,
             Operation = Type.ToString(),
             Entity = TableName,

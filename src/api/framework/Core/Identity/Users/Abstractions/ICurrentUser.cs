@@ -5,7 +5,7 @@ public interface ICurrentUser
 {
     string? Name { get; }
 
-    Guid GetUserId();
+    DefaultIdType GetUserId();
 
     string? GetUserName();
     

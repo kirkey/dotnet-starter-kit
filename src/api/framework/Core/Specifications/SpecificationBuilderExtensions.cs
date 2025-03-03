@@ -254,11 +254,11 @@ public static class SpecificationBuilderExtensions
             return Expression.Constant(valueparsed, propertyType);
         }
 
-        if (propertyType == typeof(Guid))
+        if (propertyType == typeof(DefaultIdType))
         {
             string? stringGuid = GetStringFromJsonElement(value);
 
-            if (!Guid.TryParse(stringGuid, out Guid valueparsed)) throw new CustomException(string.Format("Value {0} is not valid for {1}", value, field));
+            if (!DefaultIdType.TryParse(stringGuid, out DefaultIdType valueparsed)) throw new CustomException(string.Format("Value {0} is not valid for {1}", value, field));
 
             return Expression.Constant(valueparsed, propertyType);
         }
