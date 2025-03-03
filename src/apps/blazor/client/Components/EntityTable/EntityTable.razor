@@ -12,7 +12,6 @@
 
 <ErrorBoundary>
     <ChildContent>
-
         @if (_canSearch && (Context.AdvancedSearchEnabled || AdvancedSearchContent is not null))
         {
             <MudExpansionPanel @bind-bind-Expanded="_advancedSearchExpanded"
@@ -140,9 +139,7 @@
             <PagerContent>
                 <TablePager />
             </PagerContent>
-
         </FshTable>
-
     </ChildContent>
     <ErrorContent>
         <FshCustomError />

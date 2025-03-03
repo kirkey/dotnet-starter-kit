@@ -2,8 +2,10 @@
 
 public interface IAuditable
 {
-    DateTimeOffset Created { get; }
-    Guid CreatedBy { get; }
-    DateTimeOffset LastModified { get; }
-    Guid? LastModifiedBy { get; }
+    DateTimeOffset CreatedOn { get; }
+    DefaultIdType CreatedBy { get; }
+    string? CreatedByUserName { get; }
+    DateTimeOffset LastModifiedOn { get; }
+    DefaultIdType? LastModifiedBy { get; }
+    string? LastModifiedByUserName { get; }
 }

@@ -5,25 +5,24 @@ using FSH.Starter.WebApi.Catalog.Domain.Events;
 namespace FSH.Starter.WebApi.Catalog.Domain;
 public class Brand : AuditableEntity, IAggregateRoot
 {
-    public string Name { get; private set; } = string.Empty;
-    public string? Description { get; private set; }
-
     private Brand() { }
 
-    private Brand(Guid id, string name, string? description)
+    private Brand(Guid id, string name, string? description, string? notes)
     {
         Id = id;
         Name = name;
         Description = description;
+        Notes = notes;
+        
         QueueDomainEvent(new BrandCreated { Brand = this });
     }
 
-    public static Brand Create(string name, string? description)
+    public static Brand Create(string name, string? description, string? notes)
     {
-        return new Brand(Guid.NewGuid(), name, description);
+        return new Brand(Guid.NewGuid(), name, description, notes);
     }
 
-    public Brand Update(string? name, string? description)
+    public Brand Update(string? name, string? description, string? notes)
     {
         bool isUpdated = false;
 
@@ -36,6 +35,12 @@ public class Brand : AuditableEntity, IAggregateRoot
         if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
         {
             Description = description;
+            isUpdated = true;
+        }
+
+        if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+        {
+            Notes = notes;
             isUpdated = true;
         }
 

@@ -1,18 +1,60 @@
-﻿using FSH.Framework.Core.Domain.Contracts;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using FSH.Framework.Core.Domain.Contracts;
 
 namespace FSH.Framework.Core.Domain;
 
-public class AuditableEntity<TId> : BaseEntity<TId>, IAuditable, ISoftDeletable
+public abstract class AuditableEntity : AuditableEntity<DefaultIdType>
 {
-    public DateTimeOffset Created { get; set; }
-    public Guid CreatedBy { get; set; }
-    public DateTimeOffset LastModified { get; set; }
-    public Guid? LastModifiedBy { get; set; }
-    public DateTimeOffset? Deleted { get; set; }
-    public Guid? DeletedBy { get; set; }
+    protected AuditableEntity() => Id = DefaultIdType.NewGuid();
 }
 
-public abstract class AuditableEntity : AuditableEntity<Guid>
+public class AuditableEntity<TId> : BaseEntity<TId>, IAuditable, ISoftDeletable
 {
-    protected AuditableEntity() => Id = Guid.NewGuid();
+    [Column(TypeName = "VARCHAR(1024)")]
+    public string Name { get; set; } = string.Empty;
+    [Column(TypeName = "VARCHAR(16)")]
+    public string? Remarks { get; set; }
+    [Column(TypeName = "VARCHAR(16)")]
+    public string? Status { get; set; }
+    public string? Description { get; set; }
+    public string? Notes { get; set; }
+    public string? FilePath { get; set; }
+    public DateTimeOffset CreatedOn { get; set; }
+    public DefaultIdType CreatedBy { get; set; }
+    public string? CreatedByUserName { get; set; }
+    public DateTimeOffset LastModifiedOn { get; set; }
+    public DefaultIdType? LastModifiedBy { get; set; }
+    public string? LastModifiedByUserName { get; set; }
+    public DateTimeOffset? DeletedOn { get; set; }
+    public DefaultIdType? DeletedBy { get; set; }
+    public string? DeletedByUserName { get; set; }
+}
+
+public abstract class AuditableEntityWithApproval : AuditableEntityWithApproval<DefaultIdType>;
+
+public abstract class AuditableEntityWithApproval<TId> : AuditableEntity<TId>
+{
+    [Column(TypeName = "VARCHAR(64)")]
+    public string? Request { get; set; }
+    [Column(TypeName = "VARCHAR(64)")]
+    public string? Feedback { get; set; }
+    public DefaultIdType? PreparedBy { get; set; }
+    [Column(TypeName = "VARCHAR(1024)")]
+    public string? PreparerName { get; set; }
+    public DateTimeOffset? PreparedOn { get; set; }
+
+    public DefaultIdType? ReviewedBy { get; set; }
+    [Column(TypeName = "VARCHAR(1024)")]
+    public string? ReviewerName { get; set; }
+    public DateTimeOffset? ReviewedOn { get; set; }
+
+    public DefaultIdType? RecommendedBy { get; set; }
+    [Column(TypeName = "VARCHAR(1024)")]
+    public string? RecommenderName { get; set; }
+    public DateTimeOffset? RecommendedOn { get; set; }
+
+    public DefaultIdType? ApprovedBy { get; set; }
+    [Column(TypeName = "VARCHAR(1024)")]
+    public string? ApproverName { get; set; }
+    public DateTimeOffset? ApprovedOn { get; set; }
 }

@@ -18,7 +18,7 @@ public class NotificationPublisher : INotificationPublisher
         return _mediator.Publish(CreateNotificationWrapper(notification));
     }
 
-    private INotification CreateNotificationWrapper(INotificationMessage notification) =>
+    private static INotification CreateNotificationWrapper(INotificationMessage notification) =>
         (INotification)Activator.CreateInstance(
             typeof(NotificationWrapper<>).MakeGenericType(notification.GetType()), notification)!;
 }

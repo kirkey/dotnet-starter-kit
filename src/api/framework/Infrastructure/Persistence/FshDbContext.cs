@@ -20,7 +20,7 @@ public class FshDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenant
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // QueryFilters need to be applied before base.OnModelCreating
-        modelBuilder.AppendGlobalQueryFilter<ISoftDeletable>(s => s.Deleted == null);
+        modelBuilder.AppendGlobalQueryFilter<ISoftDeletable>(s => s.DeletedOn == null);
         base.OnModelCreating(modelBuilder);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

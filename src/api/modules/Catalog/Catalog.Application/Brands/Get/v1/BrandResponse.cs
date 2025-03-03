@@ -1,2 +1,2 @@
 namespace FSH.Starter.WebApi.Catalog.Application.Brands.Get.v1;
-public sealed record BrandResponse(Guid? Id, string Name, string? Description);
+public sealed record BrandResponse(DefaultIdType? Id, string Name, string? Description, string? Notes);

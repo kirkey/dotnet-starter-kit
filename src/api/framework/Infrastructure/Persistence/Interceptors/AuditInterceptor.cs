@@ -120,15 +120,18 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedBy = currentUser.GetUserId();
-                    entry.Entity.Created = utcNow;
+                    entry.Entity.CreatedByUserName = currentUser.GetUserName();
+                    entry.Entity.CreatedOn = utcNow;
                 }
                 entry.Entity.LastModifiedBy = currentUser.GetUserId();
-                entry.Entity.LastModified = utcNow;
+                entry.Entity.LastModifiedByUserName = currentUser.GetUserName();
+                entry.Entity.LastModifiedOn = utcNow;
             }
             if(entry.State is EntityState.Deleted && entry.Entity is ISoftDeletable softDelete)
             {
                 softDelete.DeletedBy = currentUser.GetUserId();
-                softDelete.Deleted = utcNow;
+                softDelete.DeletedByUserName = currentUser.GetUserName();
+                softDelete.DeletedOn = utcNow;
                 entry.State = EntityState.Modified;
             }
         }

@@ -16,7 +16,7 @@ public sealed class UpdateBrandHandler(
         ArgumentNullException.ThrowIfNull(request);
         var brand = await repository.GetByIdAsync(request.Id, cancellationToken);
         _ = brand ?? throw new BrandNotFoundException(request.Id);
-        var updatedBrand = brand.Update(request.Name, request.Description);
+        var updatedBrand = brand.Update(request.Name, request.Description, request.Notes);
         await repository.UpdateAsync(updatedBrand, cancellationToken);
         logger.LogInformation("Brand with id : {BrandId} updated.", brand.Id);
         return new UpdateBrandResponse(brand.Id);

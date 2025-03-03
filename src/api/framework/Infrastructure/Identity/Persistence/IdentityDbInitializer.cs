@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using IdentityConstants = FSH.Starter.Shared.Authorization.IdentityConstants;
 
 namespace FSH.Framework.Infrastructure.Identity.Persistence;
 internal sealed class IdentityDbInitializer(

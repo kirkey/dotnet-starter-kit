@@ -5,8 +5,6 @@ using FSH.Starter.WebApi.Catalog.Domain.Events;
 namespace FSH.Starter.WebApi.Catalog.Domain;
 public class Product : AuditableEntity, IAggregateRoot
 {
-    public string Name { get; private set; } = string.Empty;
-    public string? Description { get; private set; }
     public decimal Price { get; private set; }
     public Guid? BrandId { get; private set; }
     public virtual Brand Brand { get; private set; } = default!;

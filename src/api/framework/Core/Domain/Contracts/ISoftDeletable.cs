@@ -2,6 +2,7 @@
 
 public interface ISoftDeletable
 {
-    DateTimeOffset? Deleted { get; set; }
-    Guid? DeletedBy { get; set; }
+    DateTimeOffset? DeletedOn { get; set; }
+    DefaultIdType? DeletedBy { get; set; }
+    string? DeletedByUserName { get; set; }
 }
