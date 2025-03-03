@@ -6,7 +6,7 @@ public class FshTheme : MudTheme
 {
     public FshTheme()
     {
-        PaletteLight = new PaletteLight()
+        PaletteLight = new PaletteLight
         {
             Primary = CustomColors.Light.Primary,
             Secondary = CustomColors.Light.Secondary,
@@ -20,7 +20,7 @@ public class FshTheme : MudTheme
             OverlayDark = "hsl(0deg 0% 0% / 75%)"
         };
 
-        PaletteDark = new PaletteDark()
+        PaletteDark = new PaletteDark
         {
             Primary = CustomColors.Dark.Primary,
             Secondary = CustomColors.Dark.Secondary,
@@ -45,13 +45,13 @@ public class FshTheme : MudTheme
             TextDisabled = CustomColors.Dark.Disabled
         };
 
-        LayoutProperties = new LayoutProperties()
+        LayoutProperties = new LayoutProperties
         {
             DefaultBorderRadius = "5px"
         };
 
         Typography = CustomTypography.FshTypography;
         Shadows = new Shadow();
-        ZIndex = new ZIndex() { Drawer = 1300 };
+        ZIndex = new ZIndex { Drawer = 1300 };
     }
 }

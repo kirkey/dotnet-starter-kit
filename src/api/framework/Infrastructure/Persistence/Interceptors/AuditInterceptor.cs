@@ -39,7 +39,7 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
         foreach (var entry in eventData.Context.ChangeTracker.Entries<IAuditable>().Where(x => x.State is EntityState.Added or EntityState.Deleted or EntityState.Modified).ToList())
         {
             var userId = currentUser.GetUserId();
-            var trail = new TrailDto()
+            var trail = new TrailDto
             {
                 Id = DefaultIdType.NewGuid(),
                 TableName = entry.Entity.GetType().Name,

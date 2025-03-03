@@ -81,8 +81,8 @@ internal static class Extensions
 
             //set current tenant so that the right connection string is used
             tenantScope.ServiceProvider.GetRequiredService<IMultiTenantContextSetter>()
-                .MultiTenantContext = new MultiTenantContext<FshTenantInfo>()
-                {
+                .MultiTenantContext = new MultiTenantContext<FshTenantInfo>
+            {
                     TenantInfo = tenant
                 };
 

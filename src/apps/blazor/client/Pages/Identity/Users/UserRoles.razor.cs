@@ -57,7 +57,7 @@ public partial class UserRoles
 
     private async Task SaveAsync()
     {
-        var request = new AssignUserRoleCommand()
+        var request = new AssignUserRoleCommand
         {
             UserRoles = _userRolesList
         };

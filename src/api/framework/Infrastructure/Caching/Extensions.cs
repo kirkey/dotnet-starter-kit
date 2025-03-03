@@ -22,7 +22,7 @@ internal static class Extensions
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = cacheOptions.Redis;
-            options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
+            options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions
             {
                 AbortOnConnectFail = true,
                 EndPoints = { cacheOptions.Redis! }
