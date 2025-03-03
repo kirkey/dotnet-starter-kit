@@ -246,7 +246,7 @@ internal sealed partial class UserService(
 
         // Check if the user is an admin for which the admin role is getting disabled
         if (await userManager.IsInRoleAsync(user, FshRoles.Admin)
-            && request.UserRoles.Exists(a => !a.Enabled && a.RoleName == FshRoles.Admin))
+            && request.UserRoles.Exists(a => a is { Enabled: false, RoleName: FshRoles.Admin }))
         {
             // Get count of users in Admin Role
             int adminCount = (await userManager.GetUsersInRoleAsync(FshRoles.Admin)).Count;

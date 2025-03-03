@@ -102,10 +102,10 @@ public sealed class TokenService : ITokenService
         {
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = DefaultIdType.NewGuid(),
                 Operation = "Token Generated",
                 Entity = "Identity",
-                UserId = new Guid(user.Id),
+                UserId = new DefaultIdType(user.Id),
                 DateTime = DateTime.UtcNow,
             }
         }));
@@ -138,7 +138,7 @@ public sealed class TokenService : ITokenService
     private List<Claim> GetClaims(FshUser user, string ipAddress) =>
         new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new(JwtRegisteredClaimNames.Jti, DefaultIdType.NewGuid().ToString()),
             new(ClaimTypes.NameIdentifier, user.Id),
             new(ClaimTypes.Email, user.Email!),
             new(ClaimTypes.Name, user.FirstName ?? string.Empty),

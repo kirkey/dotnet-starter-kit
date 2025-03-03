@@ -43,7 +43,7 @@ public partial class RolePermissions
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
                 () => RolesClient.GetRolePermissionsEndpointAsync(Id), Toast, Navigation)
-            is RoleDto role && role.Permissions is not null)
+            is RoleDto { Permissions: not null } role)
         {
             _title = string.Format("{0} Permissions", role.Name);
             _description = string.Format("Manage {0} Role Permissions", role.Name);

@@ -41,7 +41,7 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
             var userId = currentUser.GetUserId();
             var trail = new TrailDto()
             {
-                Id = Guid.NewGuid(),
+                Id = DefaultIdType.NewGuid(),
                 TableName = entry.Entity.GetType().Name,
                 UserId = userId,
                 DateTime = utcNow
@@ -109,28 +109,34 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
         await publisher.Publish(new AuditPublishedEvent(auditTrails));
     }
 
-    public void UpdateEntities(DbContext? context)
+    private void UpdateEntities(DbContext? context)
     {
         if (context == null) return;
+    
+        var utcNow = timeProvider.GetUtcNow();
+        var userId = currentUser.GetUserId();
+        var userName = currentUser.GetUserName();
+    
         foreach (var entry in context.ChangeTracker.Entries<AuditableEntity>())
         {
-            var utcNow = timeProvider.GetUtcNow();
             if (entry.State is EntityState.Added or EntityState.Modified || entry.HasChangedOwnedEntities())
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.CreatedBy = currentUser.GetUserId();
-                    entry.Entity.CreatedByUserName = currentUser.GetUserName();
                     entry.Entity.CreatedOn = utcNow;
+                    entry.Entity.CreatedBy = userId;
+                    entry.Entity.CreatedByUserName = userName;
                 }
-                entry.Entity.LastModifiedBy = currentUser.GetUserId();
-                entry.Entity.LastModifiedByUserName = currentUser.GetUserName();
+
                 entry.Entity.LastModifiedOn = utcNow;
+                entry.Entity.LastModifiedBy = userId;
+                entry.Entity.LastModifiedByUserName = userName;
             }
-            if(entry.State is EntityState.Deleted && entry.Entity is ISoftDeletable softDelete)
+    
+            if (entry is { State: EntityState.Deleted, Entity: ISoftDeletable softDelete })
             {
-                softDelete.DeletedBy = currentUser.GetUserId();
-                softDelete.DeletedByUserName = currentUser.GetUserName();
+                softDelete.DeletedBy = userId;
+                softDelete.DeletedByUserName = userName;
                 softDelete.DeletedOn = utcNow;
                 entry.State = EntityState.Modified;
             }
@@ -144,5 +150,5 @@ public static class Extensions
         entry.References.Any(r =>
             r.TargetEntry != null &&
             r.TargetEntry.Metadata.IsOwned() &&
-            (r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
+            r.TargetEntry.State is EntityState.Added or EntityState.Modified);
 }

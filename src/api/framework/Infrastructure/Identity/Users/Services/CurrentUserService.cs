@@ -10,12 +10,12 @@ public class CurrentUser : ICurrentUser, ICurrentUserInitializer
 
     public string? Name => _user?.Identity?.Name;
 
-    private Guid _userId = Guid.Empty;
+    private DefaultIdType _userId = DefaultIdType.Empty;
 
-    public Guid GetUserId()
+    public DefaultIdType GetUserId()
     {
         return IsAuthenticated()
-            ? Guid.Parse(_user?.GetUserId() ?? Guid.Empty.ToString())
+            ? DefaultIdType.Parse(_user?.GetUserId() ?? DefaultIdType.Empty.ToString())
             : _userId;
     }
 
@@ -53,14 +53,14 @@ public class CurrentUser : ICurrentUser, ICurrentUserInitializer
 
     public void SetCurrentUserId(string userId)
     {
-        if (_userId != Guid.Empty)
+        if (_userId != DefaultIdType.Empty)
         {
             throw new FshException("Method reserved for in-scope initialization");
         }
 
         if (!string.IsNullOrEmpty(userId))
         {
-            _userId = Guid.Parse(userId);
+            _userId = DefaultIdType.Parse(userId);
         }
     }
 }
