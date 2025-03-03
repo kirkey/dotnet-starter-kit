@@ -2,7 +2,7 @@
 
 namespace FSH.Framework.Core.Storage.File.Features;
 
-public class FileUploadCommand : IRequest<FileUploadResponse>
+public abstract class FileUploadCommand : IRequest<FileUploadResponse>
 {
     public string Name { get; set; } = default!;
     public string Extension { get; set; } = default!;
