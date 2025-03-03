@@ -39,11 +39,13 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
         foreach (var entry in eventData.Context.ChangeTracker.Entries<IAuditable>().Where(x => x.State is EntityState.Added or EntityState.Deleted or EntityState.Modified).ToList())
         {
             var userId = currentUser.GetUserId();
+            var userName = currentUser.GetUserName();
             var trail = new TrailDto
             {
                 Id = DefaultIdType.NewGuid(),
                 TableName = entry.Entity.GetType().Name,
                 UserId = userId,
+                UserName = userName,
                 DateTime = utcNow
             };
 
@@ -56,7 +58,7 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
                 string propertyName = property.Metadata.Name;
                 if (property.Metadata.IsPrimaryKey())
                 {
-                    trail.KeyValues[propertyName] = property.CurrentValue;
+                    trail.KeyValues[propertyName] = property.CurrentValue ?? string.Empty;
                     continue;
                 }
 

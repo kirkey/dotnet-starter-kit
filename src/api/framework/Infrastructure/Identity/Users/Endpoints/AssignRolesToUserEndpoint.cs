@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FSH.Framework.Core.Identity.Users.Abstractions;
+﻿using FSH.Framework.Core.Identity.Users.Abstractions;
 using FSH.Framework.Core.Identity.Users.Features.AssignUserRole;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

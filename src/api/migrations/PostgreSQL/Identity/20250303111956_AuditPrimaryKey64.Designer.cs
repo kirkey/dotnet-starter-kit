@@ -3,6 +3,7 @@ using System;
 using FSH.Framework.Infrastructure.Identity.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Identity
 {
     [DbContext(typeof(IdentityDbContext))]
-    partial class IdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250303111956_AuditPrimaryKey64")]
+    partial class AuditPrimaryKey64
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Identity
                         .HasColumnType("text");
 
                     b.Property<string>("PrimaryKey")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(64)");
 
                     b.Property<string>("TenantId")
@@ -57,9 +59,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Identity
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("VARCHAR(1024)");
 
                     b.HasKey("Id");
 

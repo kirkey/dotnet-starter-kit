@@ -7,7 +7,7 @@ using MudBlazor;
  
 namespace FSH.Starter.Blazor.Client.Pages.Auth;
 
-public partial class Login()
+public partial class Login
 {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = default!;

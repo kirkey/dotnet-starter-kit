@@ -2,11 +2,12 @@
 using System.Text.Json;
 
 namespace FSH.Framework.Core.Audit;
-public class TrailDto()
+public class TrailDto
 {
     public DefaultIdType Id { get; set; }
     public DateTimeOffset DateTime { get; set; }
     public DefaultIdType UserId { get; set; }
+    public string? UserName { get; set; }
     public Dictionary<string, object?> KeyValues { get; } = [];
     public Dictionary<string, object?> OldValues { get; } = [];
     public Dictionary<string, object?> NewValues { get; } = [];
@@ -25,6 +26,7 @@ public class TrailDto()
         {
             Id = DefaultIdType.NewGuid(),
             UserId = UserId,
+            UserName = UserName,
             Operation = Type.ToString(),
             Entity = TableName,
             DateTime = DateTime,
