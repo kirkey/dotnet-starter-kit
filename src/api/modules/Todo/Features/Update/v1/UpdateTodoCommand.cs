@@ -3,8 +3,9 @@
 namespace FSH.Starter.WebApi.Todo.Features.Update.v1;
 public sealed record UpdateTodoCommand(
     DefaultIdType Id,
-    string? Title,
-    string? Note = null): IRequest<UpdateTodoResponse>;
+    string? Name,
+    string? Description,
+    string? Notes = null): IRequest<UpdateTodoResponse>;
 
 
 

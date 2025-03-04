@@ -11,10 +11,13 @@
             </MudItem>
         }
         <MudItem xs="12" md="6">
-            <MudTextField Label="Name" For="@(() => context.Title)" @bind-Value="context.Title" />
+            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="Note" For="@(() => context.Note)" @bind-Value="context.Note" />
+            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" />
         </MudItem>
         <MudItem xs="12" md="12">
             <MudItem>

@@ -13,7 +13,7 @@ public sealed class CreateTodoHandler(
     public async Task<CreateTodoResponse> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var item = TodoItem.Create(request.Title, request.Note);
+        var item = TodoItem.Create(request.Name, request.Description, request.Notes);
         await repository.AddAsync(item, cancellationToken).ConfigureAwait(false);
         await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         logger.LogInformation("todo item created {TodoItemId}", item.Id);

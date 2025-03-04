@@ -16,7 +16,7 @@ public class TodoItemUpdatedEventHandler(
     public async Task Handle(TodoItemUpdated notification, CancellationToken cancellationToken)
     {
         logger.LogInformation("handling todo item update domain event..");
-        var cacheResponse = new GetTodoResponse(notification.item.Id, notification.item.Title, notification.item.Note);
+        var cacheResponse = new GetTodoResponse(notification.item.Id, notification.item.Name, notification.item.Description, notification.item.Notes);
         await cache.SetAsync($"todo:{notification.item.Id}", cacheResponse, cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

@@ -5744,11 +5744,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial class CreateTodoCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string? Title { get; set; } = "Hello World!";
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Hello World!";
 
-        [System.Text.Json.Serialization.JsonPropertyName("note")]
-        public string? Note { get; set; } = "Important Note.";
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "This is desciption.";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = "Important Note.";
 
     }
 
@@ -5822,11 +5825,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid? Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string? Title { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("note")]
-        public string? Note { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
@@ -6092,11 +6098,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid? Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string? Title { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("note")]
-        public string? Note { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
@@ -6245,11 +6254,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string? Title { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("note")]
-        public string? Note { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 

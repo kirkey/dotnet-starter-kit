@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.Todo.Domain.Events;
-public record TodoItemCreated(DefaultIdType Id, string Title, string Note) : DomainEvent;
+public record TodoItemCreated(DefaultIdType Id, string Name, string Description, string Notes) : DomainEvent;
 
 public class TodoItemCreatedEventHandler(
     ILogger<TodoItemCreatedEventHandler> logger,
@@ -16,7 +16,7 @@ public class TodoItemCreatedEventHandler(
     public async Task Handle(TodoItemCreated notification, CancellationToken cancellationToken)
     {
         logger.LogInformation("handling todo item created domain event..");
-        var cacheResponse = new GetTodoResponse(notification.Id, notification.Title, notification.Note);
+        var cacheResponse = new GetTodoResponse(notification.Id, notification.Name, notification.Description, notification.Notes);
         await cache.SetAsync($"todo:{notification.Id}", cacheResponse, cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

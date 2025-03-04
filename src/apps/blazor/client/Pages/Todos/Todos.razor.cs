@@ -23,8 +23,9 @@ public partial class Todos
             fields: new()
             {
                 new(prod => prod.Id,"Id", "Id"),
-                new(prod => prod.Title,"Title", "Title"),
-                new(prod => prod.Note, "Note", "Note")
+                new(prod => prod.Name,"Name", "Name"),
+                new(prod => prod.Description, "Description", "Description"),
+                new(prod => prod.Notes, "Notes", "Notes")
             },
             enableAdvancedSearch: false,
             idFunc: prod => prod.Id!.Value,

@@ -5,34 +5,39 @@ using FSH.Starter.WebApi.Todo.Domain.Events;
 namespace FSH.Starter.WebApi.Todo.Domain;
 public sealed class TodoItem : AuditableEntity, IAggregateRoot
 {
-    public string Title { get; private set; } = string.Empty;
-    public string Note { get; private set; } = string.Empty;
-
     private TodoItem() { }
 
-    private TodoItem(string title, string note)
+    private TodoItem(string name, string description, string notes)
     {
-        Title = title;
-        Note = note;
-        QueueDomainEvent(new TodoItemCreated(Id, Title, Note));
+        Name = name;
+        Description = description;
+        Notes = notes;
+        QueueDomainEvent(new TodoItemCreated(Id, Name, Description, Notes));
         TodoMetrics.Created.Add(1);
     }
 
-    public static TodoItem Create(string title, string note) => new(title, note);
+    public static TodoItem Create(string name, string description, string note) =>
+        new(name, description, note);
 
-    public TodoItem Update(string? title, string? note)
+    public TodoItem Update(string? name, string? description, string? note)
     {
         bool isUpdated = false;
 
-        if (!string.IsNullOrWhiteSpace(title) && !string.Equals(Title, title, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
-            Title = title;
+            Name = name;
             isUpdated = true;
         }
 
-        if (!string.IsNullOrWhiteSpace(note) && !string.Equals(Note, note, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(description) && !string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
         {
-            Note = note;
+            Description = description;
+            isUpdated = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(note) && !string.Equals(Notes, note, StringComparison.OrdinalIgnoreCase))
+        {
+            Notes = note;
             isUpdated = true;
         }
 

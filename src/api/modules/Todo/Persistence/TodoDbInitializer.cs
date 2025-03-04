@@ -19,11 +19,12 @@ internal sealed class TodoDbInitializer(
 
     public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        const string title = "Hello World!";
-        const string note = "This is your first task";
-        if (await context.Todos.FirstOrDefaultAsync(t => t.Title == title, cancellationToken).ConfigureAwait(false) is null)
+        const string name = "Hello World!";
+        const string description = "This is your first task";
+        const string notes = "This is a note";
+        if (await context.Todos.FirstOrDefaultAsync(t => t.Name == name, cancellationToken).ConfigureAwait(false) is null)
         {
-            var todo = TodoItem.Create(title, note);
+            var todo = TodoItem.Create(name, description, notes);
             await context.Todos.AddAsync(todo, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             logger.LogInformation("[{Tenant}] seeding default todo data", context.TenantInfo!.Identifier);

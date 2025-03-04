@@ -16,7 +16,7 @@ public sealed class UpdateTodoHandler(
         ArgumentNullException.ThrowIfNull(request);
         var todo = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = todo ?? throw new TodoItemNotFoundException(request.Id);
-        var updatedTodo = todo.Update(request.Title, request.Note);
+        var updatedTodo = todo.Update(request.Name, request.Description, request.Notes);
         await repository.UpdateAsync(updatedTodo, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("todo item updated {TodoItemId}", updatedTodo.Id);
         return new UpdateTodoResponse(updatedTodo.Id);
