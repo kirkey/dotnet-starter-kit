@@ -16,9 +16,9 @@ public partial class Tenants
     [Inject]
     private IApiClient ApiClient { get; set; } = default!;
     private string? _searchString;
-    protected EntityClientTableContext<TenantViewModel, Guid, CreateTenantCommand> Context { get; set; } = default!;
+    protected EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand> Context { get; set; } = default!;
     private List<TenantViewModel> _tenants = new();
-    public EntityTable<TenantViewModel, Guid, CreateTenantCommand> EntityTable { get; set; } = default!;
+    public EntityTable<TenantViewModel, DefaultIdType, CreateTenantCommand> EntityTable { get; set; } = default!;
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Inject]

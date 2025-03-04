@@ -11,9 +11,9 @@ public partial class Products
     [Inject]
     protected IApiClient _client { get; set; } = default!;
 
-    protected EntityServerTableContext<ProductResponse, Guid, ProductViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel> Context { get; set; } = default!;
 
-    private EntityTable<ProductResponse, Guid, ProductViewModel> _table = default!;
+    private EntityTable<ProductResponse, DefaultIdType, ProductViewModel> _table = default!;
 
     private List<BrandResponse> _brands = new();
 
@@ -69,8 +69,8 @@ public partial class Products
 
     // Advanced Search
 
-    private Guid? _searchBrandId;
-    private Guid? SearchBrandId
+    private DefaultIdType? _searchBrandId;
+    private DefaultIdType? SearchBrandId
     {
         get => _searchBrandId;
         set

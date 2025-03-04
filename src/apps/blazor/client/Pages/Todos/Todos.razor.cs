@@ -11,9 +11,9 @@ public partial class Todos
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
 
-    protected EntityServerTableContext<GetTodoResponse, Guid, TodoViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel> Context { get; set; } = default!;
 
-    private EntityTable<GetTodoResponse, Guid, TodoViewModel> _table = default!;
+    private EntityTable<GetTodoResponse, DefaultIdType, TodoViewModel> _table = default!;
 
     protected override void OnInitialized() =>
         Context = new(

@@ -15,9 +15,9 @@ public partial class Audit
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Parameter]
-    public Guid Id { get; set; }
+    public DefaultIdType Id { get; set; }
 
-    protected EntityClientTableContext<RelatedAuditTrail, Guid, object> Context { get; set; } = default!;
+    protected EntityClientTableContext<RelatedAuditTrail, DefaultIdType, object> Context { get; set; } = default!;
 
     private string? _searchString;
     private string? _subHeader;
@@ -37,12 +37,12 @@ public partial class Audit
 
     protected override async Task OnInitializedAsync()
     {
-        if (Id == Guid.Empty)
+        if (Id == DefaultIdType.Empty)
         {
             var state = await AuthState;
             if (state != null)
             {
-                Id = new Guid(state.User.GetUserId()!);
+                Id = new DefaultIdType(state.User.GetUserId()!);
             }
         }
         _subHeader = $"Audit Trail for User {Id}";
@@ -71,7 +71,7 @@ public partial class Audit
             hasExtraActionsFunc: () => true);
     }
 
-    private void ShowBtnPress(Guid id)
+    private void ShowBtnPress(DefaultIdType id)
     {
         var trail = _trails.First(f => f.Id == id);
         trail.ShowDetails = !trail.ShowDetails;

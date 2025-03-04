@@ -19,7 +19,7 @@ public partial class Users
     [Inject]
     protected IApiClient UsersClient { get; set; } = default!;
 
-    protected EntityClientTableContext<UserDetail, Guid, RegisterUserCommand> Context { get; set; } = default!;
+    protected EntityClientTableContext<UserDetail, DefaultIdType, RegisterUserCommand> Context { get; set; } = default!;
 
     private bool _canExportUsers;
     private bool _canViewAuditTrails;
@@ -71,12 +71,12 @@ public partial class Users
             exportAction: string.Empty);
     }
 
-    private void ViewProfile(in Guid userId) =>
+    private void ViewProfile(in DefaultIdType userId) =>
         Navigation.NavigateTo($"/identity/users/{userId}/profile");
 
-    private void ManageRoles(in Guid userId) =>
+    private void ManageRoles(in DefaultIdType userId) =>
         Navigation.NavigateTo($"/identity/users/{userId}/roles");
-    private void ViewAuditTrails(in Guid userId) =>
+    private void ViewAuditTrails(in DefaultIdType userId) =>
         Navigation.NavigateTo($"/identity/users/{userId}/audit-trail");
 
     private void TogglePasswordVisibility()

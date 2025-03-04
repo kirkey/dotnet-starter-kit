@@ -11,9 +11,9 @@ public partial class Brands
     [Inject]
     protected IApiClient _client { get; set; } = default!;
 
-    protected EntityServerTableContext<BrandResponse, Guid, BrandViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel> Context { get; set; } = default!;
 
-    private EntityTable<BrandResponse, Guid, BrandViewModel> _table = default!;
+    private EntityTable<BrandResponse, DefaultIdType, BrandViewModel> _table = default!;
 
     protected override void OnInitialized() =>
         Context = new(

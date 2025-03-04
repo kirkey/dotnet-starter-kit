@@ -71,7 +71,7 @@ public partial class Profile
                 return;
             }
 
-            string? fileName = $"{_userId}-{Guid.NewGuid():N}";
+            string? fileName = $"{_userId}-{DefaultIdType.NewGuid():N}";
             fileName = fileName[..Math.Min(fileName.Length, 90)];
             var imageFile = await file.RequestImageFileAsync(AppConstants.StandardImageFormat, AppConstants.MaxImageWidth, AppConstants.MaxImageHeight);
             byte[]? buffer = new byte[imageFile.Size];
