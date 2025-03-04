@@ -3,6 +3,6 @@
 namespace FSH.Starter.WebApi.Todo.Features.Get.v1;
 public class GetTodoRequest : IRequest<GetTodoResponse>
 {
-    public Guid Id { get; set; }
-    public GetTodoRequest(Guid id) => Id = id;
+    public DefaultIdType Id { get; set; }
+    public GetTodoRequest(DefaultIdType id) => Id = id;
 }

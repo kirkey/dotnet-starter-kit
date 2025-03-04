@@ -11,7 +11,7 @@ public static class DeleteTodoEndpoint
     internal static RouteHandlerBuilder MapTodoItemDeletionEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapDelete("/{id:guid}", async (Guid id, ISender mediator) =>
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 await mediator.Send(new DeleteTodoCommand(id));
                 return Results.NoContent();

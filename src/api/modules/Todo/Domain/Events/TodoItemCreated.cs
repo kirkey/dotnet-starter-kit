@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.Todo.Domain.Events;
-public record TodoItemCreated(Guid Id, string Title, string Note) : DomainEvent;
+public record TodoItemCreated(DefaultIdType Id, string Title, string Note) : DomainEvent;
 
 public class TodoItemCreatedEventHandler(
     ILogger<TodoItemCreatedEventHandler> logger,

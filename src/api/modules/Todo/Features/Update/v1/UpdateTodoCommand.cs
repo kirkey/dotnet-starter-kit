@@ -2,7 +2,7 @@
 
 namespace FSH.Starter.WebApi.Todo.Features.Update.v1;
 public sealed record UpdateTodoCommand(
-    Guid Id,
+    DefaultIdType Id,
     string? Title,
     string? Note = null): IRequest<UpdateTodoResponse>;
 

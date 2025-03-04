@@ -1,3 +1,3 @@
 ﻿namespace FSH.Starter.WebApi.Todo.Features.Update.v1;
-public record UpdateTodoResponse(Guid? Id);
+public record UpdateTodoResponse(DefaultIdType? Id);
 
