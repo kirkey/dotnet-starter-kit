@@ -4,14 +4,9 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace FSH.Framework.Infrastructure.HealthChecks;
 
-public class HealthCheckMiddleware
+public class HealthCheckMiddleware(HealthCheckService healthCheckService)
 {
-    private readonly HealthCheckService _healthCheckService;
-
-    public HealthCheckMiddleware(HealthCheckService healthCheckService)
-    {
-        _healthCheckService = healthCheckService;
-    }
+    private readonly HealthCheckService _healthCheckService = healthCheckService;
 
     public async Task InvokeAsync(HttpContext context)
     {

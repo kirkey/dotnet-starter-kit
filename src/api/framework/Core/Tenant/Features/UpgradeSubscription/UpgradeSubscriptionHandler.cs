@@ -3,11 +3,9 @@ using MediatR;
 
 namespace FSH.Framework.Core.Tenant.Features.UpgradeSubscription;
 
-public class UpgradeSubscriptionHandler : IRequestHandler<UpgradeSubscriptionCommand, UpgradeSubscriptionResponse>
+public class UpgradeSubscriptionHandler(ITenantService tenantService) : IRequestHandler<UpgradeSubscriptionCommand, UpgradeSubscriptionResponse>
 {
-    private readonly ITenantService _tenantService;
-
-    public UpgradeSubscriptionHandler(ITenantService tenantService) => _tenantService = tenantService;
+    private readonly ITenantService _tenantService = tenantService;
 
     public async Task<UpgradeSubscriptionResponse> Handle(UpgradeSubscriptionCommand request, CancellationToken cancellationToken)
     {

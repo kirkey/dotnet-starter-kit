@@ -5,13 +5,9 @@ using FSH.Framework.Core.Persistence;
 using Mapster;
 
 namespace FSH.Starter.WebApi.Todo.Persistence;
-internal sealed class TodoRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T>
+internal sealed class TodoRepository<T>(TodoDbContext context) : RepositoryBase<T>(context), IReadRepository<T>, IRepository<T>
     where T : class, IAggregateRoot
 {
-    public TodoRepository(TodoDbContext context)
-        : base(context)
-    {
-    }
 
     // We override the default behavior when mapping to a dto.
     // We're using Mapster's ProjectToType here to immediately map the result from the database.

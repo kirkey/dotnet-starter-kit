@@ -11,18 +11,11 @@ using Microsoft.Extensions.Options;
 
 namespace FSH.Framework.Infrastructure.Tenant.Services;
 
-public sealed class TenantService : ITenantService
+public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, IOptions<DatabaseOptions> config, IServiceProvider serviceProvider) : ITenantService
 {
-    private readonly IMultiTenantStore<FshTenantInfo> _tenantStore;
-    private readonly DatabaseOptions _config;
-    private readonly IServiceProvider _serviceProvider;
-
-    public TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, IOptions<DatabaseOptions> config, IServiceProvider serviceProvider)
-    {
-        _tenantStore = tenantStore;
-        _config = config.Value;
-        _serviceProvider = serviceProvider;
-    }
+    private readonly IMultiTenantStore<FshTenantInfo> _tenantStore = tenantStore;
+    private readonly DatabaseOptions _config = config.Value;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public async Task<string> ActivateAsync(string id, CancellationToken cancellationToken)
     {

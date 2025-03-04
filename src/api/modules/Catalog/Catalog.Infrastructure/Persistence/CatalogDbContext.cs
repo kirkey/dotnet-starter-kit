@@ -10,13 +10,8 @@ using Shared.Constants;
 
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Persistence;
 
-public sealed class CatalogDbContext : FshDbContext
+public sealed class CatalogDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor, DbContextOptions<CatalogDbContext> options, IPublisher publisher, IOptions<DatabaseOptions> settings) : FshDbContext(multiTenantContextAccessor, options, publisher, settings)
 {
-    public CatalogDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor, DbContextOptions<CatalogDbContext> options, IPublisher publisher, IOptions<DatabaseOptions> settings)
-        : base(multiTenantContextAccessor, options, publisher, settings)
-    {
-    }
-
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Brand> Brands { get; set; } = null!;
 

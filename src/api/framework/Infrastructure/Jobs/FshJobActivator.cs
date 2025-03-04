@@ -10,12 +10,9 @@ using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Jobs;
 
-public class FshJobActivator : JobActivator
+public class FshJobActivator(IServiceScopeFactory scopeFactory) : JobActivator
 {
-    private readonly IServiceScopeFactory _scopeFactory;
-
-    public FshJobActivator(IServiceScopeFactory scopeFactory) =>
-        _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
+    private readonly IServiceScopeFactory _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
 
     public override JobActivatorScope BeginScope(PerformContext context) =>
         new Scope(context, _scopeFactory.CreateScope());

@@ -6,15 +6,13 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FSH.Framework.Infrastructure.OpenApi;
-public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+/// <summary>
+/// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
+/// </summary>
+/// <param name="provider">The <see cref="IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) : IConfigureOptions<SwaggerGenOptions>
 {
-    private readonly IApiVersionDescriptionProvider provider;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
-    /// </summary>
-    /// <param name="provider">The <see cref="IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
-    public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => this.provider = provider;
+    private readonly IApiVersionDescriptionProvider provider = provider;
 
     /// <inheritdoc />
     public void Configure(SwaggerGenOptions options)

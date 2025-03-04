@@ -5,15 +5,10 @@ using MudBlazor;
 
 namespace FSH.Starter.Blazor.Infrastructure.Preferences;
 
-public class ClientPreferenceManager : IClientPreferenceManager
+public class ClientPreferenceManager(
+    ILocalStorageService localStorageService) : IClientPreferenceManager
 {
-    private readonly ILocalStorageService _localStorageService;
-
-    public ClientPreferenceManager(
-        ILocalStorageService localStorageService)
-    {
-        _localStorageService = localStorageService;
-    }
+    private readonly ILocalStorageService _localStorageService = localStorageService;
 
     public async Task<bool> ToggleDarkModeAsync()
     {

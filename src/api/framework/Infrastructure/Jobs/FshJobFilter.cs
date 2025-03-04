@@ -8,13 +8,11 @@ using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Jobs;
 
-public class FshJobFilter : IClientFilter
+public class FshJobFilter(IServiceProvider services) : IClientFilter
 {
     private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
-    private readonly IServiceProvider _services;
-
-    public FshJobFilter(IServiceProvider services) => _services = services;
+    private readonly IServiceProvider _services = services;
 
     public void OnCreating(CreatingContext context)
     {

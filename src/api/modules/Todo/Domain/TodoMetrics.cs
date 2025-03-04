@@ -10,4 +10,3 @@ public static class TodoMetrics
     public static readonly Counter<int> Updated = Meter.CreateCounter<int>("items.updated");
     public static readonly Counter<int> Deleted = Meter.CreateCounter<int>("items.deleted");
 }
-

@@ -9,13 +9,8 @@ using Microsoft.Extensions.Options;
 using Shared.Constants;
 
 namespace FSH.Starter.WebApi.Todo.Persistence;
-public sealed class TodoDbContext : FshDbContext
+public sealed class TodoDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor, DbContextOptions<TodoDbContext> options, IPublisher publisher, IOptions<DatabaseOptions> settings) : FshDbContext(multiTenantContextAccessor, options, publisher, settings)
 {
-    public TodoDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor, DbContextOptions<TodoDbContext> options, IPublisher publisher, IOptions<DatabaseOptions> settings)
-        : base(multiTenantContextAccessor, options, publisher, settings)
-    {
-    }
-
     public DbSet<TodoItem> Todos { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

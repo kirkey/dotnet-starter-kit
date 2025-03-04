@@ -3,16 +3,10 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
 using System.Net.Http.Headers;
 
 namespace FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
-public class JwtAuthenticationHeaderHandler : DelegatingHandler
+public class JwtAuthenticationHeaderHandler(IAccessTokenProviderAccessor tokenProviderAccessor, NavigationManager navigation) : DelegatingHandler
 {
-    private readonly IAccessTokenProviderAccessor _tokenProviderAccessor;
-    private readonly NavigationManager _navigation;
-
-    public JwtAuthenticationHeaderHandler(IAccessTokenProviderAccessor tokenProviderAccessor, NavigationManager navigation)
-    {
-        _tokenProviderAccessor = tokenProviderAccessor;
-        _navigation = navigation;
-    }
+    private readonly IAccessTokenProviderAccessor _tokenProviderAccessor = tokenProviderAccessor;
+    private readonly NavigationManager _navigation = navigation;
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
