@@ -7,7 +7,7 @@ public class Brand : AuditableEntity, IAggregateRoot
 {
     private Brand() { }
 
-    private Brand(Guid id, string name, string? description, string? notes)
+    private Brand(DefaultIdType id, string name, string? description, string? notes)
     {
         Id = id;
         Name = name;
@@ -19,7 +19,7 @@ public class Brand : AuditableEntity, IAggregateRoot
 
     public static Brand Create(string name, string? description, string? notes)
     {
-        return new Brand(Guid.NewGuid(), name, description, notes);
+        return new Brand(DefaultIdType.NewGuid(), name, description, notes);
     }
 
     public Brand Update(string? name, string? description, string? notes)

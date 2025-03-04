@@ -12,9 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FSH.Starter.WebApi.Catalog.Infrastructure;
 public static class CatalogModule
 {
-    public class Endpoints : CarterModule
+    public class Endpoints() : CarterModule("catalog")
     {
-        public Endpoints() : base("catalog") { }
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             var productGroup = app.MapGroup("products").WithTags("products");

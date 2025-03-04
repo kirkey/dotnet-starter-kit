@@ -6,12 +6,12 @@ namespace FSH.Starter.WebApi.Catalog.Domain;
 public class Product : AuditableEntity, IAggregateRoot
 {
     public decimal Price { get; private set; }
-    public Guid? BrandId { get; private set; }
+    public DefaultIdType? BrandId { get; private set; }
     public virtual Brand Brand { get; private set; } = default!;
 
     private Product() { }
 
-    private Product(Guid id, string name, string? description, decimal price, Guid? brandId)
+    private Product(DefaultIdType id, string name, string? description, decimal price, DefaultIdType? brandId)
     {
         Id = id;
         Name = name;
@@ -22,12 +22,12 @@ public class Product : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new ProductCreated { Product = this });
     }
 
-    public static Product Create(string name, string? description, decimal price, Guid? brandId)
+    public static Product Create(string name, string? description, decimal price, DefaultIdType? brandId)
     {
-        return new Product(Guid.NewGuid(), name, description, price, brandId);
+        return new Product(DefaultIdType.NewGuid(), name, description, price, brandId);
     }
 
-    public Product Update(string? name, string? description, decimal? price, Guid? brandId)
+    public Product Update(string? name, string? description, decimal? price, DefaultIdType? brandId)
     {
         bool isUpdated = false;
 
@@ -49,7 +49,7 @@ public class Product : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (brandId.HasValue && brandId.Value != Guid.Empty && BrandId != brandId.Value)
+        if (brandId.HasValue && brandId.Value != DefaultIdType.Empty && BrandId != brandId.Value)
         {
             BrandId = brandId.Value;
             isUpdated = true;
