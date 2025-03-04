@@ -13,7 +13,7 @@ public static class GetProductEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetProductRequest(id));
+                var response = await mediator.Send(new GetProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GetProductEndpoint))

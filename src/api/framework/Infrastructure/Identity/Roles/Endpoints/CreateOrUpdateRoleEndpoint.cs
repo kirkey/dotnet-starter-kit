@@ -13,7 +13,7 @@ public static class CreateOrUpdateRoleEndpoint
     {
         return endpoints.MapPost("/", async (CreateOrUpdateRoleCommand request, IRoleService roleService) =>
         {
-            return await roleService.CreateOrUpdateRoleAsync(request);
+            return await roleService.CreateOrUpdateRoleAsync(request).ConfigureAwait(false);
         })
         .WithName(nameof(CreateOrUpdateRoleEndpoint))
         .WithSummary("Create or update a role")

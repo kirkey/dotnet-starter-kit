@@ -14,7 +14,7 @@ internal sealed partial class UserService
     {
         EnsureValidTenant();
 
-        var user = await userManager.FindByEmailAsync(request.Email);
+        var user = await userManager.FindByEmailAsync(request.Email).ConfigureAwait(false);
         if (user == null)
         {
             throw new NotFoundException("user not found");
@@ -25,7 +25,7 @@ internal sealed partial class UserService
             throw new InvalidOperationException("user email cannot be null or empty");
         }
 
-        var token = await userManager.GeneratePasswordResetTokenAsync(user);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user).ConfigureAwait(false);
         token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
         var resetPasswordUri = $"{origin}/reset-password?token={token}&email={request.Email}";
@@ -41,14 +41,14 @@ internal sealed partial class UserService
     {
         EnsureValidTenant();
 
-        var user = await userManager.FindByEmailAsync(request.Email);
+        var user = await userManager.FindByEmailAsync(request.Email).ConfigureAwait(false);
         if (user == null)
         {
             throw new NotFoundException("user not found");
         }
 
         request.Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
-        var result = await userManager.ResetPasswordAsync(user, request.Token, request.Password);
+        var result = await userManager.ResetPasswordAsync(user, request.Token, request.Password).ConfigureAwait(false);
 
         if (!result.Succeeded)
         {
@@ -59,11 +59,11 @@ internal sealed partial class UserService
 
     public async Task ChangePasswordAsync(ChangePasswordCommand request, string userId)
     {
-        var user = await userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId).ConfigureAwait(false);
 
         _ = user ?? throw new NotFoundException("user not found");
 
-        var result = await userManager.ChangePasswordAsync(user, request.Password, request.NewPassword);
+        var result = await userManager.ChangePasswordAsync(user, request.Password, request.NewPassword).ConfigureAwait(false);
 
         if (!result.Succeeded)
         {

@@ -22,7 +22,7 @@ public static class ToggleUserStatusEndpoint
                 return Results.BadRequest();
             }
 
-            await userService.ToggleStatusAsync(command, cancellationToken);
+            await userService.ToggleStatusAsync(command, cancellationToken).ConfigureAwait(false);
             return Results.Ok();
         })
         .WithName(nameof(ToggleUserStatusEndpoint))

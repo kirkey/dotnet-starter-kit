@@ -65,9 +65,9 @@ public class SmtpMailService(IOptions<MailOptions> settings, ILogger<SmtpMailSer
             {
                 using (var stream = new MemoryStream())
                 {
-                    await stream.WriteAsync(attachmentInfo.Value, ct);
+                    await stream.WriteAsync(attachmentInfo.Value, ct).ConfigureAwait(false);
                     stream.Position = 0;
-                    await builder.Attachments.AddAsync(attachmentInfo.Key, stream, ct);
+                    await builder.Attachments.AddAsync(attachmentInfo.Key, stream, ct).ConfigureAwait(false);
                 }
             }
         }
@@ -77,9 +77,9 @@ public class SmtpMailService(IOptions<MailOptions> settings, ILogger<SmtpMailSer
         using var client = new SmtpClient();
         try
         {
-            await client.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls, ct);
-            await client.AuthenticateAsync(_settings.UserName, _settings.Password, ct);
-            await client.SendAsync(email, ct);
+            await client.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls, ct).ConfigureAwait(false);
+            await client.AuthenticateAsync(_settings.UserName, _settings.Password, ct).ConfigureAwait(false);
+            await client.SendAsync(email, ct).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -87,7 +87,7 @@ public class SmtpMailService(IOptions<MailOptions> settings, ILogger<SmtpMailSer
         }
         finally
         {
-            await client.DisconnectAsync(true, ct);
+            await client.DisconnectAsync(true, ct).ConfigureAwait(false);
         }
     }
 }

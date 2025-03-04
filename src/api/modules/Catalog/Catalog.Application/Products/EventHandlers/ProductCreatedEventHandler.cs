@@ -10,7 +10,7 @@ public class ProductCreatedEventHandler(ILogger<ProductCreatedEventHandler> logg
         CancellationToken cancellationToken)
     {
         logger.LogInformation("handling product created domain event..");
-        await Task.FromResult(notification);
+        await Task.FromResult(notification).ConfigureAwait(false);
         logger.LogInformation("finished handling product created domain event..");
     }
 }

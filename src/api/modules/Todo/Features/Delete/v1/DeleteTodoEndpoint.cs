@@ -13,7 +13,7 @@ public static class DeleteTodoEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new DeleteTodoCommand(id));
+                await mediator.Send(new DeleteTodoCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(DeleteTodoEndpoint))

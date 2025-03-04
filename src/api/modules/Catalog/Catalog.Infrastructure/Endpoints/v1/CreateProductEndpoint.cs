@@ -13,7 +13,7 @@ public static class CreateProductEndpoint
         return endpoints
             .MapPost("/", async (CreateProductCommand request, ISender mediator) =>
             {
-                var response = await mediator.Send(request);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(CreateProductEndpoint))

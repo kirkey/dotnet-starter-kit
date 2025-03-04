@@ -18,11 +18,11 @@ using FSH.Framework.Infrastructure.Constants;
 using FSH.Framework.Infrastructure.Identity.Persistence;
 using FSH.Framework.Infrastructure.Identity.Roles;
 using FSH.Framework.Infrastructure.Tenant;
-using FSH.Starter.Shared.Authorization;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Services;
 
@@ -52,12 +52,12 @@ internal sealed partial class UserService(
 
         var user = await userManager.Users
             .Where(u => u.Id == userId && !u.EmailConfirmed)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
 
         _ = user ?? throw new FshException("An error occurred while confirming E-Mail.");
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-        var result = await userManager.ConfirmEmailAsync(user, code);
+        var result = await userManager.ConfirmEmailAsync(user, code).ConfigureAwait(false);
 
         return result.Succeeded
             ? string.Format("Account Confirmed for E-Mail {0}. You can now use the /api/tokens endpoint to generate JWT.", user.Email)
@@ -72,19 +72,19 @@ internal sealed partial class UserService(
     public async Task<bool> ExistsWithEmailAsync(string email, string? exceptId = null)
     {
         EnsureValidTenant();
-        return await userManager.FindByEmailAsync(email.Normalize()) is FshUser user && user.Id != exceptId;
+        return await userManager.FindByEmailAsync(email.Normalize()).ConfigureAwait(false) is FshUser user && user.Id != exceptId;
     }
 
     public async Task<bool> ExistsWithNameAsync(string name)
     {
         EnsureValidTenant();
-        return await userManager.FindByNameAsync(name) is not null;
+        return await userManager.FindByNameAsync(name).ConfigureAwait(false) is not null;
     }
 
     public async Task<bool> ExistsWithPhoneNumberAsync(string phoneNumber, string? exceptId = null)
     {
         EnsureValidTenant();
-        return await userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber) is FshUser user && user.Id != exceptId;
+        return await userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber).ConfigureAwait(false) is FshUser user && user.Id != exceptId;
     }
 
     public async Task<UserDetail> GetAsync(string userId, CancellationToken cancellationToken)
@@ -92,7 +92,7 @@ internal sealed partial class UserService(
         var user = await userManager.Users
             .AsNoTracking()
             .Where(u => u.Id == userId)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
 
         _ = user ?? throw new NotFoundException("user not found");
 
@@ -104,7 +104,7 @@ internal sealed partial class UserService(
 
     public async Task<List<UserDetail>> GetListAsync(CancellationToken cancellationToken)
     {
-        var users = await userManager.Users.AsNoTracking().ToListAsync(cancellationToken);
+        var users = await userManager.Users.AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false);
         return users.Adapt<List<UserDetail>>();
     }
 
@@ -129,7 +129,7 @@ internal sealed partial class UserService(
         };
 
         // register user
-        var result = await userManager.CreateAsync(user, request.Password);
+        var result = await userManager.CreateAsync(user, request.Password).ConfigureAwait(false);
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(error => error.Description).ToList();
@@ -137,12 +137,12 @@ internal sealed partial class UserService(
         }
 
         // add basic role
-        await userManager.AddToRoleAsync(user, FshRoles.Basic);
+        await userManager.AddToRoleAsync(user, FshRoles.Basic).ConfigureAwait(false);
 
         // send confirmation mail
         if (!string.IsNullOrEmpty(user.Email))
         {
-            string emailVerificationUri = await GetEmailVerificationUriAsync(user, origin);
+            string emailVerificationUri = await GetEmailVerificationUriAsync(user, origin).ConfigureAwait(false);
             var mailRequest = new MailRequest(
                 new Collection<string> { user.Email },
                 "Confirm Registration",
@@ -155,11 +155,11 @@ internal sealed partial class UserService(
 
     public async Task ToggleStatusAsync(ToggleUserStatusCommand request, CancellationToken cancellationToken)
     {
-        var user = await userManager.Users.Where(u => u.Id == request.UserId).FirstOrDefaultAsync(cancellationToken);
+        var user = await userManager.Users.Where(u => u.Id == request.UserId).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
 
         _ = user ?? throw new NotFoundException("User Not Found.");
 
-        bool isAdmin = await userManager.IsInRoleAsync(user, FshRoles.Admin);
+        bool isAdmin = await userManager.IsInRoleAsync(user, FshRoles.Admin).ConfigureAwait(false);
         if (isAdmin)
         {
             throw new FshException("Administrators Profile's Status cannot be toggled");
@@ -167,19 +167,19 @@ internal sealed partial class UserService(
 
         user.IsActive = request.ActivateUser;
 
-        await userManager.UpdateAsync(user);
+        await userManager.UpdateAsync(user).ConfigureAwait(false);
     }
 
     public async Task UpdateAsync(UpdateUserCommand request, string userId)
     {
-        var user = await userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId).ConfigureAwait(false);
 
         _ = user ?? throw new NotFoundException("user not found");
 
         Uri imageUri = user.ImageUrl ?? null!;
         if (request.Image != null || request.DeleteCurrentImage)
         {
-            user.ImageUrl = await storageService.UploadAsync<FshUser>(request.Image, FileType.Image);
+            user.ImageUrl = await storageService.UploadAsync<FshUser>(request.Image, FileType.Image).ConfigureAwait(false);
             if (request.DeleteCurrentImage && imageUri != null)
             {
                 storageService.Remove(imageUri);
@@ -189,14 +189,14 @@ internal sealed partial class UserService(
         user.FirstName = request.FirstName;
         user.LastName = request.LastName;
         user.PhoneNumber = request.PhoneNumber;
-        string? phoneNumber = await userManager.GetPhoneNumberAsync(user);
+        string? phoneNumber = await userManager.GetPhoneNumberAsync(user).ConfigureAwait(false);
         if (request.PhoneNumber != phoneNumber)
         {
-            await userManager.SetPhoneNumberAsync(user, request.PhoneNumber);
+            await userManager.SetPhoneNumberAsync(user, request.PhoneNumber).ConfigureAwait(false);
         }
 
-        var result = await userManager.UpdateAsync(user);
-        await signInManager.RefreshSignInAsync(user);
+        var result = await userManager.UpdateAsync(user).ConfigureAwait(false);
+        await signInManager.RefreshSignInAsync(user).ConfigureAwait(false);
 
         if (!result.Succeeded)
         {
@@ -206,12 +206,12 @@ internal sealed partial class UserService(
 
     public async Task DeleteAsync(string userId)
     {
-        FshUser? user = await userManager.FindByIdAsync(userId);
+        FshUser? user = await userManager.FindByIdAsync(userId).ConfigureAwait(false);
 
         _ = user ?? throw new NotFoundException("User Not Found.");
 
         user.IsActive = false;
-        IdentityResult? result = await userManager.UpdateAsync(user);
+        IdentityResult? result = await userManager.UpdateAsync(user).ConfigureAwait(false);
 
         if (!result.Succeeded)
         {
@@ -224,7 +224,7 @@ internal sealed partial class UserService(
     {
         EnsureValidTenant();
 
-        string code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        string code = await userManager.GenerateEmailConfirmationTokenAsync(user).ConfigureAwait(false);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         const string route = "api/users/confirm-email/";
         var endpointUri = new Uri(string.Concat($"{origin}/", route));
@@ -240,16 +240,16 @@ internal sealed partial class UserService(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var user = await userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync(cancellationToken);
+        var user = await userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
 
         _ = user ?? throw new NotFoundException("user not found");
 
         // Check if the user is an admin for which the admin role is getting disabled
-        if (await userManager.IsInRoleAsync(user, FshRoles.Admin)
+        if (await userManager.IsInRoleAsync(user, FshRoles.Admin).ConfigureAwait(false)
             && request.UserRoles.Exists(a => a is { Enabled: false, RoleName: FshRoles.Admin }))
         {
             // Get count of users in Admin Role
-            int adminCount = (await userManager.GetUsersInRoleAsync(FshRoles.Admin)).Count;
+            int adminCount = (await userManager.GetUsersInRoleAsync(FshRoles.Admin).ConfigureAwait(false)).Count;
 
             // Check if user is not Root Tenant Admin
             // Edge Case : there are chances for other tenants to have users with the same email as that of Root Tenant Admin. Probably can add a check while User Registration
@@ -269,18 +269,18 @@ internal sealed partial class UserService(
         foreach (var userRole in request.UserRoles)
         {
             // Check if Role Exists
-            if (await roleManager.FindByNameAsync(userRole.RoleName!) is not null)
+            if (await roleManager.FindByNameAsync(userRole.RoleName!).ConfigureAwait(false) is not null)
             {
                 if (userRole.Enabled)
                 {
-                    if (!await userManager.IsInRoleAsync(user, userRole.RoleName!))
+                    if (!await userManager.IsInRoleAsync(user, userRole.RoleName!).ConfigureAwait(false))
                     {
-                        await userManager.AddToRoleAsync(user, userRole.RoleName!);
+                        await userManager.AddToRoleAsync(user, userRole.RoleName!).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    await userManager.RemoveFromRoleAsync(user, userRole.RoleName!);
+                    await userManager.RemoveFromRoleAsync(user, userRole.RoleName!).ConfigureAwait(false);
                 }
             }
         }
@@ -293,9 +293,9 @@ internal sealed partial class UserService(
     {
         var userRoles = new List<UserRoleDetail>();
 
-        var user = await userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId).ConfigureAwait(false);
         if (user is null) throw new NotFoundException("user not found");
-        var roles = await roleManager.Roles.AsNoTracking().ToListAsync(cancellationToken);
+        var roles = await roleManager.Roles.AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false);
         if (roles is null) throw new NotFoundException("roles not found");
         foreach (var role in roles)
         {
@@ -304,7 +304,7 @@ internal sealed partial class UserService(
                 RoleId = role.Id,
                 RoleName = role.Name,
                 Description = role.Description,
-                Enabled = await userManager.IsInRoleAsync(user, role.Name!)
+                Enabled = await userManager.IsInRoleAsync(user, role.Name!).ConfigureAwait(false)
             });
         }
 

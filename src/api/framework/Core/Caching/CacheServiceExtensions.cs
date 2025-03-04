@@ -23,18 +23,18 @@ public static class CacheServiceExtensions
 
     public static async Task<T?> GetOrSetAsync<T>(this ICacheService cache, string key, Func<Task<T>> task, TimeSpan? slidingExpiration = null, CancellationToken cancellationToken = default)
     {
-        T? value = await cache.GetAsync<T>(key, cancellationToken);
+        T? value = await cache.GetAsync<T>(key, cancellationToken).ConfigureAwait(false);
 
         if (value is not null)
         {
             return value;
         }
 
-        value = await task();
+        value = await task().ConfigureAwait(false);
 
         if (value is not null)
         {
-            await cache.SetAsync(key, value, slidingExpiration, cancellationToken);
+            await cache.SetAsync(key, value, slidingExpiration, cancellationToken).ConfigureAwait(false);
         }
 
         return value;

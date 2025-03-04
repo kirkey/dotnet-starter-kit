@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
 using FSH.Framework.Core.Exceptions;
 using FSH.Framework.Core.Identity.Users.Abstractions;
-using FSH.Starter.Shared.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 public static class GetUserPermissionsEndpoint
@@ -18,7 +18,7 @@ public static class GetUserPermissionsEndpoint
                 throw new UnauthorizedException();
             }
 
-            return await service.GetPermissionsAsync(userId, cancellationToken);
+            return await service.GetPermissionsAsync(userId, cancellationToken).ConfigureAwait(false);
         })
         .WithName("GetUserPermissions")
         .WithSummary("Get current user permissions")

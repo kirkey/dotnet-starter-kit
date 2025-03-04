@@ -60,7 +60,7 @@ public static class Extensions
                     }
                 }
 
-                await next.Invoke();
+                await next.Invoke().ConfigureAwait(false);
             });
         }
 

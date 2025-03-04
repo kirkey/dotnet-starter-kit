@@ -5,11 +5,11 @@ using FSH.Framework.Infrastructure.Identity.RoleClaims;
 using FSH.Framework.Infrastructure.Identity.Roles;
 using FSH.Framework.Infrastructure.Identity.Users;
 using FSH.Framework.Infrastructure.Tenant;
-using FSH.Starter.Shared.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Persistence;
 internal sealed class IdentityDbInitializer(
@@ -32,34 +32,34 @@ internal sealed class IdentityDbInitializer(
 
     public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        await SeedRolesAsync();
-        await SeedAdminUserAsync();
+        await SeedRolesAsync().ConfigureAwait(false);
+        await SeedAdminUserAsync().ConfigureAwait(false);
     }
 
     private async Task SeedRolesAsync()
     {
         foreach (string roleName in FshRoles.DefaultRoles)
         {
-            if (await roleManager.Roles.SingleOrDefaultAsync(r => r.Name == roleName)
+            if (await roleManager.Roles.SingleOrDefaultAsync(r => r.Name == roleName).ConfigureAwait(false)
                 is not FshRole role)
             {
                 // create role
                 role = new FshRole(roleName, $"{roleName} Role for {multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id} Tenant");
-                await roleManager.CreateAsync(role);
+                await roleManager.CreateAsync(role).ConfigureAwait(false);
             }
 
             // Assign permissions
             if (roleName == FshRoles.Basic)
             {
-                await AssignPermissionsToRoleAsync(context, FshPermissions.Basic, role);
+                await AssignPermissionsToRoleAsync(context, FshPermissions.Basic, role).ConfigureAwait(false);
             }
             else if (roleName == FshRoles.Admin)
             {
-                await AssignPermissionsToRoleAsync(context, FshPermissions.Admin, role);
+                await AssignPermissionsToRoleAsync(context, FshPermissions.Admin, role).ConfigureAwait(false);
 
                 if (multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id == TenantConstants.Root.Id)
                 {
-                    await AssignPermissionsToRoleAsync(context, FshPermissions.Root, role);
+                    await AssignPermissionsToRoleAsync(context, FshPermissions.Root, role).ConfigureAwait(false);
                 }
             }
         }
@@ -67,7 +67,7 @@ internal sealed class IdentityDbInitializer(
 
     private async Task AssignPermissionsToRoleAsync(IdentityDbContext dbContext, IReadOnlyList<FshPermission> permissions, FshRole role)
     {
-        var currentClaims = await roleManager.GetClaimsAsync(role);
+        var currentClaims = await roleManager.GetClaimsAsync(role).ConfigureAwait(false);
         var newClaims = permissions
             .Where(permission => !currentClaims.Any(c => c.Type == FshClaims.Permission && c.Value == permission.Name))
             .Select(permission => new FshRoleClaim
@@ -83,13 +83,13 @@ internal sealed class IdentityDbInitializer(
         foreach (var claim in newClaims)
         {
             logger.LogInformation("Seeding {Role} Permission '{Permission}' for '{TenantId}' Tenant.", role.Name, claim.ClaimValue, multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id);
-            await dbContext.RoleClaims.AddAsync(claim);
+            await dbContext.RoleClaims.AddAsync(claim).ConfigureAwait(false);
         }
 
         // Save changes to the database context
         if (newClaims.Count != 0)
         {
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
     }
@@ -101,7 +101,7 @@ internal sealed class IdentityDbInitializer(
             return;
         }
 
-        if (await userManager.Users.FirstOrDefaultAsync(u => u.Email == multiTenantContextAccessor.MultiTenantContext.TenantInfo!.AdminEmail)
+        if (await userManager.Users.FirstOrDefaultAsync(u => u.Email == multiTenantContextAccessor.MultiTenantContext.TenantInfo!.AdminEmail).ConfigureAwait(false)
             is not FshUser adminUser)
         {
             string adminUserName = $"{multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id.Trim()}.{FshRoles.Admin}".ToUpperInvariant();
@@ -122,14 +122,14 @@ internal sealed class IdentityDbInitializer(
             logger.LogInformation("Seeding Default Admin User for '{TenantId}' Tenant.", multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id);
             var password = new PasswordHasher<FshUser>();
             adminUser.PasswordHash = password.HashPassword(adminUser, TenantConstants.DefaultPassword);
-            await userManager.CreateAsync(adminUser);
+            await userManager.CreateAsync(adminUser).ConfigureAwait(false);
         }
 
         // Assign role to user
-        if (!await userManager.IsInRoleAsync(adminUser, FshRoles.Admin))
+        if (!await userManager.IsInRoleAsync(adminUser, FshRoles.Admin).ConfigureAwait(false))
         {
             logger.LogInformation("Assigning Admin Role to Admin User for '{TenantId}' Tenant.", multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id);
-            await userManager.AddToRoleAsync(adminUser, FshRoles.Admin);
+            await userManager.AddToRoleAsync(adminUser, FshRoles.Admin).ConfigureAwait(false);
         }
     }
 }

@@ -11,7 +11,7 @@ public static class GetRolePermissionsEndpoint
     {
         return endpoints.MapGet("/{id:guid}/permissions", async (string id, IRoleService roleService, CancellationToken cancellationToken) =>
         {
-            return await roleService.GetWithPermissionsAsync(id, cancellationToken);
+            return await roleService.GetWithPermissionsAsync(id, cancellationToken).ConfigureAwait(false);
         })
         .WithName(nameof(GetRolePermissionsEndpoint))
         .WithSummary("get role permissions")

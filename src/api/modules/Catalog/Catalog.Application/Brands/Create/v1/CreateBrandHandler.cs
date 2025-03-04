@@ -14,7 +14,7 @@ public sealed class CreateBrandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         var brand = Brand.Create(request.Name!, request.Description, request.Notes);
-        await repository.AddAsync(brand, cancellationToken);
+        await repository.AddAsync(brand, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("brand created {BrandId}", brand.Id);
         return new CreateBrandResponse(brand.Id);
     }

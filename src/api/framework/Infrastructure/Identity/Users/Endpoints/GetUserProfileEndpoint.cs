@@ -4,7 +4,7 @@ using FSH.Framework.Core.Identity.Users.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using FSH.Starter.Shared.Authorization;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 public static class GetUserProfileEndpoint
@@ -18,7 +18,7 @@ public static class GetUserProfileEndpoint
                 throw new UnauthorizedException();
             }
 
-            return await service.GetAsync(userId, cancellationToken);
+            return await service.GetAsync(userId, cancellationToken).ConfigureAwait(false);
         })
         .WithName("GetMeEndpoint")
         .WithSummary("Get current user information based on token")

@@ -21,6 +21,7 @@ var api = builder.AddProject<Projects.Server>("webapi");
 
 var blazor = builder.AddProject<Projects.Client>("blazor");
 
-await using var app = builder.Build();
+var app = builder.Build();
+await using var app1 = app.ConfigureAwait(false);
 
-await app.RunAsync();
+await app.RunAsync().ConfigureAwait(false);

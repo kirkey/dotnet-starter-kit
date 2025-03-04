@@ -34,7 +34,7 @@ public static class Extensions
                 {
                     var message = BuildRateLimitResponseMessage(context);
 
-                    await context.HttpContext.Response.WriteAsync(message, cancellationToken: token);
+                    await context.HttpContext.Response.WriteAsync(message, cancellationToken: token).ConfigureAwait(false);
                 };
             });
         }

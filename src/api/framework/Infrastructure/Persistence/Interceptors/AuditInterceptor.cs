@@ -26,8 +26,8 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
     public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
         UpdateEntities(eventData.Context);
-        await PublishAuditTrailsAsync(eventData);
-        return await base.SavingChangesAsync(eventData, result, cancellationToken);
+        await PublishAuditTrailsAsync(eventData).ConfigureAwait(false);
+        return await base.SavingChangesAsync(eventData, result, cancellationToken).ConfigureAwait(false);
     }
 
     private async Task PublishAuditTrailsAsync(DbContextEventData eventData)
@@ -108,7 +108,7 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
         {
             auditTrails.Add(trail.ToAuditTrail());
         }
-        await publisher.Publish(new AuditPublishedEvent(auditTrails));
+        await publisher.Publish(new AuditPublishedEvent(auditTrails)).ConfigureAwait(false);
     }
 
     private void UpdateEntities(DbContext? context)

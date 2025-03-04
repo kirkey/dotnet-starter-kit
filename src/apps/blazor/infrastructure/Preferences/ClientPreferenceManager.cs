@@ -17,10 +17,10 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<bool> ToggleDarkModeAsync()
     {
-        if (await GetPreference() is ClientPreference preference)
+        if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
             preference.IsDarkMode = !preference.IsDarkMode;
-            await SetPreference(preference);
+            await SetPreference(preference).ConfigureAwait(false);
             return !preference.IsDarkMode;
         }
 
@@ -29,10 +29,10 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<bool> ToggleDrawerAsync()
     {
-        if (await GetPreference() is ClientPreference preference)
+        if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
             preference.IsDrawerOpen = !preference.IsDrawerOpen;
-            await SetPreference(preference);
+            await SetPreference(preference).ConfigureAwait(false);
             return preference.IsDrawerOpen;
         }
 
@@ -41,10 +41,10 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<bool> ToggleLayoutDirectionAsync()
     {
-        if (await GetPreference() is ClientPreference preference)
+        if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
             preference.IsRTL = !preference.IsRTL;
-            await SetPreference(preference);
+            await SetPreference(preference).ConfigureAwait(false);
             return preference.IsRTL;
         }
 
@@ -76,7 +76,7 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<MudTheme> GetCurrentThemeAsync()
     {
-        if (await GetPreference() is ClientPreference { IsDarkMode: true })
+        if (await GetPreference().ConfigureAwait(false) is ClientPreference { IsDarkMode: true })
             return new FshTheme();
 
         return new FshTheme();
@@ -84,7 +84,7 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<string> GetPrimaryColorAsync()
     {
-        if (await GetPreference() is ClientPreference preference)
+        if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
             string colorCode = preference.PrimaryColor;
             if (Regex.Match(colorCode, "^#(?:[0-9a-fA-F]{3,4}){1,2}$").Success)
@@ -94,7 +94,7 @@ public class ClientPreferenceManager : IClientPreferenceManager
             else
             {
                 preference.PrimaryColor = CustomColors.Light.Primary;
-                await SetPreference(preference);
+                await SetPreference(preference).ConfigureAwait(false);
                 return preference.PrimaryColor;
             }
         }
@@ -104,7 +104,7 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<bool> IsRTL()
     {
-        if (await GetPreference() is ClientPreference preference)
+        if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
             return preference.IsRTL;
         }
@@ -114,7 +114,7 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<bool> IsDrawerOpen()
     {
-        if (await GetPreference() is ClientPreference preference)
+        if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
             return preference.IsDrawerOpen;
         }
@@ -126,11 +126,11 @@ public class ClientPreferenceManager : IClientPreferenceManager
 
     public async Task<IPreference> GetPreference()
     {
-        return await _localStorageService.GetItemAsync<ClientPreference>(Preference) ?? new ClientPreference();
+        return await _localStorageService.GetItemAsync<ClientPreference>(Preference).ConfigureAwait(false) ?? new ClientPreference();
     }
 
     public async Task SetPreference(IPreference preference)
     {
-        await _localStorageService.SetItemAsync(Preference, preference as ClientPreference);
+        await _localStorageService.SetItemAsync(Preference, preference as ClientPreference).ConfigureAwait(false);
     }
 }

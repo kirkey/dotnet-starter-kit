@@ -14,7 +14,7 @@ public static class UpdateProductEndpoint
             .MapPut("/{id:guid}", async (DefaultIdType id, UpdateProductCommand request, ISender mediator) =>
             {
                 if (id != request.Id) return Results.BadRequest();
-                var response = await mediator.Send(request);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(UpdateProductEndpoint))

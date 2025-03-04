@@ -9,6 +9,6 @@ public class CurrentUserMiddleware(ICurrentUserInitializer currentUserInitialize
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         _currentUserInitializer.SetCurrentUser(context.User);
-        await next(context);
+        await next(context).ConfigureAwait(false);
     }
 }

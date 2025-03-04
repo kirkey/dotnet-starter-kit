@@ -14,10 +14,10 @@ public sealed class UpdateTodoHandler(
     public async Task<UpdateTodoResponse> Handle(UpdateTodoCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var todo = await repository.GetByIdAsync(request.Id, cancellationToken);
+        var todo = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = todo ?? throw new TodoItemNotFoundException(request.Id);
         var updatedTodo = todo.Update(request.Title, request.Note);
-        await repository.UpdateAsync(updatedTodo, cancellationToken);
+        await repository.UpdateAsync(updatedTodo, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("todo item updated {TodoItemId}", updatedTodo.Id);
         return new UpdateTodoResponse(updatedTodo.Id);
     }

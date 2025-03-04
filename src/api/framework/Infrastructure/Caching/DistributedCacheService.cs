@@ -36,7 +36,7 @@ public class DistributedCacheService : ICacheService
     }
 
     public async Task<T?> GetAsync<T>(string key, CancellationToken token = default) =>
-        await GetAsync(key, token) is { } data
+        await GetAsync(key, token).ConfigureAwait(false) is { } data
             ? Deserialize<T>(data)
             : default;
 
@@ -44,7 +44,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            return await _cache.GetAsync(key, token);
+            return await _cache.GetAsync(key, token).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -69,7 +69,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            await _cache.RefreshAsync(key, token);
+            await _cache.RefreshAsync(key, token).ConfigureAwait(false);
             _logger.LogDebug("refreshed cache with key : {Key}", key);
         }
         catch
@@ -94,7 +94,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            await _cache.RemoveAsync(key, token);
+            await _cache.RemoveAsync(key, token).ConfigureAwait(false);
         }
         catch
         {
@@ -125,7 +125,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            await _cache.SetAsync(key, value, GetOptions(slidingExpiration), token);
+            await _cache.SetAsync(key, value, GetOptions(slidingExpiration), token).ConfigureAwait(false);
             _logger.LogDebug("cached data with key : {Key}", key);
         }
         catch

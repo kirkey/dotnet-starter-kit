@@ -7,12 +7,12 @@ using FSH.Framework.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.Persistence.Services;
 using FSH.Framework.Infrastructure.Tenant.Persistence;
 using FSH.Framework.Infrastructure.Tenant.Services;
-using FSH.Starter.Shared.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Tenant;
 internal static class Extensions
@@ -37,9 +37,9 @@ internal static class Extensions
                             .GetService<IEnumerable<IMultiTenantStore<FshTenantInfo>>>()!
                             .FirstOrDefault(s => s.GetType() == typeof(DistributedCacheStore<FshTenantInfo>));
 
-                        await distributedCacheStore!.TryAddAsync(context.MultiTenantContext.TenantInfo!);
+                        await distributedCacheStore!.TryAddAsync(context.MultiTenantContext.TenantInfo!).ConfigureAwait(false);
                     }
-                    await Task.FromResult(0);
+                    await Task.FromResult(0).ConfigureAwait(false);
                 };
             })
             .WithClaimStrategy(FshClaims.Tenant)
@@ -50,7 +50,7 @@ internal static class Extensions
                     return null;
                 if (!httpContext.Request.Query.TryGetValue("tenant", out var tenantIdentifier) || string.IsNullOrEmpty(tenantIdentifier))
                     return null;
-                return await Task.FromResult(tenantIdentifier.ToString());
+                return await Task.FromResult(tenantIdentifier.ToString()).ConfigureAwait(false);
             })
             .WithDistributedCacheStore(TimeSpan.FromMinutes(60))
             .WithEFCoreStore<TenantDbContext, FshTenantInfo>();

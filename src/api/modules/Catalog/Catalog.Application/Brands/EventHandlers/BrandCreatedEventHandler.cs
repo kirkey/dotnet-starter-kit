@@ -10,7 +10,7 @@ public class BrandCreatedEventHandler(ILogger<BrandCreatedEventHandler> logger) 
         CancellationToken cancellationToken)
     {
         logger.LogInformation("handling brand created domain event..");
-        await Task.FromResult(notification);
+        await Task.FromResult(notification).ConfigureAwait(false);
         logger.LogInformation("finished handling brand created domain event..");
     }
 }

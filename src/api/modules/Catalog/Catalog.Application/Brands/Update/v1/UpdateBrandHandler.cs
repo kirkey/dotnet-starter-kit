@@ -14,10 +14,10 @@ public sealed class UpdateBrandHandler(
     public async Task<UpdateBrandResponse> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var brand = await repository.GetByIdAsync(request.Id, cancellationToken);
+        var brand = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = brand ?? throw new BrandNotFoundException(request.Id);
         var updatedBrand = brand.Update(request.Name, request.Description, request.Notes);
-        await repository.UpdateAsync(updatedBrand, cancellationToken);
+        await repository.UpdateAsync(updatedBrand, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("Brand with id : {BrandId} updated.", brand.Id);
         return new UpdateBrandResponse(brand.Id);
     }

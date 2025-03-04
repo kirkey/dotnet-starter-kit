@@ -11,7 +11,7 @@ public static class GetTodoEndpoint
     {
         return endpoints.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
                         {
-                            var response = await mediator.Send(new GetTodoRequest(id));
+                            var response = await mediator.Send(new GetTodoRequest(id)).ConfigureAwait(false);
                             return Results.Ok(response);
                         })
                         .WithName(nameof(GetTodoEndpoint))

@@ -6,7 +6,7 @@ public sealed class CreateTenantHandler(ITenantService service) : IRequestHandle
 {
     public async Task<CreateTenantResponse> Handle(CreateTenantCommand request, CancellationToken cancellationToken)
     {
-        var tenantId = await service.CreateAsync(request, cancellationToken);
+        var tenantId = await service.CreateAsync(request, cancellationToken).ConfigureAwait(false);
         return new CreateTenantResponse(tenantId);
     }
 }

@@ -11,7 +11,7 @@ public static class GetRolesEndpoint
     {
         return endpoints.MapGet("/", async (IRoleService roleService) =>
         {
-            return await roleService.GetRolesAsync();
+            return await roleService.GetRolesAsync().ConfigureAwait(false);
         })
         .WithName(nameof(GetRolesEndpoint))
         .WithSummary("Get a list of all roles")

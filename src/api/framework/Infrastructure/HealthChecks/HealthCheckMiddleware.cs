@@ -15,7 +15,7 @@ public class HealthCheckMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var report = await _healthCheckService.CheckHealthAsync();
+        var report = await _healthCheckService.CheckHealthAsync().ConfigureAwait(false);
 
         var response = new
         {
@@ -30,7 +30,7 @@ public class HealthCheckMiddleware
         };
 
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+        await context.Response.WriteAsync(JsonSerializer.Serialize(response)).ConfigureAwait(false);
     }
 }
 

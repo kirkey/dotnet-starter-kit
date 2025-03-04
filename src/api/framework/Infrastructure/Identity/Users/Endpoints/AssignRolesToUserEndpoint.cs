@@ -16,7 +16,7 @@ public static class AssignRolesToUserEndpoint
             CancellationToken cancellationToken) =>
         {
 
-            var message = await userService.AssignRolesAsync(id, command, cancellationToken);
+            var message = await userService.AssignRolesAsync(id, command, cancellationToken).ConfigureAwait(false);
             return Results.Ok(message);
         })
         .WithName(nameof(AssignRolesToUserEndpoint))

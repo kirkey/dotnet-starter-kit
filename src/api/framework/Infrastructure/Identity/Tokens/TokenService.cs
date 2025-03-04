@@ -13,11 +13,11 @@ using FSH.Framework.Infrastructure.Auth.Jwt;
 using FSH.Framework.Infrastructure.Identity.Audit;
 using FSH.Framework.Infrastructure.Identity.Users;
 using FSH.Framework.Infrastructure.Tenant;
-using FSH.Starter.Shared.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Tokens;
 public sealed class TokenService(
@@ -35,8 +35,8 @@ public sealed class TokenService(
         var currentTenant = multiTenantContextAccessor!.MultiTenantContext.TenantInfo;
         if (currentTenant == null) throw new UnauthorizedException();
         if (string.IsNullOrWhiteSpace(currentTenant.Id)
-           || await _userManager.FindByEmailAsync(request.Email.Trim().Normalize()) is not { } user
-           || !await _userManager.CheckPasswordAsync(user, request.Password))
+           || await _userManager.FindByEmailAsync(request.Email.Trim().Normalize()).ConfigureAwait(false) is not { } user
+           || !await _userManager.CheckPasswordAsync(user, request.Password).ConfigureAwait(false))
         {
             throw new UnauthorizedException();
         }
@@ -64,7 +64,7 @@ public sealed class TokenService(
             }
         }
 
-        return await GenerateTokensAndUpdateUser(user, ipAddress, deviceType);
+        return await GenerateTokensAndUpdateUser(user, ipAddress, deviceType).ConfigureAwait(false);
     }
 
 
@@ -72,7 +72,7 @@ public sealed class TokenService(
     {
         var userPrincipal = GetPrincipalFromExpiredToken(request.Token);
         var userId = _userManager.GetUserId(userPrincipal)!;
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await _userManager.FindByIdAsync(userId).ConfigureAwait(false);
         if (user is null)
         {
             throw new UnauthorizedException();
@@ -83,7 +83,7 @@ public sealed class TokenService(
             throw new UnauthorizedException("Invalid Refresh Token");
         }
 
-        return await GenerateTokensAndUpdateUser(user, ipAddress, deviceType);
+        return await GenerateTokensAndUpdateUser(user, ipAddress, deviceType).ConfigureAwait(false);
     }
     private async Task<TokenResponse> GenerateTokensAndUpdateUser(FshUser user, string ipAddress, string? deviceType = null)
     {
@@ -95,7 +95,7 @@ public sealed class TokenService(
         user.LastLoginIp = ipAddress;
         user.LastLoginDeviceType = deviceType;
 
-        await _userManager.UpdateAsync(user);
+        await _userManager.UpdateAsync(user).ConfigureAwait(false);
 
         await publisher.Publish(new AuditPublishedEvent(new()
         {
@@ -107,7 +107,7 @@ public sealed class TokenService(
                 UserId = new DefaultIdType(user.Id),
                 DateTime = DateTime.UtcNow,
             }
-        }));
+        })).ConfigureAwait(false);
 
         return new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
     }

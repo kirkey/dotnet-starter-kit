@@ -12,8 +12,8 @@ public class AuditPublishedEventHandler(ILogger<AuditPublishedEventHandler> logg
         logger.LogInformation("received audit trails");
         try
         {
-            await context.Set<AuditTrail>().AddRangeAsync(notification.Trails!, default);
-            await context.SaveChangesAsync(default);
+            await context.Set<AuditTrail>().AddRangeAsync(notification.Trails!, default).ConfigureAwait(false);
+            await context.SaveChangesAsync(default).ConfigureAwait(false);
         }
         catch
         {

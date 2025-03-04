@@ -18,12 +18,12 @@ public sealed class GetBrandHandler(
             $"brand:{request.Id}",
             async () =>
             {
-                var brandItem = await repository.GetByIdAsync(request.Id, cancellationToken);
+                var brandItem = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 return brandItem == null
                     ? throw new BrandNotFoundException(request.Id)
                     : new BrandResponse(brandItem.Id, brandItem.Name, brandItem.Description, brandItem.Notes);
             },
-            cancellationToken: cancellationToken);
+            cancellationToken: cancellationToken).ConfigureAwait(false);
         return item!;
     }
 }

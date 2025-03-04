@@ -14,7 +14,7 @@ public static class UpdateBrandEndpoint
             .MapPut("/{id:guid}", async (DefaultIdType id, UpdateBrandCommand request, ISender mediator) =>
             {
                 if (id != request.Id) return Results.BadRequest();
-                var response = await mediator.Send(request);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(UpdateBrandEndpoint))

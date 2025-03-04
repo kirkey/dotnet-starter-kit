@@ -3,11 +3,11 @@ using FluentValidation.Results;
 using FSH.Framework.Core.Identity.Users.Abstractions;
 using FSH.Framework.Core.Identity.Users.Features.ChangePassword;
 using FSH.Framework.Core.Origin;
-using FSH.Starter.Shared.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 public static class ChangePasswordEndpoint
@@ -21,7 +21,7 @@ public static class ChangePasswordEndpoint
             IUserService userService,
             CancellationToken cancellationToken) =>
         {
-            ValidationResult result = await validator.ValidateAsync(command, cancellationToken);
+            ValidationResult result = await validator.ValidateAsync(command, cancellationToken).ConfigureAwait(false);
             if (!result.IsValid)
             {
                 return Results.ValidationProblem(result.ToDictionary());
@@ -32,7 +32,7 @@ public static class ChangePasswordEndpoint
                 return Results.BadRequest();
             }
 
-            await userService.ChangePasswordAsync(command, userId);
+            await userService.ChangePasswordAsync(command, userId).ConfigureAwait(false);
             return Results.Ok("password reset email sent");
         })
         .WithName(nameof(ChangePasswordEndpoint))

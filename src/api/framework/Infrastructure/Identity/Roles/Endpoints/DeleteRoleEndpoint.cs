@@ -12,7 +12,7 @@ public static class DeleteRoleEndpoint
     {
         return endpoints.MapDelete("/{id:guid}", async (string id, IRoleService roleService) =>
         {
-            await roleService.DeleteRoleAsync(id);
+            await roleService.DeleteRoleAsync(id).ConfigureAwait(false);
         })
         .WithName(nameof(DeleteRoleEndpoint))
         .WithSummary("Delete a role by ID")

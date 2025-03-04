@@ -14,7 +14,7 @@ public static class GetTodoListEndpoint
     {
         return endpoints.MapPost("/search", async (ISender mediator, [FromBody] PaginationFilter filter) =>
         {
-            var response = await mediator.Send(new GetTodoListRequest(filter));
+            var response = await mediator.Send(new GetTodoListRequest(filter)).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(nameof(GetTodoListEndpoint))

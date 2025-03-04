@@ -15,7 +15,7 @@ try
 
     app.UseFshFramework();
     app.UseModules();
-    await app.RunAsync();
+    await app.RunAsync().ConfigureAwait(false);
 }
 catch (Exception ex) when (!ex.GetType().Name.Equals("HostAbortedException", StringComparison.Ordinal))
 {
@@ -26,5 +26,5 @@ finally
 {
     StaticLogger.EnsureInitialized();
     Log.Information("server shutting down..");
-    await Log.CloseAndFlushAsync();
+    await Log.CloseAndFlushAsync().ConfigureAwait(false);
 }

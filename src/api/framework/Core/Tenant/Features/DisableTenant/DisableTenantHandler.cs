@@ -6,7 +6,7 @@ public sealed class DisableTenantHandler(ITenantService service) : IRequestHandl
 {
     public async Task<DisableTenantResponse> Handle(DisableTenantCommand request, CancellationToken cancellationToken)
     {
-        var status = await service.DeactivateAsync(request.TenantId);
+        var status = await service.DeactivateAsync(request.TenantId).ConfigureAwait(false);
         return new DisableTenantResponse(status);
     }
 }

@@ -6,7 +6,7 @@ public sealed class ActivateTenantHandler(ITenantService service) : IRequestHand
 {
     public async Task<ActivateTenantResponse> Handle(ActivateTenantCommand request, CancellationToken cancellationToken)
     {
-        var status = await service.ActivateAsync(request.TenantId, cancellationToken);
+        var status = await service.ActivateAsync(request.TenantId, cancellationToken).ConfigureAwait(false);
         return new ActivateTenantResponse(status);
     }
 }

@@ -7,6 +7,6 @@ public sealed class GetTenantByIdHandler(ITenantService service) : IRequestHandl
 {
     public async Task<TenantDetail> Handle(GetTenantByIdQuery request, CancellationToken cancellationToken)
     {
-        return await service.GetByIdAsync(request.TenantId);
+        return await service.GetByIdAsync(request.TenantId).ConfigureAwait(false);
     }
 }

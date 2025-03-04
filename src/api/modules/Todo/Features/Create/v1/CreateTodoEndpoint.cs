@@ -12,7 +12,7 @@ public static class CreateTodoEndpoint
     {
         return endpoints.MapPost("/", async (CreateTodoCommand request, ISender mediator) =>
                 {
-                    var response = await mediator.Send(request);
+                    var response = await mediator.Send(request).ConfigureAwait(false);
                     return Results.CreatedAtRoute(nameof(CreateTodoEndpoint), new { id = response.Id }, response);
                 })
                 .WithName(nameof(CreateTodoEndpoint))

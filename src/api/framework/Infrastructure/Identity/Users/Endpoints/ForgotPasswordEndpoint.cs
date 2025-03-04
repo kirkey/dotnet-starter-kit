@@ -3,12 +3,12 @@ using FluentValidation.Results;
 using FSH.Framework.Core.Identity.Users.Abstractions;
 using FSH.Framework.Core.Identity.Users.Features.ForgotPassword;
 using FSH.Framework.Core.Origin;
-using FSH.Starter.Shared.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
+using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 
@@ -18,7 +18,7 @@ public static class ForgotPasswordEndpoint
     {
         return endpoints.MapPost("/forgot-password", async (HttpRequest request, [FromHeader(Name = TenantConstants.Identifier)] string tenant, ForgotPasswordCommand command, IOptions<OriginOptions> settings, IValidator<ForgotPasswordCommand> validator, IUserService userService, CancellationToken cancellationToken) =>
         {
-            ValidationResult result = await validator.ValidateAsync(command, cancellationToken);
+            ValidationResult result = await validator.ValidateAsync(command, cancellationToken).ConfigureAwait(false);
             if (!result.IsValid)
             {
                 return Results.ValidationProblem(result.ToDictionary());
@@ -33,7 +33,7 @@ public static class ForgotPasswordEndpoint
                 return Results.BadRequest("Origin URL is not configured.");
             }
 
-            await userService.ForgotPasswordAsync(command, origin.OriginUrl.ToString(), cancellationToken);
+            await userService.ForgotPasswordAsync(command, origin.OriginUrl.ToString(), cancellationToken).ConfigureAwait(false);
             return Results.Ok("Password reset email sent.");
         })
         .WithName(nameof(ForgotPasswordEndpoint))

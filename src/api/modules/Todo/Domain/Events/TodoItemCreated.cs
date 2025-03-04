@@ -17,6 +17,6 @@ public class TodoItemCreatedEventHandler(
     {
         logger.LogInformation("handling todo item created domain event..");
         var cacheResponse = new GetTodoResponse(notification.Id, notification.Title, notification.Note);
-        await cache.SetAsync($"todo:{notification.Id}", cacheResponse, cancellationToken: cancellationToken);
+        await cache.SetAsync($"todo:{notification.Id}", cacheResponse, cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

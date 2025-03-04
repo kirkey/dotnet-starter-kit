@@ -8,10 +8,10 @@ public class AuditService(IdentityDbContext context) : IAuditService
     public async Task<List<AuditTrail>> GetUserTrailsAsync(DefaultIdType userId)
     {
         var trails = await context.AuditTrails
-           .Where(a => a.UserId == userId)
-           .OrderByDescending(a => a.DateTime)
-           .Take(250)
-           .ToListAsync();
+            .Where(a => a.UserId == userId)
+            .OrderByDescending(a => a.DateTime)
+            .Take(250)
+            .ToListAsync().ConfigureAwait(false);
         return trails;
     }
 }

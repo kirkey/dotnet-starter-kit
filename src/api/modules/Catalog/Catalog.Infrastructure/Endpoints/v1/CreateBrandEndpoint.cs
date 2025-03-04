@@ -13,7 +13,7 @@ public static class CreateBrandEndpoint
         return endpoints
             .MapPost("/", async (CreateBrandCommand request, ISender mediator) =>
             {
-                var response = await mediator.Send(request);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(CreateBrandEndpoint))

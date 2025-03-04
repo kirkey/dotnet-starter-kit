@@ -19,7 +19,7 @@ public class JwtAuthenticationHeaderHandler : DelegatingHandler
         // skip token endpoints
         if (request.RequestUri?.AbsolutePath.Contains("/token") is not true)
         {
-            if (await _tokenProviderAccessor.TokenProvider.GetAccessTokenAsync() is string token)
+            if (await _tokenProviderAccessor.TokenProvider.GetAccessTokenAsync().ConfigureAwait(false) is string token)
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
@@ -29,6 +29,6 @@ public class JwtAuthenticationHeaderHandler : DelegatingHandler
             }
         }
 
-        return await base.SendAsync(request, cancellationToken);
+        return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
     }
 }

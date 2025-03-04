@@ -14,7 +14,7 @@ public sealed class CreateProductHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         var product = Product.Create(request.Name!, request.Description, request.Price, request.BrandId);
-        await repository.AddAsync(product, cancellationToken);
+        await repository.AddAsync(product, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("product created {ProductId}", product.Id);
         return new CreateProductResponse(product.Id);
     }

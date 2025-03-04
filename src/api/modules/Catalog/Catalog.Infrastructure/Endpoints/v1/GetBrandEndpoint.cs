@@ -13,7 +13,7 @@ public static class GetBrandEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetBrandRequest(id));
+                var response = await mediator.Send(new GetBrandRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GetBrandEndpoint))

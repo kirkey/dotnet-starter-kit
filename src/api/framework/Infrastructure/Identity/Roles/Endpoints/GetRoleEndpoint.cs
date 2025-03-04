@@ -12,7 +12,7 @@ public static class GetRoleByIdEndpoint
     {
         return endpoints.MapGet("/{id:guid}", async (string id, IRoleService roleService) =>
         {
-            return await roleService.GetRoleAsync(id);
+            return await roleService.GetRoleAsync(id).ConfigureAwait(false);
         })
         .WithName(nameof(GetRoleByIdEndpoint))
         .WithSummary("Get role details by ID")

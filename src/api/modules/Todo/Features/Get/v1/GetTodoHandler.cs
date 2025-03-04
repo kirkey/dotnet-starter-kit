@@ -18,11 +18,11 @@ public sealed class GetTodoHandler(
             $"todo:{request.Id}",
             async () =>
             {
-                var todoItem = await repository.GetByIdAsync(request.Id, cancellationToken);
+                var todoItem = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (todoItem == null) throw new TodoItemNotFoundException(request.Id);
                 return new GetTodoResponse(todoItem.Id, todoItem.Title, todoItem.Note);
             },
-            cancellationToken: cancellationToken);
+            cancellationToken: cancellationToken).ConfigureAwait(false);
         return item!;
     }
 }

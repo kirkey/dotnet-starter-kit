@@ -64,8 +64,6 @@ public static class Extensions
             .AddAttributes(attributes);
 
         #endregion region
-
-
         builder.Logging.AddOpenTelemetry(logging =>
         {
             logging.IncludeFormattedMessage = true;

@@ -14,10 +14,10 @@ public sealed class UpdateProductHandler(
     public async Task<UpdateProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var product = await repository.GetByIdAsync(request.Id, cancellationToken);
+        var product = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = product ?? throw new ProductNotFoundException(request.Id);
         var updatedProduct = product.Update(request.Name, request.Description, request.Price, request.BrandId);
-        await repository.UpdateAsync(updatedProduct, cancellationToken);
+        await repository.UpdateAsync(updatedProduct, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("product with id : {ProductId} updated.", product.Id);
         return new UpdateProductResponse(product.Id);
     }

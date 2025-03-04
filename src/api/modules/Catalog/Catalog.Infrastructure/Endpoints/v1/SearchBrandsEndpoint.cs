@@ -17,7 +17,7 @@ public static class SearchBrandsEndpoint
         return endpoints
             .MapPost("/search", async (ISender mediator, [FromBody] SearchBrandsCommand command) =>
             {
-                var response = await mediator.Send(command);
+                var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchBrandsEndpoint))

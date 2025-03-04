@@ -19,7 +19,7 @@ public static class UpdateRolePermissionsEndpoint
             [FromServices] IValidator<UpdatePermissionsCommand> validator) =>
         {
             if (id != request.RoleId) return Results.BadRequest();
-            var response = await roleService.UpdatePermissionsAsync(request);
+            var response = await roleService.UpdatePermissionsAsync(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(nameof(UpdateRolePermissionsEndpoint))
