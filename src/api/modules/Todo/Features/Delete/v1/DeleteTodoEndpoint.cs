@@ -22,6 +22,5 @@ public static class DeleteTodoEndpoint
             .Produces(StatusCodes.Status204NoContent)
             .RequirePermission("Permissions.Todos.Delete")
             .MapToApiVersion(new ApiVersion(1, 0));
-
     }
 }

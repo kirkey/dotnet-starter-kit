@@ -11,7 +11,7 @@ public static class GetBrandEndpoint
     internal static RouteHandlerBuilder MapGetBrandEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetBrandRequest(id));
                 return Results.Ok(response);

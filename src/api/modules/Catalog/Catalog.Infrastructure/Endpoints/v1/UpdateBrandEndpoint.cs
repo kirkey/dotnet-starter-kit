@@ -11,7 +11,7 @@ public static class UpdateBrandEndpoint
     internal static RouteHandlerBuilder MapBrandUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (Guid id, UpdateBrandCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateBrandCommand request, ISender mediator) =>
             {
                 if (id != request.Id) return Results.BadRequest();
                 var response = await mediator.Send(request);

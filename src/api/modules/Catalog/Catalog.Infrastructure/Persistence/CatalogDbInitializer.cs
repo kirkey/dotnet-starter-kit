@@ -22,7 +22,7 @@ internal sealed class CatalogDbInitializer(
         const string Name = "Keychron V6 QMK Custom Wired Mechanical Keyboard";
         const string Description = "A full-size layout QMK/VIA custom mechanical keyboard";
         const decimal Price = 79;
-        Guid? BrandId = null;
+        DefaultIdType? BrandId = null;
         if (await context.Products.FirstOrDefaultAsync(t => t.Name == Name, cancellationToken).ConfigureAwait(false) is null)
         {
             var product = Product.Create(Name, Description, Price, BrandId);

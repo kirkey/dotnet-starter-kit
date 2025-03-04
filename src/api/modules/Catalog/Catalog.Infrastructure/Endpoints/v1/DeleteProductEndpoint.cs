@@ -11,7 +11,7 @@ public static class DeleteProductEndpoint
     internal static RouteHandlerBuilder MapProductDeleteEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapDelete("/{id:guid}", async (Guid id, ISender mediator) =>
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
              {
                  await mediator.Send(new DeleteProductCommand(id));
                  return Results.NoContent();
