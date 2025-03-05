@@ -22,6 +22,7 @@ public partial class NavMenu
     private bool _canViewTodos;
     private bool _canViewTenants;
     private bool _canViewAuditTrails;
+
     private bool CanViewAdministrationGroup => _canViewUsers || _canViewRoles || _canViewTenants;
 
     protected override async Task OnParametersSetAsync()
