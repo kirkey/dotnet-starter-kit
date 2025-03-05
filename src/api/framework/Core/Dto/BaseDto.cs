@@ -3,7 +3,7 @@ namespace FSH.Framework.Core.Dto;
 public record BaseDto<TId>
 {
     public TId Id { get; protected init; } = default!;
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public string? Notes { get; set; }
     public string? Remarks { get; set; }
