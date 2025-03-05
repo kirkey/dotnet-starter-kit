@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Accounting.Infrastructure;
 using Asp.Versioning.Conventions;
 using Carter;
 using FluentValidation;
@@ -33,12 +34,14 @@ public static class Extensions
         //register module services
         builder.RegisterCatalogServices();
         builder.RegisterTodoServices();
+        builder.RegisterAccountingServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
+            config.WithModule<AccountingModule.Endpoints>();
         });
 
         return builder;
