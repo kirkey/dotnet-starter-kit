@@ -30,7 +30,7 @@ internal sealed partial class UserService
 
         var resetPasswordUri = $"{origin}/reset-password?token={token}&email={request.Email}";
         var mailRequest = new MailRequest(
-            new Collection<string> { user.Email },
+            [user.Email],
             "Reset Password",
             $"Please reset your password using the following link: {resetPasswordUri}");
 

@@ -99,8 +99,7 @@ public sealed class TokenService(
 
         await _userManager.UpdateAsync(user).ConfigureAwait(false);
 
-        await publisher.Publish(new AuditPublishedEvent(new Collection<AuditTrail>
-        {
+        await publisher.Publish(new AuditPublishedEvent([
             new()
             {
                 Id = DefaultIdType.NewGuid(),
@@ -109,7 +108,7 @@ public sealed class TokenService(
                 UserId = new DefaultIdType(user.Id),
                 DateTime = DateTime.UtcNow,
             }
-        })).ConfigureAwait(false);
+        ])).ConfigureAwait(false);
 
         return new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
     }
@@ -137,19 +136,18 @@ public sealed class TokenService(
     }
 
     private List<Claim> GetClaims(FshUser user, string ipAddress) =>
-        new List<Claim>
-        {
-            new(JwtRegisteredClaimNames.Jti, DefaultIdType.NewGuid().ToString()),
-            new(ClaimTypes.NameIdentifier, user.Id),
-            new(ClaimTypes.Email, user.Email!),
-            new(ClaimTypes.Name, user.FirstName ?? string.Empty),
-            new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
-            new(FshClaims.Fullname, $"{user.FirstName} {user.LastName}"),
-            new(ClaimTypes.Surname, user.LastName ?? string.Empty),
-            new(FshClaims.IpAddress, ipAddress),
-            new(FshClaims.Tenant, multiTenantContextAccessor!.MultiTenantContext.TenantInfo!.Id),
-            new(FshClaims.ImageUrl, user.ImageUrl == null ? string.Empty : user.ImageUrl.ToString())
-        };
+    [
+        new(JwtRegisteredClaimNames.Jti, DefaultIdType.NewGuid().ToString()),
+        new(ClaimTypes.NameIdentifier, user.Id),
+        new(ClaimTypes.Email, user.Email!),
+        new(ClaimTypes.Name, user.FirstName ?? string.Empty),
+        new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
+        new(FshClaims.Fullname, $"{user.FirstName} {user.LastName}"),
+        new(ClaimTypes.Surname, user.LastName ?? string.Empty),
+        new(FshClaims.IpAddress, ipAddress),
+        new(FshClaims.Tenant, multiTenantContextAccessor!.MultiTenantContext.TenantInfo!.Id),
+        new(FshClaims.ImageUrl, user.ImageUrl == null ? string.Empty : user.ImageUrl.ToString())
+    ];
     private static string GenerateRefreshToken()
     {
         byte[] randomNumber = new byte[32];

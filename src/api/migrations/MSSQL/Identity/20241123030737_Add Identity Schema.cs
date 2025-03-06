@@ -219,7 +219,7 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Identity
                 name: "RoleNameIndex",
                 schema: "identity",
                 table: "Roles",
-                columns: new[] { "NormalizedName", "TenantId" },
+                columns: ["NormalizedName", "TenantId"],
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
 

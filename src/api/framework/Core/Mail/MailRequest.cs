@@ -17,9 +17,9 @@ public class MailRequest(Collection<string> to, string subject, string? body = n
 
     public string? ReplyToName { get; } = replyToName;
 
-    public Collection<string> Bcc { get; } = bcc ?? new Collection<string>();
+    public Collection<string> Bcc { get; } = bcc ?? [];
 
-    public Collection<string> Cc { get; } = cc ?? new Collection<string>();
+    public Collection<string> Cc { get; } = cc ?? [];
 
     public IDictionary<string, byte[]> AttachmentData { get; } = attachmentData ?? new Dictionary<string, byte[]>();
 

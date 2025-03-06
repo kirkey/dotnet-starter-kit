@@ -20,7 +20,7 @@ internal static class Extensions
         services.AddHangfireServer(o =>
         {
             o.HeartbeatInterval = TimeSpan.FromSeconds(30);
-            o.Queues = new[] { "default", "email" };
+            o.Queues = ["default", "email"];
             o.WorkerCount = 5;
             o.SchedulePollingInterval = TimeSpan.FromSeconds(30);
         });
@@ -31,9 +31,7 @@ internal static class Extensions
             {
                 case DbProviders.PostgreSQL:
                     config.UsePostgreSqlStorage(o =>
-                    {
-                        o.UseNpgsqlConnection(dbOptions.ConnectionString);
-                    });
+                        o.UseNpgsqlConnection(dbOptions.ConnectionString));
                     break;
 
                 case DbProviders.MSSQL:
@@ -55,15 +53,16 @@ internal static class Extensions
     internal static IApplicationBuilder UseJobDashboard(this IApplicationBuilder app, IConfiguration config)
     {
         var hangfireOptions = config.GetSection(nameof(HangfireOptions)).Get<HangfireOptions>() ?? new HangfireOptions();
-        var dashboardOptions = new DashboardOptions();
-        dashboardOptions.AppPath = "https://fullstackhero.net/";
-        dashboardOptions.Authorization = new[]
-        {
-           new HangfireCustomBasicAuthenticationFilter
-           {
-                User = hangfireOptions.UserName,
-                Pass = hangfireOptions.Password
-           }
+        var dashboardOptions = new DashboardOptions 
+        { 
+            AppPath = "https://fullstackhero.net/",
+            Authorization = [
+                new HangfireCustomBasicAuthenticationFilter
+                {
+                    User = hangfireOptions.UserName,
+                    Pass = hangfireOptions.Password
+                }
+            ]
         };
 
         return app.UseHangfireDashboard(hangfireOptions.Route, dashboardOptions);

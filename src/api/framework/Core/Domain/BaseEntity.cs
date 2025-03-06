@@ -9,7 +9,7 @@ public abstract class BaseEntity<TId> : IEntity<TId>
 {
     public TId Id { get; protected init; } = default!;
     [NotMapped]
-    public Collection<DomainEvent> DomainEvents { get; } = new Collection<DomainEvent>();
+    public Collection<DomainEvent> DomainEvents { get; } = [];
 
     protected void QueueDomainEvent(DomainEvent @event)
     {
