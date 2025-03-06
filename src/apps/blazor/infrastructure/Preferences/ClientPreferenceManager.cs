@@ -38,9 +38,9 @@ public class ClientPreferenceManager(
     {
         if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
-            preference.IsRTL = !preference.IsRTL;
+            preference.IsRtl = !preference.IsRtl;
             await SetPreference(preference).ConfigureAwait(false);
-            return preference.IsRTL;
+            return preference.IsRtl;
         }
 
         return false;
@@ -101,7 +101,7 @@ public class ClientPreferenceManager(
     {
         if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
         {
-            return preference.IsRTL;
+            return preference.IsRtl;
         }
 
         return false;
@@ -117,7 +117,7 @@ public class ClientPreferenceManager(
         return false;
     }
 
-    public static string Preference = "clientPreference";
+    public static readonly string Preference = "clientPreference";
 
     public async Task<IPreference> GetPreference()
     {

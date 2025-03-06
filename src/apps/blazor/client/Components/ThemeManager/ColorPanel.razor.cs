@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Components.ThemeManager;
 public partial class ColorPanel
 {
     [Parameter]
-    public List<string> Colors { get; set; } = new();
+    public List<string> Colors { get; set; } = [];
 
     [Parameter]
     public string ColorType { get; set; } = string.Empty;

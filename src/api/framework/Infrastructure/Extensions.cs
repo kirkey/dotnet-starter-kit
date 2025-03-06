@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Asp.Versioning.Conventions;
+﻿using Asp.Versioning.Conventions;
 using FluentValidation;
 using FSH.Framework.Core;
 using FSH.Framework.Core.Origin;
@@ -23,9 +22,7 @@ using FSH.Framework.Infrastructure.Tenant.Endpoints;
 using FSH.Starter.Aspire.ServiceDefaults;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 
 namespace FSH.Framework.Infrastructure;
 
@@ -52,7 +49,7 @@ public static class Extensions
         builder.Services.AddOptions<OriginOptions>().BindConfiguration(nameof(OriginOptions));
 
         // Define module assemblies
-        var assemblies = new Assembly[]
+        var assemblies = new[]
         {
             typeof(FshCore).Assembly,
             typeof(FshInfrastructure).Assembly
@@ -62,10 +59,10 @@ public static class Extensions
         builder.Services.AddValidatorsFromAssemblies(assemblies);
 
         // Register MediatR
-        builder.Services.AddMediatR(cfg =>
+        builder.Services.AddMediatR(configuration =>
         {
-            cfg.RegisterServicesFromAssemblies(assemblies);
-            cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            configuration.RegisterServicesFromAssemblies(assemblies);
+            configuration.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         });
 
         builder.Services.ConfigureRateLimit(builder.Configuration);

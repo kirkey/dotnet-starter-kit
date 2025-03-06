@@ -16,16 +16,16 @@ public partial class Brands
     private EntityTable<BrandResponse, DefaultIdType, BrandViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new(
+        Context = new EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel>(
             entityName: "Brand",
             entityNamePlural: "Brands",
             entityResource: FshResources.Brands,
-            fields: new()
-            {
-                new(brand => brand.Id, "Id", "Id"),
-                new(brand => brand.Name, "Name", "Name"),
-                new(brand => brand.Description, "Description", "Description")
-            },
+            fields:
+            [
+                new EntityField<BrandResponse>(brand => brand.Id, "Id", "Id"),
+                new EntityField<BrandResponse>(brand => brand.Name, "Name", "Name"),
+                new EntityField<BrandResponse>(brand => brand.Description, "Description", "Description")
+            ],
             enableAdvancedSearch: true,
             idFunc: brand => brand.Id!.Value,
             searchFunc: async filter =>

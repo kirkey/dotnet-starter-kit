@@ -9,8 +9,8 @@ public sealed class UserInfo
     public required string UserId { get; init; }
     public required string Name { get; init; }
 
-    public const string UserIdClaimType = "sub";
-    public const string NameClaimType = "name";
+    private const string UserIdClaimType = "sub";
+    private const string NameClaimType = "name";
 
     public static UserInfo FromClaimsPrincipal(ClaimsPrincipal principal) =>
         new()
@@ -21,7 +21,7 @@ public sealed class UserInfo
 
     public ClaimsPrincipal ToClaimsPrincipal() =>
         new(new ClaimsIdentity(
-            [new(UserIdClaimType, UserId), new(NameClaimType, Name)],
+            [new Claim(UserIdClaimType, UserId), new Claim(NameClaimType, Name)],
             authenticationType: nameof(UserInfo),
             nameType: NameClaimType,
             roleType: null));

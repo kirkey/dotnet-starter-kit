@@ -56,6 +56,6 @@ public partial class BaseLayout
         _currentTheme.PaletteDark.Secondary = themePreference.SecondaryColor;
         _currentTheme.LayoutProperties.DefaultBorderRadius = $"{themePreference.BorderRadius}px";
         _currentTheme.LayoutProperties.DefaultBorderRadius = $"{themePreference.BorderRadius}px";
-        _rightToLeft = themePreference.IsRTL;
+        _rightToLeft = themePreference.IsRtl;
     }
 }

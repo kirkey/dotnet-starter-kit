@@ -6163,7 +6163,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
-
+        
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
@@ -6199,10 +6199,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
         public string? LastModifiedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("type")]
-        public Category Type { get; set; } = default!;
-
+        
+        [System.Text.Json.Serialization.JsonPropertyName("category")]
+        public string? Category { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("transactionType")]
+        public string? TransactionType { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
+        public string? ParentCode { get; set; } = default!;
+        
         [System.Text.Json.Serialization.JsonPropertyName("code")]
         public string? Code { get; set; } = default!;
 

@@ -164,8 +164,8 @@ public partial class EntityTable<TEntity, TId, TRequest>
         if (!string.IsNullOrEmpty(state.SortLabel))
         {
             orderings = state.SortDirection == SortDirection.None
-                ? new[] { $"{state.SortLabel}" }
-                : new[] { $"{state.SortLabel} {state.SortDirection}" };
+                ? [$"{state.SortLabel}"]
+                : [$"{state.SortLabel} {state.SortDirection}"];
         }
 
         var filter = new PaginationFilter
@@ -173,12 +173,12 @@ public partial class EntityTable<TEntity, TId, TRequest>
             PageSize = state.PageSize,
             PageNumber = state.Page + 1,
             Keyword = SearchString,
-            OrderBy = orderings ?? Array.Empty<string>()
+            OrderBy = orderings ?? []
         };
 
         if (!Context.AllColumnsChecked)
         {
-            filter.AdvancedSearch = new()
+            filter.AdvancedSearch = new Search
             {
                 Fields = Context.SearchFields,
                 Keyword = filter.Keyword

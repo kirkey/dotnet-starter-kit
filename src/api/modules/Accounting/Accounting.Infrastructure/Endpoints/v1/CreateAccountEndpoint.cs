@@ -21,7 +21,7 @@ public static class CreateAccountEndpoint
             .WithSummary("creates an account")
             .WithDescription("creates an account")
             .Produces<CreateAccountResponse>()
-            .RequirePermission("Permissions.Accounts.Create")
+            .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }
 }

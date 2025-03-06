@@ -22,7 +22,7 @@ public class TrailDto
 
     public AuditTrail ToAuditTrail()
     {
-        return new()
+        return new AuditTrail
         {
             Id = DefaultIdType.NewGuid(),
             UserId = UserId,

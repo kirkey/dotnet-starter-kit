@@ -57,6 +57,14 @@ public static class FshPermissions
 
         //audit
         new("View Audit Trails", FshActions.View, FshResources.AuditTrails),
+        
+        //Accounting
+        new("View Todos", FshActions.View, FshResources.Accounting),
+        new("Search Todos", FshActions.Search, FshResources.Accounting),
+        new("Create Todos", FshActions.Create, FshResources.Accounting),
+        new("Update Todos", FshActions.Update, FshResources.Accounting),
+        new("Delete Todos", FshActions.Delete, FshResources.Accounting),
+        new("Export Todos", FshActions.Export, FshResources.Accounting),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);

@@ -21,7 +21,7 @@ public sealed class GetAccountHandler(
                 var account = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 return account == null
                     ? throw new AccountNotFoundException(request.Id)
-                    : new AccountResponse(account.Category, account.Code, account.Balance);
+                    : new AccountResponse(account.Category, account.TransactionType, account.ParentCode, account.Code, account.Balance);
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
         return item!;

@@ -3,11 +3,10 @@ public static class StorageConstants
 {
     public static class Local
     {
-        public static string Preference = "clientPreference";
-
-        public static string AuthToken = "authToken";
-        public static string RefreshToken = "refreshToken";
-        public static string ImageUri = "userImageURL";
-        public static string Permissions = "permissions";
+        public const string Preference = "clientPreference";
+        public const string AuthToken = "authToken";
+        public const string RefreshToken = "refreshToken";
+        public const string ImageUri = "userImageURL";
+        public const string Permissions = "permissions";
     }
 }

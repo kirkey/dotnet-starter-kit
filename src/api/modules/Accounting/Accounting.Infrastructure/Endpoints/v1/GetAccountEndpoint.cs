@@ -21,7 +21,7 @@ public static class GetAccountEndpoint
             .WithSummary("gets an account by id")
             .WithDescription("gets an account by id")
             .Produces<AccountResponse>()
-            .RequirePermission("Permissions.Accounts.View")
+            .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }
 }

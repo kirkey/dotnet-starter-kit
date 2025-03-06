@@ -17,7 +17,7 @@ public partial class Tenants
     private IApiClient ApiClient { get; set; } = default!;
     private string? _searchString;
     protected EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand> Context { get; set; } = default!;
-    private List<TenantViewModel> _tenants = new();
+    private List<TenantViewModel> _tenants = [];
     public EntityTable<TenantViewModel, DefaultIdType, CreateTenantCommand> EntityTable { get; set; } = default!;
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
@@ -29,21 +29,21 @@ public partial class Tenants
 
     protected override async Task OnInitializedAsync()
     {
-        Context = new(
+        Context = new EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand>(
             entityName: "Tenant",
             entityNamePlural: "Tenants",
             entityResource: FshResources.Tenants,
             searchAction: FshActions.View,
             deleteAction: string.Empty,
             updateAction: string.Empty,
-            fields: new()
-            {
-                new(tenant => tenant.Id, "Id"),
-                new(tenant => tenant.Name, "Name"),
-                new(tenant => tenant.AdminEmail, "Admin Email"),
-                new(tenant => tenant.ValidUpto.ToString("MMM dd, yyyy"), "Valid Upto"),
-                new(tenant => tenant.IsActive, "Active", Type: typeof(bool))
-            },
+            fields:
+            [
+                new EntityField<TenantViewModel>(tenant => tenant.Id, "Id"),
+                new EntityField<TenantViewModel>(tenant => tenant.Name, "Name"),
+                new EntityField<TenantViewModel>(tenant => tenant.AdminEmail, "Admin Email"),
+                new EntityField<TenantViewModel>(tenant => tenant.ValidUpto.ToString("MMM dd, yyyy"), "Valid Upto"),
+                new EntityField<TenantViewModel>(tenant => tenant.IsActive, "Active", Type: typeof(bool))
+            ],
             loadDataFunc: async () => _tenants = (await ApiClient.GetTenantsEndpointAsync()).Adapt<List<TenantViewModel>>(),
             searchFunc: (searchString, tenantDto) =>
                 string.IsNullOrWhiteSpace(searchString)
@@ -61,7 +61,7 @@ public partial class Tenants
     {
         var tenant = _tenants.First(f => f.Id == id);
         tenant.ShowDetails = !tenant.ShowDetails;
-        foreach (var otherTenants in _tenants.Except(new[] { tenant }))
+        foreach (var otherTenants in _tenants.Except([tenant]))
         {
             otherTenants.ShowDetails = false;
         }

@@ -1,0 +1,56 @@
+@page "/accounts"
+
+<PageHeader Title="Accounts" Header="Accounts" SubHeader="Manage your Accounts." />
+
+<EntityTable @ref="_table" TEntity="AccountResponse" TId="Guid" TRequest="AccountViewModel" Context="@Context">
+    <EditFormContent>
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Account Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+            <MudTextField Label="Category" For="@(() => context.Category)" @bind-Value="context.Category" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+            <MudTextField Label="Type" For="@(() => context.TransactionType)" @bind-Value="context.TransactionType" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+            <MudTextField Label="Parent Code" For="@(() => context.ParentCode)" @bind-Value="context.ParentCode" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+            <MudNumericField Label="Balance" For="@(() => context.Balance)" @bind-Value="context.Balance" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Lines="2" Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField Lines="2" Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudItem>
+                <div>
+                    @if(!Context.AddEditModal.IsCreate)
+                    {
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Target="_blank"
+                            StartIcon="@Icons.Material.Filled.RemoveRedEye" Style="margin-left: 5px;" >
+                            View
+                        </MudButton>
+
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Delete" Style="margin-left: 5px;">
+                            Delete
+                        </MudButton>
+                    }
+                </div>
+            </MudItem>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

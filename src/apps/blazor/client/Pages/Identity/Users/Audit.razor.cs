@@ -25,7 +25,7 @@ public partial class Audit
     private DateRange? _dateRange;
     private bool _searchInOldValues;
     private bool _searchInNewValues;
-    private List<RelatedAuditTrail> _trails = new();
+    private List<RelatedAuditTrail> _trails = [];
 
     // Configure Automapper
     static Audit() =>
@@ -46,16 +46,16 @@ public partial class Audit
             }
         }
         _subHeader = $"Audit Trail for User {Id}";
-        Context = new(
+        Context = new EntityClientTableContext<RelatedAuditTrail, DefaultIdType, object>(
             entityNamePlural: "Trails",
             searchAction: true.ToString(),
-            fields: new()
-            {
-                new(audit => audit.Id,"Id"),
-                new(audit => audit.Entity, "Entity"),
-                new(audit => audit.DateTime, "Date", Template: DateFieldTemplate),
-                new(audit => audit.Operation, "Operation")
-            },
+            fields:
+            [
+                new EntityField<RelatedAuditTrail>(audit => audit.Id, "Id"),
+                new EntityField<RelatedAuditTrail>(audit => audit.Entity, "Entity"),
+                new EntityField<RelatedAuditTrail>(audit => audit.DateTime, "Date", Template: DateFieldTemplate),
+                new EntityField<RelatedAuditTrail>(audit => audit.Operation, "Operation")
+            ],
             loadDataFunc: async () => _trails = (await ApiClient.GetUserAuditTrailEndpointAsync(Id)).Adapt<List<RelatedAuditTrail>>(),
             searchFunc: (searchString, trail) =>
                 (string.IsNullOrWhiteSpace(searchString) // check Search String
@@ -75,7 +75,7 @@ public partial class Audit
     {
         var trail = _trails.First(f => f.Id == id);
         trail.ShowDetails = !trail.ShowDetails;
-        foreach (var otherTrail in _trails.Except(new[] { trail }))
+        foreach (var otherTrail in _trails.Except([trail]))
         {
             otherTrail.ShowDetails = false;
         }

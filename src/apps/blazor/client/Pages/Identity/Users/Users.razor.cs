@@ -40,23 +40,23 @@ public partial class Users
         _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.UserRoles);
         _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails);
 
-        Context = new(
+        Context = new EntityClientTableContext<UserDetail, DefaultIdType, RegisterUserCommand>(
             entityName: "User",
             entityNamePlural: "Users",
             entityResource: FshResources.Users,
             searchAction: FshActions.View,
             updateAction: string.Empty,
             deleteAction: string.Empty,
-            fields: new()
-            {
-                new(user => user.FirstName,"First Name"),
-                new(user => user.LastName, "Last Name"),
-                new(user => user.UserName, "UserName"),
-                new(user => user.Email, "Email"),
-                new(user => user.PhoneNumber, "PhoneNumber"),
-                new(user => user.EmailConfirmed, "Email Confirmation", Type: typeof(bool)),
-                new(user => user.IsActive, "Active", Type: typeof(bool))
-            },
+            fields:
+            [
+                new EntityField<UserDetail>(user => user.FirstName, "First Name"),
+                new EntityField<UserDetail>(user => user.LastName, "Last Name"),
+                new EntityField<UserDetail>(user => user.UserName, "UserName"),
+                new EntityField<UserDetail>(user => user.Email, "Email"),
+                new EntityField<UserDetail>(user => user.PhoneNumber, "PhoneNumber"),
+                new EntityField<UserDetail>(user => user.EmailConfirmed, "Email Confirmation", Type: typeof(bool)),
+                new EntityField<UserDetail>(user => user.IsActive, "Active", Type: typeof(bool))
+            ],
             idFunc: user => user.Id,
             loadDataFunc: async () => (await UsersClient.GetUsersListEndpointAsync()).ToList(),
             searchFunc: (searchString, user) =>

@@ -20,7 +20,7 @@ public static class AccountingModule
             var accountGroup = app.MapGroup("accounts").WithTags("accounts");
             accountGroup.MapAccountCreationEndpoint();
             accountGroup.MapGetAccountEndpoint();
-            accountGroup.MapGetAccountListEndpoint();
+            accountGroup.MapGetAccountSearchEndpoint();
             accountGroup.MapAccountUpdateEndpoint();
             accountGroup.MapAccountDeleteEndpoint();
         }

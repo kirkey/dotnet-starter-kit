@@ -103,7 +103,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
             var authState = await GetAuthenticationStateAsync().ConfigureAwait(false);
             if (authState.User.Identity?.IsAuthenticated is not true)
             {
-                return new AccessTokenResult(AccessTokenResultStatus.RequiresRedirect, new(), "/login", default);
+                return new AccessTokenResult(AccessTokenResultStatus.RequiresRedirect, new AccessToken(), "/login", default);
             }
 
             string? token = await GetCachedAuthTokenAsync().ConfigureAwait(false);
@@ -118,7 +118,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
                 (bool succeeded, var response) = await TryRefreshTokenAsync(new RefreshTokenCommand { Token = token, RefreshToken = refreshToken }).ConfigureAwait(false);
                 if (!succeeded)
                 {
-                    return new AccessTokenResult(AccessTokenResultStatus.RequiresRedirect, new(), "/login", default);
+                    return new AccessTokenResult(AccessTokenResultStatus.RequiresRedirect, new AccessToken(), "/login", default);
                 }
 
                 token = response?.Token;

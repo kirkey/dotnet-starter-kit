@@ -22,7 +22,7 @@ public static class UpdateAccountEndpoint
             .WithSummary("update an account")
             .WithDescription("update an account")
             .Produces<UpdateAccountResponse>()
-            .RequirePermission("Permissions.Accounts.Update")
+            .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }
 }

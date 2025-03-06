@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Accounting.Infrastructure;
+﻿using Accounting.Infrastructure;
 using Asp.Versioning.Conventions;
 using Carter;
 using FluentValidation;
@@ -16,7 +15,7 @@ public static class Extensions
         ArgumentNullException.ThrowIfNull(builder);
 
         //define module assemblies
-        var assemblies = new Assembly[]
+        var assemblies = new[]
         {
             typeof(CatalogMetadata).Assembly,
             typeof(TodoModule).Assembly
@@ -26,9 +25,9 @@ public static class Extensions
         builder.Services.AddValidatorsFromAssemblies(assemblies);
 
         //register mediatr
-        builder.Services.AddMediatR(cfg =>
+        builder.Services.AddMediatR(configuration =>
         {
-            cfg.RegisterServicesFromAssemblies(assemblies);
+            configuration.RegisterServicesFromAssemblies(assemblies);
         });
 
         //register module services
@@ -54,6 +53,7 @@ public static class Extensions
         //register modules
         app.UseCatalogModule();
         app.UseTodoModule();
+        app.UseAccountingModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()

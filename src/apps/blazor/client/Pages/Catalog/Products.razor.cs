@@ -15,22 +15,22 @@ public partial class Products
 
     private EntityTable<ProductResponse, DefaultIdType, ProductViewModel> _table = default!;
 
-    private List<BrandResponse> _brands = new();
+    private List<BrandResponse> _brands = [];
 
     protected override async Task OnInitializedAsync()
     {
-        Context = new(
+        Context = new EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel>(
             entityName: "Product",
             entityNamePlural: "Products",
             entityResource: FshResources.Products,
-            fields: new()
-            {
-                new(prod => prod.Id,"Id", "Id"),
-                new(prod => prod.Name,"Name", "Name"),
-                new(prod => prod.Description, "Description", "Description"),
-                new(prod => prod.Price, "Price", "Price"),
-                new(prod => prod.Brand?.Name, "Brand", "Brand")
-            },
+            fields:
+            [
+                new EntityField<ProductResponse>(prod => prod.Id, "Id", "Id"),
+                new EntityField<ProductResponse>(prod => prod.Name, "Name", "Name"),
+                new EntityField<ProductResponse>(prod => prod.Description, "Description", "Description"),
+                new EntityField<ProductResponse>(prod => prod.Price, "Price", "Price"),
+                new EntityField<ProductResponse>(prod => prod.Brand?.Name, "Brand", "Brand")
+            ],
             enableAdvancedSearch: true,
             idFunc: prod => prod.Id!.Value,
             searchFunc: async filter =>

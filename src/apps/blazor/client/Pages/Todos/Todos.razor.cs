@@ -16,17 +16,17 @@ public partial class Todos
     private EntityTable<GetTodoResponse, DefaultIdType, TodoViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new(
+        Context = new EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel>(
             entityName: "Todos",
             entityNamePlural: "Todos",
             entityResource: FshResources.Todos,
-            fields: new()
-            {
-                new(prod => prod.Id,"Id", "Id"),
-                new(prod => prod.Name,"Name", "Name"),
-                new(prod => prod.Description, "Description", "Description"),
-                new(prod => prod.Notes, "Notes", "Notes")
-            },
+            fields:
+            [
+                new EntityField<GetTodoResponse>(prod => prod.Id, "Id", "Id"),
+                new EntityField<GetTodoResponse>(prod => prod.Name, "Name", "Name"),
+                new EntityField<GetTodoResponse>(prod => prod.Description, "Description", "Description"),
+                new EntityField<GetTodoResponse>(prod => prod.Notes, "Notes", "Notes")
+            ],
             enableAdvancedSearch: false,
             idFunc: prod => prod.Id!.Value,
             searchFunc: async filter =>

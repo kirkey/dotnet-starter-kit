@@ -12,7 +12,7 @@ namespace Accounting.Infrastructure.Endpoints.v1;
 
 public static class SearchAccountsEndpoint
 {
-    internal static RouteHandlerBuilder MapGetAccountListEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapGetAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/search", async (ISender mediator, [FromBody] SearchAccountsCommand command) =>
@@ -24,7 +24,7 @@ public static class SearchAccountsEndpoint
             .WithSummary("Gets a list of accounts")
             .WithDescription("Gets a list of accounts with pagination and filtering support")
             .Produces<PagedList<AccountResponse>>()
-            .RequirePermission("Permissions.Accounts.View")
+            .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }
 }
