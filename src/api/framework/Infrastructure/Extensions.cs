@@ -87,13 +87,6 @@ public static class Extensions
         app.UseRouting();
         app.UseStaticFiles();
         app.UseFileStorage();
-
-        // app.UseStaticFiles(new StaticFileOptions
-        // {
-        //     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "assets")),
-        //     RequestPath = new PathString("/assets")
-        // });
-
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapTenantEndpoints();
