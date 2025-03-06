@@ -11,7 +11,7 @@ public record PagedList<T>(IReadOnlyList<T> Items, int PageNumber, int PageSize,
     public IPagedList<TR> MapTo<TR>(Func<T, TR> map)
         where TR : class
     {
-        return new PagedList<TR>(Items.Select(map).ToList(), PageNumber, PageSize, TotalCount);
+        return new PagedList<TR>([.. Items.Select(map)], PageNumber, PageSize, TotalCount);
     }
     public IPagedList<TR> MapTo<TR>()
         where TR : class
