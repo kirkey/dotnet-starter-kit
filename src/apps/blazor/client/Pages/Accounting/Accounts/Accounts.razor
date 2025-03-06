@@ -2,7 +2,7 @@
 
 <PageHeader Title="Accounts" Header="Accounts" SubHeader="Manage your Accounts." />
 
-<EntityTable @ref="_table" TEntity="AccountResponse" TId="Guid" TRequest="AccountViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="AccountResponse" TId="DefaultIdType" TRequest="AccountViewModel" Context="@Context">
     <EditFormContent>
         @if (!Context.AddEditModal.IsCreate)
         {

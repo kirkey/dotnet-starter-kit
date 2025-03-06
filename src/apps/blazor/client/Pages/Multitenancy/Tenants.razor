@@ -4,7 +4,7 @@
 
 <PageHeader Title="Tenants" Header="Tenants" SubHeader="Manage your Tenants." />
 
-<EntityTable @ref="EntityTable" TEntity="TenantViewModel" TId="Guid" TRequest="CreateTenantCommand" Context="@Context"
+<EntityTable @ref="EntityTable" TEntity="TenantViewModel" TId="DefaultIdType" TRequest="CreateTenantCommand" Context="@Context"
     @bind-SearchString="_searchString">
     <EditFormContent>
         <MudItem xs="12" md="6">
