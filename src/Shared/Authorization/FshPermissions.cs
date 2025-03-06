@@ -68,9 +68,9 @@ public static class FshPermissions
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);
-    public static IReadOnlyList<FshPermission> Root { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions.Where(p => p.IsRoot).ToArray());
-    public static IReadOnlyList<FshPermission> Admin { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions.Where(p => !p.IsRoot).ToArray());
-    public static IReadOnlyList<FshPermission> Basic { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions.Where(p => p.IsBasic).ToArray());
+    public static IReadOnlyList<FshPermission> Root { get; } = new ReadOnlyCollection<FshPermission>([.. AllPermissions.Where(p => p.IsRoot)]);
+    public static IReadOnlyList<FshPermission> Admin { get; } = new ReadOnlyCollection<FshPermission>([.. AllPermissions.Where(p => !p.IsRoot)]);
+    public static IReadOnlyList<FshPermission> Basic { get; } = new ReadOnlyCollection<FshPermission>([.. AllPermissions.Where(p => p.IsBasic)]);
 }
 
 public record FshPermission(string Description, string Action, string Resource, bool IsBasic = false, bool IsRoot = false)

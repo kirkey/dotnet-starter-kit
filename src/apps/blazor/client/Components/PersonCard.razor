@@ -1,7 +1,7 @@
 ﻿<MudCard Elevation="0" Square="true" Class="@Class" Style="@Style">
     <MudCardHeader style="padding:10px!important">
         <CardHeaderAvatar>
-            @if (string.IsNullOrEmpty(this.ImageUri))
+            @if (string.IsNullOrEmpty(ImageUri))
             {
                 <MudAvatar Size="Size.Medium" Color="Color.Primary">@FullName?.ToUpper().FirstOrDefault()
                 </MudAvatar>

@@ -4,7 +4,7 @@
 
 FullStackHero .NET Starter Kit is a starting point for your next `.NET 9 Clean Architecture` Solution that incorporates the most essential packages and features your projects will ever need including out-of-the-box Multi-Tenancy support. This project can save well over 200+ hours of development time for your team.
 
-![FullStackHero .NET Starter Kit](./assets/fullstackhero-dotnet-starter-kit.png)
+![FullStackHero .NET Starter Kit](./files/fullstackhero-dotnet-starter-kit.png)
 
 # Important
 
