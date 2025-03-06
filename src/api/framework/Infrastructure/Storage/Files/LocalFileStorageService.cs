@@ -13,12 +13,12 @@ namespace FSH.Framework.Infrastructure.Storage.Files
         public async Task<Uri> UploadAsync<T>(FileUploadCommand? request, FileType supportedFileType, CancellationToken cancellationToken = default)
             where T : class
         {
-            if (request == null || request.Data == null)
+            if (request?.Data == null)
             {
                 return null!;
             }
 
-            if (request.Extension is null || !supportedFileType.GetDescriptionList().Contains(request.Extension.ToLower(System.Globalization.CultureInfo.CurrentCulture)))
+            if (!supportedFileType.GetDescriptionList().Contains(request.Extension.ToLower(System.Globalization.CultureInfo.CurrentCulture)))
                 throw new InvalidOperationException("File Format Not Supported.");
             if (request.Name is null)
                 throw new InvalidOperationException("Name is required.");
@@ -36,8 +36,8 @@ namespace FSH.Framework.Infrastructure.Storage.Files
 
                 string folderName = supportedFileType switch
                 {
-                    FileType.Image => Path.Combine("assets", "images", folder),
-                    _ => Path.Combine("assets", "others", folder),
+                    FileType.Image => Path.Combine("files", "images", folder),
+                    _ => Path.Combine("files", "others", folder),
                 };
                 string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 Directory.CreateDirectory(pathToSave);
@@ -58,6 +58,7 @@ namespace FSH.Framework.Infrastructure.Storage.Files
                 await using var stream1 = stream.ConfigureAwait(false);
                 await streamData.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
                 var path = dbPath.Replace("\\", "/", StringComparison.Ordinal);
+                var Uri = originSettings.Value.OriginUrl!;
                 var imageUri = new Uri(originSettings.Value.OriginUrl!, path);
                 return imageUri;
             }

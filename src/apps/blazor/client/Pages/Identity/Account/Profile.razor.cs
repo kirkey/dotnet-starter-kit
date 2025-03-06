@@ -45,7 +45,7 @@ public partial class Profile
 
         if (_profileModel.FirstName?.Length > 0)
         {
-            _firstLetterOfName = _profileModel.FirstName.ToUpper().FirstOrDefault();
+            _firstLetterOfName = _profileModel.FirstName.ToUpperInvariant().FirstOrDefault();
         }
     }
 
@@ -65,7 +65,7 @@ public partial class Profile
         if (file is not null)
         {
             string? extension = Path.GetExtension(file.Name);
-            if (!AppConstants.SupportedImageFormats.Contains(extension.ToLower()))
+            if (!AppConstants.SupportedImageFormats.Contains(extension.ToLowerInvariant()))
             {
                 Toast.Add("Image Format Not Supported.", Severity.Error);
                 return;

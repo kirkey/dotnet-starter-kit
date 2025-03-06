@@ -86,11 +86,14 @@ public static class Extensions
         app.UseJobDashboard(app.Configuration);
         app.UseRouting();
         app.UseStaticFiles();
-        app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "assets")),
-            RequestPath = new PathString("/assets")
-        });
+        app.UseFileStorage();
+
+        // app.UseStaticFiles(new StaticFileOptions
+        // {
+        //     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "assets")),
+        //     RequestPath = new PathString("/assets")
+        // });
+
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapTenantEndpoints();
