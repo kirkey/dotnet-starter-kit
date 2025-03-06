@@ -75,7 +75,7 @@ public partial class Profile
             fileName = fileName[..Math.Min(fileName.Length, 90)];
             var imageFile = await file.RequestImageFileAsync(AppConstants.StandardImageFormat, AppConstants.MaxImageWidth, AppConstants.MaxImageHeight);
             byte[]? buffer = new byte[imageFile.Size];
-            await imageFile.OpenReadStream(AppConstants.MaxAllowedSize).ReadAsync(buffer);
+            await imageFile.OpenReadStream(AppConstants.MaxAllowedSize).ReadExactlyAsync(buffer);
             string? base64String = $"data:{AppConstants.StandardImageFormat};base64,{Convert.ToBase64String(buffer)}";
             _profileModel.Image = new FileUploadCommand { Name = fileName, Data = base64String, Extension = extension };
 
@@ -85,7 +85,7 @@ public partial class Profile
 
     public async Task RemoveImageAsync()
     {
-        string deleteContent = "You're sure you want to delete your Profile Image?";
+        const string deleteContent = "You're sure you want to delete your Profile Image?";
         var parameters = new DialogParameters
         {
             { nameof(DeleteConfirmation.ContentText), deleteContent }
