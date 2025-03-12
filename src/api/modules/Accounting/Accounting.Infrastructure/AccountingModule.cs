@@ -19,8 +19,8 @@ public static class AccountingModule
         {
             var accountGroup = app.MapGroup("accounts").WithTags("accounts");
             accountGroup.MapAccountCreationEndpoint();
-            accountGroup.MapGetAccountEndpoint();
-            accountGroup.MapGetAccountSearchEndpoint();
+            accountGroup.MapAccountGetEndpoint();
+            accountGroup.MapAccountSearchEndpoint();
             accountGroup.MapAccountUpdateEndpoint();
             accountGroup.MapAccountDeleteEndpoint();
         }

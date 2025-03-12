@@ -9,7 +9,7 @@ namespace Accounting.Infrastructure.Endpoints.v1;
 
 public static class GetAccountEndpoint
 {
-    internal static RouteHandlerBuilder MapGetAccountEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapAccountGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>

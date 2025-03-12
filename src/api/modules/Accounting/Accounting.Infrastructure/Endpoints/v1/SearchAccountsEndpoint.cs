@@ -12,7 +12,7 @@ namespace Accounting.Infrastructure.Endpoints.v1;
 
 public static class SearchAccountsEndpoint
 {
-    internal static RouteHandlerBuilder MapGetAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/search", async (ISender mediator, [FromBody] SearchAccountsCommand command) =>

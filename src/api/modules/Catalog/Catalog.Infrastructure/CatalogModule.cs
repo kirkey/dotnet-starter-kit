@@ -18,8 +18,8 @@ public static class CatalogModule
         {
             var productGroup = app.MapGroup("products").WithTags("products");
             productGroup.MapProductCreationEndpoint();
-            productGroup.MapGetProductEndpoint();
-            productGroup.MapGetProductListEndpoint();
+            productGroup.MapProductGetEndpoint();
+            productGroup.MapProductGetListEndpoint();
             productGroup.MapProductUpdateEndpoint();
             productGroup.MapProductDeleteEndpoint();
 

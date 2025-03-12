@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Routing;
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 public static class GetProductEndpoint
 {
-    internal static RouteHandlerBuilder MapGetProductEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapProductGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>

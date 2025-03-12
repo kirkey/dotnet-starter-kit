@@ -12,7 +12,7 @@ namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 
 public static class SearchProductsEndpoint
 {
-    internal static RouteHandlerBuilder MapGetProductListEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapProductGetListEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/search", async (ISender mediator, [FromBody] SearchProductsCommand command) =>
