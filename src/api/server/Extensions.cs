@@ -1,4 +1,5 @@
-﻿using Accounting.Infrastructure;
+﻿using Accounting.Application;
+using Accounting.Infrastructure;
 using Asp.Versioning.Conventions;
 using Carter;
 using FluentValidation;
@@ -17,6 +18,7 @@ public static class Extensions
         //define module assemblies
         var assemblies = new[]
         {
+            typeof(AccountingMetadata).Assembly,
             typeof(CatalogMetadata).Assembly,
             typeof(TodoModule).Assembly
         };
@@ -31,16 +33,16 @@ public static class Extensions
         });
 
         //register module services
+        builder.RegisterAccountingServices();
         builder.RegisterCatalogServices();
         builder.RegisterTodoServices();
-        builder.RegisterAccountingServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
+            config.WithModule<AccountingModule.Endpoints>();
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
-            config.WithModule<AccountingModule.Endpoints>();
         });
 
         return builder;
@@ -51,9 +53,9 @@ public static class Extensions
         ArgumentNullException.ThrowIfNull(app);
 
         //register modules
+        app.UseAccountingModule();
         app.UseCatalogModule();
         app.UseTodoModule();
-        app.UseAccountingModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()

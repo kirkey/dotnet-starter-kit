@@ -12,9 +12,9 @@ internal static class Extensions
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
         services
-            .AddMediatR(cfg =>
+            .AddMediatR(configuration =>
             {
-                cfg.RegisterServicesFromAssemblies(assemblies);
+                configuration.RegisterServicesFromAssemblies(assemblies);
             })
             .AddCourier(assemblies)
             .AddTransient<INotificationPublisher, NotificationPublisher>();
