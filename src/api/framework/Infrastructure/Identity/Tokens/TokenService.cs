@@ -1,10 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Finbuckle.MultiTenant.Abstractions;
-using FSH.Framework.Core.Audit;
 using FSH.Framework.Core.Auth.Jwt;
 using FSH.Framework.Core.Exceptions;
 using FSH.Framework.Core.Identity.Tokens;

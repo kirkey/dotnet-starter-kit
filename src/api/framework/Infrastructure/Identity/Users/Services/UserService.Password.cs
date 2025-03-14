@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Text;
 using FSH.Framework.Core.Exceptions;
 using FSH.Framework.Core.Identity.Users.Features.ChangePassword;
 using FSH.Framework.Core.Identity.Users.Features.ForgotPassword;
