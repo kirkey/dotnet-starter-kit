@@ -15,6 +15,9 @@ public partial class Accounts
 
     private EntityTable<AccountResponse, DefaultIdType, AccountViewModel> _table = default!;
 
+    private string? selectedAccountCategory { get; set; }
+    private string? selectedTransactionType { get; set; }
+    
     protected override void OnInitialized() =>
         Context = new EntityServerTableContext<AccountResponse, DefaultIdType, AccountViewModel>(
             entityName: "Account",
@@ -22,8 +25,8 @@ public partial class Accounts
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<AccountResponse>(response => response.Category, "Category", "Category"),
-                new EntityField<AccountResponse>(response => response.TransactionType, "TransactionType", "TransactionType"),
+                new EntityField<AccountResponse>(response => response.AccountCategory, "AccountCategory", "AccountCategory"),
+                new EntityField<AccountResponse>(response => response.Type, "Type", "Type"),
                 new EntityField<AccountResponse>(response => response.ParentCode, "Parent", "ParentCode"),
                 new EntityField<AccountResponse>(response => response.Code, "Code", "Code"),
                 new EntityField<AccountResponse>(response => response.Name, "Name", "Name"),
@@ -33,22 +36,22 @@ public partial class Accounts
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchAccountsCommand>();
+                var paginationFilter = filter.Adapt<AccountSearchRequest>();
 
-                var result = await ApiClient.SearchAccountsEndpointAsync("1", paginationFilter);
+                var result = await ApiClient.AccountSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<AccountResponse>>();
             },
             createFunc: async account =>
             {
-                await ApiClient.CreateAccountEndpointAsync("1", account.Adapt<CreateAccountCommand>());
+                await ApiClient.AccountCreateEndpointAsync("1", account.Adapt<AccountCreateRequest>());
             },
             updateFunc: async (id, account) =>
             {
-                await ApiClient.UpdateAccountEndpointAsync("1", id, account.Adapt<UpdateAccountCommand>());
+                await ApiClient.AccountUpdateEndpointAsync("1", id, account.Adapt<AccountUpdateRequest>());
             },
-            deleteFunc: async id => await ApiClient.DeleteAccountEndpointAsync("1", id));
+            deleteFunc: async id => await ApiClient.AccountDeleteEndpointAsync("1", id));
 }
 
-public class AccountViewModel : UpdateAccountCommand
+public class AccountViewModel : AccountUpdateRequest
 {
 }

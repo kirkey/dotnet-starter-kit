@@ -1,4 +1,3 @@
-using Accounting.Domain.Enums;
 using Accounting.Domain.Events;
 using FSH.Framework.Core.Domain;
 using FSH.Framework.Core.Domain.Contracts;
@@ -6,21 +5,19 @@ using FSH.Framework.Core.Domain.Contracts;
 namespace Accounting.Domain;
 public class Account : AuditableEntity, IAggregateRoot
 {
-    public Category Category { get; private set; }
-    public TransactionType TransactionType { get; private set; }
+    public string AccountCategory { get; private set; }
     public string ParentCode { get; private set; } = string.Empty;
     public string Code { get; private set; } = string.Empty;
     public decimal Balance { get; private set; }
-    public new AccountStatus Status { get; private set; }
     
     private Account() { }
 
-    private Account(DefaultIdType id, Category category, TransactionType transactionType, string parentCode, string code, string name, decimal balance,
+    private Account(DefaultIdType id, string accountCategory, string type, string parentCode, string code, string name, decimal balance,
         string? description = null, string? notes = null)
     {
         Id = id;
-        Category = category;
-        TransactionType = transactionType;
+        AccountCategory = accountCategory;
+        Type = type;
         ParentCode = parentCode;
         Code = code;
         Name = name;
@@ -29,30 +26,28 @@ public class Account : AuditableEntity, IAggregateRoot
         Description = description;
         Notes = notes;
 
-        Status = AccountStatus.Active;
-
-        QueueDomainEvent(new AccountCreated(Id, Category, Code, Name, Balance, Description, Notes));
+        QueueDomainEvent(new AccountCreated(Id, AccountCategory, Type, Code, Name, Balance, Description, Notes));
         AccountMetrics.Created.Add(1);
     }
 
-    public static Account Create(Category category, TransactionType transactionType, string parentCode, string code, string name, decimal balance = 0, string? description = null, string? notes = null)
+    public static Account Create(string accountCategory, string type, string parentCode, string code, string name, decimal balance = 0, string? description = null, string? notes = null)
     {
-        return new Account(DefaultIdType.NewGuid(), category, transactionType, parentCode, code, name, balance, description, notes);
+        return new Account(DefaultIdType.NewGuid(), accountCategory, type, parentCode, code, name, balance, description, notes);
     }
 
-    public Account Update(Category? category, TransactionType? transactionType, string? parentCode, string? code, string? name, decimal balance, string? description, string? notes)
+    public Account Update(string? accountCategory, string? type, string? parentCode, string? code, string? name, decimal balance, string? description, string? notes)
     {
         bool isUpdated = false;
 
-        if (category.HasValue && Category != category.Value)
+        if (accountCategory is not null && AccountCategory != accountCategory)
         {
-            Category = category.Value;
+            AccountCategory = accountCategory;
             isUpdated = true;
         }
         
-        if (transactionType.HasValue && TransactionType != transactionType.Value)
+        if (type is not null && Type != type)
         {
-            TransactionType = transactionType.Value;
+            Type = type;
             isUpdated = true;
         }
         
@@ -105,12 +100,12 @@ public class Account : AuditableEntity, IAggregateRoot
         if (amount <= 0)
             throw new ArgumentException("Debit amount must be positive", nameof(amount));
             
-        if (Category is Category.Asset or Category.Expense)
+        if (AccountCategory is "Asset" or "Expense")
             Balance += amount;
         else
             Balance -= amount;
             
-        QueueDomainEvent(new AccountBalanceChanged(Id, Balance, amount, TransactionType.Debit));
+        QueueDomainEvent(new AccountBalanceChanged(Id, Balance, amount, "Debit"));
         return this;
     }
 
@@ -119,35 +114,35 @@ public class Account : AuditableEntity, IAggregateRoot
         if (amount <= 0)
             throw new ArgumentException("Credit amount must be positive", nameof(amount));
             
-        if (Category is Category.Liability or Category.Equity or Category.Revenue)
+        if (AccountCategory is "Liability" or "Equity" or "Revenue")
             Balance += amount;
         else
             Balance -= amount;
             
-        QueueDomainEvent(new AccountBalanceChanged(Id, Balance, amount, TransactionType.Credit));
+        QueueDomainEvent(new AccountBalanceChanged(Id, Balance, amount, "Credit"));
         return this;
     }
 
     public Account Activate()
     {
-        if (Status == AccountStatus.Active)
+        if (Status == "Active")
         {
             return this;
         }
 
-        Status = AccountStatus.Active;
+        Status = "Active";
         QueueDomainEvent(new AccountStatusChanged(Id, Status));
         return this;
     }
 
     public Account Deactivate()
     {
-        if (Status == AccountStatus.Inactive)
+        if (Status == "Inactive")
         {
             return this;
         }
 
-        Status = AccountStatus.Inactive;
+        Status = "Inactive";
         QueueDomainEvent(new AccountStatusChanged(Id, Status));
         return this;
     }

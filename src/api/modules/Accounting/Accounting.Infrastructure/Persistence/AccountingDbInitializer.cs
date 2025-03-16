@@ -1,6 +1,5 @@
 using FSH.Framework.Core.Persistence;
 using Accounting.Domain;
-using Accounting.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -21,8 +20,8 @@ internal sealed class AccountingDbInitializer(
 
     public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        const Category category = Category.Asset;
-        const TransactionType transactionType = TransactionType.Debit;
+        const string category = "Asset";
+        const string type = "Debit";
         const string name = "Cash Account";
         const string parentCode = "1";
         const string code = "1000";
@@ -31,7 +30,7 @@ internal sealed class AccountingDbInitializer(
         
         if (await context.Accounts.FirstOrDefaultAsync(a => a.Code == code, cancellationToken).ConfigureAwait(false) is null)
         {
-            var account = Account.Create(category, transactionType, parentCode, code, name, balance, description);
+            var account = Account.Create(category, type, parentCode, code, name, balance, description);
             await context.Accounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             logger.LogInformation("[{Tenant}] seeding default accounting data", context.TenantInfo!.Identifier);

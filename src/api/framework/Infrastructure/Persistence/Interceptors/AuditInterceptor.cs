@@ -97,6 +97,11 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
                             }
                         }
                         break;
+                    case EntityState.Detached:
+                    case EntityState.Unchanged:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
 

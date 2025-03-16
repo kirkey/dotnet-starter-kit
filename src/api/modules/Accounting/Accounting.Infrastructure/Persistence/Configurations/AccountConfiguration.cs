@@ -15,12 +15,8 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.HasIndex(x => x.Code).IsUnique();
         
-        builder.Property(x => x.Category)
+        builder.Property(x => x.AccountCategory)
             .HasMaxLength(16)
-            .IsRequired();
-        
-        builder.Property(x => x.TransactionType)
-            .HasMaxLength(8)
             .IsRequired();
         
         builder.Property(x => x.ParentCode)
@@ -31,10 +27,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
             .HasMaxLength(16)
             .IsRequired();
         
-        builder.Property(x => x.Name)
-            .HasMaxLength(1024)
-            .IsRequired();
-            
         builder.Property(x => x.Balance)
             .HasPrecision(18, 2)
             .IsRequired();
