@@ -15,9 +15,6 @@ public partial class Accounts
 
     private EntityTable<AccountResponse, DefaultIdType, AccountViewModel> _table = default!;
 
-    private string? selectedAccountCategory { get; set; }
-    private string? selectedTransactionType { get; set; }
-    
     protected override void OnInitialized() =>
         Context = new EntityServerTableContext<AccountResponse, DefaultIdType, AccountViewModel>(
             entityName: "Account",
