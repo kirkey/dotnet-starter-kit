@@ -7,6 +7,7 @@ public class ForbiddenException : FshException
         : base("unauthorized", [], HttpStatusCode.Forbidden)
     {
     }
+
     public ForbiddenException(string message)
        : base(message, [], HttpStatusCode.Forbidden)
     {

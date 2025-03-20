@@ -1,3 +1,4 @@
+using Accounting.Application.Accounts.Exceptions;
 using Accounting.Application.Accounts.Queries;
 using FSH.Framework.Core.Persistence;
 using Accounting.Domain;
@@ -18,8 +19,8 @@ public sealed class AccountCreateRequestHandler(
         // Check for duplicate account code
         var existingAccount = await repository.FirstOrDefaultAsync(new AccountByCode(request.Code), cancellationToken)
             .ConfigureAwait(false);
-        _ = existingAccount ??
-            throw new InvalidOperationException($"An account with code {request.Code} already exists.");
+        if (existingAccount is not null)
+            throw new AccountForbiddenException(request.Code);
 
         var account = Account.Create(request.AccountCategory, request.AccountType, request.ParentCode, request.Code, request.Name, request.Balance,
             request.Description, request.Notes);
