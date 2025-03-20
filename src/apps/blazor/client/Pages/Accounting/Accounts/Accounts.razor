@@ -1,8 +1,8 @@
 @page "/accounts"
 
-<PageHeader Title="Accounts" Header="Accounts" SubHeader="Manage your Accounts." />
+<PageHeader Title="Accounts" Header="Accounts" SubHeader="Manage Accounts." />
 
-<EntityTable @ref="_table" TEntity="AccountResponse" TId="DefaultIdType" TRequest="AccountViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="AccountDto" TId="DefaultIdType" TRequest="AccountViewModel" Context="@Context">
     <EditFormContent>
         @if (!Context.AddEditModal.IsCreate)
         {
@@ -19,7 +19,7 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudSelect Label="Type" T="string" @bind-Value="context.Type">
+            <MudSelect Label="Type" T="string" @bind-Value="context.AccountType">
                 @foreach (var type in new string[] { "Debit", "Credit" })
                 {
                     <MudSelectItem Value="@type">@type</MudSelectItem>

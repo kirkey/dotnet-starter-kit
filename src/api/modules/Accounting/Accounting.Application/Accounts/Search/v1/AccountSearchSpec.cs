@@ -1,11 +1,11 @@
+using Accounting.Application.Accounts.Dtos;
 using Ardalis.Specification;
 using FSH.Framework.Core.Paging;
 using FSH.Framework.Core.Specifications;
-using Accounting.Application.Accounts.Get.v1;
 using Accounting.Domain;
 
 namespace Accounting.Application.Accounts.Search.v1;
-public sealed class AccountSearchSpec : EntitiesByPaginationFilterSpec<Account, AccountResponse>
+public sealed class AccountSearchSpec : EntitiesByPaginationFilterSpec<Account, AccountDto>
 {
     public AccountSearchSpec(AccountSearchRequest request)
         : base(request) =>

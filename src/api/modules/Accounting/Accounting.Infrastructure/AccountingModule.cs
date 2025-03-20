@@ -4,6 +4,7 @@ using FSH.Framework.Infrastructure.Persistence;
 using Accounting.Domain;
 using Accounting.Infrastructure.Endpoints.v1;
 using Accounting.Infrastructure.Persistence;
+using Accounting.Infrastructure.Persistence.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -33,6 +34,9 @@ public static class AccountingModule
         builder.Services.AddScoped<IDbInitializer, AccountingDbInitializer>();
         builder.Services.AddKeyedScoped<IRepository<Account>, AccountingRepository<Account>>("accounting:accounts");
         builder.Services.AddKeyedScoped<IReadRepository<Account>, AccountingRepository<Account>>("accounting:accounts");
+        
+        MappingConfiguration.RegisterMappings();
+        
         return builder;
     }
 

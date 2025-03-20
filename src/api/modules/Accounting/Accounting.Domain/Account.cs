@@ -6,18 +6,19 @@ namespace Accounting.Domain;
 public class Account : AuditableEntity, IAggregateRoot
 {
     public string AccountCategory { get; private set; }
+    public string AccountType { get; private set; }
     public string ParentCode { get; private set; } = string.Empty;
     public string Code { get; private set; } = string.Empty;
     public decimal Balance { get; private set; }
     
     private Account() { }
 
-    private Account(DefaultIdType id, string accountCategory, string type, string parentCode, string code, string name, decimal balance,
+    private Account(DefaultIdType id, string accountCategory, string accountType, string parentCode, string code, string name, decimal balance,
         string? description = null, string? notes = null)
     {
         Id = id;
         AccountCategory = accountCategory;
-        Type = type;
+        AccountType = accountType;
         ParentCode = parentCode;
         Code = code;
         Name = name;
@@ -26,16 +27,16 @@ public class Account : AuditableEntity, IAggregateRoot
         Description = description;
         Notes = notes;
 
-        QueueDomainEvent(new AccountCreated(Id, AccountCategory, Type, Code, Name, Balance, Description, Notes));
+        QueueDomainEvent(new AccountCreated(Id, AccountCategory, AccountType, Code, Name, Balance, Description, Notes));
         AccountMetrics.Created.Add(1);
     }
 
-    public static Account Create(string accountCategory, string type, string parentCode, string code, string name, decimal balance = 0, string? description = null, string? notes = null)
+    public static Account Create(string accountCategory, string accountType, string parentCode, string code, string name, decimal balance = 0, string? description = null, string? notes = null)
     {
-        return new Account(DefaultIdType.NewGuid(), accountCategory, type, parentCode, code, name, balance, description, notes);
+        return new Account(DefaultIdType.NewGuid(), accountCategory, accountType, parentCode, code, name, balance, description, notes);
     }
 
-    public Account Update(string? accountCategory, string? type, string? parentCode, string? code, string? name, decimal balance, string? description, string? notes)
+    public Account Update(string? accountCategory, string? accountType, string? parentCode, string? code, string? name, decimal balance, string? description, string? notes)
     {
         bool isUpdated = false;
 
@@ -45,9 +46,9 @@ public class Account : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
         
-        if (type is not null && Type != type)
+        if (accountType is not null && AccountType != accountType)
         {
-            Type = type;
+            AccountType = accountType;
             isUpdated = true;
         }
         

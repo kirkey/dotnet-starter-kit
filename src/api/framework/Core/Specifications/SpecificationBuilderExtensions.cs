@@ -153,7 +153,7 @@ public static class SpecificationBuilderExtensions
         IEnumerable<Filter> filters,
         ParameterExpression parameter)
     {
-        Expression filterExpression = default!;
+        Expression filterExpression = null!;
 
         foreach (var filter in filters)
         {

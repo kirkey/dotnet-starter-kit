@@ -4,10 +4,10 @@ using Ardalis.Specification;
 
 namespace Accounting.Application.Accounts.Queries;
 
-public sealed class AccountById :
+public sealed class AccountByCode :
     Specification<Account, AccountDto>,
     ISingleResultSpecification<Account, AccountDto>
 {
-    public AccountById(DefaultIdType id) =>
-        Query.Where(w => w.Id == id);
+    public AccountByCode(string code) =>
+        Query.Where(w => w.Code == code);
 }

@@ -1,12 +1,11 @@
 namespace FSH.Framework.Core.Extensions.Dto;
 
-public record BaseRequest : BaseRequest<DefaultIdType>;
+public class BaseRequest : BaseRequest<DefaultIdType>;
 
-public abstract record BaseRequest<TId>
+public abstract class BaseRequest<TId>
 {
     public TId? Id { get; set; }
-    public string Type { get; set; } = default!;
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
     public string? Remarks { get; set; }
     public string? Status { get; set; }
     public string? Description { get; set; }
@@ -16,9 +15,9 @@ public abstract record BaseRequest<TId>
     // public FileUploadRequest? File { get; set; }
 }
 
-public abstract record BaseRequestWithApproval : BaseRequestWithApproval<DefaultIdType>;
+public abstract class BaseRequestWithApproval : BaseRequestWithApproval<DefaultIdType>;
 
-public abstract record BaseRequestWithApproval<TId> : BaseRequest<TId>
+public abstract class BaseRequestWithApproval<TId> : BaseRequest<TId>
 {
     public string? Request { get; set; }
     public string? Feedback { get; set; }

@@ -4,7 +4,7 @@ namespace FSH.Framework.Core.Exceptions;
 
 public class CustomException(
     string message,
-    List<string>? errors = default,
+    List<string>? errors = null,
     HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
     : Exception(message)
 {

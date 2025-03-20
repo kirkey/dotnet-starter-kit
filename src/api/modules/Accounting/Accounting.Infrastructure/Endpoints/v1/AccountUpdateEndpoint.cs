@@ -21,7 +21,7 @@ public static class AccountUpdateEndpoint
             .WithName(nameof(AccountUpdateEndpoint))
             .WithSummary("update an account")
             .WithDescription("update an account")
-            .Produces<AccountUpdateRequestResponse>()
+            .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

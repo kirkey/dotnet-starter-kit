@@ -1,3 +1,4 @@
+using Accounting.Application.Accounts.Dtos;
 using Accounting.Application.Accounts.Get.v1;
 using FSH.Framework.Infrastructure.Auth.Policy;
 using MediatR;
@@ -20,7 +21,7 @@ public static class AccountGetEndpoint
             .WithName(nameof(AccountGetEndpoint))
             .WithSummary("gets an account by id")
             .WithDescription("gets an account by id")
-            .Produces<AccountResponse>()
+            .Produces<AccountDto>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

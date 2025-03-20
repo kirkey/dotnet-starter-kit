@@ -6,7 +6,12 @@ public class AccountUpdateRequestValidator : BaseRequestValidator<AccountUpdateR
 {
     public AccountUpdateRequestValidator()
     {
-        RuleFor(a => a.AccountCategory.ToString())
+        RuleFor(a => a.AccountCategory)
+            .NotEmpty()
+            .MinimumLength(1)
+            .MaximumLength(16);
+        
+        RuleFor(a => a.AccountType)
             .NotEmpty()
             .MinimumLength(1)
             .MaximumLength(16);

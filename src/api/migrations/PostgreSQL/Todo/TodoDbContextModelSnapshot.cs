@@ -18,7 +18,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Todo
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("todo")
-                .HasAnnotation("ProductVersion", "9.0.2")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -81,10 +81,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Todo
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(64)");
 
                     b.HasKey("Id");
 

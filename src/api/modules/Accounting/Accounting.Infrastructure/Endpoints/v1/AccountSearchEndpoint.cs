@@ -1,6 +1,6 @@
+using Accounting.Application.Accounts.Dtos;
 using FSH.Framework.Core.Paging;
 using FSH.Framework.Infrastructure.Auth.Policy;
-using Accounting.Application.Accounts.Get.v1;
 using Accounting.Application.Accounts.Search.v1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -23,7 +23,7 @@ public static class AccountSearchEndpoint
             .WithName(nameof(AccountSearchEndpoint))
             .WithSummary("Gets a list of accounts")
             .WithDescription("Gets a list of accounts with pagination and filtering support")
-            .Produces<PagedList<AccountResponse>>()
+            .Produces<PagedList<AccountDto>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

@@ -9,16 +9,17 @@ namespace Accounting.Application.Accounts.Update.v1;
 public sealed class AccountUpdateRequestHandler(
     ILogger<AccountUpdateRequestHandler> logger,
     [FromKeyedServices("accounting:accounts")] IRepository<Account> repository)
-    : IRequestHandler<AccountUpdateRequest, AccountUpdateRequestResponse>
+    : IRequestHandler<AccountUpdateRequest, DefaultIdType>
 {
-    public async Task<AccountUpdateRequestResponse> Handle(AccountUpdateRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(AccountUpdateRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
         var account = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = account ?? throw new AccountNotFoundException(request.Id);
 
-        var updatedAccount = account.Update(request.AccountCategory, request.Type,
+        var updatedAccount = account.Update(
+            request.AccountCategory, request.AccountType,
             request.ParentCode, request.Code,
             request.Name, request.Balance,
             request.Description, request.Notes);
@@ -27,6 +28,6 @@ public sealed class AccountUpdateRequestHandler(
 
         logger.LogInformation("account with id : {AccountId} updated.", account.Id);
 
-        return new AccountUpdateRequestResponse(account.Id);
+        return account.Id;
     }
 }

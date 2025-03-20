@@ -1,5 +1,8 @@
 using MediatR;
 
 namespace Accounting.Application.Accounts.Delete.v1;
-public sealed record AccountDeleteRequest(
-    DefaultIdType Id) : IRequest;
+
+public class AccountDeleteRequest(DefaultIdType id) : IRequest<DefaultIdType>
+{
+    public DefaultIdType Id { get; set; } = id;
+}

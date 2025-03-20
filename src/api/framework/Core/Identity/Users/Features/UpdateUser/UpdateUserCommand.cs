@@ -4,7 +4,7 @@ using MediatR;
 namespace FSH.Framework.Core.Identity.Users.Features.UpdateUser;
 public class UpdateUserCommand : IRequest
 {
-    public string Id { get; set; } = default!;
+    public string Id { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? PhoneNumber { get; set; }

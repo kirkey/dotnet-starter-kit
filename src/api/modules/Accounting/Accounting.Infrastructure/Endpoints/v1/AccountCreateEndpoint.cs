@@ -20,7 +20,7 @@ public static class AccountCreateEndpoint
             .WithName(nameof(AccountCreateEndpoint))
             .WithSummary("creates an account")
             .WithDescription("creates an account")
-            .Produces<AccountCreateRequestResponse>()
+            .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }

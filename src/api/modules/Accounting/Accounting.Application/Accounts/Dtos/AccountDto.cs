@@ -1,9 +1,8 @@
 using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
 
-namespace Accounting.Application.Accounts.Update.v1;
+namespace Accounting.Application.Accounts.Dtos;
 
-public class AccountUpdateRequest : BaseRequest, IRequest<DefaultIdType>
+public class AccountDto : BaseDto
 {
     public string AccountCategory { get; set; } = null!;
     public string AccountType { get; set; } = null!;
@@ -11,4 +10,3 @@ public class AccountUpdateRequest : BaseRequest, IRequest<DefaultIdType>
     public string Code { get; set; } = null!;
     public decimal Balance { get; set; }
 }
-    

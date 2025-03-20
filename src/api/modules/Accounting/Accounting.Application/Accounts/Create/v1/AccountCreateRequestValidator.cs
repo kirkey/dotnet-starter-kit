@@ -1,6 +1,5 @@
 using FluentValidation;
 using FSH.Framework.Core.Extensions;
-using FSH.Framework.Core.Extensions.Dto;
 
 namespace Accounting.Application.Accounts.Create.v1;
 
@@ -8,7 +7,12 @@ public class AccountCreateRequestValidator : BaseRequestValidator<AccountCreateR
 {
     public AccountCreateRequestValidator()
     {
-        RuleFor(a => a.AccountCategory.ToString())
+        RuleFor(a => a.AccountCategory)
+            .NotEmpty()
+            .MinimumLength(2)
+            .MaximumLength(16);
+        
+        RuleFor(a => a.AccountType)
             .NotEmpty()
             .MinimumLength(2)
             .MaximumLength(16);

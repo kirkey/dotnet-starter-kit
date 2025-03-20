@@ -1,10 +1,10 @@
+using Accounting.Application.Accounts.Dtos;
 using FSH.Framework.Core.Paging;
-using Accounting.Application.Accounts.Get.v1;
 using MediatR;
 
 namespace Accounting.Application.Accounts.Search.v1;
 
-public class AccountSearchRequest : PaginationFilter, IRequest<PagedList<AccountResponse>>
+public class AccountSearchRequest : PaginationFilter, IRequest<PagedList<AccountDto>>
 {
     public string? Code { get; set; }
     public string? Name { get; set; }

@@ -1,6 +1,6 @@
 namespace FSH.Framework.Core.Extensions.Dto;
 
-public record BaseDto<TId>
+public class BaseDto<TId>
 {
     public TId Id { get; protected init; } = default!;
     public string Name { get; set; } = string.Empty;
@@ -17,4 +17,4 @@ public record BaseDto<TId>
     public string? LastModifiedByUserName { get; set; }
 }
 
-public abstract record BaseDto : BaseDto<DefaultIdType>;
+public abstract class BaseDto : BaseDto<DefaultIdType>;

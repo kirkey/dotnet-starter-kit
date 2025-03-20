@@ -7,12 +7,6 @@ public class BaseRequestValidator<T> : AbstractValidator<T> where T : BaseReques
 {
     protected BaseRequestValidator()
     {
-        RuleFor(a => a.Type)
-            .NotNull()
-            .NotEmpty()
-            .MinimumLength(2)
-            .MaximumLength(64);
-        
         RuleFor(a => a.Name)
             .NotNull()
             .NotEmpty()
@@ -20,6 +14,9 @@ public class BaseRequestValidator<T> : AbstractValidator<T> where T : BaseReques
             .MaximumLength(1024);
     
         RuleFor(a => a.Description)
+            .MaximumLength(2048);
+        
+        RuleFor(a => a.Notes)
             .MaximumLength(2048);
     }
 }
