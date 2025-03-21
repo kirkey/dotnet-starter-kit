@@ -29,7 +29,7 @@ public partial class Accounts
                 new EntityField<AccountDto>(dto => dto.Name, "Name", "Name"),
                 new EntityField<AccountDto>(dto => dto.Balance, "Balance", "Balance")
             ],
-            enableAdvancedSearch: false,
+            enableAdvancedSearch: true,
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
