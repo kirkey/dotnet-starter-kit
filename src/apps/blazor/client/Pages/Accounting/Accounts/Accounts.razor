@@ -26,23 +26,24 @@
                 }
             </MudSelect>
         </MudItem>
+        <MudDivider />
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
             <MudTextField Label="Parent Code" For="@(() => context.ParentCode)" @bind-Value="context.ParentCode" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
             <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" />
         </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+            <MudNumericField Label="Balance" For="@(() => context.Balance)" @bind-Value="context.Balance" Format="N2"/>
+        </MudItem>
         <MudItem xs="12">
             <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudNumericField Label="Balance" For="@(() => context.Balance)" @bind-Value="context.Balance" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField Lines="2" Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" />
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" For="@(() => context.Description)" Label="Description" Lines="3" />
         </MudItem>
         <MudItem xs="12">
-            <MudTextField Lines="2" Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" />
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
         </MudItem>
         <MudItem xs="12">
             <MudItem>
