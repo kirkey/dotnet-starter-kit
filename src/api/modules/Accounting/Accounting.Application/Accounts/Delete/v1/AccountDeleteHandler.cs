@@ -20,7 +20,7 @@ public class AccountDeleteHandler(
 
         await repository.DeleteAsync(account, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("account with id: {AccountId} deleted", account.Id);
+        logger.LogInformation("account with id: {AccountId} successfully deleted", account.Id);
 
         return account.Id;
     }
