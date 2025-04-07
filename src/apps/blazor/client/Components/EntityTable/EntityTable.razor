@@ -14,33 +14,44 @@
     <ChildContent>
         @if (_canSearch && (Context.AdvancedSearchEnabled || AdvancedSearchContent is not null))
         {
-            <MudExpansionPanel @bind-Expanded="_advancedSearchExpanded"
-                               Class="mud-table mud-table-outlined"
-                               Style="padding:10px!important; margin-bottom:10px!important;border-radius: var(--mud-default-borderradius) !important;"
+            <MudExpansionPanel @bind-IsExpanded="_advancedSearchExpanded" 
+                               Class="mud-elevation-25" 
+                               Style="padding:5px!important; margin-bottom:10px!important;border-radius: var(--mud-default-borderradius) !important;" 
                                Text="Advanced Search and Settings">
-                <MudTextField @bind-Value="SearchString" Immediate="true"
-                    Placeholder="@($"Search for {Context.EntityNamePlural}")" Adornment="Adornment.Start"
-                    AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
-                    Style="flex:none!important;margin:0px!important" TextChanged="OnSearchStringChanged">
+                <MudTextField @bind-Value="SearchString"
+                              Placeholder="@($"Search for {Context.EntityNamePlural}")" Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Immediate=false
+                              Style="flex:none!important;margin:0px!important" TextChanged="OnSearchStringChanged">
                 </MudTextField>
-                   @* @if (Context.AdvancedSearchEnabled)
-                   {
-                       <div style="margin-top:10px!important">
-                           <MudCheckBox Label="All Columns" T="bool" Checked="Context.AllColumnsChecked"
-                               CheckedChanged="Context.AllColumnsCheckChanged"></MudCheckBox>
-                           @foreach (var field in Context.Fields)
-                           {
-                               <MudCheckBox T="bool" @bind-Checked="@field.CheckedForSearch" Label="@(field.DisplayName)"></MudCheckBox>
-                           }
-                       </div>
-                   } *@
+                @if (Context.AdvancedSearchEnabled)
+                {
+                    <MudPaper Elevation=0 Class="d-flex flex-wrap align-content-start" style="margin-top:10px!important">
+                        <MudCheckBox Class="mr-4" Label="All Columns" T="bool" Value="Context.AllColumnsChecked" ValueChanged="Context.AllColumnsCheckChanged"></MudCheckBox>
+                        @foreach (var field in Context.Fields
+                                          .Where(field => field.Type != typeof(bool)
+                                                          && field.Type != typeof(double)
+                                                          && field.Type != typeof(decimal)
+                                                          && field.Type != typeof(DateOnly)
+                                                          && field.Type != typeof(TimeOnly)
+                                                          && field.Type != typeof(DateTime)
+                                                          && field.Type != typeof(byte)))
+                        {
+                            <MudSwitch Class="mt-1" @bind-Value="@field.CheckedForSearch" Label="@(field.DisplayName)" Color="Color.Primary"></MudSwitch>
+                        }
+                    </MudPaper>
+                }
                 @AdvancedSearchContent
             </MudExpansionPanel>
         }
 
-        <FshTable @ref="_table" Outlined ServerData="@ServerReloadFunc" Items="@_entityList" Filter="LocalSearch"
-            Loading="@Loading" LoadingProgressColor="@Color.Secondary" ChildRowContent="@ChildRowContent">
-
+        <FshTable ChildRowContent="@ChildRowContent"
+                  Class="mud-elevation-25"
+                  Filter="LocalSearch" 
+                  Items="@_entityList" 
+                  Loading="@Loading" 
+                  LoadingProgressColor="@Color.Secondary" 
+                  @ref="_table" 
+                  ServerData="@ServerReloadFunc">
             <ToolBarContent>
                 <div class="justify-center mud-text-align-center">
                     @if (_canCreate)
@@ -93,11 +104,47 @@
                         }
                         else if (field.Type == typeof(bool))
                         {
-                            <MudCheckBox T="bool" Value="GetBooleanValue(field.ValueFunc(context))" ReadOnly Color="Color.Secondary"></MudCheckBox>
+                            <MudSwitch Value="@field.ValueFunc(context)" Color="Color.Tertiary" ReadOnly/>
+                        }
+                        else if (field.Type == typeof(int))
+                        {
+                            <MudText Align="Align.Right">
+                                @Convert.ToDouble(field.ValueFunc(context)).ToString("N0")
+                            </MudText>
+                        }
+                        else if (field.Type == typeof(double))
+                        {
+                            <MudText Align="Align.Right">
+                                @Convert.ToDouble(field.ValueFunc(context)).ToString("N2")
+                            </MudText>
+                        }
+                        else if (field.Type == typeof(decimal))
+                        {
+                            <MudText Align="Align.Right">
+                                @Convert.ToDecimal(field.ValueFunc(context)).ToString("N2")
+                            </MudText>
+                        }
+                        else if (field.Type == typeof(DateOnly))
+                        {
+                            <MudText Align="Align.Right">
+                                @Convert.ToDateTime(field.ValueFunc(context)).ToString("MMM dd, yyyy")
+                            </MudText>
+                        }
+                        else if (field.Type == typeof(TimeOnly))
+                        {
+                            <MudText Align="Align.Right">
+                                @Convert.ToDateTime(field.ValueFunc(context)).ToString("HH:mm")
+                            </MudText>
+                        }
+                        else if (field.Type == typeof(DateTime))
+                        {
+                            <MudText Align="Align.Right">
+                                @Convert.ToDateTime(field.ValueFunc(context)).ToString("MMM dd, HH:mm:ss")
+                            </MudText>
                         }
                         else
                         {
-                            <MudHighlighter Text="@field.ValueFunc(context)?.ToString()" HighlightedText="@SearchString" />
+                            <MudHighlighter Text="@field.ValueFunc(context)?.ToString()" HighlightedText="@SearchString"/>
                         }
                     </MudTd>
                 }
@@ -108,19 +155,49 @@
                     }
                     else if (HasActions)
                     {
-                        <MudMenu Label="Actions" Variant="Variant.Filled" DropShadow=false
-                            EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" direction="Direction.Left"
-                            offsetX="true">
+                        <MudMenu Label="Actions" Variant="Variant.Filled"
+                                 EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
                             @if (CanUpdateEntity(context))
                             {
-                                <MudMenuItem @onclick="@(() => InvokeModal(context))">Edit</MudMenuItem>
+                                <MudMenuItem Icon="@Icons.Material.Filled.EditNote"
+                                             OnClick="@(() => InvokeModal(context))">
+                                    Edit
+                                </MudMenuItem>
                             }
+                            @if (CanUpdateEntity(context))
+                            {
+                                <MudMenuItem
+                                    Icon="@Icons.Material.Filled.AutoFixHigh"
+                                    OnClick="@(() => InvokeUpdateAsync(context))">
+                                    Update
+                                </MudMenuItem>
+                            }
+                            @*@if (_canCreate && CanUpdateEntity(context))
+                            {
+                                <MudMenuItem Icon="@Icons.Material.Filled.ContentCopy"
+                                             OnClick="@(() => InvokeModal(entityToDuplicate: context))">
+                                    Duplicate
+                                </MudMenuItem>
+                            }*@
                             @if (CanDeleteEntity(context))
                             {
-                                <MudMenuItem Style="color:red!important" @onclick="@(() => Delete(context))">Delete</MudMenuItem>
+                                <MudMenuItem Icon="@Icons.Material.Filled.Delete"
+                                             OnClick="@(() => Delete(context))"
+                                             Style="color:red!important">
+                                    Delete
+                                </MudMenuItem>
                             }
+                            @*@if (IsViewableAuditLogs)
+                            {
+                                <MudDivider/>
+                                <MudMenuItem Icon="@Icons.Material.Filled.ListAlt"
+                                             Href=@($"/item-logs/{Context.IdFunc(context)}")>
+                                    Audit Logs
+                                </MudMenuItem>
+                            }*@
                             @if (ExtraActions is not null)
                             {
+                                <MudDivider/>
                                 @ExtraActions(context)
                             }
                         </MudMenu>

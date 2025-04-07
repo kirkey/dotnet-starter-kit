@@ -2,6 +2,7 @@ using FSH.Starter.Blazor.Client.Components.Common;
 using FSH.Starter.Blazor.Client.Components.Dialogs;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using FSH.Starter.Blazor.Infrastructure.Auth;
+using FSH.Starter.Blazor.Infrastructure.Preferences;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
@@ -41,8 +42,15 @@ public partial class EntityTable<TEntity, TId, TRequest>
     private IEnumerable<TEntity>? _entityList;
     private int _totalItems;
 
+    private ClientPreference? _clientPreference;
+    
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is not ClientPreference clientPreference)
+            clientPreference = new ClientPreference();
+
+        _clientPreference = clientPreference;
+        
         var state = await AuthState;
         _canSearch = await CanDoActionAsync(Context.SearchAction, state);
         _canCreate = await CanDoActionAsync(Context.CreateAction, state);
@@ -123,22 +131,24 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
     private async Task<TableData<TEntity>> ServerReload(TableState state, CancellationToken cancellationToken)
     {
-        if (!Loading && Context.ServerContext is not null)
+        if (Loading || Context.ServerContext is null)
         {
-            Loading = true;
-
-            var filter = GetPaginationFilter(state);
-
-            if (await ApiHelper.ExecuteCallGuardedAsync(
-                    () => Context.ServerContext.SearchFunc(filter), Toast, Navigation)
-                is { } result)
-            {
-                _totalItems = result.TotalCount;
-                _entityList = result.Items;
-            }
-
-            Loading = false;
+            return new TableData<TEntity> { TotalItems = _totalItems, Items = _entityList };
         }
+
+        Loading = true;
+
+        var filter = GetPaginationFilter(state);
+
+        if (await ApiHelper.ExecuteCallGuardedAsync(
+                () => Context.ServerContext.SearchFunc(filter), Toast, Navigation)
+            is { } result)
+        {
+            _totalItems = result.TotalCount;
+            _entityList = result.Items;
+        }
+
+        Loading = false;
 
         return new TableData<TEntity> { TotalItems = _totalItems, Items = _entityList };
     }
@@ -162,15 +172,17 @@ public partial class EntityTable<TEntity, TId, TRequest>
             OrderBy = orderings ?? []
         };
 
-        if (!Context.AllColumnsChecked)
+        if (Context.AllColumnsChecked)
         {
-            filter.AdvancedSearch = new Search
-            {
-                Fields = Context.SearchFields,
-                Keyword = filter.Keyword
-            };
-            filter.Keyword = null;
+            return filter;
         }
+
+        filter.AdvancedSearch = new Search
+        {
+            Fields = Context.SearchFields,
+            Keyword = filter.Keyword
+        };
+        filter.Keyword = null;
 
         return filter;
     }
@@ -243,6 +255,39 @@ public partial class EntityTable<TEntity, TId, TRequest>
         if (!result!.Canceled)
         {
             await ReloadDataAsync();
+        }
+    }
+    
+    private async Task InvokeUpdateAsync(TEntity? entity = default)
+    {
+        const string transactionAction = "Update";
+        var parameters = new DialogParameters
+        {
+            { nameof(TransactionConfirmation.TransactionIcon), Icons.Material.Filled.AutoFixHigh },
+            { nameof(TransactionConfirmation.TransactionTitle), $"{transactionAction} Confirmation" },
+            { nameof(TransactionConfirmation.ContentText), $"Do you want to Update this {Context.EntityName}?" },
+            { nameof(TransactionConfirmation.ConfirmText), transactionAction },
+            { nameof(TransactionConfirmation.ButtonColor), Color.Secondary }
+        };
+
+        var dialog = await DialogService.ShowAsync<TransactionConfirmation>(transactionAction, parameters)
+            .ConfigureAwait(false);
+        var result = await dialog.Result.ConfigureAwait(false);
+        if (result is { Canceled: false })
+        {
+            _ = Context.IdFunc ?? throw new InvalidOperationException("IdFunc can't be null!");
+            var id = Context.IdFunc(entity!);
+
+            _ = Context.UpdateFunc ?? throw new InvalidOperationException("UpdateFunc can't be null!");
+            Func<TRequest, Task> saveFunc = request => Context.UpdateFunc(id, request);
+
+            var requestModel = entity!.Adapt<TRequest>();
+
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Context.UpdateFunc(id, requestModel),
+                Toast).ConfigureAwait(false);
+
+            await ReloadDataAsync().ConfigureAwait(false);
         }
     }
 
