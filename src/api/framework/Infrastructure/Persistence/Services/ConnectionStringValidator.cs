@@ -8,7 +8,6 @@ namespace FSH.Framework.Infrastructure.Persistence.Services;
 internal sealed class ConnectionStringValidator(IOptions<DatabaseOptions> dbSettings, ILogger<ConnectionStringValidator> logger) : IConnectionStringValidator
 {
     private readonly DatabaseOptions _dbSettings = dbSettings.Value;
-    private readonly ILogger<ConnectionStringValidator> _logger = logger;
 
     public bool TryValidate(string connectionString, string? dbProvider = null)
     {
@@ -36,7 +35,7 @@ internal sealed class ConnectionStringValidator(IOptions<DatabaseOptions> dbSett
         catch (Exception ex)
         {
 #pragma warning disable S6667 // Logging in a catch clause should pass the caught exception as a parameter.
-            _logger.LogError("Connection String Validation Exception : {Error}", ex.Message);
+            logger.LogError("Connection String Validation Exception : {Error}", ex.Message);
 #pragma warning restore S6667 // Logging in a catch clause should pass the caught exception as a parameter.
             return false;
         }

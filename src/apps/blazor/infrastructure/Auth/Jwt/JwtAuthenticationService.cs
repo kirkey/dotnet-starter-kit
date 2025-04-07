@@ -21,9 +21,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
 public sealed class JwtAuthenticationService(PersistentComponentState state, ILocalStorageService localStorage, IApiClient client, NavigationManager navigation) : AuthenticationStateProvider, IAuthenticationService, IAccessTokenProvider
 {
     private readonly SemaphoreSlim _semaphore = new(1, 1);
-    private readonly IApiClient _client = client;
-    private readonly ILocalStorageService _localStorage = localStorage;
-    private readonly NavigationManager _navigation = navigation;
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
@@ -47,7 +44,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
 
     public async Task<bool> LoginAsync(string tenantId, TokenGenerationCommand request)
     {
-        var tokenResponse = await _client.TokenGenerationEndpointAsync(tenantId, "Web", request).ConfigureAwait(false);
+        var tokenResponse = await client.TokenGenerationEndpointAsync(tenantId, "Web", request).ConfigureAwait(false);
 
         string? token = tokenResponse.Token;
         string? refreshToken = tokenResponse.RefreshToken;
@@ -60,7 +57,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
         await CacheAuthTokens(token, refreshToken).ConfigureAwait(false);
 
         // Get permissions for the current user and add them to the cache
-        var permissions = await _client.GetUserPermissionsAsync().ConfigureAwait(false);
+        var permissions = await client.GetUserPermissionsAsync().ConfigureAwait(false);
         await CachePermissions(permissions).ConfigureAwait(false);
 
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
@@ -74,7 +71,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
 
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
 
-        _navigation.NavigateTo("/login");
+        navigation.NavigateTo("/login");
     }
 
     public void NavigateToExternalLogin(string returnUrl)
@@ -85,7 +82,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
     public async Task ReLoginAsync(string returnUrl)
     {
         await LogoutAsync().ConfigureAwait(false);
-        _navigation.NavigateTo(returnUrl);
+        navigation.NavigateTo(returnUrl);
     }
 
     public async ValueTask<AccessTokenResult> RequestAccessToken(AccessTokenRequestOptions options)
@@ -143,7 +140,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
 
         try
         {
-            var tokenResponse = await _client.RefreshTokenEndpointAsync(tenantKey, "Web", request).ConfigureAwait(false);
+            var tokenResponse = await client.RefreshTokenEndpointAsync(tenantKey, "Web", request).ConfigureAwait(false);
 
             await CacheAuthTokens(tokenResponse.Token, tokenResponse.RefreshToken).ConfigureAwait(false);
 
@@ -157,34 +154,34 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
 
     private async ValueTask CacheAuthTokens(string? token, string? refreshToken)
     {
-        await _localStorage.SetItemAsync(StorageConstants.Local.AuthToken, token).ConfigureAwait(false);
-        await _localStorage.SetItemAsync(StorageConstants.Local.RefreshToken, refreshToken).ConfigureAwait(false);
+        await localStorage.SetItemAsync(StorageConstants.Local.AuthToken, token).ConfigureAwait(false);
+        await localStorage.SetItemAsync(StorageConstants.Local.RefreshToken, refreshToken).ConfigureAwait(false);
     }
 
     private ValueTask CachePermissions(ICollection<string> permissions)
     {
-        return _localStorage.SetItemAsync(StorageConstants.Local.Permissions, permissions);
+        return localStorage.SetItemAsync(StorageConstants.Local.Permissions, permissions);
     }
 
     private async Task ClearCacheAsync()
     {
-        await _localStorage.RemoveItemAsync(StorageConstants.Local.AuthToken).ConfigureAwait(false);
-        await _localStorage.RemoveItemAsync(StorageConstants.Local.RefreshToken).ConfigureAwait(false);
-        await _localStorage.RemoveItemAsync(StorageConstants.Local.Permissions).ConfigureAwait(false);
+        await localStorage.RemoveItemAsync(StorageConstants.Local.AuthToken).ConfigureAwait(false);
+        await localStorage.RemoveItemAsync(StorageConstants.Local.RefreshToken).ConfigureAwait(false);
+        await localStorage.RemoveItemAsync(StorageConstants.Local.Permissions).ConfigureAwait(false);
     }
     private ValueTask<string?> GetCachedAuthTokenAsync()
     {
-        return _localStorage.GetItemAsync<string?>(StorageConstants.Local.AuthToken);
+        return localStorage.GetItemAsync<string?>(StorageConstants.Local.AuthToken);
     }
 
     private ValueTask<string?> GetCachedRefreshTokenAsync()
     {
-        return _localStorage.GetItemAsync<string>(StorageConstants.Local.RefreshToken);
+        return localStorage.GetItemAsync<string>(StorageConstants.Local.RefreshToken);
     }
 
     private ValueTask<ICollection<string>?> GetCachedPermissionsAsync()
     {
-        return _localStorage.GetItemAsync<ICollection<string>>(StorageConstants.Local.Permissions);
+        return localStorage.GetItemAsync<ICollection<string>>(StorageConstants.Local.Permissions);
     }
 
     private IEnumerable<Claim> GetClaimsFromJwt(string jwt)

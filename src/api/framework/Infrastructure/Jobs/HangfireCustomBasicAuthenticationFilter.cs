@@ -10,7 +10,6 @@ namespace FSH.Framework.Infrastructure.Jobs;
 public class HangfireCustomBasicAuthenticationFilter(ILogger<HangfireCustomBasicAuthenticationFilter> logger) : IDashboardAuthorizationFilter
 {
     private const string _AuthenticationScheme = "Basic";
-    private readonly ILogger<HangfireCustomBasicAuthenticationFilter> _logger = logger;
     public string User { get; set; } = default!;
     public string Pass { get; set; } = default!;
 
@@ -26,7 +25,7 @@ public class HangfireCustomBasicAuthenticationFilter(ILogger<HangfireCustomBasic
 
         if (MissingAuthorizationHeader(header))
         {
-            _logger.LogInformation("Request is missing Authorization Header");
+            logger.LogInformation("Request is missing Authorization Header");
             SetChallengeResponse(httpContext);
             return false;
         }
@@ -35,7 +34,7 @@ public class HangfireCustomBasicAuthenticationFilter(ILogger<HangfireCustomBasic
 
         if (NotBasicAuthentication(authValues))
         {
-            _logger.LogInformation("Request is NOT BASIC authentication");
+            logger.LogInformation("Request is NOT BASIC authentication");
             SetChallengeResponse(httpContext);
             return false;
         }
@@ -44,18 +43,18 @@ public class HangfireCustomBasicAuthenticationFilter(ILogger<HangfireCustomBasic
 
         if (tokens.AreInvalid())
         {
-            _logger.LogInformation("Authentication tokens are invalid (empty, null, whitespace)");
+            logger.LogInformation("Authentication tokens are invalid (empty, null, whitespace)");
             SetChallengeResponse(httpContext);
             return false;
         }
 
         if (tokens.CredentialsMatch(User, Pass))
         {
-            _logger.LogInformation("Awesome, authentication tokens match configuration!");
+            logger.LogInformation("Awesome, authentication tokens match configuration!");
             return true;
         }
 
-        _logger.LogInformation("auth tokens [{UserName}] [{Password}] do not match configuration", tokens.Username, tokens.Password);
+        logger.LogInformation("auth tokens [{UserName}] [{Password}] do not match configuration", tokens.Username, tokens.Password);
 
         SetChallengeResponse(httpContext);
         return false;
@@ -87,10 +86,8 @@ public class HangfireCustomBasicAuthenticationFilter(ILogger<HangfireCustomBasic
 
 public class BasicAuthenticationTokens(string[] tokens)
 {
-    private readonly string[] _tokens = tokens;
-
-    public string Username => _tokens[0];
-    public string Password => _tokens[1];
+    public string Username => tokens[0];
+    public string Password => tokens[1];
 
     public bool AreInvalid()
     {
@@ -109,6 +106,6 @@ public class BasicAuthenticationTokens(string[] tokens)
 
     private bool ContainsTwoTokens()
     {
-        return _tokens.Length == 2;
+        return tokens.Length == 2;
     }
 }

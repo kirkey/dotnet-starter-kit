@@ -14,7 +14,6 @@ public class FshDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenant
     IOptions<DatabaseOptions> settings)
     : MultiTenantDbContext(multiTenantContextAccessor, options)
 {
-    private readonly IPublisher _publisher = publisher;
     private readonly DatabaseOptions _settings = settings.Value;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,7 +53,7 @@ public class FshDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenant
 
         foreach (var domainEvent in domainEvents)
         {
-            await _publisher.Publish(domainEvent).ConfigureAwait(false);
+            await publisher.Publish(domainEvent).ConfigureAwait(false);
         }
     }
 }

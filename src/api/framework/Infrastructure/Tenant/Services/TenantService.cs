@@ -13,9 +13,7 @@ namespace FSH.Framework.Infrastructure.Tenant.Services;
 
 public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, IOptions<DatabaseOptions> config, IServiceProvider serviceProvider) : ITenantService
 {
-    private readonly IMultiTenantStore<FshTenantInfo> _tenantStore = tenantStore;
     private readonly DatabaseOptions _config = config.Value;
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public async Task<string> ActivateAsync(string id, CancellationToken cancellationToken)
     {
@@ -28,7 +26,7 @@ public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, 
 
         tenant.Activate();
 
-        await _tenantStore.TryUpdateAsync(tenant).ConfigureAwait(false);
+        await tenantStore.TryUpdateAsync(tenant).ConfigureAwait(false);
 
         return $"tenant {id} is now activated";
     }
@@ -42,7 +40,7 @@ public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, 
         }
 
         FshTenantInfo tenant = new(request.Id, request.Name, connectionString, request.AdminEmail, request.Issuer);
-        await _tenantStore.TryAddAsync(tenant).ConfigureAwait(false);
+        await tenantStore.TryAddAsync(tenant).ConfigureAwait(false);
 
         await InitializeDatabase(tenant).ConfigureAwait(false);
 
@@ -52,7 +50,7 @@ public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, 
     private async Task InitializeDatabase(FshTenantInfo tenant)
     {
         // First create a new scope
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         // Then set current tenant so the right connection string is used
         scope.ServiceProvider.GetRequiredService<IMultiTenantContextSetter>()
@@ -79,19 +77,19 @@ public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, 
         }
 
         tenant.Deactivate();
-        await _tenantStore.TryUpdateAsync(tenant).ConfigureAwait(false);
+        await tenantStore.TryUpdateAsync(tenant).ConfigureAwait(false);
         return $"tenant {id} is now deactivated";
     }
 
     public async Task<bool> ExistsWithIdAsync(string id) =>
-        await _tenantStore.TryGetAsync(id).ConfigureAwait(false) is not null;
+        await tenantStore.TryGetAsync(id).ConfigureAwait(false) is not null;
 
     public async Task<bool> ExistsWithNameAsync(string name) =>
-        (await _tenantStore.GetAllAsync().ConfigureAwait(false)).Any(t => t.Name == name);
+        (await tenantStore.GetAllAsync().ConfigureAwait(false)).Any(t => t.Name == name);
 
     public async Task<List<TenantDetail>> GetAllAsync()
     {
-        var tenants = (await _tenantStore.GetAllAsync().ConfigureAwait(false)).Adapt<List<TenantDetail>>();
+        var tenants = (await tenantStore.GetAllAsync().ConfigureAwait(false)).Adapt<List<TenantDetail>>();
         return tenants;
     }
 
@@ -103,11 +101,11 @@ public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, 
     {
         var tenant = await GetTenantInfoAsync(id).ConfigureAwait(false);
         tenant.SetValidity(extendedExpiryDate);
-        await _tenantStore.TryUpdateAsync(tenant).ConfigureAwait(false);
+        await tenantStore.TryUpdateAsync(tenant).ConfigureAwait(false);
         return tenant.ValidUpto;
     }
 
     private async Task<FshTenantInfo> GetTenantInfoAsync(string id) =>
-    await _tenantStore.TryGetAsync(id).ConfigureAwait(false)
+    await tenantStore.TryGetAsync(id).ConfigureAwait(false)
         ?? throw new NotFoundException($"{typeof(FshTenantInfo).Name} {id} Not Found.");
 }

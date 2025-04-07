@@ -14,7 +14,6 @@ using MimeKit;
 public class SmtpMailService(IOptions<MailOptions> settings, ILogger<SmtpMailService> logger) : IMailService
 {
     private readonly MailOptions _settings = settings.Value;
-    private readonly ILogger<SmtpMailService> _logger = logger;
 
     public async Task SendAsync(MailRequest request, CancellationToken ct)
     {
@@ -83,7 +82,7 @@ public class SmtpMailService(IOptions<MailOptions> settings, ILogger<SmtpMailSer
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while sending email: {Message}", ex.Message);
+            logger.LogError(ex, "An error occurred while sending email: {Message}", ex.Message);
         }
         finally
         {

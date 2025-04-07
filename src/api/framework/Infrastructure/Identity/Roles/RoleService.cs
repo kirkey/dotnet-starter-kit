@@ -18,18 +18,16 @@ public class RoleService(RoleManager<FshRole> roleManager,
     IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor,
     ICurrentUser currentUser) : IRoleService
 {
-    private readonly RoleManager<FshRole> _roleManager = roleManager;
-
     public async Task<IEnumerable<RoleDto>> GetRolesAsync()
     {
-        return await Task.Run(() => _roleManager.Roles
+        return await Task.Run(() => roleManager.Roles
             .Select(role => new RoleDto { Id = role.Id, Name = role.Name!, Description = role.Description })
             .ToList()).ConfigureAwait(false);
     }
 
     public async Task<RoleDto?> GetRoleAsync(string id)
     {
-        FshRole? role = await _roleManager.FindByIdAsync(id).ConfigureAwait(false);
+        FshRole? role = await roleManager.FindByIdAsync(id).ConfigureAwait(false);
 
         _ = role ?? throw new NotFoundException("role not found");
 
@@ -38,18 +36,18 @@ public class RoleService(RoleManager<FshRole> roleManager,
 
     public async Task<RoleDto> CreateOrUpdateRoleAsync(CreateOrUpdateRoleCommand command)
     {
-        FshRole? role = await _roleManager.FindByIdAsync(command.Id).ConfigureAwait(false);
+        FshRole? role = await roleManager.FindByIdAsync(command.Id).ConfigureAwait(false);
 
         if (role != null)
         {
             role.Name = command.Name;
             role.Description = command.Description;
-            await _roleManager.UpdateAsync(role).ConfigureAwait(false);
+            await roleManager.UpdateAsync(role).ConfigureAwait(false);
         }
         else
         {
             role = new FshRole(command.Name, command.Description);
-            await _roleManager.CreateAsync(role).ConfigureAwait(false);
+            await roleManager.CreateAsync(role).ConfigureAwait(false);
         }
 
         return new RoleDto { Id = role.Id, Name = role.Name!, Description = role.Description };
@@ -57,11 +55,11 @@ public class RoleService(RoleManager<FshRole> roleManager,
 
     public async Task DeleteRoleAsync(string id)
     {
-        FshRole? role = await _roleManager.FindByIdAsync(id).ConfigureAwait(false);
+        FshRole? role = await roleManager.FindByIdAsync(id).ConfigureAwait(false);
 
         _ = role ?? throw new NotFoundException("role not found");
 
-        await _roleManager.DeleteAsync(role).ConfigureAwait(false);
+        await roleManager.DeleteAsync(role).ConfigureAwait(false);
     }
 
     public async Task<RoleDto> GetWithPermissionsAsync(string id, CancellationToken cancellationToken)
@@ -79,7 +77,7 @@ public class RoleService(RoleManager<FshRole> roleManager,
 
     public async Task<string> UpdatePermissionsAsync(UpdatePermissionsCommand request)
     {
-        var role = await _roleManager.FindByIdAsync(request.RoleId).ConfigureAwait(false);
+        var role = await roleManager.FindByIdAsync(request.RoleId).ConfigureAwait(false);
         _ = role ?? throw new NotFoundException("role not found");
         if (role.Name == FshRoles.Admin)
         {
@@ -92,12 +90,12 @@ public class RoleService(RoleManager<FshRole> roleManager,
             request.Permissions.RemoveAll(u => u.StartsWith("Permissions.Root.", StringComparison.InvariantCultureIgnoreCase));
         }
 
-        var currentClaims = await _roleManager.GetClaimsAsync(role).ConfigureAwait(false);
+        var currentClaims = await roleManager.GetClaimsAsync(role).ConfigureAwait(false);
 
         // Remove permissions that were previously selected
         foreach (var claim in currentClaims.Where(c => !request.Permissions.Exists(p => p == c.Value)))
         {
-            var result = await _roleManager.RemoveClaimAsync(role, claim).ConfigureAwait(false);
+            var result = await roleManager.RemoveClaimAsync(role, claim).ConfigureAwait(false);
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(error => error.Description).ToList();

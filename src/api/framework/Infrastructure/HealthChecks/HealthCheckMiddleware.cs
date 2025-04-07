@@ -6,11 +6,9 @@ namespace FSH.Framework.Infrastructure.HealthChecks;
 
 public class HealthCheckMiddleware(HealthCheckService healthCheckService)
 {
-    private readonly HealthCheckService _healthCheckService = healthCheckService;
-
     public async Task InvokeAsync(HttpContext context)
     {
-        var report = await _healthCheckService.CheckHealthAsync().ConfigureAwait(false);
+        var report = await healthCheckService.CheckHealthAsync().ConfigureAwait(false);
 
         var response = new
         {

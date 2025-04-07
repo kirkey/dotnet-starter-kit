@@ -8,8 +8,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Preferences;
 public class ClientPreferenceManager(
     ILocalStorageService localStorageService) : IClientPreferenceManager
 {
-    private readonly ILocalStorageService _localStorageService = localStorageService;
-
     public async Task<bool> ToggleDarkModeAsync()
     {
         if (await GetPreference().ConfigureAwait(false) is ClientPreference preference)
@@ -121,11 +119,11 @@ public class ClientPreferenceManager(
 
     public async Task<IPreference> GetPreference()
     {
-        return await _localStorageService.GetItemAsync<ClientPreference>(Preference).ConfigureAwait(false) ?? new ClientPreference();
+        return await localStorageService.GetItemAsync<ClientPreference>(Preference).ConfigureAwait(false) ?? new ClientPreference();
     }
 
     public async Task SetPreference(IPreference preference)
     {
-        await _localStorageService.SetItemAsync(Preference, preference as ClientPreference).ConfigureAwait(false);
+        await localStorageService.SetItemAsync(Preference, preference as ClientPreference).ConfigureAwait(false);
     }
 }
