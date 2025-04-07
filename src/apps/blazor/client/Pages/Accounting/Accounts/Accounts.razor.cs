@@ -27,7 +27,7 @@ public partial class Accounts
                 new EntityField<AccountDto>(dto => dto.ParentCode, "Parent", "ParentCode"),
                 new EntityField<AccountDto>(dto => dto.Code, "Code", "Code"),
                 new EntityField<AccountDto>(dto => dto.Name, "Name", "Name"),
-                new EntityField<AccountDto>(dto => dto.Balance, "Balance", "Balance")
+                new EntityField<AccountDto>(dto => dto.Balance, "Balance", "Balance", typeof(decimal)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
