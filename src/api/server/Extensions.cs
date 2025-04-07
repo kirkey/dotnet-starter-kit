@@ -28,9 +28,7 @@ public static class Extensions
 
         //register mediatr
         builder.Services.AddMediatR(configuration =>
-        {
-            configuration.RegisterServicesFromAssemblies(assemblies);
-        });
+            configuration.RegisterServicesFromAssemblies(assemblies));
 
         //register module services
         builder.RegisterAccountingServices();

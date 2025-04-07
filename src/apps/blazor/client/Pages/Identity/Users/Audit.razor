@@ -1,16 +1,13 @@
 ﻿@page "/identity/users/{Id:guid}/audit-trail"
 @page "/identity/audit-trail"
 
-
 <PageHeader Title="Audit Trail" Header="Audit Trail" SubHeader="@_subHeader" />
 
 <EntityTable TEntity="RelatedAuditTrail" TId="DefaultIdType" TRequest="object" Context="@Context">
-
     <ActionsContent>
         <MudButton Variant="Variant.Filled" DropShadow="false" EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary"
                    OnClick="@(() => ShowBtnPress(context.Id))">@((context.ShowDetails == true) ? "Hide" : "Show") Trail Details</MudButton>
     </ActionsContent>
-
     <ChildRowContent>
         @if (context.ShowDetails)
         {
@@ -55,7 +52,6 @@
                                         <tr class="mud-table-row">
                                             <td>Previous Values</td>
                                             <td>
-
                                                 <MudItem>
                                                     @foreach (var value in context.PreviousValues.Trim('{').Trim('}').Split(','))
                                                     {
@@ -79,7 +75,6 @@
                                         <tr class="mud-table-row">
                                             <td>Current Values</td>
                                             <td>
-
                                                 <MudItem>
                                                     @foreach (var value in context.NewValues.Trim('{').Trim('}').Split(','))
                                                     {

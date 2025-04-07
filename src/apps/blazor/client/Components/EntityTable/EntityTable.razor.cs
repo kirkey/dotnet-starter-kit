@@ -17,31 +17,17 @@ public partial class EntityTable<TEntity, TId, TRequest>
     [EditorRequired]
     public EntityTableContext<TEntity, TId, TRequest> Context { get; set; } = default!;
 
-    [Parameter]
-    public bool Loading { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public string? SearchString { get; set; }
+    [Parameter] public EventCallback<string> SearchStringChanged { get; set; }
+    [Parameter] public RenderFragment? AdvancedSearchContent { get; set; }
+    [Parameter] public RenderFragment<TEntity>? ActionsContent { get; set; }
+    [Parameter] public RenderFragment<TEntity>? ExtraActions { get; set; }
+    [Parameter] public RenderFragment<TEntity>? ChildRowContent { get; set; }
+    [Parameter] public RenderFragment<TRequest>? EditFormContent { get; set; }
 
-    [Parameter]
-    public string? SearchString { get; set; }
-    [Parameter]
-    public EventCallback<string> SearchStringChanged { get; set; }
-
-    [Parameter]
-    public RenderFragment? AdvancedSearchContent { get; set; }
-
-    [Parameter]
-    public RenderFragment<TEntity>? ActionsContent { get; set; }
-    [Parameter]
-    public RenderFragment<TEntity>? ExtraActions { get; set; }
-    [Parameter]
-    public RenderFragment<TEntity>? ChildRowContent { get; set; }
-
-    [Parameter]
-    public RenderFragment<TRequest>? EditFormContent { get; set; }
-
-    [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
-    [Inject]
-    protected IAuthorizationService AuthService { get; set; } = default!;
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [Inject] protected IAuthorizationService AuthService { get; set; } = default!;
 
     private bool _canSearch;
     private bool _canCreate;

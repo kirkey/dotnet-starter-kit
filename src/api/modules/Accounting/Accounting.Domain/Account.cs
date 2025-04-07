@@ -7,12 +7,10 @@ public class Account : AuditableEntity, IAggregateRoot
 {
     public string AccountCategory { get; private set; }
     public string AccountType { get; private set; }
-    public string ParentCode { get; private set; } = string.Empty;
-    public string Code { get; private set; } = string.Empty;
+    public string ParentCode { get; private set; }
+    public string Code { get; private set; }
     public decimal Balance { get; private set; }
     
-    private Account() { }
-
     private Account(DefaultIdType id, string accountCategory, string accountType, string parentCode, string code, string name, decimal balance,
         string? description = null, string? notes = null)
     {
