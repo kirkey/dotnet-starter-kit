@@ -1,8 +1,8 @@
 @page "/accounts"
 
-<PageHeader Title="Accounts" Header="Accounts" SubHeader="Manage Ledger Accounts." />
+<PageHeader Title="Chart Of Accounts" Header="Chart Of Accounts" SubHeader="Manage Ledger Accounts." />
 
-<EntityTable @ref="_table" TEntity="AccountDto" TId="DefaultIdType" TRequest="AccountViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="ChartOfAccountDto" TId="DefaultIdType" TRequest="AccountViewModel" Context="@Context">
     <EditFormContent>
         @if (!Context.AddEditModal.IsCreate)
         {

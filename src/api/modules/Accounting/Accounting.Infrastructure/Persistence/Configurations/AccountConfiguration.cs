@@ -5,11 +5,11 @@ using Shared.Constants;
 
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
-public class AccountConfiguration : IEntityTypeConfiguration<Account>
+public class AccountConfiguration : IEntityTypeConfiguration<ChartOfAccount>
 {
-    public void Configure(EntityTypeBuilder<Account> builder)
+    public void Configure(EntityTypeBuilder<ChartOfAccount> builder)
     {
-        builder.ToTable("accounts", schema: SchemaNames.Accounting);
+        builder.ToTable("ChartOfAccounts", schema: SchemaNames.Accounting);
 
         builder.HasKey(x => x.Id);
 

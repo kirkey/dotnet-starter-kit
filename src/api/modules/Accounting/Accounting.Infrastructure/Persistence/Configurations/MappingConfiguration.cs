@@ -1,4 +1,4 @@
-using Accounting.Application.Accounts.Dtos;
+using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Domain;
 using Mapster;
 
@@ -8,7 +8,7 @@ public static class MappingConfiguration
 {
     public static void RegisterMappings()
     {
-        TypeAdapterConfig<Account, AccountDto>.NewConfig()
-            .ConstructUsing(src => new AccountDto());
+        TypeAdapterConfig<ChartOfAccount, ChartOfAccountDto>.NewConfig()
+            .ConstructUsing(src => new ChartOfAccountDto());
     }
 }

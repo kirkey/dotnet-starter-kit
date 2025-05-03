@@ -1,5 +1,5 @@
+using Accounting.Application.ChartOfAccounts.Delete.v1;
 using FSH.Framework.Infrastructure.Auth.Policy;
-using Accounting.Application.Accounts.Delete.v1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +14,7 @@ public static class AccountDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new AccountDeleteRequest(id)).ConfigureAwait(false);
+                await mediator.Send(new ChartOfAccountDeleteRequest(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(AccountDeleteEndpoint))

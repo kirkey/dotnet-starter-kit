@@ -28,10 +28,10 @@ internal sealed class AccountingDbInitializer(
         const decimal balance = 5000.00M;
         const string description = "Main cash account for general operations";
         
-        if (await context.Accounts.FirstOrDefaultAsync(a => a.Code == code, cancellationToken).ConfigureAwait(false) is null)
+        if (await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.Code == code, cancellationToken).ConfigureAwait(false) is null)
         {
-            var account = Account.Create(category, type, parentCode, code, name, balance, description);
-            await context.Accounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
+            var account = ChartOfAccount.Create(category, type, parentCode, code, name, balance, description);
+            await context.ChartOfAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             logger.LogInformation("[{Tenant}] seeding default accounting data", context.TenantInfo!.Identifier);
         }

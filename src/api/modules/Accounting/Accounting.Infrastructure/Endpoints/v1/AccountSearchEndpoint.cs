@@ -1,7 +1,7 @@
-using Accounting.Application.Accounts.Dtos;
+using Accounting.Application.ChartOfAccounts.Dtos;
+using Accounting.Application.ChartOfAccounts.Search.v1;
 using FSH.Framework.Core.Paging;
 using FSH.Framework.Infrastructure.Auth.Policy;
-using Accounting.Application.Accounts.Search.v1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +15,7 @@ public static class AccountSearchEndpoint
     internal static RouteHandlerBuilder MapAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] AccountSearchRequest command) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] ChartOfAccountSearchRequest command) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -23,7 +23,7 @@ public static class AccountSearchEndpoint
             .WithName(nameof(AccountSearchEndpoint))
             .WithSummary("Gets a list of accounts")
             .WithDescription("Gets a list of accounts with pagination and filtering support")
-            .Produces<PagedList<AccountDto>>()
+            .Produces<PagedList<ChartOfAccountDto>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

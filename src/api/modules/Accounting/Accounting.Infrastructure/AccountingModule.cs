@@ -18,7 +18,7 @@ public static class AccountingModule
     {
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            var accountGroup = app.MapGroup("accounts").WithTags("accounts");
+            var accountGroup = app.MapGroup("ChartOfAccounts").WithTags("ChartOfAccounts");
             accountGroup.MapAccountCreationEndpoint();
             accountGroup.MapAccountGetEndpoint();
             accountGroup.MapAccountSearchEndpoint();
@@ -32,8 +32,8 @@ public static class AccountingModule
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.BindDbContext<AccountingDbContext>();
         builder.Services.AddScoped<IDbInitializer, AccountingDbInitializer>();
-        builder.Services.AddKeyedScoped<IRepository<Account>, AccountingRepository<Account>>("accounting:accounts");
-        builder.Services.AddKeyedScoped<IReadRepository<Account>, AccountingRepository<Account>>("accounting:accounts");
+        builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:ChartOfAccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:ChartOfAccounts");
         
         MappingConfiguration.RegisterMappings();
         

@@ -1,5 +1,5 @@
-using Accounting.Application.Accounts.Dtos;
-using Accounting.Application.Accounts.Get.v1;
+using Accounting.Application.ChartOfAccounts.Dtos;
+using Accounting.Application.ChartOfAccounts.Get.v1;
 using FSH.Framework.Infrastructure.Auth.Policy;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -15,13 +15,13 @@ public static class AccountGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new AccountGetRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new ChartOfAccountGetRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(AccountGetEndpoint))
             .WithSummary("gets an account by id")
             .WithDescription("gets an account by id")
-            .Produces<AccountDto>()
+            .Produces<ChartOfAccountDto>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

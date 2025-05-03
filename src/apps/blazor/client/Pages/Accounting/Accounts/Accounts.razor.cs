@@ -11,44 +11,44 @@ public partial class Accounts
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
 
-    protected EntityServerTableContext<AccountDto, DefaultIdType, AccountViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<ChartOfAccountDto, DefaultIdType, AccountViewModel> Context { get; set; } = default!;
 
-    private EntityTable<AccountDto, DefaultIdType, AccountViewModel> _table = default!;
+    private EntityTable<ChartOfAccountDto, DefaultIdType, AccountViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new EntityServerTableContext<AccountDto, DefaultIdType, AccountViewModel>(
-            entityName: "Account",
-            entityNamePlural: "Accounts",
+        Context = new EntityServerTableContext<ChartOfAccountDto, DefaultIdType, AccountViewModel>(
+            entityName: "Chart Of Account",
+            entityNamePlural: "Chart Of Accounts",
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<AccountDto>(dto => dto.AccountCategory, "Category", "AccountCategory"),
-                new EntityField<AccountDto>(dto => dto.AccountType, "Type", "AccountType"),
-                new EntityField<AccountDto>(dto => dto.ParentCode, "Parent", "ParentCode"),
-                new EntityField<AccountDto>(dto => dto.Code, "Code", "Code"),
-                new EntityField<AccountDto>(dto => dto.Name, "Name", "Name"),
-                new EntityField<AccountDto>(dto => dto.Balance, "Balance", "Balance", typeof(decimal)),
+                new EntityField<ChartOfAccountDto>(dto => dto.AccountCategory, "Category", "AccountCategory"),
+                new EntityField<ChartOfAccountDto>(dto => dto.AccountType, "Type", "AccountType"),
+                new EntityField<ChartOfAccountDto>(dto => dto.ParentCode, "Parent", "ParentCode"),
+                new EntityField<ChartOfAccountDto>(dto => dto.Code, "Code", "Code"),
+                new EntityField<ChartOfAccountDto>(dto => dto.Name, "Name", "Name"),
+                new EntityField<ChartOfAccountDto>(dto => dto.Balance, "Balance", "Balance", typeof(decimal)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<AccountSearchRequest>();
+                var paginationFilter = filter.Adapt<ChartOfAccountSearchRequest>();
 
                 var result = await ApiClient.AccountSearchEndpointAsync("1", paginationFilter);
-                return result.Adapt<PaginationResponse<AccountDto>>();
+                return result.Adapt<PaginationResponse<ChartOfAccountDto>>();
             },
             createFunc: async account =>
             {
-                await ApiClient.AccountCreateEndpointAsync("1", account.Adapt<AccountCreateRequest>());
+                await ApiClient.AccountCreateEndpointAsync("1", account.Adapt<ChartOfAccountCreateRequest>());
             },
             updateFunc: async (id, account) =>
             {
-                await ApiClient.AccountUpdateEndpointAsync("1", id, account.Adapt<AccountUpdateRequest>());
+                await ApiClient.AccountUpdateEndpointAsync("1", id, account.Adapt<ChartOfAccountUpdateRequest>());
             },
             deleteFunc: async id => await ApiClient.AccountDeleteEndpointAsync("1", id));
 }
 
-public class AccountViewModel : AccountUpdateRequest
+public class AccountViewModel : ChartOfAccountUpdateRequest
 {
 }

@@ -19,7 +19,7 @@ public sealed class AccountingDbContext(
     publisher,
     settings)
 {
-    public DbSet<Account> Accounts { get; set; } = null!;
+    public DbSet<ChartOfAccount> ChartOfAccounts { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

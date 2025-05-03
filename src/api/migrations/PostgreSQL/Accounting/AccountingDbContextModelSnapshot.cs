@@ -18,12 +18,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("accounting")
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Accounting.Domain.Account", b =>
+            modelBuilder.Entity("Accounting.Domain.ChartOfAccount", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("accounts", "accounting");
+                    b.ToTable("ChartOfAccounts", "accounting");
                 });
 #pragma warning restore 612, 618
         }
