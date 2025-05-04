@@ -59,8 +59,8 @@ internal sealed partial class UserService(
         var result = await userManager.ConfirmEmailAsync(user, code).ConfigureAwait(false);
 
         return result.Succeeded
-            ? string.Format("Account Confirmed for E-Mail {0}. You can now use the /api/tokens endpoint to generate JWT.", user.Email)
-            : throw new FshException(string.Format("An error occurred while confirming {0}", user.Email));
+            ? $"Account Confirmed for E-Mail {user.Email}. You can now use the /api/tokens endpoint to generate JWT."
+            : throw new FshException($"An error occurred while confirming {user.Email}");
     }
 
     public Task<string> ConfirmPhoneNumberAsync(string userId, string code)

@@ -45,8 +45,8 @@ public partial class RolePermissions
                 () => RolesClient.GetRolePermissionsEndpointAsync(Id), Toast, Navigation)
             is RoleDto { Permissions: not null } role)
         {
-            _title = string.Format("{0} Permissions", role.Name);
-            _description = string.Format("Manage {0} Role Permissions", role.Name);
+            _title = $"{role.Name} Permissions";
+            _description = $"Manage {role.Name} Role Permissions";
 
             var permissions = state.User.GetTenant() == TenantConstants.Root.Id
                 ? FshPermissions.All
