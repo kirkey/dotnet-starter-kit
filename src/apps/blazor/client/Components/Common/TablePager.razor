@@ -1,1 +1,24 @@
-﻿<MudTablePager RowsPerPageString="RowsPerPageString" InfoFormat="InfoFormat" />
+﻿<MudTablePager RowsPerPageString="@RowsPerPageString" InfoFormat="@InfoFormat" />
+
+@code {
+    /// <summary>
+    /// Gets or sets the text displayed for the "Rows per page" label in the table pager.
+    /// </summary>
+    /// <remarks>
+    /// This parameter allows customization of the label text shown in the pager component.
+    /// The default value is "Rows per page".
+    /// </remarks>
+    [Parameter] public string RowsPerPageString { get; set; } = "Rows per page";
+
+    /// <summary>
+    /// Gets or sets the format string used to display pagination information in the table pager.
+    /// </summary>
+    /// <remarks>
+    /// The format string supports placeholders:
+    /// {0} - The starting item number on the current page.
+    /// {1} - The ending item number on the current page.
+    /// {2} - The total number of items.
+    /// The default value is "Showing {0} to {1} of {2} entries".
+    /// </remarks>
+    [Parameter] public string InfoFormat { get; set; } = "Showing {0} to {1} of {2} entries";
+}
