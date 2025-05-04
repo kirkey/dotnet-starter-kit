@@ -16,17 +16,22 @@ public class AuditableEntity<TId> : BaseEntity<TId>, IAuditable, ISoftDeletable
     public string? Remarks { get; set; }
     [Column(TypeName = "VARCHAR(32)")]
     public string? Status { get; set; }
+    [Column(TypeName = "VARCHAR(2048)")]
     public string? Description { get; set; }
+    [Column(TypeName = "VARCHAR(2048)")]
     public string? Notes { get; set; }
     public string? FilePath { get; set; }
     public DateTimeOffset CreatedOn { get; set; }
     public DefaultIdType CreatedBy { get; set; }
+    [Column(TypeName = "VARCHAR(64)")]
     public string? CreatedByUserName { get; set; }
     public DateTimeOffset LastModifiedOn { get; set; }
     public DefaultIdType? LastModifiedBy { get; set; }
+    [Column(TypeName = "VARCHAR(64)")]
     public string? LastModifiedByUserName { get; set; }
     public DateTimeOffset? DeletedOn { get; set; }
     public DefaultIdType? DeletedBy { get; set; }
+    [Column(TypeName = "VARCHAR(64)")]
     public string? DeletedByUserName { get; set; }
 }
 

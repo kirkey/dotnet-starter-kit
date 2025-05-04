@@ -12,6 +12,7 @@ public sealed class TodoItem : AuditableEntity, IAggregateRoot
         Name = name;
         Description = description;
         Notes = notes;
+
         QueueDomainEvent(new TodoItemCreated(Id, Name, Description, Notes));
         TodoMetrics.Created.Add(1);
     }

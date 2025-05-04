@@ -16,7 +16,6 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FSH.Starter.WebApi.Todo;
 public static class TodoModule
 {
-
     public class Endpoints : CarterModule
     {
         public override void AddRoutes(IEndpointRouteBuilder app)

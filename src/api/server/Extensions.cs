@@ -3,6 +3,7 @@ using Accounting.Infrastructure;
 using Asp.Versioning.Conventions;
 using Carter;
 using FluentValidation;
+using FSH.Starter.WebApi.App;
 using FSH.Starter.WebApi.Catalog.Application;
 using FSH.Starter.WebApi.Catalog.Infrastructure;
 using FSH.Starter.WebApi.Todo;
@@ -18,9 +19,10 @@ public static class Extensions
         //define module assemblies
         var assemblies = new[]
         {
-            typeof(AccountingMetadata).Assembly,
+            typeof(AppModule).Assembly,
             typeof(CatalogMetadata).Assembly,
-            typeof(TodoModule).Assembly
+            typeof(TodoModule).Assembly,
+            typeof(AccountingMetadata).Assembly,
         };
 
         //register validators
@@ -31,16 +33,18 @@ public static class Extensions
             configuration.RegisterServicesFromAssemblies(assemblies));
 
         //register module services
-        builder.RegisterAccountingServices();
+        builder.RegisterAppServices();
         builder.RegisterCatalogServices();
         builder.RegisterTodoServices();
+        builder.RegisterAccountingServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
-            config.WithModule<AccountingModule.Endpoints>();
+            config.WithModule<AppModule.Endpoints>();
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
+            config.WithModule<AccountingModule.Endpoints>();
         });
 
         return builder;
@@ -51,9 +55,10 @@ public static class Extensions
         ArgumentNullException.ThrowIfNull(app);
 
         //register modules
-        app.UseAccountingModule();
+        app.UseAppModule();
         app.UseCatalogModule();
         app.UseTodoModule();
+        app.UseAccountingModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()
