@@ -46,34 +46,36 @@ public static class SpecificationBuilderExtensions
         this ISpecificationBuilder<T> specificationBuilder,
         Search? search) where T : class
     {
-        if (!string.IsNullOrEmpty(search?.Keyword))
+        if (string.IsNullOrEmpty(search?.Keyword))
         {
-            if (search.Fields?.Any() is true)
-            {
-                // search selected fields (can contain deeper nested fields)
-                foreach (string field in search.Fields)
-                {
-                    var paramExpr = Expression.Parameter(typeof(T));
-                    MemberExpression propertyExpr = GetPropertyExpression(field, paramExpr);
+            return specificationBuilder;
+        }
 
-                    specificationBuilder.AddSearchPropertyByKeyword(propertyExpr, paramExpr, search.Keyword);
-                }
+        if (search.Fields?.Any() is true)
+        {
+            // search selected fields (can contain deeper nested fields)
+            foreach (string field in search.Fields)
+            {
+                var paramExpr = Expression.Parameter(typeof(T));
+                MemberExpression propertyExpr = GetPropertyExpression(field, paramExpr);
+
+                specificationBuilder.AddSearchPropertyByKeyword(propertyExpr, paramExpr, search.Keyword);
             }
-            else
+        }
+        else
+        {
+            // search all fields (only first level)
+            foreach (var property in typeof(T).GetProperties()
+                         .Where(prop => (Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType) is
+                                        {
+                                            IsEnum: false
+                                        } propertyType
+                                        && Type.GetTypeCode(propertyType) != TypeCode.Object))
             {
-                // search all fields (only first level)
-                foreach (var property in typeof(T).GetProperties()
-                    .Where(prop => (Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType) is
-                                   {
-                                       IsEnum: false
-                                   } propertyType
-                                   && Type.GetTypeCode(propertyType) != TypeCode.Object))
-                {
-                    var paramExpr = Expression.Parameter(typeof(T));
-                    var propertyExpr = Expression.Property(paramExpr, property);
+                var paramExpr = Expression.Parameter(typeof(T));
+                var propertyExpr = Expression.Property(paramExpr, property);
 
-                    specificationBuilder.AddSearchPropertyByKeyword(propertyExpr, paramExpr, search.Keyword);
-                }
+                specificationBuilder.AddSearchPropertyByKeyword(propertyExpr, paramExpr, search.Keyword);
             }
         }
 
@@ -118,30 +120,32 @@ public static class SpecificationBuilderExtensions
         specificationBuilder.Search(selector, searchTerm, 1);
     }
 
-    public static ISpecificationBuilder<T> AdvancedFilter<T>(
+    private static ISpecificationBuilder<T> AdvancedFilter<T>(
         this ISpecificationBuilder<T> specificationBuilder,
         Filter? filter)
     {
-        if (filter is not null)
+        if (filter is null)
         {
-            var parameter = Expression.Parameter(typeof(T));
-
-            Expression binaryExpressionFilter;
-
-            if (!string.IsNullOrEmpty(filter.Logic))
-            {
-                if (filter.Filters is null) throw new CustomException("The Filters attribute is required when declaring a logic");
-                binaryExpressionFilter = CreateFilterExpression(filter.Logic, filter.Filters, parameter);
-            }
-            else
-            {
-                var filterValid = GetValidFilter(filter);
-                binaryExpressionFilter = CreateFilterExpression(filterValid.Field!, filterValid.Operator!, filterValid.Value, parameter);
-            }
-
-            var expr = Expression.Lambda<Func<T, bool>>(binaryExpressionFilter, parameter);
-            specificationBuilder.Where(expr);
+            return specificationBuilder;
         }
+
+        var parameter = Expression.Parameter(typeof(T));
+
+        Expression binaryExpressionFilter;
+
+        if (!string.IsNullOrEmpty(filter.Logic))
+        {
+            if (filter.Filters is null) throw new CustomException("The Filters attribute is required when declaring a logic");
+            binaryExpressionFilter = CreateFilterExpression(filter.Logic, filter.Filters, parameter);
+        }
+        else
+        {
+            var filterValid = GetValidFilter(filter);
+            binaryExpressionFilter = CreateFilterExpression(filterValid.Field!, filterValid.Operator!, filterValid.Value, parameter);
+        }
+
+        var expr = Expression.Lambda<Func<T, bool>>(binaryExpressionFilter, parameter);
+        specificationBuilder.Where(expr);
 
         return specificationBuilder;
     }
@@ -249,18 +253,20 @@ public static class SpecificationBuilderExtensions
         {
             string? stringEnum = GetStringFromJsonElement(value);
 
-            if (!Enum.TryParse(propertyType, stringEnum, true, out object? valueparsed)) throw new CustomException(string.Format("Value {0} is not valid for {1}", value, field));
-
-            return Expression.Constant(valueparsed, propertyType);
+            return !Enum.TryParse(propertyType, stringEnum, true, out object? result)
+                ? throw new CustomException(
+                $"Value {value} is not valid for {field}")
+                : Expression.Constant(result, propertyType);
         }
 
-        if (propertyType == typeof(Guid))
+        if (propertyType == typeof(DefaultIdType))
         {
             string? stringGuid = GetStringFromJsonElement(value);
 
-            if (!Guid.TryParse(stringGuid, out Guid valueparsed)) throw new CustomException(string.Format("Value {0} is not valid for {1}", value, field));
-
-            return Expression.Constant(valueparsed, propertyType);
+            return !DefaultIdType.TryParse(stringGuid, out DefaultIdType result)
+                ? throw new CustomException(
+                    $"Value {value} is not valid for {field}")
+                : Expression.Constant(result, propertyType);
         }
 
         if (propertyType == typeof(string))
@@ -279,7 +285,7 @@ public static class SpecificationBuilderExtensions
         return Expression.Constant(ChangeType(((JsonElement)value).GetRawText(), propertyType), propertyType);
     }
 
-    public static dynamic? ChangeType(object value, Type conversion)
+    private static dynamic? ChangeType(object value, Type conversion)
     {
         var t = conversion;
 
@@ -303,7 +309,7 @@ public static class SpecificationBuilderExtensions
         return filter;
     }
 
-    public static ISpecificationBuilder<T> OrderBy<T>(
+    private static ISpecificationBuilder<T> OrderBy<T>(
         this ISpecificationBuilder<T> specificationBuilder,
         string[]? orderByFields)
     {
@@ -340,9 +346,9 @@ public static class SpecificationBuilderExtensions
     }
 
     private static Dictionary<string, OrderTypeEnum> ParseOrderBy(string[] orderByFields) =>
-        new(orderByFields.Select((orderByfield, index) =>
+        new(orderByFields.Select((orderByField, index) =>
         {
-            string[] fieldParts = orderByfield.Split(' ');
+            string[] fieldParts = orderByField.Split(' ');
             string field = fieldParts[0];
             bool descending = fieldParts.Length > 1 && fieldParts[1].StartsWith("Desc", StringComparison.OrdinalIgnoreCase);
             var orderBy = index == 0
