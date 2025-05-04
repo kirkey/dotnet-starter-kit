@@ -1,4 +1,4 @@
-﻿<MudTablePager RowsPerPageString="@RowsPerPageString" InfoFormat="@InfoFormat" />
+﻿<MudTablePager RowsPerPageString="@RowsPerPageString" InfoFormat="@InfoFormat" PageSizeOptions="@PageSizeOptions" />
 
 @code {
     /// <summary>
@@ -21,4 +21,13 @@
     /// The default value is "Showing {0} to {1} of {2} entries".
     /// </remarks>
     [Parameter] public string InfoFormat { get; set; } = "Showing {0} to {1} of {2} entries";
+    
+    /// <summary>
+    /// Gets or sets the available page size options for the table pager.
+    /// </summary>
+    /// <remarks>
+    /// This parameter defines the list of page sizes that users can select from in the pager component.
+    /// The default values are 15, 30, 50, 100, 500, and 999.
+    /// </remarks>
+    [Parameter] public int[] PageSizeOptions { get; set; } = [15, 50, 100, 500, 999];
 }
