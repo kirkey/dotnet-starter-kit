@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSH.Starter.WebApi.Migrations.MySQL.Todo
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20240802061357_Add Todo Schema")]
-    partial class AddTodoSchema
+    [Migration("20250504021924_InitialTodoDb")]
+    partial class InitialTodoDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Todo
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("todo")
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -32,30 +32,58 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Todo
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset>("LastModified")
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("longtext");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Note")
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(32)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 

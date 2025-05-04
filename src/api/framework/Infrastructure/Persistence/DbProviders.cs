@@ -3,5 +3,5 @@ internal static class DbProviders
 {
     public const string PostgreSQL = "POSTGRESQL";
     public const string MSSQL = "MSSQL";
-    public const string MySql = "MYSQL";
+    public const string MySQL = "MYSQL";
 }

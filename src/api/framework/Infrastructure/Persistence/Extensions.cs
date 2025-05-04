@@ -16,10 +16,21 @@ public static class Extensions
         builder.ConfigureWarnings(warnings => warnings.Log(RelationalEventId.PendingModelChangesWarning));
         return dbProvider.ToUpperInvariant() switch
         {
-            DbProviders.PostgreSQL => builder.UseNpgsql(connectionString, e =>
-                                 e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
-            DbProviders.MSSQL => builder.UseSqlServer(connectionString, e =>
-                                e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MSSQL")),
+            DbProviders.PostgreSQL => builder.UseNpgsql(
+                connectionString, optionsBuilder => optionsBuilder
+                        .MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
+
+            DbProviders.MySQL => builder.UseMySql(
+                    connectionString,
+                    ServerVersion.AutoDetect(connectionString),
+                    optionsBuilder => optionsBuilder
+                            .MigrationsAssembly("FSH.Starter.WebApi.Migrations.MySQL")
+                            .SchemaBehavior(Pomelo.EntityFrameworkCore.MySql.Infrastructure.MySqlSchemaBehavior.Ignore))
+                .EnableSensitiveDataLogging(),
+
+            DbProviders.MSSQL => builder.UseSqlServer(connectionString, optionsBuilder =>
+                                optionsBuilder.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MSSQL")),
+
             _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
         };
     }

@@ -3,8 +3,9 @@
 namespace FSH.Framework.Core.Persistence;
 public class DatabaseOptions : IValidatableObject
 {
-    public string Provider { get; set; } = "postgresql";
+    public string Provider { get; set; } = "mysql";
     public string ConnectionString { get; set; } = string.Empty;
+    public string JobsConnectionString { get; set; } = string.Empty;
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

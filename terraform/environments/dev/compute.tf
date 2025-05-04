@@ -14,7 +14,7 @@ module "webapi" {
   subnet_ids      = [module.vpc.private_a_id, module.vpc.private_b_id]
   environment_variables = {
     DatabaseOptions__ConnectionString = module.rds.connection_string
-    DatabaseOptions__Provider         = "postgresql"
+    DatabaseOptions__Provider         = "mysql"
     Serilog__MinimumLevel__Default    = "Error"
     CorsOptions__AllowedOrigins__0    = "http://${module.blazor.endpoint}"
     OriginOptions__OriginUrl          = "http://${module.webapi.endpoint}:8080"

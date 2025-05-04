@@ -3,6 +3,7 @@ using FSH.Framework.Core.Jobs;
 using FSH.Framework.Core.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
 using Hangfire;
+using Hangfire.MySql;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -31,11 +32,22 @@ internal static class Extensions
             {
                 case DbProviders.PostgreSQL:
                     config.UsePostgreSqlStorage(o =>
-                        o.UseNpgsqlConnection(dbOptions.ConnectionString));
+                        o.UseNpgsqlConnection(dbOptions.JobsConnectionString));
+                    break;
+                
+                case DbProviders.MySQL:
+                    config.UseStorage(new MySqlStorage(dbOptions.JobsConnectionString, new MySqlStorageOptions
+                    {
+                        QueuePollInterval = TimeSpan.FromSeconds(30),
+                        // TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                        PrepareSchemaIfNecessary = true,
+                        DashboardJobListLimit = 10000,
+                        TransactionTimeout = TimeSpan.FromMinutes(5)
+                    }));
                     break;
 
                 case DbProviders.MSSQL:
-                    config.UseSqlServerStorage(dbOptions.ConnectionString);
+                    config.UseSqlServerStorage(dbOptions.JobsConnectionString);
                     break;
 
                 default:

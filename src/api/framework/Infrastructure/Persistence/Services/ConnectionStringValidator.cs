@@ -18,15 +18,18 @@ internal sealed class ConnectionStringValidator(IOptions<DatabaseOptions> dbSett
 
         try
         {
-            switch (dbProvider?.ToUpperInvariant())
+            switch (dbProvider.ToUpperInvariant())
             {
                 case DbProviders.PostgreSQL:
                     _ = new NpgsqlConnectionStringBuilder(connectionString);
                     break;
+                
+                case DbProviders.MySQL:
+                    _ = new MySqlConnector.MySqlConnectionStringBuilder(connectionString);
+                    break;
+
                 case DbProviders.MSSQL:
                     _ = new SqlConnectionStringBuilder(connectionString);
-                    break;
-                default:
                     break;
             }
 

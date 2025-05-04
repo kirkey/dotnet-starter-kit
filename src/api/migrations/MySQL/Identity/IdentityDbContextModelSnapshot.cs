@@ -17,10 +17,56 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("FSH.Framework.Core.Audit.AuditTrail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("DateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Entity")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ModifiedProperties")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NewValues")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Operation")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PreviousValues")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PrimaryKey")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar(64)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditTrails", "identity");
+
+                    b.HasAnnotation("Finbuckle:MultiTenant", true);
+                });
 
             modelBuilder.Entity("FSH.Framework.Infrastructure.Identity.RoleClaims.FshRoleClaim", b =>
                 {
@@ -115,8 +161,11 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("FirstName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("longtext");
@@ -124,8 +173,20 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<DateTime?>("LastLoginDateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastLoginDeviceType")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<string>("LastLoginIp")
+                        .HasColumnType("VARCHAR(16)");
+
+                    b.Property<string>("LastLoginLocation")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("LastName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -155,7 +216,7 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("RefreshToken")
-                        .HasColumnType("longtext");
+                        .HasColumnType("VARCHAR(128)");
 
                     b.Property<DateTime>("RefreshTokenExpiryTime")
                         .HasColumnType("datetime(6)");

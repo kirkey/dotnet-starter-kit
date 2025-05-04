@@ -1,9 +1,12 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace FSH.Starter.WebApi.Migrations.MySQL.Tenant
 {
     /// <inheritdoc />
-    public partial class AddTenantSchema : Migration
+    public partial class InitialTenantDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>FSH.Starter.WebApi.Migrations.MySQL</AssemblyName>
@@ -13,19 +12,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Catalog\" />
-      <Folder Include="Identity\" />
-      <Folder Include="Tenant\" />
-      <Folder Include="Todo\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\framework\Core\Core.csproj" />
       <ProjectReference Include="..\..\framework\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\..\modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
+      <ProjectReference Include="..\..\modules\Accounting\Accounting.Domain\Accounting.Domain.csproj" />
+      <ProjectReference Include="..\..\modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
       <ProjectReference Include="..\..\modules\Catalog\Catalog.Application\Catalog.Application.csproj" />
       <ProjectReference Include="..\..\modules\Catalog\Catalog.Domain\Catalog.Domain.csproj" />
       <ProjectReference Include="..\..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
-      <ProjectReference Include="..\..\modules\Shared\Shared.csproj" />
       <ProjectReference Include="..\..\modules\Todo\Todo.csproj" />
     </ItemGroup>
 

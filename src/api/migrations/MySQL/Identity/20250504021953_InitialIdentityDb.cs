@@ -1,9 +1,13 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
 {
     /// <inheritdoc />
-    public partial class AddIdentitySchema : Migration
+    public partial class InitialIdentityDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -12,6 +16,37 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                 name: "identity");
 
             migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "AuditTrails",
+                schema: "identity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserName = table.Column<string>(type: "VARCHAR(1024)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PrimaryKey = table.Column<string>(type: "VARCHAR(64)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Operation = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Entity = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DateTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false),
+                    PreviousValues = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NewValues = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ModifiedProperties = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TenantId = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditTrails", x => x.Id);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -45,17 +80,25 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    FirstName = table.Column<string>(type: "longtext", nullable: true)
+                    EmployeeId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    FirstName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "longtext", nullable: true)
+                    LastName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ImageUrl = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    RefreshToken = table.Column<string>(type: "longtext", nullable: true)
+                    RefreshToken = table.Column<string>(type: "VARCHAR(128)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ObjectId = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastLoginDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastLoginIp = table.Column<string>(type: "VARCHAR(16)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastLoginDeviceType = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastLoginLocation = table.Column<string>(type: "VARCHAR(1024)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TenantId = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -287,6 +330,10 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AuditTrails",
+                schema: "identity");
+
             migrationBuilder.DropTable(
                 name: "RoleClaims",
                 schema: "identity");
