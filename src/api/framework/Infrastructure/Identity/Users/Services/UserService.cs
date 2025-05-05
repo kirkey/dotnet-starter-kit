@@ -292,10 +292,10 @@ internal sealed partial class UserService(
     {
         var userRoles = new List<UserRoleDetail>();
 
-        var user = await userManager.FindByIdAsync(userId).ConfigureAwait(false);
-        if (user is null) throw new NotFoundException("user not found");
-        var roles = await roleManager.Roles.AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false);
-        if (roles is null) throw new NotFoundException("roles not found");
+        var user = await userManager.FindByIdAsync(userId).ConfigureAwait(false) 
+                   ?? throw new NotFoundException("user not found");
+        var roles = await roleManager.Roles.AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false) 
+                    ?? throw new NotFoundException("roles not found");
         foreach (var role in roles)
         {
             userRoles.Add(new UserRoleDetail

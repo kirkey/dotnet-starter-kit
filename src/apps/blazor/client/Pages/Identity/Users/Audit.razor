@@ -5,7 +5,9 @@
 
 <EntityTable TEntity="RelatedAuditTrail" TId="DefaultIdType" TRequest="object" Context="@Context">
     <ActionsContent>
-        <MudButton Variant="Variant.Filled" DropShadow="false" EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary"
+        <MudButton Variant="Variant.Filled" DropShadow="false"
+                   EndIcon="@Icons.Material.Filled.KeyboardArrowDown"
+                   IconColor="Color.Secondary"
                    OnClick="@(() => ShowBtnPress(context.Id))">@((context.ShowDetails == true) ? "Hide" : "Show") Trail Details</MudButton>
     </ActionsContent>
     <ChildRowContent>
