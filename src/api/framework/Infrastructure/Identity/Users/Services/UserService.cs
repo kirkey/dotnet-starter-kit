@@ -71,7 +71,7 @@ internal sealed partial class UserService(
     public async Task<bool> ExistsWithEmailAsync(string email, string? exceptId = null)
     {
         EnsureValidTenant();
-        return await userManager.FindByEmailAsync(email.Normalize()).ConfigureAwait(false) is FshUser user && user.Id != exceptId;
+        return await userManager.FindByEmailAsync(email.Normalize()).ConfigureAwait(false) is { } user && user.Id != exceptId;
     }
 
     public async Task<bool> ExistsWithNameAsync(string name)
@@ -83,7 +83,7 @@ internal sealed partial class UserService(
     public async Task<bool> ExistsWithPhoneNumberAsync(string phoneNumber, string? exceptId = null)
     {
         EnsureValidTenant();
-        return await userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber).ConfigureAwait(false) is FshUser user && user.Id != exceptId;
+        return await userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber).ConfigureAwait(false) is { } user && user.Id != exceptId;
     }
 
     public async Task<UserDetail> GetAsync(string userId, CancellationToken cancellationToken)

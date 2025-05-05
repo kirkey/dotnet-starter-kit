@@ -10,7 +10,7 @@ public class JwtAuthenticationHeaderHandler(IAccessTokenProviderAccessor tokenPr
         // skip token endpoints
         if (request.RequestUri?.AbsolutePath.Contains("/token") is not true)
         {
-            if (await tokenProviderAccessor.TokenProvider.GetAccessTokenAsync().ConfigureAwait(false) is string token)
+            if (await tokenProviderAccessor.TokenProvider.GetAccessTokenAsync().ConfigureAwait(false) is { } token)
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }

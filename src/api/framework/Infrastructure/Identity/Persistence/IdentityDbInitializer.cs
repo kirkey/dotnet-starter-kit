@@ -41,7 +41,7 @@ internal sealed class IdentityDbInitializer(
         foreach (string roleName in FshRoles.DefaultRoles)
         {
             if (await roleManager.Roles.SingleOrDefaultAsync(r => r.Name == roleName).ConfigureAwait(false)
-                is not FshRole role)
+                is not { } role)
             {
                 // create role
                 role = new FshRole(roleName, $"{roleName} Role for {multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id} Tenant");
@@ -102,7 +102,7 @@ internal sealed class IdentityDbInitializer(
         }
 
         if (await userManager.Users.FirstOrDefaultAsync(u => u.Email == multiTenantContextAccessor.MultiTenantContext.TenantInfo!.AdminEmail).ConfigureAwait(false)
-            is not FshUser adminUser)
+            is not { } adminUser)
         {
             string adminUserName = $"{multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id.Trim()}.{FshRoles.Admin}".ToUpperInvariant();
             adminUser = new FshUser

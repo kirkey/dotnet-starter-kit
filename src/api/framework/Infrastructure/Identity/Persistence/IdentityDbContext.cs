@@ -12,14 +12,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace FSH.Framework.Infrastructure.Identity.Persistence;
-public class IdentityDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor, DbContextOptions<IdentityDbContext> options, IOptions<DatabaseOptions> settings) : MultiTenantIdentityDbContext<FshUser,
-    FshRole,
-    string,
-    IdentityUserClaim<string>,
-    IdentityUserRole<string>,
-    IdentityUserLogin<string>,
-    FshRoleClaim,
-    IdentityUserToken<string>>(multiTenantContextAccessor, options)
+public class IdentityDbContext(
+    IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor, DbContextOptions<IdentityDbContext> options, IOptions<DatabaseOptions> settings) 
+    : MultiTenantIdentityDbContext<FshUser,
+        FshRole,
+        string,
+        IdentityUserClaim<string>,
+        IdentityUserRole<string>,
+        IdentityUserLogin<string>,
+        FshRoleClaim,
+        IdentityUserToken<string>>(multiTenantContextAccessor, options)
 {
     private readonly DatabaseOptions _settings = settings.Value;
     private new FshTenantInfo TenantInfo { get; set; } = multiTenantContextAccessor.MultiTenantContext.TenantInfo!;

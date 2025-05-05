@@ -92,7 +92,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
                 () => Context.ClientContext.LoadDataFunc(), Toast, Navigation)
-            is List<TEntity> result)
+            is { } result)
         {
             _entityList = result;
         }

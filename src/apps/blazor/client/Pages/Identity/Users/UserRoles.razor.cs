@@ -39,14 +39,14 @@ public partial class UserRoles
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
                 () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation)
-            is UserDetail user)
+            is { } user)
         {
             _title = $"{user.FirstName} {user.LastName}'s Roles";
             _description = $"Manage {user.FirstName} {user.LastName}'s Roles";
 
             if (await ApiHelper.ExecuteCallGuardedAsync(
                     () => UsersClient.GetUserRolesEndpointAsync(user.Id.ToString()), Toast, Navigation)
-                is ICollection<UserRoleDetail> response)
+                is { } response)
             {
                 _userRolesList = response.ToList();
             }

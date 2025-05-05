@@ -49,7 +49,7 @@ public partial class UserProfile
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
                 () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation)
-            is UserDetail user)
+            is { } user)
         {
             _firstName = user.FirstName;
             _lastName = user.LastName;
