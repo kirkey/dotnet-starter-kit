@@ -8,10 +8,8 @@ public static class ConfirmEmailEndpoint
 {
     internal static RouteHandlerBuilder MapConfirmEmailEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/confirm-email", (string userId, string code, string tenant, IUserService service) =>
-        {
-            return service.ConfirmEmailAsync(userId, code, tenant, default);
-        })
+        return endpoints.MapGet("/confirm-email", (string userId, string code, string tenant, IUserService service) => 
+                service.ConfirmEmailAsync(userId, code, tenant, default))
         .WithName(nameof(ConfirmEmailEndpoint))
         .WithSummary("confirm user email")
         .WithDescription("confirm user email")
