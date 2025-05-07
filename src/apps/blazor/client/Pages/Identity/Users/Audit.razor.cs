@@ -12,12 +12,10 @@ public partial class Audit
 {
     [Inject]
     private IApiClient ApiClient { get; set; } = default!;
-    [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
-    [Parameter]
-    public DefaultIdType Id { get; set; }
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [Parameter] public DefaultIdType Id { get; set; }
 
-    protected EntityClientTableContext<RelatedAuditTrail, DefaultIdType, object> Context { get; set; } = default!;
+    protected EntityClientTableContext<AuditTrailExtension, DefaultIdType, object> Context { get; set; } = default!;
 
     private string? _searchString;
     private string? _subHeader;
@@ -25,12 +23,12 @@ public partial class Audit
     private DateRange? _dateRange;
     private bool _searchInOldValues;
     private bool _searchInNewValues;
-    private List<RelatedAuditTrail> _trails = [];
+    private List<AuditTrailExtension> _trails = [];
 
     // Configure Automapper
     static Audit() =>
-        TypeAdapterConfig<AuditTrail, RelatedAuditTrail>.NewConfig().Map(
-            dest => dest.UTCTime,
+        TypeAdapterConfig<AuditTrail, AuditTrailExtension>.NewConfig().Map(
+            dest => dest.UtcTime,
             src => DateTime.SpecifyKind(src.DateTime, DateTimeKind.Utc).ToLocalTime());
 
 
@@ -46,17 +44,17 @@ public partial class Audit
             }
         }
         _subHeader = $"Audit Trail for User {Id}";
-        Context = new EntityClientTableContext<RelatedAuditTrail, DefaultIdType, object>(
+        Context = new EntityClientTableContext<AuditTrailExtension, DefaultIdType, object>(
             entityNamePlural: "Trails",
             searchAction: true.ToString(),
             fields:
             [
-                new EntityField<RelatedAuditTrail>(audit => audit.Id, "Id"),
-                new EntityField<RelatedAuditTrail>(audit => audit.Entity, "Entity"),
-                new EntityField<RelatedAuditTrail>(audit => audit.DateTime, "Date", Template: DateFieldTemplate),
-                new EntityField<RelatedAuditTrail>(audit => audit.Operation, "Operation")
+                new EntityField<AuditTrailExtension>(audit => audit.Id, "Id"),
+                new EntityField<AuditTrailExtension>(audit => audit.Entity, "Entity"),
+                new EntityField<AuditTrailExtension>(audit => audit.DateTime, "Date", Template: DateFieldTemplate),
+                new EntityField<AuditTrailExtension>(audit => audit.Operation, "Operation")
             ],
-            loadDataFunc: async () => _trails = (await ApiClient.GetUserAuditTrailEndpointAsync(Id)).Adapt<List<RelatedAuditTrail>>(),
+            loadDataFunc: async () => _trails = (await ApiClient.GetUserAuditTrailEndpointAsync(Id)).Adapt<List<AuditTrailExtension>>(),
             searchFunc: (searchString, trail) =>
                 (string.IsNullOrWhiteSpace(searchString) // check Search String
                     || trail.Entity?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
@@ -81,9 +79,9 @@ public partial class Audit
         }
     }
 
-    public class RelatedAuditTrail : AuditTrail
+    public class AuditTrailExtension : AuditTrail
     {
         public bool ShowDetails { get; set; }
-        public DateTime UTCTime { get; set; }
+        public DateTime UtcTime { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 
 <PageHeader Title="Audit Trail" Header="Audit Trail" SubHeader="@_subHeader" />
 
-<EntityTable TEntity="RelatedAuditTrail" TId="DefaultIdType" TRequest="object" Context="@Context">
+<EntityTable TEntity="AuditTrailExtension" TId="DefaultIdType" TRequest="object" Context="@Context">
     <ActionsContent>
         <MudButton Variant="Variant.Filled" DropShadow="false"
                    EndIcon="@Icons.Material.Filled.KeyboardArrowDown"
@@ -107,13 +107,13 @@
 </EntityTable>
 
 @code {
-    private RenderFragment<RelatedAuditTrail> DateFieldTemplate => trail => __builder =>
+    private RenderFragment<AuditTrailExtension> DateFieldTemplate => trail => __builder =>
     {
         <MudItem>
             <MudChip T=string Icon="@Icons.Material.Filled.Watch" IconColor="Color.Secondary" Label="true" Color="Color.Surface">@trail.DateTime.ToString("dd-MMMM-yyyy hh:mm tt")</MudChip>
         </MudItem>
         <MudItem>
-            <MudChip T=string Icon="@Icons.Material.Filled.Watch" IconColor="Color.Secondary" Label="true" Color="Color.Surface">@trail.UTCTime.ToString("dd-MMMM-yyyy hh:mm tt") (UTC)</MudChip>
+            <MudChip T=string Icon="@Icons.Material.Filled.Watch" IconColor="Color.Secondary" Label="true" Color="Color.Surface">@trail.UtcTime.ToString("dd-MMMM-yyyy hh:mm tt") (UTC)</MudChip>
         </MudItem>
     };
 }
