@@ -9,7 +9,7 @@ namespace Accounting.Infrastructure.Endpoints.v1;
 
 public static class AccountCreateEndpoint
 {
-    internal static RouteHandlerBuilder MapAccountCreationEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapAccountCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/", async (ChartOfAccountCreateRequest request, ISender mediator) =>
@@ -18,8 +18,8 @@ public static class AccountCreateEndpoint
                 return Results.Ok(response);
             })
             .WithName(nameof(AccountCreateEndpoint))
-            .WithSummary("creates an account")
-            .WithDescription("creates an account")
+            .WithSummary("create an account")
+            .WithDescription("create an account")
             .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);

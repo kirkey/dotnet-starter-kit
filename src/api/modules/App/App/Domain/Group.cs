@@ -44,7 +44,7 @@ public sealed class Group : AuditableEntity, IAggregateRoot
             new GroupCreated(Id, Application, Parent, Tag, Number, Code, Name, Amount, EmployeeId, EmployeeName,
                 Description, Notes));
 
-        AppMetrics.Created.Add(1);
+        GroupMetrics.Created.Add(1);
     }
 
     public static Group Create(string application, string parent, string? tag, int number, string code, string name,
@@ -130,7 +130,7 @@ public sealed class Group : AuditableEntity, IAggregateRoot
         if (isUpdated)
         {
             QueueDomainEvent(new GroupUpdated(this));
-            AppMetrics.Updated.Add(1);
+            GroupMetrics.Updated.Add(1);
         }
 
         return this;

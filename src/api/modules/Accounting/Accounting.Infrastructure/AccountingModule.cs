@@ -18,12 +18,12 @@ public static class AccountingModule
     {
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            var accountGroup = app.MapGroup("ChartOfAccounts").WithTags("ChartOfAccounts");
-            accountGroup.MapAccountCreationEndpoint();
-            accountGroup.MapAccountGetEndpoint();
-            accountGroup.MapAccountSearchEndpoint();
-            accountGroup.MapAccountUpdateEndpoint();
-            accountGroup.MapAccountDeleteEndpoint();
+            var chartOfAccount = app.MapGroup("ChartOfAccounts").WithTags("ChartOfAccounts");
+            chartOfAccount.MapAccountCreateEndpoint();
+            chartOfAccount.MapAccountGetEndpoint();
+            chartOfAccount.MapAccountSearchEndpoint();
+            chartOfAccount.MapAccountUpdateEndpoint();
+            chartOfAccount.MapAccountDeleteEndpoint();
         }
     }
 

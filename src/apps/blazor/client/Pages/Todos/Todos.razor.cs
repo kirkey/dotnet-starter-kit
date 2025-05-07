@@ -31,9 +31,9 @@ public partial class Todos
             idFunc: prod => prod.Id!.Value,
             searchFunc: async filter =>
             {
-                var todoFilter = filter.Adapt<PaginationFilter>();
+                var paginationFilter = filter.Adapt<PaginationFilter>();
 
-                var result = await ApiClient.GetTodoListEndpointAsync("1", todoFilter);
+                var result = await ApiClient.GetTodoListEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<GetTodoResponse>>();
             },
             createFunc: async todo =>

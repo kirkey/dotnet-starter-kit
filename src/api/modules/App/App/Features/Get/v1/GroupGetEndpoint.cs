@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.App.Features.Get.v1;
 
 public static class GroupGetEndpoint
 {
-    internal static RouteHandlerBuilder MapGetAppEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapGroupGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {

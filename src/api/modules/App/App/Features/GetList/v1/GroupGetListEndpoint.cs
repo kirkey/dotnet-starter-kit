@@ -10,7 +10,7 @@ namespace FSH.Starter.WebApi.App.Features.GetList.v1;
 
 public static class GroupGetListEndpoint
 {
-    internal static RouteHandlerBuilder MapGetAppListEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapGroupGetListEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints.MapPost("/search", async (ISender mediator, [FromBody] PaginationFilter filter) =>
             {

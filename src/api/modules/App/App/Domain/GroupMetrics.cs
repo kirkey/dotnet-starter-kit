@@ -3,7 +3,7 @@ using FSH.Starter.Aspire.ServiceDefaults;
 
 namespace FSH.Starter.WebApi.App.Domain;
 
-public static class AppMetrics
+public static class GroupMetrics
 {
     private static readonly Meter Meter = new Meter(MetricsConstants.App, "1.0.0");
     public static readonly Counter<int> Created = Meter.CreateCounter<int>("groups.created");

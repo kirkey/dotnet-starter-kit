@@ -26,4 +26,13 @@
 	     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
 	   </ItemGroup>
 	 
+	   <ItemGroup>
+	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\Components\ContactFormDialog.razor" />
+	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\Components\ContactsAdvancedSearchComponent.razor" />
+	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\Contacts.razor" />
+	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\CreateContact.razor" />
+	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\EditContact.razor" />
+	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\ViewContact.razor" />
+	   </ItemGroup>
+	 
 	 </Project>

@@ -2,7 +2,7 @@
 
 <PageHeader Title="Chart Of Accounts" Header="Chart Of Accounts" SubHeader="Manage Ledger Accounts." />
 
-<EntityTable @ref="_table" TEntity="ChartOfAccountDto" TId="DefaultIdType" TRequest="AccountViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="ChartOfAccountDto" TId="DefaultIdType" TRequest="ViewModel" Context="@Context">
     <EditFormContent>
         @if (!Context.AddEditModal.IsCreate)
         {

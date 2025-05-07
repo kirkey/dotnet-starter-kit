@@ -1,5 +1,5 @@
 ﻿using Carter;
-using FSH.WebApi.Modules.Catalog.Features.Products.ProductCreation.v1;
+using FSH.WebApi.Modules.Catalog.Features.Products.ProductCreate.v1;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -14,7 +14,7 @@ public static class CatalogModule
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             var productGroup = app.MapGroup("products").WithTags("products");
-            productGroup.MapProductCreationEndpoint();
+            productGroup.MapProductCreateEndpoint();
 
             var testGroup = app.MapGroup("test").WithTags("test");
             testGroup.MapGet("/test", () => "hi");

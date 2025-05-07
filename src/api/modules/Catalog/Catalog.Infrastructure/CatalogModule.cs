@@ -17,14 +17,14 @@ public static class CatalogModule
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             var productGroup = app.MapGroup("products").WithTags("products");
-            productGroup.MapProductCreationEndpoint();
+            productGroup.MapProductCreateEndpoint();
             productGroup.MapProductGetEndpoint();
             productGroup.MapProductGetListEndpoint();
             productGroup.MapProductUpdateEndpoint();
             productGroup.MapProductDeleteEndpoint();
 
             var brandGroup = app.MapGroup("brands").WithTags("brands");
-            brandGroup.MapBrandCreationEndpoint();
+            brandGroup.MapBrandCreateEndpoint();
             brandGroup.MapGetBrandEndpoint();
             brandGroup.MapGetBrandListEndpoint();
             brandGroup.MapBrandUpdateEndpoint();

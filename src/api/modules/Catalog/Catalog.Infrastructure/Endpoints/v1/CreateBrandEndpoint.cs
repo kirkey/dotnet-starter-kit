@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Routing;
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 public static class CreateBrandEndpoint
 {
-    internal static RouteHandlerBuilder MapBrandCreationEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapBrandCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/", async (CreateBrandCommand request, ISender mediator) =>

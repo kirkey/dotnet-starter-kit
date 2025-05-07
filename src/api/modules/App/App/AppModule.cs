@@ -21,12 +21,12 @@ public static class AppModule
     {
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            var appGroup = app.MapGroup("Apps").WithTags("Apps");
-            appGroup.MapGroupCreationEndpoint();
-            appGroup.MapGetAppEndpoint();
-            appGroup.MapGetAppListEndpoint();
-            appGroup.MapGroupUpdateEndpoint();
-            appGroup.MapGroupDeletionEndpoint();
+            var group = app.MapGroup("Groups").WithTags("Groups");
+            group.MapGroupCreateEndpoint();
+            group.MapGroupGetEndpoint();
+            group.MapGroupGetListEndpoint();
+            group.MapGroupUpdateEndpoint();
+            group.MapGroupDeletionEndpoint();
         }
     }
 

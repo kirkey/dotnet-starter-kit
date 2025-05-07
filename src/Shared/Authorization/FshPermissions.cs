@@ -58,13 +58,21 @@ public static class FshPermissions
         //audit
         new("View Audit Trails", FshActions.View, FshResources.AuditTrails),
         
+        //App
+        new("View App", FshActions.View, FshResources.App),
+        new("Search App", FshActions.Search, FshResources.App),
+        new("Create App", FshActions.Create, FshResources.App),
+        new("Update App", FshActions.Update, FshResources.App),
+        new("Delete App", FshActions.Delete, FshResources.App),
+        new("Export App", FshActions.Export, FshResources.App),
+        
         //Accounting
-        new("View Todos", FshActions.View, FshResources.Accounting),
-        new("Search Todos", FshActions.Search, FshResources.Accounting),
-        new("Create Todos", FshActions.Create, FshResources.Accounting),
-        new("Update Todos", FshActions.Update, FshResources.Accounting),
-        new("Delete Todos", FshActions.Delete, FshResources.Accounting),
-        new("Export Todos", FshActions.Export, FshResources.Accounting),
+        new("View Accounting", FshActions.View, FshResources.Accounting),
+        new("Search Accounting", FshActions.Search, FshResources.Accounting),
+        new("Create Accounting", FshActions.Create, FshResources.Accounting),
+        new("Update Accounting", FshActions.Update, FshResources.Accounting),
+        new("Delete Accounting", FshActions.Delete, FshResources.Accounting),
+        new("Export Accounting", FshActions.Export, FshResources.Accounting),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);

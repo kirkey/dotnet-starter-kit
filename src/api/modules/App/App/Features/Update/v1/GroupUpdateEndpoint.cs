@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.App.Features.Update.v1;
 
-public static class UpdateAppEndpoint
+public static class GroupUpdateEndpoint
 {
     internal static RouteHandlerBuilder MapGroupUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
@@ -17,7 +17,7 @@ public static class UpdateAppEndpoint
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(nameof(UpdateAppEndpoint))
+            .WithName(nameof(GroupUpdateEndpoint))
             .WithSummary("Updates a Group Item")
             .WithDescription("Updated a Group Item")
             .Produces<GroupUpdateResponse>(StatusCodes.Status200OK)
