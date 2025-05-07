@@ -7,17 +7,17 @@
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
-                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Product Id" />
+                <MudTextField Value="Context.AddEditModal.RequestModel.Id" Underline=false ReadOnly Label="Product Id" />
             </MudItem>
         }
         <MudItem xs="12" md="6">
-            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" />
+            <MudTextField Label="Name" For="@(() => Context.AddEditModal.RequestModel.Name)" @bind-Value="Context.AddEditModal.RequestModel.Name" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" />
+            <MudTextField Label="Description" For="@(() => Context.AddEditModal.RequestModel.Description)" @bind-Value="Context.AddEditModal.RequestModel.Description" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" />
+            <MudTextField Label="Notes" For="@(() => Context.AddEditModal.RequestModel.Notes)" @bind-Value="Context.AddEditModal.RequestModel.Notes" />
         </MudItem>
         <MudItem xs="12" md="12">
             <MudItem>

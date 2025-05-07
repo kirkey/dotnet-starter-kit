@@ -7,11 +7,11 @@
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
-                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Account Id" />
+                <MudTextField Value="Context.AddEditModal.RequestModel.Id" Underline=false ReadOnly Label="Account Id" />
             </MudItem>
         }
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudSelect Label="Category" T="string" @bind-Value="context.AccountCategory">
+            <MudSelect Label="Category" T="string" @bind-Value="Context.AddEditModal.RequestModel.AccountCategory">
                 @foreach (var category in new string[] { "Asset", "Liability", "Equity", "Revenue", "Expense" })
                 {
                     <MudSelectItem Value="@category">@category</MudSelectItem>
@@ -19,7 +19,7 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudSelect Label="Type" T="string" @bind-Value="context.AccountType">
+            <MudSelect Label="Type" T="string" @bind-Value="Context.AddEditModal.RequestModel.AccountType">
                 @foreach (var type in new string[] { "Debit", "Credit" })
                 {
                     <MudSelectItem Value="@type">@type</MudSelectItem>
@@ -28,22 +28,22 @@
         </MudItem>
         <MudDivider />
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudTextField Label="Parent Code" For="@(() => context.ParentCode)" @bind-Value="context.ParentCode" />
+            <MudTextField Label="Parent Code" For="@(() => Context.AddEditModal.RequestModel.ParentCode)" @bind-Value="Context.AddEditModal.RequestModel.ParentCode" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" />
+            <MudTextField Label="Code" For="@(() => Context.AddEditModal.RequestModel.Code)" @bind-Value="Context.AddEditModal.RequestModel.Code" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudNumericField Label="Balance" For="@(() => context.Balance)" @bind-Value="context.Balance" Format="N2"/>
+            <MudNumericField Label="Balance" For="@(() => Context.AddEditModal.RequestModel.Balance)" @bind-Value="Context.AddEditModal.RequestModel.Balance" Format="N2"/>
         </MudItem>
         <MudItem xs="12">
-            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" />
+            <MudTextField Label="Name" For="@(() => Context.AddEditModal.RequestModel.Name)" @bind-Value="Context.AddEditModal.RequestModel.Name" />
         </MudItem>
         <MudItem xs="12">
-            <MudTextField @bind-Value="context.Description" For="@(() => context.Description)" Label="Description" Lines="3" />
+            <MudTextField @bind-Value="Context.AddEditModal.RequestModel.Description" For="@(() => Context.AddEditModal.RequestModel.Description)" Label="Description" Lines="3" />
         </MudItem>
         <MudItem xs="12">
-            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+            <MudTextField @bind-Value="Context.AddEditModal.RequestModel.Notes" For="@(() => Context.AddEditModal.RequestModel.Notes)" Label="Notes" Lines="3" />
         </MudItem>
         <MudItem xs="12">
             <MudItem>
