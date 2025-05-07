@@ -4,42 +4,42 @@
 
 <EntityTable TEntity="UserDetail" TId="DefaultIdType" TRequest="UserDetailViewModel" Context="@Context">
     <ExtraActions>
-        <MudMenuItem OnClick="(() => ViewProfile(Context.AddEditModal.RequestModel.Id))">View Profile</MudMenuItem>
+        <MudMenuItem OnClick="(() => ViewProfile(context.Id))">View Profile</MudMenuItem>
         @if (_canViewRoles)
         {
-            <MudMenuItem OnClick="(() => ManageRoles(Context.AddEditModal.RequestModel.Id))">Manage Roles</MudMenuItem>
+            <MudMenuItem OnClick="(() => ManageRoles(context.Id))">Manage Roles</MudMenuItem>
         }
         @if (_canViewAuditTrails)
         {
-            <MudMenuItem OnClick="(() => ViewAuditTrails(Context.AddEditModal.RequestModel.Id))">View Audit Trails</MudMenuItem>
+            <MudMenuItem OnClick="(() => ViewAuditTrails(context.Id))">View Audit Trails</MudMenuItem>
         }
     </ExtraActions>
 
     <EditFormContent>
         <MudItem xs="12" md="6">
-            <MudTextField For="@(() => Context.AddEditModal.RequestModel.UserName)" @bind-Value="Context.AddEditModal.RequestModel.UserName" Label="User Name" />
+            <MudTextField For="@(() => context.UserName)" @bind-Value="context.UserName" Label="User Name" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField For="@(() => Context.AddEditModal.RequestModel.FirstName)" @bind-Value="Context.AddEditModal.RequestModel.FirstName" Label="First Name" />
+            <MudTextField For="@(() => context.FirstName)" @bind-Value="context.FirstName" Label="First Name" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField For="@(() => Context.AddEditModal.RequestModel.LastName)" @bind-Value="Context.AddEditModal.RequestModel.LastName" Label="Last Name" />
+            <MudTextField For="@(() => context.LastName)" @bind-Value="context.LastName" Label="Last Name" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField For="@(() => Context.AddEditModal.RequestModel.Email)" InputType="InputType.Email" @bind-Value="Context.AddEditModal.RequestModel.Email"
+            <MudTextField For="@(() => context.Email)" InputType="InputType.Email" @bind-Value="context.Email"
                 Label="Email" />
         </MudItem>
         <MudItem xs="12" md="12">
-            <MudTextField For="@(() => Context.AddEditModal.RequestModel.PhoneNumber)" @bind-Value="Context.AddEditModal.RequestModel.PhoneNumber"
+            <MudTextField For="@(() => context.PhoneNumber)" @bind-Value="context.PhoneNumber"
                 Label="Phone Number" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField For="@(() => Context.AddEditModal.RequestModel.Password)" @bind-Value="Context.AddEditModal.RequestModel.Password" Label="Password"
+            <MudTextField For="@(() => context.Password)" @bind-Value="context.Password" Label="Password"
                 InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon"
                 OnAdornmentClick="TogglePasswordVisibility" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField For="@(() => Context.AddEditModal.RequestModel.ConfirmPassword)" @bind-Value="Context.AddEditModal.RequestModel.ConfirmPassword"
+            <MudTextField For="@(() => context.ConfirmPassword)" @bind-Value="context.ConfirmPassword"
                 Label="Confirm Password" InputType="InputType.Password" />
         </MudItem>
     </EditFormContent>
