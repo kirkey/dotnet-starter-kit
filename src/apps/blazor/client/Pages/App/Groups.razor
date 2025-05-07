@@ -22,7 +22,7 @@
             <MudTextField Label="Code" For="@(() => Context.AddEditModal.RequestModel.Code)" @bind-Value="Context.AddEditModal.RequestModel.Code" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudNumericField Label="Amount" For="@(() => Context.AddEditModal.RequestModel.Amount)" @bind-Value="Context.AddEditModal.RequestModel.Amount" />
+            <MudNumericField Label="Amount" For="@(() => Context.AddEditModal.RequestModel.Amount)" @bind-Value="Context.AddEditModal.RequestModel.Amount" Format="N2" />
         </MudItem>
         <MudItem xs="12">
             <MudTextField Label="Name" For="@(() => Context.AddEditModal.RequestModel.Name)" @bind-Value="Context.AddEditModal.RequestModel.Name" />

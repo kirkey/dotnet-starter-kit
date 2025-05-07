@@ -12,7 +12,7 @@ public static class GroupGetListEndpoint
 {
     internal static RouteHandlerBuilder MapGroupGetListEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/search", async (ISender mediator, [FromBody] PaginationFilter filter) =>
+        return endpoints.MapPost("/list", async (ISender mediator, [FromBody] PaginationFilter filter) =>
             {
                 var response = await mediator.Send(new GroupGetListRequest(filter)).ConfigureAwait(false);
                 return Results.Ok(response);

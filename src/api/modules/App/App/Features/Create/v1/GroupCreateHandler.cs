@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.App.Features.Create.v1;
 
 public sealed class GroupCreateHandler(
     ILogger<GroupCreateHandler> logger,
-    [FromKeyedServices("Group")] IRepository<Group> repository)
+    [FromKeyedServices("app:group")] IRepository<Group> repository)
     : IRequestHandler<GroupCreateCommand, GroupCreateResponse>
 {
     public async Task<GroupCreateResponse> Handle(GroupCreateCommand request, CancellationToken cancellationToken)

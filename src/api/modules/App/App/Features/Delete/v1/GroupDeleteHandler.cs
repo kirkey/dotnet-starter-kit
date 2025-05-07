@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.App.Features.Delete.v1;
 
 public sealed class GroupDeleteHandler(
     ILogger<GroupDeleteHandler> logger,
-    [FromKeyedServices("Group")] IRepository<Group> repository)
+    [FromKeyedServices("app:group")] IRepository<Group> repository)
     : IRequestHandler<GroupDeleteCommand>
 {
     public async Task Handle(GroupDeleteCommand request, CancellationToken cancellationToken)

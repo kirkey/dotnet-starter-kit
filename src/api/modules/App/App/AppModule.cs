@@ -6,6 +6,7 @@ using FSH.Starter.WebApi.App.Features.Create.v1;
 using FSH.Starter.WebApi.App.Features.Delete.v1;
 using FSH.Starter.WebApi.App.Features.Get.v1;
 using FSH.Starter.WebApi.App.Features.GetList.v1;
+using FSH.Starter.WebApi.App.Features.Search.v1;
 using FSH.Starter.WebApi.App.Features.Update.v1;
 using FSH.Starter.WebApi.App.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,7 @@ public static class AppModule
             group.MapGroupCreateEndpoint();
             group.MapGroupGetEndpoint();
             group.MapGroupGetListEndpoint();
+            group.MapGroupSearchEndpoint();
             group.MapGroupUpdateEndpoint();
             group.MapGroupDeletionEndpoint();
         }
@@ -35,8 +37,8 @@ public static class AppModule
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.BindDbContext<AppDbContext>();
         builder.Services.AddScoped<IDbInitializer, AppDbInitializer>();
-        builder.Services.AddKeyedScoped<IRepository<Group>, AppRepository<Group>>("Group");
-        builder.Services.AddKeyedScoped<IReadRepository<Group>, AppRepository<Group>>("Group");
+        builder.Services.AddKeyedScoped<IRepository<Group>, AppRepository<Group>>("app:group");
+        builder.Services.AddKeyedScoped<IReadRepository<Group>, AppRepository<Group>>("app:group");
         return builder;
     }
 

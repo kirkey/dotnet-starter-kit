@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
+
 public sealed class ChartOfAccountSearchHandler(
     [FromKeyedServices("accounting:ChartOfAccounts")] IReadRepository<ChartOfAccount> repository)
     : IRequestHandler<ChartOfAccountSearchRequest, PagedList<ChartOfAccountDto>>

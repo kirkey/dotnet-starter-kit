@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FSH.Starter.WebApi.App.Features.Get.v1;
 
 public sealed class GroupGetHandler(
-    [FromKeyedServices("Group")] IReadRepository<Group> repository,
+    [FromKeyedServices("app:group")] IReadRepository<Group> repository,
     ICacheService cache)
     : IRequestHandler<GetAppRequest, GroupGetResponse>
 {

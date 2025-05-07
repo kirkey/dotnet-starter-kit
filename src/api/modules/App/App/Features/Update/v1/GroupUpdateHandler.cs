@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.App.Features.Update.v1;
 
 public sealed class GroupUpdateHandler(
     ILogger<GroupUpdateHandler> logger,
-    [FromKeyedServices("Group")] IRepository<Group> repository)
+    [FromKeyedServices("app:group")] IRepository<Group> repository)
     : IRequestHandler<GroupUpdateCommand, GroupUpdateResponse>
 {
     public async Task<GroupUpdateResponse> Handle(GroupUpdateCommand request, CancellationToken cancellationToken)

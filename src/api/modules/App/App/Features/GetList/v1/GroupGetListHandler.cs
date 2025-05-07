@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FSH.Starter.WebApi.App.Features.GetList.v1;
 
 public sealed class GroupGetListHandler(
-    [FromKeyedServices("Group")] IReadRepository<Group> repository)
+    [FromKeyedServices("app:group")] IReadRepository<Group> repository)
     : IRequestHandler<GroupGetListRequest, PagedList<GroupDto>>
 {
     public async Task<PagedList<GroupDto>> Handle(GroupGetListRequest request, CancellationToken cancellationToken)
