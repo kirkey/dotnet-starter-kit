@@ -14,6 +14,7 @@ public abstract class EntityTableContext<TEntity, TId, TRequest>(
     Func<TEntity, TId>? idFunc,
     Func<Task<TRequest>>? getDefaultsFunc,
     Func<TRequest, Task>? createFunc,
+    Func<TEntity, Task<TRequest>>? duplicateFunc,
     Func<TId, Task<TRequest>>? getDetailsFunc,
     Func<TId, TRequest, Task>? updateFunc,
     Func<TId, Task>? deleteFunc,
@@ -53,6 +54,11 @@ public abstract class EntityTableContext<TEntity, TId, TRequest>(
     /// </summary>
     public Func<TRequest, Task>? CreateFunc { get; } = createFunc;
 
+    /// <summary>
+    ///     A function that duplicates a given entity into a request to create a new one.
+    /// </summary>
+    public Func<TEntity, Task<TRequest>>? GetDuplicateFunc { get; } = duplicateFunc;
+    
     /// <summary>
     /// A function that executes the GetDetails method on the api with the supplied Id and returns a Task of Result of TRequest.
     /// No need to check for error messages or api exceptions. These are automatically handled by the component.

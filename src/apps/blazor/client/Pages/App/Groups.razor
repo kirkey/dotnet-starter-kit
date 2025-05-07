@@ -2,7 +2,7 @@
         
 <PageHeader Title="Groups" Header="Groups" SubHeader="Manage Application Groups." />
 
-<EntityTable @ref="_table" TEntity="GroupDto" TId="DefaultIdType" TRequest="ViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="GroupDto" TId="DefaultIdType" TRequest="GroupViewModel" Context="@Context">
     <EditFormContent>
         @if (!Context.AddEditModal.IsCreate)
         {

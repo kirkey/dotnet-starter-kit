@@ -11,12 +11,12 @@ public partial class Groups
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
 
-    protected EntityServerTableContext<GroupDto, DefaultIdType, ViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<GroupDto, DefaultIdType, GroupViewModel> Context { get; set; } = default!;
 
-    private EntityTable<GroupDto, DefaultIdType, ViewModel> _table = default!;
+    private EntityTable<GroupDto, DefaultIdType, GroupViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new EntityServerTableContext<GroupDto, DefaultIdType, ViewModel>(
+        Context = new EntityServerTableContext<GroupDto, DefaultIdType, GroupViewModel>(
             entityName: "Group",
             entityNamePlural: "Groups",
             entityResource: FshResources.Accounting,
@@ -47,6 +47,6 @@ public partial class Groups
             deleteFunc: async id => await ApiClient.GroupDeleteEndpointAsync("1", id));
 }
 
-public class ViewModel : GroupUpdateCommand
+public class GroupViewModel : GroupUpdateCommand
 {
 }

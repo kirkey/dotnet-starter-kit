@@ -11,12 +11,12 @@ public partial class ChartOfAccounts
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
 
-    protected EntityServerTableContext<ChartOfAccountDto, DefaultIdType, ViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<ChartOfAccountDto, DefaultIdType, ChartOfAccountViewModel> Context { get; set; } = default!;
 
-    private EntityTable<ChartOfAccountDto, DefaultIdType, ViewModel> _table = default!;
+    private EntityTable<ChartOfAccountDto, DefaultIdType, ChartOfAccountViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new EntityServerTableContext<ChartOfAccountDto, DefaultIdType, ViewModel>(
+        Context = new EntityServerTableContext<ChartOfAccountDto, DefaultIdType, ChartOfAccountViewModel>(
             entityName: "Chart Of Account",
             entityNamePlural: "Chart Of Accounts",
             entityResource: FshResources.Accounting,
@@ -49,6 +49,6 @@ public partial class ChartOfAccounts
             deleteFunc: async id => await ApiClient.AccountDeleteEndpointAsync("1", id));
 }
 
-public class ViewModel : ChartOfAccountUpdateRequest
+public class ChartOfAccountViewModel : ChartOfAccountUpdateRequest
 {
 }

@@ -2,16 +2,16 @@
 
 <PageHeader Title="Users" Header="Users" SubHeader="Manage Users." />
 
-<EntityTable TEntity="UserDetail" TId="DefaultIdType" TRequest="RegisterUserCommand" Context="@Context">
+<EntityTable TEntity="UserDetail" TId="DefaultIdType" TRequest="UserDetailViewModel" Context="@Context">
     <ExtraActions>
-        <MudMenuItem OnClick="(() => ViewProfile(context.Id))">View Profile</MudMenuItem>
+        <MudMenuItem OnClick="(() => ViewProfile(Context.AddEditModal.RequestModel.Id))">View Profile</MudMenuItem>
         @if (_canViewRoles)
         {
-            <MudMenuItem OnClick="(() => ManageRoles(context.Id))">Manage Roles</MudMenuItem>
+            <MudMenuItem OnClick="(() => ManageRoles(Context.AddEditModal.RequestModel.Id))">Manage Roles</MudMenuItem>
         }
         @if (_canViewAuditTrails)
         {
-            <MudMenuItem OnClick="(() => ViewAuditTrails(context.Id))">View Audit Trails</MudMenuItem>
+            <MudMenuItem OnClick="(() => ViewAuditTrails(Context.AddEditModal.RequestModel.Id))">View Audit Trails</MudMenuItem>
         }
     </ExtraActions>
 

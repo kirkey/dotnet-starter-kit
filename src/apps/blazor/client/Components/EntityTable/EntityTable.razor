@@ -172,13 +172,13 @@
                                     Update
                                 </MudMenuItem>
                             }
-                            @*@if (_canCreate && CanUpdateEntity(context))
+                            @if (_canCreate && CanUpdateEntity(context))
                             {
                                 <MudMenuItem Icon="@Icons.Material.Filled.ContentCopy"
                                              OnClick="@(() => InvokeModal(entityToDuplicate: context))">
                                     Duplicate
                                 </MudMenuItem>
-                            }*@
+                            }
                             @if (CanDeleteEntity(context))
                             {
                                 <MudMenuItem Icon="@Icons.Material.Filled.Delete"

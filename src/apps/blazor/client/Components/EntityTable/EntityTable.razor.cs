@@ -187,75 +187,69 @@ public partial class EntityTable<TEntity, TId, TRequest>
         return filter;
     }
 
-    private async Task InvokeModal(TEntity? entity = default)
+    private async Task InvokeModal(TEntity? entity = default, TEntity? entityToDuplicate = default)
     {
         bool isCreate = entity is null;
-
+    
         var parameters = new DialogParameters
         {
             { nameof(AddEditModal<TRequest>.ChildContent), EditFormContent },
             { nameof(AddEditModal<TRequest>.OnInitializedFunc), Context.EditFormInitializedFunc },
             { nameof(AddEditModal<TRequest>.IsCreate), isCreate }
         };
-
-        Func<TRequest, Task> saveFunc;
-        TRequest requestModel;
-        string title, successMessage;
-
-        if (isCreate)
-        {
-            _ = Context.CreateFunc ?? throw new InvalidOperationException("CreateFunc can't be null!");
-
-            saveFunc = Context.CreateFunc;
-
-            requestModel =
-                Context.GetDefaultsFunc is not null
-                    && await ApiHelper.ExecuteCallGuardedAsync(
-                            () => Context.GetDefaultsFunc(), Toast, Navigation)
-                        is { } defaultsResult
-                ? defaultsResult
-                : new TRequest();
-
-            title = $"Create {Context.EntityName}";
-            successMessage = $"{Context.EntityName} Created";
-        }
-        else
-        {
-            _ = Context.IdFunc ?? throw new InvalidOperationException("IdFunc can't be null!");
-            _ = Context.UpdateFunc ?? throw new InvalidOperationException("UpdateFunc can't be null!");
-
-            var id = Context.IdFunc(entity!);
-
-            saveFunc = request => Context.UpdateFunc(id, request);
-
-            requestModel =
-                Context.GetDetailsFunc is not null
-                    && await ApiHelper.ExecuteCallGuardedAsync(
-                            () => Context.GetDetailsFunc(id!),
-                            Toast, Navigation)
-                        is { } detailsResult
+    
+        Func<TRequest, Task> saveFunc = isCreate
+            ? Context.CreateFunc ?? throw new InvalidOperationException("CreateFunc can't be null!")
+            : request => Context.UpdateFunc!(Context.IdFunc!(entity!), request);
+    
+        TRequest requestModel = isCreate || entityToDuplicate is not null
+            ? await GetRequestModel(entityToDuplicate).ConfigureAwait(false)
+            : Context.GetDetailsFunc is not null &&
+              await ApiHelper.ExecuteCallGuardedAsync(() => Context.GetDetailsFunc(Context.IdFunc!(entity!)), Toast, Navigation)
+                  is { } detailsResult
                 ? detailsResult
                 : entity!.Adapt<TRequest>();
-
-            title = $"Edit {Context.EntityName}";
-            successMessage = $"{Context.EntityName}Updated";
-        }
-
+    
+        string title = isCreate ? $"Create {Context.EntityName}" : $"Edit {Context.EntityName}";
+        string successMessage = isCreate ? $"{Context.EntityName} Created" : $"{Context.EntityName} Updated";
+    
         parameters.Add(nameof(AddEditModal<TRequest>.SaveFunc), saveFunc);
         parameters.Add(nameof(AddEditModal<TRequest>.RequestModel), requestModel);
         parameters.Add(nameof(AddEditModal<TRequest>.Title), title);
         parameters.Add(nameof(AddEditModal<TRequest>.SuccessMessage), successMessage);
-
+    
         var dialog = DialogService.ShowModal<AddEditModal<TRequest>>(parameters);
-
+    
         Context.SetAddEditModalRef(dialog);
-
+    
         var result = await dialog.Result;
-
+    
         if (!result!.Canceled)
         {
             await ReloadDataAsync();
         }
+    }
+    
+    private async Task<TRequest> GetRequestModel(TEntity? entityToDuplicate)
+    {
+        if (entityToDuplicate is not null)
+        {
+            if (Context.GetDuplicateFunc is not null &&
+                await ApiHelper.ExecuteCallGuardedAsync(() => 
+                        Context.GetDuplicateFunc(entityToDuplicate), Toast, Navigation)
+                    .ConfigureAwait(false) is { } duplicateResult)
+                return duplicateResult;
+
+            return entityToDuplicate.Adapt<TRequest>();
+        }
+
+        if (Context.GetDefaultsFunc is not null &&
+            await ApiHelper.ExecuteCallGuardedAsync(() =>
+                    Context.GetDefaultsFunc(), Toast, Navigation)
+                .ConfigureAwait(false) is { } defaultsResult)
+            return defaultsResult;
+
+        return new TRequest();
     }
     
     private async Task InvokeUpdateAsync(TEntity? entity = default)

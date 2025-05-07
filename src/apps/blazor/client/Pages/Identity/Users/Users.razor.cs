@@ -19,7 +19,7 @@ public partial class Users
     [Inject]
     protected IApiClient UsersClient { get; set; } = default!;
 
-    protected EntityClientTableContext<UserDetail, DefaultIdType, RegisterUserCommand> Context { get; set; } = default!;
+    protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = default!;
 
     private bool _canExportUsers;
     private bool _canViewAuditTrails;
@@ -40,7 +40,7 @@ public partial class Users
         _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.UserRoles);
         _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails);
 
-        Context = new EntityClientTableContext<UserDetail, DefaultIdType, RegisterUserCommand>(
+        Context = new EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel>(
             entityName: "User",
             entityNamePlural: "Users",
             entityResource: FshResources.Users,
@@ -49,24 +49,24 @@ public partial class Users
             deleteAction: string.Empty,
             fields:
             [
-                new EntityField<UserDetail>(user => user.FirstName, "First Name"),
-                new EntityField<UserDetail>(user => user.LastName, "Last Name"),
-                new EntityField<UserDetail>(user => user.UserName, "UserName"),
-                new EntityField<UserDetail>(user => user.Email, "Email"),
-                new EntityField<UserDetail>(user => user.PhoneNumber, "PhoneNumber"),
-                new EntityField<UserDetail>(user => user.EmailConfirmed, "Email Confirmation", Type: typeof(bool)),
-                new EntityField<UserDetail>(user => user.IsActive, "Active", Type: typeof(bool))
+                new EntityField<UserDetail>(userDetail => userDetail.FirstName, "First Name"),
+                new EntityField<UserDetail>(userDetail => userDetail.LastName, "Last Name"),
+                new EntityField<UserDetail>(userDetail => userDetail.UserName, "UserName"),
+                new EntityField<UserDetail>(userDetail => userDetail.Email, "Email"),
+                new EntityField<UserDetail>(userDetail => userDetail.PhoneNumber, "PhoneNumber"),
+                new EntityField<UserDetail>(userDetail => userDetail.EmailConfirmed, "Email Confirmation", Type: typeof(bool)),
+                new EntityField<UserDetail>(userDetail => userDetail.IsActive, "Active", Type: typeof(bool))
             ],
-            idFunc: user => user.Id,
+            idFunc: userDetail => userDetail.Id,
             loadDataFunc: async () => (await UsersClient.GetUsersListEndpointAsync()).ToList(),
-            searchFunc: (searchString, user) =>
+            searchFunc: (searchString, userDetail) =>
                 string.IsNullOrWhiteSpace(searchString)
-                    || user.FirstName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
-                    || user.LastName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
-                    || user.Email?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
-                    || user.PhoneNumber?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
-                    || user.UserName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true,
-            createFunc: user => UsersClient.RegisterUserEndpointAsync(user),
+                    || userDetail.FirstName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
+                    || userDetail.LastName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
+                    || userDetail.Email?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
+                    || userDetail.PhoneNumber?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
+                    || userDetail.UserName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true,
+            createFunc: userDetailExtension => UsersClient.RegisterUserEndpointAsync(userDetailExtension),
             hasExtraActionsFunc: () => true,
             exportAction: string.Empty);
     }
@@ -95,5 +95,10 @@ public partial class Users
         }
 
         Context.AddEditModal.ForceRender();
+    }
+
+    public class UserDetailViewModel : RegisterUserCommand
+    {
+        public DefaultIdType Id { get; set; } = default!;
     }
 }
