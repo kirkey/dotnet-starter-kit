@@ -20,7 +20,7 @@ public sealed class ChartOfAccountUpdateRequestHandler(
 
         var updatedAccount = account.Update(
             request.AccountCategory, request.AccountType,
-            request.ParentCode, request.Code,
+            request.ParentCode, request.AccountCode,
             request.Name, request.Balance,
             request.Description, request.Notes);
 

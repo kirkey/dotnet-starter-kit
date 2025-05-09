@@ -17,12 +17,12 @@ public sealed class ChartOfAccountCreateRequestHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         // Check for duplicate account code
-        var existingAccount = await repository.FirstOrDefaultAsync(new ChartOfAccountByCode(request.Code), cancellationToken)
+        var existingAccount = await repository.FirstOrDefaultAsync(new ChartOfAccountByCode(request.AccountCode), cancellationToken)
             .ConfigureAwait(false);
         if (existingAccount is not null)
-            throw new ChartOfAccountForbiddenException(request.Code);
+            throw new ChartOfAccountForbiddenException(request.AccountCode);
 
-        var account = ChartOfAccount.Create(request.AccountCategory, request.AccountType, request.ParentCode, request.Code, request.Name, request.Balance,
+        var account = ChartOfAccount.Create(request.AccountCategory, request.AccountType, request.ParentCode, request.AccountCode, request.Name, request.Balance,
             request.Description, request.Notes);
 
         await repository.AddAsync(account, cancellationToken).ConfigureAwait(false);

@@ -1,4 +1,5 @@
-@page "/accounts"
+@page "/chart-of-accounts"
+
 @using FSH.Starter.Blazor.Client.Components.Autocompletes.App
 
 <PageHeader Title="Chart Of Accounts" Header="Chart Of Accounts" SubHeader="Manage Ledger Accounts." />
@@ -11,7 +12,14 @@
                 <MudTextField Value="Context.AddEditModal.RequestModel.Id" Underline=false ReadOnly Label="Account Id" />
             </MudItem>
         }
-        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+            <AutocompleteGroupByParent @bind-Value="Context.AddEditModal.RequestModel.AccountCategory"
+                                       For="@(() => Context.AddEditModal.RequestModel.AccountCategory)"
+                                       Label="Category"
+                                       Parent="ACCOUNTCATEGORY"
+                                       Variant="Variant.Filled" />
+        </MudItem>
+        @*<MudItem xs="12" sm="6" md="4" lg="3" xl="2">
             <MudSelect @bind-Value="Context.AddEditModal.RequestModel.AccountCategory"
                        For="@(() => Context.AddEditModal.RequestModel.AccountCategory!)"
                        Label="Category" 
@@ -22,8 +30,8 @@
                     <MudSelectItem Value="@category">@category</MudSelectItem>
                 }
             </MudSelect>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+        </MudItem>*@
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
             <MudSelect @bind-Value="Context.AddEditModal.RequestModel.AccountType"
                        For="@(() => Context.AddEditModal.RequestModel.AccountType!)"
                        Label="Type"
@@ -36,23 +44,19 @@
             </MudSelect>
         </MudItem>
         <MudDivider />
-        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <AutocompleteGroupByParent @bind-Value="Context.AddEditModal.RequestModel.ParentCode"
-                                       For="@(() => Context.AddEditModal.RequestModel.ParentCode!)" 
-                                       Label="Parent Code" 
-                                       Parent="CHARTOFACCOUNTS"
-                                       Variant="Variant.Filled" />
-        </MudItem>
-        @*<MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudTextField Label="Parent Code" For="@(() => Context.AddEditModal.RequestModel.ParentCode)" @bind-Value="Context.AddEditModal.RequestModel.ParentCode" />
-        </MudItem>*@
-        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
-            <MudTextField @bind-Value="Context.AddEditModal.RequestModel.Code" 
-                          For="@(() => Context.AddEditModal.RequestModel.Code)" 
-                          Label="Code"
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+            <MudTextField @bind-Value="Context.AddEditModal.RequestModel.ParentCode"
+                          For="@(() => Context.AddEditModal.RequestModel.ParentCode)"
+                          Label="Parent Code"
                           Variant="Variant.Filled"/>
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" xxl="1">
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+            <MudTextField @bind-Value="Context.AddEditModal.RequestModel.AccountCode" 
+                          For="@(() => Context.AddEditModal.RequestModel.AccountCode)" 
+                          Label="Account Code"
+                          Variant="Variant.Filled"/>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
             <MudNumericField @bind-Value="Context.AddEditModal.RequestModel.Balance" 
                              For="@(() => Context.AddEditModal.RequestModel.Balance)" 
                              Format="N2" 

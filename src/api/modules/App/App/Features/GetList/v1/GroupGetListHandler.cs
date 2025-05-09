@@ -1,7 +1,9 @@
-﻿using FSH.Framework.Core.Paging;
+﻿using Ardalis.Specification;
+using FSH.Framework.Core.Paging;
 using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.App.Domain;
+using FSH.Starter.WebApi.App.Features.Dtos;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +17,9 @@ public sealed class GroupGetListHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new EntitiesByPaginationFilterSpec<Group, GroupDto>(request.Filter);
+        // var spec = new EntitiesByPaginationFilterSpec<Group, GroupDto>(request.Filter);
+
+        var spec = new GroupGetListRequestSpec(request);
 
         var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);

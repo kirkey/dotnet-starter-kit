@@ -8,6 +8,6 @@ public sealed class ChartOfAccountByCode :
     Specification<ChartOfAccount, ChartOfAccountDto>,
     ISingleResultSpecification<ChartOfAccount, ChartOfAccountDto>
 {
-    public ChartOfAccountByCode(string code) =>
-        Query.Where(w => w.Code == code);
+    public ChartOfAccountByCode(string accountCode) =>
+        Query.Where(w => w.AccountCode == accountCode);
 }

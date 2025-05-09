@@ -1,5 +1,7 @@
 ﻿using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.App.Domain;
+using FSH.Starter.WebApi.App.Exceptions;
+using FSH.Starter.WebApi.App.Features.Queries;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,6 +15,14 @@ public sealed class GroupCreateHandler(
 {
     public async Task<GroupCreateResponse> Handle(GroupCreateCommand request, CancellationToken cancellationToken)
     {
+        var existingGroupByCode = await repository.SingleOrDefaultAsync(new GroupByCodeSpec(request.Code), cancellationToken);
+        if (existingGroupByCode != null) 
+            throw new GroupExistingException(request.Code);
+        
+        var existingGroupByName = await repository.SingleOrDefaultAsync(new GroupByNameSpec(request.Name), cancellationToken);
+        if (existingGroupByName != null) 
+            throw new GroupExistingException(request.Name);
+
         ArgumentNullException.ThrowIfNull(request);
         var item = Group.Create(request.Application, request.Parent, request.Tag, request.Number, request.Code,
             request.Name, request.Amount, request.EmployeeId, request.EmployeeName,

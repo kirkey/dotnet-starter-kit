@@ -13,7 +13,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<ChartOfAccount>
 
         builder.HasKey(x => x.Id);
 
-        builder.HasIndex(x => x.Code).IsUnique();
+        builder.HasIndex(x => x.AccountCode).IsUnique();
         
         builder.Property(x => x.AccountCategory)
             .HasMaxLength(16)
@@ -23,7 +23,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<ChartOfAccount>
             .HasMaxLength(16)
             .IsRequired();
         
-        builder.Property(x => x.Code)
+        builder.Property(x => x.AccountCode)
             .HasMaxLength(16)
             .IsRequired();
         

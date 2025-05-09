@@ -19,6 +19,7 @@ public static class Extensions
             DbProviders.PostgreSQL => builder.UseNpgsql(
                 connectionString, optionsBuilder => optionsBuilder
                         .MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
+                // .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking),
 
             DbProviders.MySQL => builder.UseMySql(
                     connectionString,
@@ -26,10 +27,12 @@ public static class Extensions
                     optionsBuilder => optionsBuilder
                             .MigrationsAssembly("FSH.Starter.WebApi.Migrations.MySQL")
                             .SchemaBehavior(Pomelo.EntityFrameworkCore.MySql.Infrastructure.MySqlSchemaBehavior.Ignore))
+                // .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging(),
 
             DbProviders.MSSQL => builder.UseSqlServer(connectionString, optionsBuilder =>
                                 optionsBuilder.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MSSQL")),
+                // .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking),
 
             _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
         };

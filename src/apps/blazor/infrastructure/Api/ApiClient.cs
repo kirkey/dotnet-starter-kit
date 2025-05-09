@@ -7052,7 +7052,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? ParentCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
+        public string? AccountCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("balance")]
         public double Balance { get; set; } = default!;
@@ -7112,7 +7112,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? ParentCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
+        public string? AccountCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("balance")]
         public double Balance { get; set; } = default!;
@@ -7169,7 +7169,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
+        public string? AccountCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
@@ -7214,7 +7214,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? ParentCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
+        public string? AccountCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("balance")]
         public double Balance { get; set; } = default!;

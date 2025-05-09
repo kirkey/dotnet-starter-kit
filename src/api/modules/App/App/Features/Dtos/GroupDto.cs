@@ -1,4 +1,4 @@
-﻿namespace FSH.Starter.WebApi.App.Features.GetList.v1;
+﻿namespace FSH.Starter.WebApi.App.Features.Dtos;
 
 public record GroupDto(
     DefaultIdType Id,

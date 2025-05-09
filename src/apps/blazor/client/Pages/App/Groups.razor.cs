@@ -26,14 +26,18 @@ public partial class Groups
                 new EntityField<GroupDto>(dto => dto.Parent, "Parent", "Parent"),
                 new EntityField<GroupDto>(dto => dto.Code, "Code", "Code"),
                 new EntityField<GroupDto>(dto => dto.Name, "Name", "Name"),
+                new EntityField<GroupDto>(dto => dto.Amount, "Amount", "Amount"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<PaginationFilter>();
-
-                var dtoPagedList = await ApiClient.GroupGetListEndpointAsync("1", paginationFilter);
+                // var paginationFilter = filter.Adapt<PaginationFilter>();
+                // var dtoPagedList = await ApiClient.GroupGetListEndpointAsync("1", paginationFilter);
+                
+                var groupSearchCommand = filter.Adapt<GroupSearchCommand>();
+                var dtoPagedList = await ApiClient.GroupSearchEndpointAsync("1", groupSearchCommand);
+                
                 return dtoPagedList.Adapt<PaginationResponse<GroupDto>>();
             },
             createFunc: async model =>

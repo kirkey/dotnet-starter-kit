@@ -2,5 +2,5 @@
 
 namespace Accounting.Application.ChartOfAccounts.Exceptions;
 
-internal sealed class ChartOfAccountForbiddenException(string code)
-    : ForbiddenException($"account with code {code} already exists.");
+internal sealed class ChartOfAccountForbiddenException(string accountCode)
+    : ForbiddenException($"account with account code {accountCode} already exists.");

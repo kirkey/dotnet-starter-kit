@@ -24,13 +24,13 @@ internal sealed class AccountingDbInitializer(
         const string type = "Debit";
         const string name = "Cash Account";
         const string parentCode = "1";
-        const string code = "1000";
+        const string accountCode = "1000";
         const decimal balance = 5000.00M;
         const string description = "Main cash account for general operations";
         
-        if (await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.Code == code, cancellationToken).ConfigureAwait(false) is null)
+        if (await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == accountCode, cancellationToken).ConfigureAwait(false) is null)
         {
-            var account = ChartOfAccount.Create(category, type, parentCode, code, name, balance, description);
+            var account = ChartOfAccount.Create(category, type, parentCode, accountCode, name, balance, description);
             await context.ChartOfAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             logger.LogInformation("[{Tenant}] seeding default accounting data", context.TenantInfo!.Identifier);

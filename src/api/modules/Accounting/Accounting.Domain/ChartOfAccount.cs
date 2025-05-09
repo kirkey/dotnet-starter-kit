@@ -8,33 +8,33 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     public string AccountCategory { get; private set; }
     public string AccountType { get; private set; }
     public string ParentCode { get; private set; }
-    public string Code { get; private set; }
+    public string AccountCode { get; private set; }
     public decimal Balance { get; private set; }
     
-    private ChartOfAccount(DefaultIdType id, string accountCategory, string accountType, string parentCode, string code, string name, decimal balance,
+    private ChartOfAccount(DefaultIdType id, string accountCategory, string accountType, string parentCode, string accountCode, string name, decimal balance,
         string? description = null, string? notes = null)
     {
         Id = id;
         AccountCategory = accountCategory;
         AccountType = accountType;
         ParentCode = parentCode;
-        Code = code;
+        AccountCode = accountCode;
         Name = name;
         Balance = balance;
 
         Description = description;
         Notes = notes;
 
-        QueueDomainEvent(new ChartOfAccountCreated(Id, AccountCategory, AccountType, Code, Name, Balance, Description, Notes));
+        QueueDomainEvent(new ChartOfAccountCreated(Id, AccountCategory, AccountType, AccountCode, Name, Balance, Description, Notes));
         AccountMetrics.Created.Add(1);
     }
 
-    public static ChartOfAccount Create(string accountCategory, string accountType, string parentCode, string code, string name, decimal balance = 0, string? description = null, string? notes = null)
+    public static ChartOfAccount Create(string accountCategory, string accountType, string parentCode, string accountCode, string name, decimal balance = 0, string? description = null, string? notes = null)
     {
-        return new ChartOfAccount(DefaultIdType.NewGuid(), accountCategory, accountType, parentCode, code, name, balance, description, notes);
+        return new ChartOfAccount(DefaultIdType.NewGuid(), accountCategory, accountType, parentCode, accountCode, name, balance, description, notes);
     }
 
-    public ChartOfAccount Update(string? accountCategory, string? accountType, string? parentCode, string? code, string? name, decimal balance, string? description, string? notes)
+    public ChartOfAccount Update(string? accountCategory, string? accountType, string? parentCode, string? accountCode, string? name, decimal balance, string? description, string? notes)
     {
         bool isUpdated = false;
 
@@ -56,9 +56,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (!string.IsNullOrWhiteSpace(code) && !string.Equals(Code, code, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(accountCode) && !string.Equals(AccountCode, accountCode, StringComparison.OrdinalIgnoreCase))
         {
-            Code = code;
+            AccountCode = accountCode;
             isUpdated = true;
         }
         

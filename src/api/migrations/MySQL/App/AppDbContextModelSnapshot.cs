@@ -30,7 +30,8 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.App
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(16, 2)
+                        .HasColumnType("decimal(16,2)");
 
                     b.Property<string>("Application")
                         .IsRequired()

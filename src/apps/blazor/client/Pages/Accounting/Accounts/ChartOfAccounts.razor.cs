@@ -25,7 +25,7 @@ public partial class ChartOfAccounts
                 new EntityField<ChartOfAccountDto>(dto => dto.AccountCategory, "Category", "AccountCategory"),
                 new EntityField<ChartOfAccountDto>(dto => dto.AccountType, "Type", "AccountType"),
                 new EntityField<ChartOfAccountDto>(dto => dto.ParentCode, "Parent", "ParentCode"),
-                new EntityField<ChartOfAccountDto>(dto => dto.Code, "Code", "Code"),
+                new EntityField<ChartOfAccountDto>(dto => dto.AccountCode, "Code", "Code"),
                 new EntityField<ChartOfAccountDto>(dto => dto.Name, "Name", "Name"),
                 new EntityField<ChartOfAccountDto>(dto => dto.Balance, "Balance", "Balance", typeof(decimal)),
             ],

@@ -1,6 +1,7 @@
 using FSH.Framework.Core.Paging;
 using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.App.Domain;
+using FSH.Starter.WebApi.App.Features.Dtos;
 using FSH.Starter.WebApi.App.Features.GetList.v1;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

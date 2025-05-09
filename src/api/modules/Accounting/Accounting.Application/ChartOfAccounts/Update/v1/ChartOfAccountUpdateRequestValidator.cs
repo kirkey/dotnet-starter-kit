@@ -21,7 +21,7 @@ public class ChartOfAccountUpdateRequestValidator : BaseRequestValidator<ChartOf
             .MinimumLength(1)
             .MaximumLength(16);
         
-        RuleFor(a => a.Code)
+        RuleFor(a => a.AccountCode)
             .NotEmpty()
             .MinimumLength(1)
             .MaximumLength(16);
