@@ -8,17 +8,17 @@
     @bind-SearchString="_searchString">
     <EditFormContent>
         <MudItem xs="12" md="6">
-            <MudTextField T="string" For="@(() => Context.AddEditModal.RequestModel.Id)" @bind-Value="Context.AddEditModal.RequestModel.Id" Label="Key" />
+            <MudTextField T="string" For="@(() => context.Id)" @bind-Value="context.Id" Label="Key" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField T="string" For="@(() => Context.AddEditModal.RequestModel.Name)" @bind-Value="Context.AddEditModal.RequestModel.Name" Label="Name" />
+            <MudTextField T="string" For="@(() => context.Name)" @bind-Value="context.Name" Label="Name" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField T="string" For="@(() => Context.AddEditModal.RequestModel.ConnectionString)" HelperText="To use default connection string, leave this field blank." @bind-Value="Context.AddEditModal.RequestModel.ConnectionString"
+            <MudTextField T="string" For="@(() => context.ConnectionString)" HelperText="To use default connection string, leave this field blank." @bind-Value="context.ConnectionString"
                 Label="Connection String" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField T="string" For="@(() => Context.AddEditModal.RequestModel.AdminEmail)" @bind-Value="Context.AddEditModal.RequestModel.AdminEmail"
+            <MudTextField T="string" For="@(() => context.AdminEmail)" @bind-Value="context.AdminEmail"
                 Label="Admin Email" />
         </MudItem>
     </EditFormContent>

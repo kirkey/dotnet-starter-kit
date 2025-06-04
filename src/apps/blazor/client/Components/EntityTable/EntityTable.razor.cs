@@ -218,6 +218,14 @@ public partial class EntityTable<TEntity, TId, TRequest>
         parameters.Add(nameof(AddEditModal<TRequest>.Title), title);
         parameters.Add(nameof(AddEditModal<TRequest>.SuccessMessage), successMessage);
     
+        var dialogOptions = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            BackdropClick = false
+        };
+        
         var dialog = DialogService.ShowModal<AddEditModal<TRequest>>(parameters);
     
         Context.SetAddEditModalRef(dialog);

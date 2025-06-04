@@ -20,21 +20,21 @@
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
-                <MudTextField Value="Context.AddEditModal.RequestModel.Id" Underline=false ReadOnly Label="Product Id" />
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Product Id" />
             </MudItem>
         }
         <MudItem xs="12" md="6">
-            <MudTextField Label="Name" For="@(() => Context.AddEditModal.RequestModel.Name)" @bind-Value="Context.AddEditModal.RequestModel.Name" />
+            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="Description" For="@(() => Context.AddEditModal.RequestModel.Description)"
-                @bind-Value="Context.AddEditModal.RequestModel.Description" />
+            <MudTextField Label="Description" For="@(() => context.Description)"
+                @bind-Value="context.Description" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="Price" For="@(() => Context.AddEditModal.RequestModel.Price)" @bind-Value="Context.AddEditModal.RequestModel.Price" />
+            <MudTextField Label="Price" For="@(() => context.Price)" @bind-Value="context.Price" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudSelect T="DefaultIdType?" Label="Brand" @bind-Value="Context.AddEditModal.RequestModel.BrandId">
+            <MudSelect T="DefaultIdType?" Label="Brand" @bind-Value="context.BrandId">
                 @foreach (var brand in _brands)
                 {
                     <MudSelectItem T="DefaultIdType?" Value="brand.Id">@brand.Name</MudSelectItem>

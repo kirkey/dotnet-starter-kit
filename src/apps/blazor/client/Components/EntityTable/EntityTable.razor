@@ -181,8 +181,9 @@
                             }
                             @if (CanDeleteEntity(context))
                             {
-                                <MudMenuItem Icon="@Icons.Material.Filled.Delete"
-                                             OnClick="@(() => Delete(context))"
+                                <MudMenuItem Icon="@Icons.Material.Filled.Delete" 
+                                             IconColor="Color.Error"
+                                             OnClick="@(() => Delete(context))" 
                                              Style="color:red!important">
                                     Delete
                                 </MudMenuItem>
