@@ -16,7 +16,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<ChartOfAccount>
         builder.HasIndex(x => x.AccountCode).IsUnique();
         
         builder.Property(x => x.AccountCategory)
-            .HasMaxLength(16)
+            .HasMaxLength(32)
             .IsRequired();
         
         builder.Property(x => x.ParentCode)
