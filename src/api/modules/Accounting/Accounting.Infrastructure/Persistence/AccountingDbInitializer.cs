@@ -20,16 +20,17 @@ internal sealed class AccountingDbInitializer(
 
     public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        const string category = "Asset";
-        const string type = "Debit";
-        const string name = "Cash Account";
-        const string parentCode = "1";
-        const string accountCode = "1000";
-        const decimal balance = 5000.00M;
-        const string description = "Main cash account for general operations";
-        
-        if (await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == accountCode, cancellationToken).ConfigureAwait(false) is null)
+        // Check if the ChartOfAccounts table is empty
+        if (!await context.ChartOfAccounts.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
+            const string category = "Asset";
+            const string type = "Debit";
+            const string name = "Cash Account";
+            const string parentCode = "1";
+            const string accountCode = "1000";
+            const decimal balance = 5000.00M;
+            const string description = "Main cash account for general operations";
+        
             var account = ChartOfAccount.Create(category, type, parentCode, accountCode, name, balance, description);
             await context.ChartOfAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
