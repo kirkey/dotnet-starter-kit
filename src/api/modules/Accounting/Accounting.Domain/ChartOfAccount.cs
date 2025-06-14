@@ -15,15 +15,15 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         string? description = null, string? notes = null)
     {
         Id = id;
-        AccountCategory = accountCategory;
-        AccountType = accountType;
-        ParentCode = parentCode;
-        AccountCode = accountCode;
-        Name = name;
+        AccountCategory = accountCategory.Trim();
+        AccountType = accountType.Trim();
+        ParentCode = parentCode.Trim();
+        AccountCode = accountCode.Trim();
+        Name = name.Trim();
         Balance = balance;
 
-        Description = description;
-        Notes = notes;
+        Description = description?.Trim();
+        Notes = notes?.Trim();
 
         QueueDomainEvent(new ChartOfAccountCreated(Id, AccountCategory, AccountType, AccountCode, Name, Balance, Description, Notes));
         AccountMetrics.Created.Add(1);
@@ -40,31 +40,31 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         if (accountCategory is not null && AccountCategory != accountCategory)
         {
-            AccountCategory = accountCategory;
+            AccountCategory = accountCategory.Trim();
             isUpdated = true;
         }
         
         if (accountType is not null && AccountType != accountType)
         {
-            AccountType = accountType;
+            AccountType = accountType.Trim();
             isUpdated = true;
         }
         
         if (!string.IsNullOrWhiteSpace(parentCode) && !string.Equals(ParentCode, parentCode, StringComparison.OrdinalIgnoreCase))
         {
-            ParentCode = parentCode;
+            ParentCode = parentCode.Trim();
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(accountCode) && !string.Equals(AccountCode, accountCode, StringComparison.OrdinalIgnoreCase))
         {
-            AccountCode = accountCode;
+            AccountCode = accountCode.Trim();
             isUpdated = true;
         }
         
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
-            Name = name;
+            Name = name.Trim();
             isUpdated = true;
         }
         
@@ -76,13 +76,13 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         if (description != Description)
         {
-            Description = description;
+            Description = description?.Trim();
             isUpdated = true;
         }
         
         if (notes != Notes)
         {
-            Notes = notes;
+            Notes = notes?.Trim();
             isUpdated = true;
         }
 
