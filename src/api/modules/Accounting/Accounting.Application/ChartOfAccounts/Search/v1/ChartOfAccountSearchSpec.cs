@@ -11,11 +11,11 @@ public sealed class ChartOfAccountSearchSpec : EntitiesByPaginationFilterSpec<Ch
         : base(request)
     {
         Query
-            .OrderBy(c => c.AccountCode, !request.HasOrderBy())
-            .Where(a => a.AccountCode.Contains(request.Keyword!)
-                || a.Name.Contains(request.Keyword!)
-                || a.Description!.Contains(request.Keyword!)
-                || a.Notes!.Contains(request.Keyword!),
-                !string.IsNullOrEmpty(request.Keyword));
+            .OrderBy(c => c.AccountCode, !request.HasOrderBy());
+        // .Where(a => a.AccountCode.Contains(request.Keyword!)
+        //     || a.Name.Contains(request.Keyword!)
+        //     || a.Description!.Contains(request.Keyword!)
+        //     || a.Notes!.Contains(request.Keyword!),
+        //     !string.IsNullOrEmpty(request.Keyword));
     }
 }

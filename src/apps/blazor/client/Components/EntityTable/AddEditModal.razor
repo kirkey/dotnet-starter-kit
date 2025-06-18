@@ -21,25 +21,23 @@
             <DataAnnotationsValidator />
             <FshValidation @ref="_customValidation" />
             <MudGrid>
-
                 @ChildContent(RequestModel)
-
             </MudGrid>
         </DialogContent>
 
         <DialogActions>
-            <MudButton DropShadow="false" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" OnClick="MudDialog.Cancel">
+            <MudButton OnClick="MudDialog.Cancel" StartIcon="@Icons.Material.Filled.Cancel" Variant="Variant.Filled">
                Cancel
             </MudButton>
             @if (IsCreate)
             {
-                <MudButton DropShadow="false" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit" Color="Color.Success">
+                <MudButton ButtonType="ButtonType.Submit" Color="Color.Success" StartIcon="@Icons.Material.Filled.Save" Variant="Variant.Filled">
                     Save
                 </MudButton>
             }
             else
             {
-                <MudButton DropShadow="false" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Update" ButtonType="ButtonType.Submit" Color="Color.Secondary">
+                <MudButton ButtonType="ButtonType.Submit" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.PlaylistAddCheck" Variant="Variant.Filled">
                     Update
                 </MudButton>
             }
