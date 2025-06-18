@@ -19,18 +19,6 @@
                                        Parent="ACCOUNTCATEGORY"
                                        Variant="Variant.Filled" />
         </MudItem>
-        @*<MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-            <MudSelect @bind-Value="context.AccountCategory"
-                       For="@(() => context.AccountCategory!)"
-                       Label="Category" 
-                       T="string" 
-                       Variant="Variant.Filled">
-                @foreach (var category in new[] { "ASSET", "LIABILITY", "EQUITY", "REVENUE", "EXPENSE" })
-                {
-                    <MudSelectItem Value="@category">@category</MudSelectItem>
-                }
-            </MudSelect>
-        </MudItem>*@
         <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
             <MudSelect @bind-Value="context.AccountType"
                        For="@(() => context.AccountType!)"
