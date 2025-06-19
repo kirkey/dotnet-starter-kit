@@ -13,22 +13,25 @@ public sealed class ChartOfAccountCreateRequestHandler(
     : IRequestHandler<ChartOfAccountCreateRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(ChartOfAccountCreateRequest request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        // Check for duplicate account code
-        var existingAccount = await repository.FirstOrDefaultAsync(new ChartOfAccountByCode(request.AccountCode), cancellationToken)
-            .ConfigureAwait(false);
-        if (existingAccount is not null)
-            throw new ChartOfAccountForbiddenException(request.AccountCode);
-
-        var account = ChartOfAccount.Create(request.AccountCategory, request.AccountType, request.ParentCode, request.AccountCode, request.Name, request.Balance,
-            request.Description, request.Notes);
-
-        await repository.AddAsync(account, cancellationToken).ConfigureAwait(false);
-
-        logger.LogInformation("account created {AccountId}", account.Id);
-
-        return account.Id;
-    }
+        {
+            ArgumentNullException.ThrowIfNull(request);
+        
+            // Check for duplicate account code or name
+            if (await repository.FirstOrDefaultAsync(new ChartOfAccountByCode(request.AccountCode), cancellationToken) != null ||
+                await repository.FirstOrDefaultAsync(new ChartOfAccountByName(request.Name), cancellationToken) != null)
+            {
+                throw new ChartOfAccountForbiddenException($"{request.AccountCode} or {request.Name}");
+            }
+        
+            var account = ChartOfAccount.Create(
+                request.AccountCategory, request.AccountType, request.ParentCode,
+                request.AccountCode, request.Name, request.Balance,
+                request.Description, request.Notes);
+        
+            await repository.AddAsync(account, cancellationToken).ConfigureAwait(false);
+        
+            logger.LogInformation("account created {AccountId}", account.Id);
+        
+            return account.Id;
+        }
 }

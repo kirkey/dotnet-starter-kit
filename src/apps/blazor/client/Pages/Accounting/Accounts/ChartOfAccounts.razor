@@ -8,18 +8,18 @@
     <EditFormContent>
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6" lg="4" xl="3">
+            <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
             </MudItem>
         }
-        <MudItem xs="12" sm="12" md="6" lg="4" xl="3">
+        <MudItem xs="12" sm="12" md="6" lg="4">
             <AutocompleteGroupByParent @bind-Value="context.AccountCategory"
                                        For="@(() => context.AccountCategory)"
                                        Label="Category"
                                        Parent="ACCOUNTCATEGORY"
                                        Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="3" lg="2" xl="1">
+        <MudItem xs="12" sm="6" md="3" lg="2">
             <MudSelect @bind-Value="context.AccountType"
                        For="@(() => context.AccountType!)"
                        Label="Type"
@@ -32,19 +32,19 @@
             </MudSelect>
         </MudItem>
         <MudDivider />
-        <MudItem xs="12" sm="6" md="4" lg="2" xl="1">
+        <MudItem xs="12" sm="6" md="4" lg="2">
             <MudTextField @bind-Value="context.ParentCode"
                           For="@(() => context.ParentCode)"
                           Label="Parent Code"
                           Variant="Variant.Filled"/>
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2" xl="1">
+        <MudItem xs="12" sm="6" md="4" lg="2">
             <MudTextField @bind-Value="context.AccountCode" 
                           For="@(() => context.AccountCode)" 
                           Label="Account Code"
                           Variant="Variant.Filled"/>
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2" xl="1">
+        <MudItem xs="12" sm="6" md="4" lg="2">
             <MudNumericField @bind-Value="context.Balance" 
                              For="@(() => context.Balance)" 
                              Format="N2" 
