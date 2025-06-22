@@ -1,5 +1,5 @@
-﻿using FSH.Framework.Core.Exceptions;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using FSH.Framework.Core.Exceptions;
 using FSH.Framework.Core.Identity.Users.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

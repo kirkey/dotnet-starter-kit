@@ -12,10 +12,6 @@ public class AuditableEntity<TId> : BaseEntity<TId>, IAuditable, ISoftDeletable
 {
     [Column(TypeName = "VARCHAR(1024)")]
     public string Name { get; set; } = string.Empty;
-    [Column(TypeName = "VARCHAR(32)")]
-    public string? Remarks { get; set; }
-    [Column(TypeName = "VARCHAR(32)")]
-    public string? Status { get; set; }
     [Column(TypeName = "VARCHAR(2048)")]
     public string? Description { get; set; }
     [Column(TypeName = "VARCHAR(2048)")]
@@ -41,9 +37,13 @@ public abstract class AuditableEntityWithApproval<TId> : AuditableEntity<TId>
 {
     [Column(TypeName = "VARCHAR(1024)")]
     public string? Request { get; set; }
-    [Column(TypeName = "VARCHAR(1024)")]
+    [Column(TypeName = "VARCHAR(32)")]
     public string? Feedback { get; set; }
-
+    [Column(TypeName = "VARCHAR(32)")]
+    public string? Status { get; set; }
+    [Column(TypeName = "VARCHAR(1024)")]
+    public string? Remarks { get; set; }
+    
     public DefaultIdType? PreparedBy { get; set; }
     [Column(TypeName = "VARCHAR(1024)")]
     public string? PreparerName { get; set; }

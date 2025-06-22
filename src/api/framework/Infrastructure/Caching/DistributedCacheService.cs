@@ -6,16 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace FSH.Framework.Infrastructure.Caching;
 
-public class DistributedCacheService : ICacheService
+public class DistributedCacheService(IDistributedCache cache, ILogger<DistributedCacheService> logger)
+    : ICacheService
 {
-    private readonly IDistributedCache _cache;
-    private readonly ILogger<DistributedCacheService> _logger;
-
-    public DistributedCacheService(IDistributedCache cache, ILogger<DistributedCacheService> logger)
-    {
-        (_cache, _logger) = (cache, logger);
-    }
-
     public T? Get<T>(string key) =>
         Get(key) is { } data
             ? Deserialize<T>(data)
@@ -27,7 +20,7 @@ public class DistributedCacheService : ICacheService
 
         try
         {
-            return _cache.Get(key);
+            return cache.Get(key);
         }
         catch
         {
@@ -44,7 +37,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            return await _cache.GetAsync(key, token).ConfigureAwait(false);
+            return await cache.GetAsync(key, token).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -57,7 +50,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            _cache.Refresh(key);
+            cache.Refresh(key);
         }
         catch
         {
@@ -69,8 +62,8 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            await _cache.RefreshAsync(key, token).ConfigureAwait(false);
-            _logger.LogDebug("refreshed cache with key : {Key}", key);
+            await cache.RefreshAsync(key, token).ConfigureAwait(false);
+            logger.LogDebug("refreshed cache with key : {Key}", key);
         }
         catch
         {
@@ -82,7 +75,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            _cache.Remove(key);
+            cache.Remove(key);
         }
         catch
         {
@@ -94,7 +87,7 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            await _cache.RemoveAsync(key, token).ConfigureAwait(false);
+            await cache.RemoveAsync(key, token).ConfigureAwait(false);
         }
         catch
         {
@@ -109,8 +102,8 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            _cache.Set(key, value, GetOptions(slidingExpiration));
-            _logger.LogDebug("cached data with key : {Key}", key);
+            cache.Set(key, value, GetOptions(slidingExpiration));
+            logger.LogDebug("cached data with key : {Key}", key);
         }
         catch
         {
@@ -125,8 +118,8 @@ public class DistributedCacheService : ICacheService
     {
         try
         {
-            await _cache.SetAsync(key, value, GetOptions(slidingExpiration), token).ConfigureAwait(false);
-            _logger.LogDebug("cached data with key : {Key}", key);
+            await cache.SetAsync(key, value, GetOptions(slidingExpiration), token).ConfigureAwait(false);
+            logger.LogDebug("cached data with key : {Key}", key);
         }
         catch
         {
@@ -147,14 +140,7 @@ public class DistributedCacheService : ICacheService
     private static DistributedCacheEntryOptions GetOptions(TimeSpan? slidingExpiration)
     {
         var options = new DistributedCacheEntryOptions();
-        if (slidingExpiration.HasValue)
-        {
-            options.SetSlidingExpiration(slidingExpiration.Value);
-        }
-        else
-        {
-            options.SetSlidingExpiration(TimeSpan.FromMinutes(5));
-        }
+        options.SetSlidingExpiration(slidingExpiration ?? TimeSpan.FromMinutes(5));
         options.SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
         return options;
     }

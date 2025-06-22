@@ -1,7 +1,6 @@
 using Ardalis.Specification;
 using FSH.Starter.WebApi.App.Domain;
 using FSH.Starter.WebApi.App.Features.Dtos;
-using FSH.Starter.WebApi.App.Features.GetList.v1;
 
 namespace FSH.Starter.WebApi.App.Features.Queries;
 

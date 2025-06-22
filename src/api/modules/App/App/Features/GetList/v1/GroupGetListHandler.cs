@@ -1,7 +1,5 @@
-﻿using Ardalis.Specification;
-using FSH.Framework.Core.Paging;
+﻿using FSH.Framework.Core.Paging;
 using FSH.Framework.Core.Persistence;
-using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.App.Domain;
 using FSH.Starter.WebApi.App.Features.Dtos;
 using MediatR;

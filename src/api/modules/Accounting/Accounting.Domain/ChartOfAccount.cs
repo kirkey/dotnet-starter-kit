@@ -1,4 +1,4 @@
-using Accounting.Domain.Events;
+using Accounting.Domain.Events.ChartOfAccount;
 using FSH.Framework.Core.Domain;
 using FSH.Framework.Core.Domain.Contracts;
 
@@ -122,27 +122,27 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         return this;
     }
 
-    public ChartOfAccount Activate()
-    {
-        if (Status == "Active")
-        {
-            return this;
-        }
-
-        Status = "Active";
-        QueueDomainEvent(new ChartOfAccountStatusChanged(Id, Status));
-        return this;
-    }
-
-    public ChartOfAccount Deactivate()
-    {
-        if (Status == "Inactive")
-        {
-            return this;
-        }
-
-        Status = "Inactive";
-        QueueDomainEvent(new ChartOfAccountStatusChanged(Id, Status));
-        return this;
-    }
+    // public ChartOfAccount Activate()
+    // {
+    //     if (Status == "Active")
+    //     {
+    //         return this;
+    //     }
+    //
+    //     Status = "Active";
+    //     QueueDomainEvent(new ChartOfAccountStatusChanged(Id, Status));
+    //     return this;
+    // }
+    //
+    // public ChartOfAccount Deactivate()
+    // {
+    //     if (Status == "Inactive")
+    //     {
+    //         return this;
+    //     }
+    //
+    //     Status = "Inactive";
+    //     QueueDomainEvent(new ChartOfAccountStatusChanged(Id, Status));
+    //     return this;
+    // }
 }

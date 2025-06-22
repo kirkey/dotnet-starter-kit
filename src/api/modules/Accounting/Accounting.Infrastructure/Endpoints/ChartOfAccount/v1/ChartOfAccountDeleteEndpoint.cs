@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Accounting.Infrastructure.Endpoints.v1;
+namespace Accounting.Infrastructure.Endpoints.ChartOfAccount.v1;
 
-public static class AccountDeleteEndpoint
+public static class ChartOfAccountDeleteEndpoint
 {
-    internal static RouteHandlerBuilder MapAccountDeleteEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapChartOfAccountDeleteEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -17,9 +17,9 @@ public static class AccountDeleteEndpoint
                 await mediator.Send(new ChartOfAccountDeleteRequest(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
-            .WithName(nameof(AccountDeleteEndpoint))
-            .WithSummary("deletes account by id")
-            .WithDescription("deletes account by id")
+            .WithName(nameof(ChartOfAccountDeleteEndpoint))
+            .WithSummary("delete chart of account by id")
+            .WithDescription("delete chart of account by id")
             .Produces(StatusCodes.Status204NoContent)
             .RequirePermission("Permissions.Accounting.Delete")
             .MapToApiVersion(1);

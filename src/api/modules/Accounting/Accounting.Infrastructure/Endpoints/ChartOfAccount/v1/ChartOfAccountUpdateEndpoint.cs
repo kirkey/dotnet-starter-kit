@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Accounting.Infrastructure.Endpoints.v1;
+namespace Accounting.Infrastructure.Endpoints.ChartOfAccount.v1;
 
-public static class AccountUpdateEndpoint
+public static class ChartOfAccountUpdateEndpoint
 {
-    internal static RouteHandlerBuilder MapAccountUpdateEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapChartOfAccountUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPut("/{id:guid}", async (DefaultIdType id, ChartOfAccountUpdateRequest request, ISender mediator) =>
@@ -18,9 +18,9 @@ public static class AccountUpdateEndpoint
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(nameof(AccountUpdateEndpoint))
-            .WithSummary("update an account")
-            .WithDescription("update an account")
+            .WithName(nameof(ChartOfAccountUpdateEndpoint))
+            .WithSummary("update a chart of account")
+            .WithDescription("update a chart of account")
             .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);

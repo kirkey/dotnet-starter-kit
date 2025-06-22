@@ -1,6 +1,6 @@
 using FSH.Framework.Core.Domain.Events;
 
-namespace Accounting.Domain.Events;
+namespace Accounting.Domain.Events.ChartOfAccount;
 public record ChartOfAccountCreated(
     DefaultIdType Id, string AccountCategory, string AccountType,
     string AccountCode, string Name, decimal Balance,

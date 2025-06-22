@@ -1,4 +1,5 @@
 using Accounting.Domain.Events;
+using Accounting.Domain.Events.ChartOfAccount;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

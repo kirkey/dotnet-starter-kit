@@ -1,9 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
-using FSH.Starter.WebApi.Catalog.Domain.Exceptions;
-using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Caching;
+using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.Catalog.Domain;
+using FSH.Starter.WebApi.Catalog.Domain.Exceptions;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.Catalog.Application.Brands.Get.v1;
 public sealed class GetBrandHandler(

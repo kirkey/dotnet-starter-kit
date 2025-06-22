@@ -3,7 +3,6 @@ using FSH.Framework.Core.Paging;
 using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.App.Domain;
 using FSH.Starter.WebApi.App.Features.Dtos;
-using FSH.Starter.WebApi.App.Features.GetList.v1;
 
 namespace FSH.Starter.WebApi.App.Features.Search.v1;
 public sealed class GroupSearchSpec : EntitiesByPaginationFilterSpec<Group, GroupDto>

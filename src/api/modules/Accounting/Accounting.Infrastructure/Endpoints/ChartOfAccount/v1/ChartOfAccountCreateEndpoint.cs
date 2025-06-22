@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Accounting.Infrastructure.Endpoints.v1;
+namespace Accounting.Infrastructure.Endpoints.ChartOfAccount.v1;
 
-public static class AccountCreateEndpoint
+public static class ChartOfAccountCreateEndpoint
 {
-    internal static RouteHandlerBuilder MapAccountCreateEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapChartOfAccountCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/", async (ChartOfAccountCreateRequest request, ISender mediator) =>
@@ -17,9 +17,9 @@ public static class AccountCreateEndpoint
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(nameof(AccountCreateEndpoint))
-            .WithSummary("create an account")
-            .WithDescription("create an account")
+            .WithName(nameof(ChartOfAccountCreateEndpoint))
+            .WithSummary("create a chart of account")
+            .WithDescription("create a chart of account")
             .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);

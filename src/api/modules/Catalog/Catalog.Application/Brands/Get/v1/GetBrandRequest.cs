@@ -1,7 +1,7 @@
 using MediatR;
 
 namespace FSH.Starter.WebApi.Catalog.Application.Brands.Get.v1;
-public class GetBrandRequest(Guid id) : IRequest<BrandResponse>
+public class GetBrandRequest(DefaultIdType id) : IRequest<BrandResponse>
 {
-    public Guid Id { get; set; } = id;
+    public DefaultIdType Id { get; set; } = id;
 }

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.Catalog.Application.Products.Get.v1;
 
 public class GetProductSpecs : Specification<Product, ProductResponse>
 {
-    public GetProductSpecs(Guid id)
+    public GetProductSpecs(DefaultIdType id)
     {
         Query
             .Where(p => p.Id == id)

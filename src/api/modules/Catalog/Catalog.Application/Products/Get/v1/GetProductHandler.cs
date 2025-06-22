@@ -1,9 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
-using FSH.Starter.WebApi.Catalog.Domain.Exceptions;
-using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Caching;
+using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.Catalog.Domain;
+using FSH.Starter.WebApi.Catalog.Domain.Exceptions;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.Catalog.Application.Products.Get.v1;
 public sealed class GetProductHandler(
@@ -19,9 +19,9 @@ public sealed class GetProductHandler(
             async () =>
             {
                 var spec = new GetProductSpecs(request.Id);
-                var productItem = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
-                if (productItem == null) throw new ProductNotFoundException(request.Id);
-                return productItem;
+                var response = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false) ?? 
+                               throw new ProductNotFoundException(request.Id);
+                return response;
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
         return item!;

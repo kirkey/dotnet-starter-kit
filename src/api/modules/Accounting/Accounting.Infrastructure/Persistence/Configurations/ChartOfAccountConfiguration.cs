@@ -5,7 +5,7 @@ using Shared.Constants;
 
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
-public class AccountConfiguration : IEntityTypeConfiguration<ChartOfAccount>
+public class ChartOfAccountConfiguration : IEntityTypeConfiguration<ChartOfAccount>
 {
     public void Configure(EntityTypeBuilder<ChartOfAccount> builder)
     {

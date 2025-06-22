@@ -3,10 +3,5 @@ using System.Collections.ObjectModel;
 
 public class CorsOptions
 {
-    public CorsOptions()
-    {
-        AllowedOrigins = [];
-    }
-
-    public Collection<string> AllowedOrigins { get; }
+    public Collection<string> AllowedOrigins { get; } = [];
 }

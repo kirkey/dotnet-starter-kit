@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Accounting.Infrastructure.Endpoints.v1;
+namespace Accounting.Infrastructure.Endpoints.ChartOfAccount.v1;
 
-public static class AccountGetEndpoint
+public static class ChartOfAccountGetEndpoint
 {
-    internal static RouteHandlerBuilder MapAccountGetEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapChartOfAccountGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -18,9 +18,9 @@ public static class AccountGetEndpoint
                 var response = await mediator.Send(new ChartOfAccountGetRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(nameof(AccountGetEndpoint))
-            .WithSummary("gets an account by id")
-            .WithDescription("gets an account by id")
+            .WithName(nameof(ChartOfAccountGetEndpoint))
+            .WithSummary("get a chart of account by id")
+            .WithDescription("get a chart of account by id")
             .Produces<ChartOfAccountDto>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);

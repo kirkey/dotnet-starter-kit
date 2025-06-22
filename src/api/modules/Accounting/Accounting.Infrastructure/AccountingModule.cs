@@ -1,10 +1,10 @@
+using Accounting.Domain;
+using Accounting.Infrastructure.Endpoints.ChartOfAccount.v1;
+using Accounting.Infrastructure.Persistence;
+using Accounting.Infrastructure.Persistence.Configurations;
 using Carter;
 using FSH.Framework.Core.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
-using Accounting.Domain;
-using Accounting.Infrastructure.Endpoints.v1;
-using Accounting.Infrastructure.Persistence;
-using Accounting.Infrastructure.Persistence.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -19,11 +19,18 @@ public static class AccountingModule
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             var chartOfAccount = app.MapGroup("ChartOfAccounts").WithTags("ChartOfAccounts");
-            chartOfAccount.MapAccountCreateEndpoint();
-            chartOfAccount.MapAccountGetEndpoint();
-            chartOfAccount.MapAccountSearchEndpoint();
-            chartOfAccount.MapAccountUpdateEndpoint();
-            chartOfAccount.MapAccountDeleteEndpoint();
+            chartOfAccount.MapChartOfAccountCreateEndpoint();
+            chartOfAccount.MapChartOfAccountGetEndpoint();
+            chartOfAccount.MapChartOfAccountSearchEndpoint();
+            chartOfAccount.MapChartOfAccountUpdateEndpoint();
+            chartOfAccount.MapChartOfAccountDeleteEndpoint();
+            
+            // var payee = app.MapGroup("Payees").WithTags("Payees");
+            // payee.MapPayeeCreateEndpoint();
+            // payee.MapPayeeGetEndpoint();
+            // payee.MapPayeeSearchEndpoint();
+            // payee.MapPayeeUpdateEndpoint();
+            // payee.MapPayeeDeleteEndpoint();
         }
     }
 
@@ -32,8 +39,12 @@ public static class AccountingModule
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.BindDbContext<AccountingDbContext>();
         builder.Services.AddScoped<IDbInitializer, AccountingDbInitializer>();
+        
         builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:ChartOfAccounts");
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:ChartOfAccounts");
+        
+        builder.Services.AddKeyedScoped<IRepository<Payee>, AccountingRepository<Payee>>("accounting:Payees");
+        builder.Services.AddKeyedScoped<IReadRepository<Payee>, AccountingRepository<Payee>>("accounting:Payees");
         
         MappingConfiguration.RegisterMappings();
         

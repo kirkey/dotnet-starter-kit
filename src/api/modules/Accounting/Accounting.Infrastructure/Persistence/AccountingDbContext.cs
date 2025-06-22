@@ -1,8 +1,8 @@
+using Accounting.Domain;
 using Finbuckle.MultiTenant.Abstractions;
 using FSH.Framework.Core.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.Tenant;
-using Accounting.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -20,6 +20,7 @@ public sealed class AccountingDbContext(
     settings)
 {
     public DbSet<ChartOfAccount> ChartOfAccounts { get; set; } = null!;
+    public DbSet<Payee> Payees { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
