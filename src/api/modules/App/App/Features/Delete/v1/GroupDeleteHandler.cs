@@ -18,6 +18,6 @@ public sealed class GroupDeleteHandler(
         var group = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = group ?? throw new GroupNotFoundException(request.Id);
         await repository.DeleteAsync(group, cancellationToken).ConfigureAwait(false);
-        logger.LogInformation("app group with id : {AppId} deleted", group.Id);
+        logger.LogInformation("app group with id : {AppId} successfully deleted", group.Id);
     }
 }

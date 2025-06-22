@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.ChartOfAccounts.Get.v1;
 public sealed class ChartOfAccountGetHandler(
-    [FromKeyedServices("accounting:ChartOfAccounts")] IReadRepository<ChartOfAccount> repository,
+    [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> repository,
     ICacheService cache)
     : IRequestHandler<ChartOfAccountGetRequest, ChartOfAccountDto>
 {

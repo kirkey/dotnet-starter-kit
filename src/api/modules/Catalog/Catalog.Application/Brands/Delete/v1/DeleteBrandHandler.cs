@@ -17,6 +17,6 @@ public sealed class DeleteBrandHandler(
         var brand = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = brand ?? throw new BrandNotFoundException(request.Id);
         await repository.DeleteAsync(brand, cancellationToken).ConfigureAwait(false);
-        logger.LogInformation("Brand with id : {BrandId} deleted", brand.Id);
+        logger.LogInformation("Brand with id : {BrandId} successfully deleted", brand.Id);
     }
 }

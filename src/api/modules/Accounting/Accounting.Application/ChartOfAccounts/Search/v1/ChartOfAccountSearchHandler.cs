@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
 
 public sealed class ChartOfAccountSearchHandler(
-    [FromKeyedServices("accounting:ChartOfAccounts")] IReadRepository<ChartOfAccount> repository)
+    [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> repository)
     : IRequestHandler<ChartOfAccountSearchRequest, PagedList<ChartOfAccountDto>>
 {
     public async Task<PagedList<ChartOfAccountDto>> Handle(ChartOfAccountSearchRequest request, CancellationToken cancellationToken)

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Accounting.Application.ChartOfAccounts.Delete.v1;
 public class ChartOfAccountDeleteHandler(
     ILogger<ChartOfAccountDeleteHandler> logger,
-    [FromKeyedServices("accounting:ChartOfAccounts")] IRepository<ChartOfAccount> repository)
+    [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
     : IRequestHandler<ChartOfAccountDeleteRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(ChartOfAccountDeleteRequest request, CancellationToken cancellationToken)

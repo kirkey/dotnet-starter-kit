@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace Accounting.Infrastructure.Endpoints.ChartOfAccount.v1;
+namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
 public static class ChartOfAccountSearchEndpoint
 {

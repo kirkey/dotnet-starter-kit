@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
 public sealed class ChartOfAccountCreateRequestHandler(
     ILogger<ChartOfAccountCreateRequestHandler> logger,
-    [FromKeyedServices("accounting:ChartOfAccounts")] IRepository<ChartOfAccount> repository)
+    [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
     : IRequestHandler<ChartOfAccountCreateRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(ChartOfAccountCreateRequest request, CancellationToken cancellationToken)

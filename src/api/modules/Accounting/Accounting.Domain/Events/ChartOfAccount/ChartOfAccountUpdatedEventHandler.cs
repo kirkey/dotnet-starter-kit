@@ -1,5 +1,4 @@
 using FSH.Framework.Core.Caching;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Accounting.Domain.Events.ChartOfAccount;

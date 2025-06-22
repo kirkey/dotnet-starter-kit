@@ -35,18 +35,18 @@ public partial class ChartOfAccounts
             {
                 var paginationFilter = filter.Adapt<ChartOfAccountSearchRequest>();
 
-                var result = await ApiClient.AccountSearchEndpointAsync("1", paginationFilter);
+                var result = await ApiClient.ChartOfAccountSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<ChartOfAccountDto>>();
             },
             createFunc: async account =>
             {
-                await ApiClient.AccountCreateEndpointAsync("1", account.Adapt<ChartOfAccountCreateRequest>());
+                await ApiClient.ChartOfAccountCreateEndpointAsync("1", account.Adapt<ChartOfAccountCreateRequest>());
             },
             updateFunc: async (id, account) =>
             {
-                await ApiClient.AccountUpdateEndpointAsync("1", id, account.Adapt<ChartOfAccountUpdateRequest>());
+                await ApiClient.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<ChartOfAccountUpdateRequest>());
             },
-            deleteFunc: async id => await ApiClient.AccountDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await ApiClient.ChartOfAccountDeleteEndpointAsync("1", id));
 }
 
 public class ChartOfAccountViewModel : ChartOfAccountUpdateRequest

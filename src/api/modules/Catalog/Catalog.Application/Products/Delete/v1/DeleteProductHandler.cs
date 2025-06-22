@@ -17,6 +17,6 @@ public sealed class DeleteProductHandler(
         var product = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = product ?? throw new ProductNotFoundException(request.Id);
         await repository.DeleteAsync(product, cancellationToken).ConfigureAwait(false);
-        logger.LogInformation("product with id : {ProductId} deleted", product.Id);
+        logger.LogInformation("product with id : {ProductId} successfully deleted", product.Id);
     }
 }

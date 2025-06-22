@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Accounting.Application.ChartOfAccounts.Update.v1;
 public sealed class ChartOfAccountUpdateRequestHandler(
     ILogger<ChartOfAccountUpdateRequestHandler> logger,
-    [FromKeyedServices("accounting:ChartOfAccounts")] IRepository<ChartOfAccount> repository)
+    [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
     : IRequestHandler<ChartOfAccountUpdateRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(ChartOfAccountUpdateRequest request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ public sealed class ChartOfAccountUpdateRequestHandler(
 
         await repository.UpdateAsync(updatedAccount, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("account with id : {AccountId} updated.", account.Id);
+        logger.LogInformation("account with id: {AccountId} updated.", account.Id);
 
         return account.Id;
     }

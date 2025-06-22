@@ -1,0 +1,71 @@
+@page "/payees"
+
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.App
+
+<PageHeader Title="Chart Of Accounts" Header="Chart Of Accounts" SubHeader="Manage Chart of Accounts." />
+
+<EntityTable @ref="_table" TEntity="PayeeResponse" TId="DefaultIdType" TRequest="PayeeResponseViewModel" Context="@Context">
+    <EditFormContent>
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudTextField @bind-Value="context.PayeeCode"
+                          For="@(() => context.PayeeCode)"
+                          Label="Payee Code"
+                          Variant="Variant.Filled"/>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Name" 
+                          For="@(() => context.Name)" 
+                          Label="Name" 
+                          Variant="Variant.Filled"/>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudTextField @bind-Value="context.ExpenseAccountCode"
+                          For="@(() => context.ExpenseAccountCode)"
+                          Label="Account Code"
+                          Variant="Variant.Filled"/>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudTextField @bind-Value="context.ExpenseAccountName"
+                          For="@(() => context.ExpenseAccountName)"
+                          Label="Account Name"
+                          Variant="Variant.Filled"/>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" 
+                          For="@(() => context.Description)" 
+                          Label="Description" 
+                          Lines="3" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" 
+                          For="@(() => context.Notes)" 
+                          Label="Notes" 
+                          Lines="3" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudItem>
+                <div>
+                    @if(!Context.AddEditModal.IsCreate)
+                    {
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Target="_blank"
+                            StartIcon="@Icons.Material.Filled.RemoveRedEye" Style="margin-left: 5px;" >
+                            View
+                        </MudButton>
+
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Delete" Style="margin-left: 5px;">
+                            Delete
+                        </MudButton>
+                    }
+                </div>
+            </MudItem>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
