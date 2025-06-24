@@ -176,5 +176,5 @@ public abstract class EntityTableContext<TEntity, TId, TRequest>(
     public bool AdvancedSearchEnabled =>
         ServerContext?.EnableAdvancedSearch is true;
     public List<string> SearchFields =>
-        Fields.Where(f => f.CheckedForSearch).Select(f => f.SortLabel).ToList();
+        [.. Fields.Where(f => f.CheckedForSearch).Select(f => f.SortLabel)];
 }

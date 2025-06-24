@@ -16,13 +16,17 @@
         <DataAnnotationsValidator />
         <FshValidation @ref="_customValidation" />
         <MudItem xs="12">
-            <MudTextField T="string" Label="E-mail" Variant="Variant.Outlined" @bind-Value="_tokenRequest.Email"
-                          For="@(() => _tokenRequest.Email)" />
+            <MudTextField @bind-Value="_tokenRequest.Email" For="@(() => _tokenRequest.Email)" Label="E-mail" T="string" Variant="Variant.Outlined" />
         </MudItem>
         <MudItem xs="12">
-            <MudTextField Label="Password" Variant="Variant.Outlined" @bind-Value="_tokenRequest.Password"
-                          For="@(() => _tokenRequest.Password)" InputType="@_passwordInput" Adornment="Adornment.End"
-                          AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
+            <MudTextField Adornment="Adornment.End"
+                          AdornmentIcon="@_passwordInputIcon"
+                          @bind-Value="_tokenRequest.Password"
+                          For="@(() => _tokenRequest.Password)"
+                          InputType="@_passwordInput"
+                          Label="Password"
+                          OnAdornmentClick="TogglePasswordVisibility"
+                          Variant="Variant.Outlined"/>
         </MudItem>
         <MudItem xs="12">
             <MudTextField T="string" Label="Tenant" Variant="Variant.Outlined" @bind-Value="TenantId"

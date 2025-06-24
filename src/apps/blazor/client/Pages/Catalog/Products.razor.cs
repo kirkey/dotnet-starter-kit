@@ -62,7 +62,7 @@ public partial class Products
             var response = await _client.SearchBrandsEndpointAsync("1", new SearchBrandsCommand());
             if (response?.Items != null)
             {
-                _brands = response.Items.ToList();
+                _brands = [.. response.Items];
             }
         }
     }

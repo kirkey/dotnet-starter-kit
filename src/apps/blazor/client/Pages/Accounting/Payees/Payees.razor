@@ -13,30 +13,39 @@
             </MudItem>
         }
         
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="12" sm="4" md="3" lg="2">
             <MudTextField @bind-Value="context.PayeeCode"
                           For="@(() => context.PayeeCode)"
                           Label="Payee Code"
                           Variant="Variant.Filled"/>
         </MudItem>
+        <br/>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Name" 
                           For="@(() => context.Name)" 
                           Label="Name" 
                           Variant="Variant.Filled"/>
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <br/>
+        <MudItem xs="12" sm="4" md="3" lg="2">
             <MudTextField @bind-Value="context.ExpenseAccountCode"
                           For="@(() => context.ExpenseAccountCode)"
                           Label="Account Code"
                           Variant="Variant.Filled"/>
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="12" sm="8" md="9" lg="10">
             <MudTextField @bind-Value="context.ExpenseAccountName"
                           For="@(() => context.ExpenseAccountName)"
                           Label="Account Name"
                           Variant="Variant.Filled"/>
         </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.Tin"
+                          For="@(() => context.Tin)"
+                          Label="TIN"
+                          Variant="Variant.Filled"/>
+        </MudItem>
+        <br/>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Description" 
                           For="@(() => context.Description)" 

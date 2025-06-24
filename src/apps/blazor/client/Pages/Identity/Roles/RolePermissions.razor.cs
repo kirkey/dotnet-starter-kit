@@ -83,7 +83,7 @@ public partial class RolePermissions
         var request = new UpdatePermissionsCommand
         {
             RoleId = Id,
-            Permissions = selectedPermissions.Where(x => x.Enabled).Select(x => x.Name).ToList(),
+            Permissions = [.. selectedPermissions.Where(x => x.Enabled).Select(x => x.Name)],
         };
         await ApiHelper.ExecuteCallGuardedAsync(
                 () => RolesClient.UpdateRolePermissionsEndpointAsync(request.RoleId, request),

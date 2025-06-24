@@ -38,7 +38,7 @@ public partial class Roles
                 new EntityField<RoleDto>(role => role.Description, "Description")
             ],
             idFunc: role => role.Id,
-            loadDataFunc: async () => (await RolesClient.GetRolesEndpointAsync()).ToList(),
+            loadDataFunc: async () => [.. (await RolesClient.GetRolesEndpointAsync())],
             searchFunc: (searchString, role) =>
                 string.IsNullOrWhiteSpace(searchString)
                     || role.Name?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true

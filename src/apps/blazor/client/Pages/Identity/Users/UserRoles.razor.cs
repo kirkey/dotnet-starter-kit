@@ -48,7 +48,7 @@ public partial class UserRoles
                     () => UsersClient.GetUserRolesEndpointAsync(user.Id.ToString()), Toast, Navigation)
                 is { } response)
             {
-                _userRolesList = response.ToList();
+                _userRolesList = [.. response];
             }
         }
 

@@ -58,7 +58,7 @@ public partial class Users
                 new EntityField<UserDetail>(userDetail => userDetail.IsActive, "Active", Type: typeof(bool))
             ],
             idFunc: userDetail => userDetail.Id,
-            loadDataFunc: async () => (await UsersClient.GetUsersListEndpointAsync()).ToList(),
+            loadDataFunc: async () => [.. (await UsersClient.GetUsersListEndpointAsync())],
             searchFunc: (searchString, userDetail) =>
                 string.IsNullOrWhiteSpace(searchString)
                     || userDetail.FirstName?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true
