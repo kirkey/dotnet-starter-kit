@@ -4,7 +4,7 @@
 
 <PageHeader Title="Chart Of Accounts" Header="Chart Of Accounts" SubHeader="Manage Chart of Accounts." />
 
-<EntityTable @ref="_table" TEntity="PayeeResponse" TId="DefaultIdType" TRequest="PayeeResponseViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="PayeeResponse" TId="DefaultIdType" TRequest="ResponseViewModel" Context="@Context">
     <EditFormContent>
         @if (!Context.AddEditModal.IsCreate)
         {
@@ -20,7 +20,7 @@
                           Variant="Variant.Filled"/>
         </MudItem>
         <br/>
-        <MudItem xs="12">
+        <MudItem xs="12" sm="8" md="9" lg="10">
             <MudTextField @bind-Value="context.Name" 
                           For="@(() => context.Name)" 
                           Label="Name" 

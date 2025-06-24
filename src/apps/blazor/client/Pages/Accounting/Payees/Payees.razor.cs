@@ -11,12 +11,12 @@ public partial class Payees
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
 
-    protected EntityServerTableContext<PayeeResponse, DefaultIdType, PayeeResponseViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<PayeeResponse, DefaultIdType, ResponseViewModel> Context { get; set; } = default!;
 
-    private EntityTable<PayeeResponse, DefaultIdType, PayeeResponseViewModel> _table = default!;
+    private EntityTable<PayeeResponse, DefaultIdType, ResponseViewModel> _table = default!;
 
     protected override void OnInitialized() =>
-        Context = new EntityServerTableContext<PayeeResponse, DefaultIdType, PayeeResponseViewModel>(
+        Context = new EntityServerTableContext<PayeeResponse, DefaultIdType, ResponseViewModel>(
             entityName: "Chart Of Account",
             entityNamePlural: "Chart Of Accounts",
             entityResource: FshResources.Accounting,
@@ -38,17 +38,17 @@ public partial class Payees
                 var result = await ApiClient.PayeeSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<PayeeResponse>>();
             },
-            createFunc: async account =>
+            createFunc: async viewModel =>
             {
-                await ApiClient.PayeeCreateEndpointAsync("1", account.Adapt<PayeeCreateCommand>());
+                await ApiClient.PayeeCreateEndpointAsync("1", viewModel.Adapt<PayeeCreateCommand>());
             },
-            updateFunc: async (id, account) =>
+            updateFunc: async (id, viewModel) =>
             {
-                await ApiClient.PayeeUpdateEndpointAsync("1", id, account.Adapt<PayeeUpdateCommand>());
+                await ApiClient.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<PayeeUpdateCommand>());
             },
             deleteFunc: async id => await ApiClient.PayeeDeleteEndpointAsync("1", id));
 }
 
-public class PayeeResponseViewModel : PayeeUpdateCommand
+public class ResponseViewModel : PayeeUpdateCommand
 {
 }

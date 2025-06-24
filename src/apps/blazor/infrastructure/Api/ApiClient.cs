@@ -406,7 +406,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body);
+        System.Threading.Tasks.Task<PayeeCreateResponse> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -418,7 +418,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PayeeCreateResponse> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a payee by id
@@ -452,7 +452,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body);
+        System.Threading.Tasks.Task<PayeeUpdateResponse> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -464,7 +464,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PayeeUpdateResponse> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete payee by id
@@ -3055,7 +3055,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body)
+        public virtual System.Threading.Tasks.Task<PayeeCreateResponse> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body)
         {
             return PayeeCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -3070,7 +3070,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PayeeCreateResponse> PayeeCreateEndpointAsync(string version, PayeeCreateCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3123,7 +3123,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PayeeCreateResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -3260,7 +3260,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body)
+        public virtual System.Threading.Tasks.Task<PayeeUpdateResponse> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body)
         {
             return PayeeUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -3275,7 +3275,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PayeeUpdateResponse> PayeeUpdateEndpointAsync(string version, System.Guid id, PayeeUpdateCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3332,7 +3332,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PayeeUpdateResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -8348,6 +8348,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PayeeCreateResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PayeeResponse
     {
 
@@ -8461,6 +8470,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PayeeUpdateResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
 
     }
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
+
 public static class UpdateProductEndpoint
 {
     internal static RouteHandlerBuilder MapProductUpdateEndpoint(this IEndpointRouteBuilder endpoints)

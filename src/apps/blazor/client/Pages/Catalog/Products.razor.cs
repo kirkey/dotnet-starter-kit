@@ -42,13 +42,13 @@ public partial class Products
                 var result = await _client.SearchProductsEndpointAsync("1", productFilter);
                 return result.Adapt<PaginationResponse<ProductResponse>>();
             },
-            createFunc: async prod =>
+            createFunc: async viewModel =>
             {
-                await _client.CreateProductEndpointAsync("1", prod.Adapt<CreateProductCommand>());
+                await _client.CreateProductEndpointAsync("1", viewModel.Adapt<CreateProductCommand>());
             },
-            updateFunc: async (id, prod) =>
+            updateFunc: async (id, viewModel) =>
             {
-                await _client.UpdateProductEndpointAsync("1", id, prod.Adapt<UpdateProductCommand>());
+                await _client.UpdateProductEndpointAsync("1", id, viewModel.Adapt<UpdateProductCommand>());
             },
             deleteFunc: async id => await _client.DeleteProductEndpointAsync("1", id));
 

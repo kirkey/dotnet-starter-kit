@@ -26,7 +26,7 @@ public sealed class PayeeUpdateHandler(
             request.Description, 
             request.Notes);
         await repository.UpdateAsync(updatedPayee, cancellationToken).ConfigureAwait(false);
-        logger.LogInformation("payee with id: {PayeeId} updated.", payee.Id);
-        return new PayeeUpdateResponse(payee.Id);
+        logger.LogInformation("payee with id: {PayeeId} updated.", updatedPayee.Id);
+        return new PayeeUpdateResponse(updatedPayee.Id);
     }
 }

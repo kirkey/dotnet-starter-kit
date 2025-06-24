@@ -20,7 +20,7 @@ public static class PayeeCreateEndpoint
             .WithName(nameof(PayeeCreateEndpoint))
             .WithSummary("create a payee")
             .WithDescription("create a payee")
-            .Produces<DefaultIdType>()
+            .Produces<PayeeCreateResponse>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }

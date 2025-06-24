@@ -21,7 +21,7 @@ public static class PayeeUpdateEndpoint
             .WithName(nameof(PayeeUpdateEndpoint))
             .WithSummary("update a payee")
             .WithDescription("update a payee")
-            .Produces<DefaultIdType>()
+            .Produces<PayeeUpdateResponse>()
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }
