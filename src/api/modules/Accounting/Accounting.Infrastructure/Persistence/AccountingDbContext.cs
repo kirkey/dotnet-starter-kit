@@ -21,6 +21,7 @@ public sealed class AccountingDbContext(
 {
     public DbSet<ChartOfAccount> ChartOfAccounts { get; set; } = null!;
     public DbSet<Payee> Payees { get; set; } = null!;
+    public DbSet<Vendor> Vendors { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
