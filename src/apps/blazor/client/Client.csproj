@@ -35,4 +35,7 @@
 	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\ViewContact.razor" />
 	   </ItemGroup>
 	 
-	 </Project>
+	 <ItemGroup>
+    <PackageVersion Include="MudBlazor" Version="8.10.0" />
+</ItemGroup>
+</Project>
