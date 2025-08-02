@@ -1,0 +1,42 @@
+﻿@using Microsoft.FluentUI.AspNetCore.Components
+@using BlazorApp1.Services
+@inject ThemeService ThemeService
+@implements IDisposable
+
+<FluentDesignTheme Mode="@currentMode" OfficeColor="@currentColor" StorageName="theme">
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</FluentDesignTheme>
+
+@code {
+    private DesignThemeModes currentMode = DesignThemeModes.Light;
+    private OfficeColor currentColor = OfficeColor.Default;
+
+    protected override void OnInitialized()
+    {
+        currentMode = ThemeService.CurrentMode;
+        currentColor = ThemeService.CurrentColor;
+        ThemeService.ThemeChanged += OnThemeChanged;
+    }
+
+    private void OnThemeChanged(DesignThemeModes mode, OfficeColor color)
+    {
+        currentMode = mode;
+        currentColor = color;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        ThemeService.ThemeChanged -= OnThemeChanged;
+    }
+}
