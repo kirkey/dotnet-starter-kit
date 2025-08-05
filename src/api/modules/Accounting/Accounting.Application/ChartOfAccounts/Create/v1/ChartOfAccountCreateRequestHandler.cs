@@ -9,29 +9,50 @@ using Microsoft.Extensions.Logging;
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
 public sealed class ChartOfAccountCreateRequestHandler(
     ILogger<ChartOfAccountCreateRequestHandler> logger,
-    [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
+    [FromKeyedServices("accounting")] IRepository<ChartOfAccount> repository)
     : IRequestHandler<ChartOfAccountCreateRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(ChartOfAccountCreateRequest request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        // Check for duplicate account code
+        var existingByCode = await repository.FirstOrDefaultAsync(
+            new ChartOfAccountByCodeSpec(request.AccountCode), cancellationToken);
+        if (existingByCode != null)
         {
-            ArgumentNullException.ThrowIfNull(request);
-        
-            // Check for duplicate account code or name
-            if (await repository.FirstOrDefaultAsync(new ChartOfAccountByCode(request.AccountCode), cancellationToken) != null ||
-                await repository.FirstOrDefaultAsync(new ChartOfAccountByName(request.Name), cancellationToken) != null)
-            {
-                throw new ChartOfAccountForbiddenException($"{request.AccountCode} or {request.Name}");
-            }
-        
-            var account = ChartOfAccount.Create(
-                request.AccountCategory, request.AccountType, request.ParentCode,
-                request.AccountCode, request.Name, request.Balance,
-                request.Description, request.Notes);
-        
-            await repository.AddAsync(account, cancellationToken).ConfigureAwait(false);
-        
-            logger.LogInformation("account created {AccountId}", account.Id);
-        
-            return account.Id;
+            throw new ChartOfAccountForbiddenException($"Account code {request.AccountCode} already exists");
         }
+
+        // Check for duplicate account name
+        var existingByName = await repository.FirstOrDefaultAsync(
+            new ChartOfAccountByNameSpec(request.AccountName), cancellationToken);
+        if (existingByName != null)
+        {
+            throw new ChartOfAccountForbiddenException($"Account name {request.AccountName} already exists");
+        }
+
+        var account = ChartOfAccount.Create(
+            accountId: request.AccountCode,
+            accountName: request.AccountName,
+            accountType: request.AccountType,
+            usoaCategory: request.UsoaCategory,
+            subAccountOf: request.SubAccountOf,
+            parentCode: request.ParentCode,
+            balance: request.Balance,
+            isControlAccount: request.IsControlAccount,
+            normalBalance: request.NormalBalance,
+            isUsoaCompliant: request.IsUsoaCompliant,
+            regulatoryClassification: request.RegulatoryClassification,
+            description: request.Description,
+            notes: request.Notes,
+            currencyId: request.CurrencyId);
+
+        await repository.AddAsync(account, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+
+        logger.LogInformation("Account created {AccountId}", account.Id);
+
+        return account.Id;
+    }
 }

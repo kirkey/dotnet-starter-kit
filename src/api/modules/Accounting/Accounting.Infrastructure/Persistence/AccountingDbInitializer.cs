@@ -21,20 +21,20 @@ internal sealed class AccountingDbInitializer(
     public async Task SeedAsync(CancellationToken cancellationToken)
     {
         // Check if the ChartOfAccounts table is empty
-        if (!await context.ChartOfAccounts.AnyAsync(cancellationToken).ConfigureAwait(false))
-        {
-            const string category = "Asset";
-            const string type = "Debit";
-            const string name = "Cash Account";
-            const string parentCode = "1";
-            const string accountCode = "1000";
-            const decimal balance = 5000.00M;
-            const string description = "Main cash account for general operations";
-        
-            var account = ChartOfAccount.Create(category, type, parentCode, accountCode, name, balance, description);
-            await context.ChartOfAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
-            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            logger.LogInformation("[{Tenant}] seeding default accounting data", context.TenantInfo!.Identifier);
-        }
+        // if (!await context.ChartOfAccounts.AnyAsync(cancellationToken).ConfigureAwait(false))
+        // {
+        //     const string category = "Asset";
+        //     const string type = "Debit";
+        //     const string name = "Cash Account";
+        //     const string parentCode = "1";
+        //     const string accountCode = "1000";
+        //     const decimal balance = 5000.00M;
+        //     const string description = "Main cash account for general operations";
+        //
+        //     var account = ChartOfAccount.Create(category, type, parentCode, accountCode, name, balance, description);
+        //     await context.ChartOfAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
+        //     await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        //     logger.LogInformation("[{Tenant}] seeding default accounting data", context.TenantInfo!.Identifier);
+        // }
     }
 }

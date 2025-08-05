@@ -1,0 +1,61 @@
+using Accounting.Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Constants;
+
+namespace Accounting.Infrastructure.Persistence.Configurations;
+
+public class ProjectConfiguration : IEntityTypeConfiguration<Project>
+{
+    public void Configure(EntityTypeBuilder<Project> builder)
+    {
+        builder.ToTable("Projects", schema: SchemaNames.Accounting);
+
+        builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.StartDate)
+            .IsRequired();
+
+        builder.Property(x => x.EndDate);
+
+        builder.Property(x => x.BudgetedAmount)
+            .HasPrecision(18, 2)
+            .IsRequired();
+
+        builder.Property(x => x.Status)
+            .HasMaxLength(16)
+            .IsRequired();
+
+        builder.Property(x => x.ClientName)
+            .HasMaxLength(256);
+
+        builder.Property(x => x.ProjectManager)
+            .HasMaxLength(256);
+
+        builder.Property(x => x.Department)
+            .HasMaxLength(100);
+
+        builder.Property(x => x.ActualCost)
+            .HasPrecision(18, 2)
+            .IsRequired();
+
+        builder.Property(x => x.ActualRevenue)
+            .HasPrecision(18, 2)
+            .IsRequired();
+
+        // Configure owned entity for JobCostingEntries
+        builder.OwnsMany(x => x.CostingEntries, ce =>
+        {
+            ce.ToTable("JobCostingEntries", schema: SchemaNames.Accounting);
+            ce.WithOwner().HasForeignKey("ProjectId");
+            ce.HasKey("Id");
+            
+            ce.Property(x => x.Date)
+                .IsRequired();
+                
+            ce.Property(x => x.Amount)
+                .HasPrecision(18, 2)
+                .IsRequired();
+        });
+    }
+}

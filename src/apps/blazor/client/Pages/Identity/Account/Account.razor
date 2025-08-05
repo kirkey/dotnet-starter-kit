@@ -19,7 +19,7 @@
     [Inject]
     public IAuthenticationService AuthService { get; set; } = default!;
 
-    public bool SecurityTabHidden { get; set; } = false;
+    public bool SecurityTabHidden { get; set; }
 
     protected override void OnInitialized()
     {

@@ -1,4 +1,5 @@
 using Accounting.Domain.Events.Vendor;
+using Accounting.Domain.Exceptions;
 using FSH.Framework.Core.Domain;
 using FSH.Framework.Core.Domain.Contracts;
 
@@ -8,84 +9,155 @@ public class Vendor : AuditableEntity, IAggregateRoot
 {
     public string VendorCode { get; private set; }
     public string? Address { get; private set; }
+    public string? BillingAddress { get; private set; }
+    public string? ContactPerson { get; private set; }
+    public string? Email { get; private set; }
+    public string? Terms { get; private set; }
     public string? ExpenseAccountCode { get; private set; }
     public string? ExpenseAccountName { get; private set; }
     public string? Tin { get; private set; }
-    public string? Phone { get; private set; }
+    public string? PhoneNumber { get; private set; }
+    public bool IsActive { get; private set; }
 
-    private Vendor(DefaultIdType id, string vendorCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? phone, string? description, string? notes)
+    private Vendor(string vendorCode, string name, string? address, string? billingAddress, 
+        string? contactPerson, string? email, string? terms, string? expenseAccountCode, string? expenseAccountName, 
+        string? tin, string? phoneNumber, string? description, string? notes)
     {
-        Id = id;
         VendorCode = vendorCode.Trim();
         Name = name.Trim();
         Address = address?.Trim();
+        BillingAddress = billingAddress?.Trim();
+        ContactPerson = contactPerson?.Trim();
+        Email = email?.Trim();
+        Terms = terms?.Trim();
         ExpenseAccountCode = expenseAccountCode?.Trim();
         ExpenseAccountName = expenseAccountName?.Trim();
         Tin = tin?.Trim();
-        Phone = phone?.Trim();
+        PhoneNumber = phoneNumber?.Trim();
         Description = description?.Trim();
         Notes = notes?.Trim();
+        IsActive = true;
+
+        QueueDomainEvent(new VendorCreated(Id, VendorCode, Name, Email, Terms, Description, Notes));
     }
 
-    public static Vendor Create(string vendorCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? phone, string? description, string? notes)
+    public static Vendor Create(string vendorCode, string name, string? address = null, string? billingAddress = null,
+        string? contactPerson = null, string? email = null, string? terms = null, string? expenseAccountCode = null, 
+        string? expenseAccountName = null, string? tin = null, string? phoneNumber = null, string? description = null, string? notes = null)
     {
-        return new Vendor(DefaultIdType.NewGuid(), vendorCode, name, address, expenseAccountCode, expenseAccountName, tin, phone, description, notes);
+        return new Vendor(vendorCode, name, address, billingAddress, contactPerson, 
+            email, terms, expenseAccountCode, expenseAccountName, tin, phoneNumber, description, notes);
     }
 
-    public Vendor Update(string? vendorCode, string? name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? phone, string? description, string? notes)
+    public Vendor Update(string? vendorCode, string? name, string? address, string? billingAddress, 
+        string? contactPerson, string? email, string? terms, string? expenseAccountCode, string? expenseAccountName, 
+        string? tin, string? phoneNumber, string? description, string? notes)
     {
         bool isUpdated = false;
+
         if (!string.IsNullOrWhiteSpace(vendorCode) && !string.Equals(VendorCode, vendorCode, StringComparison.OrdinalIgnoreCase))
         {
             VendorCode = vendorCode.Trim();
             isUpdated = true;
         }
+
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
             Name = name.Trim();
             isUpdated = true;
         }
-        if (!string.IsNullOrWhiteSpace(address) && !string.Equals(Address, address, StringComparison.OrdinalIgnoreCase))
+
+        if (address != Address)
         {
-            Address = address.Trim();
+            Address = address?.Trim();
             isUpdated = true;
         }
-        if (!string.IsNullOrWhiteSpace(expenseAccountCode) && !string.Equals(ExpenseAccountCode, expenseAccountCode, StringComparison.OrdinalIgnoreCase))
+
+        if (billingAddress != BillingAddress)
         {
-            ExpenseAccountCode = expenseAccountCode.Trim();
+            BillingAddress = billingAddress?.Trim();
             isUpdated = true;
         }
-        if (!string.IsNullOrWhiteSpace(expenseAccountName) && !string.Equals(ExpenseAccountName, expenseAccountName, StringComparison.OrdinalIgnoreCase))
+
+        if (contactPerson != ContactPerson)
         {
-            ExpenseAccountName = expenseAccountName.Trim();
+            ContactPerson = contactPerson?.Trim();
             isUpdated = true;
         }
-        if (!string.IsNullOrWhiteSpace(tin) && !string.Equals(Tin, tin, StringComparison.OrdinalIgnoreCase))
+
+        if (email != Email)
         {
-            Tin = tin.Trim();
+            Email = email?.Trim();
             isUpdated = true;
         }
-        if (!string.IsNullOrWhiteSpace(phone) && !string.Equals(Phone, phone, StringComparison.OrdinalIgnoreCase))
+
+        if (terms != Terms)
         {
-            Phone = phone.Trim();
+            Terms = terms?.Trim();
             isUpdated = true;
         }
-        if (!string.IsNullOrWhiteSpace(description) && !string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
+
+        if (expenseAccountCode != ExpenseAccountCode)
         {
-            Description = description.Trim();
+            ExpenseAccountCode = expenseAccountCode?.Trim();
             isUpdated = true;
         }
-        if (!string.IsNullOrWhiteSpace(notes) && !string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+
+        if (expenseAccountName != ExpenseAccountName)
         {
-            Notes = notes.Trim();
+            ExpenseAccountName = expenseAccountName?.Trim();
+            isUpdated = true;
+        }
+
+        if (tin != Tin)
+        {
+            Tin = tin?.Trim();
+            isUpdated = true;
+        }
+
+        if (phoneNumber != PhoneNumber)
+        {
+            PhoneNumber = phoneNumber?.Trim();
+            isUpdated = true;
+        }
+
+        if (description != Description)
+        {
+            Description = description?.Trim();
+            isUpdated = true;
+        }
+
+        if (notes != Notes)
+        {
+            Notes = notes?.Trim();
             isUpdated = true;
         }
         
         if (isUpdated)
         {
-            // Optionally queue a domain event here, e.g.:
             QueueDomainEvent(new VendorUpdated(this));
         }
+
+        return this;
+    }
+
+    public Vendor Activate()
+    {
+        if (IsActive)
+            throw new VendorAlreadyActiveException(Id);
+
+        IsActive = true;
+        QueueDomainEvent(new VendorActivated(Id, VendorCode, Name));
+        return this;
+    }
+
+    public Vendor Deactivate()
+    {
+        if (!IsActive)
+            throw new VendorAlreadyInactiveException(Id);
+
+        IsActive = false;
+        QueueDomainEvent(new VendorDeactivated(Id, VendorCode, Name));
         return this;
     }
 }

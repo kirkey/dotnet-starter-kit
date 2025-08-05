@@ -5,7 +5,7 @@ public class BaseRequest : BaseRequest<DefaultIdType>;
 public abstract class BaseRequest<TId>
 {
     public TId? Id { get; set; }
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
     public string? Remarks { get; set; }
     public string? Status { get; set; }
     public string? Description { get; set; }

@@ -15,7 +15,7 @@ public class ChartOfAccountConfiguration : IEntityTypeConfiguration<ChartOfAccou
 
         builder.HasIndex(x => x.AccountCode).IsUnique();
         
-        builder.Property(x => x.AccountCategory)
+        builder.Property(x => x.AccountType)
             .HasMaxLength(32)
             .IsRequired();
         

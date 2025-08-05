@@ -4,10 +4,10 @@ using Ardalis.Specification;
 
 namespace Accounting.Application.ChartOfAccounts.Queries;
 
-public sealed class ChartOfAccountByName :
+public sealed class ChartOfAccountByIdSpec :
     Specification<ChartOfAccount, ChartOfAccountDto>,
     ISingleResultSpecification<ChartOfAccount, ChartOfAccountDto>
 {
-    public ChartOfAccountByName(string name) =>
-        Query.Where(w => w.Name == name);
+    public ChartOfAccountByIdSpec(DefaultIdType id) =>
+        Query.Where(w => w.Id == id);
 }

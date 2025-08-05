@@ -3,12 +3,18 @@ using MediatR;
 
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
 
-public class ChartOfAccountCreateRequest
-    : BaseRequest, IRequest<DefaultIdType>
+public class ChartOfAccountCreateRequest : BaseRequest, IRequest<DefaultIdType>
 {
-    public string AccountCategory { get; set; } = null!;
-    public string AccountType { get; set; } = null!;
-    public string ParentCode { get; set; } = null!;
     public string AccountCode { get; set; } = null!;
-    public decimal Balance { get; set; }
+    public string AccountName { get; set; } = null!;
+    public string AccountType { get; set; } = null!;
+    public string UsoaCategory { get; set; } = null!;
+    public DefaultIdType? SubAccountOf { get; set; }
+    public string ParentCode { get; set; } = string.Empty;
+    public decimal Balance { get; set; } = 0;
+    public bool IsControlAccount { get; set; } = false;
+    public string NormalBalance { get; set; } = "Debit";
+    public bool IsUsoaCompliant { get; set; } = true;
+    public string? RegulatoryClassification { get; set; }
+    public DefaultIdType? CurrencyId { get; set; }
 }

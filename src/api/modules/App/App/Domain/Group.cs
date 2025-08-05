@@ -19,12 +19,10 @@ public sealed class Group : AuditableEntity, IAggregateRoot
     public DefaultIdType? EmployeeId { get; set; }
     public string? EmployeeName { get; set; }
 
-    public Group(DefaultIdType id, string application, string parent, string? tag, int number, string code, string name,
+    public Group(string application, string parent, string? tag, int number, string code, string name,
         decimal amount = 0, DefaultIdType? employeeId = null, string? employeeName = null,
         string? description = null, string? notes = null)
     {
-        Id = id;
-
         Application = application.ToUpperInvariant();
         Parent = parent.Trim().ToUpperInvariant();
         if (tag is not null && Tag?.Equals(tag) != true) Tag = tag.Trim().ToUpperInvariant();
@@ -51,7 +49,7 @@ public sealed class Group : AuditableEntity, IAggregateRoot
         decimal amount = 0, DefaultIdType? employeeId = null, string? employeeName = null,
         string? description = null, string? notes = null)
     {
-        return new Group(DefaultIdType.NewGuid(), application, parent, tag, number, code, name, amount,
+        return new Group(application, parent, tag, number, code, name, amount,
             employeeId, employeeName, description, notes);
     }
 

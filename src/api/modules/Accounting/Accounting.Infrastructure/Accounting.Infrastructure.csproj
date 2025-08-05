@@ -21,4 +21,8 @@
       <Folder Include="Endpoints\ChartOfAccounts\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Persistence\Configurations\CostingMethodConfiguration.cs" />
+    </ItemGroup>
+
 </Project>

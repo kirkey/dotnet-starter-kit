@@ -12,9 +12,8 @@ public class Payee : AuditableEntity, IAggregateRoot
     public string? ExpenseAccountName { get; private set; }
     public string? Tin { get; private set; }
 
-    private Payee(DefaultIdType id, string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
+    private Payee(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
     {
-        Id = id;
         PayeeCode = payeeCode.Trim();
         Name = name.Trim();
         Address = address?.Trim();
@@ -27,7 +26,7 @@ public class Payee : AuditableEntity, IAggregateRoot
 
     public static Payee Create(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
     {
-        return new Payee(DefaultIdType.NewGuid(), payeeCode, name, address, expenseAccountCode, expenseAccountName, tin, description, notes);
+        return new Payee(payeeCode, name, address, expenseAccountCode, expenseAccountName, tin, description, notes);
     }
 
     public Payee Update(string? payeeCode, string? name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)

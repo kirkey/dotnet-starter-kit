@@ -6,7 +6,7 @@ public class ChartOfAccountUpdateRequestValidator : BaseRequestValidator<ChartOf
 {
     public ChartOfAccountUpdateRequestValidator()
     {
-        RuleFor(a => a.AccountCategory)
+        RuleFor(a => a.AccountType)
             .NotEmpty()
             .MinimumLength(1)
             .MaximumLength(32);

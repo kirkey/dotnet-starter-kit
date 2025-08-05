@@ -1,0 +1,292 @@
+using Accounting.Domain.Events.Invoice;
+using Accounting.Domain.Exceptions;
+using FSH.Framework.Core.Domain;
+using FSH.Framework.Core.Domain.Contracts;
+
+namespace Accounting.Domain;
+
+public class Invoice : AuditableEntity, IAggregateRoot
+{
+    public string InvoiceNumber { get; private set; } // InvoiceID equivalent
+    public DefaultIdType MemberId { get; private set; } // Foreign Key to Member
+    public DateTime InvoiceDate { get; private set; }
+    public DateTime DueDate { get; private set; }
+    public decimal TotalAmount { get; private set; }
+    public string Status { get; private set; } // "Draft", "Sent", "Paid", "Overdue", "Cancelled"
+    public DefaultIdType? ConsumptionDataId { get; private set; } // Links to consumption record
+    public decimal UsageCharge { get; private set; } // Charge based on kWhUsed
+    public decimal BasicServiceCharge { get; private set; } // Fixed monthly charge
+    public decimal TaxAmount { get; private set; } // Tax amount
+    public decimal OtherCharges { get; private set; } // Late fees, reconnection fees, etc.
+    public decimal KWhUsed { get; private set; }
+    public string BillingPeriod { get; private set; }
+    public DateTime? PaidDate { get; private set; }
+    public string? PaymentMethod { get; private set; }
+    public decimal? LateFee { get; private set; }
+    public decimal? ReconnectionFee { get; private set; }
+    public decimal? DepositAmount { get; private set; }
+    public string? RateSchedule { get; private set; } // Rate schedule applied
+    public decimal? DemandCharge { get; private set; } // For commercial/industrial customers
+
+    private readonly List<InvoiceLineItem> _lineItems = new();
+    public IReadOnlyCollection<InvoiceLineItem> LineItems => _lineItems.AsReadOnly();
+
+    private Invoice(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
+        DateTime dueDate, DefaultIdType? consumptionDataId, decimal usageCharge, decimal basicServiceCharge,
+        decimal taxAmount, decimal otherCharges, decimal kWhUsed, string billingPeriod,
+        decimal? lateFee = null, decimal? reconnectionFee = null, decimal? depositAmount = null,
+        string? rateSchedule = null, decimal? demandCharge = null, string? description = null, string? notes = null)
+    {
+        InvoiceNumber = invoiceNumber.Trim();
+        Name = invoiceNumber.Trim(); // Keep for compatibility
+        MemberId = memberId;
+        InvoiceDate = invoiceDate;
+        DueDate = dueDate;
+        ConsumptionDataId = consumptionDataId;
+        UsageCharge = usageCharge;
+        BasicServiceCharge = basicServiceCharge;
+        TaxAmount = taxAmount;
+        OtherCharges = otherCharges;
+        LateFee = lateFee;
+        ReconnectionFee = reconnectionFee;
+        DepositAmount = depositAmount;
+        DemandCharge = demandCharge;
+        TotalAmount = CalculateTotalAmount();
+        KWhUsed = kWhUsed;
+        BillingPeriod = billingPeriod.Trim();
+        RateSchedule = rateSchedule?.Trim();
+        Status = "Draft";
+        Description = description?.Trim();
+        Notes = notes?.Trim();
+
+        QueueDomainEvent(new InvoiceCreated(Id, InvoiceNumber, MemberId, TotalAmount, DueDate, Description, Notes));
+    }
+
+    public static Invoice Create(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
+        DateTime dueDate, DefaultIdType? consumptionDataId, decimal usageCharge, decimal basicServiceCharge,
+        decimal taxAmount, decimal otherCharges, decimal kWhUsed, string billingPeriod,
+        decimal? lateFee = null, decimal? reconnectionFee = null, decimal? depositAmount = null,
+        string? rateSchedule = null, decimal? demandCharge = null, string? description = null, string? notes = null)
+    {
+        if (string.IsNullOrWhiteSpace(invoiceNumber))
+            throw new ArgumentException("Invoice number cannot be empty");
+
+        if (string.IsNullOrWhiteSpace(billingPeriod))
+            throw new ArgumentException("Billing period cannot be empty");
+
+        if (usageCharge < 0 || basicServiceCharge < 0 || taxAmount < 0 || otherCharges < 0)
+            throw new ArgumentException("Charges cannot be negative");
+
+        if (dueDate < invoiceDate)
+            throw new ArgumentException("Due date cannot be before invoice date");
+
+        return new Invoice(invoiceNumber, memberId, invoiceDate, dueDate,
+            consumptionDataId, usageCharge, basicServiceCharge, taxAmount, otherCharges, kWhUsed,
+            billingPeriod, lateFee, reconnectionFee, depositAmount, rateSchedule, demandCharge, description, notes);
+    }
+
+    public Invoice Update(DateTime? dueDate = null, decimal? usageCharge = null, decimal? basicServiceCharge = null,
+        decimal? taxAmount = null, decimal? otherCharges = null, decimal? lateFee = null,
+        decimal? reconnectionFee = null, decimal? depositAmount = null, decimal? demandCharge = null,
+        string? rateSchedule = null, string? description = null, string? notes = null)
+    {
+        if (Status == "Paid")
+            throw new ArgumentException("Cannot modify paid invoice");
+
+        bool isUpdated = false;
+
+        if (dueDate.HasValue && DueDate != dueDate.Value)
+        {
+            if (dueDate.Value < InvoiceDate)
+                throw new ArgumentException("Due date cannot be before invoice date");
+            DueDate = dueDate.Value;
+            isUpdated = true;
+        }
+
+        if (usageCharge.HasValue && UsageCharge != usageCharge.Value)
+        {
+            if (usageCharge.Value < 0)
+                throw new ArgumentException("Usage charge cannot be negative");
+            UsageCharge = usageCharge.Value;
+            isUpdated = true;
+        }
+
+        if (basicServiceCharge.HasValue && BasicServiceCharge != basicServiceCharge.Value)
+        {
+            if (basicServiceCharge.Value < 0)
+                throw new ArgumentException("Basic service charge cannot be negative");
+            BasicServiceCharge = basicServiceCharge.Value;
+            isUpdated = true;
+        }
+
+        if (taxAmount.HasValue && TaxAmount != taxAmount.Value)
+        {
+            if (taxAmount.Value < 0)
+                throw new ArgumentException("Tax amount cannot be negative");
+            TaxAmount = taxAmount.Value;
+            isUpdated = true;
+        }
+
+        if (otherCharges.HasValue && OtherCharges != otherCharges.Value)
+        {
+            if (otherCharges.Value < 0)
+                throw new ArgumentException("Other charges cannot be negative");
+            OtherCharges = otherCharges.Value;
+            isUpdated = true;
+        }
+
+        if (lateFee.HasValue && LateFee != lateFee.Value)
+        {
+            LateFee = lateFee.Value;
+            isUpdated = true;
+        }
+
+        if (reconnectionFee.HasValue && ReconnectionFee != reconnectionFee.Value)
+        {
+            ReconnectionFee = reconnectionFee.Value;
+            isUpdated = true;
+        }
+
+        if (depositAmount.HasValue && DepositAmount != depositAmount.Value)
+        {
+            DepositAmount = depositAmount.Value;
+            isUpdated = true;
+        }
+
+        if (demandCharge.HasValue && DemandCharge != demandCharge.Value)
+        {
+            DemandCharge = demandCharge.Value;
+            isUpdated = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(rateSchedule) && RateSchedule != rateSchedule.Trim())
+        {
+            RateSchedule = rateSchedule.Trim();
+            isUpdated = true;
+        }
+
+        if (description != Description)
+        {
+            Description = description?.Trim();
+            isUpdated = true;
+        }
+
+        if (notes != Notes)
+        {
+            Notes = notes?.Trim();
+            isUpdated = true;
+        }
+
+        if (isUpdated)
+        {
+            TotalAmount = CalculateTotalAmount();
+            QueueDomainEvent(new InvoiceUpdated(Id, InvoiceNumber, MemberId, TotalAmount, Description, Notes));
+        }
+
+        return this;
+    }
+
+    public Invoice Send()
+    {
+        if (Status != "Draft")
+            throw new ArgumentException($"Cannot send invoice with status {Status}");
+
+        Status = "Sent";
+        QueueDomainEvent(new InvoiceSent(Id, InvoiceNumber, MemberId, TotalAmount, DueDate));
+        return this;
+    }
+
+    public Invoice MarkPaid(DateTime paidDate, string? paymentMethod = null)
+    {
+        if (Status == "Paid")
+            throw new ArgumentException("Invoice is already paid");
+
+        Status = "Paid";
+        PaidDate = paidDate;
+        PaymentMethod = paymentMethod?.Trim();
+
+        QueueDomainEvent(new InvoicePaid(Id, InvoiceNumber, MemberId, TotalAmount, paidDate, paymentMethod));
+        return this;
+    }
+
+    public Invoice MarkOverdue()
+    {
+        if (Status == "Paid")
+            throw new ArgumentException("Cannot mark paid invoice as overdue");
+
+        if (DateTime.Now > DueDate && Status != "Overdue")
+        {
+            Status = "Overdue";
+            QueueDomainEvent(new InvoiceOverdue(Id, InvoiceNumber, MemberId, TotalAmount, DueDate));
+        }
+
+        return this;
+    }
+
+    public Invoice Cancel(string? reason = null)
+    {
+        if (Status == "Paid")
+            throw new ArgumentException("Cannot cancel paid invoice");
+
+        Status = "Cancelled";
+        QueueDomainEvent(new InvoiceCancelled(Id, InvoiceNumber, MemberId, reason));
+        return this;
+    }
+
+    public Invoice AddLineItem(string description, decimal quantity, decimal unitPrice, string? accountCode = null)
+    {
+        if (Status == "Paid")
+            throw new ArgumentException("Cannot modify paid invoice");
+
+        var lineItem = InvoiceLineItem.Create(Id, description, quantity, unitPrice, accountCode);
+        _lineItems.Add(lineItem);
+
+        TotalAmount = CalculateTotalAmount();
+        QueueDomainEvent(new InvoiceLineItemAdded(Id, InvoiceNumber, description, quantity * unitPrice));
+        return this;
+    }
+
+    private decimal CalculateTotalAmount()
+    {
+        var lineItemsTotal = _lineItems.Sum(li => li.TotalPrice);
+        return UsageCharge + BasicServiceCharge + TaxAmount + OtherCharges + 
+               (LateFee ?? 0) + (ReconnectionFee ?? 0) + (DepositAmount ?? 0) + 
+               (DemandCharge ?? 0) + lineItemsTotal;
+    }
+}
+
+public class InvoiceLineItem : BaseEntity
+{
+    public DefaultIdType InvoiceId { get; private set; }
+    public string Description { get; private set; }
+    public decimal Quantity { get; private set; }
+    public decimal UnitPrice { get; private set; }
+    public decimal TotalPrice { get; private set; }
+    public string? AccountCode { get; private set; }
+
+    private InvoiceLineItem(DefaultIdType invoiceId, string description, 
+        decimal quantity, decimal unitPrice, string? accountCode = null)
+    {
+        InvoiceId = invoiceId;
+        Description = description.Trim();
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+        TotalPrice = quantity * unitPrice;
+        AccountCode = accountCode?.Trim();
+    }
+
+    public static InvoiceLineItem Create(DefaultIdType invoiceId, string description,
+        decimal quantity, decimal unitPrice, string? accountCode = null)
+    {
+        if (string.IsNullOrWhiteSpace(description))
+            throw new ArgumentException("Description cannot be empty");
+
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be positive");
+
+        if (unitPrice < 0)
+            throw new ArgumentException("Unit price cannot be negative");
+
+        return new InvoiceLineItem(invoiceId, description, quantity, unitPrice, accountCode);
+    }
+}
