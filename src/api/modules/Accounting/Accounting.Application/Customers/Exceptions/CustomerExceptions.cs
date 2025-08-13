@@ -2,30 +2,12 @@ using FSH.Framework.Core.Exceptions;
 
 namespace Accounting.Application.Customers.Exceptions;
 
-public class CustomerNotFoundException : NotFoundException
-{
-    public CustomerNotFoundException(DefaultIdType id) : base($"Customer with ID {id} was not found.")
-    {
-    }
-}
+public class CustomerNotFoundException(DefaultIdType id) : NotFoundException($"Customer with ID {id} was not found.");
 
-public class CustomerCodeAlreadyExistsException : ForbiddenException
-{
-    public CustomerCodeAlreadyExistsException(string code) : base($"Customer with code '{code}' already exists.")
-    {
-    }
-}
+public class CustomerCodeAlreadyExistsException(string code)
+    : ForbiddenException($"Customer with code '{code}' already exists.");
 
-public class CustomerNameAlreadyExistsException : ForbiddenException
-{
-    public CustomerNameAlreadyExistsException(string name) : base($"Customer with name '{name}' already exists.")
-    {
-    }
-}
+public class CustomerNameAlreadyExistsException(string name)
+    : ForbiddenException($"Customer with name '{name}' already exists.");
 
-public class InvalidCreditLimitException : ForbiddenException
-{
-    public InvalidCreditLimitException() : base("Credit limit must be greater than or equal to zero.")
-    {
-    }
-}
+public class InvalidCreditLimitException() : ForbiddenException("Credit limit must be greater than or equal to zero.");

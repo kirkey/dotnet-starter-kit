@@ -2,40 +2,27 @@ using MediatR;
 
 namespace Accounting.Application.FixedAssets.Update;
 
-public class UpdateFixedAssetRequest : IRequest<DefaultIdType>
+public class UpdateFixedAssetRequest(
+    DefaultIdType id,
+    string? assetName = null,
+    DefaultIdType? depreciationMethodId = null,
+    int? serviceLife = null,
+    decimal? salvageValue = null,
+    string? serialNumber = null,
+    string? location = null,
+    string? department = null,
+    string? description = null,
+    string? notes = null)
+    : IRequest<DefaultIdType>
 {
-    public DefaultIdType Id { get; set; }
-    public string? AssetName { get; set; }
-    public DefaultIdType? DepreciationMethodId { get; set; }
-    public int? ServiceLife { get; set; }
-    public decimal? SalvageValue { get; set; }
-    public string? SerialNumber { get; set; }
-    public string? Location { get; set; }
-    public string? Department { get; set; }
-    public string? Description { get; set; }
-    public string? Notes { get; set; }
-
-    public UpdateFixedAssetRequest(
-        DefaultIdType id,
-        string? assetName = null,
-        DefaultIdType? depreciationMethodId = null,
-        int? serviceLife = null,
-        decimal? salvageValue = null,
-        string? serialNumber = null,
-        string? location = null,
-        string? department = null,
-        string? description = null,
-        string? notes = null)
-    {
-        Id = id;
-        AssetName = assetName;
-        DepreciationMethodId = depreciationMethodId;
-        ServiceLife = serviceLife;
-        SalvageValue = salvageValue;
-        SerialNumber = serialNumber;
-        Location = location;
-        Department = department;
-        Description = description;
-        Notes = notes;
-    }
+    public DefaultIdType Id { get; set; } = id;
+    public string? AssetName { get; set; } = assetName;
+    public DefaultIdType? DepreciationMethodId { get; set; } = depreciationMethodId;
+    public int? ServiceLife { get; set; } = serviceLife;
+    public decimal? SalvageValue { get; set; } = salvageValue;
+    public string? SerialNumber { get; set; } = serialNumber;
+    public string? Location { get; set; } = location;
+    public string? Department { get; set; } = department;
+    public string? Description { get; set; } = description;
+    public string? Notes { get; set; } = notes;
 }

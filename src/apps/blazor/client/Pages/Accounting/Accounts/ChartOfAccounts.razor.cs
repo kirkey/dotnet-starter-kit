@@ -6,7 +6,7 @@ using Shared.Authorization;
 
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Accounts;
 
-public partial class ChartOfAccounts
+public partial class ChartOfAccounts : ComponentBase
 {
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
@@ -15,7 +15,8 @@ public partial class ChartOfAccounts
 
     private EntityTable<ChartOfAccountDto, DefaultIdType, ChartOfAccountViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
+    protected override void OnInitialized()
+    {
         Context = new EntityServerTableContext<ChartOfAccountDto, DefaultIdType, ChartOfAccountViewModel>(
             entityName: "Chart Of Account",
             entityNamePlural: "Chart Of Accounts",
@@ -47,8 +48,11 @@ public partial class ChartOfAccounts
                 await ApiClient.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<ChartOfAccountUpdateRequest>());
             },
             deleteFunc: async id => await ApiClient.ChartOfAccountDeleteEndpointAsync("1", id));
+    }
 }
 
 public class ChartOfAccountViewModel : ChartOfAccountUpdateRequest
 {
+    // Properties will be inherited from ChartOfAccountUpdateRequest
+    // This class serves as the view model for the entity table
 }

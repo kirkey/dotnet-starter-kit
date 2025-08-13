@@ -3,6 +3,7 @@ using Accounting.Application.Budgets.Dtos;
 using Accounting.Domain.Exceptions;
 using FSH.Framework.Core.Caching;
 using FSH.Framework.Core.Persistence;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,19 +24,7 @@ public sealed class GetBudgetHandler(
             {
                 var budget = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (budget == null) throw new BudgetNotFoundException(request.Id);
-                return new BudgetDto(
-                    budget.Id,
-                    budget.Name!,
-                    budget.PeriodId,
-                    budget.FiscalYear,
-                    budget.BudgetType,
-                    budget.Status,
-                    budget.TotalBudgetedAmount,
-                    budget.TotalActualAmount,
-                    budget.ApprovedDate,
-                    budget.ApprovedBy,
-                    budget.Description,
-                    budget.Notes);
+                return budget.Adapt<BudgetDto>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

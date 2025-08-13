@@ -3,12 +3,7 @@ using Accounting.Application.Customers.Dtos;
 
 namespace Accounting.Application.Customers.Get;
 
-public class GetCustomerRequest : IRequest<CustomerDto>
+public class GetCustomerRequest(DefaultIdType id) : IRequest<CustomerDto>
 {
-    public DefaultIdType Id { get; set; }
-
-    public GetCustomerRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

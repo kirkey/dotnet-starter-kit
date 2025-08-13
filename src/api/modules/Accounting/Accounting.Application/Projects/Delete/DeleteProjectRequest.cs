@@ -2,12 +2,7 @@ using MediatR;
 
 namespace Accounting.Application.Projects.Delete;
 
-public class DeleteProjectRequest : IRequest
+public class DeleteProjectRequest(DefaultIdType id) : IRequest
 {
-    public DefaultIdType Id { get; set; }
-
-    public DeleteProjectRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

@@ -3,12 +3,7 @@ using Accounting.Application.Projects.Dtos;
 
 namespace Accounting.Application.Projects.Get;
 
-public class GetProjectRequest : IRequest<ProjectDto>
+public class GetProjectRequest(DefaultIdType id) : IRequest<ProjectDto>
 {
-    public DefaultIdType Id { get; set; }
-
-    public GetProjectRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

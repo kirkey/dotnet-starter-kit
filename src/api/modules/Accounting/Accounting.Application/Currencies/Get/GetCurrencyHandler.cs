@@ -3,6 +3,7 @@ using Accounting.Application.Currencies.Dtos;
 using Accounting.Application.Currencies.Exceptions;
 using FSH.Framework.Core.Caching;
 using FSH.Framework.Core.Persistence;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,22 +18,13 @@ public sealed class GetCurrencyHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var item = await cache.GetOrSetAsync(
+        var item = await cache.GetOrSetAsync<CurrencyDto>(
             $"currency:{request.Id}",
             async () =>
             {
                 var currency = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (currency == null) throw new CurrencyNotFoundException(request.Id);
-                return new CurrencyDto(
-                    currency.Id,
-                    currency.CurrencyCode,
-                    currency.Name!,
-                    currency.Symbol,
-                    currency.DecimalPlaces,
-                    currency.IsActive,
-                    currency.IsBaseCurrency,
-                    currency.Description,
-                    currency.Notes);
+                return currency.Adapt<CurrencyDto>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

@@ -3,12 +3,7 @@ using Accounting.Application.Budgets.Dtos;
 
 namespace Accounting.Application.Budgets.Get;
 
-public class GetBudgetRequest : IRequest<BudgetDto>
+public class GetBudgetRequest(DefaultIdType id) : IRequest<BudgetDto>
 {
-    public DefaultIdType Id { get; set; }
-
-    public GetBudgetRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

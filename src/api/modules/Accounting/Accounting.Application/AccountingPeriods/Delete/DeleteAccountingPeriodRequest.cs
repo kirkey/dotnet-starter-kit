@@ -2,12 +2,7 @@ using MediatR;
 
 namespace Accounting.Application.AccountingPeriods.Delete;
 
-public class DeleteAccountingPeriodRequest : IRequest
+public class DeleteAccountingPeriodRequest(DefaultIdType id) : IRequest
 {
-    public DefaultIdType Id { get; set; }
-
-    public DeleteAccountingPeriodRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

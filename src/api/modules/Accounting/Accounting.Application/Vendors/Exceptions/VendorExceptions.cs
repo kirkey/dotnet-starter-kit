@@ -2,30 +2,13 @@ using FSH.Framework.Core.Exceptions;
 
 namespace Accounting.Application.Vendors.Exceptions;
 
-public class VendorNotFoundException : FshException
-{
-    public VendorNotFoundException(DefaultIdType id) : base($"Vendor with ID {id} was not found.")
-    {
-    }
-}
+public class VendorNotFoundException(DefaultIdType id) : FshException($"Vendor with ID {id} was not found.");
 
-public class VendorCodeAlreadyExistsException : ConflictException
-{
-    public VendorCodeAlreadyExistsException(string code) : base($"Vendor with code '{code}' already exists.")
-    {
-    }
-}
+public class VendorCodeAlreadyExistsException(string code)
+    : ConflictException($"Vendor with code '{code}' already exists.");
 
-public class VendorNameAlreadyExistsException : ConflictException
-{
-    public VendorNameAlreadyExistsException(string name) : base($"Vendor with name '{name}' already exists.")
-    {
-    }
-}
+public class VendorNameAlreadyExistsException(string name)
+    : ConflictException($"Vendor with name '{name}' already exists.");
 
-public class VendorAlreadyActiveException : BadRequestException
-{
-    public VendorAlreadyActiveException(DefaultIdType id) : base($"Vendor with ID {id} is already active.")
-    {
-    }
-}
+public class VendorAlreadyActiveException(DefaultIdType id)
+    : BadRequestException($"Vendor with ID {id} is already active.");

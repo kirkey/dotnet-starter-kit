@@ -3,6 +3,7 @@ using Accounting.Application.FixedAssets.Dtos;
 using Accounting.Application.FixedAssets.Exceptions;
 using FSH.Framework.Core.Caching;
 using FSH.Framework.Core.Persistence;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,25 +24,7 @@ public sealed class GetFixedAssetHandler(
             {
                 var asset = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (asset == null) throw new FixedAssetNotFoundException(request.Id);
-                return new FixedAssetDto(
-                    asset.Id,
-                    asset.AssetName,
-                    asset.PurchaseDate,
-                    asset.PurchasePrice,
-                    asset.ServiceLife,
-                    asset.DepreciationMethodId,
-                    asset.SalvageValue,
-                    asset.CurrentBookValue,
-                    asset.AccumulatedDepreciationAccountId,
-                    asset.DepreciationExpenseAccountId,
-                    asset.SerialNumber,
-                    asset.Location,
-                    asset.Department,
-                    asset.IsDisposed,
-                    asset.DisposalDate,
-                    asset.DisposalAmount,
-                    asset.Description,
-                    asset.Notes);
+                return asset.Adapt<FixedAssetDto>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

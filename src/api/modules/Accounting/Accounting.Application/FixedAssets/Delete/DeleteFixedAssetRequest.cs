@@ -2,12 +2,7 @@ using MediatR;
 
 namespace Accounting.Application.FixedAssets.Delete;
 
-public class DeleteFixedAssetRequest : IRequest
+public class DeleteFixedAssetRequest(DefaultIdType id) : IRequest
 {
-    public DefaultIdType Id { get; set; }
-
-    public DeleteFixedAssetRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

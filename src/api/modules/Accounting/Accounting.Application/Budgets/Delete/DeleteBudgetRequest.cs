@@ -2,12 +2,7 @@ using MediatR;
 
 namespace Accounting.Application.Budgets.Delete;
 
-public class DeleteBudgetRequest : IRequest
+public class DeleteBudgetRequest(DefaultIdType id) : IRequest
 {
-    public DefaultIdType Id { get; set; }
-
-    public DeleteBudgetRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

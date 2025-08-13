@@ -3,12 +3,7 @@ using Accounting.Application.FixedAssets.Dtos;
 
 namespace Accounting.Application.FixedAssets.Get;
 
-public class GetFixedAssetRequest : IRequest<FixedAssetDto>
+public class GetFixedAssetRequest(DefaultIdType id) : IRequest<FixedAssetDto>
 {
-    public DefaultIdType Id { get; set; }
-
-    public GetFixedAssetRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

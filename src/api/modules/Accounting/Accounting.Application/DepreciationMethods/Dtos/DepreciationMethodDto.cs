@@ -1,30 +1,13 @@
+using FSH.Framework.Core.Extensions.Dto;
+
 namespace Accounting.Application.DepreciationMethods.Dtos;
 
-public class DepreciationMethodDto
+public class DepreciationMethodDto(
+    string methodCode,
+    string? formula,
+    bool isActive) : BaseDto
 {
-    public DefaultIdType Id { get; set; }
-    public string MethodCode { get; set; } = null!;
-    public string Name { get; set; } = null!;
-    public string? Formula { get; set; }
-    public bool IsActive { get; set; }
-    public string? Description { get; set; }
-    public string? Notes { get; set; }
-
-    public DepreciationMethodDto(
-        DefaultIdType id,
-        string methodCode,
-        string name,
-        string? formula,
-        bool isActive,
-        string? description,
-        string? notes)
-    {
-        Id = id;
-        MethodCode = methodCode;
-        Name = name;
-        Formula = formula;
-        IsActive = isActive;
-        Description = description;
-        Notes = notes;
-    }
+    public string MethodCode { get; set; } = methodCode;
+    public string? Formula { get; set; } = formula;
+    public bool IsActive { get; set; } = isActive;
 }

@@ -3,12 +3,7 @@ using Accounting.Application.DepreciationMethods.Dtos;
 
 namespace Accounting.Application.DepreciationMethods.Get;
 
-public class GetDepreciationMethodRequest : IRequest<DepreciationMethodDto>
+public class GetDepreciationMethodRequest(DefaultIdType id) : IRequest<DepreciationMethodDto>
 {
-    public DefaultIdType Id { get; set; }
-
-    public GetDepreciationMethodRequest(DefaultIdType id)
-    {
-        Id = id;
-    }
+    public DefaultIdType Id { get; set; } = id;
 }

@@ -1,89 +1,53 @@
+using FSH.Framework.Core.Extensions.Dto;
+
 namespace Accounting.Application.FixedAssets.Dtos;
 
-public class FixedAssetDto
+public class FixedAssetDto(
+    DateTime purchaseDate,
+    decimal purchasePrice,
+    int serviceLife,
+    DefaultIdType depreciationMethodId,
+    decimal salvageValue,
+    decimal currentBookValue,
+    DefaultIdType accumulatedDepreciationAccountId,
+    DefaultIdType depreciationExpenseAccountId,
+    string? serialNumber,
+    string? location,
+    string? department,
+    bool isDisposed,
+    DateTime? disposalDate,
+    decimal? disposalAmount,
+    string? description) : BaseDto
 {
-    public DefaultIdType Id { get; set; }
-    public string AssetName { get; set; } = null!;
-    public DateTime PurchaseDate { get; set; }
-    public decimal PurchasePrice { get; set; }
-    public int ServiceLife { get; set; }
-    public DefaultIdType DepreciationMethodId { get; set; }
-    public decimal SalvageValue { get; set; }
-    public decimal CurrentBookValue { get; set; }
-    public DefaultIdType AccumulatedDepreciationAccountId { get; set; }
-    public DefaultIdType DepreciationExpenseAccountId { get; set; }
-    public string? SerialNumber { get; set; }
-    public string? Location { get; set; }
-    public string? Department { get; set; }
-    public bool IsDisposed { get; set; }
-    public DateTime? DisposalDate { get; set; }
-    public decimal? DisposalAmount { get; set; }
-    public string? Description { get; set; }
-    public string? Notes { get; set; }
-
-    public FixedAssetDto(
-        DefaultIdType id,
-        string assetName,
-        DateTime purchaseDate,
-        decimal purchasePrice,
-        int serviceLife,
-        DefaultIdType depreciationMethodId,
-        decimal salvageValue,
-        decimal currentBookValue,
-        DefaultIdType accumulatedDepreciationAccountId,
-        DefaultIdType depreciationExpenseAccountId,
-        string? serialNumber,
-        string? location,
-        string? department,
-        bool isDisposed,
-        DateTime? disposalDate,
-        decimal? disposalAmount,
-        string? description,
-        string? notes)
-    {
-        Id = id;
-        AssetName = assetName;
-        PurchaseDate = purchaseDate;
-        PurchasePrice = purchasePrice;
-        ServiceLife = serviceLife;
-        DepreciationMethodId = depreciationMethodId;
-        SalvageValue = salvageValue;
-        CurrentBookValue = currentBookValue;
-        AccumulatedDepreciationAccountId = accumulatedDepreciationAccountId;
-        DepreciationExpenseAccountId = depreciationExpenseAccountId;
-        SerialNumber = serialNumber;
-        Location = location;
-        Department = department;
-        IsDisposed = isDisposed;
-        DisposalDate = disposalDate;
-        DisposalAmount = disposalAmount;
-        Description = description;
-        Notes = notes;
-    }
+    public DateTime PurchaseDate { get; set; } = purchaseDate;
+    public decimal PurchasePrice { get; set; } = purchasePrice;
+    public int ServiceLife { get; set; } = serviceLife;
+    public DefaultIdType DepreciationMethodId { get; set; } = depreciationMethodId;
+    public decimal SalvageValue { get; set; } = salvageValue;
+    public decimal CurrentBookValue { get; set; } = currentBookValue;
+    public DefaultIdType AccumulatedDepreciationAccountId { get; set; } = accumulatedDepreciationAccountId;
+    public DefaultIdType DepreciationExpenseAccountId { get; set; } = depreciationExpenseAccountId;
+    public string? SerialNumber { get; set; } = serialNumber;
+    public string? Location { get; set; } = location;
+    public string? Department { get; set; } = department;
+    public bool IsDisposed { get; set; } = isDisposed;
+    public DateTime? DisposalDate { get; set; } = disposalDate;
+    public decimal? DisposalAmount { get; set; } = disposalAmount;
+    public string? Description { get; set; } = description;
 }
 
-public class DepreciationEntryDto
+public class DepreciationEntryDto(
+    DefaultIdType id,
+    DefaultIdType assetId,
+    DateTime depreciationDate,
+    decimal depreciationAmount,
+    string method,
+    string? notes)
 {
-    public DefaultIdType Id { get; set; }
-    public DefaultIdType AssetId { get; set; }
-    public DateTime DepreciationDate { get; set; }
-    public decimal DepreciationAmount { get; set; }
-    public string Method { get; set; } = null!;
-    public string? Notes { get; set; }
-
-    public DepreciationEntryDto(
-        DefaultIdType id,
-        DefaultIdType assetId,
-        DateTime depreciationDate,
-        decimal depreciationAmount,
-        string method,
-        string? notes)
-    {
-        Id = id;
-        AssetId = assetId;
-        DepreciationDate = depreciationDate;
-        DepreciationAmount = depreciationAmount;
-        Method = method;
-        Notes = notes;
-    }
+    public DefaultIdType Id { get; set; } = id;
+    public DefaultIdType AssetId { get; set; } = assetId;
+    public DateTime DepreciationDate { get; set; } = depreciationDate;
+    public decimal DepreciationAmount { get; set; } = depreciationAmount;
+    public string Method { get; set; } = method;
+    public string? Notes { get; set; } = notes;
 }

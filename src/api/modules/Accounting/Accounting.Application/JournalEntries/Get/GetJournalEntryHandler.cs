@@ -3,6 +3,7 @@ using Accounting.Application.JournalEntries.Dtos;
 using Accounting.Application.JournalEntries.Exceptions;
 using FSH.Framework.Core.Caching;
 using FSH.Framework.Core.Persistence;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,18 +24,7 @@ public sealed class GetJournalEntryHandler(
             {
                 var entry = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (entry == null) throw new JournalEntryNotFoundException(request.Id);
-                return new JournalEntryDto(
-                    entry.Id,
-                    entry.Name!,
-                    entry.Description!,
-                    entry.Date,
-                    entry.ReferenceNumber,
-                    entry.Source,
-                    entry.IsPosted,
-                    entry.PeriodId,
-                    entry.CurrencyId,
-                    entry.ExchangeRate,
-                    entry.OriginalAmount);
+                return entry.Adapt<JournalEntryDto>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

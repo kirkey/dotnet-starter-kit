@@ -6,7 +6,7 @@ using Shared.Authorization;
 
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 
-public partial class Payees
+public partial class Payees : ComponentBase
 {
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
