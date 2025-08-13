@@ -10,6 +10,11 @@ public class DepreciationMethod : AuditableEntity, IAggregateRoot
     public string MethodCode { get; private set; }
     public string CalculationFormula { get; private set; }
     public bool IsActive { get; private set; }
+    
+    private DepreciationMethod()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private DepreciationMethod(string methodCode, string methodName, string calculationFormula, string description, string? notes = null)
     {

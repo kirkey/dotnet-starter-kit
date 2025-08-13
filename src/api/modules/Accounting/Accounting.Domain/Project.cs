@@ -16,6 +16,11 @@ public class Project : AuditableEntity, IAggregateRoot
     public string? Department { get; private set; }
     public decimal ActualCost { get; private set; }
     public decimal ActualRevenue { get; private set; }
+    
+    private Project()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private readonly List<JobCostingEntry> _costingEntries = new();
     public IReadOnlyCollection<JobCostingEntry> CostingEntries => _costingEntries.AsReadOnly();

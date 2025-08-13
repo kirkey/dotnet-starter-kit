@@ -22,6 +22,11 @@ public class Member : AuditableEntity, IAggregateRoot
     public string? EmergencyContact { get; private set; }
     public string? ServiceClass { get; private set; } // Residential, Commercial, Industrial
     public string? RateSchedule { get; private set; } // Rate schedule applied to this member
+    
+    private Member()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private Member(string memberNumber, string memberName, string serviceAddress,
         DateTime membershipDate, string? mailingAddress = null, string? contactInfo = null,

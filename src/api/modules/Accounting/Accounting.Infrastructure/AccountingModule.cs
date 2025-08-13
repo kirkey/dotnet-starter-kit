@@ -2,6 +2,12 @@ using Accounting.Domain;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 using Accounting.Infrastructure.Endpoints.Payees.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
+using Accounting.Infrastructure.Endpoints.Customers.v1;
+using Accounting.Infrastructure.Endpoints.Projects.v1;
+using Accounting.Infrastructure.Endpoints.Currencies.v1;
+using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
+using Accounting.Infrastructure.Endpoints.Budgets.v1;
+using Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Persistence.Configurations;
 using Carter;
@@ -40,6 +46,36 @@ public static class AccountingModule
             vendor.MapVendorSearchEndpoint();
             vendor.MapVendorUpdateEndpoint();
             vendor.MapVendorDeleteEndpoint();
+
+            var customer = app.MapGroup("customers").WithTags("customers");
+            customer.MapCustomerCreateEndpoint();
+            customer.MapCustomerGetEndpoint();
+            customer.MapCustomerSearchEndpoint();
+            customer.MapCustomerUpdateEndpoint();
+            customer.MapCustomerDeleteEndpoint();
+
+            var projects = app.MapGroup("projects").WithTags("projects");
+            projects.MapProjectCreateEndpoint();
+            projects.MapProjectGetEndpoint();
+            projects.MapProjectSearchEndpoint();
+            projects.MapProjectUpdateEndpoint();
+            projects.MapProjectDeleteEndpoint();
+
+            var currency = app.MapGroup("currencies").WithTags("currencies");
+            currency.MapCurrencyCreateEndpoint();
+            currency.MapCurrencyGetEndpoint();
+            currency.MapCurrencySearchEndpoint();
+            currency.MapCurrencyUpdateEndpoint();
+            currency.MapCurrencyDeleteEndpoint();
+
+            var periods = app.MapGroup("periods").WithTags("periods");
+            periods.MapAccountingPeriodSearchEndpoint();
+
+            var budgets = app.MapGroup("budgets").WithTags("budgets");
+            budgets.MapBudgetSearchEndpoint();
+
+            var journals = app.MapGroup("journals").WithTags("journals");
+            journals.MapJournalEntrySearchEndpoint();
         }
     }
 
@@ -49,22 +85,114 @@ public static class AccountingModule
         builder.Services.BindDbContext<AccountingDbContext>();
         builder.Services.AddScoped<IDbInitializer, AccountingDbInitializer>();
     
-        // Register without keys
+        // Register without keys (for MediatR handlers that don't use keyed services)
+        builder.Services.AddScoped<IRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>();
+        builder.Services.AddScoped<IReadRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>();
+        builder.Services.AddScoped<IRepository<Budget>, AccountingRepository<Budget>>();
+        builder.Services.AddScoped<IReadRepository<Budget>, AccountingRepository<Budget>>();
         builder.Services.AddScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
         builder.Services.AddScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
+        builder.Services.AddScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>();
+        builder.Services.AddScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>();
+        builder.Services.AddScoped<IRepository<Currency>, AccountingRepository<Currency>>();
+        builder.Services.AddScoped<IReadRepository<Currency>, AccountingRepository<Currency>>();
+        builder.Services.AddScoped<IRepository<Customer>, AccountingRepository<Customer>>();
+        builder.Services.AddScoped<IReadRepository<Customer>, AccountingRepository<Customer>>();
+        builder.Services.AddScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>();
+        builder.Services.AddScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>();
+        builder.Services.AddScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>();
+        builder.Services.AddScoped<IReadRepository<FixedAsset>, AccountingRepository<FixedAsset>>();
+        builder.Services.AddScoped<IRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>();
+        builder.Services.AddScoped<IReadRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>();
+        builder.Services.AddScoped<IRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>();
+        builder.Services.AddScoped<IReadRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>();
+        builder.Services.AddScoped<IRepository<Invoice>, AccountingRepository<Invoice>>();
+        builder.Services.AddScoped<IReadRepository<Invoice>, AccountingRepository<Invoice>>();
+        builder.Services.AddScoped<IRepository<JournalEntry>, AccountingRepository<JournalEntry>>();
+        builder.Services.AddScoped<IReadRepository<JournalEntry>, AccountingRepository<JournalEntry>>();
+        builder.Services.AddScoped<IRepository<Member>, AccountingRepository<Member>>();
+        builder.Services.AddScoped<IReadRepository<Member>, AccountingRepository<Member>>();
+        builder.Services.AddScoped<IRepository<Meter>, AccountingRepository<Meter>>();
+        builder.Services.AddScoped<IReadRepository<Meter>, AccountingRepository<Meter>>();
         builder.Services.AddScoped<IRepository<Payee>, AccountingRepository<Payee>>();
         builder.Services.AddScoped<IReadRepository<Payee>, AccountingRepository<Payee>>();
+        builder.Services.AddScoped<IRepository<Project>, AccountingRepository<Project>>();
+        builder.Services.AddScoped<IReadRepository<Project>, AccountingRepository<Project>>();
         builder.Services.AddScoped<IRepository<Vendor>, AccountingRepository<Vendor>>();
         builder.Services.AddScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>();
-    
-        // Register with keys
+
+        // Register with the "accounting" key (for handlers that use [FromKeyedServices("accounting")])
+        builder.Services.AddKeyedScoped<IRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Budget>, AccountingRepository<Budget>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Budget>, AccountingRepository<Budget>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Currency>, AccountingRepository<Currency>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Currency>, AccountingRepository<Currency>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Invoice>, AccountingRepository<Invoice>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Invoice>, AccountingRepository<Invoice>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Member>, AccountingRepository<Member>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Member>, AccountingRepository<Member>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Meter>, AccountingRepository<Meter>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Meter>, AccountingRepository<Meter>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Payee>, AccountingRepository<Payee>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Payee>, AccountingRepository<Payee>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Project>, AccountingRepository<Project>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
+        
+        // Register with specific keys (for handlers that use specific keys like "accounting:budgets", "accounting:accounts", etc.)
+        builder.Services.AddKeyedScoped<IRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting:periods");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting:periods");
+        builder.Services.AddKeyedScoped<IRepository<Budget>, AccountingRepository<Budget>>("accounting:budgets");
+        builder.Services.AddKeyedScoped<IReadRepository<Budget>, AccountingRepository<Budget>>("accounting:budgets");
         builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
+        builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumptiondata");
+        builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumptiondata");
+        builder.Services.AddKeyedScoped<IRepository<Currency>, AccountingRepository<Currency>>("accounting:currencies");
+        builder.Services.AddKeyedScoped<IReadRepository<Currency>, AccountingRepository<Currency>>("accounting:currencies");
+        builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
+        builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
+        builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");
+        builder.Services.AddKeyedScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");
+        builder.Services.AddKeyedScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting:fixedassets");
+        builder.Services.AddKeyedScoped<IReadRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting:fixedassets");
+        builder.Services.AddKeyedScoped<IRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting:fuelconsumptions");
+        builder.Services.AddKeyedScoped<IReadRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting:fuelconsumptions");
+        builder.Services.AddKeyedScoped<IRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting:generalledger");
+        builder.Services.AddKeyedScoped<IReadRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting:generalledger");
+        builder.Services.AddKeyedScoped<IRepository<Invoice>, AccountingRepository<Invoice>>("accounting:invoices");
+        builder.Services.AddKeyedScoped<IReadRepository<Invoice>, AccountingRepository<Invoice>>("accounting:invoices");
+        builder.Services.AddKeyedScoped<IRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journals");
+        builder.Services.AddKeyedScoped<IReadRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journals");
+        builder.Services.AddKeyedScoped<IRepository<Member>, AccountingRepository<Member>>("accounting:members");
+        builder.Services.AddKeyedScoped<IReadRepository<Member>, AccountingRepository<Member>>("accounting:members");
+        builder.Services.AddKeyedScoped<IRepository<Meter>, AccountingRepository<Meter>>("accounting:meters");
+        builder.Services.AddKeyedScoped<IReadRepository<Meter>, AccountingRepository<Meter>>("accounting:meters");
         builder.Services.AddKeyedScoped<IRepository<Payee>, AccountingRepository<Payee>>("accounting:payees");
         builder.Services.AddKeyedScoped<IReadRepository<Payee>, AccountingRepository<Payee>>("accounting:payees");
+        builder.Services.AddKeyedScoped<IRepository<Project>, AccountingRepository<Project>>("accounting:projects");
+        builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting:projects");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
-    
+        
         MappingConfiguration.RegisterMappings();
     
         return builder;

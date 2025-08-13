@@ -1,0 +1,17 @@
+using Accounting.Domain.Events.ChartOfAccount;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace Accounting.Application.ChartOfAccounts.EventHandlers;
+
+public class ChartOfAccountBalanceUpdatedEventHandler(ILogger<ChartOfAccountBalanceUpdatedEventHandler> logger) : INotificationHandler<ChartOfAccountBalanceUpdated>
+{
+    public async Task Handle(ChartOfAccountBalanceUpdated notification, CancellationToken cancellationToken)
+    {
+        logger.LogInformation("handling account balance updated domain event: {Balance}", notification.Balance);
+        await Task.FromResult(notification).ConfigureAwait(false);
+        logger.LogInformation("finished handling account balance updated domain event..");
+    }
+}
+
+

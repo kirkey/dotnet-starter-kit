@@ -13,6 +13,11 @@ public class Currency : AuditableEntity, IAggregateRoot
     public bool IsActive { get; private set; }
     public bool IsBaseCurrency { get; private set; }
 
+    private Currency()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
+    
     private Currency(string currencyCode, string currencyName, string symbol, int decimalPlaces = 2, string? description = null, string? notes = null)
     {
         CurrencyCode = currencyCode.Trim().ToUpper();

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.AccountingPeriods.Update;
 
 public sealed class UpdateAccountingPeriodHandler(
-    [FromKeyedServices("accounting")] IRepository<AccountingPeriod> repository)
+    [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)
     : IRequestHandler<UpdateAccountingPeriodRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateAccountingPeriodRequest request, CancellationToken cancellationToken)

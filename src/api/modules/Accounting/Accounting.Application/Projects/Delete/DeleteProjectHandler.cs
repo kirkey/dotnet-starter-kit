@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.Projects.Delete;
 
 public sealed class DeleteProjectHandler(
-    [FromKeyedServices("accounting")] IRepository<Project> repository)
+    [FromKeyedServices("accounting:projects")] IRepository<Project> repository)
     : IRequestHandler<DeleteProjectRequest>
 {
     public async Task Handle(DeleteProjectRequest request, CancellationToken cancellationToken)

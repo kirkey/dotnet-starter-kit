@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.Projects.Update;
 
 public sealed class UpdateProjectHandler(
-    [FromKeyedServices("accounting")] IRepository<Project> repository)
+    [FromKeyedServices("accounting:projects")] IRepository<Project> repository)
     : IRequestHandler<UpdateProjectRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateProjectRequest request, CancellationToken cancellationToken)

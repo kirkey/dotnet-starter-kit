@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.FixedAssets.Update;
 
 public sealed class UpdateFixedAssetHandler(
-    [FromKeyedServices("accounting")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
     : IRequestHandler<UpdateFixedAssetRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateFixedAssetRequest request, CancellationToken cancellationToken)

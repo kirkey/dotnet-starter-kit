@@ -12,6 +12,11 @@ public class Payee : AuditableEntity, IAggregateRoot
     public string? ExpenseAccountName { get; private set; }
     public string? Tin { get; private set; }
 
+    private Payee()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
+    
     private Payee(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
     {
         PayeeCode = payeeCode.Trim();

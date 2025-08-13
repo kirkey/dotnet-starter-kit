@@ -29,6 +29,11 @@ public class Meter : AuditableEntity, IAggregateRoot
 
     private readonly List<MeterReading> _readings = new();
     public IReadOnlyCollection<MeterReading> Readings => _readings.AsReadOnly();
+    
+    private Meter()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private Meter(string meterNumber, string meterType, string manufacturer,
         string modelNumber, DateTime installationDate, decimal multiplier = 1,

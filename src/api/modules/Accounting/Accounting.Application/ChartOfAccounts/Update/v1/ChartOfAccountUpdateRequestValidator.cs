@@ -6,27 +6,28 @@ public class ChartOfAccountUpdateRequestValidator : BaseRequestValidator<ChartOf
 {
     public ChartOfAccountUpdateRequestValidator()
     {
-        RuleFor(a => a.AccountType)
-            .NotEmpty()
-            .MinimumLength(1)
-            .MaximumLength(32);
-        
-        RuleFor(a => a.AccountType)
-            .NotEmpty()
-            .MinimumLength(1)
-            .MaximumLength(16);
-        
-        RuleFor(a => a.ParentCode)
-            .NotEmpty()
-            .MinimumLength(1)
-            .MaximumLength(16);
-        
-        RuleFor(a => a.AccountCode)
-            .NotEmpty()
-            .MinimumLength(1)
-            .MaximumLength(16);
-        
-        RuleFor(a => a.Balance)
-            .GreaterThanOrEqualTo(0);
+            RuleFor(a => a.AccountName)
+                .MaximumLength(1024)
+                .When(x => !string.IsNullOrEmpty(x.AccountName));
+
+            RuleFor(a => a.AccountType)
+                .MaximumLength(32)
+                .When(x => !string.IsNullOrEmpty(x.AccountType));
+
+            RuleFor(a => a.UsoaCategory)
+                .MaximumLength(16)
+                .When(x => !string.IsNullOrEmpty(x.UsoaCategory));
+
+            RuleFor(a => a.ParentCode)
+                .MaximumLength(16)
+                .When(x => !string.IsNullOrEmpty(x.ParentCode));
+
+            RuleFor(a => a.AccountCode)
+                .NotEmpty()
+                .MinimumLength(2)
+                .MaximumLength(16);
+
+            RuleFor(a => a.Balance)
+                .GreaterThanOrEqualTo(0);
     }
 }

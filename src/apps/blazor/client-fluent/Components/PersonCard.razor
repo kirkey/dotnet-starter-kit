@@ -1,0 +1,43 @@
+@inherits PersonCardComponent
+
+<FluentCard Class="person-card">
+    <FluentStack Orientation="Orientation.Horizontal" 
+                 VerticalAlignment="VerticalAlignment.Center"
+                 Class="person-card-content">
+        @if (string.IsNullOrEmpty(ImageUri))
+        {
+            <FluentPersona ImageInitials="@(FullName?.ToUpper().FirstOrDefault().ToString() ?? "U")"
+                          Status="PresenceStatus.Available"
+                          StatusSize="PresenceBadgeSize.Small" />
+        }
+        else
+        {
+            <FluentPersona ImageSrc="@ImageUri"
+                          Status="PresenceStatus.Available"
+                          StatusSize="PresenceBadgeSize.Small" />
+        }
+        
+        <FluentStack Orientation="Orientation.Vertical" Class="person-info">
+            <FluentLabel Typo="Typography.Body" Weight="FontWeight.Bold">@FullName</FluentLabel>
+            <FluentLabel Typo="Typography.Body" Color="Color.Neutral">@Email</FluentLabel>
+        </FluentStack>
+    </FluentStack>
+</FluentCard>
+
+<style>
+    .person-card {
+        background: var(--neutral-layer-2);
+        border: none;
+        margin-bottom: 8px;
+    }
+    
+    .person-card-content {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .person-info {
+        gap: 4px;
+        flex: 1;
+    }
+</style>

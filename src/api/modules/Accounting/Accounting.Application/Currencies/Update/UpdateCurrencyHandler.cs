@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.Currencies.Update;
 
 public sealed class UpdateCurrencyHandler(
-    [FromKeyedServices("accounting")] IRepository<Currency> repository)
+    [FromKeyedServices("accounting:currencies")] IRepository<Currency> repository)
     : IRequestHandler<UpdateCurrencyRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateCurrencyRequest request, CancellationToken cancellationToken)

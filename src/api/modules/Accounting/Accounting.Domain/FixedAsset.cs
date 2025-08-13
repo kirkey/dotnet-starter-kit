@@ -39,6 +39,11 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
 
     private readonly List<DepreciationEntry> _depreciationEntries = new();
     public IReadOnlyCollection<DepreciationEntry> DepreciationEntries => _depreciationEntries.AsReadOnly();
+    
+    private FixedAsset()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private FixedAsset(string assetName, DateTime purchaseDate, decimal purchasePrice,
         DefaultIdType depreciationMethodId, int serviceLife, decimal salvageValue,

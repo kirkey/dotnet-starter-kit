@@ -1,0 +1,145 @@
+@page "/login"
+@attribute [AllowAnonymous]
+@inherits LoginComponent
+@inject IAuthenticationService authService
+
+<PageTitle>Login</PageTitle>
+
+<FluentStack Orientation="Orientation.Vertical" 
+             HorizontalAlignment="HorizontalAlignment.Center"
+             VerticalAlignment="VerticalAlignment.Center"
+             Class="login-container">
+    
+    <FluentCard Class="login-card">
+        <FluentStack Orientation="Orientation.Vertical" Class="login-content">
+            <FluentStack Orientation="Orientation.Vertical" 
+                        HorizontalAlignment="HorizontalAlignment.Center"
+                        Class="login-header">
+                <FluentIcon Value="@(new Icons.Regular.Size48.Person())" Color="Color.Accent" />
+                <FluentLabel Typo="Typography.H4">Sign In</FluentLabel>
+                <FluentLabel Typo="Typography.Body" Color="Color.Neutral">
+                    Enter your credentials to get started.
+                </FluentLabel>
+            </FluentStack>
+
+            <EditForm Model="@_tokenRequest" OnValidSubmit="SubmitAsync">
+                <FluentStack Orientation="Orientation.Vertical" Class="login-form">
+                    <DataAnnotationsValidator />
+                    <FshValidation @ref="_customValidation" />
+                    
+                    <FluentTextField @bind-Value="_tokenRequest.Email" 
+                                    Label="Email"
+                                    Placeholder="Enter your email"
+                                    Required="true"
+                                    Class="login-field" />
+                    
+                    <FluentTextField @bind-Value="_tokenRequest.Password"
+                                    Label="Password"
+                                    Placeholder="Enter your password"
+                                    TextFieldType="@(_showPassword ? TextFieldType.Text : TextFieldType.Password)"
+                                    Required="true"
+                                    Class="login-field">
+                        <FluentIcon Value="@(_showPassword ? new Icons.Regular.Size16.EyeOff() : new Icons.Regular.Size16.Eye())"
+                                   slot="end"
+                                   @onclick="TogglePasswordVisibility"
+                                   style="cursor: pointer;" />
+                    </FluentTextField>
+                    
+                    <FluentTextField @bind-Value="TenantId"
+                                    Label="Tenant"
+                                    Placeholder="Enter tenant ID"
+                                    Required="true"
+                                    Class="login-field" />
+
+                    <FluentStack Orientation="Orientation.Horizontal" 
+                                HorizontalAlignment="HorizontalAlignment.Start"
+                                Class="login-links">
+                        <FluentAnchor Href="/register">
+                            <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+                                <FluentIcon Value="@(new Icons.Regular.Size16.PersonAdd())" />
+                                <FluentLabel>Register</FluentLabel>
+                            </FluentStack>
+                        </FluentAnchor>
+                        <FluentAnchor Href="/forgot-password">
+                            <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+                                <FluentIcon Value="@(new Icons.Regular.Size16.Key())" />
+                                <FluentLabel>Forgot password?</FluentLabel>
+                            </FluentStack>
+                        </FluentAnchor>
+                    </FluentStack>
+
+                    <FluentButton Type="ButtonType.Submit"
+                                 Appearance="Appearance.Accent"
+                                 Loading="@BusySubmitting"
+                                 IconStart="@(new Icons.Regular.Size16.ArrowEnter())"
+                                 Class="login-button">
+                        Sign In
+                    </FluentButton>
+
+                    <FluentButton Appearance="Appearance.Stealth"
+                                 IconStart="@(new Icons.Regular.Size16.Key())"
+                                 OnClick="FillAdministratorCredentials"
+                                 Class="admin-button">
+                        Fill Administrator Credentials
+                    </FluentButton>
+                </FluentStack>
+            </EditForm>
+        </FluentStack>
+    </FluentCard>
+</FluentStack>
+
+<style>
+    .login-container {
+        height: 100vh;
+        background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 400px;
+        padding: 0;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .login-content {
+        padding: 32px;
+        gap: 24px;
+    }
+
+    .login-header {
+        gap: 12px;
+        text-align: center;
+    }
+
+    .login-form {
+        gap: 16px;
+    }
+
+    .login-field {
+        width: 100%;
+    }
+
+    .login-links {
+        margin: 8px 0;
+    }
+
+    .login-links a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .login-links a:hover {
+        color: #106ebe;
+    }
+
+    .login-button {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .admin-button {
+        width: 100%;
+        margin-top: 8px;
+    }
+</style>

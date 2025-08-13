@@ -19,8 +19,22 @@ public sealed class AccountingDbContext(
     publisher,
     settings)
 {
+    public DbSet<AccountingPeriod> AccountingPeriods { get; set; } = null!;
+    public DbSet<Budget> Budgets { get; set; } = null!;
     public DbSet<ChartOfAccount> ChartOfAccounts { get; set; } = null!;
+    public DbSet<ConsumptionData> ConsumptionData { get; set; } = null!;
+    public DbSet<Currency> Currencies { get; set; } = null!;
+    public DbSet<Customer> Customers { get; set; } = null!;
+    public DbSet<DepreciationMethod> DepreciationMethods { get; set; } = null!;
+    public DbSet<FixedAsset> FixedAssets { get; set; } = null!;
+    public DbSet<FuelConsumption> FuelConsumptions { get; set; } = null!;
+    public DbSet<GeneralLedger> GeneralLedgers { get; set; } = null!;
+    public DbSet<Invoice> Invoices { get; set; } = null!;
+    public DbSet<JournalEntry> JournalEntries { get; set; } = null!;
+    public DbSet<Member> Members { get; set; } = null!;
+    public DbSet<Meter> Meters { get; set; } = null!;
     public DbSet<Payee> Payees { get; set; } = null!;
+    public DbSet<Project> Projects { get; set; } = null!;
     public DbSet<Vendor> Vendors { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

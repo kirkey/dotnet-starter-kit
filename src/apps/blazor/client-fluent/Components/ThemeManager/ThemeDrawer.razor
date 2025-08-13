@@ -1,0 +1,158 @@
+@namespace FSH.Starter.Blazor.FluentClient.Components.ThemeManager
+
+<FluentStack Orientation="Orientation.Vertical" Class="theme-drawer">
+    <FluentLabel Typo="Typography.H6">Theme Settings</FluentLabel>
+    
+    <FluentStack Orientation="Orientation.Vertical" Class="theme-options">
+        <FluentLabel Typo="Typography.Body">Appearance</FluentLabel>
+        <FluentRadioGroup @bind-Value="_appearanceMode" Class="appearance-options">
+            <FluentRadio Value="DesignThemeModes.System">System</FluentRadio>
+            <FluentRadio Value="DesignThemeModes.Light">Light</FluentRadio>
+            <FluentRadio Value="DesignThemeModes.Dark">Dark</FluentRadio>
+        </FluentRadioGroup>
+        
+        <FluentLabel Typo="Typography.Body">Primary Color</FluentLabel>
+        <FluentStack Orientation="Orientation.Horizontal" Class="color-options">
+            @foreach (var color in _primaryColors)
+            {
+                <FluentButton Appearance="@(color.Value == _selectedPrimaryColor ? Appearance.Accent : Appearance.Stealth)"
+                             Class="color-button"
+                             Style="@($"background-color: {color.Value};")"
+                             OnClick="@(() => SetPrimaryColor(color.Value))"
+                             Title="@color.Name" />
+            }
+        </FluentStack>
+        
+        <FluentLabel Typo="Typography.Body">Accent Color</FluentLabel>
+        <FluentStack Orientation="Orientation.Horizontal" Class="color-options">
+            @foreach (var color in _accentColors)
+            {
+                <FluentButton Appearance="@(color.Value == _selectedAccentColor ? Appearance.Accent : Appearance.Stealth)"
+                             Class="color-button"
+                             Style="@($"background-color: {color.Value};")"
+                             OnClick="@(() => SetAccentColor(color.Value))"
+                             Title="@color.Name" />
+            }
+        </FluentStack>
+        
+        <FluentDivider />
+        
+        <FluentButton Appearance="Appearance.Stealth"
+                     IconStart="@(new Icons.Regular.Size16.ArrowReset())"
+                     OnClick="ResetToDefaults">
+            Reset to Defaults
+        </FluentButton>
+    </FluentStack>
+</FluentStack>
+
+@code {
+    [Inject] private IClientPreferenceManager ClientPreferences { get; set; } = default!;
+    
+    private DesignThemeModes _appearanceMode = DesignThemeModes.System;
+    private string _selectedPrimaryColor = "#0078d4";
+    private string _selectedAccentColor = "#ff6900";
+
+    private readonly List<ColorOption> _primaryColors = new()
+    {
+        new("Blue", "#0078d4"),
+        new("Purple", "#8764b8"),
+        new("Green", "#107c10"),
+        new("Orange", "#ff8c00"),
+        new("Red", "#d13438"),
+        new("Teal", "#008575")
+    };
+
+    private readonly List<ColorOption> _accentColors = new()
+    {
+        new("Orange", "#ff6900"),
+        new("Yellow", "#ffd700"),
+        new("Pink", "#e3008c"),
+        new("Cyan", "#00bcf2"),
+        new("Lime", "#bad80a"),
+        new("Magenta", "#bf0077")
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        var preference = await ClientPreferences.GetPreference();
+        if (preference != null)
+        {
+            _appearanceMode = preference.IsDarkMode ? DesignThemeModes.Dark : DesignThemeModes.Light;
+            _selectedPrimaryColor = preference.PrimaryColor ?? "#0078d4";
+            _selectedAccentColor = preference.SecondaryColor ?? "#ff6900";
+        }
+    }
+
+    private async Task SetPrimaryColor(string color)
+    {
+        _selectedPrimaryColor = color;
+        await UpdatePreferences();
+    }
+
+    private async Task SetAccentColor(string color)
+    {
+        _selectedAccentColor = color;
+        await UpdatePreferences();
+    }
+
+    private async Task UpdatePreferences()
+    {
+        var preference = await ClientPreferences.GetPreference();
+        if (preference != null)
+        {
+            preference.PrimaryColor = _selectedPrimaryColor;
+            preference.SecondaryColor = _selectedAccentColor;
+            preference.IsDarkMode = _appearanceMode == DesignThemeModes.Dark;
+            
+            await ClientPreferences.SetPreference(preference);
+            StateHasChanged();
+        }
+    }
+
+    private async Task ResetToDefaults()
+    {
+        _appearanceMode = DesignThemeModes.System;
+        _selectedPrimaryColor = "#0078d4";
+        _selectedAccentColor = "#ff6900";
+        await UpdatePreferences();
+    }
+
+    private record ColorOption(string Name, string Value);
+}
+
+<style>
+    .theme-drawer {
+        padding: 16px;
+        gap: 16px;
+        background: var(--neutral-layer-2);
+        border-left: 1px solid var(--neutral-stroke-divider);
+        min-width: 280px;
+    }
+
+    .theme-options {
+        gap: 12px;
+    }
+
+    .appearance-options {
+        gap: 8px;
+    }
+
+    .color-options {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .color-button {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid var(--neutral-stroke-divider);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .color-button:hover {
+        transform: scale(1.1);
+        box-shadow: var(--elevation-shadow-8);
+    }
+</style>

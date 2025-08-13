@@ -14,19 +14,23 @@ public class ChartOfAccountConfiguration : IEntityTypeConfiguration<ChartOfAccou
         builder.HasKey(x => x.Id);
 
         builder.HasIndex(x => x.AccountCode).IsUnique();
-        
-        builder.Property(x => x.AccountType)
-            .HasMaxLength(32)
-            .IsRequired();
-        
-        builder.Property(x => x.ParentCode)
-            .HasMaxLength(16)
-            .IsRequired();
-        
+
         builder.Property(x => x.AccountCode)
             .HasMaxLength(16)
             .IsRequired();
-        
+
+        builder.Property(x => x.AccountType)
+            .HasMaxLength(32)
+            .IsRequired();
+
+        builder.Property(x => x.ParentCode)
+            .HasMaxLength(16)
+            .IsRequired();
+
+        builder.Property(x => x.UsoaCategory)
+            .HasMaxLength(16)
+            .IsRequired();
+
         builder.Property(x => x.Balance)
             .HasPrecision(18, 2)
             .IsRequired();

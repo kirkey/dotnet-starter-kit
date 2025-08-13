@@ -14,6 +14,11 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
     public int FiscalYear { get; private set; }
     public string PeriodType { get; private set; } // Monthly, Quarterly, Yearly
 
+    // Parameterless constructor for EF Core
+    private AccountingPeriod()
+    {
+    }
+
     private AccountingPeriod(string periodName, DateTime startDate, DateTime endDate,
         int fiscalYear, string periodType, bool isAdjustmentPeriod = false, string? description = null, string? notes = null)
     {

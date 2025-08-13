@@ -19,6 +19,11 @@ public class FuelConsumption : AuditableEntity, IAggregateRoot
     public decimal? SulfurContent { get; private set; } // For environmental reporting
     public string? DeliveryMethod { get; private set; } // "Pipeline", "Truck", "Rail", "Barge"
     public bool IsEmergencyFuel { get; private set; }
+    
+    private FuelConsumption()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private FuelConsumption(DateTime consumptionDate, DefaultIdType powerPlantId,
         string fuelType, decimal quantity, string quantityUnit, decimal unitCost,

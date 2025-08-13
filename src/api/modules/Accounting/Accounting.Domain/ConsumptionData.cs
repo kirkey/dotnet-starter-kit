@@ -17,6 +17,11 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
     public decimal? Multiplier { get; private set; } // For CT/PT ratios
     public bool IsValidReading { get; private set; }
     public string? ReadingSource { get; private set; } // "AMR", "Manual", "AMI"
+    
+    private ConsumptionData()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private ConsumptionData(DefaultIdType meterId, DateTime readingDate,
         decimal currentReading, decimal previousReading, string billingPeriod,

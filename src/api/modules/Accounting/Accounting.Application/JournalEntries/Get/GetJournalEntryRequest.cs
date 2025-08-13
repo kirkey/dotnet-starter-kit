@@ -3,4 +3,12 @@ using Accounting.Application.JournalEntries.Dtos;
 
 namespace Accounting.Application.JournalEntries.Get;
 
-public record GetJournalEntryRequest(DefaultIdType Id) : IRequest<JournalEntryDto>;
+public class GetJournalEntryRequest : IRequest<JournalEntryDto>
+{
+    public DefaultIdType Id { get; set; }
+
+    public GetJournalEntryRequest(DefaultIdType id)
+    {
+        Id = id;
+    }
+}

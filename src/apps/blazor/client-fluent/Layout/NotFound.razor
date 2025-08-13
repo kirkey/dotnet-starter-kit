@@ -1,0 +1,23 @@
+<PageTitle>Not found</PageTitle>
+
+<FluentStack Orientation="Orientation.Vertical" 
+             HorizontalAlignment="HorizontalAlignment.Center"
+             VerticalAlignment="VerticalAlignment.Center"
+             Class="not-found-container">
+    <FluentIcon Value="@(new Icons.Regular.Size48.QuestionCircle())" Color="Color.Neutral" />
+    <FluentLabel Typo="Typography.H3">Page Not Found</FluentLabel>
+    <FluentLabel Typo="Typography.Body">Sorry, we can't find the page you're looking for.</FluentLabel>
+    <FluentButton Appearance="Appearance.Accent" 
+                  Href="/"
+                  IconStart="@(new Icons.Regular.Size16.Home())">
+        Go Home
+    </FluentButton>
+</FluentStack>
+
+<style>
+    .not-found-container {
+        height: 60vh;
+        text-align: center;
+        gap: 16px;
+    }
+</style>

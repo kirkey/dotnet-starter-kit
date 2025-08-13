@@ -24,6 +24,11 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     public bool IsUsoaCompliant { get; private set; }
     public string? RegulatoryClassification { get; private set; } // FERC classification
     
+    // Parameterless constructor for EF Core
+    private ChartOfAccount()
+    {
+    }
+    
     private ChartOfAccount(string accountCode, string accountName, string accountType, 
         string usoaCategory, DefaultIdType? subAccountOf = null, string? parentCode = null,
         decimal balance = 0, bool isControlAccount = false, string normalBalance = "Debit",

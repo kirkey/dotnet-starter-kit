@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.Budgets.Create;
 
 public sealed class CreateBudgetHandler(
-    [FromKeyedServices("accounting")] IRepository<Budget> repository)
+    [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)
     : IRequestHandler<CreateBudgetRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(CreateBudgetRequest request, CancellationToken cancellationToken)

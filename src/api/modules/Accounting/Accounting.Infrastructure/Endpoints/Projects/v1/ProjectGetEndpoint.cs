@@ -1,0 +1,30 @@
+using Accounting.Application.Projects.Dtos;
+using Accounting.Application.Projects.Get;
+using FSH.Framework.Infrastructure.Auth.Policy;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace Accounting.Infrastructure.Endpoints.Projects.v1;
+
+public static class ProjectGetEndpoint
+{
+    internal static RouteHandlerBuilder MapProjectGetEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator.Send(new GetProjectRequest(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(ProjectGetEndpoint))
+            .WithSummary("get a project by id")
+            .WithDescription("get a project by id")
+            .Produces<ProjectDto>()
+            .RequirePermission("Permissions.Accounting.View")
+            .MapToApiVersion(1);
+    }
+}
+
+

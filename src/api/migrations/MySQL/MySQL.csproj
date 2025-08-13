@@ -24,4 +24,8 @@
       <ProjectReference Include="..\..\modules\Todo\Todo.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Accounting\" />
+    </ItemGroup>
+
 </Project>

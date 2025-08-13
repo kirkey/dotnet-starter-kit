@@ -1,4 +1,3 @@
-using Accounting.Application.Currencies.Dtos;
 using Accounting.Application.Projects.Dtos;
 using Accounting.Domain;
 using Ardalis.Specification;

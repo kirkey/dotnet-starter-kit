@@ -2,4 +2,12 @@ using MediatR;
 
 namespace Accounting.Application.JournalEntries.Delete;
 
-public record DeleteJournalEntryRequest(DefaultIdType Id) : IRequest;
+public class DeleteJournalEntryRequest : IRequest
+{
+    public DefaultIdType Id { get; set; }
+
+    public DeleteJournalEntryRequest(DefaultIdType id)
+    {
+        Id = id;
+    }
+}

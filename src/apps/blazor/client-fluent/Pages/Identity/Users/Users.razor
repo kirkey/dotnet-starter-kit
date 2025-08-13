@@ -1,0 +1,191 @@
+@page "/identity/users"
+@inherits UsersComponent
+
+<PageHeader Title="Users" SubTitle="Manage Users.">
+    <Actions>
+        <FluentButton Appearance="Appearance.Accent"
+                     IconStart="@(new Icons.Regular.Size16.PersonAdd())"
+                     OnClick="OpenCreateDialog">
+            Add User
+        </FluentButton>
+    </Actions>
+</PageHeader>
+
+<FluentCard>
+    <FluentStack Orientation="Orientation.Vertical" Class="users-container">
+        @* Search and Filter Section *@
+        <FluentStack Orientation="Orientation.Horizontal" Class="search-section">
+            <FluentSearch @bind-Value="@_searchString"
+                         @onkeyup="OnSearchChanged"
+                         Placeholder="Search users..."
+                         Class="search-input" />
+            <FluentButton Appearance="Appearance.Stealth"
+                         IconStart="@(new Icons.Regular.Size16.ArrowSync())"
+                         OnClick="RefreshData">
+                Refresh
+            </FluentButton>
+        </FluentStack>
+
+        @* Users Data Grid *@
+        <FluentDataGrid Items="@_users" 
+                       Loading="@_loading"
+                       Pagination="@_pagination"
+                       Class="users-grid">
+            <PropertyColumn Property="@(u => u.UserName)" Title="User Name" Sortable="true" />
+            <PropertyColumn Property="@(u => u.FirstName)" Title="First Name" Sortable="true" />
+            <PropertyColumn Property="@(u => u.LastName)" Title="Last Name" Sortable="true" />
+            <PropertyColumn Property="@(u => u.Email)" Title="Email" Sortable="true" />
+            <PropertyColumn Property="@(u => u.PhoneNumber)" Title="Phone" />
+            <PropertyColumn Property="@(u => u.IsActive)" Title="Status">
+                <ColumnOptions>
+                    <div data-grid-cell>
+                        <FluentBadge Appearance="@(context.IsActive ? Appearance.Accent : Appearance.Neutral)">
+                            @(context.IsActive ? "Active" : "Inactive")
+                        </FluentBadge>
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+            <TemplateColumn Title="Actions" Align="Align.Center">
+                <div data-grid-cell>
+                    <FluentStack Orientation="Orientation.Horizontal">
+                        <FluentButton Appearance="Appearance.Stealth"
+                                     IconStart="@(new Icons.Regular.Size16.Eye())"
+                                     OnClick="@(() => ViewProfile(context.Id))"
+                                     Title="View Profile" />
+                        <FluentButton Appearance="Appearance.Stealth"
+                                     IconStart="@(new Icons.Regular.Size16.Edit())"
+                                     OnClick="@(() => EditUser(context))"
+                                     Title="Edit User" />
+                        @if (_canViewRoles)
+                        {
+                            <FluentButton Appearance="Appearance.Stealth"
+                                         IconStart="@(new Icons.Regular.Size16.Person())"
+                                         OnClick="@(() => ManageRoles(context.Id))"
+                                         Title="Manage Roles" />
+                        }
+                        @if (_canViewAuditTrails)
+                        {
+                            <FluentButton Appearance="Appearance.Stealth"
+                                         IconStart="@(new Icons.Regular.Size16.History())"
+                                         OnClick="@(() => ViewAuditTrails(context.Id))"
+                                         Title="View Audit Trails" />
+                        }
+                        <FluentButton Appearance="Appearance.Stealth"
+                                     IconStart="@(new Icons.Regular.Size16.Delete())"
+                                     OnClick="@(() => DeleteUser(context))"
+                                     Title="Delete User"
+                                     Style="color: #d13438;" />
+                    </FluentStack>
+                </div>
+            </TemplateColumn>
+        </FluentDataGrid>
+
+        @* Pagination *@
+        <FluentPaginator State="@_pagination" />
+    </FluentStack>
+</FluentCard>
+
+@* Create/Edit User Dialog *@
+<FluentDialog @bind-Hidden="@_dialogHidden" Modal="true" Class="user-dialog">
+    <FluentDialogHeader>
+        <FluentLabel Typo="Typography.H4">
+            @(_editingUser != null ? "Edit User" : "Create User")
+        </FluentLabel>
+    </FluentDialogHeader>
+    <FluentDialogBody>
+        <EditForm Model="@_userModel" OnValidSubmit="SaveUser">
+            <DataAnnotationsValidator />
+            <FluentValidationSummary />
+            
+            <FluentStack Orientation="Orientation.Vertical" Class="user-form">
+                <FluentTextField @bind-Value="_userModel.UserName"
+                                Label="User Name"
+                                Required="true"
+                                Class="form-field" />
+                
+                <FluentStack Orientation="Orientation.Horizontal">
+                    <FluentTextField @bind-Value="_userModel.FirstName"
+                                    Label="First Name"
+                                    Required="true"
+                                    Class="form-field" />
+                    <FluentTextField @bind-Value="_userModel.LastName"
+                                    Label="Last Name"
+                                    Required="true"
+                                    Class="form-field" />
+                </FluentStack>
+                
+                <FluentTextField @bind-Value="_userModel.Email"
+                                Label="Email"
+                                TextFieldType="TextFieldType.Email"
+                                Required="true"
+                                Class="form-field" />
+                
+                <FluentTextField @bind-Value="_userModel.PhoneNumber"
+                                Label="Phone Number"
+                                Class="form-field" />
+                
+                @if (_editingUser == null)
+                {
+                    <FluentTextField @bind-Value="_userModel.Password"
+                                    Label="Password"
+                                    TextFieldType="@(_showPassword ? TextFieldType.Text : TextFieldType.Password)"
+                                    Required="true"
+                                    Class="form-field">
+                        <FluentIcon Value="@(_showPassword ? new Icons.Regular.Size16.EyeOff() : new Icons.Regular.Size16.Eye())"
+                                   slot="end"
+                                   @onclick="TogglePasswordVisibility"
+                                   style="cursor: pointer;" />
+                    </FluentTextField>
+                    
+                    <FluentTextField @bind-Value="_userModel.ConfirmPassword"
+                                    Label="Confirm Password"
+                                    TextFieldType="TextFieldType.Password"
+                                    Required="true"
+                                    Class="form-field" />
+                }
+            </FluentStack>
+        </EditForm>
+    </FluentDialogBody>
+    <FluentDialogFooter>
+        <FluentButton Appearance="Appearance.Neutral"
+                     OnClick="CloseDialog">
+            Cancel
+        </FluentButton>
+        <FluentButton Appearance="Appearance.Accent"
+                     OnClick="SaveUser"
+                     Loading="@_saving">
+            @(_editingUser != null ? "Update" : "Create")
+        </FluentButton>
+    </FluentDialogFooter>
+</FluentDialog>
+
+<style>
+    .users-container {
+        gap: 16px;
+    }
+
+    .search-section {
+        gap: 16px;
+        align-items: center;
+    }
+
+    .search-input {
+        min-width: 300px;
+    }
+
+    .users-grid {
+        min-height: 400px;
+    }
+
+    .user-dialog {
+        min-width: 500px;
+    }
+
+    .user-form {
+        gap: 16px;
+    }
+
+    .form-field {
+        width: 100%;
+    }
+</style>

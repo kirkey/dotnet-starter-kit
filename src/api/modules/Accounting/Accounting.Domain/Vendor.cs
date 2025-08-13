@@ -7,7 +7,7 @@ namespace Accounting.Domain;
 
 public class Vendor : AuditableEntity, IAggregateRoot
 {
-    public string VendorCode { get; private set; }
+    public string VendorCode { get; private set; } = null!;
     public string? Address { get; private set; }
     public string? BillingAddress { get; private set; }
     public string? ContactPerson { get; private set; }
@@ -18,6 +18,12 @@ public class Vendor : AuditableEntity, IAggregateRoot
     public string? Tin { get; private set; }
     public string? PhoneNumber { get; private set; }
     public bool IsActive { get; private set; }
+
+    // Parameterless constructor for EF Core
+    private Vendor()
+    {
+        VendorCode = string.Empty;
+    }
 
     private Vendor(string vendorCode, string name, string? address, string? billingAddress, 
         string? contactPerson, string? email, string? terms, string? expenseAccountCode, string? expenseAccountName, 

@@ -1,4 +1,3 @@
-using Accounting.Application.Currencies.Dtos;
 using Accounting.Application.DepreciationMethods.Dtos;
 using Accounting.Domain;
 using Ardalis.Specification;

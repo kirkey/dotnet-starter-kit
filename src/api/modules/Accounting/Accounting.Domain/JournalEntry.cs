@@ -18,6 +18,12 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     
     private readonly List<JournalEntryLine> _lines = new();
     public IReadOnlyCollection<JournalEntryLine> Lines => _lines.AsReadOnly();
+    
+    
+    private JournalEntry()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private JournalEntry(DateTime date, string referenceNumber, string description, string source,
         DefaultIdType? periodId = null, DefaultIdType? currencyId = null, decimal exchangeRate = 1.0m, decimal originalAmount = 0)

@@ -20,6 +20,12 @@ public class Customer : AuditableEntity, IAggregateRoot
     public bool IsActive { get; private set; }
     public decimal CreditLimit { get; private set; }
     public decimal CurrentBalance { get; private set; }
+    
+    private Customer()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
+
 
     private Customer(string customerCode, string name, string? address, string? billingAddress,
         string? contactPerson, string? email, string? terms, string? revenueAccountCode, string? revenueAccountName,

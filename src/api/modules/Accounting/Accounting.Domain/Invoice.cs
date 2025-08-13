@@ -30,6 +30,11 @@ public class Invoice : AuditableEntity, IAggregateRoot
 
     private readonly List<InvoiceLineItem> _lineItems = new();
     public IReadOnlyCollection<InvoiceLineItem> LineItems => _lineItems.AsReadOnly();
+    
+    private Invoice()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private Invoice(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
         DateTime dueDate, DefaultIdType? consumptionDataId, decimal usageCharge, decimal basicServiceCharge,

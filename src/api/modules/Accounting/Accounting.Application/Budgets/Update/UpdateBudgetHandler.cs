@@ -1,5 +1,4 @@
 using Accounting.Domain;
-using Accounting.Application.Budgets.Exceptions;
 using Accounting.Domain.Exceptions;
 using FSH.Framework.Core.Persistence;
 using MediatR;
@@ -8,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.Budgets.Update;
 
 public sealed class UpdateBudgetHandler(
-    [FromKeyedServices("accounting")] IRepository<Budget> repository)
+    [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)
     : IRequestHandler<UpdateBudgetRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateBudgetRequest request, CancellationToken cancellationToken)

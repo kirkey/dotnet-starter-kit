@@ -16,6 +16,13 @@ public class CustomerCodeAlreadyExistsException : ForbiddenException
     }
 }
 
+public class CustomerNameAlreadyExistsException : ForbiddenException
+{
+    public CustomerNameAlreadyExistsException(string name) : base($"Customer with name '{name}' already exists.")
+    {
+    }
+}
+
 public class InvalidCreditLimitException : ForbiddenException
 {
     public InvalidCreditLimitException() : base("Credit limit must be greater than or equal to zero.")

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.JournalEntries.Create;
 
 public sealed class CreateJournalEntryHandler(
-    [FromKeyedServices("accounting")] IRepository<JournalEntry> repository)
+    [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
     : IRequestHandler<CreateJournalEntryRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(CreateJournalEntryRequest request, CancellationToken cancellationToken)

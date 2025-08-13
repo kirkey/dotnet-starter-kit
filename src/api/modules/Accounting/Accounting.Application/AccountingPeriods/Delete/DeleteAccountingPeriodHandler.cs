@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.AccountingPeriods.Delete;
 
 public sealed class DeleteAccountingPeriodHandler(
-    [FromKeyedServices("accounting")] IRepository<AccountingPeriod> repository)
+    [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)
     : IRequestHandler<DeleteAccountingPeriodRequest>
 {
     public async Task Handle(DeleteAccountingPeriodRequest request, CancellationToken cancellationToken)

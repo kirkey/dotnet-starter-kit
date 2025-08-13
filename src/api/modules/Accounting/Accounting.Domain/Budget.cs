@@ -19,6 +19,11 @@ public class Budget : AuditableEntity, IAggregateRoot
     private readonly List<BudgetLine> _budgetLines = new();
     public IReadOnlyCollection<BudgetLine> BudgetLines => _budgetLines.AsReadOnly();
 
+    // Parameterless constructor for EF Core
+    private Budget()
+    {
+    }
+
     private Budget(string budgetName, DefaultIdType periodId, int fiscalYear, string budgetType, string? description = null, string? notes = null)
     {
         Name = budgetName.Trim();

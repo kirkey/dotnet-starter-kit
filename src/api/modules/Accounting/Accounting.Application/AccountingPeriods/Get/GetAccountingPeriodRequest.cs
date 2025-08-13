@@ -3,4 +3,12 @@ using Accounting.Application.AccountingPeriods.Dtos;
 
 namespace Accounting.Application.AccountingPeriods.Get;
 
-public record GetAccountingPeriodRequest(DefaultIdType Id) : IRequest<AccountingPeriodDto>;
+public class GetAccountingPeriodRequest : IRequest<AccountingPeriodDto>
+{
+    public DefaultIdType Id { get; set; }
+
+    public GetAccountingPeriodRequest(DefaultIdType id)
+    {
+        Id = id;
+    }
+}

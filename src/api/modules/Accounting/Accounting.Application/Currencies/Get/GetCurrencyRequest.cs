@@ -3,4 +3,12 @@ using Accounting.Application.Currencies.Dtos;
 
 namespace Accounting.Application.Currencies.Get;
 
-public record GetCurrencyRequest(DefaultIdType Id) : IRequest<CurrencyDto>;
+public class GetCurrencyRequest : IRequest<CurrencyDto>
+{
+    public DefaultIdType Id { get; set; }
+
+    public GetCurrencyRequest(DefaultIdType id)
+    {
+        Id = id;
+    }
+}

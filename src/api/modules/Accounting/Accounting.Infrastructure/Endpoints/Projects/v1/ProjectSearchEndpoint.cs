@@ -1,0 +1,32 @@
+using Accounting.Application.Projects.Dtos;
+using Accounting.Application.Projects.Search;
+using FSH.Framework.Core.Paging;
+using FSH.Framework.Infrastructure.Auth.Policy;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+
+namespace Accounting.Infrastructure.Endpoints.Projects.v1;
+
+public static class ProjectSearchEndpoint
+{
+    internal static RouteHandlerBuilder MapProjectSearchEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchProjectsRequest command) =>
+            {
+                var response = await mediator.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(ProjectSearchEndpoint))
+            .WithSummary("Gets a list of projects")
+            .WithDescription("Gets a list of projects with pagination and filtering support")
+            .Produces<PagedList<ProjectDto>>()
+            .RequirePermission("Permissions.Accounting.View")
+            .MapToApiVersion(1);
+    }
+}
+
+

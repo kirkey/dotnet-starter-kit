@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.FixedAssets.Delete;
 
 public sealed class DeleteFixedAssetHandler(
-    [FromKeyedServices("accounting")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
     : IRequestHandler<DeleteFixedAssetRequest>
 {
     public async Task Handle(DeleteFixedAssetRequest request, CancellationToken cancellationToken)

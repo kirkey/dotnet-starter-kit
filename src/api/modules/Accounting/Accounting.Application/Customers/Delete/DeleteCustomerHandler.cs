@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.Customers.Delete;
 
 public sealed class DeleteCustomerHandler(
-    [FromKeyedServices("accounting")] IRepository<Customer> repository)
+    [FromKeyedServices("accounting:customers")] IRepository<Customer> repository)
     : IRequestHandler<DeleteCustomerRequest>
 {
     public async Task Handle(DeleteCustomerRequest request, CancellationToken cancellationToken)

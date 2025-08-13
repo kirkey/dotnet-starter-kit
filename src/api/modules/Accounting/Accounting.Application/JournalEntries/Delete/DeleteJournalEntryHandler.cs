@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.JournalEntries.Delete;
 
 public sealed class DeleteJournalEntryHandler(
-    [FromKeyedServices("accounting")] IRepository<JournalEntry> repository)
+    [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
     : IRequestHandler<DeleteJournalEntryRequest>
 {
     public async Task Handle(DeleteJournalEntryRequest request, CancellationToken cancellationToken)

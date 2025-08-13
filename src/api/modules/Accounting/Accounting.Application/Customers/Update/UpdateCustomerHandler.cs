@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Accounting.Application.Customers.Update;
 
 public sealed class UpdateCustomerHandler(
-    [FromKeyedServices("accounting")] IRepository<Customer> repository)
+    [FromKeyedServices("accounting:customers")] IRepository<Customer> repository)
     : IRequestHandler<UpdateCustomerRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateCustomerRequest request, CancellationToken cancellationToken)

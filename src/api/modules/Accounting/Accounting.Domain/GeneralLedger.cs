@@ -16,6 +16,11 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
     public DateTime TransactionDate { get; private set; }
     public string? ReferenceNumber { get; private set; }
     public DefaultIdType? PeriodId { get; private set; }
+    
+    private GeneralLedger()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+    }
 
     private GeneralLedger(DefaultIdType entryId, DefaultIdType accountId,
         decimal debit, decimal credit, string usoaClass, DateTime transactionDate,
