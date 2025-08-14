@@ -3,6 +3,7 @@ using Accounting.Application.Customers.Dtos;
 using Accounting.Application.Customers.Exceptions;
 using FSH.Framework.Core.Caching;
 using FSH.Framework.Core.Persistence;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,24 +24,7 @@ public sealed class GetCustomerHandler(
             {
                 var customer = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (customer == null) throw new CustomerNotFoundException(request.Id);
-                return new CustomerDto(
-                    customer.Id,
-                    customer.CustomerCode,
-                    customer.Name!,
-                    customer.Address,
-                    customer.BillingAddress,
-                    customer.ContactPerson,
-                    customer.Email,
-                    customer.Terms,
-                    customer.RevenueAccountCode,
-                    customer.RevenueAccountName,
-                    customer.Tin,
-                    customer.PhoneNumber,
-                    customer.IsActive,
-                    customer.CreditLimit,
-                    customer.CurrentBalance,
-                    customer.Description,
-                    customer.Notes);
+                return customer.Adapt<CustomerDto>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

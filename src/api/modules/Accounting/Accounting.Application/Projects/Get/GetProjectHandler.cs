@@ -3,6 +3,7 @@ using Accounting.Application.Projects.Dtos;
 using Accounting.Application.Projects.Exceptions;
 using FSH.Framework.Core.Caching;
 using FSH.Framework.Core.Persistence;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,20 +24,7 @@ public sealed class GetProjectHandler(
             {
                 var project = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (project == null) throw new ProjectNotFoundException(request.Id);
-                return new ProjectDto(
-                    project.Id,
-                    project.Name!,
-                    project.StartDate,
-                    project.EndDate,
-                    project.BudgetedAmount,
-                    project.Status,
-                    project.ClientName,
-                    project.ProjectManager,
-                    project.Department,
-                    project.ActualCost,
-                    project.ActualRevenue,
-                    project.Description,
-                    project.Notes);
+                return project.Adapt<ProjectDto>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

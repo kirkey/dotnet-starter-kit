@@ -2,6 +2,7 @@ using Accounting.Domain;
 using Accounting.Application.DepreciationMethods.Dtos;
 using Accounting.Application.DepreciationMethods.Exceptions;
 using FSH.Framework.Core.Persistence;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,13 +19,6 @@ public sealed class GetDepreciationMethodHandler(
         var method = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (method == null) throw new DepreciationMethodNotFoundException(request.Id);
 
-        return new DepreciationMethodDto(
-            method.Id,
-            method.MethodCode,
-            method.Name,
-            method.CalculationFormula,
-            method.IsActive,
-            method.Description,
-            method.Notes);
+        return method.Adapt<DepreciationMethodDto>();
     }
 }
