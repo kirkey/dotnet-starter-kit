@@ -1,13 +1,13 @@
-using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Domain;
 using Ardalis.Specification;
+using FSH.Framework.Core.Specifications;
 
 namespace Accounting.Application.ChartOfAccounts.Queries;
 
-public sealed class ChartOfAccountByCodeSpec :
-    Specification<ChartOfAccount, ChartOfAccountDto>,
-    ISingleResultSpecification<ChartOfAccount, ChartOfAccountDto>
+public class ChartOfAccountByCodeSpec : Specification<ChartOfAccount>
 {
-    public ChartOfAccountByCodeSpec(string accountCode) =>
-        Query.Where(w => w.AccountCode == accountCode);
+    public ChartOfAccountByCodeSpec(string accountCode)
+    {
+        Query.Where(c => c.AccountCode == accountCode);
+    }
 }

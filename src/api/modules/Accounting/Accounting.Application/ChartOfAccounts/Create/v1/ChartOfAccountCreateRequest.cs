@@ -12,7 +12,7 @@ public class ChartOfAccountCreateRequest : BaseRequest, IRequest<DefaultIdType>
     public DefaultIdType? SubAccountOf { get; set; }
     public string ParentCode { get; set; } = string.Empty;
     public decimal Balance { get; set; } = 0;
-    public bool IsControlAccount { get; set; } = false;
+    public bool IsControlAccount { get; set; }
     public string NormalBalance { get; set; } = "Debit";
     public bool IsUsoaCompliant { get; set; } = true;
     public string? RegulatoryClassification { get; set; }
