@@ -45,8 +45,7 @@ public sealed class ChartOfAccountCreateRequestHandler(
             isUsoaCompliant: request.IsUsoaCompliant,
             regulatoryClassification: request.RegulatoryClassification,
             description: request.Description,
-            notes: request.Notes,
-            currencyId: request.CurrencyId);
+            notes: request.Notes);
 
         await repository.AddAsync(account, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

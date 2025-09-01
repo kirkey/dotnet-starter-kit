@@ -4,7 +4,6 @@ using Accounting.Infrastructure.Endpoints.Payees.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
 using Accounting.Infrastructure.Endpoints.Customers.v1;
 using Accounting.Infrastructure.Endpoints.Projects.v1;
-using Accounting.Infrastructure.Endpoints.Currencies.v1;
 using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 using Accounting.Infrastructure.Endpoints.Budgets.v1;
 using Accounting.Infrastructure.Endpoints.JournalEntries.v1;
@@ -61,13 +60,6 @@ public static class AccountingModule
             projects.MapProjectUpdateEndpoint();
             projects.MapProjectDeleteEndpoint();
 
-            var currency = app.MapGroup("currencies").WithTags("currencies");
-            currency.MapCurrencyCreateEndpoint();
-            currency.MapCurrencyGetEndpoint();
-            currency.MapCurrencySearchEndpoint();
-            currency.MapCurrencyUpdateEndpoint();
-            currency.MapCurrencyDeleteEndpoint();
-
             var periods = app.MapGroup("periods").WithTags("periods");
             periods.MapAccountingPeriodSearchEndpoint();
 
@@ -94,8 +86,6 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
         builder.Services.AddScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>();
         builder.Services.AddScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>();
-        builder.Services.AddScoped<IRepository<Currency>, AccountingRepository<Currency>>();
-        builder.Services.AddScoped<IReadRepository<Currency>, AccountingRepository<Currency>>();
         builder.Services.AddScoped<IRepository<Customer>, AccountingRepository<Customer>>();
         builder.Services.AddScoped<IReadRepository<Customer>, AccountingRepository<Customer>>();
         builder.Services.AddScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>();
@@ -130,8 +120,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting");
-        builder.Services.AddKeyedScoped<IRepository<Currency>, AccountingRepository<Currency>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<Currency>, AccountingRepository<Currency>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting");
@@ -166,8 +154,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
         builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumptiondata");
         builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumptiondata");
-        builder.Services.AddKeyedScoped<IRepository<Currency>, AccountingRepository<Currency>>("accounting:currencies");
-        builder.Services.AddKeyedScoped<IReadRepository<Currency>, AccountingRepository<Currency>>("accounting:currencies");
         builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
         builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
         builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");

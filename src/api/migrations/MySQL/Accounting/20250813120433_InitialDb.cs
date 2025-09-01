@@ -125,7 +125,6 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     AccountLevel = table.Column<int>(type: "int", nullable: false),
                     AllowDirectPosting = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CurrencyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     IsUsoaCompliant = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     RegulatoryClassification = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -571,8 +570,6 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsPosted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PeriodId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    CurrencyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    ExchangeRate = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
                     OriginalAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

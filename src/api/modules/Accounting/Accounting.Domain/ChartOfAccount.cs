@@ -20,7 +20,6 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     public string NormalBalance { get; private set; } // "Debit" or "Credit"
     public int AccountLevel { get; private set; }
     public bool AllowDirectPosting { get; private set; }
-    public DefaultIdType? CurrencyId { get; private set; }
     public bool IsUsoaCompliant { get; private set; }
     public string? RegulatoryClassification { get; private set; } // FERC classification
     
@@ -33,7 +32,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         string usoaCategory, DefaultIdType? subAccountOf = null, string? parentCode = null,
         decimal balance = 0, bool isControlAccount = false, string normalBalance = "Debit",
         bool isUsoaCompliant = true, string? regulatoryClassification = null,
-        string? description = null, string? notes = null, DefaultIdType? currencyId = null)
+        string? description = null, string? notes = null)
     {
         AccountCode = accountCode.Trim();
         AccountName = accountName.Trim();
@@ -48,7 +47,6 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         NormalBalance = normalBalance.Trim();
         AccountLevel = CalculateAccountLevel(parentCode);
         AllowDirectPosting = !isControlAccount;
-        CurrencyId = currencyId;
         IsUsoaCompliant = isUsoaCompliant;
         RegulatoryClassification = regulatoryClassification?.Trim();
         Description = description?.Trim();
@@ -61,7 +59,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         string usoaCategory, DefaultIdType? subAccountOf = null, string? parentCode = null,
         decimal balance = 0, bool isControlAccount = false, string normalBalance = "Debit",
         bool isUsoaCompliant = true, string? regulatoryClassification = null,
-        string? description = null, string? notes = null, DefaultIdType? currencyId = null)
+        string? description = null, string? notes = null)
     {
         if (string.IsNullOrWhiteSpace(accountId))
             throw new ChartOfAccountInvalidException("Account ID cannot be empty");
@@ -77,7 +75,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         return new ChartOfAccount(accountId, accountName, accountType, usoaCategory,
             subAccountOf, parentCode, balance, isControlAccount, normalBalance, isUsoaCompliant, 
-            regulatoryClassification, description, notes, currencyId);
+            regulatoryClassification, description, notes);
     }
 
     public ChartOfAccount Update(string? accountName = null, string? accountType = null, 

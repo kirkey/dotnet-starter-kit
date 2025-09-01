@@ -30,7 +30,10 @@ public sealed class ReconcileAccountCommandHandler(
             new GeneralLedgerByAccountAndDateSpec(request.ChartOfAccountId, request.ReconciliationDate), 
             cancellationToken);
 
-        var accountBalance = ledgerEntries.Sum(le => le.Debit - le.Credit);
+        var accountBalance = ledgerEntries
+            .Select(le => le.Debit - le.Credit)
+            .DefaultIfEmpty(0m)
+            .Aggregate((a, b) => a + b);
 
         // Calculate reconciliation variance
         var variance = request.StatementBalance - accountBalance;

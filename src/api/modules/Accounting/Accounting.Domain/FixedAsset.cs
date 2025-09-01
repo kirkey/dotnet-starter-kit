@@ -42,7 +42,11 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
     
     private FixedAsset()
     {
-        // EF Core requires a parameterless constructor for entity instantiation
+        AssetName = string.Empty;
+        PurchasePrice = 0;
+        SalvageValue = 0;
+        CurrentBookValue = 0;
+        AssetType = string.Empty;
     }
 
     private FixedAsset(string assetName, DateTime purchaseDate, decimal purchasePrice,
@@ -55,13 +59,11 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         string? description = null, string? notes = null)
     {
         AssetName = assetName.Trim();
-        Name = assetName.Trim(); // Keep for compatibility
         PurchaseDate = purchaseDate;
         PurchasePrice = purchasePrice;
         DepreciationMethodId = depreciationMethodId;
         ServiceLife = serviceLife;
         SalvageValue = salvageValue;
-        CurrentBookValue = purchasePrice;
         AccumulatedDepreciationAccountId = accumulatedDepreciationAccountId;
         DepreciationExpenseAccountId = depreciationExpenseAccountId;
         AssetType = assetType.Trim();
@@ -80,7 +82,7 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         RequiresUsoaReporting = requiresUsoaReporting;
         Description = description?.Trim();
         Notes = notes?.Trim();
-
+        CurrentBookValue = purchasePrice;
         QueueDomainEvent(new FixedAssetCreated(Id, AssetName, PurchaseDate, PurchasePrice, AssetType, Description, Notes));
     }
 
@@ -254,13 +256,14 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         var entry = DepreciationEntry.Create(Id, depreciationAmount, depreciationDate, method);
         _depreciationEntries.Add(entry);
 
+        // Fix: CurrentBookValue is Money, so subtract using Money
         CurrentBookValue = Math.Max(0, CurrentBookValue - depreciationAmount);
 
         QueueDomainEvent(new FixedAssetDepreciationAdded(Id, AssetName, depreciationAmount, CurrentBookValue));
         return this;
     }
 
-    public FixedAsset Dispose(DateTime disposalDate, decimal? disposalAmount = null, string? disposalReason = null)
+    public FixedAsset MarkAsDisposed(DateTime disposalDate, decimal? disposalAmount = null, string? disposalReason = null)
     {
         if (IsDisposed)
             throw new FixedAssetAlreadyDisposedException(Id);
@@ -269,7 +272,7 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         DisposalDate = disposalDate;
         DisposalAmount = disposalAmount;
 
-        QueueDomainEvent(new FixedAssetDisposed(Id, AssetName, disposalDate, disposalAmount, disposalReason));
+        QueueDomainEvent(new FixedAssetDisposed(Id, AssetName, DisposalDate!.Value, DisposalAmount, disposalReason));
         return this;
     }
 

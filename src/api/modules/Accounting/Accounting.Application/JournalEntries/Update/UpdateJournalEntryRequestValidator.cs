@@ -17,10 +17,6 @@ public class UpdateJournalEntryRequestValidator : AbstractValidator<UpdateJourna
             .MaximumLength(64)
             .When(x => !string.IsNullOrEmpty(x.Source));
 
-        RuleFor(x => x.ExchangeRate)
-            .GreaterThan(0)
-            .When(x => x.ExchangeRate.HasValue);
-
         RuleFor(x => x.OriginalAmount)
             .GreaterThanOrEqualTo(0)
             .When(x => x.OriginalAmount.HasValue);

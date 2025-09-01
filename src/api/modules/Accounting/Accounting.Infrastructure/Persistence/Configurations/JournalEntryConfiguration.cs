@@ -31,12 +31,6 @@ public class JournalEntryConfiguration : IEntityTypeConfiguration<JournalEntry>
 
         builder.Property(x => x.PeriodId);
 
-        builder.Property(x => x.CurrencyId);
-
-        builder.Property(x => x.ExchangeRate)
-            .HasPrecision(18, 6)
-            .IsRequired();
-
         builder.Property(x => x.OriginalAmount)
             .HasPrecision(18, 2)
             .IsRequired();

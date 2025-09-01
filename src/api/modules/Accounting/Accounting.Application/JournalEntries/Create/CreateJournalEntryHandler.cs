@@ -19,8 +19,6 @@ public sealed class CreateJournalEntryHandler(
             request.Description,
             request.Source,
             request.PeriodId,
-            request.CurrencyId,
-            request.ExchangeRate,
             request.OriginalAmount);
 
         await repository.AddAsync(journalEntry, cancellationToken);

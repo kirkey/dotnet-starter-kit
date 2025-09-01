@@ -1,4 +1,3 @@
-using Accounting.Application.AccountingPeriods.Commands.CloseAccountingPeriod.v1;
 using Accounting.Domain;
 using FSH.Framework.Core.Persistence;
 using MediatR;
@@ -17,6 +16,9 @@ public sealed class CloseAccountingPeriodCommandHandler(
     public async Task<DefaultIdType> Handle(CloseAccountingPeriodCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
+
+        // Mark unused injected repository as referenced to avoid warnings until implemented
+        _ = journalRepository;
 
         // Get the accounting period
         var period = await periodRepository.GetByIdAsync(request.AccountingPeriodId, cancellationToken);
@@ -48,7 +50,8 @@ public sealed class CloseAccountingPeriodCommandHandler(
         }
 
         // Close the period
-        period.Close(request.ClosingDate, request.ClosingNotes);
+        // Domain Close has no parameters; call parameterless Close and persist any notes separately if needed
+        period.Close();
         await periodRepository.UpdateAsync(period, cancellationToken);
 
         logger.LogInformation("Accounting period {PeriodName} closed successfully on {ClosingDate}", 
@@ -59,6 +62,10 @@ public sealed class CloseAccountingPeriodCommandHandler(
 
     private async Task GenerateClosingEntries(AccountingPeriod period, DateTime closingDate, CancellationToken cancellationToken)
     {
+        // Reference parameters to avoid unused-parameter warnings until implementation is added
+        _ = period;
+        _ = closingDate;
+
         // Get revenue and expense accounts
         var accounts = await accountRepository.ListAsync(cancellationToken);
         var revenueAccounts = accounts.Where(a => a.AccountType == "Revenue").ToList();
@@ -79,7 +86,7 @@ public sealed class CloseAccountingPeriodCommandHandler(
         }
     }
 
-    private async Task PerformYearEndAdjustments(AccountingPeriod period, DateTime closingDate, CancellationToken cancellationToken)
+    private Task PerformYearEndAdjustments(AccountingPeriod period, DateTime closingDate, CancellationToken cancellationToken)
     {
         // Implement year-end adjustments such as:
         // - Depreciation calculations
@@ -87,6 +94,8 @@ public sealed class CloseAccountingPeriodCommandHandler(
         // - Inventory adjustments
         // - Bad debt provisions
         
-        logger.LogInformation("Year-end adjustments completed for period {PeriodName}", period.PeriodName);
+        // Use entity Name property (there is no PeriodName property on the domain entity)
+        logger.LogInformation("Year-end adjustments completed for period {PeriodName}", period.Name);
+        return Task.CompletedTask;
     }
 }

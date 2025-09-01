@@ -1,4 +1,3 @@
-using Accounting.Application.GeneralLedger.Commands.PostJournalEntry.v1;
 using Accounting.Application.JournalEntries.Exceptions;
 using Accounting.Domain;
 using FSH.Framework.Core.Persistence;
@@ -10,8 +9,12 @@ namespace Accounting.Application.GeneralLedger.Commands.PostJournalEntry.v1;
 
 public sealed class PostJournalEntryCommandHandler(
     ILogger<PostJournalEntryCommandHandler> logger,
-    [FromKeyedServices("accounting:journalentries")] IRepository<JournalEntry> journalRepository,
-    [FromKeyedServices("accounting:generalledger")] IRepository<Domain.GeneralLedger> ledgerRepository)
+    [FromKeyedServices("accounting:journalentries")]
+    IRepository<JournalEntry> journalRepository,
+    [FromKeyedServices("accounting:generalledger")]
+    IRepository<Accounting.Domain.GeneralLedger> ledgerRepository,
+    [FromKeyedServices("accounting:accounts")]
+    IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<PostJournalEntryCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(PostJournalEntryCommand request, CancellationToken cancellationToken)
@@ -34,9 +37,8 @@ public sealed class PostJournalEntryCommandHandler(
         // Validate balances if required
         if (request.ValidateBalances)
         {
-            var totalDebits = journalEntry.Lines?.Where(l => l.DebitAmount > 0).Sum(l => l.DebitAmount) ?? 0;
-            var totalCredits = journalEntry.Lines?.Where(l => l.CreditAmount > 0).Sum(l => l.CreditAmount) ?? 0;
-            
+            var totalDebits = journalEntry.Lines.Sum(l => l.DebitAmount);
+            var totalCredits = journalEntry.Lines.Sum(l => l.CreditAmount);
             if (totalDebits != totalCredits)
             {
                 throw new JournalEntryUnbalancedException($"Journal entry {journalEntry.ReferenceNumber} is unbalanced. Debits: {totalDebits}, Credits: {totalCredits}");
@@ -44,26 +46,28 @@ public sealed class PostJournalEntryCommandHandler(
         }
 
         // Create general ledger entries
-        foreach (var line in journalEntry.Lines ?? [])
+        foreach (var line in journalEntry.Lines)
         {
-            var ledgerEntry = GeneralLedger.Create(
+            var account = await accountRepository.GetByIdAsync(line.AccountId, cancellationToken);
+            var usoaClass = account?.UsoaCategory ?? "General";
+            var ledgerEntry = Accounting.Domain.GeneralLedger.Create(
                 journalEntry.Id,
                 line.AccountId,
-                request.PostingDate,
                 line.DebitAmount,
                 line.CreditAmount,
+                usoaClass,
+                request.PostingDate,
                 line.Description,
-                request.PostingReference ?? journalEntry.ReferenceNumber);
-
+                request.PostingReference ?? journalEntry.ReferenceNumber
+            );
             await ledgerRepository.AddAsync(ledgerEntry, cancellationToken);
         }
 
         // Mark journal entry as posted
-        journalEntry.MarkAsPosted(request.PostingDate, request.PostingReference);
+
         await journalRepository.UpdateAsync(journalEntry, cancellationToken);
 
         logger.LogInformation("Journal entry {EntryNumber} posted successfully", journalEntry.ReferenceNumber);
-
         return journalEntry.Id;
     }
 }

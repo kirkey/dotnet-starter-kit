@@ -8,8 +8,6 @@ public record UpdateJournalEntryRequest(
     DateTime? Date = null,
     string? Source = null,
     DefaultIdType? PeriodId = null,
-    DefaultIdType? CurrencyId = null,
-    decimal? ExchangeRate = null,
     decimal? OriginalAmount = null,
     string? Description = null,
     string? Notes = null) : IRequest<DefaultIdType>;

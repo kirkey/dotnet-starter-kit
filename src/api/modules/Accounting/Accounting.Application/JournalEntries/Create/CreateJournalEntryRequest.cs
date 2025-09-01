@@ -8,6 +8,4 @@ public record CreateJournalEntryRequest(
     string Description,
     string Source,
     DefaultIdType? PeriodId = null,
-    DefaultIdType? CurrencyId = null,
-    decimal ExchangeRate = 1.0m,
     decimal OriginalAmount = 0) : IRequest<DefaultIdType>;

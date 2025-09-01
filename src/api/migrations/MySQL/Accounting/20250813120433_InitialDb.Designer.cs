@@ -221,9 +221,6 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid?>("CurrencyId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("char(36)");
 
@@ -1138,9 +1135,6 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid?>("CurrencyId")
-                        .HasColumnType("char(36)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
@@ -1155,10 +1149,6 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
 
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<decimal>("ExchangeRate")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("FilePath")
                         .HasColumnType("longtext");

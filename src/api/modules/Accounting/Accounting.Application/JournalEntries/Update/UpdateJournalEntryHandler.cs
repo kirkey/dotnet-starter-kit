@@ -15,10 +15,10 @@ public sealed class UpdateJournalEntryHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var entry = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (entry == null) throw new JournalEntryNotFoundException(request.Id);
+        if (entry == null) throw new JournalEntryNotFoundException(request.Id.ToString());
 
         // Check if already posted
-        if (entry.IsPosted) throw new JournalEntryAlreadyPostedException(request.Id);
+        if (entry.IsPosted) throw new JournalEntryAlreadyPostedException(request.Id.ToString());
 
         // Check for duplicate reference number (excluding current entry)
         if (!string.IsNullOrEmpty(request.ReferenceNumber) && request.ReferenceNumber != entry.ReferenceNumber)
@@ -32,8 +32,7 @@ public sealed class UpdateJournalEntryHandler(
         }
 
         entry.Update(request.Date, request.ReferenceNumber, request.Description, request.Source,
-                    request.PeriodId, request.CurrencyId, request.ExchangeRate,
-                    request.OriginalAmount);
+                    request.PeriodId, request.OriginalAmount);
 
         await repository.UpdateAsync(entry, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

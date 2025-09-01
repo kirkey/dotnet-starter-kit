@@ -21,9 +21,6 @@ public class CreateJournalEntryRequestValidator : AbstractValidator<CreateJourna
             .NotEmpty()
             .MaximumLength(64);
 
-        RuleFor(x => x.ExchangeRate)
-            .GreaterThan(0);
-
         RuleFor(x => x.OriginalAmount)
             .GreaterThanOrEqualTo(0);
     }

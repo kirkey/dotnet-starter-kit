@@ -12,21 +12,22 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     public string Source { get; private set; }
     public bool IsPosted { get; private set; }
     public DefaultIdType? PeriodId { get; private set; }
-    public DefaultIdType? CurrencyId { get; private set; }
-    public decimal ExchangeRate { get; private set; }
     public decimal OriginalAmount { get; private set; }
     
     private readonly List<JournalEntryLine> _lines = new();
     public IReadOnlyCollection<JournalEntryLine> Lines => _lines.AsReadOnly();
     
-    
+    public string ApprovalStatus { get; private set; } // Pending, Approved, Rejected
+    public string? ApprovedBy { get; private set; }
+    public DateTime? ApprovedDate { get; private set; }
+
     private JournalEntry()
     {
         // EF Core requires a parameterless constructor for entity instantiation
     }
 
     private JournalEntry(DateTime date, string referenceNumber, string description, string source,
-        DefaultIdType? periodId = null, DefaultIdType? currencyId = null, decimal exchangeRate = 1.0m, decimal originalAmount = 0)
+        DefaultIdType? periodId = null, decimal originalAmount = 0)
     {
         Date = date;
         ReferenceNumber = referenceNumber.Trim();
@@ -34,21 +35,20 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         Source = source.Trim();
         IsPosted = false;
         PeriodId = periodId;
-        CurrencyId = currencyId;
-        ExchangeRate = exchangeRate;
         OriginalAmount = originalAmount;
+        ApprovalStatus = "Pending";
 
         QueueDomainEvent(new JournalEntryCreated(Id, Date, ReferenceNumber, Description, Source));
     }
 
     public static JournalEntry Create(DateTime date, string referenceNumber, string description, string source,
-        DefaultIdType? periodId = null, DefaultIdType? currencyId = null, decimal exchangeRate = 1.0m, decimal originalAmount = 0)
+        DefaultIdType? periodId = null, decimal originalAmount = 0)
     {
-        return new JournalEntry(date, referenceNumber, description, source, periodId, currencyId, exchangeRate, originalAmount);
+        return new JournalEntry(date, referenceNumber, description, source, periodId, originalAmount);
     }
 
     public JournalEntry Update(DateTime? date, string? referenceNumber, string? description, string? source,
-        DefaultIdType? periodId, DefaultIdType? currencyId, decimal? exchangeRate, decimal? originalAmount)
+        DefaultIdType? periodId, decimal? originalAmount)
     {
         bool isUpdated = false;
 
@@ -82,18 +82,6 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         if (periodId != PeriodId)
         {
             PeriodId = periodId;
-            isUpdated = true;
-        }
-
-        if (currencyId != CurrencyId)
-        {
-            CurrencyId = currencyId;
-            isUpdated = true;
-        }
-
-        if (exchangeRate.HasValue && ExchangeRate != exchangeRate.Value)
-        {
-            ExchangeRate = exchangeRate.Value;
             isUpdated = true;
         }
 
@@ -143,6 +131,26 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
 
         QueueDomainEvent(new JournalEntryReversed(Id, reversalDate, reversalReason));
         return this;
+    }
+
+    public void Approve(string approvedBy)
+    {
+        if (ApprovalStatus == "Approved")
+            throw new InvalidOperationException("Journal entry already approved.");
+        ApprovalStatus = "Approved";
+        ApprovedBy = approvedBy;
+        ApprovedDate = DateTime.UtcNow;
+        QueueDomainEvent(new Events.JournalEntry.JournalEntryApproved(Id, ApprovedBy, ApprovedDate.Value));
+    }
+
+    public void Reject(string rejectedBy)
+    {
+        if (ApprovalStatus == "Rejected")
+            throw new InvalidOperationException("Journal entry already rejected.");
+        ApprovalStatus = "Rejected";
+        ApprovedBy = rejectedBy;
+        ApprovedDate = DateTime.UtcNow;
+        QueueDomainEvent(new Events.JournalEntry.JournalEntryRejected(Id, ApprovedBy, ApprovedDate.Value));
     }
 
     private bool IsBalanced()

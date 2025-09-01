@@ -23,7 +23,7 @@ public sealed class GetJournalEntryHandler(
             async () =>
             {
                 var entry = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
-                if (entry == null) throw new JournalEntryNotFoundException(request.Id);
+                if (entry == null) throw new JournalEntryNotFoundException(request.Id.ToString());
                 return entry.Adapt<JournalEntryDto>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);

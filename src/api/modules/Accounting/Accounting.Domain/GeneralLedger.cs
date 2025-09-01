@@ -19,6 +19,7 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
     
     private GeneralLedger()
     {
+        UsoaClass = string.Empty;
         // EF Core requires a parameterless constructor for entity instantiation
     }
 
@@ -48,16 +49,7 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
         string? description = null, string? notes = null)
     {
         if (debit < 0 || credit < 0)
-            throw new InvalidGeneralLedgerAmountException("Debit and Credit amounts cannot be negative");
-
-        if (debit > 0 && credit > 0)
-            throw new InvalidGeneralLedgerAmountException("Both Debit and Credit cannot have amounts");
-
-        if (debit == 0 && credit == 0)
-            throw new InvalidGeneralLedgerAmountException("Either Debit or Credit must have an amount");
-
-        if (!IsValidUsoaClass(usoaClass))
-            throw new InvalidUsoaClassException($"Invalid USOA class: {usoaClass}");
+            throw new InvalidGeneralLedgerAmountException("Debit or credit amount cannot be negative");
 
         return new GeneralLedger(entryId, accountId, debit, credit, usoaClass,
             transactionDate, memo, referenceNumber, periodId, description, notes);
@@ -104,15 +96,15 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (!string.IsNullOrWhiteSpace(description) && Description != description?.Trim())
+        if (!string.IsNullOrWhiteSpace(description) && Description != (description?.Trim() ?? string.Empty))
         {
-            Description = description.Trim();
+            Description = description?.Trim();
             isUpdated = true;
         }
 
-        if (!string.IsNullOrWhiteSpace(notes) && Notes != notes?.Trim())
+        if (!string.IsNullOrWhiteSpace(notes) && Notes != (notes?.Trim() ?? string.Empty))
         {
-            Notes = notes.Trim();
+            Notes = notes?.Trim();
             isUpdated = true;
         }
 

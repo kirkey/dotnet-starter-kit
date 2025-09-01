@@ -9,8 +9,6 @@ public class JournalEntryDto : BaseDto
     public string Source { get; set; } = null!;
     public bool IsPosted { get; set; }
     public DefaultIdType? PeriodId { get; set; }
-    public DefaultIdType? CurrencyId { get; set; }
-    public decimal ExchangeRate { get; set; }
     public decimal OriginalAmount { get; set; }
 }
 

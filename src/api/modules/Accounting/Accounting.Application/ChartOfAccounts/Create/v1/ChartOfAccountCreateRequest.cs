@@ -16,5 +16,4 @@ public class ChartOfAccountCreateRequest : BaseRequest, IRequest<DefaultIdType>
     public string NormalBalance { get; set; } = "Debit";
     public bool IsUsoaCompliant { get; set; } = true;
     public string? RegulatoryClassification { get; set; }
-    public DefaultIdType? CurrencyId { get; set; }
 }
