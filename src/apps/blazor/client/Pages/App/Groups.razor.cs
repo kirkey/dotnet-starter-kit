@@ -8,8 +8,7 @@ namespace FSH.Starter.Blazor.Client.Pages.App;
 
 public partial class Groups
 {
-    [Inject]
-    protected IApiClient ApiClient { get; set; } = default!;
+    [Inject] protected IApiClient ApiClient { get; set; } = default!;
 
     protected EntityServerTableContext<GroupDto, DefaultIdType, GroupViewModel> Context { get; set; } = default!;
 
@@ -51,6 +50,6 @@ public partial class Groups
             deleteFunc: async id => await ApiClient.GroupDeleteEndpointAsync("1", id));
 }
 
-public class GroupViewModel : GroupUpdateCommand
+public partial class GroupViewModel : GroupUpdateCommand
 {
 }

@@ -3,7 +3,7 @@
 <PageHeader Title="Todos" Header="Todos" SubHeader="Manage your Todos." />
 
 <EntityTable @ref="_table" TEntity="GetTodoResponse" TId="DefaultIdType" TRequest="TodoViewModel" Context="@Context">
-    <EditFormContent>
+    <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">

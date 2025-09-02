@@ -5,7 +5,7 @@
 <PageHeader Title="Payee" Header="Payees" SubHeader="Manage Payees." />
 
 <EntityTable @ref="_table" TEntity="PayeeResponse" TId="DefaultIdType" TRequest="ResponseViewModel" Context="@Context">
-    <EditFormContent>
+    <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6" lg="4">

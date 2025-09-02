@@ -3,7 +3,7 @@
 <PageHeader Title="Groups" Header="Groups" SubHeader="Manage Application Groups." />
 
 <EntityTable @ref="_table" TEntity="GroupDto" TId="DefaultIdType" TRequest="GroupViewModel" Context="@Context">
-    <EditFormContent>
+    <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">

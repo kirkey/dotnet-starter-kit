@@ -9,7 +9,7 @@
             <MudMenuItem @onclick="@(() => ManagePermissions(context.Id))">Manage Permission</MudMenuItem>
         }
     </ExtraActions>
-    <EditFormContent>
+    <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">

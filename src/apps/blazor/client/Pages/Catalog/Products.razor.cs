@@ -8,8 +8,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Catalog;
 
 public partial class Products
 {
-    [Inject]
-    protected IApiClient _client { get; set; } = default!;
+    [Inject] protected IApiClient _client { get; set; } = default!;
 
     protected EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel> Context { get; set; } = default!;
 
@@ -103,6 +102,6 @@ public partial class Products
     }
 }
 
-public class ProductViewModel : UpdateProductCommand
+public partial class ProductViewModel : UpdateProductCommand
 {
 }

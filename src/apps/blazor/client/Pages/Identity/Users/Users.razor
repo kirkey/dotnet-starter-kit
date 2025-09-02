@@ -15,7 +15,7 @@
         }
     </ExtraActions>
 
-    <EditFormContent>
+    <EditFormContent Context="context">
         <MudItem xs="12" md="6">
             <MudTextField For="@(() => context.UserName)" @bind-Value="context.UserName" Label="User Name" />
         </MudItem>

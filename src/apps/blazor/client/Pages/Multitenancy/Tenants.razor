@@ -6,7 +6,7 @@
 
 <EntityTable @ref="EntityTable" TEntity="TenantViewModel" TId="DefaultIdType" TRequest="CreateTenantCommand" Context="@Context"
     @bind-SearchString="_searchString">
-    <EditFormContent>
+    <EditFormContent Context="context">
         <MudItem xs="12" md="6">
             <MudTextField T="string" For="@(() => context.Id)" @bind-Value="context.Id" Label="Key" />
         </MudItem>
