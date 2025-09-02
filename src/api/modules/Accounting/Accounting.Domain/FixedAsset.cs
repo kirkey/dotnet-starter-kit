@@ -23,7 +23,7 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
     public DateTime? DisposalDate { get; private set; }
     public decimal? DisposalAmount { get; private set; }
     
-    // Power Company specific fields
+    // Power Company-specific fields
     public string AssetType { get; private set; } // "Transformer", "Transmission Line", "Power Plant", "Vehicle"
     public string? GpsCoordinates { get; private set; } // "lat,lng" format
     public string? SubstationName { get; private set; }

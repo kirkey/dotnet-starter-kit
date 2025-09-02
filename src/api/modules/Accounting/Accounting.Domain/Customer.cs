@@ -25,8 +25,7 @@ public class Customer : AuditableEntity, IAggregateRoot
     {
         // EF Core requires a parameterless constructor for entity instantiation
     }
-
-
+    
     private Customer(string customerCode, string name, string? address, string? billingAddress,
         string? contactPerson, string? email, string? terms, string? revenueAccountCode, string? revenueAccountName,
         string? tin, string? phoneNumber, decimal creditLimit, string? description, string? notes)
