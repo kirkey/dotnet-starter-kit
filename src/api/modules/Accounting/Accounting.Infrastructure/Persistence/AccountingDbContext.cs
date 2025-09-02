@@ -35,6 +35,10 @@ public sealed class AccountingDbContext(
     public DbSet<Payee> Payees { get; set; } = null!;
     public DbSet<Project> Projects { get; set; } = null!;
     public DbSet<Vendor> Vendors { get; set; } = null!;
+    public DbSet<Accrual> Accruals { get; set; } = null!;
+    public DbSet<DeferredRevenue> DeferredRevenues { get; set; } = null!;
+    public DbSet<PostingBatch> PostingBatches { get; set; } = null!;
+    public DbSet<RegulatoryReport> RegulatoryReports { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
