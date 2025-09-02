@@ -1,4 +1,3 @@
-using Accounting.Application.FinancialStatements.Queries.GenerateBalanceSheet.v1;
 using FluentValidation;
 
 namespace Accounting.Application.FinancialStatements.Queries.GenerateBalanceSheet.v1;

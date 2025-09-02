@@ -1,5 +1,4 @@
 using MediatR;
-using System;
 using Accounting.Application.PostingBatch.Dtos;
 
 namespace Accounting.Application.PostingBatch.Queries

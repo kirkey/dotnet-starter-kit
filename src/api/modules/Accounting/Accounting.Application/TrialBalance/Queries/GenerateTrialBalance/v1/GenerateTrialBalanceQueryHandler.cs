@@ -1,5 +1,4 @@
 using Accounting.Application.GeneralLedger.Specifications;
-using Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
 using Accounting.Domain;
 using FSH.Framework.Core.Persistence;
 using MediatR;

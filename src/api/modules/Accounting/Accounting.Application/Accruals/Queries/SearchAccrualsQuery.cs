@@ -1,5 +1,4 @@
 using MediatR;
-using System.Collections.Generic;
 using Accounting.Application.Accruals.Dtos;
 
 namespace Accounting.Application.Accruals.Queries

@@ -1,5 +1,3 @@
-using System;
-
 namespace Accounting.Application.DeferredRevenue.Dtos
 {
     public class DeferredRevenueDto

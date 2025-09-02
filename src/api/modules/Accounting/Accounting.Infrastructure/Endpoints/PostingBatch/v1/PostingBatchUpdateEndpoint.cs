@@ -25,13 +25,13 @@ public static class PostingBatchUpdateEndpoint
         .RequirePermission("Permissions.Accounting.Update")
         .MapToApiVersion(1);
 
-        group.MapPut("/{id}/post", async (DefaultIdType id, PostPostingBatchCommand command, ISender mediator) =>
+        group.MapPut("/{id}/post", async (DefaultIdType id, PostingBatchCommand command, ISender mediator) =>
         {
             command.Id = id;
             await mediator.Send(command).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("PostPostingBatch")
+        .WithName("PostingBatch")
         .WithSummary("Post posting batch")
         .WithDescription("Posts a posting batch")
         .RequirePermission("Permissions.Accounting.Update")

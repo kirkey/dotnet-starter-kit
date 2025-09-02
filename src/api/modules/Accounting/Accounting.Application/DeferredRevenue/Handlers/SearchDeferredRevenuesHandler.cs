@@ -1,9 +1,4 @@
-using Accounting.Domain;
 using MediatR;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Accounting.Application.DeferredRevenue.Queries;
 using Accounting.Application.DeferredRevenue.Dtos;
 using FSH.Framework.Core.Persistence;

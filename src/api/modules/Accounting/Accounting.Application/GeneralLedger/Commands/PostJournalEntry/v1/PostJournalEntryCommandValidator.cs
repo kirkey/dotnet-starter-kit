@@ -1,4 +1,3 @@
-using Accounting.Application.GeneralLedger.Commands.PostJournalEntry.v1;
 using FluentValidation;
 
 namespace Accounting.Application.GeneralLedger.Commands.PostJournalEntry.v1;

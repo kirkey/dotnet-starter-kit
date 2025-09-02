@@ -1,5 +1,4 @@
 using FSH.Framework.Core.Domain.Events;
-using System;
 
 namespace Accounting.Domain.Events.PostingBatch
 {

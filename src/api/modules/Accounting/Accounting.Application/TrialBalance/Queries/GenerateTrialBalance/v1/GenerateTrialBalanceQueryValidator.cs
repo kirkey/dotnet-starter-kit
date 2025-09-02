@@ -1,4 +1,3 @@
-using Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
 using FluentValidation;
 
 namespace Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;

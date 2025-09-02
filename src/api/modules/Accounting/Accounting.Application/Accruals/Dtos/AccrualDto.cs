@@ -1,5 +1,3 @@
-using System;
-
 namespace Accounting.Application.Accruals.Dtos
 {
     public class AccrualDto

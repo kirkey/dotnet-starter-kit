@@ -1,4 +1,3 @@
-using Accounting.Application.Budgets.Queries.GenerateBudgetVarianceAnalysis.v1;
 using FluentValidation;
 
 namespace Accounting.Application.Budgets.Queries.GenerateBudgetVarianceAnalysis.v1;

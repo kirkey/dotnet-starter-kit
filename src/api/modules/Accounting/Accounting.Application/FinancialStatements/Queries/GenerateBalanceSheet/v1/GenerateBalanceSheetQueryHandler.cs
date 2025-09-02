@@ -1,4 +1,3 @@
-using Accounting.Application.FinancialStatements.Queries.GenerateBalanceSheet.v1;
 using Accounting.Application.GeneralLedger.Specifications;
 using Accounting.Domain;
 using FSH.Framework.Core.Persistence;

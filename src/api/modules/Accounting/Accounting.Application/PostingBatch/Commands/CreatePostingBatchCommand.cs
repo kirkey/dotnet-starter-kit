@@ -1,5 +1,4 @@
 using MediatR;
-using System;
 
 namespace Accounting.Application.PostingBatch.Commands
 {

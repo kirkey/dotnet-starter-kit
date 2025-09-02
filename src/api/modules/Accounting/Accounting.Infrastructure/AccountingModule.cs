@@ -7,11 +7,6 @@ using Accounting.Infrastructure.Endpoints.Projects.v1;
 using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 using Accounting.Infrastructure.Endpoints.Budgets.v1;
 using Accounting.Infrastructure.Endpoints.JournalEntries.v1;
-using Accounting.Infrastructure.Endpoints.Accruals.v1;
-using Accounting.Infrastructure.Endpoints.DeferredRevenue.v1;
-using Accounting.Infrastructure.Endpoints.DepreciationMethods.v1;
-using Accounting.Infrastructure.Endpoints.PostingBatch.v1;
-using Accounting.Infrastructure.Endpoints.TrialBalance.v1;
 using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Persistence.Configurations;
 using Carter;
@@ -113,13 +108,13 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<Meter>, AccountingRepository<Meter>>();
         builder.Services.AddScoped<IRepository<Payee>, AccountingRepository<Payee>>();
         builder.Services.AddScoped<IReadRepository<Payee>, AccountingRepository<Payee>>();
+        builder.Services.AddScoped<IRepository<Project>, AccountingRepository<Project>>();
         builder.Services.AddScoped<IReadRepository<Project>, AccountingRepository<Project>>();
         builder.Services.AddScoped<IRepository<Vendor>, AccountingRepository<Vendor>>();
         builder.Services.AddScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>();
         // Added missing repository registrations for PostingBatch, DeferredRevenue, and Accrual
         builder.Services.AddScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
         builder.Services.AddScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
-        builder.Services.AddScoped<IRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>();
         builder.Services.AddScoped<IReadRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>();
         builder.Services.AddScoped<IRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>();
         builder.Services.AddScoped<IReadRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>();
@@ -157,6 +152,7 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Payee>, AccountingRepository<Payee>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
         // Added missing keyed registrations for PostingBatch, DeferredRevenue, and Accrual
         builder.Services.AddKeyedScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
@@ -197,6 +193,7 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Meter>, AccountingRepository<Meter>>("accounting:meters");
         builder.Services.AddKeyedScoped<IRepository<Payee>, AccountingRepository<Payee>>("accounting:payees");
         builder.Services.AddKeyedScoped<IReadRepository<Payee>, AccountingRepository<Payee>>("accounting:payees");
+        builder.Services.AddKeyedScoped<IRepository<Project>, AccountingRepository<Project>>("accounting:projects");
         builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting:projects");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");

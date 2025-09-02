@@ -1,5 +1,4 @@
 using Accounting.Domain.Events.Invoice;
-using Accounting.Domain.Exceptions;
 using FSH.Framework.Core.Domain;
 using FSH.Framework.Core.Domain.Contracts;
 

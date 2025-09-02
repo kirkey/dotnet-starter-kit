@@ -3,9 +3,9 @@ using Accounting.Application.PostingBatch.Commands;
 
 namespace Accounting.Application.PostingBatch.Validators
 {
-    public class PostPostingBatchCommandValidator : AbstractValidator<PostPostingBatchCommand>
+    public class PostingBatchCommandValidator : AbstractValidator<PostingBatchCommand>
     {
-        public PostPostingBatchCommandValidator()
+        public PostingBatchCommandValidator()
         {
             RuleFor(x => x.Id).NotEmpty();
         }

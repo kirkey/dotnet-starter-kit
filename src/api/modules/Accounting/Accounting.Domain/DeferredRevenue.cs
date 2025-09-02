@@ -1,4 +1,3 @@
-using System;
 using FSH.Framework.Core.Domain;
 using FSH.Framework.Core.Domain.Contracts;
 

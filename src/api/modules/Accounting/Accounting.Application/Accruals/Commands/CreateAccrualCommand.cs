@@ -1,6 +1,4 @@
 using MediatR;
-using System;
-using Accounting.Domain;
 
 namespace Accounting.Application.Accruals.Commands
 {

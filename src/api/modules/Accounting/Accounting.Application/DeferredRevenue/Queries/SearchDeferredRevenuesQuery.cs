@@ -1,5 +1,4 @@
 using MediatR;
-using System.Collections.Generic;
 using Accounting.Application.DeferredRevenue.Dtos;
 
 namespace Accounting.Application.DeferredRevenue.Queries

@@ -1,4 +1,3 @@
-using Accounting.Application.Vendors.Get.v1;
 using Accounting.Application.Vendors.Search.v1;
 using FSH.Framework.Core.Paging;
 using FSH.Framework.Infrastructure.Auth.Policy;

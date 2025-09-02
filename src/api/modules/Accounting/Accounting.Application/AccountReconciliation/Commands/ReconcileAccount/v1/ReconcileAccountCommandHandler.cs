@@ -1,4 +1,3 @@
-using Accounting.Application.AccountReconciliation.Commands.ReconcileAccount.v1;
 using Accounting.Application.GeneralLedger.Specifications;
 using Accounting.Domain;
 using FSH.Framework.Core.Persistence;

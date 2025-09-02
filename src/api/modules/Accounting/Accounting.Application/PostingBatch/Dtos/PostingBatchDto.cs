@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Accounting.Application.PostingBatch.Dtos
 {
     public class PostingBatchDto
