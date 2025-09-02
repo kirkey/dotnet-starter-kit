@@ -23,7 +23,7 @@ public partial class ChartOfAccounts : ComponentBase
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<ChartOfAccountDto>(dto => dto.AccountCategory, "Category", "AccountCategory"),
+                new EntityField<ChartOfAccountDto>(dto => dto.UsoaCategory, "Category", "UsoaCategory"),
                 new EntityField<ChartOfAccountDto>(dto => dto.AccountType, "Type", "AccountType"),
                 new EntityField<ChartOfAccountDto>(dto => dto.ParentCode, "Parent", "ParentCode"),
                 new EntityField<ChartOfAccountDto>(dto => dto.AccountCode, "Code", "AccountCode"),
