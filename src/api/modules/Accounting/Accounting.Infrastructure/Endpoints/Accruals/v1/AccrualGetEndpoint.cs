@@ -1,0 +1,27 @@
+using Accounting.Application.Accruals.Queries;
+using FSH.Framework.Infrastructure.Auth.Policy;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+
+
+
+public static class AccrualGetEndpoint
+{
+    internal static RouteHandlerBuilder MapAccrualGetEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator.Send(new GetAccrualByIdQuery(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(AccrualGetEndpoint))
+            .WithSummary("Get an accrual by ID")
+            .WithDescription("Gets the details of an accrual by its ID")
+            .RequirePermission("Permissions.Accounting.View")
+            .MapToApiVersion(1);
+    }
+}

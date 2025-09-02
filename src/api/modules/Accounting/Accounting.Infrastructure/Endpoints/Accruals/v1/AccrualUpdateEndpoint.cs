@@ -1,0 +1,28 @@
+using Accounting.Application.Accruals.Commands;
+using FSH.Framework.Infrastructure.Auth.Policy;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+
+
+
+public static class AccrualUpdateEndpoint
+{
+    internal static RouteHandlerBuilder MapAccrualUpdateEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapPut("/{id}/reverse", async (DefaultIdType id, ReverseAccrualCommand command, ISender mediator) =>
+            {
+                command.Id = id;
+                await mediator.Send(command).ConfigureAwait(false);
+                return Results.NoContent();
+            })
+            .WithName(nameof(AccrualUpdateEndpoint))
+            .WithSummary("Reverse an accrual")
+            .WithDescription("Reverses an accrual entry by ID")
+            .RequirePermission("Permissions.Accounting.Update")
+            .MapToApiVersion(1);
+    }
+}
