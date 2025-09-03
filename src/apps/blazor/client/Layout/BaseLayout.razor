@@ -17,9 +17,13 @@
         </NotAuthorized>
         <Authorized>
             <MudLayout>
+                <EnvironmentBanner />
                 <ThemeDrawer @bind-ThemeDrawerOpen="_themeDrawerOpen" ThemePreference="_themePreference"
                         ThemePreferenceChanged="ThemePreferenceChanged" />
-                    <ThemeButton OnClick="@(() => _themeDrawerOpen = true)" />
+                <ThemeButton OnClick="@(() => _themeDrawerOpen = true)" />
+                <NetworkStatusBanner Online="_online" Pending="_pending" />
+                <ShortcutHelp @ref="_shortcutHelp" />
+                <CommandPalette @ref="_commandPalette" />
                 <MainLayout OnDarkModeToggle="ToggleDarkLightMode">
                     @Body
                 </MainLayout>

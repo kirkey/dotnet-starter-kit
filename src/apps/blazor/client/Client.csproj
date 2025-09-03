@@ -15,6 +15,7 @@
 	     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
 	     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" />
 	     <PackageReference Include="Microsoft.Extensions.Http" />
+	     <PackageReference Include="MudBlazor" />
 	   </ItemGroup>
 	 
 	   <ItemGroup>
@@ -25,17 +26,4 @@
 	   <ItemGroup>
 	     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
 	   </ItemGroup>
-	 
-	   <ItemGroup>
-	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\Components\ContactFormDialog.razor" />
-	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\Components\ContactsAdvancedSearchComponent.razor" />
-	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\Contacts.razor" />
-	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\CreateContact.razor" />
-	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\EditContact.razor" />
-	     <_ContentIncludedByDefault Remove="Pages\App\Contacts\ViewContact.razor" />
-	   </ItemGroup>
-	 
-	 <ItemGroup>
-    <PackageVersion Include="MudBlazor" Version="8.10.0" />
-</ItemGroup>
-</Project>
+	 </Project>

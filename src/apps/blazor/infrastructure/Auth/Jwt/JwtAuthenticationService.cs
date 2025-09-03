@@ -30,7 +30,7 @@ public sealed class JwtAuthenticationService(PersistentComponentState state, ILo
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
 
-        // Generate claimsIdentity from cached token
+        // Generate claimsIdentity from a cached token
         var claimsIdentity = new ClaimsIdentity(GetClaimsFromJwt(cachedToken), "jwt");
 
         // Add cached permissions as claims

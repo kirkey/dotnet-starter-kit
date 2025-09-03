@@ -4,7 +4,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Themes;
 
 public static class CustomTypography
 {
-    public static Typography FshTypography => new Typography
+    public static Typography FshTypography => new()
     {
         Default = new DefaultTypography
         {

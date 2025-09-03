@@ -4,18 +4,12 @@ using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.Blazor.Infrastructure.Notifications;
 
-public class NotificationPublisher : INotificationPublisher
+public class NotificationPublisher(ILogger<NotificationPublisher> logger, IPublisher mediator) : INotificationPublisher
 {
-    private readonly ILogger<NotificationPublisher> _logger;
-    private readonly IPublisher _mediator;
-
-    public NotificationPublisher(ILogger<NotificationPublisher> logger, IPublisher mediator) =>
-        (_logger, _mediator) = (logger, mediator);
-
     public Task PublishAsync(INotificationMessage notification)
     {
-        _logger.LogInformation("Publishing Notification : {notification}", notification.GetType().Name);
-        return _mediator.Publish(CreateNotificationWrapper(notification));
+        logger.LogInformation("Publishing Notification : {notification}", notification.GetType().Name);
+        return mediator.Publish(CreateNotificationWrapper(notification));
     }
 
     private static INotification CreateNotificationWrapper(INotificationMessage notification) =>

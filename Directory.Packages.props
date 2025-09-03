@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.16" />
+    <PackageVersion Include="Microsoft.JSInterop" Version="7.0.16" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+</Project>
+

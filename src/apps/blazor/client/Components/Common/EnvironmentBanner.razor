@@ -1,0 +1,17 @@
+@inject IConfiguration Config
+
+@if (!string.IsNullOrWhiteSpace(_env) && _env != "Production")
+{
+    <MudAlert Severity="Severity.Info" Dense Elevation="0" Variant="Variant.Filled" Class="pa-1" Style="border-radius:0;">
+        <MudText Typo="Typo.caption" Class="ma-0">Environment: @_env</MudText>
+    </MudAlert>
+}
+
+@code {
+    private string _env = string.Empty;
+    protected override void OnInitialized()
+    {
+        _env = Config["ASPNETCORE_ENVIRONMENT"] ?? Config["Environment"] ?? "Production";
+    }
+}
+
