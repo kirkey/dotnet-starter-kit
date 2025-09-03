@@ -1,7 +1,5 @@
 @page "/payees"
 
-@using FSH.Starter.Blazor.Client.Components.Autocompletes.App
-
 <PageHeader Title="Payee" Header="Payees" SubHeader="Manage Payees." />
 
 <EntityTable @ref="_table" TEntity="PayeeResponse" TId="DefaultIdType" TRequest="ResponseViewModel" Context="@Context">

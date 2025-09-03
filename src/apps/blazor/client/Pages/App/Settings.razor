@@ -191,9 +191,6 @@
     private List<QueuedRequest> _queued = new();
     private Dictionary<string,bool> _featureFlags = new();
     private List<ShortcutDescriptor> _shortcuts = new();
-    private string _currentCulture = "en-US";
-    private string _selectedCulture = "en-US";
-    private IEnumerable<string> _cultures = Array.Empty<string>();
     private List<KeyValuePair<string,double>> _metricsEntries = new();
     private bool _pushSupported;
     private string _pushPermission = "unknown";
