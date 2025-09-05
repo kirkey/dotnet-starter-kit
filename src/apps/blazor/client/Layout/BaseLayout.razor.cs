@@ -24,6 +24,7 @@ public partial class BaseLayout : IDisposable
 
     [Microsoft.AspNetCore.Components.Inject] private INetworkStatusService Network { get; set; } = default!;
     [Microsoft.AspNetCore.Components.Inject] private IOfflineRequestQueue OfflineQueue { get; set; } = default!;
+    [Microsoft.AspNetCore.Components.Inject] private IOfflineRetryService OfflineRetry { get; set; } = default!;
     [Microsoft.AspNetCore.Components.Inject] private HttpClient Http { get; set; } = default!;
     [Microsoft.AspNetCore.Components.Inject] private IShortcutService Shortcuts { get; set; } = default!;
     [Microsoft.AspNetCore.Components.Inject] private IIdleTimerService Idle { get; set; } = default!;
@@ -47,9 +48,13 @@ public partial class BaseLayout : IDisposable
 
         await Network.InitializeAsync();
         _ = Network.IsOnline;
-        _ = OfflineQueue.PendingCount;
-        Network.StatusChanged += OnNetworkStatusChanged;
+        _online = Network.IsOnline;
+        _pending = OfflineQueue.PendingCount;
 
+        OfflineQueue.QueueChanged += OnQueueChanged;
+
+        // Start the offline retry service for automatic background processing
+        await OfflineRetry.StartAsync();
         // Initialize shortcuts
         Shortcuts.Register("Ctrl+/", "show-help", "Show shortcut help");
         Shortcuts.Register("Ctrl+K", "command-palette", "Open command palette (placeholder)");
@@ -123,34 +128,12 @@ public partial class BaseLayout : IDisposable
     private void OnNetworkStatusChanged(bool isOnline)
     {
         _online = isOnline;
-        if (isOnline)
-        {
-            _ = OfflineQueue.FlushAsync(async qr =>
-            {
-                try
-                {
-                    var msg = new HttpRequestMessage(new HttpMethod(qr.Method), qr.Url);
-                    if (qr.Body != null)
-                    {
-                        msg.Content = new StringContent(qr.Body, System.Text.Encoding.UTF8,
-                            qr.Headers.TryGetValue("Content-Type", out var ct) ? ct : "application/json");
-                    }
-                    foreach (var h in qr.Headers)
-                    {
-                        if (h.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase)) continue;
-                        if (h.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase)) continue;
-                        msg.Headers.TryAddWithoutValidation(h.Key, h.Value);
-                    }
-                    var resp = await Http.SendAsync(msg);
-                    return resp.IsSuccessStatusCode;
-                }
-                catch
-                {
-                    return false;
-                }
-            });
-        }
-        StateHasChanged();
+        if (isOnline) StateHasChanged();
+    }
+
+    private void OnQueueChanged()
+    {
+        _pending = OfflineQueue.PendingCount;
     }
 
     private async Task ToggleDarkLightMode(bool isDarkMode)
@@ -183,9 +166,18 @@ public partial class BaseLayout : IDisposable
     {
         Network.StatusChanged -= OnNetworkStatusChanged;
         Shortcuts.Triggered -= OnShortcut;
+        OfflineQueue.QueueChanged -= OnQueueChanged;
         Idle.Warning -= OnIdleWarning;
         Idle.TimedOut -= OnIdleTimeout;
         Broadcaster.DisposeAsync().AsTask().ConfigureAwait(false);
+        
+        // Stop the offline retry service
+        try
+        {
+            OfflineRetry.StopAsync().GetAwaiter().GetResult();
+        }
+        catch { /* ignore disposal errors */ }
+        
         GC.SuppressFinalize(this);
     }
 }

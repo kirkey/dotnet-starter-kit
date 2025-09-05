@@ -15,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
-using Microsoft.Extensions.Caching.Memory;
 using FSH.Starter.Blazor.Infrastructure.Telemetry;
 using FSH.Starter.Blazor.Infrastructure.Palette;
 using FSH.Starter.Blazor.Infrastructure.Sync;
@@ -46,6 +45,7 @@ public static class Extensions
         services.AddScoped<IApiCacheService, ApiCacheService>();
         services.AddScoped<INetworkStatusService, NetworkStatusService>();
         services.AddScoped<IOfflineRequestQueue, OfflineRequestQueue>();
+        services.AddScoped<IOfflineRetryService, OfflineRetryService>();
         services.AddScoped<IFeatureFlagService, FeatureFlagService>();
         services.AddSingleton<IShortcutService, ShortcutService>();
         services.AddScoped<IIdleTimerService, IdleTimerService>();

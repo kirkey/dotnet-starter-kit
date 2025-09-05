@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 
 namespace FSH.Starter.Blazor.Infrastructure.Offline;
 
-public class OfflineRequestQueue(ILocalStorageService localStorage) : IOfflineRequestQueue
+public class OfflineRequestQueue(ILocalStorageService localStorage) : IOfflineRequestQueue, IDisposable
 {
     private const string StorageKey = "offline-requests";
     private readonly SemaphoreSlim _mutex = new(1,1);
@@ -76,5 +76,10 @@ public class OfflineRequestQueue(ILocalStorageService localStorage) : IOfflineRe
             await localStorage.SetItemAsync(StorageKey, _queue.ToArray());
         }
         finally { _mutex.Release(); }
+    }
+
+    public void Dispose()
+    {
+        throw new NotImplementedException();
     }
 }

@@ -7,4 +7,5 @@ public static class SchemaNames
     public const string Catalog = "catalog";
     public const string Todo = "todo";
     public const string Accounting = "accounting";
+    public const string Warehouse = "warehouse";
 }
