@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.Warehouse.Features.Products.Update.v1;
 
 public static class UpdateProductEndpoint
 {
-    internal static RouteHandlerBuilder MapProductUpdateEndpoint(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder MapProductUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints.MapPut("/{id:guid}", async (DefaultIdType id, UpdateProductCommand request, ISender mediator) =>
         {
@@ -25,4 +25,3 @@ public static class UpdateProductEndpoint
         .MapToApiVersion(new ApiVersion(1, 0));
     }
 }
-
