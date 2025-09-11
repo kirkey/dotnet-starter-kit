@@ -21,8 +21,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
-
 </Project>

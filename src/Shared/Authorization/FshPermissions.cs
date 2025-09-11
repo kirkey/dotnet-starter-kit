@@ -73,6 +73,14 @@ public static class FshPermissions
         new("Update Accounting", FshActions.Update, FshResources.Accounting),
         new("Delete Accounting", FshActions.Delete, FshResources.Accounting),
         new("Export Accounting", FshActions.Export, FshResources.Accounting),
+
+        //Warehouse
+        new("View Warehouse", FshActions.View, FshResources.Warehouse),
+        new("Search Warehouse", FshActions.Search, FshResources.Warehouse),
+        new("Create Warehouse", FshActions.Create, FshResources.Warehouse),
+        new("Update Warehouse", FshActions.Update, FshResources.Warehouse),
+        new("Delete Warehouse", FshActions.Delete, FshResources.Warehouse),
+        new("Export Warehouse", FshActions.Export, FshResources.Warehouse),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);
@@ -89,5 +97,3 @@ public record FshPermission(string Description, string Action, string Resource, 
         return $"Permissions.{resource}.{action}";
     }
 }
-
-

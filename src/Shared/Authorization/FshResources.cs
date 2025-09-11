@@ -17,4 +17,5 @@ public static class FshResources
     public const string Todos = nameof(Todos);
 
     public const string Accounting = nameof(Accounting);
+    public const string Warehouse = nameof(Warehouse);
 }
