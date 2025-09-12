@@ -25,7 +25,6 @@
     <ProjectReference Include="..\modules\App\App\App.csproj" />
     <ProjectReference Include="..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
     <ProjectReference Include="..\modules\Todo\Todo.csproj" />
-    <ProjectReference Include="..\modules\Warehouse\Warehouse.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.Development.json">
