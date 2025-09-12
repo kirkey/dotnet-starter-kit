@@ -16,5 +16,4 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.DependencyInjection;
 global using Store.Domain;
-global using Store.Infrastructure.Endpoints.v1;
 global using Store.Infrastructure.Persistence;
