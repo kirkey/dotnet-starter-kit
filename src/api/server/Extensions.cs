@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.App;
 using FSH.Starter.WebApi.Catalog.Application;
 using FSH.Starter.WebApi.Catalog.Infrastructure;
 using FSH.Starter.WebApi.Todo;
-using FSH.Starter.WebApi.Warehouse;
+using Store.Infrastructure;
 
 namespace FSH.Starter.WebApi.Host;
 
@@ -24,7 +24,7 @@ public static class Extensions
             typeof(CatalogMetadata).Assembly,
             typeof(TodoModule).Assembly,
             typeof(AccountingMetadata).Assembly,
-            typeof(WarehouseModule).Assembly,
+            typeof(StoreModule).Assembly,
         };
 
         //register validators
@@ -39,7 +39,7 @@ public static class Extensions
         builder.RegisterCatalogServices();
         builder.RegisterTodoServices();
         builder.RegisterAccountingServices();
-        builder.RegisterWarehouseServices();
+        builder.RegisterStoreServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
@@ -48,7 +48,7 @@ public static class Extensions
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
             config.WithModule<AccountingModule.Endpoints>();
-            config.WithModule<WarehouseModule.Endpoints>();
+            config.WithModule<StoreModule.Endpoints>();
         });
 
         return builder;
@@ -63,7 +63,7 @@ public static class Extensions
         app.UseCatalogModule();
         app.UseTodoModule();
         app.UseAccountingModule();
-        app.UseWarehouseModule();
+        app.UseStoreModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()

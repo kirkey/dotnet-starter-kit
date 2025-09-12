@@ -1,7 +1,4 @@
-﻿using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.Catalog.Domain;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Persistence;
 internal sealed class CatalogDbInitializer(

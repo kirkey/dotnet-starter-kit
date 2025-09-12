@@ -120,7 +120,7 @@ public class AuditInterceptor(ICurrentUser currentUser, TimeProvider timeProvide
     {
         if (context == null) return;
     
-        var utcNow = timeProvider.GetUtcNow();
+        var utcNow = timeProvider.GetLocalNow();
         var userId = currentUser.GetUserId();
         var userName = currentUser.GetUserName();
     

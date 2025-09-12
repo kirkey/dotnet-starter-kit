@@ -1,9 +1,4 @@
-﻿using Finbuckle.MultiTenant;
-using FSH.Starter.WebApi.Catalog.Domain;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace FSH.Starter.WebApi.Catalog.Infrastructure.Persistence.Configurations;
+﻿namespace FSH.Starter.WebApi.Catalog.Infrastructure.Persistence.Configurations;
 internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)

@@ -1,0 +1,24 @@
+namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Get.v1;
+
+public record GetInventoryTransferResponse(
+    DefaultIdType Id,
+    string TransferNumber,
+    DefaultIdType FromWarehouseId,
+    string FromWarehouseName,
+    DefaultIdType ToWarehouseId,
+    string ToWarehouseName,
+    DateTime TransferDate,
+    DateTime? ExpectedArrivalDate,
+    DateTime? ActualArrivalDate,
+    string Status,
+    string TransferType,
+    string Priority,
+    decimal TotalValue,
+    string? TransportMethod,
+    string? TrackingNumber,
+    string? Notes,
+    string? RequestedBy,
+    string? ApprovedBy,
+    DateTime? ApprovalDate,
+    DateTime CreatedOn,
+    DateTime? LastModifiedOn);

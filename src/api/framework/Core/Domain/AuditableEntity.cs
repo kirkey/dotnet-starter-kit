@@ -47,20 +47,20 @@ public abstract class AuditableEntityWithApproval<TId> : AuditableEntity<TId>
     public DefaultIdType? PreparedBy { get; set; }
     [Column(TypeName = "VARCHAR(1024)")]
     public string? PreparerName { get; set; }
-    public DateTimeOffset? PreparedOn { get; set; }
+    public DateTime? PreparedOn { get; set; }
 
     public DefaultIdType? ReviewedBy { get; set; }
     [Column(TypeName = "VARCHAR(1024)")]
     public string? ReviewerName { get; set; }
-    public DateTimeOffset? ReviewedOn { get; set; }
+    public DateTime? ReviewedOn { get; set; }
 
     public DefaultIdType? RecommendedBy { get; set; }
     [Column(TypeName = "VARCHAR(1024)")]
     public string? RecommenderName { get; set; }
-    public DateTimeOffset? RecommendedOn { get; set; }
+    public DateTime? RecommendedOn { get; set; }
 
     public DefaultIdType? ApprovedBy { get; set; }
     [Column(TypeName = "VARCHAR(1024)")]
     public string? ApproverName { get; set; }
-    public DateTimeOffset? ApprovedOn { get; set; }
+    public DateTime? ApprovedOn { get; set; }
 }
