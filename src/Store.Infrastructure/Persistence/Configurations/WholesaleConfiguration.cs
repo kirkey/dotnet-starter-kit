@@ -1,7 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Store.Domain;
-
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class WholesaleConfiguration : IEntityTypeConfiguration<WholesaleContract>

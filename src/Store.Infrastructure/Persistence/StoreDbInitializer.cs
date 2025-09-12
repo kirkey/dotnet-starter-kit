@@ -1,8 +1,6 @@
 // filepath: /Users/kirkeypsalms/Projects/dotnet-starter-kit/src/Store.Infrastructure/Persistence/StoreDbInitializer.cs
-using FSH.Framework.Core.Persistence;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Logging;
-using Store.Domain;
 
 namespace Store.Infrastructure.Persistence;
 

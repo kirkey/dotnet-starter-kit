@@ -1,9 +1,6 @@
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-
 namespace Store.Infrastructure.Endpoints.v1;
+
+// Deprecated: moved endpoints to Store.Infrastructure/Endpoints/SalesOrders/v1/*. Keep this file as a stub to avoid duplicate registrations.
 
 public class SalesOrdersEndpoint : IEndpoint
 {

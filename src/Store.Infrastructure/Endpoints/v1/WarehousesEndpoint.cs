@@ -2,10 +2,6 @@ using FSH.Starter.WebApi.Store.Application.Warehouses.Create.v1;
 using FSH.Starter.WebApi.Store.Application.Warehouses.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
 using FSH.Starter.WebApi.Store.Application.Warehouses.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace Store.Infrastructure.Endpoints.v1;
 

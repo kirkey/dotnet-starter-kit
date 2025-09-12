@@ -1,11 +1,5 @@
-using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Create.v1;
-using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Get.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Create.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace Store.Infrastructure.Endpoints.v1;
 

@@ -1,11 +1,10 @@
-using Carter;
-using FSH.Framework.Core.Persistence;
-using FSH.Framework.Infrastructure.Persistence;
-using Store.Domain;
-using Store.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
+using Store.Infrastructure.Endpoints.Customers.v1;
+using Store.Infrastructure.Endpoints.GroceryItems.v1;
+using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
+using Store.Infrastructure.Endpoints.StockAdjustments.v1;
+using Store.Infrastructure.Endpoints.Warehouses.v1;
+using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
+using Store.Infrastructure.Endpoints.SalesOrders.v1;
 
 namespace Store.Infrastructure;
 
@@ -18,7 +17,48 @@ public static class StoreModule
 
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            // endpoints are implemented as IEndpoint classes under Endpoints/v1, so module routes don't need to add routes here.
+            // Register endpoints using Catalog-style grouped mapping for clarity
+            var groceryGroup = app.MapGroup("grocery-items").WithTags("Grocery Items");
+            groceryGroup.MapCreateGroceryItemEndpoint();
+            groceryGroup.MapGetGroceryItemEndpoint();
+            groceryGroup.MapUpdateGroceryItemEndpoint();
+            groceryGroup.MapDeleteGroceryItemEndpoint();
+
+            var customerGroup = app.MapGroup("customers").WithTags("Customers");
+            customerGroup.MapCreateCustomerEndpoint();
+            customerGroup.MapGetCustomerEndpoint();
+            customerGroup.MapUpdateCustomerEndpoint();
+            customerGroup.MapDeleteCustomerEndpoint();
+
+            var inventoryGroup = app.MapGroup("inventory-transfers").WithTags("Inventory Transfers");
+            inventoryGroup.MapCreateInventoryTransferEndpoint();
+            inventoryGroup.MapGetInventoryTransferEndpoint();
+            inventoryGroup.MapUpdateInventoryTransferEndpoint();
+            inventoryGroup.MapSearchInventoryTransfersEndpoint();
+
+            var stockGroup = app.MapGroup("stock-adjustments").WithTags("Stock Adjustments");
+            stockGroup.MapCreateStockAdjustmentEndpoint();
+            stockGroup.MapGetStockAdjustmentEndpoint();
+            stockGroup.MapApproveStockAdjustmentEndpoint();
+            // Note: search endpoint removed until a SearchStockAdjustmentsQuery is implemented
+
+            var warehouses = app.MapGroup("warehouses").WithTags("Warehouses");
+            warehouses.MapCreateWarehouseEndpoint();
+            warehouses.MapGetWarehouseEndpoint();
+            warehouses.MapUpdateWarehouseEndpoint();
+            warehouses.MapDeleteWarehouseEndpoint();
+
+            var whLocations = app.MapGroup("warehouse-locations").WithTags("Warehouse Locations");
+            whLocations.MapCreateWarehouseLocationEndpoint();
+            whLocations.MapGetWarehouseLocationEndpoint();
+            whLocations.MapSearchWarehouseLocationsEndpoint();
+            whLocations.MapUpdateWarehouseLocationEndpoint();
+
+            var sales = app.MapGroup("sales-orders").WithTags("Sales Orders");
+            sales.MapCreateSalesOrderEndpoint();
+            sales.MapGetSalesOrderEndpoint();
+            sales.MapUpdateSalesOrderEndpoint();
+            sales.MapDeleteSalesOrderEndpoint();
         }
     }
 
