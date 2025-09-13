@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class SalesOrder : AuditableEntity, IAggregateRoot
+public sealed class SalesOrder : AuditableEntity, IAggregateRoot
 {
     public string OrderNumber { get; private set; } = default!;
     public DefaultIdType CustomerId { get; private set; }
@@ -20,14 +20,14 @@ public class SalesOrder : AuditableEntity, IAggregateRoot
     public string PaymentStatus { get; private set; } = default!; // Pending, Paid, Partial, Overdue
     public string PaymentMethod { get; private set; } = default!; // Cash, Card, Transfer, Credit
     public string? DeliveryAddress { get; private set; }
-    public string? Notes { get; private set; }
+    
     public bool IsUrgent { get; private set; }
     public string? SalesPersonId { get; private set; }
     public DefaultIdType? WarehouseId { get; private set; }
     
-    public virtual Customer Customer { get; private set; } = default!;
-    public virtual Warehouse? Warehouse { get; private set; }
-    public virtual ICollection<SalesOrderItem> Items { get; private set; } = new List<SalesOrderItem>();
+    public Customer Customer { get; private set; } = default!;
+    public Warehouse? Warehouse { get; private set; }
+    public ICollection<SalesOrderItem> Items { get; private set; } = new List<SalesOrderItem>();
 
     private SalesOrder() { }
 

@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class InventoryTransferItem : AuditableEntity, IAggregateRoot
+public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
 {
     public DefaultIdType InventoryTransferId { get; private set; }
     public DefaultIdType GroceryItemId { get; private set; }
@@ -13,12 +13,12 @@ public class InventoryTransferItem : AuditableEntity, IAggregateRoot
     public int ReceivedQuantity { get; private set; }
     public decimal UnitCost { get; private set; }
     public decimal TotalValue { get; private set; }
-    public string? Notes { get; private set; }
+    
     public string? BatchNumber { get; private set; }
     public DateTime? ExpiryDate { get; private set; }
     
-    public virtual InventoryTransfer InventoryTransfer { get; private set; } = default!;
-    public virtual GroceryItem GroceryItem { get; private set; } = default!;
+    public InventoryTransfer InventoryTransfer { get; private set; } = default!;
+    public GroceryItem GroceryItem { get; private set; } = default!;
 
     private InventoryTransferItem() { }
 

@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class PriceList : AuditableEntity, IAggregateRoot
+public sealed class PriceList : AuditableEntity, IAggregateRoot
 {
     public string PriceListName { get; private set; } = default!;
     public string PriceListType { get; private set; } = default!; // Retail, Wholesale, Promotional, Seasonal
@@ -14,9 +14,9 @@ public class PriceList : AuditableEntity, IAggregateRoot
     public string Currency { get; private set; } = default!;
     public decimal? MinimumOrderValue { get; private set; }
     public string? CustomerType { get; private set; } // Retail, Wholesale, VIP, etc.
-    public string? Notes { get; private set; }
     
-    public virtual ICollection<PriceListItem> Items { get; private set; } = new List<PriceListItem>();
+    
+    public ICollection<PriceListItem> Items { get; private set; } = new List<PriceListItem>();
 
     private PriceList() { }
 

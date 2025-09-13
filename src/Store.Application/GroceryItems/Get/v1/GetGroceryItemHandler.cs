@@ -1,6 +1,3 @@
-
-
-
 using Store.Domain.Exceptions.GroceryItem;
 
 namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Get.v1;
@@ -8,9 +5,9 @@ namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Get.v1;
 public sealed class GetGroceryItemHandler(
     [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> repository,
     ICacheService cache)
-    : IRequestHandler<GetGroceryItemRequest, GroceryItemResponse>
+    : IRequestHandler<GetGroceryItemQuery, GroceryItemResponse>
 {
-    public async Task<GroceryItemResponse> Handle(GetGroceryItemRequest request, CancellationToken cancellationToken)
+    public async Task<GroceryItemResponse> Handle(GetGroceryItemQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(
@@ -18,7 +15,7 @@ public sealed class GetGroceryItemHandler(
             async () =>
             {
                 var spec = new GetGroceryItemSpecs(request.Id);
-                var response = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false) ?? 
+                var response = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false) ??
                                throw new GroceryItemNotFoundException(request.Id);
                 return response;
             },

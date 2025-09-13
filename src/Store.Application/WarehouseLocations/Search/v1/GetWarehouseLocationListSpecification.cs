@@ -1,8 +1,6 @@
-
-
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
 
-public class GetWarehouseLocationListSpecification : Specification<WarehouseLocation>
+public class GetWarehouseLocationListSpecification : Specification<WarehouseLocation, GetWarehouseLocationListResponse>
 {
     public GetWarehouseLocationListSpecification(SearchWarehouseLocationsCommand request)
     {
@@ -41,6 +39,24 @@ public class GetWarehouseLocationListSpecification : Specification<WarehouseLoca
         {
             Query.Where(wl => wl.RequiresTemperatureControl == request.RequiresTemperatureControl.Value);
         }
+
+        // Project to DTO expected by handlers
+        Query.Select(wl => new GetWarehouseLocationListResponse(
+            wl.Id,
+            wl.Name!,
+            wl.Code,
+            wl.Aisle,
+            wl.Section,
+            wl.Shelf,
+            wl.Bin,
+            wl.WarehouseId,
+            wl.Warehouse != null ? wl.Warehouse.Name! : null,
+            wl.LocationType,
+            wl.Capacity,
+            wl.UsedCapacity,
+            wl.CapacityUnit,
+            wl.IsActive,
+            wl.RequiresTemperatureControl));
 
         Query.OrderBy(wl => wl.Warehouse.Name).ThenBy(wl => wl.Aisle).ThenBy(wl => wl.Section).ThenBy(wl => wl.Shelf);
     }

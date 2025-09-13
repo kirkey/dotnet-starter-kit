@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class InventoryTransfer : AuditableEntity, IAggregateRoot
+public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 {
     public string TransferNumber { get; private set; } = default!;
     // Name and Description are inherited from AuditableEntity
@@ -27,11 +27,11 @@ public class InventoryTransfer : AuditableEntity, IAggregateRoot
     public string? ApprovedBy { get; private set; }
     public DateTime? ApprovalDate { get; private set; }
     
-    public virtual Warehouse FromWarehouse { get; private set; } = default!;
-    public virtual Warehouse ToWarehouse { get; private set; } = default!;
-    public virtual WarehouseLocation? FromLocation { get; private set; }
-    public virtual WarehouseLocation? ToLocation { get; private set; }
-    public virtual ICollection<InventoryTransferItem> Items { get; private set; } = new List<InventoryTransferItem>();
+    public Warehouse FromWarehouse { get; private set; } = default!;
+    public Warehouse ToWarehouse { get; private set; } = default!;
+    public WarehouseLocation? FromLocation { get; private set; }
+    public WarehouseLocation? ToLocation { get; private set; }
+    public ICollection<InventoryTransferItem> Items { get; private set; } = new List<InventoryTransferItem>();
 
     private InventoryTransfer() { }
 

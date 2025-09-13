@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class Category : AuditableEntity, IAggregateRoot
+public sealed class Category : AuditableEntity, IAggregateRoot
 {
     public string Code { get; private set; } = default!;
     public DefaultIdType? ParentCategoryId { get; private set; }
@@ -12,9 +12,9 @@ public class Category : AuditableEntity, IAggregateRoot
     public int SortOrder { get; private set; }
     public string? ImageUrl { get; private set; }
     
-    public virtual Category? ParentCategory { get; private set; }
-    public virtual ICollection<Category> SubCategories { get; private set; } = new List<Category>();
-    public virtual ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
+    public Category? ParentCategory { get; private set; }
+    public ICollection<Category> SubCategories { get; private set; } = new List<Category>();
+    public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
 
     private Category() { }
 

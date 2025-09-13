@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class PurchaseOrderItem : AuditableEntity, IAggregateRoot
+public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
 {
     public DefaultIdType PurchaseOrderId { get; private set; }
     public DefaultIdType GroceryItemId { get; private set; }
@@ -13,10 +13,10 @@ public class PurchaseOrderItem : AuditableEntity, IAggregateRoot
     public decimal DiscountAmount { get; private set; }
     public decimal TotalPrice { get; private set; }
     public int ReceivedQuantity { get; private set; }
-    public string? Notes { get; private set; }
     
-    public virtual PurchaseOrder PurchaseOrder { get; private set; } = default!;
-    public virtual GroceryItem GroceryItem { get; private set; } = default!;
+    
+    public PurchaseOrder PurchaseOrder { get; private set; } = default!;
+    public GroceryItem GroceryItem { get; private set; } = default!;
 
     private PurchaseOrderItem() { }
 

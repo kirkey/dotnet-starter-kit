@@ -3,7 +3,7 @@ using FSH.Framework.Core.Domain.Contracts;
 
 namespace Store.Domain;
 
-public class Customer : AuditableEntity, IAggregateRoot
+public sealed class Customer : AuditableEntity, IAggregateRoot
 {
     public string Code { get; private set; } = default!;
     public string CustomerType { get; private set; } = default!; // Retail, Wholesale, Corporate
@@ -24,10 +24,10 @@ public class Customer : AuditableEntity, IAggregateRoot
     public string? BusinessLicense { get; private set; }
     public DateTime? LastOrderDate { get; private set; }
     public decimal LifetimeValue { get; private set; }
-    public string? Notes { get; private set; }
     
-    public virtual ICollection<SalesOrder> SalesOrders { get; private set; } = new List<SalesOrder>();
-    public virtual ICollection<WholesaleContract> WholesaleContracts { get; private set; } = new List<WholesaleContract>();
+    
+    public ICollection<SalesOrder> SalesOrders { get; private set; } = new List<SalesOrder>();
+    public ICollection<WholesaleContract> WholesaleContracts { get; private set; } = new List<WholesaleContract>();
 
     private Customer() { }
 

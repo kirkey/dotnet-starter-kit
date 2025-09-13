@@ -12,25 +12,10 @@ public sealed class SearchWarehouseLocationsHandler(
         ArgumentNullException.ThrowIfNull(request);
         
         var spec = new GetWarehouseLocationListSpecification(request);
-        var warehouseLocations = await repository.PaginatedListAsync(spec, new PaginationFilter(request.PageNumber, request.PageSize), cancellationToken).ConfigureAwait(false);
+        var paged = await repository.PaginatedListAsync(spec, new PaginationFilter { PageNumber = request.PageNumber, PageSize = request.PageSize }, cancellationToken).ConfigureAwait(false);
         
-        logger.LogInformation("Retrieved {Count} warehouse locations", warehouseLocations.Data.Count);
+        logger.LogInformation("Retrieved {Count} warehouse locations", paged.TotalCount);
         
-        return warehouseLocations.Select(wl => new GetWarehouseLocationListResponse(
-            wl.Id,
-            wl.Name!,
-            wl.Code,
-            wl.Aisle,
-            wl.Section,
-            wl.Shelf,
-            wl.Bin,
-            wl.WarehouseId,
-            wl.Warehouse.Name!,
-            wl.LocationType,
-            wl.Capacity,
-            wl.UsedCapacity,
-            wl.CapacityUnit,
-            wl.IsActive,
-            wl.RequiresTemperatureControl));
+        return paged;
     }
 }

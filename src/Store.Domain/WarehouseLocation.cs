@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class WarehouseLocation : AuditableEntity, IAggregateRoot
+public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
 {
     public string Code { get; private set; } = default!;
     public string Aisle { get; private set; } = default!;
@@ -22,8 +22,8 @@ public class WarehouseLocation : AuditableEntity, IAggregateRoot
     public decimal? MaxTemperature { get; private set; }
     public string? TemperatureUnit { get; private set; }
     
-    public virtual Warehouse Warehouse { get; private set; } = default!;
-    public virtual ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
+    public Warehouse Warehouse { get; private set; } = default!;
+    public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
 
     private WarehouseLocation() { }
 

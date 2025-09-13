@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.StockAdjustments.Approve.v1;
+
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
 public static class ApproveStockAdjustmentEndpoint
@@ -6,7 +8,7 @@ public static class ApproveStockAdjustmentEndpoint
     {
         return endpoints.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveStockAdjustmentCommand command, ISender sender) =>
         {
-            if (id != command.AdjustmentId) return Results.BadRequest("ID mismatch");
+            if (id != command.Id) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })

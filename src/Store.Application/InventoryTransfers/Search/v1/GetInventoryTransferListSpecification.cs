@@ -1,8 +1,6 @@
-
-
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Search.v1;
 
-public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer>
+public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer, GetInventoryTransferListResponse>
 {
     public SearchInventoryTransfersSpecs(SearchInventoryTransfersCommand request)
     {
@@ -40,6 +38,19 @@ public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer>
         {
             Query.Where(it => it.TransferDate <= request.ToDate.Value);
         }
+
+        // Project to DTO expected by handlers and PaginatedListAsync
+        Query.Select(it => new GetInventoryTransferListResponse(
+            it.Id,
+            it.TransferNumber,
+            it.FromWarehouseId,
+            it.FromWarehouse != null ? it.FromWarehouse.Name! : null,
+            it.ToWarehouseId,
+            it.ToWarehouse != null ? it.ToWarehouse.Name! : null,
+            it.TransferDate,
+            it.Status,
+            it.TransferType,
+            it.Priority));
 
         Query.OrderByDescending(it => it.TransferDate).ThenBy(it => it.TransferNumber);
     }

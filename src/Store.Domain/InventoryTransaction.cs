@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class InventoryTransaction : AuditableEntity, IAggregateRoot
+public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
 {
     public string TransactionNumber { get; private set; } = default!;
     public DefaultIdType GroceryItemId { get; private set; }
@@ -20,16 +20,16 @@ public class InventoryTransaction : AuditableEntity, IAggregateRoot
     public decimal TotalCost { get; private set; }
     public DateTime TransactionDate { get; private set; }
     public string? Reference { get; private set; }
-    public string? Notes { get; private set; }
+    
     public string? PerformedBy { get; private set; }
     public bool IsApproved { get; private set; }
     public string? ApprovedBy { get; private set; }
     public DateTime? ApprovalDate { get; private set; }
     
-    public virtual GroceryItem GroceryItem { get; private set; } = default!;
-    public virtual Warehouse? Warehouse { get; private set; }
-    public virtual WarehouseLocation? WarehouseLocation { get; private set; }
-    public virtual PurchaseOrder? PurchaseOrder { get; private set; }
+    public GroceryItem GroceryItem { get; private set; } = default!;
+    public Warehouse? Warehouse { get; private set; }
+    public WarehouseLocation? WarehouseLocation { get; private set; }
+    public PurchaseOrder? PurchaseOrder { get; private set; }
 
     private InventoryTransaction() { }
 

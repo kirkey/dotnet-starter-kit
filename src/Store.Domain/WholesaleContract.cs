@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class WholesaleContract : AuditableEntity, IAggregateRoot
+public sealed class WholesaleContract : AuditableEntity, IAggregateRoot
 {
     public string ContractNumber { get; private set; } = default!;
     public DefaultIdType CustomerId { get; private set; }
@@ -18,10 +18,10 @@ public class WholesaleContract : AuditableEntity, IAggregateRoot
     public string? DeliveryTerms { get; private set; }
     public string? ContractTerms { get; private set; }
     public bool AutoRenewal { get; private set; }
-    public string? Notes { get; private set; }
     
-    public virtual Customer Customer { get; private set; } = default!;
-    public virtual ICollection<WholesalePricing> WholesalePricings { get; private set; } = new List<WholesalePricing>();
+    
+    public Customer Customer { get; private set; } = default!;
+    public ICollection<WholesalePricing> WholesalePricings { get; private set; } = new List<WholesalePricing>();
 
     private WholesaleContract() { }
 

@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class Supplier : AuditableEntity, IAggregateRoot
+public sealed class Supplier : AuditableEntity, IAggregateRoot
 {
     public string Code { get; private set; } = default!;
     public string ContactPerson { get; private set; } = default!;
@@ -20,10 +20,10 @@ public class Supplier : AuditableEntity, IAggregateRoot
     public int PaymentTermsDays { get; private set; }
     public bool IsActive { get; private set; } = true;
     public decimal Rating { get; private set; } = 0;
-    public string? Notes { get; private set; }
     
-    public virtual ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
-    public virtual ICollection<PurchaseOrder> PurchaseOrders { get; private set; } = new List<PurchaseOrder>();
+    
+    public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
+    public ICollection<PurchaseOrder> PurchaseOrders { get; private set; } = new List<PurchaseOrder>();
 
     private Supplier() { }
 

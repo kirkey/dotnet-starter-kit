@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class PriceListItem : AuditableEntity, IAggregateRoot
+public sealed class PriceListItem : AuditableEntity, IAggregateRoot
 {
     public DefaultIdType PriceListId { get; private set; }
     public DefaultIdType GroceryItemId { get; private set; }
@@ -14,8 +14,8 @@ public class PriceListItem : AuditableEntity, IAggregateRoot
     public decimal? MaximumQuantity { get; private set; }
     public bool IsActive { get; private set; } = true;
     
-    public virtual PriceList PriceList { get; private set; } = default!;
-    public virtual GroceryItem GroceryItem { get; private set; } = default!;
+    public PriceList PriceList { get; private set; } = default!;
+    public GroceryItem GroceryItem { get; private set; } = default!;
 
     private PriceListItem() { }
 

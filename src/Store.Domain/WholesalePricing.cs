@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class WholesalePricing : AuditableEntity, IAggregateRoot
+public sealed class WholesalePricing : AuditableEntity, IAggregateRoot
 {
     public DefaultIdType WholesaleContractId { get; private set; }
     public DefaultIdType GroceryItemId { get; private set; }
@@ -15,10 +15,10 @@ public class WholesalePricing : AuditableEntity, IAggregateRoot
     public DateTime EffectiveDate { get; private set; }
     public DateTime? ExpiryDate { get; private set; }
     public bool IsActive { get; private set; } = true;
-    public string? Notes { get; private set; }
     
-    public virtual WholesaleContract WholesaleContract { get; private set; } = default!;
-    public virtual GroceryItem GroceryItem { get; private set; } = default!;
+    
+    public WholesaleContract WholesaleContract { get; private set; } = default!;
+    public GroceryItem GroceryItem { get; private set; } = default!;
 
     private WholesalePricing() { }
 
@@ -75,22 +75,26 @@ public class WholesalePricing : AuditableEntity, IAggregateRoot
 
     public WholesalePricing UpdatePricing(decimal tierPrice, decimal discountPercentage)
     {
-        if (TierPrice != tierPrice || DiscountPercentage != discountPercentage)
+        if (TierPrice == tierPrice && DiscountPercentage == discountPercentage)
         {
-            TierPrice = tierPrice;
-            DiscountPercentage = discountPercentage;
-            QueueDomainEvent(new WholesalePricingUpdated { WholesalePricing = this });
+            return this;
         }
+
+        TierPrice = tierPrice;
+        DiscountPercentage = discountPercentage;
+        QueueDomainEvent(new WholesalePricingUpdated { WholesalePricing = this });
         return this;
     }
 
     public WholesalePricing Deactivate()
     {
-        if (IsActive)
+        if (!IsActive)
         {
-            IsActive = false;
-            QueueDomainEvent(new WholesalePricingDeactivated { WholesalePricing = this });
+            return this;
         }
+
+        IsActive = false;
+        QueueDomainEvent(new WholesalePricingDeactivated { WholesalePricing = this });
         return this;
     }
 

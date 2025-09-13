@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class Warehouse : AuditableEntity, IAggregateRoot
+public sealed class Warehouse : AuditableEntity, IAggregateRoot
 {
     public string Code { get; private set; } = default!;
     public string Address { get; private set; } = default!;
@@ -22,8 +22,8 @@ public class Warehouse : AuditableEntity, IAggregateRoot
     public bool IsMainWarehouse { get; private set; }
     public DateTime? LastInventoryDate { get; private set; }
     
-    public virtual ICollection<WarehouseLocation> Locations { get; private set; } = new List<WarehouseLocation>();
-    public virtual ICollection<InventoryTransaction> InventoryTransactions { get; private set; } = new List<InventoryTransaction>();
+    public ICollection<WarehouseLocation> Locations { get; private set; } = new List<WarehouseLocation>();
+    public ICollection<InventoryTransaction> InventoryTransactions { get; private set; } = new List<InventoryTransaction>();
 
     private Warehouse() { }
 

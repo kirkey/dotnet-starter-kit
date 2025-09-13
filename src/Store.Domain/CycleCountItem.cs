@@ -4,21 +4,21 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class CycleCountItem : AuditableEntity, IAggregateRoot
+public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
 {
     public DefaultIdType CycleCountId { get; private set; }
     public DefaultIdType GroceryItemId { get; private set; }
     public int SystemQuantity { get; private set; }
     public int? CountedQuantity { get; private set; }
     public int? VarianceQuantity { get; private set; }
-    public string? Notes { get; private set; }
+    
     public DateTime? CountDate { get; private set; }
     public string? CountedBy { get; private set; }
     public bool RequiresRecount { get; private set; }
     public string? RecountReason { get; private set; }
     
-    public virtual CycleCount CycleCount { get; private set; } = default!;
-    public virtual GroceryItem GroceryItem { get; private set; } = default!;
+    public CycleCount CycleCount { get; private set; } = default!;
+    public GroceryItem GroceryItem { get; private set; } = default!;
 
     private CycleCountItem() { }
 

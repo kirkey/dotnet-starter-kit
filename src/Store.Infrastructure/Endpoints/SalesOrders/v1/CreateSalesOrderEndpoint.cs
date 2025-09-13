@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.SalesOrders.Create.v1;
+
 namespace Store.Infrastructure.Endpoints.SalesOrders.v1;
 
 public static class CreateSalesOrderEndpoint

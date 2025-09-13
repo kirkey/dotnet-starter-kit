@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class CycleCount : AuditableEntity, IAggregateRoot
+public sealed class CycleCount : AuditableEntity, IAggregateRoot
 {
     public string CountNumber { get; private set; } = default!;
     public DefaultIdType WarehouseId { get; private set; }
@@ -20,11 +20,11 @@ public class CycleCount : AuditableEntity, IAggregateRoot
     public int ItemsCountedCorrect { get; private set; }
     public int ItemsWithDiscrepancies { get; private set; }
     public decimal AccuracyPercentage { get; private set; }
-    public string? Notes { get; private set; }
     
-    public virtual Warehouse Warehouse { get; private set; } = default!;
-    public virtual WarehouseLocation? WarehouseLocation { get; private set; }
-    public virtual ICollection<CycleCountItem> Items { get; private set; } = new List<CycleCountItem>();
+    
+    public Warehouse Warehouse { get; private set; } = default!;
+    public WarehouseLocation? WarehouseLocation { get; private set; }
+    public ICollection<CycleCountItem> Items { get; private set; } = new List<CycleCountItem>();
 
     private CycleCount() { }
 

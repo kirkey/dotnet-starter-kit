@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class GroceryItem : AuditableEntity, IAggregateRoot
+public sealed class GroceryItem : AuditableEntity, IAggregateRoot
 {
     public string SKU { get; private set; } = default!;
     public string Barcode { get; private set; } = default!;
@@ -24,9 +24,9 @@ public class GroceryItem : AuditableEntity, IAggregateRoot
     public DefaultIdType? SupplierId { get; private set; }
     public DefaultIdType? WarehouseLocationId { get; private set; }
     
-    public virtual Category Category { get; private set; } = default!;
-    public virtual Supplier Supplier { get; private set; } = default!;
-    public virtual WarehouseLocation? WarehouseLocation { get; private set; }
+    public Category Category { get; private set; } = default!;
+    public Supplier Supplier { get; private set; } = default!;
+    public WarehouseLocation? WarehouseLocation { get; private set; }
 
     private GroceryItem() { }
 

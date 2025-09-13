@@ -4,7 +4,7 @@ using Store.Domain.Events;
 
 namespace Store.Domain;
 
-public class StockAdjustment : AuditableEntity, IAggregateRoot
+public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
 {
     public string AdjustmentNumber { get; private set; } = default!;
     public DefaultIdType GroceryItemId { get; private set; }
@@ -19,7 +19,7 @@ public class StockAdjustment : AuditableEntity, IAggregateRoot
     public decimal UnitCost { get; private set; }
     public decimal TotalCostImpact { get; private set; }
     public string? Reference { get; private set; }
-    public string? Notes { get; private set; }
+    
     public string? AdjustedBy { get; private set; }
     public string? ApprovedBy { get; private set; }
     public DateTime? ApprovalDate { get; private set; }
@@ -27,9 +27,9 @@ public class StockAdjustment : AuditableEntity, IAggregateRoot
     public string? BatchNumber { get; private set; }
     public DateTime? ExpiryDate { get; private set; }
     
-    public virtual GroceryItem GroceryItem { get; private set; } = default!;
-    public virtual Warehouse Warehouse { get; private set; } = default!;
-    public virtual WarehouseLocation? WarehouseLocation { get; private set; }
+    public GroceryItem GroceryItem { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = default!;
+    public WarehouseLocation? WarehouseLocation { get; private set; }
 
     private StockAdjustment() { }
 
