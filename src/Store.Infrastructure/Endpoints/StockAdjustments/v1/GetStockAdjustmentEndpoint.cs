@@ -1,5 +1,4 @@
-using Store.Application.StockAdjustments.Get.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 

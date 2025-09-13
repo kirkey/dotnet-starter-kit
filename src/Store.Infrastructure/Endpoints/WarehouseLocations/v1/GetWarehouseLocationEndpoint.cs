@@ -1,5 +1,4 @@
-using Store.Application.WarehouseLocations.Get.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 

@@ -1,4 +1,4 @@
-
+using FSH.Framework.Core.Paging;
 
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Search.v1;
 
@@ -12,7 +12,7 @@ public sealed class SearchInventoryTransfersHandler(
         ArgumentNullException.ThrowIfNull(request);
         
         var spec = new SearchInventoryTransfersSpecs(request);
-        var inventoryTransfers = await repository.PaginatedListAsync(spec, request.PageNumber, request.PageSize, cancellationToken).ConfigureAwait(false);
+        var inventoryTransfers = await repository.PaginatedListAsync(spec, new PaginationFilter(request.PageNumber, request.PageSize), cancellationToken).ConfigureAwait(false);
         
         logger.LogInformation("Retrieved {Count} inventory transfers", inventoryTransfers.Data.Count);
         

@@ -1,5 +1,4 @@
-using Store.Application.InventoryTransfers.Create.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Create.v1;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 

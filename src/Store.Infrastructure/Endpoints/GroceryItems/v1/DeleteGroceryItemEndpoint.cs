@@ -1,5 +1,5 @@
-using Store.Application.GroceryItems.Delete.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.GroceryItems.Create.v1;
+using FSH.Starter.WebApi.Store.Application.GroceryItems.Delete.v1;
 
 namespace Store.Infrastructure.Endpoints.GroceryItems.v1;
 

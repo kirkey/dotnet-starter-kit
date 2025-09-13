@@ -1,4 +1,7 @@
+using Finbuckle.MultiTenant.Abstractions;
+using FSH.Framework.Infrastructure.Tenant;
 using Microsoft.Extensions.Options;
+using Shared.Constants;
 
 namespace Store.Infrastructure.Persistence;
 
@@ -32,12 +35,20 @@ public sealed class StoreDbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        ArgumentNullException.ThrowIfNull(modelBuilder);
         base.OnModelCreating(modelBuilder);
 
         // Apply all entity configurations from this assembly
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly);
 
-        // Configure schema
-        modelBuilder.HasDefaultSchema("Store");
+        // Configure schema using a shared constant
+        modelBuilder.HasDefaultSchema(SchemaNames.Warehouse);
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        base.ConfigureConventions(configurationBuilder);
+        configurationBuilder.Properties<decimal>().HavePrecision(16, 2);
+        configurationBuilder.Properties<double>().HavePrecision(8, 2);
     }
 }

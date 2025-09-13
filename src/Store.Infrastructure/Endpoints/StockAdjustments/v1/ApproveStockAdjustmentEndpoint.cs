@@ -1,6 +1,3 @@
-using Store.Application.StockAdjustments.Update.v1;
-using MediatR;
-
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
 public static class ApproveStockAdjustmentEndpoint

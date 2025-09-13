@@ -1,5 +1,4 @@
-using Store.Application.Customers.Update.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.Customers.Update.v1;
 
 namespace Store.Infrastructure.Endpoints.Customers.v1;
 

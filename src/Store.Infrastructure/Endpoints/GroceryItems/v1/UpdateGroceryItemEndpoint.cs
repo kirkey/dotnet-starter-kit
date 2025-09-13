@@ -1,5 +1,4 @@
-using Store.Application.GroceryItems.Update.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.GroceryItems.Update.v1;
 
 namespace Store.Infrastructure.Endpoints.GroceryItems.v1;
 

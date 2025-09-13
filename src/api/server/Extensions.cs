@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.App;
 using FSH.Starter.WebApi.Catalog.Application;
 using FSH.Starter.WebApi.Catalog.Infrastructure;
 using FSH.Starter.WebApi.Todo;
-using Store.Infrastructure;
+using FSH.Starter.WebApi.Store.Infrastructure;
 
 namespace FSH.Starter.WebApi.Host;
 

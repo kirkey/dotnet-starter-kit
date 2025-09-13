@@ -1,6 +1,3 @@
-using Store.Application.GroceryItems.Get.v1;
-using MediatR;
-
 namespace Store.Infrastructure.Endpoints.GroceryItems.v1;
 
 public static class GetGroceryItemEndpoint

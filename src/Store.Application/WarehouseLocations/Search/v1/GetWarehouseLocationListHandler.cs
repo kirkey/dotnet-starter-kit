@@ -1,4 +1,4 @@
-
+using FSH.Framework.Core.Paging;
 
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
 
@@ -12,7 +12,7 @@ public sealed class SearchWarehouseLocationsHandler(
         ArgumentNullException.ThrowIfNull(request);
         
         var spec = new GetWarehouseLocationListSpecification(request);
-        var warehouseLocations = await repository.PaginatedListAsync(spec, request.PageNumber, request.PageSize, cancellationToken).ConfigureAwait(false);
+        var warehouseLocations = await repository.PaginatedListAsync(spec, new PaginationFilter(request.PageNumber, request.PageSize), cancellationToken).ConfigureAwait(false);
         
         logger.LogInformation("Retrieved {Count} warehouse locations", warehouseLocations.Data.Count);
         

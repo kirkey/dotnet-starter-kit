@@ -1,6 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.SalesOrders.Create.v1;
-using MediatR;
-
 namespace Store.Infrastructure.Endpoints.SalesOrders.v1;
 
 public static class CreateSalesOrderEndpoint

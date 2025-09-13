@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
 public static class SearchInventoryTransfersEndpoint

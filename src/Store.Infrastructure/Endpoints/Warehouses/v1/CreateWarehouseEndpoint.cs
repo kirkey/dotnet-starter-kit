@@ -1,5 +1,4 @@
-using Store.Application.Warehouses.Create.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.Warehouses.Create.v1;
 
 namespace Store.Infrastructure.Endpoints.Warehouses.v1;
 

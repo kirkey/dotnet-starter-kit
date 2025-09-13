@@ -1,5 +1,4 @@
-using Store.Application.Warehouses.Update.v1;
-using MediatR;
+using FSH.Starter.WebApi.Store.Application.Warehouses.Update.v1;
 
 namespace Store.Infrastructure.Endpoints.Warehouses.v1;
 

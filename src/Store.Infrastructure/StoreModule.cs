@@ -1,4 +1,11 @@
-using Store.Infrastructure.Endpoints.v1;
+using Store.Infrastructure.Endpoints.Customers.v1;
+using Store.Infrastructure.Endpoints.GroceryItems.v1;
+using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
+using Store.Infrastructure.Endpoints.SalesOrders.v1;
+using Store.Infrastructure.Endpoints.StockAdjustments.v1;
+using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
+using Store.Infrastructure.Endpoints.Warehouses.v1;
+using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
 
