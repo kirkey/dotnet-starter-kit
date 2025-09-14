@@ -105,15 +105,20 @@ public sealed class SalesOrder : AuditableEntity, IAggregateRoot
         if (existingItem != null)
         {
             existingItem.UpdateQuantity(existingItem.Quantity + quantity);
+            // queue quantity-updated event for the existing item
+            QueueDomainEvent(new SalesOrderItemQuantityUpdated { SalesOrderItem = existingItem });
         }
         else
         {
             var newItem = SalesOrderItem.Create(Id, groceryItemId, quantity, unitPrice, discount);
             Items.Add(newItem);
+            // queue created event for the new item
+            QueueDomainEvent(new SalesOrderItemCreated { SalesOrderItem = newItem });
         }
 
         RecalculateTotals();
-        QueueDomainEvent(new SalesOrderItemAdded { SalesOrder = this, GroceryItemId = groceryItemId });
+        // keep a SalesOrderUpdated event as well to indicate order level change
+        QueueDomainEvent(new SalesOrderUpdated { SalesOrder = this });
         
         return this;
     }
@@ -180,4 +185,101 @@ public sealed class SalesOrder : AuditableEntity, IAggregateRoot
     public bool IsOverdue() => PaymentStatus == "Overdue";
     public bool IsPaid() => PaymentStatus == "Paid";
     public bool IsDelivered() => Status == "Delivered";
+
+    // Update method to apply editable fields from application layer
+    public SalesOrder Update(
+        string orderNumber,
+        DefaultIdType customerId,
+        DateTime orderDate,
+        DateTime? deliveryDate,
+        string status,
+        string orderType,
+        string paymentStatus,
+        string paymentMethod,
+        string? deliveryAddress,
+        bool isUrgent,
+        string? salesPersonId,
+        DefaultIdType? warehouseId)
+    {
+        var changed = false;
+
+        if (OrderNumber != orderNumber)
+        {
+            OrderNumber = orderNumber;
+            changed = true;
+        }
+
+        if (CustomerId != customerId)
+        {
+            CustomerId = customerId;
+            changed = true;
+        }
+
+        if (OrderDate != orderDate)
+        {
+            OrderDate = orderDate;
+            changed = true;
+        }
+
+        if (DeliveryDate != deliveryDate)
+        {
+            DeliveryDate = deliveryDate;
+            changed = true;
+        }
+
+        if (Status != status)
+        {
+            Status = status;
+            changed = true;
+        }
+
+        if (OrderType != orderType)
+        {
+            OrderType = orderType;
+            changed = true;
+        }
+
+        if (PaymentStatus != paymentStatus)
+        {
+            PaymentStatus = paymentStatus;
+            changed = true;
+        }
+
+        if (PaymentMethod != paymentMethod)
+        {
+            PaymentMethod = paymentMethod;
+            changed = true;
+        }
+
+        if (DeliveryAddress != deliveryAddress)
+        {
+            DeliveryAddress = deliveryAddress;
+            changed = true;
+        }
+
+        if (IsUrgent != isUrgent)
+        {
+            IsUrgent = isUrgent;
+            changed = true;
+        }
+
+        if (SalesPersonId != salesPersonId)
+        {
+            SalesPersonId = salesPersonId;
+            changed = true;
+        }
+
+        if (WarehouseId != warehouseId)
+        {
+            WarehouseId = warehouseId;
+            changed = true;
+        }
+
+        if (changed)
+        {
+            QueueDomainEvent(new SalesOrderUpdated { SalesOrder = this });
+        }
+
+        return this;
+    }
 }

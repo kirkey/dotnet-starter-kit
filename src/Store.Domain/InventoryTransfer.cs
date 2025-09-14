@@ -6,8 +6,8 @@ namespace Store.Domain;
 
 public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 {
+    public string? Reason { get; private set; }
     public string TransferNumber { get; private set; } = default!;
-    // Name and Description are inherited from AuditableEntity
     public DefaultIdType FromWarehouseId { get; private set; }
     public DefaultIdType ToWarehouseId { get; private set; }
     public DefaultIdType? FromLocationId { get; private set; }
@@ -15,30 +15,27 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     public DateTime TransferDate { get; private set; }
     public DateTime? ExpectedArrivalDate { get; private set; }
     public DateTime? ActualArrivalDate { get; private set; }
-    public string Status { get; private set; } = default!; // Pending, InTransit, Completed, Cancelled
-    public string TransferType { get; private set; } = default!; // Replenishment, Rebalancing, Emergency, Consolidation
+    public string Status { get; private set; } = default!; // Pending, Approved, InTransit, Completed, Cancelled
+    public string TransferType { get; private set; } = default!; // Standard, Express, etc.
     public string Priority { get; private set; } = default!; // Low, Normal, High, Critical
     public decimal TotalValue { get; private set; }
     public string? TransportMethod { get; private set; }
     public string? TrackingNumber { get; private set; }
-    // Notes is inherited from AuditableEntity
     public string? RequestedBy { get; private set; }
-    public string? Reason { get; private set; }
     public string? ApprovedBy { get; private set; }
     public DateTime? ApprovalDate { get; private set; }
-    
+
+    public ICollection<InventoryTransferItem> Items { get; private set; } = new List<InventoryTransferItem>();
+
     public Warehouse FromWarehouse { get; private set; } = default!;
     public Warehouse ToWarehouse { get; private set; } = default!;
     public WarehouseLocation? FromLocation { get; private set; }
     public WarehouseLocation? ToLocation { get; private set; }
-    public ICollection<InventoryTransferItem> Items { get; private set; } = new List<InventoryTransferItem>();
 
     private InventoryTransfer() { }
 
     private InventoryTransfer(
         DefaultIdType id,
-        string? name,
-        string? description,
         string transferNumber,
         DefaultIdType fromWarehouseId,
         DefaultIdType toWarehouseId,
@@ -46,7 +43,6 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         DefaultIdType? toLocationId,
         DateTime transferDate,
         DateTime? expectedArrivalDate,
-        string status,
         string transferType,
         string priority,
         string? transportMethod,
@@ -54,8 +50,6 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         string? requestedBy)
     {
         Id = id;
-        Name = name;
-        Description = description;
         TransferNumber = transferNumber;
         FromWarehouseId = fromWarehouseId;
         ToWarehouseId = toWarehouseId;
@@ -63,21 +57,21 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         ToLocationId = toLocationId;
         TransferDate = transferDate;
         ExpectedArrivalDate = expectedArrivalDate;
-        Status = status;
         TransferType = transferType;
         Priority = priority;
-        TotalValue = 0;
         TransportMethod = transportMethod;
-        Notes = notes;
+        Notes = notes; // Notes property comes from AuditableEntity
         RequestedBy = requestedBy;
+        Status = "Pending";
+        TotalValue = 0m;
 
         QueueDomainEvent(new InventoryTransferCreated { InventoryTransfer = this });
     }
 
     public static InventoryTransfer Create(
-        string? name,
-        string? description,
-        string transferNumber,
+        string? transferNumber,
+        object? unused,
+        string transferNumberOverride,
         DefaultIdType fromWarehouseId,
         DefaultIdType toWarehouseId,
         DefaultIdType? fromLocationId,
@@ -85,23 +79,22 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         DateTime transferDate,
         DateTime? expectedArrivalDate,
         string transferType,
-        string priority = "Normal",
-        string? transportMethod = null,
-        string? notes = null,
-        string? requestedBy = null)
+        string priority,
+        string? transportMethod,
+        string? notes,
+        string? requestedBy)
     {
+        // some callers pass nulls differently; use transferNumberOverride if provided else generate
+        var tn = string.IsNullOrWhiteSpace(transferNumberOverride) ? transferNumber ?? $"TRF-{DefaultIdType.NewGuid()}" : transferNumberOverride;
         return new InventoryTransfer(
             DefaultIdType.NewGuid(),
-            name,
-            description,
-            transferNumber,
+            tn,
             fromWarehouseId,
             toWarehouseId,
             fromLocationId,
             toLocationId,
             transferDate,
             expectedArrivalDate,
-            "Pending",
             transferType,
             priority,
             transportMethod,
@@ -109,62 +102,86 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
             requestedBy);
     }
 
-    public InventoryTransfer AddItem(DefaultIdType groceryItemId, int quantity, decimal unitCost)
+    public InventoryTransfer AddItem(DefaultIdType groceryItemId, int quantity, decimal unitPrice)
     {
-        var item = InventoryTransferItem.Create(Id, groceryItemId, quantity, unitCost);
+        if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+        var item = InventoryTransferItem.Create(Id, groceryItemId, quantity, unitPrice);
         Items.Add(item);
-        RecalculateTotalValue();
-        QueueDomainEvent(new InventoryTransferItemAdded { InventoryTransfer = this, GroceryItemId = groceryItemId });
+        RecalculateTotal();
         return this;
+    }
+
+    public InventoryTransfer RemoveItem(DefaultIdType itemId)
+    {
+        var item = Items.FirstOrDefault(i => i.Id == itemId);
+        if (item != null)
+        {
+            Items.Remove(item);
+            RecalculateTotal();
+        }
+        return this;
+    }
+
+    private void RecalculateTotal()
+    {
+        TotalValue = Items.Sum(i => i.Quantity * i.UnitPrice);
     }
 
     public InventoryTransfer Approve(string approvedBy)
     {
-        if (Status == "Pending")
-        {
-            ApprovedBy = approvedBy;
-            ApprovalDate = DateTime.UtcNow;
-            Status = "Approved";
-            QueueDomainEvent(new InventoryTransferApproved { InventoryTransfer = this });
-        }
+        if (Status != "Pending") return this;
+        Status = "Approved";
+        ApprovedBy = approvedBy;
+        ApprovalDate = DateTime.UtcNow;
+        QueueDomainEvent(new InventoryTransferApproved { InventoryTransfer = this });
         return this;
     }
 
-    public InventoryTransfer StartTransit(string? trackingNumber = null)
+    public InventoryTransfer MarkInTransit()
     {
         if (Status == "Approved")
         {
             Status = "InTransit";
-            TrackingNumber = trackingNumber;
-            QueueDomainEvent(new InventoryTransferStarted { InventoryTransfer = this });
+            QueueDomainEvent(new InventoryTransferInTransit { InventoryTransfer = this });
         }
         return this;
     }
 
-    public InventoryTransfer Complete(DateTime actualArrivalDate)
+    public InventoryTransfer Complete(DateTime actualArrival)
     {
         if (Status == "InTransit")
         {
             Status = "Completed";
-            ActualArrivalDate = actualArrivalDate;
+            ActualArrivalDate = actualArrival;
             QueueDomainEvent(new InventoryTransferCompleted { InventoryTransfer = this });
         }
         return this;
     }
 
-    public InventoryTransfer Cancel(string reason)
+    public InventoryTransfer Cancel()
     {
         if (Status != "Completed")
         {
             Status = "Cancelled";
-            Notes = string.IsNullOrEmpty(Notes) ? reason : $"{Notes}; Cancelled: {reason}";
-            QueueDomainEvent(new InventoryTransferCancelled { InventoryTransfer = this, Reason = reason });
+            QueueDomainEvent(new InventoryTransferCancelled { InventoryTransfer = this });
         }
         return this;
     }
 
+    // New helper to set tracking number (used when shipment/tracking info is available)
+    public InventoryTransfer SetTrackingNumber(string? trackingNumber)
+    {
+        if (!string.Equals(TrackingNumber, trackingNumber, StringComparison.OrdinalIgnoreCase))
+        {
+            TrackingNumber = trackingNumber;
+            QueueDomainEvent(new InventoryTransferUpdated { InventoryTransfer = this });
+        }
+        return this;
+    }
+
+    // Update method used by application layer to apply editable fields
     public InventoryTransfer Update(
-        string? name,
+        string name,
         string? description,
         string transferNumber,
         DefaultIdType fromWarehouseId,
@@ -172,82 +189,69 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         DateTime transferDate,
         string status,
         string? notes,
-        string reason)
+        string? reason)
     {
-        bool isUpdated = false;
+        var changed = false;
 
-        if (!string.Equals(TransferNumber, transferNumber, StringComparison.OrdinalIgnoreCase))
+        if (Name != name)
+        {
+            Name = name; // Name inherited from AuditableEntity
+            changed = true;
+        }
+
+        if (Description != description)
+        {
+            Description = description; // inherited
+            changed = true;
+        }
+
+        if (TransferNumber != transferNumber)
         {
             TransferNumber = transferNumber;
-            isUpdated = true;
+            changed = true;
         }
-        if (!string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
-        {
-            Name = name;
-            isUpdated = true;
-        }
-        if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
-        {
-            Description = description;
-            isUpdated = true;
-        }
+
         if (FromWarehouseId != fromWarehouseId)
         {
             FromWarehouseId = fromWarehouseId;
-            isUpdated = true;
+            changed = true;
         }
 
         if (ToWarehouseId != toWarehouseId)
         {
             ToWarehouseId = toWarehouseId;
-            isUpdated = true;
+            changed = true;
         }
 
         if (TransferDate != transferDate)
         {
             TransferDate = transferDate;
-            isUpdated = true;
+            changed = true;
         }
 
         if (Status != status)
         {
             Status = status;
-            isUpdated = true;
+            changed = true;
         }
 
-        if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+        if (Notes != notes)
         {
-            Notes = notes;
-            isUpdated = true;
+            Notes = notes; // inherited
+            changed = true;
         }
 
-        if (!string.Equals(Reason, reason, StringComparison.OrdinalIgnoreCase))
+        if (Reason != reason)
         {
             Reason = reason;
-            isUpdated = true;
+            changed = true;
         }
 
-        if (isUpdated)
+        if (changed)
         {
             QueueDomainEvent(new InventoryTransferUpdated { InventoryTransfer = this });
         }
 
         return this;
     }
-
-    private void RecalculateTotalValue()
-    {
-        TotalValue = Items.Sum(i => i.TotalValue);
-    }
-
-    public bool IsOverdue() => 
-        ExpectedArrivalDate.HasValue && 
-        ExpectedArrivalDate.Value < DateTime.UtcNow && 
-        Status == "InTransit";
-
-    public bool IsHighPriority() => Priority == "High" || Priority == "Critical";
-    public bool IsCompleted() => Status == "Completed";
-    public int GetDaysInTransit() => ActualArrivalDate.HasValue 
-        ? (ActualArrivalDate.Value - TransferDate).Days 
-        : (DateTime.UtcNow - TransferDate).Days;
 }

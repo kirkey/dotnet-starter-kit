@@ -8,98 +8,54 @@ public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
 {
     public DefaultIdType InventoryTransferId { get; private set; }
     public DefaultIdType GroceryItemId { get; private set; }
-    public int RequestedQuantity { get; private set; }
-    public int ShippedQuantity { get; private set; }
-    public int ReceivedQuantity { get; private set; }
-    public decimal UnitCost { get; private set; }
-    public decimal TotalValue { get; private set; }
-    
-    public string? BatchNumber { get; private set; }
-    public DateTime? ExpiryDate { get; private set; }
-    
+    public int Quantity { get; private set; }
+    public decimal UnitPrice { get; private set; }
+    public decimal LineTotal { get; private set; }
+
     public InventoryTransfer InventoryTransfer { get; private set; } = default!;
     public GroceryItem GroceryItem { get; private set; } = default!;
 
-    private InventoryTransferItem() { }
+    protected InventoryTransferItem() { }
 
-    private InventoryTransferItem(
-        DefaultIdType id,
-        DefaultIdType inventoryTransferId,
-        DefaultIdType groceryItemId,
-        int requestedQuantity,
-        decimal unitCost,
-        string? notes,
-        string? batchNumber,
-        DateTime? expiryDate)
+    private InventoryTransferItem(DefaultIdType id, DefaultIdType inventoryTransferId, DefaultIdType groceryItemId, int quantity, decimal unitPrice)
     {
         Id = id;
         InventoryTransferId = inventoryTransferId;
         GroceryItemId = groceryItemId;
-        RequestedQuantity = requestedQuantity;
-        ShippedQuantity = 0;
-        ReceivedQuantity = 0;
-        UnitCost = unitCost;
-        Notes = notes;
-        BatchNumber = batchNumber;
-        ExpiryDate = expiryDate;
-        
-        CalculateTotalValue();
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+        LineTotal = quantity * unitPrice;
 
         QueueDomainEvent(new InventoryTransferItemCreated { InventoryTransferItem = this });
     }
 
-    public static InventoryTransferItem Create(
-        DefaultIdType inventoryTransferId,
-        DefaultIdType groceryItemId,
-        int requestedQuantity,
-        decimal unitCost,
-        string? notes = null,
-        string? batchNumber = null,
-        DateTime? expiryDate = null)
+    public static InventoryTransferItem Create(DefaultIdType inventoryTransferId, DefaultIdType groceryItemId, int quantity, decimal unitPrice)
     {
-        return new InventoryTransferItem(
-            DefaultIdType.NewGuid(),
-            inventoryTransferId,
-            groceryItemId,
-            requestedQuantity,
-            unitCost,
-            notes,
-            batchNumber,
-            expiryDate);
+        if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+        if (unitPrice < 0) throw new ArgumentException("Unit price cannot be negative", nameof(unitPrice));
+        return new InventoryTransferItem(DefaultIdType.NewGuid(), inventoryTransferId, groceryItemId, quantity, unitPrice);
     }
 
-    public InventoryTransferItem Ship(int shippedQuantity)
+    public InventoryTransferItem Update(int quantity, decimal unitPrice)
     {
-        if (shippedQuantity < 0 || shippedQuantity > RequestedQuantity)
+        bool isUpdated = false;
+        if (Quantity != quantity)
         {
-            throw new ArgumentException("Shipped quantity cannot be negative or exceed requested quantity.", nameof(shippedQuantity));
+            if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+            Quantity = quantity;
+            isUpdated = true;
         }
-
-        ShippedQuantity = shippedQuantity;
-        QueueDomainEvent(new InventoryTransferItemShipped { InventoryTransferItem = this });
+        if (UnitPrice != unitPrice)
+        {
+            if (unitPrice < 0) throw new ArgumentException("Unit price cannot be negative", nameof(unitPrice));
+            UnitPrice = unitPrice;
+            isUpdated = true;
+        }
+        if (isUpdated)
+        {
+            LineTotal = Quantity * UnitPrice;
+            QueueDomainEvent(new InventoryTransferItemUpdated { InventoryTransferItem = this });
+        }
         return this;
     }
-
-    public InventoryTransferItem Receive(int receivedQuantity)
-    {
-        if (receivedQuantity < 0 || receivedQuantity > ShippedQuantity)
-        {
-            throw new ArgumentException("Received quantity cannot be negative or exceed shipped quantity.", nameof(receivedQuantity));
-        }
-
-        ReceivedQuantity = receivedQuantity;
-        QueueDomainEvent(new InventoryTransferItemReceived { InventoryTransferItem = this });
-        return this;
-    }
-
-    private void CalculateTotalValue()
-    {
-        TotalValue = RequestedQuantity * UnitCost;
-    }
-
-    public bool IsFullyShipped() => ShippedQuantity >= RequestedQuantity;
-    public bool IsFullyReceived() => ReceivedQuantity >= ShippedQuantity;
-    public int GetPendingShipmentQuantity() => Math.Max(0, RequestedQuantity - ShippedQuantity);
-    public int GetPendingReceiptQuantity() => Math.Max(0, ShippedQuantity - ReceivedQuantity);
-    public bool HasDiscrepancy() => ReceivedQuantity != ShippedQuantity;
 }

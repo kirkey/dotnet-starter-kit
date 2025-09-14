@@ -2,7 +2,7 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Create.v1;
 
 public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateInventoryTransferCommand>
 {
-    public CreateInventoryTransferCommandValidator()
+    public CreateInventoryTransferCommandValidator([FromKeyedServices("store:inventory-transfers")] IReadRepository<InventoryTransfer> readRepository)
     {
         RuleFor(x => x.TransferNumber)
             .NotEmpty()
@@ -11,6 +11,14 @@ public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateI
             .WithMessage("Transfer number must not exceed 20 characters")
             .Matches(@"^[A-Z0-9]+$")
             .WithMessage("Transfer number must contain only uppercase letters and numbers");
+
+        // Async uniqueness check
+        RuleFor(x => x.TransferNumber).MustAsync(async (transferNumber, ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(transferNumber)) return true;
+            var existing = await readRepository.FirstOrDefaultAsync(new Specs.InventoryTransferByNumberSpec(transferNumber), ct).ConfigureAwait(false);
+            return existing is null;
+        }).WithMessage("An inventory transfer with the same TransferNumber already exists.");
 
         RuleFor(x => x.FromWarehouseId)
             .NotEmpty()

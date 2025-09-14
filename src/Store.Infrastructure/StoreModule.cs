@@ -5,6 +5,8 @@ using Store.Infrastructure.Endpoints.SalesOrders.v1;
 using Store.Infrastructure.Endpoints.StockAdjustments.v1;
 using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 using Store.Infrastructure.Endpoints.Warehouses.v1;
+using Store.Infrastructure.Endpoints.Categories.v1;
+using Store.Infrastructure.Endpoints.CycleCounts.v1;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
@@ -12,8 +14,10 @@ namespace Store.Infrastructure;
 public static class StoreModule
 {
     // Optional Carter endpoints holder (not required if endpoints are registered via IEndpoint implementations)
-    public class Endpoints() : CarterModule("store")
+    public class Endpoints : CarterModule
     {
+        public Endpoints() : base("store") { }
+
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             // Register endpoints using Catalog-style grouped mapping for clarity
@@ -34,6 +38,8 @@ public static class StoreModule
             inventoryGroup.MapGetInventoryTransferEndpoint();
             inventoryGroup.MapUpdateInventoryTransferEndpoint();
             inventoryGroup.MapSearchInventoryTransfersEndpoint();
+            inventoryGroup.MapAddInventoryTransferItemEndpoint();
+            inventoryGroup.MapRemoveInventoryTransferItemEndpoint();
 
             var stockGroup = app.MapGroup("stock-adjustments").WithTags("Stock Adjustments");
             stockGroup.MapCreateStockAdjustmentEndpoint();
@@ -58,6 +64,20 @@ public static class StoreModule
             sales.MapGetSalesOrderEndpoint();
             sales.MapUpdateSalesOrderEndpoint();
             sales.MapDeleteSalesOrderEndpoint();
+
+            var categories = app.MapGroup("categories").WithTags("Categories");
+            categories.MapCreateCategoryEndpoint();
+            categories.MapGetCategoryEndpoint();
+            categories.MapUpdateCategoryEndpoint();
+            categories.MapDeleteCategoryEndpoint();
+            categories.MapSearchCategoriesEndpoint();
+
+            var cycleCounts = app.MapGroup("cycle-counts").WithTags("Cycle Counts");
+            cycleCounts.MapCreateCycleCountEndpoint();
+            cycleCounts.MapStartCycleCountEndpoint();
+            cycleCounts.MapAddCycleCountItemEndpoint();
+            cycleCounts.MapCompleteCycleCountEndpoint();
+            cycleCounts.MapReconcileCycleCountEndpoint();
         }
     }
 
@@ -89,6 +109,16 @@ public static class StoreModule
 
         builder.Services.AddKeyedScoped<IRepository<StockAdjustment>, StoreRepository<StockAdjustment>>("store:stock-adjustments");
         builder.Services.AddKeyedScoped<IReadRepository<StockAdjustment>, StoreRepository<StockAdjustment>>("store:stock-adjustments");
+
+        builder.Services.AddKeyedScoped<IRepository<Category>, StoreRepository<Category>>("store:categories");
+        builder.Services.AddKeyedScoped<IReadRepository<Category>, StoreRepository<Category>>("store:categories");
+
+        builder.Services.AddKeyedScoped<IRepository<Supplier>, StoreRepository<Supplier>>("store:suppliers");
+        builder.Services.AddKeyedScoped<IReadRepository<Supplier>, StoreRepository<Supplier>>("store:suppliers");
+
+        // Register keyed repository for CycleCounts
+        builder.Services.AddKeyedScoped<IRepository<CycleCount>, StoreRepository<CycleCount>>("store:cycle-counts");
+        builder.Services.AddKeyedScoped<IReadRepository<CycleCount>, StoreRepository<CycleCount>>("store:cycle-counts");
 
         // Additional common entity registrations (purchase orders, sales orders, price lists)
         builder.Services.AddKeyedScoped<IRepository<PurchaseOrder>, StoreRepository<PurchaseOrder>>("store:purchase-orders");

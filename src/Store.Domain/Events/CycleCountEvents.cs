@@ -1,4 +1,5 @@
 using FSH.Framework.Core.Domain.Events;
+using Store.Domain;
 
 namespace Store.Domain.Events;
 
@@ -31,29 +32,4 @@ public record CycleCountItemMarkedForRecount : DomainEvent
 {
     public CycleCountItem CycleCountItem { get; init; } = default!;
     public string Reason { get; init; } = default!;
-}
-
-public record PriceListCreated : DomainEvent
-{
-    public PriceList PriceList { get; init; } = default!;
-}
-
-public record PriceListActivated : DomainEvent
-{
-    public PriceList PriceList { get; init; } = default!;
-}
-
-public record PriceListDeactivated : DomainEvent
-{
-    public PriceList PriceList { get; init; } = default!;
-}
-
-public record PriceListItemCreated : DomainEvent
-{
-    public PriceListItem PriceListItem { get; init; } = default!;
-}
-
-public record PriceListItemUpdated : DomainEvent
-{
-    public PriceListItem PriceListItem { get; init; } = default!;
 }

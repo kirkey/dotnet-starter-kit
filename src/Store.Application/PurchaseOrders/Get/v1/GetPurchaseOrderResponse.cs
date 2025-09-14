@@ -1,0 +1,21 @@
+namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Get.v1;
+
+public sealed record GetPurchaseOrderResponse(
+    DefaultIdType Id,
+    string OrderNumber,
+    DefaultIdType SupplierId,
+    DateTime OrderDate,
+    DateTime? ExpectedDeliveryDate,
+    DateTime? ActualDeliveryDate,
+    string Status,
+    decimal TotalAmount,
+    decimal TaxAmount,
+    decimal DiscountAmount,
+    decimal NetAmount,
+    string? DeliveryAddress,
+    string? ContactPerson,
+    string? ContactPhone,
+    bool IsUrgent,
+    DateTimeOffset CreatedOn,
+    DateTimeOffset LastModifiedOn);
+

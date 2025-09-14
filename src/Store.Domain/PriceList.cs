@@ -106,4 +106,94 @@ public sealed class PriceList : AuditableEntity, IAggregateRoot
         IsActive && DateTime.UtcNow >= EffectiveDate && (!ExpiryDate.HasValue || DateTime.UtcNow <= ExpiryDate.Value);
     
     public bool IsExpired() => ExpiryDate.HasValue && DateTime.UtcNow > ExpiryDate.Value;
+
+    // Update method to apply editable fields and emit update event when necessary
+    public PriceList Update(
+        string name,
+        string? description,
+        string priceListName,
+        string priceListType,
+        DateTime effectiveDate,
+        DateTime? expiryDate,
+        bool isActive,
+        string currency,
+        decimal? minimumOrderValue,
+        string? customerType,
+        string? notes)
+    {
+        var changed = false;
+
+        if (Name != name)
+        {
+            Name = name;
+            changed = true;
+        }
+
+        if (Description != description)
+        {
+            Description = description;
+            changed = true;
+        }
+
+        if (PriceListName != priceListName)
+        {
+            PriceListName = priceListName;
+            changed = true;
+        }
+
+        if (PriceListType != priceListType)
+        {
+            PriceListType = priceListType;
+            changed = true;
+        }
+
+        if (EffectiveDate != effectiveDate)
+        {
+            EffectiveDate = effectiveDate;
+            changed = true;
+        }
+
+        if (ExpiryDate != expiryDate)
+        {
+            ExpiryDate = expiryDate;
+            changed = true;
+        }
+
+        if (IsActive != isActive)
+        {
+            IsActive = isActive;
+            changed = true;
+        }
+
+        if (Currency != currency)
+        {
+            Currency = currency;
+            changed = true;
+        }
+
+        if (MinimumOrderValue != minimumOrderValue)
+        {
+            MinimumOrderValue = minimumOrderValue;
+            changed = true;
+        }
+
+        if (CustomerType != customerType)
+        {
+            CustomerType = customerType;
+            changed = true;
+        }
+
+        if (Notes != notes)
+        {
+            Notes = notes;
+            changed = true;
+        }
+
+        if (changed)
+        {
+            QueueDomainEvent(new PriceListUpdated { PriceList = this });
+        }
+
+        return this;
+    }
 }

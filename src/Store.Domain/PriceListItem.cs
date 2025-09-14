@@ -72,4 +72,6 @@ public sealed class PriceListItem : AuditableEntity, IAggregateRoot
             ? Price * (1 - DiscountPercentage.Value / 100)
             : Price;
     }
+
+    
 }

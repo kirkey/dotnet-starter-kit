@@ -58,3 +58,8 @@ public record PurchaseOrderItemReceived : DomainEvent
     public int PreviousReceivedQuantity { get; init; }
     public int NewReceivedQuantity { get; init; }
 }
+
+public record PurchaseOrderUpdated : DomainEvent
+{
+    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+}

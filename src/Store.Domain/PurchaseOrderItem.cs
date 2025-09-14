@@ -14,7 +14,6 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
     public decimal TotalPrice { get; private set; }
     public int ReceivedQuantity { get; private set; }
     
-    
     public PurchaseOrder PurchaseOrder { get; private set; } = default!;
     public GroceryItem GroceryItem { get; private set; } = default!;
 

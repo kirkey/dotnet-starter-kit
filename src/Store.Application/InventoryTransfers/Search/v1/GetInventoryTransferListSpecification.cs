@@ -9,9 +9,12 @@ public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer, Ge
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            Query.Where(it => it.Name!.Contains(request.SearchTerm) ||
-                            it.TransferNumber.Contains(request.SearchTerm) ||
-                            it.Reason.Contains(request.SearchTerm));
+            Query.Where(it =>
+                it.TransferNumber.Contains(request.SearchTerm) ||
+                (it.TransportMethod != null && it.TransportMethod.Contains(request.SearchTerm)) ||
+                (it.TrackingNumber != null && it.TrackingNumber.Contains(request.SearchTerm)) ||
+                (it.RequestedBy != null && it.RequestedBy.Contains(request.SearchTerm))
+            );
         }
 
         if (request.FromWarehouseId.HasValue)
@@ -44,9 +47,9 @@ public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer, Ge
             it.Id,
             it.TransferNumber,
             it.FromWarehouseId,
-            it.FromWarehouse != null ? it.FromWarehouse.Name! : null,
+            it.FromWarehouse.Name,
             it.ToWarehouseId,
-            it.ToWarehouse != null ? it.ToWarehouse.Name! : null,
+            it.ToWarehouse.Name,
             it.TransferDate,
             it.Status,
             it.TransferType,

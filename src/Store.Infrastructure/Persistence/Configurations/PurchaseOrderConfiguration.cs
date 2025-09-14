@@ -56,6 +56,20 @@ public class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<PurchaseO
     {
         builder.HasKey(x => x.Id);
 
+        // Ensure required foreign keys and quantities
+        builder.Property(x => x.PurchaseOrderId)
+            .IsRequired();
+
+        builder.Property(x => x.GroceryItemId)
+            .IsRequired();
+
+        builder.Property(x => x.Quantity)
+            .IsRequired();
+
+        builder.Property(x => x.ReceivedQuantity)
+            .IsRequired()
+            .HasDefaultValue(0);
+
         builder.Property(x => x.UnitPrice)
             .HasColumnType("decimal(18,2)");
 

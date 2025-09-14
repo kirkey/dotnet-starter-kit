@@ -16,7 +16,6 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     public decimal TaxAmount { get; private set; }
     public decimal DiscountAmount { get; private set; }
     public decimal NetAmount { get; private set; }
-    
     public string? DeliveryAddress { get; private set; }
     public string? ContactPerson { get; private set; }
     public string? ContactPhone { get; private set; }
@@ -136,6 +135,45 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    // Update a child item's quantity and recalculate totals
+    public PurchaseOrder UpdateItemQuantity(DefaultIdType purchaseOrderItemId, int quantity)
+    {
+        var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
+        if (item is null)
+            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
+
+        item.UpdateQuantity(quantity);
+        RecalculateTotals();
+        QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
+        return this;
+    }
+
+    // Update a child item's price and optionally discount, then recalc totals
+    public PurchaseOrder UpdateItemPrice(DefaultIdType purchaseOrderItemId, decimal unitPrice, decimal? discountAmount = null)
+    {
+        var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
+        if (item is null)
+            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
+
+        item.UpdatePrice(unitPrice, discountAmount);
+        RecalculateTotals();
+        QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
+        return this;
+    }
+
+    // Receive quantity for a child item and recalc totals
+    public PurchaseOrder ReceiveItemQuantity(DefaultIdType purchaseOrderItemId, int receivedQuantity)
+    {
+        var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
+        if (item is null)
+            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
+
+        item.ReceiveQuantity(receivedQuantity);
+        RecalculateTotals();
+        QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
+        return this;
+    }
+
     public PurchaseOrder UpdateDeliveryDate(DateTime? actualDeliveryDate)
     {
         if (ActualDeliveryDate != actualDeliveryDate)
@@ -158,6 +196,89 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
             DiscountAmount = discountAmount;
             RecalculateTotals();
             QueueDomainEvent(new PurchaseOrderDiscountApplied { PurchaseOrder = this, DiscountAmount = discountAmount });
+        }
+
+        return this;
+    }
+
+    // Update method to apply editable fields and emit PurchaseOrderUpdated when there are changes
+    public PurchaseOrder Update(
+        string orderNumber,
+        DefaultIdType supplierId,
+        DateTime orderDate,
+        DateTime? expectedDeliveryDate,
+        string status,
+        string? notes,
+        string? deliveryAddress,
+        string? contactPerson,
+        string? contactPhone,
+        bool isUrgent)
+    {
+        var changed = false;
+
+        if (OrderNumber != orderNumber)
+        {
+            OrderNumber = orderNumber;
+            changed = true;
+        }
+
+        if (SupplierId != supplierId)
+        {
+            SupplierId = supplierId;
+            changed = true;
+        }
+
+        if (OrderDate != orderDate)
+        {
+            OrderDate = orderDate;
+            changed = true;
+        }
+
+        if (ExpectedDeliveryDate != expectedDeliveryDate)
+        {
+            ExpectedDeliveryDate = expectedDeliveryDate;
+            changed = true;
+        }
+
+        if (Status != status)
+        {
+            Status = status;
+            changed = true;
+        }
+
+        if (Notes != notes)
+        {
+            Notes = notes;
+            changed = true;
+        }
+
+        if (DeliveryAddress != deliveryAddress)
+        {
+            DeliveryAddress = deliveryAddress;
+            changed = true;
+        }
+
+        if (ContactPerson != contactPerson)
+        {
+            ContactPerson = contactPerson;
+            changed = true;
+        }
+
+        if (ContactPhone != contactPhone)
+        {
+            ContactPhone = contactPhone;
+            changed = true;
+        }
+
+        if (IsUrgent != isUrgent)
+        {
+            IsUrgent = isUrgent;
+            changed = true;
+        }
+
+        if (changed)
+        {
+            QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
         }
 
         return this;

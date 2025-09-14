@@ -73,17 +73,22 @@ public class InventoryTransferItemConfiguration : IEntityTypeConfiguration<Inven
     {
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.UnitCost)
+        // Required foreign keys and quantity
+        builder.Property(x => x.InventoryTransferId)
+            .IsRequired();
+
+        builder.Property(x => x.GroceryItemId)
+            .IsRequired();
+
+        builder.Property(x => x.Quantity)
+            .IsRequired();
+
+        // Monetary fields
+        builder.Property(x => x.UnitPrice)
             .HasColumnType("decimal(18,2)");
 
-        builder.Property(x => x.TotalValue)
+        builder.Property(x => x.LineTotal)
             .HasColumnType("decimal(18,2)");
-
-        builder.Property(x => x.Notes)
-            .HasMaxLength(1000);
-
-        builder.Property(x => x.BatchNumber)
-            .HasMaxLength(50);
 
         builder.HasOne(x => x.InventoryTransfer)
             .WithMany(x => x.Items)

@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Paging;
-
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Search.v1;
 
 public sealed class SearchInventoryTransfersHandler(
