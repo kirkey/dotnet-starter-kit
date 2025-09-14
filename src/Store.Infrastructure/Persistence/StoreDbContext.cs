@@ -42,7 +42,7 @@ public sealed class StoreDbContext(
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly);
 
         // Configure schema using a shared constant
-        modelBuilder.HasDefaultSchema(SchemaNames.Warehouse);
+        modelBuilder.HasDefaultSchema(SchemaNames.Store);
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

@@ -1,3 +1,5 @@
+using Shared.Constants;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class WholesalePricingConfiguration : IEntityTypeConfiguration<WholesalePricing>
