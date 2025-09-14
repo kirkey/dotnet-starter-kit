@@ -29,6 +29,12 @@ public record SalesOrderItemShipped : DomainEvent
     public int NewShippedQuantity { get; init; }
 }
 
+public record SalesOrderItemRemoved : DomainEvent
+{
+    public SalesOrder SalesOrder { get; init; } = default!;
+    public DefaultIdType GroceryItemId { get; init; }
+}
+
 public record SalesOrderStatusChanged : DomainEvent
 {
     public SalesOrder SalesOrder { get; init; } = default!;
@@ -53,4 +59,3 @@ public record SalesOrderDeliveryScheduled : DomainEvent
 {
     public SalesOrder SalesOrder { get; init; } = default!;
 }
-

@@ -16,7 +16,7 @@ public sealed class SalesOrderItem : AuditableEntity, IAggregateRoot
     
     public bool IsWholesaleItem { get; private set; }
     public decimal? WholesaleTierPrice { get; private set; }
-    
+
     public SalesOrder SalesOrder { get; private set; } = default!;
     public GroceryItem GroceryItem { get; private set; } = default!;
 
@@ -30,8 +30,7 @@ public sealed class SalesOrderItem : AuditableEntity, IAggregateRoot
         decimal unitPrice,
         decimal discountAmount,
         bool isWholesaleItem,
-        decimal? wholesaleTierPrice,
-        string? notes)
+        decimal? wholesaleTierPrice)
     {
         Id = id;
         SalesOrderId = salesOrderId;
@@ -42,7 +41,6 @@ public sealed class SalesOrderItem : AuditableEntity, IAggregateRoot
         ShippedQuantity = 0;
         IsWholesaleItem = isWholesaleItem;
         WholesaleTierPrice = wholesaleTierPrice;
-        Notes = notes;
         
         CalculateTotalPrice();
 
@@ -56,23 +54,42 @@ public sealed class SalesOrderItem : AuditableEntity, IAggregateRoot
         decimal unitPrice,
         decimal? discountAmount = null,
         bool isWholesaleItem = false,
-        decimal? wholesaleTierPrice = null,
-        string? notes = null)
+        decimal? wholesaleTierPrice = null)
     {
+        // domain level validations to avoid invalid state
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+
+        if (unitPrice < 0m)
+            throw new ArgumentException("Unit price must be non-negative", nameof(unitPrice));
+
+        if (discountAmount.HasValue && discountAmount.Value < 0m)
+            throw new ArgumentException("Discount must be non-negative", nameof(discountAmount));
+
+        if (wholesaleTierPrice.HasValue && wholesaleTierPrice.Value < 0m)
+            throw new ArgumentException("Wholesale tier price must be non-negative", nameof(wholesaleTierPrice));
+
+        var discount = discountAmount ?? 0m;
+        var max = quantity * unitPrice;
+        if (discount > max)
+            throw new ArgumentException("Discount cannot exceed line total (quantity * unit price)", nameof(discountAmount));
+
         return new SalesOrderItem(
             DefaultIdType.NewGuid(),
             salesOrderId,
             groceryItemId,
             quantity,
             unitPrice,
-            discountAmount ?? 0,
+            discount,
             isWholesaleItem,
-            wholesaleTierPrice,
-            notes);
+            wholesaleTierPrice);
     }
 
     public SalesOrderItem UpdateQuantity(int quantity)
     {
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+
         if (Quantity != quantity)
         {
             Quantity = quantity;

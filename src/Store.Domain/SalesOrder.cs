@@ -27,8 +27,12 @@ public sealed class SalesOrder : AuditableEntity, IAggregateRoot
     
     public Customer Customer { get; private set; } = default!;
     public Warehouse? Warehouse { get; private set; }
+
+    // collection navigation for order line items
     public ICollection<SalesOrderItem> Items { get; private set; } = new List<SalesOrderItem>();
 
+    // The parameterless constructor and private setters are required by EF Core for materialization.
+    // They may look unused in code, but they are used by the ORM at runtime.
     private SalesOrder() { }
 
     private SalesOrder(
@@ -120,6 +124,20 @@ public sealed class SalesOrder : AuditableEntity, IAggregateRoot
         // keep a SalesOrderUpdated event as well to indicate order level change
         QueueDomainEvent(new SalesOrderUpdated { SalesOrder = this });
         
+        return this;
+    }
+
+    // Remove a line item by grocery item id
+    public SalesOrder RemoveItem(DefaultIdType groceryItemId)
+    {
+        var item = Items.FirstOrDefault(i => i.GroceryItemId == groceryItemId);
+        if (item != null)
+        {
+            Items.Remove(item);
+            RecalculateTotals();
+            QueueDomainEvent(new SalesOrderItemRemoved { SalesOrder = this, GroceryItemId = groceryItemId });
+            QueueDomainEvent(new SalesOrderUpdated { SalesOrder = this });
+        }
         return this;
     }
 
@@ -280,6 +298,34 @@ public sealed class SalesOrder : AuditableEntity, IAggregateRoot
             QueueDomainEvent(new SalesOrderUpdated { SalesOrder = this });
         }
 
+        return this;
+    }
+
+    // Update a child item's quantity and recalculate totals
+    public SalesOrder UpdateItemQuantity(DefaultIdType salesOrderItemId, int quantity)
+    {
+        var item = Items.FirstOrDefault(i => i.Id == salesOrderItemId);
+        if (item is null)
+            throw new Store.Domain.Exceptions.SalesOrder.SalesOrderItemNotFoundException(salesOrderItemId);
+
+        item.UpdateQuantity(quantity);
+        RecalculateTotals();
+        QueueDomainEvent(new SalesOrderItemQuantityUpdated { SalesOrderItem = item });
+        QueueDomainEvent(new SalesOrderUpdated { SalesOrder = this });
+        return this;
+    }
+
+    // Ship (set shipped quantity) for a child item and recalc totals
+    public SalesOrder ShipItemQuantity(DefaultIdType salesOrderItemId, int shippedQuantity)
+    {
+        var item = Items.FirstOrDefault(i => i.Id == salesOrderItemId);
+        if (item is null)
+            throw new Store.Domain.Exceptions.SalesOrder.SalesOrderItemNotFoundException(salesOrderItemId);
+
+        item.ShipQuantity(shippedQuantity);
+        RecalculateTotals();
+        QueueDomainEvent(new SalesOrderItemShipped { SalesOrderItem = item, PreviousShippedQuantity = 0, NewShippedQuantity = shippedQuantity });
+        QueueDomainEvent(new SalesOrderUpdated { SalesOrder = this });
         return this;
     }
 }

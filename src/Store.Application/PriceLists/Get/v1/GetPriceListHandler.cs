@@ -1,5 +1,4 @@
 using Store.Domain.Exceptions.PriceList;
-using FSH.Framework.Core.Paging;
 
 namespace FSH.Starter.WebApi.Store.Application.PriceLists.Get.v1;
 

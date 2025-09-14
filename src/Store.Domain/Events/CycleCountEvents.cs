@@ -1,5 +1,4 @@
 using FSH.Framework.Core.Domain.Events;
-using Store.Domain;
 
 namespace Store.Domain.Events;
 
