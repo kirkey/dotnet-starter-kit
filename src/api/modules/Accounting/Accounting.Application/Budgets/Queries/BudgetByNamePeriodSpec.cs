@@ -1,5 +1,3 @@
-using Ardalis.Specification;
-
 namespace Accounting.Application.Budgets.Queries;
 
 public sealed class BudgetByNamePeriodSpec : Specification<Budget>, ISingleResultSpecification<Budget>

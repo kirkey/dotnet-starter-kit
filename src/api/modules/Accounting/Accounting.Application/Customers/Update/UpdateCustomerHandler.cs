@@ -18,10 +18,21 @@ public sealed class UpdateCustomerHandler(
         if (!string.IsNullOrEmpty(request.CustomerCode) && request.CustomerCode != customer.CustomerCode)
         {
             var existingByCode = await repository.FirstOrDefaultAsync(
-                new CustomerByCodeSpec(request.CustomerCode), cancellationToken);
+                new CustomerByCodeSpec(request.CustomerCode, request.Id), cancellationToken);
             if (existingByCode != null)
             {
                 throw new CustomerCodeAlreadyExistsException(request.CustomerCode);
+            }
+        }
+
+        // Check for duplicate name (excluding current customer)
+        if (!string.IsNullOrEmpty(request.Name) && !string.Equals(request.Name, customer.Name, StringComparison.OrdinalIgnoreCase))
+        {
+            var existingByName = await repository.FirstOrDefaultAsync(
+                new CustomerByNameSpec(request.Name, request.Id), cancellationToken);
+            if (existingByName != null)
+            {
+                throw new CustomerNameAlreadyExistsException(request.Name);
             }
         }
 

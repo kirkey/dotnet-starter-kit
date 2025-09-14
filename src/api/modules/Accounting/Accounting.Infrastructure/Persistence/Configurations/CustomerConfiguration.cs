@@ -14,6 +14,17 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.HasKey(x => x.Id);
 
         builder.HasIndex(x => x.CustomerCode).IsUnique();
+        builder.HasIndex(x => x.Name).IsUnique();
+
+        builder.Property(x => x.Name)
+            .IsRequired()
+            .HasMaxLength(256);
+
+        builder.Property(x => x.Description)
+            .HasMaxLength(1000);
+
+        builder.Property(x => x.Notes)
+            .HasMaxLength(1000);
 
         builder.Property(x => x.CustomerCode)
             .HasMaxLength(16)

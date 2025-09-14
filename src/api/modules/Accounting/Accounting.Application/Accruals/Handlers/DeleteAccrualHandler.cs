@@ -1,6 +1,5 @@
 using Accounting.Application.Accruals.Commands;
 using Accounting.Application.Accruals.Exceptions;
-using Accounting.Domain;
 
 namespace Accounting.Application.Accruals.Handlers;
 

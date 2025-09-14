@@ -15,6 +15,30 @@ public class UpdateCustomerRequestValidator : AbstractValidator<UpdateCustomerRe
             .MaximumLength(256)
             .When(x => !string.IsNullOrEmpty(x.Name));
 
+        RuleFor(x => x.ContactPerson)
+            .MaximumLength(256)
+            .When(x => !string.IsNullOrEmpty(x.ContactPerson));
+
+        RuleFor(x => x.Terms)
+            .MaximumLength(100)
+            .When(x => !string.IsNullOrEmpty(x.Terms));
+
+        RuleFor(x => x.RevenueAccountCode)
+            .MaximumLength(16)
+            .When(x => !string.IsNullOrEmpty(x.RevenueAccountCode));
+
+        RuleFor(x => x.RevenueAccountName)
+            .MaximumLength(256)
+            .When(x => !string.IsNullOrEmpty(x.RevenueAccountName));
+
+        RuleFor(x => x.Tin)
+            .MaximumLength(50)
+            .When(x => !string.IsNullOrEmpty(x.Tin));
+
+        RuleFor(x => x.PhoneNumber)
+            .MaximumLength(50)
+            .When(x => !string.IsNullOrEmpty(x.PhoneNumber));
+
         RuleFor(x => x.Email)
             .EmailAddress()
             .MaximumLength(256)

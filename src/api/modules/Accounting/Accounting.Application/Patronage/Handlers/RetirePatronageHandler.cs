@@ -1,8 +1,4 @@
-using Accounting.Domain;
-using FSH.Framework.Core.Persistence;
-using MediatR;
 using Accounting.Application.Patronage.Commands;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.Patronage.Handlers;
 

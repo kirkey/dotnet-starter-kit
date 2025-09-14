@@ -1,5 +1,3 @@
-using Ardalis.Specification;
-
 namespace Accounting.Application.Accruals.Queries;
 
 public sealed class AccrualByNumberSpec : Specification<Accrual>, ISingleResultSpecification<Accrual>

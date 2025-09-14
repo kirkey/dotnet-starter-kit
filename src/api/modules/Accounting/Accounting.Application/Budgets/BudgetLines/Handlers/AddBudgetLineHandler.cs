@@ -1,5 +1,4 @@
 using Accounting.Application.Budgets.BudgetLines.Commands;
-using Accounting.Application.Budgets.BudgetLines.Exceptions;
 
 namespace Accounting.Application.Budgets.BudgetLines.Handlers;
 

@@ -1,4 +1,3 @@
-using Accounting.Application.RegulatoryReports.Exceptions;
 using Accounting.Application.RegulatoryReports.Queries;
 
 namespace Accounting.Application.RegulatoryReports.Update.v1;

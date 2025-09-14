@@ -11,37 +11,49 @@ public sealed class CreateCustomerHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        var customerCode = request.CustomerCode?.Trim() ?? string.Empty;
+        var name = request.Name?.Trim() ?? string.Empty;
+        var address = request.Address?.Trim();
+        var billingAddress = request.BillingAddress?.Trim();
+        var contactPerson = request.ContactPerson?.Trim();
+        var email = request.Email?.Trim();
+        var terms = request.Terms?.Trim();
+        var revenueAccountCode = request.RevenueAccountCode?.Trim();
+        var revenueAccountName = request.RevenueAccountName?.Trim();
+        var tin = request.Tin?.Trim();
+        var phoneNumber = request.PhoneNumber?.Trim();
+
         // check duplicates by code
         var existingByCode = await repository.FirstOrDefaultAsync(
-            new CustomerByCodeSpec(request.CustomerCode), cancellationToken);
+            new CustomerByCodeSpec(customerCode), cancellationToken);
         if (existingByCode != null)
         {
-            throw new CustomerCodeAlreadyExistsException(request.CustomerCode);
+            throw new CustomerCodeAlreadyExistsException(customerCode);
         }
 
         // optional duplicate by name
         var existingByName = await repository.FirstOrDefaultAsync(
-            new CustomerByNameSpec(request.Name), cancellationToken);
+            new CustomerByNameSpec(name), cancellationToken);
         if (existingByName != null)
         {
-            throw new CustomerNameAlreadyExistsException(request.Name);
+            throw new CustomerNameAlreadyExistsException(name);
         }
 
         var customer = Customer.Create(
-            request.CustomerCode,
-            request.Name,
-            request.Address,
-            request.BillingAddress,
-            request.ContactPerson,
-            request.Email,
-            request.Terms,
-            request.RevenueAccountCode,
-            request.RevenueAccountName,
-            request.Tin,
-            request.PhoneNumber,
+            customerCode,
+            name,
+            address,
+            billingAddress,
+            contactPerson,
+            email,
+            terms,
+            revenueAccountCode,
+            revenueAccountName,
+            tin,
+            phoneNumber,
             request.CreditLimit,
-            request.Description,
-            request.Notes);
+            request.Description?.Trim(),
+            request.Notes?.Trim());
 
         await repository.AddAsync(customer, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

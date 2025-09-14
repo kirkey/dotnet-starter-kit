@@ -1,5 +1,4 @@
 using Accounting.Application.RegulatoryReports.Dtos;
-using Accounting.Application.RegulatoryReports.Exceptions;
 using Accounting.Application.RegulatoryReports.Queries;
 
 namespace Accounting.Application.RegulatoryReports.Get.v1;

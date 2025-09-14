@@ -4,7 +4,7 @@ namespace Accounting.Application.Billing.Handlers;
 
 public sealed class CreateInvoiceFromConsumptionHandler(
     IBillingService billingService,
-    [FromKeyedServices("accounting:consumptiondata")] IReadRepository<ConsumptionData> consumptionRepo,
+    [FromKeyedServices("accounting:consumptiondata")] IReadRepository<Domain.ConsumptionData> consumptionRepo,
     [FromKeyedServices("accounting:members")] IRepository<Member> memberRepo,
     [FromKeyedServices("accounting:rateschedules")] IReadRepository<RateSchedule> rateRepo,
     [FromKeyedServices("accounting:invoices")] IRepository<Invoice> invoiceRepo,
