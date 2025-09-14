@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.CycleCount;
 
 public sealed class CycleCountNotFoundException(DefaultIdType id)

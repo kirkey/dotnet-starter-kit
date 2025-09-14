@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.InventoryTransfer;
 
 public sealed class DuplicateInventoryTransferNumberException(string transferNumber)

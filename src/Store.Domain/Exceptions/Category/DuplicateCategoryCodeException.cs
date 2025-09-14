@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.Category;
 
 public sealed class DuplicateCategoryCodeException(string code)

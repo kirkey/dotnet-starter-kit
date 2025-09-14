@@ -1,7 +1,3 @@
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
-using Store.Domain.Events;
-
 namespace Store.Domain;
 
 public sealed class Category : AuditableEntity, IAggregateRoot

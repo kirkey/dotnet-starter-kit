@@ -1,37 +1,5 @@
 namespace Store.Infrastructure.Persistence.Configurations;
 
-public class CategoryConfiguration : IEntityTypeConfiguration<Category>
-{
-    public void Configure(EntityTypeBuilder<Category> builder)
-    {
-        builder.HasKey(x => x.Id);
-
-        builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(200);
-
-        builder.Property(x => x.Description)
-            .HasMaxLength(1000);
-
-        builder.Property(x => x.Code)
-            .IsRequired()
-            .HasMaxLength(50);
-
-        builder.HasIndex(x => x.Code)
-            .IsUnique();
-
-        builder.Property(x => x.ImageUrl)
-            .HasMaxLength(500);
-
-        builder.HasOne(x => x.ParentCategory)
-            .WithMany(x => x.SubCategories)
-            .HasForeignKey(x => x.ParentCategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.ToTable("Categories", "Store");
-    }
-}
-
 public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
 {
     public void Configure(EntityTypeBuilder<Supplier> builder)
@@ -94,6 +62,12 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
         builder.Property(x => x.Notes)
             .HasMaxLength(2000);
 
-        builder.ToTable("Suppliers", "Store");
+        // Add table-level constraints to enforce invariants
+        builder.ToTable("Suppliers", "Store", tb =>
+        {
+            tb.HasCheckConstraint("CK_Suppliers_CreditLimit_NonNegative", "[CreditLimit] IS NULL OR [CreditLimit] >= 0");
+            tb.HasCheckConstraint("CK_Suppliers_PaymentTerms_NonNegative", "[PaymentTermsDays] >= 0");
+            tb.HasCheckConstraint("CK_Suppliers_Rating_Range", "[Rating] >= 0 AND [Rating] <= 5");
+        });
     }
 }

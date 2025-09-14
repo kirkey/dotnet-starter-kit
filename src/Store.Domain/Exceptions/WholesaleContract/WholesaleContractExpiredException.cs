@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.WholesaleContract;
 
 public sealed class WholesaleContractExpiredException(DefaultIdType id, DateTime expiryDate)

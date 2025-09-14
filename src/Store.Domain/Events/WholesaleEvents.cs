@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Store.Domain.Events;
 
 public record WholesaleContractCreated : DomainEvent

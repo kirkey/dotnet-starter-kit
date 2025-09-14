@@ -1,7 +1,3 @@
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
-using Store.Domain.Events;
-
 namespace Store.Domain;
 
 public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
@@ -31,6 +27,8 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     public Warehouse Warehouse { get; private set; } = default!;
     public WarehouseLocation? WarehouseLocation { get; private set; }
 
+    private static readonly string[] AllowedAdjustmentTypes = new[] { "Physical Count", "Damage", "Loss", "Found", "Transfer", "Other", "Increase", "Decrease", "Write-Off" };
+
     private StockAdjustment() { }
 
     private StockAdjustment(
@@ -51,6 +49,29 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         string? batchNumber,
         DateTime? expiryDate)
     {
+        // basic domain validation to prevent invalid state
+        if (string.IsNullOrWhiteSpace(adjustmentNumber))
+            throw new ArgumentException("Adjustment number is required", nameof(adjustmentNumber));
+        if (adjustmentNumber.Length > 50)
+            throw new ArgumentException("Adjustment number must not exceed 50 characters", nameof(adjustmentNumber));
+
+        if (!AllowedAdjustmentTypes.Contains(adjustmentType))
+            throw new ArgumentException($"Invalid adjustment type: {adjustmentType}", nameof(adjustmentType));
+
+        if (string.IsNullOrWhiteSpace(reason))
+            throw new ArgumentException("Reason is required", nameof(reason));
+        if (reason.Length > 200)
+            throw new ArgumentException("Reason must not exceed 200 characters", nameof(reason));
+
+        if (quantityBefore < 0)
+            throw new ArgumentException("QuantityBefore must be zero or greater", nameof(quantityBefore));
+
+        if (adjustmentQuantity <= 0)
+            throw new ArgumentException("Adjustment quantity must be greater than zero", nameof(adjustmentQuantity));
+
+        if (unitCost < 0m)
+            throw new ArgumentException("Unit cost must be zero or greater", nameof(unitCost));
+
         Id = id;
         AdjustmentNumber = adjustmentNumber;
         GroceryItemId = groceryItemId;
@@ -61,9 +82,12 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         Reason = reason;
         QuantityBefore = quantityBefore;
         AdjustmentQuantity = adjustmentQuantity;
-        QuantityAfter = adjustmentType == "Increase" ? quantityBefore + adjustmentQuantity : quantityBefore - adjustmentQuantity;
+        QuantityAfter = (adjustmentType == "Increase" || adjustmentType == "Found") ? quantityBefore + adjustmentQuantity : quantityBefore - adjustmentQuantity;
+        if (QuantityAfter < 0)
+            throw new ArgumentException("Resulting QuantityAfter cannot be negative", nameof(adjustmentQuantity));
+
         UnitCost = unitCost;
-        TotalCostImpact = adjustmentQuantity * unitCost * (adjustmentType == "Increase" ? 1 : -1);
+        TotalCostImpact = adjustmentQuantity * unitCost * ((adjustmentType == "Increase" || adjustmentType == "Found") ? 1m : -1m);
         Reference = reference;
         Notes = notes;
         AdjustedBy = adjustedBy;
@@ -112,13 +136,16 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
 
     public StockAdjustment Approve(string approvedBy)
     {
-        if (!IsApproved)
-        {
-            IsApproved = true;
-            ApprovedBy = approvedBy;
-            ApprovalDate = DateTime.UtcNow;
-            QueueDomainEvent(new StockAdjustmentApproved { StockAdjustment = this });
-        }
+        if (IsApproved)
+            return this; // idempotent
+
+        if (string.IsNullOrWhiteSpace(approvedBy))
+            throw new ArgumentException("ApprovedBy is required when approving", nameof(approvedBy));
+
+        IsApproved = true;
+        ApprovedBy = approvedBy;
+        ApprovalDate = DateTime.UtcNow;
+        QueueDomainEvent(new StockAdjustmentApproved { StockAdjustment = this });
         return this;
     }
 
@@ -132,7 +159,22 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     {
         bool isUpdated = false;
 
-        if (GroceryItemId != groceryItemId)
+        if (groceryItemId == default)
+            throw new ArgumentException("GroceryItemId is required", nameof(groceryItemId));
+
+        if (!AllowedAdjustmentTypes.Contains(adjustmentType))
+            throw new ArgumentException($"Invalid adjustment type: {adjustmentType}", nameof(adjustmentType));
+
+        if (adjustmentQuantity <= 0)
+            throw new ArgumentException("Adjustment quantity must be greater than zero", nameof(adjustmentQuantity));
+
+        if (string.IsNullOrWhiteSpace(reason))
+            throw new ArgumentException("Reason is required", nameof(reason));
+
+        if (reason.Length > 200)
+            throw new ArgumentException("Reason must not exceed 200 characters", nameof(reason));
+
+        if (!string.Equals(GroceryItemId, groceryItemId))
         {
             GroceryItemId = groceryItemId;
             isUpdated = true;
@@ -174,6 +216,9 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
             QuantityAfter = AdjustmentType == "Increase" || AdjustmentType == "Found"
                 ? QuantityBefore + AdjustmentQuantity
                 : QuantityBefore - AdjustmentQuantity;
+
+            if (QuantityAfter < 0)
+                throw new InvalidOperationException("Resulting QuantityAfter cannot be negative after update");
 
             TotalCostImpact = AdjustmentQuantity * UnitCost * ((AdjustmentType == "Increase" || AdjustmentType == "Found") ? 1m : -1m);
 

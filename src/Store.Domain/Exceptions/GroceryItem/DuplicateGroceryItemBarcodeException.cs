@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.GroceryItem;
 
 public sealed class DuplicateGroceryItemBarcodeException(string barcode)

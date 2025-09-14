@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.Customer;
 
 public sealed class CustomerNotFoundException(DefaultIdType id)

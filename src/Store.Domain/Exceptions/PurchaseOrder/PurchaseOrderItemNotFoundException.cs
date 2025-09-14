@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.PurchaseOrder;
 
 public sealed class PurchaseOrderItemNotFoundException(DefaultIdType id)

@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
-
 namespace Store.Domain;
 
 public sealed class Customer : AuditableEntity, IAggregateRoot

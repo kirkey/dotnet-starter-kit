@@ -12,17 +12,18 @@ public sealed class CreateSalesOrderHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Basic validation of customer existence is performed in handler
-        var customer = await customerRepository.GetByIdAsync(request.CustomerId ?? default, cancellationToken).ConfigureAwait(false);
-        _ = customer ?? throw new CustomerNotFoundException(request.CustomerId ?? default);
+        // Validate customer exists
+        var customer = await customerRepository.GetByIdAsync(request.CustomerId, cancellationToken).ConfigureAwait(false);
+        _ = customer ?? throw new CustomerNotFoundException(request.CustomerId);
 
-        // Create minimal sales order; more fields can be set by extending the command
-        var orderNumber = request.CustomerId.HasValue ? $"SO-{request.CustomerId.Value}" : $"SO-{DefaultIdType.NewGuid()}";
+        // Build an order number using the customer id (or fallback to a new guid string)
+        var orderNumber = $"SO-{request.CustomerId}";
 
-        var so = SalesOrder.Create(orderNumber, request.CustomerId ?? DefaultIdType.NewGuid(), DateTime.UtcNow);
+        // Create the sales order (domain will set derived totals based on items)
+        var so = SalesOrder.Create(orderNumber, request.CustomerId, DateTime.UtcNow);
 
         await repository.AddAsync(so, cancellationToken).ConfigureAwait(false);
-        logger.LogInformation("Sales order created {SalesOrderId}", so.Id);
+        logger.LogInformation("Sales order created {SalesOrderId} for customer {CustomerId}", so.Id, request.CustomerId);
         return new CreateSalesOrderResponse(so.Id);
     }
 }

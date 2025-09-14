@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.StockAdjustment;
 
 public sealed class StockAdjustmentNotFoundException(DefaultIdType id)

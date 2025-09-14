@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Store.Domain.Exceptions.SalesOrder;
 
 public sealed class SalesOrderItemNotFoundException(DefaultIdType id)

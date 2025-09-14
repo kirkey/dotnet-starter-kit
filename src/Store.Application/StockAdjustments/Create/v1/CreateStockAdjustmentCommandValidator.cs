@@ -2,6 +2,8 @@ namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.Create.v1;
 
 public class CreateStockAdjustmentCommandValidator : AbstractValidator<CreateStockAdjustmentCommand>
 {
+    private static readonly string[] AllowedAdjustmentTypes = new[] { "Physical Count", "Damage", "Loss", "Found", "Transfer", "Other", "Increase", "Decrease", "Write-Off" };
+
     public CreateStockAdjustmentCommandValidator()
     {
         RuleFor(x => x.Name)
@@ -13,10 +15,8 @@ public class CreateStockAdjustmentCommandValidator : AbstractValidator<CreateSto
         RuleFor(x => x.AdjustmentNumber)
             .NotEmpty()
             .WithMessage("Adjustment number is required")
-            .MaximumLength(20)
-            .WithMessage("Adjustment number must not exceed 20 characters")
-            .Matches(@"^[A-Z0-9]+$")
-            .WithMessage("Adjustment number must contain only uppercase letters and numbers");
+            .MaximumLength(50)
+            .WithMessage("Adjustment number must not exceed 50 characters");
 
         RuleFor(x => x.GroceryItemId)
             .NotEmpty()
@@ -40,8 +40,8 @@ public class CreateStockAdjustmentCommandValidator : AbstractValidator<CreateSto
         RuleFor(x => x.AdjustmentType)
             .NotEmpty()
             .WithMessage("Adjustment type is required")
-            .Must(type => new[] { "Physical Count", "Damage", "Loss", "Found", "Transfer", "Other" }.Contains(type))
-            .WithMessage("Adjustment type must be one of: Physical Count, Damage, Loss, Found, Transfer, Other");
+            .Must(type => AllowedAdjustmentTypes.Contains(type))
+            .WithMessage($"Adjustment type must be one of: {string.Join(", ", AllowedAdjustmentTypes)}");
 
         RuleFor(x => x.Status)
             .NotEmpty()
