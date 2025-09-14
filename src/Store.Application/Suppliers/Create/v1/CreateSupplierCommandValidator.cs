@@ -7,10 +7,19 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
     private static readonly string[] AllowedCountries = new[] { "" }; // placeholder - allow any for now
     private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    public CreateSupplierCommandValidator()
+    public CreateSupplierCommandValidator([FromKeyedServices("store:suppliers")] IReadRepository<Supplier> repository)
     {
         RuleFor(x => x.Name).NotEmpty().MaximumLength(200);
-        RuleFor(x => x.Code).NotEmpty().MaximumLength(50);
+        RuleFor(x => x.Code)
+            .NotEmpty()
+            .MaximumLength(50)
+            .MustAsync(async (code, ct) =>
+            {
+                // ensure no existing supplier has same code
+                var exists = await repository.FirstOrDefaultAsync(new SupplierByCodeSpec(code), ct).ConfigureAwait(false);
+                return exists is null;
+            }).WithMessage("Supplier code must be unique");
+
         RuleFor(x => x.ContactPerson).NotEmpty().MaximumLength(100);
         RuleFor(x => x.Email).NotEmpty().MaximumLength(255).Must(e => EmailRegex.IsMatch(e)).WithMessage("Invalid email address");
         RuleFor(x => x.Phone).NotEmpty().MaximumLength(50);
@@ -23,7 +32,15 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
         RuleFor(x => x.PaymentTermsDays).GreaterThanOrEqualTo(0);
         RuleFor(x => x.Rating).InclusiveBetween(0m, 5m);
         RuleFor(x => x.Notes).MaximumLength(2000).When(x => !string.IsNullOrEmpty(x.Notes));
-        // Code uniqueness check could be added here if repository available
+        // Additional checks (email uniqueness, phone format) can be added similarly
     }
 }
 
+// Add a small specification used by the validator
+public class SupplierByCodeSpec : Specification<Supplier>
+{
+    public SupplierByCodeSpec(string code)
+    {
+        Query.Where(s => s.Code == code);
+    }
+}

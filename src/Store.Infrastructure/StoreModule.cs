@@ -8,6 +8,7 @@ using Store.Infrastructure.Endpoints.Warehouses.v1;
 using Store.Infrastructure.Endpoints.Categories.v1;
 using Store.Infrastructure.Endpoints.CycleCounts.v1;
 using Store.Infrastructure.Persistence;
+using Store.Infrastructure.Endpoints.Suppliers.v1; // ...added supplier endpoints using
 
 namespace Store.Infrastructure;
 
@@ -78,6 +79,14 @@ public static class StoreModule
             cycleCounts.MapAddCycleCountItemEndpoint();
             cycleCounts.MapCompleteCycleCountEndpoint();
             cycleCounts.MapReconcileCycleCountEndpoint();
+
+            // Supplier endpoints
+            var suppliers = app.MapGroup("suppliers").WithTags("Suppliers");
+            suppliers.MapCreateSupplierEndpoint();
+            suppliers.MapGetSupplierEndpoint();
+            suppliers.MapUpdateSupplierEndpoint();
+            suppliers.MapDeleteSupplierEndpoint();
+            suppliers.MapSearchSuppliersEndpoint();
         }
     }
 

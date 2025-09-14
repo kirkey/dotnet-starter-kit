@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.PriceLists.Specs;
 
-public class GetPriceListListSpecification : Specification<PriceList, FSH.Starter.WebApi.Store.Application.PriceLists.Search.v1.GetPriceListListResponse>
+public class GetPriceListListSpecification : Specification<PriceList, Search.v1.GetPriceListListResponse>
 {
-    public GetPriceListListSpecification(FSH.Starter.WebApi.Store.Application.PriceLists.Search.v1.SearchPriceListsCommand request)
+    public GetPriceListListSpecification(Search.v1.SearchPriceListsCommand request)
     {
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
@@ -24,7 +24,7 @@ public class GetPriceListListSpecification : Specification<PriceList, FSH.Starte
             Query.Where(p => p.EffectiveDate <= request.ToDate.Value);
         }
 
-        Query.Select(p => new FSH.Starter.WebApi.Store.Application.PriceLists.Search.v1.GetPriceListListResponse(
+        Query.Select(p => new Search.v1.GetPriceListListResponse(
             p.Id,
             p.Name,
             p.PriceListName,

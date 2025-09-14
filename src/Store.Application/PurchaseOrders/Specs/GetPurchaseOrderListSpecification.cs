@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
 
-public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1.GetPurchaseOrderListResponse>
+public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, Search.v1.GetPurchaseOrderListResponse>
 {
-    public GetPurchaseOrderListSpecification(FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1.SearchPurchaseOrdersCommand request)
+    public GetPurchaseOrderListSpecification(Search.v1.SearchPurchaseOrdersCommand request)
     {
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
@@ -21,7 +21,7 @@ public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, FS
         if (request.ToDate.HasValue)
             Query.Where(po => po.OrderDate <= request.ToDate.Value);
 
-        Query.Select(po => new FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1.GetPurchaseOrderListResponse(
+        Query.Select(po => new Search.v1.GetPurchaseOrderListResponse(
             po.Id,
             po.OrderNumber,
             po.SupplierId,
