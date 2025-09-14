@@ -6,6 +6,8 @@ public record ProjectCreated(DefaultIdType Id, string ProjectName, DateTime Star
 
 public record ProjectUpdated(Accounting.Domain.Project Project) : DomainEvent;
 
+public record ProjectDeleted(DefaultIdType Id) : DomainEvent;
+
 public record ProjectCostAdded(DefaultIdType ProjectId, decimal Amount, decimal TotalActualCost) : DomainEvent;
 
 public record ProjectRevenueAdded(DefaultIdType ProjectId, decimal Amount, decimal TotalActualRevenue) : DomainEvent;

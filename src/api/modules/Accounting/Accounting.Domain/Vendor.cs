@@ -141,7 +141,7 @@ public class Vendor : AuditableEntity, IAggregateRoot
         
         if (isUpdated)
         {
-            QueueDomainEvent(new VendorUpdated(this));
+            QueueDomainEvent(new VendorUpdated(Id, this));
         }
 
         return this;

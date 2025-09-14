@@ -6,6 +6,8 @@ public record CustomerCreated(DefaultIdType Id, string CustomerCode, string Name
 
 public record CustomerUpdated(Accounting.Domain.Customer Customer) : DomainEvent;
 
+public record CustomerDeleted(DefaultIdType Id) : DomainEvent;
+
 public record CustomerBalanceChanged(DefaultIdType Id, decimal NewBalance, decimal ChangeAmount, string TransactionType, string? Reference) : DomainEvent;
 
 public record CustomerCreditLimitChanged(DefaultIdType Id, decimal OldLimit, decimal NewLimit) : DomainEvent;

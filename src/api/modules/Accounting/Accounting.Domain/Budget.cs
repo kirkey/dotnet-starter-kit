@@ -7,10 +7,16 @@ namespace Accounting.Domain;
 
 public class Budget : AuditableEntity, IAggregateRoot
 {
+    private const int MaxNameLength = 256;
+    private const int MaxBudgetTypeLength = 32;
+    private const int MaxStatusLength = 16;
+    private const int MaxDescriptionLength = 1000;
+    private const int MaxNotesLength = 1000;
+
     public DefaultIdType PeriodId { get; private set; }
     public int FiscalYear { get; private set; }
-    public string BudgetType { get; private set; } // Operating, Capital, Cash Flow
-    public string Status { get; private set; } // Draft, Approved, Active, Closed
+    public string BudgetType { get; private set; } = string.Empty; // Operating, Capital, Cash Flow
+    public string Status { get; private set; } = string.Empty; // Draft, Approved, Active, Closed
     public decimal TotalBudgetedAmount { get; private set; }
     public decimal TotalActualAmount { get; private set; }
     public DateTime? ApprovedDate { get; private set; }
@@ -26,15 +32,41 @@ public class Budget : AuditableEntity, IAggregateRoot
 
     private Budget(string budgetName, DefaultIdType periodId, int fiscalYear, string budgetType, string? description = null, string? notes = null)
     {
-        Name = budgetName.Trim();
+        var name = (budgetName ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Budget name is required.");
+        if (name.Length > MaxNameLength)
+            throw new ArgumentException($"Budget name cannot exceed {MaxNameLength} characters.");
+
+        if (periodId == default)
+            throw new ArgumentException("PeriodId is required.");
+
+        if (fiscalYear < 1900 || fiscalYear > 2100)
+            throw new ArgumentException("Fiscal year is out of range.");
+
+        var bt = (budgetType ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(bt))
+            throw new ArgumentException("BudgetType is required.");
+        if (bt.Length > MaxBudgetTypeLength)
+            throw new ArgumentException($"BudgetType cannot exceed {MaxBudgetTypeLength} characters.");
+
+        Name = name;
         PeriodId = periodId;
         FiscalYear = fiscalYear;
-        BudgetType = budgetType.Trim();
+        BudgetType = bt;
         Status = "Draft";
         TotalBudgetedAmount = 0;
         TotalActualAmount = 0;
-        Description = description?.Trim();
-        Notes = notes?.Trim();
+
+        var desc = description?.Trim();
+        if (!string.IsNullOrEmpty(desc) && desc.Length > MaxDescriptionLength)
+            desc = desc.Substring(0, MaxDescriptionLength);
+        Description = desc;
+
+        var nts = notes?.Trim();
+        if (!string.IsNullOrEmpty(nts) && nts.Length > MaxNotesLength)
+            nts = nts.Substring(0, MaxNotesLength);
+        Notes = nts;
 
         QueueDomainEvent(new BudgetCreated(Id, Name, PeriodId, FiscalYear, BudgetType, Description, Notes));
     }
@@ -53,31 +85,46 @@ public class Budget : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(budgetName) && Name != budgetName)
         {
-            Name = budgetName.Trim();
+            var n = budgetName.Trim();
+            if (n.Length > MaxNameLength)
+                throw new ArgumentException($"Budget name cannot exceed {MaxNameLength} characters.");
+            Name = n;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(budgetType) && BudgetType != budgetType)
         {
-            BudgetType = budgetType.Trim();
+            var bt = budgetType.Trim();
+            if (bt.Length > MaxBudgetTypeLength)
+                throw new ArgumentException($"BudgetType cannot exceed {MaxBudgetTypeLength} characters.");
+            BudgetType = bt;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(status) && Status != status)
         {
-            Status = status.Trim();
+            var st = status.Trim();
+            if (st.Length > MaxStatusLength)
+                throw new ArgumentException($"Status cannot exceed {MaxStatusLength} characters.");
+            Status = st;
             isUpdated = true;
         }
 
         if (description != Description)
         {
-            Description = description?.Trim();
+            var desc = description?.Trim();
+            if (!string.IsNullOrEmpty(desc) && desc.Length > MaxDescriptionLength)
+                desc = desc.Substring(0, MaxDescriptionLength);
+            Description = desc;
             isUpdated = true;
         }
 
         if (notes != Notes)
         {
-            Notes = notes?.Trim();
+            var nts = notes?.Trim();
+            if (!string.IsNullOrEmpty(nts) && nts.Length > MaxNotesLength)
+                nts = nts.Substring(0, MaxNotesLength);
+            Notes = nts;
             isUpdated = true;
         }
 
@@ -209,6 +256,8 @@ public class Budget : AuditableEntity, IAggregateRoot
 
 public class BudgetLine : BaseEntity
 {
+    private const int MaxBudgetLineDescriptionLength = 500;
+
     public DefaultIdType BudgetId { get; private set; }
     public DefaultIdType AccountId { get; private set; }
     public decimal BudgetedAmount { get; private set; }
@@ -218,11 +267,18 @@ public class BudgetLine : BaseEntity
     private BudgetLine(DefaultIdType budgetId, DefaultIdType accountId, 
         decimal budgetedAmount, string? description = null)
     {
+        if (budgetedAmount < 0)
+            throw new InvalidBudgetAmountException();
+
         BudgetId = budgetId;
         AccountId = accountId;
         BudgetedAmount = budgetedAmount;
         ActualAmount = 0;
-        Description = description?.Trim();
+
+        var desc = description?.Trim();
+        if (!string.IsNullOrEmpty(desc) && desc.Length > MaxBudgetLineDescriptionLength)
+            desc = desc.Substring(0, MaxBudgetLineDescriptionLength);
+        Description = desc;
     }
 
     public static BudgetLine Create(DefaultIdType budgetId, DefaultIdType accountId,
@@ -245,7 +301,10 @@ public class BudgetLine : BaseEntity
 
         if (description != Description)
         {
-            Description = description?.Trim();
+            var desc = description?.Trim();
+            if (!string.IsNullOrEmpty(desc) && desc.Length > MaxBudgetLineDescriptionLength)
+                desc = desc.Substring(0, MaxBudgetLineDescriptionLength);
+            Description = desc;
         }
 
         return this;

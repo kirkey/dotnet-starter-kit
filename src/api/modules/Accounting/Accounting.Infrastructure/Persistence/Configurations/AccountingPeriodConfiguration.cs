@@ -15,6 +15,17 @@ public class AccountingPeriodConfiguration : IEntityTypeConfiguration<Accounting
 
         builder.HasIndex(x => new { x.FiscalYear, x.PeriodType }).IsUnique();
 
+        // Name, Description, Notes - align lengths with domain/AuditableEntity
+        builder.Property(x => x.Name)
+            .HasMaxLength(1024)
+            .IsRequired();
+
+        builder.Property(x => x.Description)
+            .HasMaxLength(2048);
+
+        builder.Property(x => x.Notes)
+            .HasMaxLength(2048);
+
         builder.Property(x => x.FiscalYear)
             .IsRequired();
 

@@ -6,6 +6,8 @@ public record AccountingPeriodCreated(DefaultIdType Id, string PeriodName, DateT
 
 public record AccountingPeriodUpdated(Accounting.Domain.AccountingPeriod Period) : DomainEvent;
 
+public record AccountingPeriodDeleted(DefaultIdType Id) : DomainEvent;
+
 public record AccountingPeriodClosed(DefaultIdType Id, string PeriodName, DateTime EndDate) : DomainEvent;
 
 public record AccountingPeriodReopened(DefaultIdType Id, string PeriodName) : DomainEvent;

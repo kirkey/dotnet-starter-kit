@@ -1,4 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
+// ChartOfAccount events consolidated into ChartOfAccountEvents.cs
+// See: Accounting.Domain.Events.ChartOfAccount.ChartOfAccountEvents
 
-namespace Accounting.Domain.Events.ChartOfAccount;
-public record ChartOfAccountBalanceChanged(DefaultIdType Id, decimal NewBalance, decimal Amount, string Type) : DomainEvent;

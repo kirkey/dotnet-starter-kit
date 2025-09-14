@@ -82,7 +82,7 @@ public class Payee : AuditableEntity, IAggregateRoot
         if (isUpdated)
         {
             // Optionally queue a domain event here, e.g.:
-            QueueDomainEvent(new PayeeUpdated(this));
+            QueueDomainEvent(new PayeeUpdated(Id, this));
         }
 
         return this;

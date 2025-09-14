@@ -6,6 +6,8 @@ public record BudgetCreated(DefaultIdType Id, string BudgetName, DefaultIdType P
 
 public record BudgetUpdated(Accounting.Domain.Budget Budget) : DomainEvent;
 
+public record BudgetDeleted(DefaultIdType Id) : DomainEvent;
+
 public record BudgetLineAdded(DefaultIdType BudgetId, DefaultIdType AccountId, decimal BudgetedAmount) : DomainEvent;
 
 public record BudgetLineUpdated(DefaultIdType BudgetId, DefaultIdType AccountId, decimal BudgetedAmount) : DomainEvent;

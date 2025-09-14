@@ -1,6 +1,8 @@
 using FSH.Framework.Core.Domain.Events;
 
+// ChartOfAccount events consolidated into ChartOfAccountEvents.cs
+// See: Accounting.Domain.Events.ChartOfAccount.ChartOfAccountEvents
+
 namespace Accounting.Domain.Events.ChartOfAccount;
-public record ChartOfAccountCreated(
-    DefaultIdType Id, string AccountId, string AccountName, string AccountType,
-    string UsoaCategory, string? Description, string? Notes) : DomainEvent;
+// Placeholder for consolidated ChartOfAccount events. See ChartOfAccountEvents.cs for details.
+public record ChartOfAccountEventsPlaceholder;

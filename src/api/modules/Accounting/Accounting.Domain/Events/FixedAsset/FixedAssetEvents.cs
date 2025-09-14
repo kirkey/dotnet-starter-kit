@@ -6,6 +6,8 @@ public record FixedAssetCreated(DefaultIdType Id, string AssetName, DateTime Pur
 
 public record FixedAssetUpdated(DefaultIdType Id, string AssetName, string AssetType, string? Description, string? Notes) : DomainEvent;
 
+public record FixedAssetDeleted(DefaultIdType Id) : DomainEvent;
+
 public record FixedAssetMaintenanceUpdated(DefaultIdType Id, string AssetName, DateTime? LastMaintenanceDate, DateTime? NextMaintenanceDate) : DomainEvent;
 
 public record FixedAssetDepreciationAdded(DefaultIdType Id, string AssetName, decimal DepreciationAmount, decimal CurrentBookValue) : DomainEvent;

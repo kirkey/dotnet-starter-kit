@@ -6,6 +6,8 @@ public record JournalEntryCreated(DefaultIdType Id, DateTime Date, string Refere
 
 public record JournalEntryUpdated(Accounting.Domain.JournalEntry JournalEntry) : DomainEvent;
 
+public record JournalEntryDeleted(DefaultIdType Id) : DomainEvent;
+
 public record JournalEntryPosted(DefaultIdType Id, DateTime PostedDate) : DomainEvent;
 
 public record JournalEntryReversed(DefaultIdType Id, DateTime ReversalDate, string Reason) : DomainEvent;

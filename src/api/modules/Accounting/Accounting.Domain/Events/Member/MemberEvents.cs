@@ -6,6 +6,8 @@ public record MemberCreated(DefaultIdType MemberId, string MemberNumber, string 
 
 public record MemberUpdated(DefaultIdType Id, string MemberNumber, string MemberName, string ServiceAddress, string? Description, string? Notes) : DomainEvent;
 
+public record MemberDeleted(DefaultIdType Id) : DomainEvent;
+
 public record MemberBalanceUpdated(DefaultIdType Id, string MemberNumber, decimal CurrentBalance) : DomainEvent;
 
 public record MemberStatusChanged(DefaultIdType Id, string MemberNumber, bool IsActive, string AccountStatus) : DomainEvent;

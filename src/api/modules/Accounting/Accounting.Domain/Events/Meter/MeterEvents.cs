@@ -8,6 +8,8 @@ public record MeterCreated(
 public record MeterUpdated(
     DefaultIdType Id, string MeterNumber, string MeterType, string? Description, string? Notes) : DomainEvent;
 
+public record MeterDeleted(DefaultIdType Id) : DomainEvent;
+
 public record MeterStatusChanged(
     DefaultIdType Id, string MeterNumber, string Status) : DomainEvent;
 

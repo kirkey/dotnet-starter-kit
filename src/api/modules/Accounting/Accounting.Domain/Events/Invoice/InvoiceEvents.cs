@@ -6,6 +6,8 @@ public record InvoiceCreated(DefaultIdType Id, string InvoiceNumber, DefaultIdTy
 
 public record InvoiceUpdated(DefaultIdType Id, string InvoiceNumber, DefaultIdType MemberId, decimal TotalAmount, string? Description, string? Notes) : DomainEvent;
 
+public record InvoiceDeleted(DefaultIdType Id) : DomainEvent;
+
 public record InvoiceLineItemAdded(DefaultIdType Id, string InvoiceNumber, string Description, decimal Amount) : DomainEvent;
 
 public record InvoiceSent(DefaultIdType Id, string InvoiceNumber, DefaultIdType MemberId, decimal TotalAmount, DateTime DueDate) : DomainEvent;

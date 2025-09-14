@@ -13,6 +13,14 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
 
         builder.HasKey(x => x.Id);
 
+        // Unique constraint: Name + PeriodId (one budget name per period)
+        builder.HasIndex(x => new { x.Name, x.PeriodId }).IsUnique();
+
+        // Name - align with application validators (max 256)
+        builder.Property(x => x.Name)
+            .HasMaxLength(256)
+            .IsRequired();
+
         builder.Property(x => x.PeriodId)
             .IsRequired();
 
@@ -35,6 +43,13 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
             .HasPrecision(18, 2)
             .IsRequired();
 
+        // Description and Notes - align with validator (max 1000)
+        builder.Property(x => x.Description)
+            .HasMaxLength(1000);
+
+        builder.Property(x => x.Notes)
+            .HasMaxLength(1000);
+
         builder.Property(x => x.ApprovedBy)
             .HasMaxLength(256);
 
@@ -56,6 +71,7 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
                 .HasPrecision(18, 2)
                 .IsRequired();
                 
+            // Keep BudgetLine description max 500 (application validators can be tightened if needed)
             bl.Property(x => x.Description)
                 .HasMaxLength(500);
         });

@@ -6,6 +6,8 @@ public record DepreciationMethodCreated(DefaultIdType Id, string MethodCode, str
 
 public record DepreciationMethodUpdated(Accounting.Domain.DepreciationMethod Method) : DomainEvent;
 
+public record DepreciationMethodDeleted(DefaultIdType Id) : DomainEvent;
+
 public record DepreciationMethodActivated(DefaultIdType Id, string MethodName) : DomainEvent;
 
 public record DepreciationMethodDeactivated(DefaultIdType Id, string MethodName) : DomainEvent;

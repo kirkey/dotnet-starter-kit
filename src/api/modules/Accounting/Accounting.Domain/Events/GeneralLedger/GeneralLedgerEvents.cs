@@ -9,3 +9,5 @@ public record GeneralLedgerEntryCreated(
 public record GeneralLedgerEntryUpdated(
     DefaultIdType Id, DefaultIdType EntryId, DefaultIdType AccountId,
     decimal Debit, decimal Credit, string UsoaClass) : DomainEvent;
+
+public record GeneralLedgerEntryDeleted(DefaultIdType EntryId) : DomainEvent;

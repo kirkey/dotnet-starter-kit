@@ -2,11 +2,19 @@ namespace Accounting.Application.AccountingPeriods.Create;
 
 public class CreateAccountingPeriodRequestValidator : AbstractValidator<CreateAccountingPeriodRequest>
 {
+    private static readonly HashSet<string> AllowedPeriodTypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Monthly",
+        "Quarterly",
+        "Yearly",
+        "Annual",
+    };
+
     public CreateAccountingPeriodRequestValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .MaximumLength(256);
+            .MaximumLength(1024);
 
         RuleFor(x => x.StartDate)
             .NotEmpty();
@@ -16,19 +24,22 @@ public class CreateAccountingPeriodRequestValidator : AbstractValidator<CreateAc
             .GreaterThan(x => x.StartDate);
 
         RuleFor(x => x.FiscalYear)
-            .GreaterThan(1900)
+            .GreaterThan(1899)
             .LessThanOrEqualTo(2100);
 
         RuleFor(x => x.PeriodType)
             .NotEmpty()
-            .MaximumLength(16);
+            .Must(pt => !string.IsNullOrWhiteSpace(pt) && pt.Trim().Length <= 16)
+            .WithMessage("PeriodType cannot exceed 16 characters (trimmed).")
+            .Must(pt => AllowedPeriodTypes.Contains(pt!.Trim()))
+            .WithMessage(x => $"PeriodType must be one of: {string.Join(", ", AllowedPeriodTypes)}");
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
+            .MaximumLength(2048)
             .When(x => !string.IsNullOrEmpty(x.Description));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(2048)
             .When(x => !string.IsNullOrEmpty(x.Notes));
     }
 }

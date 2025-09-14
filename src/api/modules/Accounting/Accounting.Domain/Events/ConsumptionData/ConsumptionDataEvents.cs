@@ -6,4 +6,6 @@ public record ConsumptionDataCreated(DefaultIdType ConsumptionId, DefaultIdType 
 
 public record ConsumptionDataUpdated(Accounting.Domain.ConsumptionData ConsumptionData) : DomainEvent;
 
+public record ConsumptionDataDeleted(DefaultIdType ConsumptionId) : DomainEvent;
+
 public record ConsumptionDataMarkedAsEstimated(DefaultIdType ConsumptionId, DefaultIdType MeterId, string Reason) : DomainEvent;
