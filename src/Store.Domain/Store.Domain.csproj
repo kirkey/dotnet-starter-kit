@@ -8,10 +8,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\api\framework\Core\Core.csproj" />
-      <ProjectReference Include="..\api\framework\Infrastructure\Infrastructure.csproj" />
-      <ProjectReference Include="..\api\migrations\MSSQL\MSSQL.csproj" />
-      <ProjectReference Include="..\api\migrations\MySQL\MySQL.csproj" />
-      <ProjectReference Include="..\api\migrations\PostgreSQL\PostgreSQL.csproj" />
       <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 

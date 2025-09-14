@@ -4,6 +4,9 @@
     <AssemblyName>FSH.Starter.WebApi.Migrations.PostgreSQL</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Store.Application\Store.Application.csproj" />
+    <ProjectReference Include="..\..\..\Store.Domain\Store.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Store.Infrastructure\Store.Infrastructure.csproj" />
     <ProjectReference Include="..\..\framework\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
@@ -13,6 +16,7 @@
     <Folder Include="Accounting\" />
     <Folder Include="Catalog\" />
     <Folder Include="Identity\" />
+    <Folder Include="Store\" />
     <Folder Include="Tenant\" />
     <Folder Include="Todo\" />
   </ItemGroup>

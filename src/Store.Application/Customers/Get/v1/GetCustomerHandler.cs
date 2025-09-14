@@ -1,6 +1,4 @@
-using Accounting.Application.Customers.Exceptions;
-
-
+using Store.Domain.Exceptions.Customer;
 
 namespace FSH.Starter.WebApi.Store.Application.Customers.Get.v1;
 

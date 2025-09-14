@@ -7,9 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\aspire\service-defaults\ServiceDefaults.csproj" />
       <ProjectReference Include="..\..\..\framework\Core\Core.csproj" />
-      <ProjectReference Include="..\..\..\framework\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

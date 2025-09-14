@@ -4,7 +4,12 @@
     <AssemblyName>FSH.Starter.WebApi.Migrations.MSSQL</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Store.Application\Store.Application.csproj" />
+    <ProjectReference Include="..\..\..\Store.Domain\Store.Domain.csproj" />
     <ProjectReference Include="..\..\framework\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
+    <ProjectReference Include="..\..\modules\Accounting\Accounting.Domain\Accounting.Domain.csproj" />
+    <ProjectReference Include="..\..\modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\Todo\Todo.csproj" />
   </ItemGroup>
