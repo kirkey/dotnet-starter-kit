@@ -1,6 +1,6 @@
 namespace Accounting.Application.AccountingPeriods.Queries;
 
-public sealed class AccountingPeriodOverlappingSpec : Ardalis.Specification.Specification<Accounting.Domain.AccountingPeriod>
+public sealed class AccountingPeriodOverlappingSpec : Specification<AccountingPeriod>
 {
     public AccountingPeriodOverlappingSpec(DateTime startDate, DateTime endDate, DefaultIdType? excludeId = null)
     {

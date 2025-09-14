@@ -1,7 +1,4 @@
 using Accounting.Domain.Events.FixedAsset;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
 
 namespace Accounting.Domain;
 

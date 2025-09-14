@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.JournalEntry;
 
 public record JournalEntryCreated(DefaultIdType Id, DateTime Date, string ReferenceNumber, string Description, string Source) : DomainEvent;

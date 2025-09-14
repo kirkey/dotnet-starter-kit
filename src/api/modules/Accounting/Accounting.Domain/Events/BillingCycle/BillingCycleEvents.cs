@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.BillingCycle;
 
 public record BillingCycleCreated(DefaultIdType Id, string CycleName, DateTime StartDate, DateTime EndDate) : DomainEvent;

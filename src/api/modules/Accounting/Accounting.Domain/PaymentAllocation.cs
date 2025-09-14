@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain;
-
 namespace Accounting.Domain;
 
 public class PaymentAllocation : BaseEntity

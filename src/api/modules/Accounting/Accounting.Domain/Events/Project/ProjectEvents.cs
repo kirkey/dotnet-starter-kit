@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.Project;
 
 public record ProjectCreated(DefaultIdType Id, string ProjectName, DateTime StartDate, decimal BudgetedAmount, string? Description, string? Notes) : DomainEvent;

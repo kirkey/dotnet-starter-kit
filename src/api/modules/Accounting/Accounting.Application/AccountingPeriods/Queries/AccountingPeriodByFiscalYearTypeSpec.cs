@@ -1,6 +1,6 @@
 namespace Accounting.Application.AccountingPeriods.Queries;
 
-public sealed class AccountingPeriodByFiscalYearTypeSpec : Ardalis.Specification.Specification<Accounting.Domain.AccountingPeriod>, Ardalis.Specification.ISingleResultSpecification<Accounting.Domain.AccountingPeriod>
+public sealed class AccountingPeriodByFiscalYearTypeSpec : Specification<AccountingPeriod>, ISingleResultSpecification<AccountingPeriod>
 {
     public AccountingPeriodByFiscalYearTypeSpec(int fiscalYear, string periodType, DefaultIdType? excludeId = null)
     {

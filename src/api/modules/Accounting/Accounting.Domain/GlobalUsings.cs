@@ -1,0 +1,10 @@
+global using System;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using Accounting.Domain.Exceptions;
+global using FSH.Framework.Core.Caching;
+global using FSH.Framework.Core.Domain;
+global using FSH.Framework.Core.Domain.Contracts;
+global using FSH.Framework.Core.Domain.Events;
+global using FSH.Framework.Core.Exceptions;
+global using MediatR;
+global using Microsoft.Extensions.Logging;

@@ -1,9 +1,11 @@
 namespace Accounting.Application.ChartOfAccounts.Queries;
 
-public class ChartOfAccountByCodeSpec : Specification<ChartOfAccount>
+public sealed class ChartOfAccountByCodeSpec : Specification<ChartOfAccount>, ISingleResultSpecification<ChartOfAccount>
 {
-    public ChartOfAccountByCodeSpec(string accountCode)
+    public ChartOfAccountByCodeSpec(string code)
     {
-        Query.Where(c => c.AccountCode == accountCode);
+        var c = (code ?? string.Empty).Trim();
+        Query.Where(a => a.AccountCode == c);
     }
 }
+

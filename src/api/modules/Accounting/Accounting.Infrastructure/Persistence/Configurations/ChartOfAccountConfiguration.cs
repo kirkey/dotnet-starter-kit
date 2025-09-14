@@ -19,13 +19,17 @@ public class ChartOfAccountConfiguration : IEntityTypeConfiguration<ChartOfAccou
             .HasMaxLength(16)
             .IsRequired();
 
+        // AccountName / Name mapping
+        builder.Property(x => x.AccountName)
+            .HasMaxLength(1024)
+            .IsRequired();
+
         builder.Property(x => x.AccountType)
             .HasMaxLength(32)
             .IsRequired();
 
         builder.Property(x => x.ParentCode)
-            .HasMaxLength(16)
-            .IsRequired();
+            .HasMaxLength(16);
 
         builder.Property(x => x.UsoaCategory)
             .HasMaxLength(16)
@@ -34,5 +38,21 @@ public class ChartOfAccountConfiguration : IEntityTypeConfiguration<ChartOfAccou
         builder.Property(x => x.Balance)
             .HasPrecision(18, 2)
             .IsRequired();
+
+        // Additional mappings
+        builder.Property(x => x.IsActive)
+            .IsRequired();
+
+        builder.Property(x => x.NormalBalance)
+            .HasMaxLength(8);
+
+        builder.Property(x => x.RegulatoryClassification)
+            .HasMaxLength(256);
+
+        builder.Property(x => x.Description)
+            .HasMaxLength(2048);
+
+        builder.Property(x => x.Notes)
+            .HasMaxLength(2048);
     }
 }

@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.Budget;
 
 public record BudgetCreated(DefaultIdType Id, string BudgetName, DefaultIdType PeriodId, int FiscalYear, string BudgetType, string? Description, string? Notes) : DomainEvent;

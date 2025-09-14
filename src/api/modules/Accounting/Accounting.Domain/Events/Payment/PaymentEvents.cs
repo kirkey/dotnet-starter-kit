@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.Payment;
 
 public record PaymentReceived(DefaultIdType PaymentId, string PaymentNumber, DefaultIdType? MemberId, DefaultIdType? InvoiceId, decimal Amount, DateTime PaymentDate, string PaymentMethod) : DomainEvent;

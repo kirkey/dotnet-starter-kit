@@ -4,7 +4,7 @@ using Accounting.Application.Accruals.Exceptions;
 
 namespace Accounting.Application.Accruals.Handlers
 {
-    public class CreateAccrualHandler(IRepository<Accounting.Domain.Accrual> repository)
+    public class CreateAccrualHandler(IRepository<Accrual> repository)
         : IRequestHandler<CreateAccrualCommand, DefaultIdType>
     {
         public async Task<DefaultIdType> Handle(CreateAccrualCommand request, CancellationToken cancellationToken)
@@ -16,7 +16,7 @@ namespace Accounting.Application.Accruals.Handlers
             if (existing != null)
                 throw new AccrualAlreadyExistsException(accrualNumber);
 
-            var accrual = Accounting.Domain.Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description);
+            var accrual = Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description);
             await repository.AddAsync(accrual, cancellationToken);
             await repository.SaveChangesAsync(cancellationToken);
             return accrual.Id;

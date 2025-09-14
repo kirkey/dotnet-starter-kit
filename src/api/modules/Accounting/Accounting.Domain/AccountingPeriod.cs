@@ -1,8 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Accounting.Domain.Events.AccountingPeriod;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
 
 namespace Accounting.Domain;
 

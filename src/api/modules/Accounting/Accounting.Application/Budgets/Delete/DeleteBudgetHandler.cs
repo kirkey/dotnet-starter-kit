@@ -1,6 +1,6 @@
 namespace Accounting.Application.Budgets.Delete;
 
-using Accounting.Application.Budgets.Exceptions;
+using Exceptions;
 
 public sealed class DeleteBudgetHandler(
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)

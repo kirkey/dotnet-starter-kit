@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.Customer;
 
 public record CustomerCreated(DefaultIdType Id, string CustomerCode, string Name, string? Email, string? Terms, decimal CreditLimit, string? Description, string? Notes) : DomainEvent;

@@ -1,6 +1,4 @@
 using Accounting.Domain.Events.Invoice;
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
 
 namespace Accounting.Domain;
 

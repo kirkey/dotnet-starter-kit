@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.AccountingPeriod;
 
 public record AccountingPeriodCreated(DefaultIdType Id, string PeriodName, DateTime StartDate, DateTime EndDate, int FiscalYear, string? Description, string? Notes) : DomainEvent;

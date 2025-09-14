@@ -1,11 +1,18 @@
 using Accounting.Domain.Events.ChartOfAccount;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
 
 namespace Accounting.Domain;
 public class ChartOfAccount : AuditableEntity, IAggregateRoot
 {
+    private const int MaxAccountCodeLength = 16;
+    private const int MaxAccountNameLength = 1024;
+    private const int MaxAccountTypeLength = 32;
+    private const int MaxUsoaCategoryLength = 16;
+    private const int MaxParentCodeLength = 16;
+    private const int MaxNormalBalanceLength = 8;
+    private const int MaxRegulatoryClassificationLength = 256;
+    private const int MaxDescriptionLength = 2048;
+    private const int MaxNotesLength = 2048;
+
     public string AccountCode { get; private set; } // USOA Account ID (e.g., 101, 403)
     public string AccountName { get; private set; } // Official USOA account name
     public string AccountType { get; private set; } // Asset, Liability, Equity, Revenue, Expense
@@ -22,7 +29,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     public bool AllowDirectPosting { get; private set; }
     public bool IsUsoaCompliant { get; private set; }
     public string? RegulatoryClassification { get; private set; } // FERC classification
-    
+
     // Parameterless constructor for EF Core
     private ChartOfAccount()
     {
@@ -34,23 +41,61 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         bool isUsoaCompliant = true, string? regulatoryClassification = null,
         string? description = null, string? notes = null)
     {
-        AccountCode = accountCode.Trim();
-        AccountName = accountName.Trim();
-        Name = accountName.Trim(); // Keep for compatibility
-        AccountType = accountType.Trim();
+        var ac = (accountCode ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(ac))
+            throw new ChartOfAccountInvalidException("Account ID cannot be empty");
+        if (ac.Length > MaxAccountCodeLength)
+            throw new ChartOfAccountInvalidException($"Account code cannot exceed {MaxAccountCodeLength} characters.");
+
+        var an = (accountName ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(an))
+            throw new ChartOfAccountInvalidException("Account Name cannot be empty");
+        if (an.Length > MaxAccountNameLength)
+            throw new ChartOfAccountInvalidException($"Account name cannot exceed {MaxAccountNameLength} characters.");
+
+        var at = (accountType ?? string.Empty).Trim();
+        if (!IsValidAccountType(at))
+            throw new ChartOfAccountInvalidException($"Invalid account type: {accountType}");
+        if (at.Length > MaxAccountTypeLength)
+            throw new ChartOfAccountInvalidException($"Account type cannot exceed {MaxAccountTypeLength} characters.");
+
+        var uc = (usoaCategory ?? string.Empty).Trim();
+        if (!IsValidUsoaCategory(uc))
+            throw new ChartOfAccountInvalidException($"Invalid USOA category: {usoaCategory}");
+        if (uc.Length > MaxUsoaCategoryLength)
+            throw new ChartOfAccountInvalidException($"USOA category cannot exceed {MaxUsoaCategoryLength} characters.");
+
+        AccountCode = ac;
+        AccountName = an;
+        Name = an; // Keep for compatibility
+        AccountType = at;
         SubAccountOf = subAccountOf;
-        UsoaCategory = usoaCategory.Trim();
+        UsoaCategory = uc;
         IsActive = true;
-        ParentCode = parentCode?.Trim() ?? string.Empty;
+        ParentCode = (parentCode ?? string.Empty).Trim();
+        if (ParentCode.Length > MaxParentCodeLength)
+            ParentCode = ParentCode.Substring(0, MaxParentCodeLength);
+
         Balance = balance;
         IsControlAccount = isControlAccount;
-        NormalBalance = normalBalance.Trim();
-        AccountLevel = CalculateAccountLevel(parentCode);
+        NormalBalance = (normalBalance ?? "Debit").Trim();
+        if (NormalBalance.Length > MaxNormalBalanceLength)
+            NormalBalance = NormalBalance.Substring(0, MaxNormalBalanceLength);
+
+        AccountLevel = CalculateAccountLevel(ParentCode);
         AllowDirectPosting = !isControlAccount;
         IsUsoaCompliant = isUsoaCompliant;
         RegulatoryClassification = regulatoryClassification?.Trim();
+        if (RegulatoryClassification?.Length > MaxRegulatoryClassificationLength)
+            RegulatoryClassification = RegulatoryClassification.Substring(0, MaxRegulatoryClassificationLength);
+
         Description = description?.Trim();
+        if (Description?.Length > MaxDescriptionLength)
+            Description = Description.Substring(0, MaxDescriptionLength);
+
         Notes = notes?.Trim();
+        if (Notes?.Length > MaxNotesLength)
+            Notes = Notes.Substring(0, MaxNotesLength);
 
         QueueDomainEvent(new ChartOfAccountCreated(Id, AccountCode, AccountName, AccountType, UsoaCategory, Description, Notes));
     }
@@ -61,20 +106,8 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         bool isUsoaCompliant = true, string? regulatoryClassification = null,
         string? description = null, string? notes = null)
     {
-        if (string.IsNullOrWhiteSpace(accountId))
-            throw new ChartOfAccountInvalidException("Account ID cannot be empty");
-            
-        if (string.IsNullOrWhiteSpace(accountName))
-            throw new ChartOfAccountInvalidException("Account Name cannot be empty");
-            
-        if (!IsValidAccountType(accountType))
-            throw new ChartOfAccountInvalidException($"Invalid account type: {accountType}");
-            
-        if (!IsValidUsoaCategory(usoaCategory))
-            throw new ChartOfAccountInvalidException($"Invalid USOA category: {usoaCategory}");
-
         return new ChartOfAccount(accountId, accountName, accountType, usoaCategory,
-            subAccountOf, parentCode, balance, isControlAccount, normalBalance, isUsoaCompliant, 
+            subAccountOf, parentCode, balance, isControlAccount, normalBalance, isUsoaCompliant,
             regulatoryClassification, description, notes);
     }
 
@@ -87,23 +120,33 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(accountName) && AccountName != accountName.Trim())
         {
-            Name = accountName.Trim();
+            var an = accountName.Trim();
+            if (an.Length > MaxAccountNameLength)
+                throw new ChartOfAccountInvalidException($"Account name cannot exceed {MaxAccountNameLength} characters.");
+            Name = an;
+            AccountName = an;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(accountType) && AccountType != accountType.Trim())
         {
-            if (!IsValidAccountType(accountType))
+            var at = accountType.Trim();
+            if (!IsValidAccountType(at))
                 throw new ChartOfAccountInvalidException($"Invalid account type: {accountType}");
-            AccountType = accountType.Trim();
+            if (at.Length > MaxAccountTypeLength)
+                throw new ChartOfAccountInvalidException($"Account type cannot exceed {MaxAccountTypeLength} characters.");
+            AccountType = at;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(usoaCategory) && UsoaCategory != usoaCategory.Trim())
         {
-            if (!IsValidUsoaCategory(usoaCategory))
+            var uc = usoaCategory.Trim();
+            if (!IsValidUsoaCategory(uc))
                 throw new ChartOfAccountInvalidException($"Invalid USOA category: {usoaCategory}");
-            UsoaCategory = usoaCategory.Trim();
+            if (uc.Length > MaxUsoaCategoryLength)
+                throw new ChartOfAccountInvalidException($"USOA category cannot exceed {MaxUsoaCategoryLength} characters.");
+            UsoaCategory = uc;
             isUpdated = true;
         }
 
@@ -115,7 +158,10 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(parentCode) && ParentCode != parentCode.Trim())
         {
-            ParentCode = parentCode.Trim();
+            var pc = parentCode.Trim();
+            if (pc.Length > MaxParentCodeLength)
+                pc = pc.Substring(0, MaxParentCodeLength);
+            ParentCode = pc;
             AccountLevel = CalculateAccountLevel(ParentCode);
             isUpdated = true;
         }
@@ -129,7 +175,10 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(normalBalance) && NormalBalance != normalBalance.Trim())
         {
-            NormalBalance = normalBalance.Trim();
+            var nb = normalBalance.Trim();
+            if (nb.Length > MaxNormalBalanceLength)
+                nb = nb.Substring(0, MaxNormalBalanceLength);
+            NormalBalance = nb;
             isUpdated = true;
         }
 
@@ -141,19 +190,28 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(regulatoryClassification) && RegulatoryClassification != regulatoryClassification.Trim())
         {
-            RegulatoryClassification = regulatoryClassification.Trim();
+            var rc = regulatoryClassification.Trim();
+            if (rc.Length > MaxRegulatoryClassificationLength)
+                rc = rc.Substring(0, MaxRegulatoryClassificationLength);
+            RegulatoryClassification = rc;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(description) && Description != description?.Trim())
         {
-            Description = description.Trim();
+            var d = description.Trim();
+            if (d.Length > MaxDescriptionLength)
+                d = d.Substring(0, MaxDescriptionLength);
+            Description = d;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(notes) && Notes != notes?.Trim())
         {
-            Notes = notes.Trim();
+            var n = notes.Trim();
+            if (n.Length > MaxNotesLength)
+                n = n.Substring(0, MaxNotesLength);
+            Notes = n;
             isUpdated = true;
         }
 

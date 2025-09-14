@@ -1,7 +1,7 @@
 namespace Accounting.Application.Budgets.Create;
 
-using Accounting.Application.Budgets.Exceptions;
-using Accounting.Application.Budgets.Queries;
+using Exceptions;
+using Queries;
 
 public sealed class CreateBudgetHandler(
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)

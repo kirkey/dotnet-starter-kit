@@ -5,7 +5,7 @@ using Accounting.Application.Accruals.Queries;
 namespace Accounting.Application.Accruals.Handlers;
 
 public class UpdateAccrualHandler(
-    IRepository<Accounting.Domain.Accrual> repository)
+    IRepository<Accrual> repository)
     : IRequestHandler<UpdateAccrualCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateAccrualCommand request, CancellationToken cancellationToken)

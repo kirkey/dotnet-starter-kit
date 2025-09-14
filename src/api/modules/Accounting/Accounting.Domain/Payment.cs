@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
 using Accounting.Domain.Events.Payment;
 
 namespace Accounting.Domain;

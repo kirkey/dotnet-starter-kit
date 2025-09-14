@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.FixedAsset;
 
 public record FixedAssetCreated(DefaultIdType Id, string AssetName, DateTime PurchaseDate, decimal PurchasePrice, string AssetType, string? Description, string? Notes) : DomainEvent;

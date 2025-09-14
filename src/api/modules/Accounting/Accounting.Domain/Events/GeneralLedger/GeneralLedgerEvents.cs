@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.GeneralLedger;
 
 public record GeneralLedgerEntryCreated(

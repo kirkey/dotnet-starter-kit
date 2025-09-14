@@ -2,7 +2,7 @@ using Ardalis.Specification;
 
 namespace Accounting.Application.Budgets.Queries;
 
-public sealed class BudgetByNamePeriodSpec : Specification<Accounting.Domain.Budget>, Ardalis.Specification.ISingleResultSpecification<Accounting.Domain.Budget>
+public sealed class BudgetByNamePeriodSpec : Specification<Budget>, ISingleResultSpecification<Budget>
 {
     public BudgetByNamePeriodSpec(string name, DefaultIdType periodId, DefaultIdType? excludeId = null)
     {

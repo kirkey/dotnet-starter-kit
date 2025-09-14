@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.Member;
 
 public record MemberCreated(DefaultIdType MemberId, string MemberNumber, string MemberName, string ServiceAddress, DateTime MembershipDate, string? Description, string? Notes) : DomainEvent;

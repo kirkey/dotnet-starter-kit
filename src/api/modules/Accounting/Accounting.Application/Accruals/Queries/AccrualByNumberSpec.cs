@@ -2,7 +2,7 @@ using Ardalis.Specification;
 
 namespace Accounting.Application.Accruals.Queries;
 
-public sealed class AccrualByNumberSpec : Specification<Accounting.Domain.Accrual>, ISingleResultSpecification<Accounting.Domain.Accrual>
+public sealed class AccrualByNumberSpec : Specification<Accrual>, ISingleResultSpecification<Accrual>
 {
     public AccrualByNumberSpec(string accrualNumber, DefaultIdType? excludeId = null)
     {

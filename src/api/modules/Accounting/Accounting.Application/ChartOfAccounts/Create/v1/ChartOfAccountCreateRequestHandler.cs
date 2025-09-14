@@ -11,36 +11,43 @@ public sealed class ChartOfAccountCreateRequestHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        var accountCode = request.AccountCode?.Trim() ?? string.Empty;
+        var accountName = request.AccountName?.Trim() ?? string.Empty;
+        var accountType = request.AccountType?.Trim() ?? string.Empty;
+        var usoaCategory = request.UsoaCategory?.Trim() ?? string.Empty;
+        var parentCode = request.ParentCode?.Trim() ?? string.Empty;
+        var normalBalance = request.NormalBalance?.Trim() ?? "Debit";
+
         // Check for duplicate account code
         var existingByCode = await repository.FirstOrDefaultAsync(
-            new ChartOfAccountByCodeSpec(request.AccountCode), cancellationToken);
+            new ChartOfAccountByCodeSpec(accountCode), cancellationToken);
         if (existingByCode != null)
         {
-            throw new ChartOfAccountForbiddenException($"Account code {request.AccountCode} already exists");
+            throw new ChartOfAccountForbiddenException($"Account code {accountCode} already exists");
         }
 
         // Check for duplicate account name
         var existingByName = await repository.FirstOrDefaultAsync(
-            new ChartOfAccountByNameSpec(request.AccountName), cancellationToken);
+            new ChartOfAccountByNameSpec(accountName), cancellationToken);
         if (existingByName != null)
         {
-            throw new ChartOfAccountForbiddenException($"Account name {request.AccountName} already exists");
+            throw new ChartOfAccountForbiddenException($"Account name {accountName} already exists");
         }
 
         var account = ChartOfAccount.Create(
-            accountId: request.AccountCode,
-            accountName: request.AccountName,
-            accountType: request.AccountType,
-            usoaCategory: request.UsoaCategory,
+            accountId: accountCode,
+            accountName: accountName,
+            accountType: accountType,
+            usoaCategory: usoaCategory,
             subAccountOf: request.SubAccountOf,
-            parentCode: request.ParentCode,
+            parentCode: parentCode,
             balance: request.Balance,
             isControlAccount: request.IsControlAccount,
-            normalBalance: request.NormalBalance,
+            normalBalance: normalBalance,
             isUsoaCompliant: request.IsUsoaCompliant,
-            regulatoryClassification: request.RegulatoryClassification,
-            description: request.Description,
-            notes: request.Notes);
+            regulatoryClassification: request.RegulatoryClassification?.Trim(),
+            description: request.Description?.Trim(),
+            notes: request.Notes?.Trim());
 
         await repository.AddAsync(account, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

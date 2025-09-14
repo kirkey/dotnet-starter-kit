@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.Invoice;
 
 public record InvoiceCreated(DefaultIdType Id, string InvoiceNumber, DefaultIdType MemberId, decimal TotalAmount, DateTime DueDate, string? Description, string? Notes) : DomainEvent;

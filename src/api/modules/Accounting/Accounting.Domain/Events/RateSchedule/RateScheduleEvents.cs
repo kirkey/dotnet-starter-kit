@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Domain.Events;
-
 namespace Accounting.Domain.Events.RateSchedule;
 
 public record RateScheduleCreated(DefaultIdType Id, string RateCode, string RateName, DateTime EffectiveDate, string? Description) : DomainEvent;
