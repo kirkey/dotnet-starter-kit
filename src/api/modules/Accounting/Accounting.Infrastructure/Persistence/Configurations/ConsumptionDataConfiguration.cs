@@ -1,6 +1,7 @@
 using Accounting.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Constants;
 
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
@@ -8,7 +9,7 @@ public class ConsumptionDataConfiguration : IEntityTypeConfiguration<Consumption
 {
     public void Configure(EntityTypeBuilder<ConsumptionData> builder)
     {
-        builder.ToTable("ConsumptionData", schema: "Accounting");
+        builder.ToTable("ConsumptionData", SchemaNames.Accounting);
 
         builder.HasKey(x => x.Id);
 

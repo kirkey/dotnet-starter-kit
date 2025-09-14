@@ -1,6 +1,7 @@
 using Accounting.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Constants;
 
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
@@ -8,7 +9,7 @@ public class AccrualConfiguration : IEntityTypeConfiguration<Accounting.Domain.A
 {
     public void Configure(EntityTypeBuilder<Accounting.Domain.Accrual> builder)
     {
-        builder.ToTable("Accruals", schema: "Accounting");
+        builder.ToTable("Accruals", SchemaNames.Accounting);
 
         builder.HasKey(x => x.Id);
 

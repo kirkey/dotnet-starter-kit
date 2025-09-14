@@ -103,7 +103,8 @@ public static class StoreModule
         ArgumentNullException.ThrowIfNull(builder);
 
         // Bind DB context using the framework helper which reads DatabaseOptions
-        builder.Services.BindDbContext<StoreDbContext>();
+        // Use module key "store" to allow a separate DB per module when configured
+        builder.Services.BindDbContext<StoreDbContext>("store");
 
         // If a DB initializer is present, register it (we add one in Persistence)
         builder.Services.AddScoped<IDbInitializer, StoreDbInitializer>();

@@ -76,7 +76,8 @@ public static class AccountingModule
     public static WebApplicationBuilder RegisterAccountingServices(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
-        builder.Services.BindDbContext<AccountingDbContext>();
+        // Use module key "accounting" to allow a separate DB per module when configured
+        builder.Services.BindDbContext<AccountingDbContext>("accounting");
         builder.Services.AddScoped<IDbInitializer, AccountingDbInitializer>();
     
         // Register without keys (for MediatR handlers that don't use keyed services)

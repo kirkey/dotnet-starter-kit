@@ -54,7 +54,7 @@ public static class Extensions
         return builder;
     }
 
-    public static IServiceCollection BindDbContext<TContext>(this IServiceCollection services)
+    public static IServiceCollection BindDbContext<TContext>(this IServiceCollection services, string? moduleKey = null)
         where TContext : DbContext
     {
         ArgumentNullException.ThrowIfNull(services);
@@ -62,7 +62,21 @@ public static class Extensions
         services.AddDbContext<TContext>((sp, options) =>
         {
             var dbConfig = sp.GetRequiredService<IOptions<DatabaseOptions>>().Value;
-            options.ConfigureDatabase(dbConfig.Provider, dbConfig.ConnectionString);
+
+            // Default to global provider/connection
+            var provider = dbConfig.Provider;
+            var conn = dbConfig.ConnectionString;
+
+            // If a module key is provided and an override exists, use it
+            if (!string.IsNullOrEmpty(moduleKey)
+                && dbConfig.ModuleConnectionStrings.TryGetValue(moduleKey, out var moduleOptions)
+                && !string.IsNullOrEmpty(moduleOptions.ConnectionString))
+            {
+                provider = string.IsNullOrEmpty(moduleOptions.Provider) ? provider : moduleOptions.Provider;
+                conn = moduleOptions.ConnectionString;
+            }
+
+            options.ConfigureDatabase(provider, conn);
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
         });
         return services;
