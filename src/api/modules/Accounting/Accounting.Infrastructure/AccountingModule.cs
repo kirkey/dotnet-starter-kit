@@ -112,6 +112,11 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<Project>, AccountingRepository<Project>>();
         builder.Services.AddScoped<IRepository<Vendor>, AccountingRepository<Vendor>>();
         builder.Services.AddScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>();
+        // Ensure DeferredRevenue and Accrual repositories are registered for non-keyed resolution
+        builder.Services.AddScoped<IRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>();
+        builder.Services.AddScoped<IReadRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>();
+        builder.Services.AddScoped<IRepository<Accrual>, AccountingRepository<Accrual>>();
+        builder.Services.AddScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>();
         // Added missing repository registrations for PostingBatch, DeferredRevenue, and Accrual
         builder.Services.AddScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
         builder.Services.AddScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
@@ -169,6 +174,12 @@ public static class AccountingModule
         // Also register a dedicated key for rate schedules used by billing handlers
         builder.Services.AddKeyedScoped<IRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");
         builder.Services.AddKeyedScoped<IReadRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");
+        // Register keyed repositories matching handler expectations
+        builder.Services.AddKeyedScoped<IRepository<PatronageCapital>, AccountingRepository<PatronageCapital>>("accounting:patronagecapitals");
+        builder.Services.AddKeyedScoped<IReadRepository<PatronageCapital>, AccountingRepository<PatronageCapital>>("accounting:patronagecapitals");
+        // Handlers use the key "accounting:consumption" (singular) in some places — register it as well
+        builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumption");
+        builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumption");
         // Register with specific keys (for handlers that use specific keys like "accounting:budgets", "accounting:accounts", etc.)
         builder.Services.AddKeyedScoped<IRepository<Accrual>, AccountingRepository<Accrual>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>("accounting");
