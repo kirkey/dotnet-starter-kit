@@ -35,6 +35,20 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
         string? supervisorName,
         string? notes)
     {
+        // validations
+        if (string.IsNullOrWhiteSpace(countNumber)) throw new ArgumentException("CountNumber is required", nameof(countNumber));
+        if (countNumber.Length > 100) throw new ArgumentException("CountNumber must not exceed 100 characters", nameof(countNumber));
+
+        if (warehouseId == default) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+
+        if (scheduledDate == default) throw new ArgumentException("ScheduledDate is required", nameof(scheduledDate));
+
+        if (string.IsNullOrWhiteSpace(countType)) throw new ArgumentException("CountType is required", nameof(countType));
+        if (countType.Length > 50) throw new ArgumentException("CountType must not exceed 50 characters", nameof(countType));
+
+        if (counterName is { Length: > 100 }) throw new ArgumentException("CounterName must not exceed 100 characters", nameof(counterName));
+        if (supervisorName is { Length: > 100 }) throw new ArgumentException("SupervisorName must not exceed 100 characters", nameof(supervisorName));
+
         Id = id;
         CountNumber = countNumber;
         WarehouseId = warehouseId;

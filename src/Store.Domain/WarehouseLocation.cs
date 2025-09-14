@@ -42,6 +42,37 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
         decimal? maxTemperature,
         string? temperatureUnit)
     {
+        // domain validations
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
+        if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+
+        if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is required", nameof(code));
+        if (code.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
+
+        if (string.IsNullOrWhiteSpace(aisle)) throw new ArgumentException("Aisle is required", nameof(aisle));
+        if (aisle.Length > 20) throw new ArgumentException("Aisle must not exceed 20 characters", nameof(aisle));
+
+        if (string.IsNullOrWhiteSpace(section)) throw new ArgumentException("Section is required", nameof(section));
+        if (section.Length > 20) throw new ArgumentException("Section must not exceed 20 characters", nameof(section));
+
+        if (string.IsNullOrWhiteSpace(shelf)) throw new ArgumentException("Shelf is required", nameof(shelf));
+        if (shelf.Length > 20) throw new ArgumentException("Shelf must not exceed 20 characters", nameof(shelf));
+
+        if (bin is { Length: > 20 }) throw new ArgumentException("Bin must not exceed 20 characters", nameof(bin));
+
+        if (capacity <= 0) throw new ArgumentException("Capacity must be greater than 0", nameof(capacity));
+        if (string.IsNullOrWhiteSpace(capacityUnit)) throw new ArgumentException("CapacityUnit is required", nameof(capacityUnit));
+        if (capacityUnit.Length > 20) throw new ArgumentException("CapacityUnit must not exceed 20 characters", nameof(capacityUnit));
+
+        if (requiresTemperatureControl)
+        {
+            if (!minTemperature.HasValue) throw new ArgumentException("MinTemperature is required when temperature control is enabled", nameof(minTemperature));
+            if (!maxTemperature.HasValue) throw new ArgumentException("MaxTemperature is required when temperature control is enabled", nameof(maxTemperature));
+            if (maxTemperature.Value <= minTemperature.Value) throw new ArgumentException("MaxTemperature must be greater than MinTemperature", nameof(maxTemperature));
+            if (string.IsNullOrWhiteSpace(temperatureUnit)) throw new ArgumentException("TemperatureUnit is required when temperature control is enabled", nameof(temperatureUnit));
+            if (!(temperatureUnit == "C" || temperatureUnit == "F")) throw new ArgumentException("TemperatureUnit must be 'C' or 'F'", nameof(temperatureUnit));
+        }
+
         Id = id;
         Name = name;
         Description = description;

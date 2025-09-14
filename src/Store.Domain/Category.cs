@@ -24,6 +24,17 @@ public sealed class Category : AuditableEntity, IAggregateRoot
         int sortOrder,
         string? imageUrl)
     {
+        // domain validations
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
+        if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+
+        if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is required", nameof(code));
+        if (code.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
+
+        if (sortOrder < 0) throw new ArgumentException("SortOrder must be zero or greater", nameof(sortOrder));
+
+        if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+
         Id = id;
         Name = name;
         Description = description;

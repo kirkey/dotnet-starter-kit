@@ -59,10 +59,10 @@ public sealed class SalesOrderItem : AuditableEntity, IAggregateRoot
         if (unitPrice < 0m)
             throw new ArgumentException("Unit price must be non-negative", nameof(unitPrice));
 
-        if (discountAmount.HasValue && discountAmount.Value < 0m)
+        if (discountAmount is < 0m)
             throw new ArgumentException("Discount must be non-negative", nameof(discountAmount));
 
-        if (wholesaleTierPrice.HasValue && wholesaleTierPrice.Value < 0m)
+        if (wholesaleTierPrice is < 0m)
             throw new ArgumentException("Wholesale tier price must be non-negative", nameof(wholesaleTierPrice));
 
         var discount = discountAmount ?? 0m;

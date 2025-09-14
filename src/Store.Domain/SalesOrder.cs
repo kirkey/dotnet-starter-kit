@@ -46,6 +46,21 @@ public sealed class SalesOrder : AuditableEntity, IAggregateRoot
         string? salesPersonId,
         DefaultIdType? warehouseId)
     {
+        // domain validations
+        if (string.IsNullOrWhiteSpace(orderNumber)) throw new ArgumentException("OrderNumber is required", nameof(orderNumber));
+        if (orderNumber.Length > 100) throw new ArgumentException("OrderNumber must not exceed 100 characters", nameof(orderNumber));
+
+        if (customerId == default) throw new ArgumentException("CustomerId is required", nameof(customerId));
+
+        if (orderDate == default) throw new ArgumentException("OrderDate is required", nameof(orderDate));
+
+        if (status is { Length: > 50 }) throw new ArgumentException("Status must not exceed 50 characters", nameof(status));
+        if (orderType is { Length: > 50 }) throw new ArgumentException("OrderType must not exceed 50 characters", nameof(orderType));
+        if (paymentStatus is { Length: > 50 }) throw new ArgumentException("PaymentStatus must not exceed 50 characters", nameof(paymentStatus));
+        if (paymentMethod is { Length: > 50 }) throw new ArgumentException("PaymentMethod must not exceed 50 characters", nameof(paymentMethod));
+        if (deliveryAddress is { Length: > 500 }) throw new ArgumentException("DeliveryAddress must not exceed 500 characters", nameof(deliveryAddress));
+        if (salesPersonId is { Length: > 100 }) throw new ArgumentException("SalesPersonId must not exceed 100 characters", nameof(salesPersonId));
+
         Id = id;
         OrderNumber = orderNumber;
         CustomerId = customerId;

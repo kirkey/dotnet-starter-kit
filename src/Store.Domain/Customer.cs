@@ -26,6 +26,8 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
     public ICollection<SalesOrder> SalesOrders { get; private set; } = new List<SalesOrder>();
     public ICollection<WholesaleContract> WholesaleContracts { get; private set; } = new List<WholesaleContract>();
 
+    private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
     private Customer() { }
 
     private Customer(
@@ -49,6 +51,43 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         string? businessLicense,
         string? notes)
     {
+        // domain validations
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
+        if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+
+        if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is required", nameof(code));
+        if (code.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
+
+        if (string.IsNullOrWhiteSpace(customerType)) throw new ArgumentException("CustomerType is required", nameof(customerType));
+        if (customerType.Length > 50) throw new ArgumentException("CustomerType must not exceed 50 characters", nameof(customerType));
+
+        if (string.IsNullOrWhiteSpace(contactPerson)) throw new ArgumentException("ContactPerson is required", nameof(contactPerson));
+        if (contactPerson.Length > 100) throw new ArgumentException("ContactPerson must not exceed 100 characters", nameof(contactPerson));
+
+        if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email is required", nameof(email));
+        if (email.Length > 255) throw new ArgumentException("Email must not exceed 255 characters", nameof(email));
+        if (!EmailRegex.IsMatch(email)) throw new ArgumentException("Email format is invalid", nameof(email));
+
+        if (string.IsNullOrWhiteSpace(phone)) throw new ArgumentException("Phone is required", nameof(phone));
+        if (phone.Length > 50) throw new ArgumentException("Phone must not exceed 50 characters", nameof(phone));
+
+        if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Address is required", nameof(address));
+        if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
+
+        if (string.IsNullOrWhiteSpace(city)) throw new ArgumentException("City is required", nameof(city));
+        if (city.Length > 100) throw new ArgumentException("City must not exceed 100 characters", nameof(city));
+
+        if (state is { Length: > 100 }) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
+
+        if (string.IsNullOrWhiteSpace(country)) throw new ArgumentException("Country is required", nameof(country));
+        if (country.Length > 100) throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
+
+        if (postalCode is { Length: > 20 }) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
+
+        if (creditLimit < 0m) throw new ArgumentException("CreditLimit cannot be negative", nameof(creditLimit));
+        if (paymentTermsDays < 0) throw new ArgumentException("PaymentTermsDays must be zero or greater", nameof(paymentTermsDays));
+        if (discountPercentage < 0m || discountPercentage > 100m) throw new ArgumentException("DiscountPercentage must be between 0 and 100", nameof(discountPercentage));
+
         Id = id;
         Name = name;
         Description = description;

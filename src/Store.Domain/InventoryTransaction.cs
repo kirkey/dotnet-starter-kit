@@ -47,6 +47,27 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
         string? performedBy,
         bool isApproved)
     {
+        // validations
+        if (string.IsNullOrWhiteSpace(transactionNumber)) throw new ArgumentException("TransactionNumber is required", nameof(transactionNumber));
+        if (transactionNumber.Length > 100) throw new ArgumentException("TransactionNumber must not exceed 100 characters", nameof(transactionNumber));
+
+        if (groceryItemId == default) throw new ArgumentException("GroceryItemId is required", nameof(groceryItemId));
+
+        var allowedTypes = new[] { "IN", "OUT", "ADJUSTMENT", "TRANSFER" };
+        if (string.IsNullOrWhiteSpace(transactionType) || !allowedTypes.Contains(transactionType)) throw new ArgumentException($"Invalid transaction type: {transactionType}", nameof(transactionType));
+
+        if (string.IsNullOrWhiteSpace(reason)) throw new ArgumentException("Reason is required", nameof(reason));
+        if (reason.Length > 200) throw new ArgumentException("Reason must not exceed 200 characters", nameof(reason));
+
+        if (quantity == 0) throw new ArgumentException("Quantity must be non-zero", nameof(quantity));
+        if (quantity < 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+
+        if (quantityBefore < 0) throw new ArgumentException("QuantityBefore must be zero or greater", nameof(quantityBefore));
+
+        if (unitCost < 0m) throw new ArgumentException("UnitCost must be zero or greater", nameof(unitCost));
+
+        if (transactionDate == default) throw new ArgumentException("TransactionDate is required", nameof(transactionDate));
+
         Id = id;
         TransactionNumber = transactionNumber;
         GroceryItemId = groceryItemId;

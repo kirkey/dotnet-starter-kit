@@ -2,7 +2,7 @@ namespace FSH.Starter.WebApi.Store.Application.Warehouses.Create.v1;
 
 public class CreateWarehouseCommandValidator : AbstractValidator<CreateWarehouseCommand>
 {
-    public CreateWarehouseCommandValidator()
+    public CreateWarehouseCommandValidator([FromKeyedServices("store:warehouses")] IReadRepository<Warehouse> repository)
     {
         RuleFor(x => x.Name)
             .NotEmpty()
@@ -16,7 +16,12 @@ public class CreateWarehouseCommandValidator : AbstractValidator<CreateWarehouse
             .MaximumLength(20)
             .WithMessage("Warehouse code must not exceed 20 characters")
             .Matches(@"^[A-Z0-9]+$")
-            .WithMessage("Warehouse code must contain only uppercase letters and numbers");
+            .WithMessage("Warehouse code must contain only uppercase letters and numbers")
+            .MustAsync(async (code, ct) =>
+            {
+                var existing = await repository.FirstOrDefaultAsync(new WarehouseByCodeSpec(code), ct).ConfigureAwait(false);
+                return existing is null;
+            }).WithMessage("Warehouse code must be unique");
 
         RuleFor(x => x.Address)
             .NotEmpty()
@@ -63,5 +68,13 @@ public class CreateWarehouseCommandValidator : AbstractValidator<CreateWarehouse
             .WithMessage("Capacity unit is required")
             .Must(unit => new[] { "sqft", "sqm", "cbft", "cbm", "tons", "kg" }.Contains(unit.ToLower()))
             .WithMessage("Capacity unit must be one of: sqft, sqm, cbft, cbm, tons, kg");
+    }
+}
+
+public class WarehouseByCodeSpec : Ardalis.Specification.Specification<Warehouse>
+{
+    public WarehouseByCodeSpec(string code)
+    {
+        Query.Where(w => w.Code == code);
     }
 }

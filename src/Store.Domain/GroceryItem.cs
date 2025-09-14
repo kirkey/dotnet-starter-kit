@@ -48,6 +48,34 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
         DefaultIdType? supplierId,
         DefaultIdType? warehouseLocationId)
     {
+        // domain validations
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
+        if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+
+        if (string.IsNullOrWhiteSpace(sku)) throw new ArgumentException("SKU is required", nameof(sku));
+        if (sku.Length > 100) throw new ArgumentException("SKU must not exceed 100 characters", nameof(sku));
+
+        if (string.IsNullOrWhiteSpace(barcode)) throw new ArgumentException("Barcode is required", nameof(barcode));
+        if (barcode.Length > 100) throw new ArgumentException("Barcode must not exceed 100 characters", nameof(barcode));
+
+        if (price < 0m) throw new ArgumentException("Price must be zero or greater", nameof(price));
+        if (cost < 0m) throw new ArgumentException("Cost must be zero or greater", nameof(cost));
+
+        if (minimumStock < 0) throw new ArgumentException("MinimumStock must be zero or greater", nameof(minimumStock));
+        if (maximumStock < 0) throw new ArgumentException("MaximumStock must be zero or greater", nameof(maximumStock));
+        if (maximumStock > 0 && minimumStock > maximumStock) throw new ArgumentException("MinimumStock cannot be greater than MaximumStock", nameof(minimumStock));
+
+        if (currentStock < 0) throw new ArgumentException("CurrentStock must be zero or greater", nameof(currentStock));
+        if (maximumStock > 0 && currentStock > maximumStock) throw new ArgumentException("CurrentStock cannot exceed MaximumStock", nameof(currentStock));
+
+        if (reorderPoint < 0) throw new ArgumentException("ReorderPoint must be zero or greater", nameof(reorderPoint));
+
+        if (weight < 0m) throw new ArgumentException("Weight must be zero or greater", nameof(weight));
+        if (weightUnit is { Length: > 20 }) throw new ArgumentException("WeightUnit must not exceed 20 characters", nameof(weightUnit));
+
+        if (brand is { Length: > 200 }) throw new ArgumentException("Brand must not exceed 200 characters", nameof(brand));
+        if (manufacturer is { Length: > 200 }) throw new ArgumentException("Manufacturer must not exceed 200 characters", nameof(manufacturer));
+
         Id = id;
         Name = name;
         Description = description;

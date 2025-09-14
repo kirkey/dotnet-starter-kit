@@ -45,6 +45,15 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         string? notes,
         string? requestedBy)
     {
+        // validations
+        if (string.IsNullOrWhiteSpace(transferNumber)) throw new ArgumentException("TransferNumber is required", nameof(transferNumber));
+        if (fromWarehouseId == default) throw new ArgumentException("FromWarehouseId is required", nameof(fromWarehouseId));
+        if (toWarehouseId == default) throw new ArgumentException("ToWarehouseId is required", nameof(toWarehouseId));
+        if (fromWarehouseId == toWarehouseId) throw new ArgumentException("From and To warehouses must be different", nameof(toWarehouseId));
+        if (transferDate == default) throw new ArgumentException("TransferDate is required", nameof(transferDate));
+        if (string.IsNullOrWhiteSpace(transferType)) throw new ArgumentException("TransferType is required", nameof(transferType));
+        if (string.IsNullOrWhiteSpace(priority)) throw new ArgumentException("Priority is required", nameof(priority));
+
         Id = id;
         TransferNumber = transferNumber;
         FromWarehouseId = fromWarehouseId;

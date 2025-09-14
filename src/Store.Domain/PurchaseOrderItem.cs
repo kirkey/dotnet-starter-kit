@@ -24,6 +24,12 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
         decimal discountAmount,
         string? notes)
     {
+        // validations
+        if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+        if (unitPrice < 0m) throw new ArgumentException("UnitPrice must be zero or greater", nameof(unitPrice));
+        if (discountAmount < 0m) throw new ArgumentException("DiscountAmount must be zero or greater", nameof(discountAmount));
+        if (discountAmount > quantity * unitPrice) throw new ArgumentException("Discount cannot exceed line total", nameof(discountAmount));
+
         Id = id;
         PurchaseOrderId = purchaseOrderId;
         GroceryItemId = groceryItemId;

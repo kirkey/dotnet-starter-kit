@@ -2,7 +2,7 @@ namespace FSH.Starter.WebApi.Store.Application.Warehouses.Update.v1;
 
 public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouseCommand>
 {
-    public UpdateWarehouseCommandValidator()
+    public UpdateWarehouseCommandValidator([FromKeyedServices("store:warehouses")] IReadRepository<Warehouse> repository)
     {
         RuleFor(x => x.Id)
             .NotEmpty()
@@ -20,7 +20,13 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
             .MaximumLength(20)
             .WithMessage("Warehouse code must not exceed 20 characters")
             .Matches(@"^[A-Z0-9]+$")
-            .WithMessage("Warehouse code must contain only uppercase letters and numbers");
+            .WithMessage("Warehouse code must contain only uppercase letters and numbers")
+            .MustAsync(async (cmd, code, ct) =>
+            {
+                var existing = await repository.FirstOrDefaultAsync(new WarehouseByCodeSpec(code), ct).ConfigureAwait(false);
+                // allow if no existing or existing is the same entity
+                return existing is null || existing.Id == cmd.Id;
+            }).WithMessage("Warehouse code must be unique");
 
         RuleFor(x => x.Address)
             .NotEmpty()
@@ -67,5 +73,14 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
             .WithMessage("Capacity unit is required")
             .Must(unit => new[] { "sqft", "sqm", "cbft", "cbm", "tons", "kg" }.Contains(unit.ToLower()))
             .WithMessage("Capacity unit must be one of: sqft, sqm, cbft, cbm, tons, kg");
+    }
+}
+
+// Local spec re-used in validators
+public class WarehouseByCodeSpec : Ardalis.Specification.Specification<Warehouse>
+{
+    public WarehouseByCodeSpec(string code)
+    {
+        Query.Where(w => w.Code == code);
     }
 }

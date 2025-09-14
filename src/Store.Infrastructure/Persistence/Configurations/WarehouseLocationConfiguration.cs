@@ -40,10 +40,13 @@ public class WarehouseLocationConfiguration : IEntityTypeConfiguration<Warehouse
             .HasMaxLength(50);
 
         builder.Property(x => x.Capacity)
-            .HasColumnType("decimal(18,3)");
+            .HasColumnType("decimal(18,3)")
+            .IsRequired();
 
         builder.Property(x => x.UsedCapacity)
-            .HasColumnType("decimal(18,3)");
+            .HasColumnType("decimal(18,3)")
+            .IsRequired()
+            .HasDefaultValue(0m);
 
         builder.Property(x => x.CapacityUnit)
             .IsRequired()
@@ -63,6 +66,12 @@ public class WarehouseLocationConfiguration : IEntityTypeConfiguration<Warehouse
             .HasForeignKey(x => x.WarehouseId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.ToTable("WarehouseLocations", "Store");
+        // Table-level constraints: capacity positive and used within range; temperature constraints when required
+        builder.ToTable("WarehouseLocations", "Store", tb =>
+        {
+            tb.HasCheckConstraint("CK_WarehouseLocations_Capacity_Positive", "[Capacity] > 0");
+            tb.HasCheckConstraint("CK_WarehouseLocations_UsedCapacity_Range", "[UsedCapacity] >= 0 AND [UsedCapacity] <= [Capacity]");
+            tb.HasCheckConstraint("CK_WarehouseLocations_TemperatureConstraints", "[RequiresTemperatureControl] = 0 OR ([MinTemperature] IS NOT NULL AND [MaxTemperature] IS NOT NULL AND [MaxTemperature] > [MinTemperature])");
+        });
     }
 }

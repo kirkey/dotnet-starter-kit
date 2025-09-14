@@ -51,15 +51,23 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
             .HasMaxLength(50);
 
         builder.Property(x => x.TotalCapacity)
-            .HasColumnType("decimal(18,3)");
+            .HasColumnType("decimal(18,3)")
+            .IsRequired();
 
         builder.Property(x => x.UsedCapacity)
-            .HasColumnType("decimal(18,3)");
+            .HasColumnType("decimal(18,3)")
+            .IsRequired()
+            .HasDefaultValue(0m);
 
         builder.Property(x => x.CapacityUnit)
             .IsRequired()
             .HasMaxLength(20);
 
-        builder.ToTable("Warehouses", "Store");
+        // Table-level constraints
+        builder.ToTable("Warehouses", "Store", tb =>
+        {
+            tb.HasCheckConstraint("CK_Warehouses_TotalCapacity_Positive", "[TotalCapacity] > 0");
+            tb.HasCheckConstraint("CK_Warehouses_UsedCapacity_Range", "[UsedCapacity] >= 0 AND [UsedCapacity] <= [TotalCapacity]");
+        });
     }
 }

@@ -83,7 +83,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         if (city.Length > 100)
             throw new ArgumentException("City must not exceed 100 characters", nameof(city));
 
-        if (state != null && state.Length > 100)
+        if (state is { Length: > 100 })
             throw new ArgumentException("State must not exceed 100 characters", nameof(state));
 
         if (string.IsNullOrWhiteSpace(country))
@@ -91,13 +91,13 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         if (country.Length > 100)
             throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
 
-        if (postalCode != null && postalCode.Length > 20)
+        if (postalCode is { Length: > 20 })
             throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
 
-        if (website != null && website.Length > 255)
+        if (website is { Length: > 255 })
             throw new ArgumentException("Website must not exceed 255 characters", nameof(website));
 
-        if (creditLimit.HasValue && creditLimit.Value < 0m)
+        if (creditLimit is < 0m)
             throw new ArgumentException("Credit limit cannot be negative", nameof(creditLimit));
 
         if (paymentTermsDays < 0)
@@ -238,7 +238,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(State, state, StringComparison.OrdinalIgnoreCase))
         {
-            if (state != null && state.Length > 100) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
+            if (state is { Length: > 100 }) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
             State = state;
             isUpdated = true;
         }
@@ -252,21 +252,21 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(PostalCode, postalCode, StringComparison.OrdinalIgnoreCase))
         {
-            if (postalCode != null && postalCode.Length > 20) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
+            if (postalCode is { Length: > 20 }) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
             PostalCode = postalCode;
             isUpdated = true;
         }
 
         if (!string.Equals(Website, website, StringComparison.OrdinalIgnoreCase))
         {
-            if (website != null && website.Length > 255) throw new ArgumentException("Website must not exceed 255 characters", nameof(website));
+            if (website is { Length: > 255 }) throw new ArgumentException("Website must not exceed 255 characters", nameof(website));
             Website = website;
             isUpdated = true;
         }
 
         if (creditLimit != CreditLimit)
         {
-            if (creditLimit.HasValue && creditLimit.Value < 0m) throw new ArgumentException("Credit limit cannot be negative", nameof(creditLimit));
+            if (creditLimit is < 0m) throw new ArgumentException("Credit limit cannot be negative", nameof(creditLimit));
             CreditLimit = creditLimit;
             isUpdated = true;
         }
@@ -287,7 +287,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
         {
-            if (notes != null && notes.Length > 2000) throw new ArgumentException("Notes must not exceed 2000 characters", nameof(notes));
+            if (notes is { Length: > 2000 }) throw new ArgumentException("Notes must not exceed 2000 characters", nameof(notes));
             Notes = notes;
             isUpdated = true;
         }

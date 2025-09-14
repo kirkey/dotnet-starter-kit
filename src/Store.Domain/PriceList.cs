@@ -29,6 +29,23 @@ public sealed class PriceList : AuditableEntity, IAggregateRoot
         string? customerType,
         string? notes)
     {
+        // validations
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
+        if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+
+        if (string.IsNullOrWhiteSpace(priceListName)) throw new ArgumentException("PriceListName is required", nameof(priceListName));
+        if (priceListName.Length > 200) throw new ArgumentException("PriceListName must not exceed 200 characters", nameof(priceListName));
+
+        if (string.IsNullOrWhiteSpace(priceListType)) throw new ArgumentException("PriceListType is required", nameof(priceListType));
+        if (priceListType.Length > 50) throw new ArgumentException("PriceListType must not exceed 50 characters", nameof(priceListType));
+
+        if (expiryDate.HasValue && expiryDate.Value < effectiveDate) throw new ArgumentException("ExpiryDate cannot be earlier than EffectiveDate", nameof(expiryDate));
+
+        if (string.IsNullOrWhiteSpace(currency)) throw new ArgumentException("Currency is required", nameof(currency));
+        if (currency.Length > 10) throw new ArgumentException("Currency must not exceed 10 characters", nameof(currency));
+
+        if (minimumOrderValue.HasValue && minimumOrderValue.Value < 0m) throw new ArgumentException("MinimumOrderValue must be zero or greater", nameof(minimumOrderValue));
+
         Id = id;
         Name = name;
         Description = description;

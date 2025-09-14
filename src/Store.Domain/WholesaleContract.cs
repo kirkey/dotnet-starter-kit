@@ -37,6 +37,18 @@ public sealed class WholesaleContract : AuditableEntity, IAggregateRoot
         bool autoRenewal,
         string? notes)
     {
+        // validations
+        if (string.IsNullOrWhiteSpace(contractNumber)) throw new ArgumentException("ContractNumber is required", nameof(contractNumber));
+        if (contractNumber.Length > 100) throw new ArgumentException("ContractNumber must not exceed 100 characters", nameof(contractNumber));
+        if (customerId == default) throw new ArgumentException("CustomerId is required", nameof(customerId));
+        if (startDate == default) throw new ArgumentException("StartDate is required", nameof(startDate));
+        if (endDate == default) throw new ArgumentException("EndDate is required", nameof(endDate));
+        if (endDate < startDate) throw new ArgumentException("EndDate must be equal or later than StartDate", nameof(endDate));
+        if (minimumOrderValue < 0m) throw new ArgumentException("MinimumOrderValue must be zero or greater", nameof(minimumOrderValue));
+        if (volumeDiscountPercentage < 0m || volumeDiscountPercentage > 100m) throw new ArgumentException("VolumeDiscountPercentage must be between 0 and 100", nameof(volumeDiscountPercentage));
+        if (paymentTermsDays < 0) throw new ArgumentException("PaymentTermsDays must be zero or greater", nameof(paymentTermsDays));
+        if (creditLimit < 0m) throw new ArgumentException("CreditLimit must be zero or greater", nameof(creditLimit));
+
         Id = id;
         ContractNumber = contractNumber;
         CustomerId = customerId;

@@ -35,6 +35,18 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         string? contactPhone,
         bool isUrgent)
     {
+        // domain validations
+        if (string.IsNullOrWhiteSpace(orderNumber)) throw new ArgumentException("Order number is required", nameof(orderNumber));
+        if (orderNumber.Length > 100) throw new ArgumentException("Order number must not exceed 100 characters", nameof(orderNumber));
+
+        if (supplierId == default) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+
+        if (orderDate == default) throw new ArgumentException("OrderDate is required", nameof(orderDate));
+
+        if (status is { Length: > 50 }) throw new ArgumentException("Status must not exceed 50 characters", nameof(status));
+
+        if (deliveryAddress is { Length: > 500 }) throw new ArgumentException("DeliveryAddress must not exceed 500 characters", nameof(deliveryAddress));
+
         Id = id;
         OrderNumber = orderNumber;
         SupplierId = supplierId;
