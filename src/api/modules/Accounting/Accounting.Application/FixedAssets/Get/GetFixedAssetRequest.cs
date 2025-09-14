@@ -1,4 +1,3 @@
-using MediatR;
 using Accounting.Application.FixedAssets.Dtos;
 
 namespace Accounting.Application.FixedAssets.Get;

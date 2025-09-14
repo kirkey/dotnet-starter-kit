@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Vendors.Create.v1;
 
 public class VendorCreateCommandValidator : AbstractValidator<VendorCreateCommand>

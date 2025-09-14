@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
 
 public class GenerateTrialBalanceQuery : BaseRequest, IRequest<TrialBalanceDto>

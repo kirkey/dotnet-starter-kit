@@ -1,8 +1,4 @@
-using Accounting.Domain;
-using Accounting.Application.DepreciationMethods.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+using DepreciationMethodNotFoundException = Accounting.Application.DepreciationMethods.Exceptions.DepreciationMethodNotFoundException;
 
 namespace Accounting.Application.DepreciationMethods.Delete;
 

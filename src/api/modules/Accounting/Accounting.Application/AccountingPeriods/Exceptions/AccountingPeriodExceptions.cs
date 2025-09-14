@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.AccountingPeriods.Exceptions;
 
 public class AccountingPeriodNotFoundException(DefaultIdType id)

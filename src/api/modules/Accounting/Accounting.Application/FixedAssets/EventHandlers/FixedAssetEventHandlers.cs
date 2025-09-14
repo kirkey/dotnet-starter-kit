@@ -1,6 +1,4 @@
 using Accounting.Domain.Events.FixedAsset;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.FixedAssets.EventHandlers;
 

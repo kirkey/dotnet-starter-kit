@@ -1,11 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Exceptions;
 using Accounting.Application.ChartOfAccounts.Queries;
-using Accounting.Domain;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.ChartOfAccounts.Update.v1;
 public sealed class ChartOfAccountUpdateRequestHandler(

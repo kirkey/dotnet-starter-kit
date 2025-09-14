@@ -1,12 +1,4 @@
 using Accounting.Application.RegulatoryReports.Dtos;
-using Accounting.Domain;
-using Ardalis.Specification;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Persistence;
-using FSH.Framework.Core.Specifications;
-using Mapster;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.RegulatoryReports.Search.v1;
 

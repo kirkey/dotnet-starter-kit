@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.FixedAssets.Update;
 
 public class UpdateFixedAssetRequestValidator : AbstractValidator<UpdateFixedAssetRequest>

@@ -1,6 +1,4 @@
 using Accounting.Domain.Events.JournalEntry;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.JournalEntries.EventHandlers;
 

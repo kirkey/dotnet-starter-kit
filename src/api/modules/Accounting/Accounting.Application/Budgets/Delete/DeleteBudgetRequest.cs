@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Budgets.Delete;
 
 public class DeleteBudgetRequest(DefaultIdType id) : IRequest

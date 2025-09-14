@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Customers.Delete;
 
 public class DeleteCustomerRequest(DefaultIdType id) : IRequest

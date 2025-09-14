@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Vendors.Create.v1;
 
 public record VendorCreateCommand(

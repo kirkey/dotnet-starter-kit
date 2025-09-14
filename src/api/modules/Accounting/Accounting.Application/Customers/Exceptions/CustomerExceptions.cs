@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.Customers.Exceptions;
 
 public class CustomerNotFoundException(DefaultIdType id) : NotFoundException($"Customer with ID {id} was not found.");

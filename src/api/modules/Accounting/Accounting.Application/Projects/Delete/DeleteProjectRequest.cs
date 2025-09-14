@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Projects.Delete;
 
 public class DeleteProjectRequest(DefaultIdType id) : IRequest

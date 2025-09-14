@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
 
 public class GenerateTrialBalanceQueryValidator : AbstractValidator<GenerateTrialBalanceQuery>

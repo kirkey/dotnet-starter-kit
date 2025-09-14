@@ -1,4 +1,3 @@
-using FluentValidation;
 using Accounting.Application.PostingBatch.Commands;
 
 namespace Accounting.Application.PostingBatch.Validators

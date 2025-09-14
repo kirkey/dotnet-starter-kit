@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Projects.Create;
 
 public class CreateProjectRequestValidator : AbstractValidator<CreateProjectRequest>

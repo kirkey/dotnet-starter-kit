@@ -1,6 +1,4 @@
 using Accounting.Application.FixedAssets.Dtos;
-using FSH.Framework.Core.Paging;
-using MediatR;
 
 namespace Accounting.Application.FixedAssets.Search;
 

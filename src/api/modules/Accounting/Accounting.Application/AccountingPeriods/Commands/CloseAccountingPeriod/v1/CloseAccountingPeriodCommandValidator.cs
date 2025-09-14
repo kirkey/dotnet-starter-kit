@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.AccountingPeriods.Commands.CloseAccountingPeriod.v1;
 
 public class CloseAccountingPeriodCommandValidator : AbstractValidator<CloseAccountingPeriodCommand>

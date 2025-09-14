@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Customers.Update;
 
 public class UpdateCustomerRequest(

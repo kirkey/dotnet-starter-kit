@@ -1,6 +1,4 @@
 using Accounting.Application.Customers.Dtos;
-using FSH.Framework.Core.Paging;
-using MediatR;
 
 namespace Accounting.Application.Customers.Search;
 

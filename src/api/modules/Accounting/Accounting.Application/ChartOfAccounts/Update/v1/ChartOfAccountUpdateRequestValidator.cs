@@ -1,4 +1,3 @@
-using FluentValidation;
 using FSH.Framework.Core.Extensions;
 
 namespace Accounting.Application.ChartOfAccounts.Update.v1;

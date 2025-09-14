@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Customers.Create;
 
 public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRequest>

@@ -115,11 +115,17 @@ public static class AccountingModule
         // Added missing repository registrations for PostingBatch, DeferredRevenue, and Accrual
         builder.Services.AddScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
         builder.Services.AddScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
-        builder.Services.AddScoped<IReadRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>();
-        builder.Services.AddScoped<IRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>();
-        builder.Services.AddScoped<IReadRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>();
-        builder.Services.AddScoped<IRepository<Accrual>, AccountingRepository<Accrual>>();
-        builder.Services.AddScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>();
+        // New domain repositories for electric cooperative features
+        builder.Services.AddScoped<IRepository<RateSchedule>, AccountingRepository<RateSchedule>>();
+        builder.Services.AddScoped<IReadRepository<RateSchedule>, AccountingRepository<RateSchedule>>();
+        builder.Services.AddScoped<IRepository<PatronageCapital>, AccountingRepository<PatronageCapital>>();
+        builder.Services.AddScoped<IReadRepository<PatronageCapital>, AccountingRepository<PatronageCapital>>();
+        builder.Services.AddScoped<IRepository<SecurityDeposit>, AccountingRepository<SecurityDeposit>>();
+        builder.Services.AddScoped<IReadRepository<SecurityDeposit>, AccountingRepository<SecurityDeposit>>();
+        builder.Services.AddScoped<IRepository<Payment>, AccountingRepository<Payment>>();
+        builder.Services.AddScoped<IReadRepository<Payment>, AccountingRepository<Payment>>();
+        // Billing service
+        builder.Services.AddScoped<Accounting.Application.Billing.IBillingService, Accounting.Application.Billing.BillingService>();
 
         // Register with the "accounting" key (for handlers that use [FromKeyedServices("accounting")])
         builder.Services.AddKeyedScoped<IRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting");
@@ -154,12 +160,15 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
-        // Added missing keyed registrations for PostingBatch, DeferredRevenue, and Accrual
+        // Added missing repository registrations for PostingBatch, DeferredRevenue, and Accrual
         builder.Services.AddKeyedScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
-        builder.Services.AddKeyedScoped<IRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>("accounting");
-        builder.Services.AddKeyedScoped<IRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>("accounting");
+        // New keyed registrations for added domain types
+        builder.Services.AddKeyedScoped<IRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting");
+        // Also register a dedicated key for rate schedules used by billing handlers
+        builder.Services.AddKeyedScoped<IRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");
+        builder.Services.AddKeyedScoped<IReadRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");
         // Register with specific keys (for handlers that use specific keys like "accounting:budgets", "accounting:accounts", etc.)
         builder.Services.AddKeyedScoped<IRepository<Accrual>, AccountingRepository<Accrual>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>("accounting");

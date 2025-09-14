@@ -1,4 +1,3 @@
-using MediatR;
 using Accounting.Application.Projects.Dtos;
 
 namespace Accounting.Application.Projects.Get;

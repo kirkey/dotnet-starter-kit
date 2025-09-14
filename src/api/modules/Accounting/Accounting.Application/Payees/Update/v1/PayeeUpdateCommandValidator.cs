@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Payees.Update.v1;
 public class PayeeUpdateCommandValidator : AbstractValidator<PayeeUpdateCommand>
 {

@@ -1,9 +1,4 @@
 using Accounting.Application.GeneralLedger.Specifications;
-using Accounting.Domain;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.FinancialStatements.Queries.GenerateIncomeStatement.v1;
 

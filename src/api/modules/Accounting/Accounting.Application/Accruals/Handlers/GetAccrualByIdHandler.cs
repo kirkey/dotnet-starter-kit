@@ -1,9 +1,5 @@
-using Accounting.Domain;
-using MediatR;
 using Accounting.Application.Accruals.Queries;
 using Accounting.Application.Accruals.Dtos;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Persistence;
 
 namespace Accounting.Application.Accruals.Handlers
 {

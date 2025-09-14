@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.DepreciationMethods.Create;
 
 public record CreateDepreciationMethodRequest(

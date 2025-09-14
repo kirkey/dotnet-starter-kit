@@ -1,7 +1,4 @@
-using Accounting.Domain;
-using MediatR;
 using Accounting.Application.Accruals.Commands;
-using FSH.Framework.Core.Persistence;
 
 namespace Accounting.Application.Accruals.Handlers
 {

@@ -1,6 +1,4 @@
 using Accounting.Application.Payees.Get.v1;
-using FSH.Framework.Core.Paging;
-using MediatR;
 
 namespace Accounting.Application.Payees.Search.v1;
 

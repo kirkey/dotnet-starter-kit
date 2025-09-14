@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.FinancialStatements.Queries.GenerateCashFlowStatement.v1;
 
 public class GenerateCashFlowStatementQuery : BaseRequest, IRequest<CashFlowStatementDto>

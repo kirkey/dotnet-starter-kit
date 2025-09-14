@@ -1,8 +1,5 @@
-using MediatR;
 using Accounting.Application.DeferredRevenue.Queries;
 using Accounting.Application.DeferredRevenue.Dtos;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Persistence;
 
 namespace Accounting.Application.DeferredRevenue.Handlers
 {

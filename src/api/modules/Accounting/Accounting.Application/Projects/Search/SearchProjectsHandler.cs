@@ -1,9 +1,4 @@
 using Accounting.Application.Projects.Dtos;
-using Accounting.Domain;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.Projects.Search;
 

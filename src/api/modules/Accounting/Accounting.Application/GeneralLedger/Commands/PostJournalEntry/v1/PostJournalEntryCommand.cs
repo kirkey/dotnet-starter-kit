@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.GeneralLedger.Commands.PostJournalEntry.v1;
 
 public class PostJournalEntryCommand : BaseRequest, IRequest<DefaultIdType>

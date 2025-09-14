@@ -1,7 +1,4 @@
 ﻿using Accounting.Application.Payees.Queries;
-using Accounting.Domain;
-using FluentValidation;
-using FSH.Framework.Core.Persistence;
 
 namespace Accounting.Application.Payees.Create.v1;
 

@@ -1,10 +1,4 @@
-﻿using Accounting.Domain;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-namespace Accounting.Application.Payees.Create.v1;
+﻿namespace Accounting.Application.Payees.Create.v1;
 public sealed class PayeeCreateHandler(
     ILogger<PayeeCreateHandler> logger,
     [FromKeyedServices("accounting:payees")] IRepository<Payee> repository)

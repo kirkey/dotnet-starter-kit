@@ -14,6 +14,8 @@ public class Member : AuditableEntity, IAggregateRoot
     public string? ContactInfo { get; private set; } // Phone, email, etc.
     public string AccountStatus { get; private set; } // "Active", "Inactive", "Past Due"
     public DefaultIdType? MeterId { get; private set; } // Links to specific physical meter
+    // Link to RateSchedule entity (new)
+    public DefaultIdType? RateScheduleId { get; private set; }
     public DateTime MembershipDate { get; private set; }
     public decimal CurrentBalance { get; private set; }
     public bool IsActive { get; private set; }
@@ -21,8 +23,8 @@ public class Member : AuditableEntity, IAggregateRoot
     public string? PhoneNumber { get; private set; }
     public string? EmergencyContact { get; private set; }
     public string? ServiceClass { get; private set; } // Residential, Commercial, Industrial
-    public string? RateSchedule { get; private set; } // Rate schedule applied to this member
-    
+    public string? RateSchedule { get; private set; } // (legacy) Rate schedule applied (human-readable)
+
     private Member()
     {
         // EF Core requires a parameterless constructor for entity instantiation
@@ -32,7 +34,7 @@ public class Member : AuditableEntity, IAggregateRoot
         DateTime membershipDate, string? mailingAddress = null, string? contactInfo = null,
         string accountStatus = "Active", DefaultIdType? meterId = null, string? email = null,
         string? phoneNumber = null, string? emergencyContact = null, string? serviceClass = null,
-        string? rateSchedule = null, string? description = null, string? notes = null)
+        DefaultIdType? rateScheduleId = null, string? rateSchedule = null, string? description = null, string? notes = null)
     {
         MemberNumber = memberNumber.Trim();
         MemberName = memberName.Trim();
@@ -49,6 +51,7 @@ public class Member : AuditableEntity, IAggregateRoot
         PhoneNumber = phoneNumber?.Trim();
         EmergencyContact = emergencyContact?.Trim();
         ServiceClass = serviceClass?.Trim();
+        RateScheduleId = rateScheduleId;
         RateSchedule = rateSchedule?.Trim();
         Description = description?.Trim();
         Notes = notes?.Trim();
@@ -60,7 +63,7 @@ public class Member : AuditableEntity, IAggregateRoot
         DateTime membershipDate, string? mailingAddress = null, string? contactInfo = null,
         string accountStatus = "Active", DefaultIdType? meterId = null, string? email = null,
         string? phoneNumber = null, string? emergencyContact = null, string? serviceClass = null,
-        string? rateSchedule = null, string? description = null, string? notes = null)
+        DefaultIdType? rateScheduleId = null, string? rateSchedule = null, string? description = null, string? notes = null)
     {
         if (string.IsNullOrWhiteSpace(memberNumber))
             throw new MemberNotFoundException(DefaultIdType.Empty);
@@ -76,7 +79,7 @@ public class Member : AuditableEntity, IAggregateRoot
 
         return new Member(memberNumber, memberName, serviceAddress, membershipDate,
             mailingAddress, contactInfo, accountStatus, meterId, email, phoneNumber, emergencyContact,
-            serviceClass, rateSchedule, description, notes);
+            serviceClass, rateScheduleId, rateSchedule, description, notes);
     }
 
     public Member Update(string? memberName = null, string? serviceAddress = null, string? mailingAddress = null,
@@ -149,6 +152,7 @@ public class Member : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
+        // Support updating either the legacy RateSchedule text or the new RateScheduleId via API-level mapping
         if (rateSchedule != RateSchedule)
         {
             RateSchedule = rateSchedule?.Trim();

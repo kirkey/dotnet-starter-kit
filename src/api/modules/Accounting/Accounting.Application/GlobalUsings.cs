@@ -1,0 +1,14 @@
+global using Accounting.Domain;
+global using Accounting.Domain.Exceptions;
+global using Ardalis.Specification;
+global using FluentValidation;
+global using FSH.Framework.Core.Caching;
+global using FSH.Framework.Core.Exceptions;
+global using FSH.Framework.Core.Extensions.Dto;
+global using FSH.Framework.Core.Paging;
+global using FSH.Framework.Core.Persistence;
+global using FSH.Framework.Core.Specifications;
+global using Mapster;
+global using MediatR;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;

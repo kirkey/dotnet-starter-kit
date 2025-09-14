@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.RegulatoryReports.Create.v1;
 
 public class RegulatoryReportCreateRequestValidator : AbstractValidator<RegulatoryReportCreateRequest>

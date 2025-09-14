@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.AccountingPeriods.Update;
 
 public class UpdateAccountingPeriodRequestValidator : AbstractValidator<UpdateAccountingPeriodRequest>

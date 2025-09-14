@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.DepreciationMethods.Update;
 
 public class UpdateDepreciationMethodRequestValidator : AbstractValidator<UpdateDepreciationMethodRequest>

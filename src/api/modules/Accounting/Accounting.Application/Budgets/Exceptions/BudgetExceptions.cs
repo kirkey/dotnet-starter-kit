@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.Budgets.Exceptions;
 
 public class BudgetCannotBeModifiedException(DefaultIdType id)

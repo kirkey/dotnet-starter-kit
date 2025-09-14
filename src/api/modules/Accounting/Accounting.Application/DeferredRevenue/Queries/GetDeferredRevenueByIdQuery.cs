@@ -1,4 +1,3 @@
-using MediatR;
 using Accounting.Application.DeferredRevenue.Dtos;
 
 namespace Accounting.Application.DeferredRevenue.Queries

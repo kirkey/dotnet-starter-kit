@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.DepreciationMethods.Update;
 
 public record UpdateDepreciationMethodRequest(

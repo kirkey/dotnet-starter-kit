@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.AccountingPeriods.Update;
 
 public record UpdateAccountingPeriodRequest(

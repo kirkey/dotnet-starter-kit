@@ -1,11 +1,5 @@
-using Accounting.Domain;
 using Accounting.Application.Customers.Dtos;
 using Accounting.Application.Customers.Exceptions;
-using FSH.Framework.Core.Caching;
-using FSH.Framework.Core.Persistence;
-using Mapster;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.Customers.Get;
 

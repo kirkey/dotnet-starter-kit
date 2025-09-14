@@ -1,6 +1,3 @@
-using Accounting.Domain;
-using Ardalis.Specification;
-
 namespace Accounting.Application.ChartOfAccounts.Queries;
 
 public class ChartOfAccountByCodeSpec : Specification<ChartOfAccount>

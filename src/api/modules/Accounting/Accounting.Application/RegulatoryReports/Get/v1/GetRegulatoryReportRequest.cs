@@ -1,5 +1,4 @@
 using Accounting.Application.RegulatoryReports.Dtos;
-using MediatR;
 
 namespace Accounting.Application.RegulatoryReports.Get.v1;
 

@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.RegulatoryReports.Exceptions;
 
 public class RegulatoryReportForbiddenException : ForbiddenException

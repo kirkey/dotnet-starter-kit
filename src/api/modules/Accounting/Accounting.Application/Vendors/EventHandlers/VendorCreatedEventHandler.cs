@@ -1,6 +1,4 @@
-using MediatR;
 using Accounting.Domain.Events.Vendor;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.Vendors.EventHandlers;
 

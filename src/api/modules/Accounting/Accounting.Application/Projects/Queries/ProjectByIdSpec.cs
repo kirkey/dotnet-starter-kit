@@ -1,6 +1,4 @@
 using Accounting.Application.Projects.Dtos;
-using Accounting.Domain;
-using Ardalis.Specification;
 
 namespace Accounting.Application.Projects.Queries;
 

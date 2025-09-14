@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-
 namespace Accounting.Application.DepreciationMethods.Dtos;
 
 public class DepreciationMethodDto(

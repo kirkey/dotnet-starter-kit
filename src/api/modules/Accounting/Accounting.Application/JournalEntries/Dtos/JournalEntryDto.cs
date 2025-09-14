@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-
 namespace Accounting.Application.JournalEntries.Dtos;
 
 public class JournalEntryDto : BaseDto

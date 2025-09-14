@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.RegulatoryReports.Update.v1;
 
 public class UpdateRegulatoryReportRequest : BaseRequest, IRequest<DefaultIdType>

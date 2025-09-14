@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Projects.Update;
 
 public class UpdateProjectRequest(

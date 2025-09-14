@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.Projects.Exceptions;
 
 public class ProjectNotFoundException(DefaultIdType id) : NotFoundException($"Project with ID {id} was not found.");

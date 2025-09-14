@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.JournalEntries.Exceptions;
 
 public class JournalEntryAlreadyPostedException(string message) : ConflictException(message);

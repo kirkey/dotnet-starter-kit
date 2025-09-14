@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.Budgets.Queries.GenerateBudgetVarianceAnalysis.v1;
 
 public class GenerateBudgetVarianceAnalysisQuery : BaseRequest, IRequest<BudgetVarianceAnalysisDto>

@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.FixedAssets.Exceptions;
 
 public class FixedAssetNotFoundException(DefaultIdType id)

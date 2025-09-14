@@ -15,3 +15,5 @@ public record InvoicePaid(DefaultIdType Id, string InvoiceNumber, DefaultIdType 
 public record InvoiceOverdue(DefaultIdType Id, string InvoiceNumber, DefaultIdType MemberId, decimal TotalAmount, DateTime DueDate) : DomainEvent;
 
 public record InvoiceCancelled(DefaultIdType Id, string InvoiceNumber, DefaultIdType MemberId, string? Reason) : DomainEvent;
+
+public record InvoicePartiallyPaid(DefaultIdType Id, string InvoiceNumber, DefaultIdType MemberId, decimal AmountApplied, decimal TotalPaidToDate) : DomainEvent;

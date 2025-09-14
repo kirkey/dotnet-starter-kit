@@ -1,9 +1,5 @@
-using Accounting.Domain;
 using Accounting.Application.Projects.Exceptions;
 using Accounting.Application.Projects.Queries;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.Projects.Create;
 

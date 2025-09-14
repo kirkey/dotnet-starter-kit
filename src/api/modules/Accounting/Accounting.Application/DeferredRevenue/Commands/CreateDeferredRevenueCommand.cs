@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.DeferredRevenue.Commands
 {
     public class CreateDeferredRevenueCommand : IRequest<DefaultIdType>

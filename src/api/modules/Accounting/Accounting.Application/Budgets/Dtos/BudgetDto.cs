@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-
 namespace Accounting.Application.Budgets.Dtos;
 
 public class BudgetDto : BaseDto

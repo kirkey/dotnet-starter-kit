@@ -1,4 +1,3 @@
-using FluentValidation;
 using Accounting.Application.DeferredRevenue.Commands;
 
 namespace Accounting.Application.DeferredRevenue.Validators

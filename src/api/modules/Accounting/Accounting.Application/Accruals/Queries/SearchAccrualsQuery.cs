@@ -1,4 +1,3 @@
-using MediatR;
 using Accounting.Application.Accruals.Dtos;
 
 namespace Accounting.Application.Accruals.Queries

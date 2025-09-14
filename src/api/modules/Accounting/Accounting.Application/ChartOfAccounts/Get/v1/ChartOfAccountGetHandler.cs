@@ -1,11 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Application.ChartOfAccounts.Queries;
-using Accounting.Domain;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Caching;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.ChartOfAccounts.Get.v1;
 public sealed class ChartOfAccountGetHandler(

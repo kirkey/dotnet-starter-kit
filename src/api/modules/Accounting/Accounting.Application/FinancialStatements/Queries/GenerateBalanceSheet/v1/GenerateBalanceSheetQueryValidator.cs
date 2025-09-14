@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.FinancialStatements.Queries.GenerateBalanceSheet.v1;
 
 public class GenerateBalanceSheetQueryValidator : AbstractValidator<GenerateBalanceSheetQuery>

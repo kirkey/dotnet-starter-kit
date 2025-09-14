@@ -1,8 +1,3 @@
-using Accounting.Domain;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Accounting.Application.Budgets.Create;
 
 public sealed class CreateBudgetHandler(

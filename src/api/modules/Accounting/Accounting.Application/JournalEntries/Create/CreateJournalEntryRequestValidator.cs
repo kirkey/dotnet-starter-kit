@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.JournalEntries.Create;
 
 public class CreateJournalEntryRequestValidator : AbstractValidator<CreateJournalEntryRequest>

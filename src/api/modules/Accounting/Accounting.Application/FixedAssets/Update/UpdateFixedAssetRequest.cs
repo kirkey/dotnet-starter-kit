@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.FixedAssets.Update;
 
 public class UpdateFixedAssetRequest(

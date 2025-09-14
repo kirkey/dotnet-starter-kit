@@ -1,6 +1,4 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
-using FSH.Framework.Core.Paging;
-using MediatR;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
 

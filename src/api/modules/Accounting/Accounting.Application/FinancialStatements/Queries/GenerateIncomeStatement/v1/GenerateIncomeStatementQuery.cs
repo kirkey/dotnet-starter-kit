@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.FinancialStatements.Queries.GenerateIncomeStatement.v1;
 
 public class GenerateIncomeStatementQuery : BaseRequest, IRequest<IncomeStatementDto>

@@ -1,11 +1,5 @@
-using Accounting.Domain;
 using Accounting.Application.JournalEntries.Dtos;
-using Accounting.Application.JournalEntries.Exceptions;
-using FSH.Framework.Core.Caching;
-using FSH.Framework.Core.Persistence;
-using Mapster;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+using JournalEntryNotFoundException = Accounting.Application.JournalEntries.Exceptions.JournalEntryNotFoundException;
 
 namespace Accounting.Application.JournalEntries.Get;
 

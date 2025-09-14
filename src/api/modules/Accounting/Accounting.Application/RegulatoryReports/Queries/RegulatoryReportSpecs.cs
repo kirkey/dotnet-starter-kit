@@ -1,6 +1,3 @@
-using Accounting.Domain;
-using Ardalis.Specification;
-
 namespace Accounting.Application.RegulatoryReports.Queries;
 
 public class RegulatoryReportByIdSpec : SingleResultSpecification<RegulatoryReport>

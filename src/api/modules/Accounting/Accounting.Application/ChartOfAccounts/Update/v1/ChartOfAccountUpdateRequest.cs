@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.ChartOfAccounts.Update.v1;
 
 public class ChartOfAccountUpdateRequest : BaseRequest, IRequest<DefaultIdType>

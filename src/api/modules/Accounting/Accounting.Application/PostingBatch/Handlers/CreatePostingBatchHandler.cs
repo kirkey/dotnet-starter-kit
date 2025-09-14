@@ -1,6 +1,4 @@
-using MediatR;
 using Accounting.Application.PostingBatch.Commands;
-using FSH.Framework.Core.Persistence;
 
 namespace Accounting.Application.PostingBatch.Handlers
 {

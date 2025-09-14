@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Accruals.Commands
 {
     public class CreateAccrualCommand : IRequest<DefaultIdType>

@@ -1,9 +1,4 @@
 using Accounting.Application.Payees.Get.v1;
-using Accounting.Domain;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.Payees.Search.v1;
 public sealed class PayeeSearchHandler(

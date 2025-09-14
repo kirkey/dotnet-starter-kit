@@ -1,11 +1,4 @@
-﻿using Accounting.Domain;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-namespace Accounting.Application.Payees.Delete.v1;
+﻿namespace Accounting.Application.Payees.Delete.v1;
 public sealed class PayeeDeleteHandler(
     ILogger<PayeeDeleteHandler> logger,
     [FromKeyedServices("accounting:payees")] IRepository<Payee> repository)

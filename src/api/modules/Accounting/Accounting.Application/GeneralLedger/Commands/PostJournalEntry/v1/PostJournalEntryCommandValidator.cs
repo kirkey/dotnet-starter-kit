@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.GeneralLedger.Commands.PostJournalEntry.v1;
 
 public class PostJournalEntryCommandValidator : AbstractValidator<PostJournalEntryCommand>

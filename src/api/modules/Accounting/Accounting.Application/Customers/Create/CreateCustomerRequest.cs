@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Customers.Create;
 
 public class CreateCustomerRequest(

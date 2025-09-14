@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.FinancialStatements.Queries.GenerateCashFlowStatement.v1;
 
 public class GenerateCashFlowStatementQueryValidator : AbstractValidator<GenerateCashFlowStatementQuery>

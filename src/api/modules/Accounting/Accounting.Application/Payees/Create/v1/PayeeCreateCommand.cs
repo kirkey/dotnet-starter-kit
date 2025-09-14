@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Accounting.Application.Payees.Create.v1;
+﻿namespace Accounting.Application.Payees.Create.v1;
 
 public sealed record PayeeCreateCommand(
     string PayeeCode,

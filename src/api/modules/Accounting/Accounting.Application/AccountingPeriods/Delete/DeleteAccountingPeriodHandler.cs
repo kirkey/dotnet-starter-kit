@@ -1,8 +1,4 @@
-using Accounting.Domain;
-using Accounting.Application.AccountingPeriods.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
 
 namespace Accounting.Application.AccountingPeriods.Delete;
 

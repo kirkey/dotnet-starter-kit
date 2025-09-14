@@ -1,8 +1,4 @@
 using Accounting.Application.FixedAssets.Dtos;
-using Accounting.Domain;
-using Ardalis.Specification;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Specifications;
 
 namespace Accounting.Application.FixedAssets.Search;
 

@@ -1,9 +1,5 @@
-using Accounting.Domain;
 using Accounting.Application.Customers.Exceptions;
 using Accounting.Application.Customers.Queries;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.Customers.Create;
 

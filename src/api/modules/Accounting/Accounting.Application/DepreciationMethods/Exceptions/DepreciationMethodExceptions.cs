@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.DepreciationMethods.Exceptions;
 
 public class DepreciationMethodNotFoundException(DefaultIdType id)

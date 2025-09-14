@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Budgets.Queries.GenerateBudgetVarianceAnalysis.v1;
 
 public class GenerateBudgetVarianceAnalysisQueryValidator : AbstractValidator<GenerateBudgetVarianceAnalysisQuery>

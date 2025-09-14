@@ -1,10 +1,3 @@
-using Accounting.Domain;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.Payees.Update.v1;
 public sealed class PayeeUpdateHandler(
     ILogger<PayeeUpdateHandler> logger,

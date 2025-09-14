@@ -1,4 +1,3 @@
-using MediatR;
 using Accounting.Application.Budgets.Dtos;
 
 namespace Accounting.Application.Budgets.Get;

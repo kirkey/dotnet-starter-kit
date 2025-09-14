@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.AccountingPeriods.Create;
 
 public record CreateAccountingPeriodRequest(

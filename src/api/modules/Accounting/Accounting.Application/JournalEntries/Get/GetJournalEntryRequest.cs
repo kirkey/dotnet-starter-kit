@@ -1,4 +1,3 @@
-using MediatR;
 using Accounting.Application.JournalEntries.Dtos;
 
 namespace Accounting.Application.JournalEntries.Get;

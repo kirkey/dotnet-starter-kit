@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.AccountingPeriods.Commands.CloseAccountingPeriod.v1;
 
 public class CloseAccountingPeriodCommand : BaseRequest, IRequest<DefaultIdType>

@@ -1,8 +1,4 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
-using Accounting.Domain;
-using Ardalis.Specification;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Specifications;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
 public sealed class ChartOfAccountSearchSpec : EntitiesByPaginationFilterSpec<ChartOfAccount, ChartOfAccountDto>

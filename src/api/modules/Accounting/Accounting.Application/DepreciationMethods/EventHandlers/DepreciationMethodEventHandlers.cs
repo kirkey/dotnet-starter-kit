@@ -1,6 +1,4 @@
 using Accounting.Domain.Events.DepreciationMethod;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.DepreciationMethods.EventHandlers;
 

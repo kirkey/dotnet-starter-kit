@@ -1,6 +1,3 @@
-using Ardalis.Specification;
-using Accounting.Domain;
-
 namespace Accounting.Application.Vendors.Queries;
 
 public class VendorByCodeSpec : Specification<Vendor>

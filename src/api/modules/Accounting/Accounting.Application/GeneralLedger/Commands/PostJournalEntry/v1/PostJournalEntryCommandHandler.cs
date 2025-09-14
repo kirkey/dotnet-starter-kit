@@ -1,9 +1,6 @@
 using Accounting.Application.JournalEntries.Exceptions;
-using Accounting.Domain;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using JournalEntryAlreadyPostedException = Accounting.Application.JournalEntries.Exceptions.JournalEntryAlreadyPostedException;
+using JournalEntryNotFoundException = Accounting.Application.JournalEntries.Exceptions.JournalEntryNotFoundException;
 
 namespace Accounting.Application.GeneralLedger.Commands.PostJournalEntry.v1;
 

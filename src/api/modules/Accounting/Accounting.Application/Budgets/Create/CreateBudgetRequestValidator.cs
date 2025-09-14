@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Budgets.Create;
 
 public class CreateBudgetRequestValidator : AbstractValidator<CreateBudgetRequest>

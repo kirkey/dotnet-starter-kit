@@ -1,6 +1,4 @@
 using Accounting.Application.Customers.Dtos;
-using Accounting.Domain;
-using Ardalis.Specification;
 
 namespace Accounting.Application.Customers.Queries;
 

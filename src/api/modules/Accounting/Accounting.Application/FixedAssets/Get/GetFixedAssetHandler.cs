@@ -1,11 +1,5 @@
-using Accounting.Domain;
 using Accounting.Application.FixedAssets.Dtos;
-using Accounting.Application.FixedAssets.Exceptions;
-using FSH.Framework.Core.Caching;
-using FSH.Framework.Core.Persistence;
-using Mapster;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+using FixedAssetNotFoundException = Accounting.Application.FixedAssets.Exceptions.FixedAssetNotFoundException;
 
 namespace Accounting.Application.FixedAssets.Get;
 

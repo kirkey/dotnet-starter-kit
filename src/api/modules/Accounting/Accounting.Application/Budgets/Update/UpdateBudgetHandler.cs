@@ -1,9 +1,3 @@
-using Accounting.Domain;
-using Accounting.Domain.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Accounting.Application.Budgets.Update;
 
 public sealed class UpdateBudgetHandler(

@@ -1,6 +1,4 @@
 ﻿using Accounting.Domain.Events.Payee;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.Payees.EventHandlers;
 

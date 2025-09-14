@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.JournalEntries.Update;
 
 public record UpdateJournalEntryRequest(

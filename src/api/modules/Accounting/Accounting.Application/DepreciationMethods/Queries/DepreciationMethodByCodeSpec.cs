@@ -1,6 +1,4 @@
 using Accounting.Application.DepreciationMethods.Dtos;
-using Accounting.Domain;
-using Ardalis.Specification;
 
 namespace Accounting.Application.DepreciationMethods.Queries;
 

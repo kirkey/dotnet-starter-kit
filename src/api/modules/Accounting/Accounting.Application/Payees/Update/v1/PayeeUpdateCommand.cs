@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Payees.Update.v1;
 public sealed record PayeeUpdateCommand(
     DefaultIdType Id,

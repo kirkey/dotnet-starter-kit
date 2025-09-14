@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.Budgets.Create;
 
 public record CreateBudgetRequest(

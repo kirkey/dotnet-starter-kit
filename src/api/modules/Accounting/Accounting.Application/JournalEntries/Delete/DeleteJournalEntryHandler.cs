@@ -1,8 +1,5 @@
-using Accounting.Domain;
-using Accounting.Application.JournalEntries.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+using JournalEntryAlreadyPostedException = Accounting.Application.JournalEntries.Exceptions.JournalEntryAlreadyPostedException;
+using JournalEntryNotFoundException = Accounting.Application.JournalEntries.Exceptions.JournalEntryNotFoundException;
 
 namespace Accounting.Application.JournalEntries.Delete;
 

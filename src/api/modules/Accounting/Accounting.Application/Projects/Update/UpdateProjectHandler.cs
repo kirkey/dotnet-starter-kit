@@ -1,9 +1,6 @@
-using Accounting.Domain;
 using Accounting.Application.Projects.Exceptions;
 using Accounting.Application.Projects.Queries;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+using ProjectNotFoundException = Accounting.Application.Projects.Exceptions.ProjectNotFoundException;
 
 namespace Accounting.Application.Projects.Update;
 

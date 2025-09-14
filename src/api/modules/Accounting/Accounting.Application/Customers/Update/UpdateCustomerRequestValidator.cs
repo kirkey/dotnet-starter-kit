@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Customers.Update;
 
 public class UpdateCustomerRequestValidator : AbstractValidator<UpdateCustomerRequest>

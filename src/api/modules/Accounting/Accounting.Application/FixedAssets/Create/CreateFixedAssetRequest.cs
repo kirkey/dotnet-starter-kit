@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.FixedAssets.Create;
 
 public class CreateFixedAssetRequest(

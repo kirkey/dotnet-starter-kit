@@ -1,6 +1,3 @@
-using FSH.Framework.Core.Extensions.Dto;
-using MediatR;
-
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
 
 public class ChartOfAccountCreateRequest : BaseRequest, IRequest<DefaultIdType>

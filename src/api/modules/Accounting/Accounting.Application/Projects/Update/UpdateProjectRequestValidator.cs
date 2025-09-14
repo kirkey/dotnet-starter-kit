@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.Projects.Update;
 
 public class UpdateProjectRequestValidator : AbstractValidator<UpdateProjectRequest>

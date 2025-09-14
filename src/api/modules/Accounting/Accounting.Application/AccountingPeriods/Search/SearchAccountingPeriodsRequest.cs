@@ -1,6 +1,4 @@
 using Accounting.Application.AccountingPeriods.Dtos;
-using FSH.Framework.Core.Paging;
-using MediatR;
 
 namespace Accounting.Application.AccountingPeriods.Search;
 

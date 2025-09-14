@@ -1,8 +1,4 @@
-using Accounting.Domain;
 using Accounting.Application.Customers.Exceptions;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Application.Customers.Delete;
 

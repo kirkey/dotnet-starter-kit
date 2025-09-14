@@ -1,4 +1,3 @@
-using MediatR;
 using Accounting.Application.Customers.Dtos;
 
 namespace Accounting.Application.Customers.Get;

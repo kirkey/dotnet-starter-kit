@@ -1,5 +1,3 @@
-using Ardalis.Specification;
-
 namespace Accounting.Application.GeneralLedger.Specifications;
 
 public class GeneralLedgerByDateRangeSpec : Specification<Domain.GeneralLedger>

@@ -11,6 +11,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
     public DateTime InvoiceDate { get; private set; }
     public DateTime DueDate { get; private set; }
     public decimal TotalAmount { get; private set; }
+    public decimal PaidAmount { get; private set; }
     public string Status { get; private set; } // "Draft", "Sent", "Paid", "Overdue", "Cancelled"
     public DefaultIdType? ConsumptionDataId { get; private set; } // Links to consumption record
     public decimal UsageCharge { get; private set; } // Charge based on kWhUsed
@@ -33,6 +34,10 @@ public class Invoice : AuditableEntity, IAggregateRoot
     private Invoice()
     {
         // EF Core requires a parameterless constructor for entity instantiation
+        InvoiceNumber = string.Empty;
+        Status = string.Empty;
+        BillingPeriod = string.Empty;
+        PaidAmount = 0m;
     }
 
     private Invoice(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
@@ -56,6 +61,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
         DepositAmount = depositAmount;
         DemandCharge = demandCharge;
         TotalAmount = CalculateTotalAmount();
+        PaidAmount = 0m;
         KWhUsed = kWhUsed;
         BillingPeriod = billingPeriod.Trim();
         RateSchedule = rateSchedule?.Trim();
@@ -205,6 +211,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
         if (Status == "Paid")
             throw new ArgumentException("Invoice is already paid");
 
+        PaidAmount = TotalAmount;
         Status = "Paid";
         PaidDate = paidDate;
         PaymentMethod = paymentMethod?.Trim();
@@ -212,6 +219,28 @@ public class Invoice : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new InvoicePaid(Id, InvoiceNumber, MemberId, TotalAmount, paidDate, paymentMethod));
         return this;
     }
+
+    public Invoice ApplyPayment(decimal amount, DateTime paymentDate, string? paymentMethod = null)
+    {
+        if (amount <= 0) throw new ArgumentException("Payment amount must be positive");
+
+        PaidAmount += amount;
+        if (PaidAmount >= TotalAmount)
+        {
+            Status = "Paid";
+            PaidDate = paymentDate;
+            PaymentMethod = paymentMethod?.Trim();
+            QueueDomainEvent(new InvoicePaid(Id, InvoiceNumber, MemberId, TotalAmount, paymentDate, paymentMethod));
+        }
+        else
+        {
+            QueueDomainEvent(new Events.Invoice.InvoicePartiallyPaid(Id, InvoiceNumber, MemberId, amount, PaidAmount));
+        }
+
+        return this;
+    }
+
+    public decimal GetOutstandingAmount() => Math.Max(0, TotalAmount - PaidAmount);
 
     public Invoice MarkOverdue()
     {

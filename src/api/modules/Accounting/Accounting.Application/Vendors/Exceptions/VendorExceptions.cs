@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Application.Vendors.Exceptions;
 
 public class VendorNotFoundException(DefaultIdType id) : FshException($"Vendor with ID {id} was not found.");

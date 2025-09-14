@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.PostingBatch.Commands
 {
     public class RejectPostingBatchCommand : IRequest

@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Accounting.Application.JournalEntries.Create;
 
 public record CreateJournalEntryRequest(

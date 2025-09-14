@@ -1,4 +1,3 @@
-using FluentValidation;
 using Accounting.Application.Accruals.Commands;
 
 namespace Accounting.Application.Accruals.Validators

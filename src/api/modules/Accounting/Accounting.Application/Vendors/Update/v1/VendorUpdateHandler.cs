@@ -1,10 +1,5 @@
-using Accounting.Domain;
 using Accounting.Application.Vendors.Exceptions;
 using Accounting.Application.Vendors.Queries;
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.Vendors.Update.v1;
 public sealed class VendorUpdateHandler(
