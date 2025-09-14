@@ -21,6 +21,11 @@ public record WholesaleContractRenewed : DomainEvent
     public WholesaleContract WholesaleContract { get; init; } = default!;
 }
 
+public record WholesaleContractUpdated : DomainEvent
+{
+    public WholesaleContract WholesaleContract { get; init; } = default!;
+}
+
 public record WholesalePricingCreated : DomainEvent
 {
     public WholesalePricing WholesalePricing { get; init; } = default!;

@@ -9,6 +9,7 @@ using Store.Infrastructure.Endpoints.Categories.v1;
 using Store.Infrastructure.Endpoints.CycleCounts.v1;
 using Store.Infrastructure.Persistence;
 using Store.Infrastructure.Endpoints.Suppliers.v1; // ...added supplier endpoints using
+using Store.Infrastructure.Endpoints.WholesalePricings.v1; // added wholesale pricings endpoints using
 
 namespace Store.Infrastructure;
 
@@ -87,6 +88,13 @@ public static class StoreModule
             suppliers.MapUpdateSupplierEndpoint();
             suppliers.MapDeleteSupplierEndpoint();
             suppliers.MapSearchSuppliersEndpoint();
+
+            // Wholesale pricing endpoints
+            var wholesalePricingGroup = app.MapGroup("wholesale-pricings").WithTags("Wholesale Pricings");
+            wholesalePricingGroup.MapCreateWholesalePricingEndpoint();
+            wholesalePricingGroup.MapGetWholesalePricingEndpoint();
+            wholesalePricingGroup.MapUpdateWholesalePricingEndpoint();
+            wholesalePricingGroup.MapDeactivateWholesalePricingEndpoint();
         }
     }
 
@@ -138,6 +146,14 @@ public static class StoreModule
 
         builder.Services.AddKeyedScoped<IRepository<PriceList>, StoreRepository<PriceList>>("store:price-lists");
         builder.Services.AddKeyedScoped<IReadRepository<PriceList>, StoreRepository<PriceList>>("store:price-lists");
+
+        // Register wholesale contracts repository
+        builder.Services.AddKeyedScoped<IRepository<WholesaleContract>, StoreRepository<WholesaleContract>>("store:wholesale-contracts");
+        builder.Services.AddKeyedScoped<IReadRepository<WholesaleContract>, StoreRepository<WholesaleContract>>("store:wholesale-contracts");
+
+        // Register wholesale pricings repository
+        builder.Services.AddKeyedScoped<IRepository<WholesalePricing>, StoreRepository<WholesalePricing>>("store:wholesale-pricings");
+        builder.Services.AddKeyedScoped<IReadRepository<WholesalePricing>, StoreRepository<WholesalePricing>>("store:wholesale-pricings");
 
         return builder;
     }

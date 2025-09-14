@@ -8,7 +8,7 @@ public class WholesaleConfiguration : IEntityTypeConfiguration<WholesaleContract
 
         builder.Property(x => x.ContractNumber)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(100); // Increased to match domain validation
 
         builder.HasIndex(x => x.ContractNumber)
             .IsUnique();
@@ -32,8 +32,9 @@ public class WholesaleConfiguration : IEntityTypeConfiguration<WholesaleContract
         builder.Property(x => x.ContractTerms)
             .HasMaxLength(5000);
 
+        // Notes are defined on AuditableEntity as VARCHAR(2048), ensure EF config doesn't truncate further
         builder.Property(x => x.Notes)
-            .HasMaxLength(2000);
+            .HasMaxLength(2048);
 
         builder.HasOne(x => x.Customer)
             .WithMany(x => x.WholesaleContracts)

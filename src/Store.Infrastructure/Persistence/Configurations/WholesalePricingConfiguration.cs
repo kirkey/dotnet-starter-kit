@@ -13,7 +13,7 @@ public class WholesalePricingConfiguration : IEntityTypeConfiguration<WholesaleP
             .HasColumnType("decimal(5,2)");
 
         builder.Property(x => x.Notes)
-            .HasMaxLength(1000);
+            .HasMaxLength(2048);
 
         builder.HasOne(x => x.WholesaleContract)
             .WithMany(x => x.WholesalePricings)
