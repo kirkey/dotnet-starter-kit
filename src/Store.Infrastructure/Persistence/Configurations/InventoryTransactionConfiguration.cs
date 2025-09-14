@@ -59,6 +59,6 @@ public class InventoryTransactionConfiguration : IEntityTypeConfiguration<Invent
             .HasForeignKey(x => x.PurchaseOrderId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        builder.ToTable("InventoryTransactions", "Store");
+        builder.ToTable("InventoryTransactions", SchemaNames.Store);
     }
 }

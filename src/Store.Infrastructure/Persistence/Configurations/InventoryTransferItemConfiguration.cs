@@ -33,6 +33,6 @@ public class InventoryTransferItemConfiguration : IEntityTypeConfiguration<Inven
             .HasForeignKey(x => x.GroceryItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("InventoryTransferItems", "Store");
+        builder.ToTable("InventoryTransferItems", SchemaNames.Store);
     }
 }

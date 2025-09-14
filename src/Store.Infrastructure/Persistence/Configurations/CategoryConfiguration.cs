@@ -1,3 +1,5 @@
+using Shared.Constants;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class CategoryConfiguration : IEntityTypeConfiguration<Category>
@@ -28,6 +30,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .HasForeignKey(x => x.ParentCategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("Categories", "Store");
+        builder.ToTable("Categories", SchemaNames.Store);
     }
 }

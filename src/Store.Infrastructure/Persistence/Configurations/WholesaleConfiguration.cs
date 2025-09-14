@@ -41,6 +41,6 @@ public class WholesaleConfiguration : IEntityTypeConfiguration<WholesaleContract
             .HasForeignKey(x => x.CustomerId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("WholesaleContracts", "Store");
+        builder.ToTable("WholesaleContracts", SchemaNames.Store);
     }
 }

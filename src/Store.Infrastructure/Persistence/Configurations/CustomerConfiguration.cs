@@ -75,6 +75,6 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(x => x.Notes)
             .HasMaxLength(2000);
 
-        builder.ToTable("Customers", "Store");
+        builder.ToTable("Customers", SchemaNames.Store);
     }
 }

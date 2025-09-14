@@ -63,6 +63,6 @@ public class SalesOrderConfiguration : IEntityTypeConfiguration<SalesOrder>
             .HasForeignKey(x => x.WarehouseId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        builder.ToTable("SalesOrders", "Store");
+        builder.ToTable("SalesOrders", SchemaNames.Store);
     }
 }

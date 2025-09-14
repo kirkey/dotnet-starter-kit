@@ -60,6 +60,6 @@ public class GroceryItemConfiguration : IEntityTypeConfiguration<GroceryItem>
             .HasForeignKey(x => x.WarehouseLocationId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        builder.ToTable("GroceryItems", "Store");
+        builder.ToTable("GroceryItems", SchemaNames.Store);
     }
 }

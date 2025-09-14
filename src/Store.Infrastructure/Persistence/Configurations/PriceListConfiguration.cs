@@ -34,6 +34,6 @@ public class PriceListConfiguration : IEntityTypeConfiguration<PriceList>
         builder.Property(x => x.Notes)
             .HasMaxLength(2000);
 
-        builder.ToTable("PriceLists", "Store");
+        builder.ToTable("PriceLists", SchemaNames.Store);
     }
 }

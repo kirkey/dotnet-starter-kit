@@ -63,6 +63,6 @@ public class InventoryTransferConfiguration : IEntityTypeConfiguration<Inventory
             .HasForeignKey(x => x.ToLocationId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        builder.ToTable("InventoryTransfers", "Store");
+        builder.ToTable("InventoryTransfers", SchemaNames.Store);
     }
 }

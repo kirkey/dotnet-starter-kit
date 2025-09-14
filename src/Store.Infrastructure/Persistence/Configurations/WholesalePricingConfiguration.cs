@@ -25,6 +25,6 @@ public class WholesalePricingConfiguration : IEntityTypeConfiguration<WholesaleP
             .HasForeignKey(x => x.GroceryItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("WholesalePricings", "Store");
+        builder.ToTable("WholesalePricings", SchemaNames.Store);
     }
 }

@@ -20,4 +20,8 @@
     <Folder Include="Tenant\" />
     <Folder Include="Todo\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Store\StoreDbContextModelSnapshot.cs" />
+    <Compile Remove="Store\20250914134559_Initial.Designer.cs" />
+  </ItemGroup>
 </Project>

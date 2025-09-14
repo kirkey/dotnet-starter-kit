@@ -46,6 +46,6 @@ public class PurchaseOrderConfiguration : IEntityTypeConfiguration<PurchaseOrder
             .HasForeignKey(x => x.SupplierId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("PurchaseOrders", "Store");
+        builder.ToTable("PurchaseOrders", SchemaNames.Store);
     }
 }

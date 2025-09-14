@@ -25,6 +25,6 @@ public class CycleCountItemConfiguration : IEntityTypeConfiguration<CycleCountIt
             .HasForeignKey(x => x.GroceryItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("CycleCountItems", "Store");
+        builder.ToTable("CycleCountItems", SchemaNames.Store);
     }
 }

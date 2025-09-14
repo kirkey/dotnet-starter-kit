@@ -28,6 +28,6 @@ public class PriceListItemConfiguration : IEntityTypeConfiguration<PriceListItem
             .HasForeignKey(x => x.GroceryItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("PriceListItems", "Store");
+        builder.ToTable("PriceListItems", SchemaNames.Store);
     }
 }

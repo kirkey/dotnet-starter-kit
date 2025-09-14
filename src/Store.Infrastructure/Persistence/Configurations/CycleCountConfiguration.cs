@@ -43,6 +43,6 @@ public class CycleCountConfiguration : IEntityTypeConfiguration<CycleCount>
             .HasForeignKey(x => x.WarehouseLocationId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        builder.ToTable("CycleCounts", "Store");
+        builder.ToTable("CycleCounts", SchemaNames.Store);
     }
 }

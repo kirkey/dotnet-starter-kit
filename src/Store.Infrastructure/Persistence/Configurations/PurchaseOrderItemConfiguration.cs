@@ -42,6 +42,6 @@ public class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<PurchaseO
             .HasForeignKey(x => x.GroceryItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable("PurchaseOrderItems", "Store");
+        builder.ToTable("PurchaseOrderItems", SchemaNames.Store);
     }
 }
