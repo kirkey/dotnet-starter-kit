@@ -1,8 +1,3 @@
-using FSH.Framework.Infrastructure;
-using FSH.Framework.Infrastructure.Logging.Serilog;
-using FSH.Starter.WebApi.Host;
-using Serilog;
-
 StaticLogger.EnsureInitialized();
 Log.Information("server booting up..");
 try

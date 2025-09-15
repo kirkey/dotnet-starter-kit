@@ -63,7 +63,7 @@ public class Payment : AuditableEntity, IAggregateRoot
 
         // For simplicity mark as negative unapplied and queue event
         UnappliedAmount -= amount;
-        QueueDomainEvent(new Events.Payment.PaymentReferenceUpdated(Id, PaymentNumber, refundReference));
+        QueueDomainEvent(new PaymentReferenceUpdated(Id, PaymentNumber, refundReference));
         return this;
     }
 

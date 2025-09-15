@@ -5,9 +5,9 @@ using Shared.Constants;
 
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
-public class AccrualConfiguration : IEntityTypeConfiguration<Accounting.Domain.Accrual>
+public class AccrualConfiguration : IEntityTypeConfiguration<Accrual>
 {
-    public void Configure(EntityTypeBuilder<Accounting.Domain.Accrual> builder)
+    public void Configure(EntityTypeBuilder<Accrual> builder)
     {
         builder.ToTable("Accruals", SchemaNames.Accounting);
 

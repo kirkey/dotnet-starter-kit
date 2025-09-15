@@ -71,7 +71,7 @@ public class CreateWarehouseCommandValidator : AbstractValidator<CreateWarehouse
     }
 }
 
-public class WarehouseByCodeSpec : Ardalis.Specification.Specification<Warehouse>
+public class WarehouseByCodeSpec : Specification<Warehouse>
 {
     public WarehouseByCodeSpec(string code)
     {

@@ -137,7 +137,7 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         ApprovalStatus = "Approved";
         ApprovedBy = approvedBy;
         ApprovedDate = DateTime.UtcNow;
-        QueueDomainEvent(new Events.JournalEntry.JournalEntryApproved(Id, ApprovedBy, ApprovedDate.Value));
+        QueueDomainEvent(new JournalEntryApproved(Id, ApprovedBy, ApprovedDate.Value));
     }
 
     public void Reject(string rejectedBy)
@@ -147,7 +147,7 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         ApprovalStatus = "Rejected";
         ApprovedBy = rejectedBy;
         ApprovedDate = DateTime.UtcNow;
-        QueueDomainEvent(new Events.JournalEntry.JournalEntryRejected(Id, ApprovedBy, ApprovedDate.Value));
+        QueueDomainEvent(new JournalEntryRejected(Id, ApprovedBy, ApprovedDate.Value));
     }
 
     private bool IsBalanced()

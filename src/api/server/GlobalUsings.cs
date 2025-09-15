@@ -1,0 +1,13 @@
+global using Accounting.Application;
+global using Accounting.Infrastructure;
+global using Asp.Versioning.Conventions;
+global using Carter;
+global using FluentValidation;
+global using FSH.Framework.Infrastructure;
+global using FSH.Framework.Infrastructure.Logging.Serilog;
+global using FSH.Starter.WebApi.Catalog.Application;
+global using FSH.Starter.WebApi.Catalog.Infrastructure;
+global using FSH.Starter.WebApi.Host;
+global using FSH.Starter.WebApi.Todo;
+global using Serilog;
+global using Store.Infrastructure;

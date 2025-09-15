@@ -1,14 +1,4 @@
-﻿using Accounting.Application;
-using Accounting.Infrastructure;
-using Asp.Versioning.Conventions;
-using Carter;
-using FluentValidation;
-using FSH.Starter.WebApi.Catalog.Application;
-using FSH.Starter.WebApi.Catalog.Infrastructure;
-using FSH.Starter.WebApi.Todo;
-using Store.Infrastructure;
-
-namespace FSH.Starter.WebApi.Host;
+﻿namespace FSH.Starter.WebApi.Host;
 
 public static class Extensions
 {

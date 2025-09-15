@@ -111,7 +111,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         LifetimeValue = 0;
         Notes = notes;
 
-        QueueDomainEvent(new Events.CustomerCreated { Customer = this });
+        QueueDomainEvent(new CustomerCreated { Customer = this });
     }
 
     public static Customer Create(
@@ -175,7 +175,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
                 throw new ArgumentException("Invalid balance operation. Use ADD, SUBTRACT, or SET.", nameof(operation));
         }
 
-        QueueDomainEvent(new Events.CustomerBalanceUpdated 
+        QueueDomainEvent(new CustomerBalanceUpdated 
         { 
             Customer = this, 
             PreviousBalance = previousBalance, 
@@ -190,7 +190,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
     public Customer UpdateLifetimeValue(decimal additionalValue)
     {
         LifetimeValue += additionalValue;
-        QueueDomainEvent(new Events.CustomerLifetimeValueUpdated { Customer = this, AdditionalValue = additionalValue });
+        QueueDomainEvent(new CustomerLifetimeValueUpdated { Customer = this, AdditionalValue = additionalValue });
         return this;
     }
 
@@ -337,7 +337,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
 
         if (isUpdated)
         {
-            QueueDomainEvent(new Events.CustomerUpdated { Customer = this });
+            QueueDomainEvent(new CustomerUpdated { Customer = this });
         }
 
         return this;

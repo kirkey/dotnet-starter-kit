@@ -77,7 +77,7 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
 }
 
 // Local spec re-used in validators
-public class WarehouseByCodeSpec : Ardalis.Specification.Specification<Warehouse>
+public class WarehouseByCodeSpec : Specification<Warehouse>
 {
     public WarehouseByCodeSpec(string code)
     {

@@ -174,7 +174,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         if (reason.Length > 200)
             throw new ArgumentException("Reason must not exceed 200 characters", nameof(reason));
 
-        if (!string.Equals(GroceryItemId, groceryItemId))
+        if (!Equals(GroceryItemId, groceryItemId))
         {
             GroceryItemId = groceryItemId;
             isUpdated = true;

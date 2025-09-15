@@ -14,9 +14,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
             migrationBuilder.EnsureSchema(
                 name: "accounting");
 
-            migrationBuilder.EnsureSchema(
-                name: "Accounting");
-
             migrationBuilder.CreateTable(
                 name: "AccountingPeriods",
                 schema: "accounting",
@@ -50,7 +47,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.CreateTable(
                 name: "Accruals",
-                schema: "Accounting",
+                schema: "accounting",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -152,7 +149,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.CreateTable(
                 name: "ConsumptionData",
-                schema: "Accounting",
+                schema: "accounting",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -942,7 +939,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accruals_AccrualNumber",
-                schema: "Accounting",
+                schema: "accounting",
                 table: "Accruals",
                 column: "AccrualNumber",
                 unique: true);
@@ -969,7 +966,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.CreateIndex(
                 name: "IX_ConsumptionData_MeterId_ReadingDate",
-                schema: "Accounting",
+                schema: "accounting",
                 table: "ConsumptionData",
                 columns: new[] { "MeterId", "ReadingDate" },
                 unique: true);
@@ -1092,7 +1089,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.DropTable(
                 name: "Accruals",
-                schema: "Accounting");
+                schema: "accounting");
 
             migrationBuilder.DropTable(
                 name: "BudgetLines",
@@ -1104,7 +1101,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.DropTable(
                 name: "ConsumptionData",
-                schema: "Accounting");
+                schema: "accounting");
 
             migrationBuilder.DropTable(
                 name: "Customers",

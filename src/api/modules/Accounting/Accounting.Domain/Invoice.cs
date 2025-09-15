@@ -232,7 +232,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
         }
         else
         {
-            QueueDomainEvent(new Events.Invoice.InvoicePartiallyPaid(Id, InvoiceNumber, MemberId, amount, PaidAmount));
+            QueueDomainEvent(new InvoicePartiallyPaid(Id, InvoiceNumber, MemberId, amount, PaidAmount));
         }
 
         return this;

@@ -1,6 +1,6 @@
 namespace Accounting.Application.ChartOfAccounts.Queries;
 
-public sealed class ChartOfAccountByNameSpec : Ardalis.Specification.Specification<Accounting.Domain.ChartOfAccount>, Ardalis.Specification.ISingleResultSpecification<Accounting.Domain.ChartOfAccount>
+public sealed class ChartOfAccountByNameSpec : Specification<ChartOfAccount>, ISingleResultSpecification<ChartOfAccount>
 {
     public ChartOfAccountByNameSpec(string name, DefaultIdType? excludeId = null)
     {
