@@ -1,3 +1,5 @@
+using Shared.Constants;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class StockAdjustmentConfiguration : IEntityTypeConfiguration<StockAdjustment>
@@ -67,12 +69,12 @@ public class StockAdjustmentConfiguration : IEntityTypeConfiguration<StockAdjust
             .OnDelete(DeleteBehavior.SetNull);
 
         // Table-level constraints to enforce invariants
-        builder.ToTable("StockAdjustments", "Store", tb =>
+        builder.ToTable("StockAdjustments", SchemaNames.Store, tb =>
         {
-            tb.HasCheckConstraint("CK_StockAdjustments_QuantityBefore_NonNegative", "[QuantityBefore] >= 0");
-            tb.HasCheckConstraint("CK_StockAdjustments_AdjustmentQuantity_Positive", "[AdjustmentQuantity] > 0");
-            tb.HasCheckConstraint("CK_StockAdjustments_QuantityAfter_NonNegative", "[QuantityAfter] >= 0");
-            tb.HasCheckConstraint("CK_StockAdjustments_UnitCost_NonNegative", "[UnitCost] >= 0");
+            tb.HasCheckConstraint("CK_StockAdjustments_QuantityBefore_NonNegative", "QuantityBefore >= 0");
+            tb.HasCheckConstraint("CK_StockAdjustments_AdjustmentQuantity_Positive", "AdjustmentQuantity > 0");
+            tb.HasCheckConstraint("CK_StockAdjustments_QuantityAfter_NonNegative", "QuantityAfter >= 0");
+            tb.HasCheckConstraint("CK_StockAdjustments_UnitCost_NonNegative", "UnitCost >= 0");
         });
     }
 }
