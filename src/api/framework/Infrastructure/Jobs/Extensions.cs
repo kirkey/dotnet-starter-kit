@@ -32,7 +32,7 @@ internal static class Extensions
             {
                 case DbProviders.PostgreSQL:
                     config.UsePostgreSqlStorage(o =>
-                        o.UseNpgsqlConnection(dbOptions.ConnectionString));
+                        o.UseNpgsqlConnection(dbOptions.JobsConnectionString));
                     break;
                 
                 case DbProviders.MySQL:

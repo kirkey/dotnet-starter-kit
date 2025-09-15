@@ -1,7 +1,6 @@
-using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
-
-using Accounting.Application.AccountingPeriods.Queries;
 using Accounting.Application.AccountingPeriods.Exceptions;
+using Accounting.Application.AccountingPeriods.Queries;
+using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
 
 namespace Accounting.Application.AccountingPeriods.Update;
 

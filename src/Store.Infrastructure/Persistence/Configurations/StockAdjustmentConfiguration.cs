@@ -1,5 +1,3 @@
-using Shared.Constants;
-
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class StockAdjustmentConfiguration : IEntityTypeConfiguration<StockAdjustment>

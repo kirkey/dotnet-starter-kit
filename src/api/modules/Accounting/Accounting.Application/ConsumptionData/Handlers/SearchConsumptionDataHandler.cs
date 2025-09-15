@@ -1,5 +1,5 @@
-using Accounting.Application.ConsumptionData.Queries;
 using Accounting.Application.ConsumptionData.Dtos;
+using Accounting.Application.ConsumptionData.Queries;
 
 namespace Accounting.Application.ConsumptionData.Handlers;
 

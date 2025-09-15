@@ -1,15 +1,15 @@
+using Store.Infrastructure.Endpoints.Categories.v1;
 using Store.Infrastructure.Endpoints.Customers.v1;
+using Store.Infrastructure.Endpoints.CycleCounts.v1;
 using Store.Infrastructure.Endpoints.GroceryItems.v1;
 using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 using Store.Infrastructure.Endpoints.SalesOrders.v1;
 using Store.Infrastructure.Endpoints.StockAdjustments.v1;
+using Store.Infrastructure.Endpoints.Suppliers.v1; // ...added supplier endpoints using
 using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 using Store.Infrastructure.Endpoints.Warehouses.v1;
-using Store.Infrastructure.Endpoints.Categories.v1;
-using Store.Infrastructure.Endpoints.CycleCounts.v1;
-using Store.Infrastructure.Persistence;
-using Store.Infrastructure.Endpoints.Suppliers.v1; // ...added supplier endpoints using
-using Store.Infrastructure.Endpoints.WholesalePricings.v1; // added wholesale pricings endpoints using
+using Store.Infrastructure.Endpoints.WholesalePricings.v1;
+using Store.Infrastructure.Persistence; // added wholesale pricings endpoints using
 
 namespace Store.Infrastructure;
 

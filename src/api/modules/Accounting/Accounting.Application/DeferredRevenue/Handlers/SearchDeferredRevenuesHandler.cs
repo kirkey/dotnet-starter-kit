@@ -1,5 +1,5 @@
-using Accounting.Application.DeferredRevenue.Queries;
 using Accounting.Application.DeferredRevenue.Dtos;
+using Accounting.Application.DeferredRevenue.Queries;
 
 namespace Accounting.Application.DeferredRevenue.Handlers
 {

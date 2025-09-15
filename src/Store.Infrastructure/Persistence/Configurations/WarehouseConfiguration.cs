@@ -1,5 +1,3 @@
-using Shared.Constants;
-
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
@@ -68,8 +66,9 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
         // Table-level constraints
         builder.ToTable("Warehouses", SchemaNames.Store, tb =>
         {
-            tb.HasCheckConstraint("CK_Warehouses_TotalCapacity_Positive", "TotalCapacity > 0");
-            tb.HasCheckConstraint("CK_Warehouses_UsedCapacity_Range", "UsedCapacity >= 0 AND UsedCapacity <= TotalCapacity");
+            // Quote identifiers so PostgreSQL resolves them exactly (e.g. "TotalCapacity").
+            tb.HasCheckConstraint("CK_Warehouses_TotalCapacity_Positive", "\"TotalCapacity\" > 0");
+            tb.HasCheckConstraint("CK_Warehouses_UsedCapacity_Range", "\"UsedCapacity\" >= 0 AND \"UsedCapacity\" <= \"TotalCapacity\"");
         });
     }
 }

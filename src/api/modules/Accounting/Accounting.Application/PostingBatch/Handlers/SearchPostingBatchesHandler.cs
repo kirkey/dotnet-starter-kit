@@ -1,5 +1,5 @@
-using Accounting.Application.PostingBatch.Queries;
 using Accounting.Application.PostingBatch.Dtos;
+using Accounting.Application.PostingBatch.Queries;
 
 namespace Accounting.Application.PostingBatch.Handlers
 {

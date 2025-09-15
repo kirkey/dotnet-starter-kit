@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
+﻿#nullable disable
 
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Todo
 {

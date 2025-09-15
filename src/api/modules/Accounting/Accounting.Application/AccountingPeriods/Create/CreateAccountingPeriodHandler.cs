@@ -1,5 +1,5 @@
-using Accounting.Application.AccountingPeriods.Queries;
 using Accounting.Application.AccountingPeriods.Exceptions;
+using Accounting.Application.AccountingPeriods.Queries;
 
 namespace Accounting.Application.AccountingPeriods.Create;
 

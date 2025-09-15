@@ -1,7 +1,6 @@
 using Finbuckle.MultiTenant.Abstractions;
 using FSH.Framework.Infrastructure.Tenant;
 using Microsoft.Extensions.Options;
-using Shared.Constants;
 
 namespace Store.Infrastructure.Persistence;
 
