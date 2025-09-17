@@ -2,10 +2,8 @@ using Accounting.Application.ConsumptionData.Dtos;
 
 namespace Accounting.Application.ConsumptionData.Queries;
 
-public class GetConsumptionDataByIdQuery : IRequest<ConsumptionDataDto>
+public class GetConsumptionDataByIdQuery(DefaultIdType id) : IRequest<ConsumptionDataDto>
 {
-    public DefaultIdType Id { get; set; }
-
-    public GetConsumptionDataByIdQuery(DefaultIdType id) { Id = id; }
+    public DefaultIdType Id { get; set; } = id;
 }
 

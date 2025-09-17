@@ -1,8 +1,7 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
 
 namespace Accounting.Application.ChartOfAccounts.Get.v1;
-public class GetChartOfAccountRequest : IRequest<ChartOfAccountDto>
+public class GetChartOfAccountRequest(DefaultIdType id) : IRequest<ChartOfAccountDto>
 {
-    public DefaultIdType Id { get; set; }
-    public GetChartOfAccountRequest(DefaultIdType id) => Id = id;
+    public DefaultIdType Id { get; set; } = id;
 }

@@ -2,10 +2,17 @@ using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 using Accounting.Infrastructure.Endpoints.Budgets.v1;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 using Accounting.Infrastructure.Endpoints.Customers.v1;
+using Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 using Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 using Accounting.Infrastructure.Endpoints.Payees.v1;
 using Accounting.Infrastructure.Endpoints.Projects.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
+using Accounting.Infrastructure.Endpoints.AccountReconciliation.v1;
+using Accounting.Infrastructure.Endpoints.Billing.v1;
+using Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
+using Accounting.Infrastructure.Endpoints.Inventory.v1;
+using Accounting.Infrastructure.Endpoints.Patronage.v1;
+using Accounting.Infrastructure.Endpoints.Payments.v1;
 using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Persistence.Configurations;
 using Carter;
@@ -16,6 +23,7 @@ namespace Accounting.Infrastructure;
 
 public static class AccountingModule
 {
+    // Restore proper CarterModule subclass pattern and constructor
     public class Endpoints : CarterModule
     {
         public Endpoints() : base("accounting") { }
@@ -66,6 +74,38 @@ public static class AccountingModule
 
             var budgets = app.MapGroup("budgets").WithTags("budgets");
             budgets.MapBudgetSearchEndpoint();
+            budgets.MapBudgetCreateEndpoint();
+            budgets.MapBudgetGetEndpoint();
+            budgets.MapBudgetUpdateEndpoint();
+            budgets.MapBudgetDeleteEndpoint();
+
+            var fixedAssets = app.MapGroup("fixedassets").WithTags("fixedassets");
+            fixedAssets.MapFixedAssetSearchEndpoint();
+            fixedAssets.MapFixedAssetGetEndpoint();
+            fixedAssets.MapFixedAssetCreateEndpoint();
+            fixedAssets.MapFixedAssetUpdateEndpoint();
+            fixedAssets.MapFixedAssetDeleteEndpoint();
+
+            // New route groups for domains previously missing endpoints
+            var reconciliations = app.MapGroup("reconciliations").WithTags("reconciliations");
+            reconciliations.MapReconcileAccountEndpoint();
+
+            var billing = app.MapGroup("billing").WithTags("billing");
+            billing.MapCreateInvoiceFromConsumptionEndpoint();
+
+            var financial = app.MapGroup("financialstatements").WithTags("financialstatements");
+            financial.MapGenerateBalanceSheetEndpoint();
+            financial.MapGenerateIncomeStatementEndpoint();
+            financial.MapGenerateCashFlowStatementEndpoint();
+
+            var inventory = app.MapGroup("inventory").WithTags("inventory");
+            inventory.MapCreateInventoryItemEndpoint();
+
+            var patronage = app.MapGroup("patronage").WithTags("patronage");
+            patronage.MapRetirePatronageEndpoint();
+
+            var payments = app.MapGroup("payments").WithTags("payments");
+            payments.MapAllocatePaymentEndpoint();
 
             var journals = app.MapGroup("journals").WithTags("journals");
             journals.MapJournalEntrySearchEndpoint();

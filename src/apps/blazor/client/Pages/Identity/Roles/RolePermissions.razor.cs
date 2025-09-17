@@ -90,12 +90,13 @@ public partial class RolePermissions
             || permission.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase) is true;
 }
 
-public record PermissionViewModel : FshPermission
+public record PermissionViewModel(
+    string Description,
+    string Action,
+    string Resource,
+    bool IsBasic = false,
+    bool IsRoot = false)
+    : FshPermission(Description, Action, Resource, IsBasic, IsRoot)
 {
     public bool Enabled { get; set; }
-
-    public PermissionViewModel(string Description, string Action, string Resource, bool IsBasic = false, bool IsRoot = false)
-        : base(Description, Action, Resource, IsBasic, IsRoot)
-    {
-    }
 }

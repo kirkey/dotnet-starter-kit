@@ -5,14 +5,8 @@ public class BudgetCannotBeModifiedException(DefaultIdType id)
 
 public class InvalidBudgetAmountException() : ForbiddenException("Budget amount must be greater than zero.");
 
-public class BudgetAlreadyExistsException : Exception
-{
-    public BudgetAlreadyExistsException(string name, DefaultIdType periodId)
-        : base($"A budget named '{name}' already exists for period {periodId}.") { }
-}
+public class BudgetAlreadyExistsException(string name, DefaultIdType periodId)
+    : Exception($"A budget named '{name}' already exists for period {periodId}.");
 
-public class BudgetCannotBeDeletedException : Exception
-{
-    public BudgetCannotBeDeletedException(DefaultIdType id)
-        : base($"Budget with ID {id} cannot be deleted (status prevents deletion).") { }
-}
+public class BudgetCannotBeDeletedException(DefaultIdType id)
+    : Exception($"Budget with ID {id} cannot be deleted (status prevents deletion).");

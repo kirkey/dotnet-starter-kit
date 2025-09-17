@@ -1,0 +1,61 @@
+@page "/accounting-budgets"
+
+<PageHeader Title="Accounting Periods" Header="Accounting Periods" SubHeader="Manage Accounting Periods." />
+
+<EntityTable @ref="_table" TEntity="BudgetDto" TId="DefaultIdType" TRequest="BudgetViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3" lg="2">
+            <MudDatePicker @bind-Date="context.StartDate"
+                           For="@(() => context.StartDate)"
+                           Label="Start Date"
+                           Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3" lg="2">
+            <MudDatePicker @bind-Date="context.EndDate"
+                           For="@(() => context.EndDate)"
+                           Label="End Date"
+                           Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudSwitch @bind-Value="context.IsAdjustmentPeriod"
+                       For="@(() => context.IsAdjustmentPeriod)"
+                       Label="Adjustment Period" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudNumericField @bind-Value="context.FiscalYear"
+                             For="@(() => context.FiscalYear)"
+                             Label="Fiscal Year"
+                             Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudTextField @bind-Value="context.PeriodType"
+                          For="@(() => context.PeriodType)"
+                          Label="Period Type"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

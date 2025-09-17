@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace FSH.Starter.Blazor.Client.Models.NavigationMenu;
 
 public class MenuSectionModel

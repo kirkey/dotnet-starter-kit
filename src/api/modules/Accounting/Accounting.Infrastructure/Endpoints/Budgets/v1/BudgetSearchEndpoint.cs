@@ -21,5 +21,3 @@ public static class BudgetSearchEndpoint
             .MapToApiVersion(1);
     }
 }
-
-
