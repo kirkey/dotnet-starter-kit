@@ -38,7 +38,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, ChartOfAccountCreateRequest body);
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -50,7 +50,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, ChartOfAccountCreateRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a chart of account by id
@@ -84,7 +84,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, ChartOfAccountUpdateRequest body);
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -96,7 +96,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, ChartOfAccountUpdateRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete chart of account by id
@@ -130,7 +130,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, ChartOfAccountSearchRequest body);
+        System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -142,7 +142,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, ChartOfAccountSearchRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// creates a brand
@@ -2795,7 +2795,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, ChartOfAccountCreateRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body)
         {
             return ChartOfAccountCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -2810,7 +2810,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, ChartOfAccountCreateRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3000,7 +3000,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, ChartOfAccountUpdateRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body)
         {
             return ChartOfAccountUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -3015,7 +3015,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, ChartOfAccountUpdateRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3203,7 +3203,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, ChartOfAccountSearchRequest body)
+        public virtual System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body)
         {
             return ChartOfAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -3218,7 +3218,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, ChartOfAccountSearchRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15202,7 +15202,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChartOfAccountCreateRequest
+    public partial class CreateChartOfAccountRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -15361,7 +15361,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChartOfAccountSearchRequest
+    public partial class SearchChartOfAccountRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -15397,7 +15397,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChartOfAccountUpdateRequest
+    public partial class UpdateChartOfAccountRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]

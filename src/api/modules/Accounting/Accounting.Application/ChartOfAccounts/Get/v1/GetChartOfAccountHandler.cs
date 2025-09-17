@@ -2,12 +2,12 @@ using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Application.ChartOfAccounts.Queries;
 
 namespace Accounting.Application.ChartOfAccounts.Get.v1;
-public sealed class ChartOfAccountGetHandler(
+public sealed class GetChartOfAccountHandler(
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> repository,
     ICacheService cache)
-    : IRequestHandler<ChartOfAccountGetRequest, ChartOfAccountDto>
+    : IRequestHandler<GetChartOfAccountRequest, ChartOfAccountDto>
 {
-    public async Task<ChartOfAccountDto> Handle(ChartOfAccountGetRequest request, CancellationToken cancellationToken)
+    public async Task<ChartOfAccountDto> Handle(GetChartOfAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

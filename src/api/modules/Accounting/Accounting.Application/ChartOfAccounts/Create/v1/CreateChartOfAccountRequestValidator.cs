@@ -2,7 +2,7 @@ using FSH.Framework.Core.Extensions;
 
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
 
-public class ChartOfAccountCreateRequestValidator : BaseRequestValidator<ChartOfAccountCreateRequest>
+public class CreateChartOfAccountRequestValidator : BaseRequestValidator<CreateChartOfAccountRequest>
 {
     private static readonly HashSet<string> AllowedAccountTypes = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -27,7 +27,7 @@ public class ChartOfAccountCreateRequestValidator : BaseRequestValidator<ChartOf
         "Operation",
     };
 
-    public ChartOfAccountCreateRequestValidator()
+    public CreateChartOfAccountRequestValidator()
     {
             RuleFor(a => a.AccountCode)
                 .NotEmpty()

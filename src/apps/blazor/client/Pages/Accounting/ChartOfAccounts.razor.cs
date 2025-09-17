@@ -30,25 +30,25 @@ public partial class ChartOfAccounts : ComponentBase
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<ChartOfAccountSearchRequest>();
+                var paginationFilter = filter.Adapt<SearchChartOfAccountRequest>();
 
                 var result = await ApiClient.ChartOfAccountSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<ChartOfAccountDto>>();
             },
             createFunc: async account =>
             {
-                await ApiClient.ChartOfAccountCreateEndpointAsync("1", account.Adapt<ChartOfAccountCreateRequest>());
+                await ApiClient.ChartOfAccountCreateEndpointAsync("1", account.Adapt<CreateChartOfAccountRequest>());
             },
             updateFunc: async (id, account) =>
             {
-                await ApiClient.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<ChartOfAccountUpdateRequest>());
+                await ApiClient.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<UpdateChartOfAccountRequest>());
             },
             deleteFunc: async id => await ApiClient.ChartOfAccountDeleteEndpointAsync("1", id));
     }
 }
 
-public class ChartOfAccountViewModel : ChartOfAccountUpdateRequest
+public class ChartOfAccountViewModel : UpdateChartOfAccountRequest
 {
-    // Properties will be inherited from ChartOfAccountUpdateRequest
+    // Properties will be inherited from UpdateChartOfAccountRequest
     // This class serves as the view model for the entity table
 }

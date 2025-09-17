@@ -2,7 +2,7 @@ using Accounting.Domain.Events.ChartOfAccount;
 
 namespace Accounting.Application.ChartOfAccounts.EventHandlers;
 
-public class ChartOfAccountStatusChangedEventHandler(ILogger<ChartOfAccountStatusChangedEventHandler> logger) : INotificationHandler<ChartOfAccountStatusChanged>
+public class StatusChangedChartOfAccountHandler(ILogger<StatusChangedChartOfAccountHandler> logger) : INotificationHandler<ChartOfAccountStatusChanged>
 {
     public async Task Handle(ChartOfAccountStatusChanged notification, CancellationToken cancellationToken)
     {
@@ -11,5 +11,3 @@ public class ChartOfAccountStatusChangedEventHandler(ILogger<ChartOfAccountStatu
         logger.LogInformation("finished handling account status changed domain event..");
     }
 }
-
-

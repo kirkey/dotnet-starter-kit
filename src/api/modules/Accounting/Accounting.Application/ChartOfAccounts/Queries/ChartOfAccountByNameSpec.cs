@@ -10,4 +10,3 @@ public sealed class ChartOfAccountByNameSpec : Specification<ChartOfAccount>, IS
             Query.Where(a => a.Id != excludeId.Value);
     }
 }
-

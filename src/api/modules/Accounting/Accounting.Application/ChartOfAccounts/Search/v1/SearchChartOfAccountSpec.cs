@@ -1,9 +1,9 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
-public sealed class ChartOfAccountSearchSpec : EntitiesByPaginationFilterSpec<ChartOfAccount, ChartOfAccountDto>
+public sealed class SearchChartOfAccountSpec : EntitiesByPaginationFilterSpec<ChartOfAccount, ChartOfAccountDto>
 {
-    public ChartOfAccountSearchSpec(ChartOfAccountSearchRequest request)
+    public SearchChartOfAccountSpec(SearchChartOfAccountRequest request)
         : base(request)
     {
         Query

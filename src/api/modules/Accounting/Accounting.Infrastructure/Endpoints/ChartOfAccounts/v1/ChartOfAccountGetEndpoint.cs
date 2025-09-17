@@ -10,7 +10,7 @@ public static class ChartOfAccountGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new ChartOfAccountGetRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetChartOfAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ChartOfAccountGetEndpoint))

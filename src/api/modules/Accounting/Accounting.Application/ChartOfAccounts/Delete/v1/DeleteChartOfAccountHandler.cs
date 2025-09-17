@@ -1,10 +1,10 @@
 namespace Accounting.Application.ChartOfAccounts.Delete.v1;
-public class ChartOfAccountDeleteHandler(
-    ILogger<ChartOfAccountDeleteHandler> logger,
+public class DeleteChartOfAccountHandler(
+    ILogger<DeleteChartOfAccountHandler> logger,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
-    : IRequestHandler<ChartOfAccountDeleteRequest, DefaultIdType>
+    : IRequestHandler<DeleteChartOfAccountRequest, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(ChartOfAccountDeleteRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(DeleteChartOfAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

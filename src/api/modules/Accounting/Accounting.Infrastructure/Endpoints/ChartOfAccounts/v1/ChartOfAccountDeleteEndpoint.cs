@@ -9,7 +9,7 @@ public static class ChartOfAccountDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new ChartOfAccountDeleteRequest(id)).ConfigureAwait(false);
+                await mediator.Send(new DeleteChartOfAccountRequest(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(ChartOfAccountDeleteEndpoint))

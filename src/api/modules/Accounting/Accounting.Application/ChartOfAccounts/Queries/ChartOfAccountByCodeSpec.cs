@@ -8,4 +8,3 @@ public sealed class ChartOfAccountByCodeSpec : Specification<ChartOfAccount>, IS
         Query.Where(a => a.AccountCode == c);
     }
 }
-

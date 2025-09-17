@@ -8,7 +8,7 @@ public static class ChartOfAccountSearchEndpoint
     internal static RouteHandlerBuilder MapChartOfAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] ChartOfAccountSearchRequest command) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchChartOfAccountRequest command) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

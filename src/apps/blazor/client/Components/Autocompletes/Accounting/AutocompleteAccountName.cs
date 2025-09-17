@@ -25,7 +25,7 @@ public class AutocompleteAccountName : MudAutocomplete<string>
 
     private async Task<IEnumerable<string>>? SearchText(string? value, CancellationToken cancellationToken)
     {
-        var filter = new ChartOfAccountSearchRequest
+        var filter = new SearchChartOfAccountRequest
         {
             AdvancedSearch = new Search { Fields = new[] { "accountName", "name", "description", "notes" }, Keyword = value },
             PageSize = 10

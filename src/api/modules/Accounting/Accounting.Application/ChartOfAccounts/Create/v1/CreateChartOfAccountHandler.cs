@@ -2,12 +2,12 @@ using Accounting.Application.ChartOfAccounts.Exceptions;
 using Accounting.Application.ChartOfAccounts.Queries;
 
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
-public sealed class ChartOfAccountCreateRequestHandler(
-    ILogger<ChartOfAccountCreateRequestHandler> logger,
+public sealed class CreateChartOfAccountHandler(
+    ILogger<CreateChartOfAccountHandler> logger,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
-    : IRequestHandler<ChartOfAccountCreateRequest, DefaultIdType>
+    : IRequestHandler<CreateChartOfAccountRequest, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(ChartOfAccountCreateRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateChartOfAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

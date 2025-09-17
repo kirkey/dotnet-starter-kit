@@ -1,6 +1,6 @@
 namespace Accounting.Application.ChartOfAccounts.Update.v1;
 
-public class ChartOfAccountUpdateRequest : BaseRequest, IRequest<DefaultIdType>
+public class UpdateChartOfAccountRequest : BaseRequest, IRequest<DefaultIdType>
 {
     public string AccountCode { get; set; } = default!;
     public string? AccountName { get; set; }
