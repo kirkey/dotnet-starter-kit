@@ -9,6 +9,9 @@ public partial class Roles
     [Inject]
     private IApiClient RolesClient { get; set; } = default!;
 
+    // Explicitly inject NavigationManager here so the code-behind resolves Navigation.NavigateTo in IDE analyzers
+    [Inject] protected NavigationManager Navigation { get; set; } = default!;
+
     protected EntityClientTableContext<RoleDto, string?, CreateOrUpdateRoleCommand> Context { get; set; } = default!;
 
     private bool _canViewRoleClaims;
