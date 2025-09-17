@@ -1,13 +1,50 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Represents a purchase order sent to a supplier to procure stock.
+/// Tracks items, delivery dates, and totals.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Create orders to suppliers and track receipt of goods.
+/// - Compute totals, taxes, discounts, and delivery status.
+/// </remarks>
 public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Purchase order number. Example: "PO-2025-001".
+    /// </summary>
     public string OrderNumber { get; private set; } = default!;
+
+    /// <summary>
+    /// Supplier id the order is sent to.
+    /// </summary>
     public DefaultIdType SupplierId { get; private set; }
+
+    /// <summary>
+    /// Date the order was placed.
+    /// </summary>
     public DateTime OrderDate { get; private set; }
+
+    /// <summary>
+    /// Expected delivery date (optional).
+    /// </summary>
     public DateTime? ExpectedDeliveryDate { get; private set; }
+
+    /// <summary>
+    /// Actual delivery date when goods were received (optional).
+    /// Set by UpdateDeliveryDate when a delivery is recorded.
+    /// </summary>
     public DateTime? ActualDeliveryDate { get; private set; }
-    public string Status { get; private set; } = default!; // Draft, Sent, Confirmed, Received, Cancelled
+
+    /// <summary>
+    /// Order status: Draft, Sent, Confirmed, Received, Cancelled.
+    /// </summary>
+    public string Status { get; private set; } = default!;
+
+    /// <summary>
+    /// Computed totals: TotalAmount includes line totals, NetAmount accounts for taxes/discounts.
+    /// </summary>
     public decimal TotalAmount { get; private set; }
     public decimal TaxAmount { get; private set; }
     public decimal DiscountAmount { get; private set; }
@@ -20,6 +57,8 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     public Supplier Supplier { get; private set; } = default!;
     public ICollection<PurchaseOrderItem> Items { get; private set; } = new List<PurchaseOrderItem>();
 
+    // The parameterless constructor is required by EF Core for entity materialization.
+    // It may appear unused to static analyzers but must remain.
     private PurchaseOrder() { }
 
     private PurchaseOrder(
@@ -299,15 +338,15 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     }
 
     public bool IsOverdue() => 
-        ExpectedDeliveryDate.HasValue && 
-        ExpectedDeliveryDate.Value < DateTime.UtcNow && 
+        ExpectedDeliveryDate is { } ed &&
+        ed < DateTime.UtcNow &&
         !ActualDeliveryDate.HasValue &&
         Status != "Cancelled";
 
     public bool IsDelivered() => ActualDeliveryDate.HasValue;
 
     public int GetDaysUntilExpectedDelivery() =>
-        ExpectedDeliveryDate.HasValue 
-            ? (ExpectedDeliveryDate.Value - DateTime.UtcNow).Days 
+        ExpectedDeliveryDate is { } ed
+            ? (ed - DateTime.UtcNow).Days
             : 0;
 }

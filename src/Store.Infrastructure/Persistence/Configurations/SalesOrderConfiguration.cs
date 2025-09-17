@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Store.Domain;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class SalesOrderConfiguration : IEntityTypeConfiguration<SalesOrder>
@@ -53,12 +57,14 @@ public class SalesOrderConfiguration : IEntityTypeConfiguration<SalesOrder>
         builder.Property(x => x.SalesPersonId)
             .HasMaxLength(100);
 
-        builder.HasOne(x => x.Customer)
-            .WithMany(x => x.SalesOrders)
+        // SalesOrder exposes CustomerId and WarehouseId (no navigation properties),
+        // configure relationships using generic overloads so EF knows the principal entity type.
+        builder.HasOne<Customer>()
+            .WithMany(c => c.SalesOrders)
             .HasForeignKey(x => x.CustomerId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.Warehouse)
+        builder.HasOne<Warehouse>()
             .WithMany()
             .HasForeignKey(x => x.WarehouseId)
             .OnDelete(DeleteBehavior.SetNull);

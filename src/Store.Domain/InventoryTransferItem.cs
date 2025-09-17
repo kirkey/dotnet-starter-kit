@@ -1,11 +1,38 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Line item inside an inventory transfer. Associates a grocery item with quantity and unit price.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Represent what is being shipped between warehouses.
+/// - Compute line totals for transfer valuation.
+/// </remarks>
 public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Parent transfer id.
+    /// </summary>
     public DefaultIdType InventoryTransferId { get; private set; }
+
+    /// <summary>
+    /// Grocery item id being transferred.
+    /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
+
+    /// <summary>
+    /// Quantity being transferred. Must be > 0.
+    /// </summary>
     public int Quantity { get; private set; }
+
+    /// <summary>
+    /// Unit price used for valuation.
+    /// </summary>
     public decimal UnitPrice { get; private set; }
+
+    /// <summary>
+    /// Computed line total: Quantity * UnitPrice.
+    /// </summary>
     public decimal LineTotal { get; private set; }
 
     public InventoryTransfer InventoryTransfer { get; private set; } = default!;

@@ -1,15 +1,50 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Line item on a purchase order representing a requested quantity from a supplier.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track ordered vs received quantities.
+/// - Apply per-line discounts and compute totals.
+/// </remarks>
 public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Parent purchase order id.
+    /// </summary>
     public DefaultIdType PurchaseOrderId { get; private set; }
+
+    /// <summary>
+    /// Grocery item id ordered from the supplier.
+    /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
+
+    /// <summary>
+    /// Quantity ordered. Must be > 0.
+    /// </summary>
     public int Quantity { get; private set; }
+
+    /// <summary>
+    /// Unit price agreed with the supplier.
+    /// </summary>
     public decimal UnitPrice { get; private set; }
+
+    /// <summary>
+    /// Discount amount applied to this line item.
+    /// </summary>
     public decimal DiscountAmount { get; private set; }
-    public decimal TotalPrice { get; private set; }
+
+    /// <summary>
+    /// Quantity that has been received so far.
+    /// </summary>
     public int ReceivedQuantity { get; private set; }
-    
+
+    /// <summary>
+    /// Computed total price for this line (Quantity * UnitPrice) - DiscountAmount.
+    /// </summary>
+    public decimal TotalPrice { get; private set; }
+
     public PurchaseOrder PurchaseOrder { get; private set; } = default!;
     public GroceryItem GroceryItem { get; private set; } = default!;
 

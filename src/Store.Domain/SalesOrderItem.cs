@@ -1,17 +1,52 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Line item inside a sales order. Holds quantity, unit price, discount and shipped quantities.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track ordered vs shipped quantities.
+/// - Compute line totals used in order totals.
+/// </remarks>
 public sealed class SalesOrderItem : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Parent sales order id.
+    /// </summary>
     public DefaultIdType SalesOrderId { get; private set; }
+
+    /// <summary>
+    /// Grocery item being ordered.
+    /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
+
+    /// <summary>
+    /// Quantity ordered. Must be > 0.
+    /// </summary>
     public int Quantity { get; private set; }
+
+    /// <summary>
+    /// Unit price applied to this line.
+    /// </summary>
     public decimal UnitPrice { get; private set; }
+
+    /// <summary>
+    /// Discount amount applied to this line.
+    /// </summary>
     public decimal DiscountAmount { get; private set; }
-    public decimal TotalPrice { get; private set; }
+
+    /// <summary>
+    /// Quantity that has already been shipped for this line.
+    /// </summary>
     public int ShippedQuantity { get; private set; }
     
     public bool IsWholesaleItem { get; private set; }
     public decimal? WholesaleTierPrice { get; private set; }
+
+    /// <summary>
+    /// Computed total price for this line (Quantity * effective price) minus discount.
+    /// </summary>
+    public decimal TotalPrice { get; private set; }
 
     public SalesOrder SalesOrder { get; private set; } = default!;
     public GroceryItem GroceryItem { get; private set; } = default!;

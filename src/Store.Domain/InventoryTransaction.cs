@@ -1,30 +1,124 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Records a single inventory movement affecting stock levels.
+/// Includes type (IN/OUT), reason, quantities and cost impact.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track purchases, sales, adjustments and transfers.
+/// - Audit stock changes and compute financial impact.
+/// </remarks>
 public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Human-friendly transaction identifier. Example: "TXN-202509-001".
+    /// </summary>
     public string TransactionNumber { get; private set; } = default!;
+
+    /// <summary>
+    /// ID of the grocery item affected by the transaction.
+    /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
+
+    /// <summary>
+    /// Warehouse where the transaction occurred (optional).
+    /// </summary>
     public DefaultIdType? WarehouseId { get; private set; }
+
+    /// <summary>
+    /// Warehouse location within the warehouse (optional).
+    /// </summary>
     public DefaultIdType? WarehouseLocationId { get; private set; }
+
+    /// <summary>
+    /// Related purchase order id (if this transaction is linked to a PO).
+    /// </summary>
     public DefaultIdType? PurchaseOrderId { get; private set; }
+
+    /// <summary>
+    /// Type of transaction: IN, OUT, ADJUSTMENT, TRANSFER.
+    /// </summary>
     public string TransactionType { get; private set; } = default!; // IN, OUT, ADJUSTMENT, TRANSFER
-    public string Reason { get; private set; } = default!; // Purchase, Sale, Return, Damage, Expiry, etc.
+
+    /// <summary>
+    /// Short reason text for the transaction. Example: "Sale", "Damage", "Return".
+    /// </summary>
+    public string Reason { get; private set; } = default!;
+
+    /// <summary>
+    /// Quantity moved. Positive integer; must be non-zero.
+    /// </summary>
     public int Quantity { get; private set; }
+
+    /// <summary>
+    /// Quantity before the transaction.
+    /// </summary>
     public int QuantityBefore { get; private set; }
+
+    /// <summary>
+    /// Quantity after the transaction.
+    /// </summary>
     public int QuantityAfter { get; private set; }
+
+    /// <summary>
+    /// Cost per unit used to compute the total cost impact.
+    /// </summary>
     public decimal UnitCost { get; private set; }
+
+    /// <summary>
+    /// Absolute financial impact (Quantity * UnitCost).
+    /// </summary>
     public decimal TotalCost { get; private set; }
+
+    /// <summary>
+    /// Date when the transaction was recorded.
+    /// </summary>
     public DateTime TransactionDate { get; private set; }
+
+    /// <summary>
+    /// Optional reference information for the transaction.
+    /// </summary>
     public string? Reference { get; private set; }
     
+    /// <summary>
+    /// User who performed the transaction.
+    /// </summary>
     public string? PerformedBy { get; private set; }
+
+    /// <summary>
+    /// Indicates if the transaction is approved.
+    /// </summary>
     public bool IsApproved { get; private set; }
+
+    /// <summary>
+    /// User who approved the transaction.
+    /// </summary>
     public string? ApprovedBy { get; private set; }
+
+    /// <summary>
+    /// Date when the transaction was approved.
+    /// </summary>
     public DateTime? ApprovalDate { get; private set; }
     
+    /// <summary>
+    /// Related grocery item details.
+    /// </summary>
     public GroceryItem GroceryItem { get; private set; } = default!;
+
+    /// <summary>
+    /// Related warehouse details (if applicable).
+    /// </summary>
     public Warehouse? Warehouse { get; private set; }
+
+    /// <summary>
+    /// Related warehouse location details (if applicable).
+    /// </summary>
     public WarehouseLocation? WarehouseLocation { get; private set; }
+
+    /// <summary>
+    /// Related purchase order details (if applicable).
+    /// </summary>
     public PurchaseOrder? PurchaseOrder { get; private set; }
 
     private InventoryTransaction() { }

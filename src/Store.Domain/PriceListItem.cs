@@ -1,13 +1,49 @@
 namespace Store.Domain;
 
+/// <summary>
+/// A single pricing entry for a grocery item within a price list.
+/// Stores base price and optional discounts or quantity limits.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Define per-item pricing for a price list.
+/// - Support quantity-based pricing or discounts.
+/// </remarks>
 public sealed class PriceListItem : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Parent price list id.
+    /// </summary>
     public DefaultIdType PriceListId { get; private set; }
+
+    /// <summary>
+    /// Grocery item id this price applies to.
+    /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
+
+    /// <summary>
+    /// Base price for the item. Must be >= 0.
+    /// </summary>
     public decimal Price { get; private set; }
+
+    /// <summary>
+    /// Optional discount percentage (0-100). Example: 10 for 10% off.
+    /// </summary>
     public decimal? DiscountPercentage { get; private set; }
+
+    /// <summary>
+    /// Optional minimum quantity for the price to be effective. Must be >= 0.
+    /// </summary>
     public decimal? MinimumQuantity { get; private set; }
+
+    /// <summary>
+    /// Optional maximum quantity for the price to be effective. Must be >= 0.
+    /// </summary>
     public decimal? MaximumQuantity { get; private set; }
+
+    /// <summary>
+    /// Indicates if the price list item is active.
+    /// </summary>
     public bool IsActive { get; private set; } = true;
     
     public PriceList PriceList { get; private set; } = default!;

@@ -1,30 +1,124 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Adjustments made to stock outside normal transactions (e.g., found, damaged, write-off).
+/// Records before/after quantities and financial impact.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Correct stock after a physical count or incidents.
+/// - Produce accounting entries for write-offs or found inventory.
+/// </remarks>
 public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Adjustment reference number. Example: "ADJ-2025-01".
+    /// </summary>
     public string AdjustmentNumber { get; private set; } = default!;
+
+    /// <summary>
+    /// Grocery item affected by the adjustment.
+    /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
+
+    /// <summary>
+    /// Warehouse where the adjustment occurred.
+    /// </summary>
     public DefaultIdType WarehouseId { get; private set; }
+
+    /// <summary>
+    /// Optional location within the warehouse.
+    /// </summary>
     public DefaultIdType? WarehouseLocationId { get; private set; }
+
+    /// <summary>
+    /// Date of the adjustment.
+    /// </summary>
     public DateTime AdjustmentDate { get; private set; }
-    public string AdjustmentType { get; private set; } = default!; // Increase, Decrease, Write-Off, Found
-    public string Reason { get; private set; } = default!; // Damage, Theft, Expiry, Count Error, etc.
+
+    /// <summary>
+    /// Type of adjustment (Increase, Decrease, Write-Off, Found).
+    /// </summary>
+    public string AdjustmentType { get; private set; } = default!;
+
+    /// <summary>
+    /// Reason for the adjustment (e.g., Damage, Theft, Expiry).
+    /// </summary>
+    public string Reason { get; private set; } = default!;
+
+    /// <summary>
+    /// Quantity prior to adjustment.
+    /// </summary>
     public int QuantityBefore { get; private set; }
+
+    /// <summary>
+    /// Quantity adjusted (positive integer).
+    /// </summary>
     public int AdjustmentQuantity { get; private set; }
+
+    /// <summary>
+    /// Quantity after the adjustment (derived).
+    /// </summary>
     public int QuantityAfter { get; private set; }
+
+    /// <summary>
+    /// Unit cost used to compute cost impact of the adjustment.
+    /// </summary>
     public decimal UnitCost { get; private set; }
+
+    /// <summary>
+    /// Total cost impact for accounting (positive or negative depending on type).
+    /// </summary>
     public decimal TotalCostImpact { get; private set; }
+
+    /// <summary>
+    /// Optional reference for external systems or notes.
+    /// </summary>
     public string? Reference { get; private set; }
     
+    /// <summary>
+    /// User who adjusted the stock.
+    /// </summary>
     public string? AdjustedBy { get; private set; }
+
+    /// <summary>
+    /// User who approved the adjustment.
+    /// </summary>
     public string? ApprovedBy { get; private set; }
+
+    /// <summary>
+    /// Date when the adjustment was approved.
+    /// </summary>
     public DateTime? ApprovalDate { get; private set; }
+
+    /// <summary>
+    /// Indicates if the adjustment is approved.
+    /// </summary>
     public bool IsApproved { get; private set; }
+
+    /// <summary>
+    /// Batch number for tracking adjustments in bulk.
+    /// </summary>
     public string? BatchNumber { get; private set; }
+
+    /// <summary>
+    /// Expiry date for perishable items, if applicable.
+    /// </summary>
     public DateTime? ExpiryDate { get; private set; }
     
+    /// <summary>
+    /// Related grocery item entity.
+    /// </summary>
     public GroceryItem GroceryItem { get; private set; } = default!;
+
+    /// <summary>
+    /// Related warehouse entity.
+    /// </summary>
     public Warehouse Warehouse { get; private set; } = default!;
+
+    /// <summary>
+    /// Related warehouse location entity, if applicable.
+    /// </summary>
     public WarehouseLocation? WarehouseLocation { get; private set; }
 
     private static readonly string[] AllowedAdjustmentTypes = new[] { "Physical Count", "Damage", "Loss", "Found", "Transfer", "Other", "Increase", "Decrease", "Write-Off" };

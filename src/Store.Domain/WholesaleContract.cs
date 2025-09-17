@@ -1,18 +1,73 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Contract with a wholesale customer that defines pricing, minimums and payment terms.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Store negotiated terms for large customers.
+/// - Apply wholesale pricing rules via linked <see cref="WholesalePricings"/>.
+/// </remarks>
 public sealed class WholesaleContract : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Unique contract number. Example: "WC-2025-001".
+    /// </summary>
     public string ContractNumber { get; private set; } = default!;
+
+    /// <summary>
+    /// Customer id this contract applies to.
+    /// </summary>
     public DefaultIdType CustomerId { get; private set; }
+
+    /// <summary>
+    /// Contract start date.
+    /// </summary>
     public DateTime StartDate { get; private set; }
+
+    /// <summary>
+    /// Contract end date.
+    /// </summary>
     public DateTime EndDate { get; private set; }
+
+    /// <summary>
+    /// Status of the contract. Possible values: Active, Expired, Terminated, Pending.
+    /// </summary>
     public string Status { get; private set; } = default!; // Active, Expired, Terminated, Pending
+
+    /// <summary>
+    /// Minimum order value to qualify under this contract.
+    /// </summary>
     public decimal MinimumOrderValue { get; private set; }
+
+    /// <summary>
+    /// Percentage discount applied on bulk orders.
+    /// </summary>
     public decimal VolumeDiscountPercentage { get; private set; }
+
+    /// <summary>
+    /// Payment terms in days.
+    /// </summary>
     public int PaymentTermsDays { get; private set; }
+
+    /// <summary>
+    /// Credit limit for the customer under this contract.
+    /// </summary>
     public decimal CreditLimit { get; private set; }
+
+    /// <summary>
+    /// Optional delivery terms.
+    /// </summary>
     public string? DeliveryTerms { get; private set; }
+
+    /// <summary>
+    /// Optional contract terms and conditions.
+    /// </summary>
     public string? ContractTerms { get; private set; }
+
+    /// <summary>
+    /// Indicates if the contract should automatically renew at the end date.
+    /// </summary>
     public bool AutoRenewal { get; private set; }
     
     

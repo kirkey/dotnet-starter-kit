@@ -1,23 +1,86 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Supplier that provides goods to the store. Stores contact, payment and rating information.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track supplier contact details for orders and deliveries.
+/// - Apply supplier credit limits and payment terms.
+/// </remarks>
 public sealed class Supplier : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Short supplier code. Example: "SUP-001".
+    /// </summary>
     public string Code { get; private set; } = default!;
+
+    /// <summary>
+    /// Main contact person at the supplier.
+    /// </summary>
     public string ContactPerson { get; private set; } = default!;
+
+    /// <summary>
+    /// Contact email for supplier communications.
+    /// </summary>
     public string Email { get; private set; } = default!;
+
+    /// <summary>
+    /// Contact phone number for the supplier.
+    /// </summary>
     public string Phone { get; private set; } = default!;
+
+    /// <summary>
+    /// Supplier address used for deliveries and billing.
+    /// </summary>
     public string Address { get; private set; } = default!;
+
+    /// <summary>
+    /// City where supplier is located.
+    /// </summary>
     public string City { get; private set; } = default!;
+
+    /// <summary>
+    /// State or region (optional).
+    /// </summary>
     public string? State { get; private set; }
+
+    /// <summary>
+    /// Country of the supplier.
+    /// </summary>
     public string Country { get; private set; } = default!;
+
+    /// <summary>
+    /// Postal code (optional).
+    /// </summary>
     public string? PostalCode { get; private set; }
+
+    /// <summary>
+    /// Supplier website (optional).
+    /// </summary>
     public string? Website { get; private set; }
+
+    /// <summary>
+    /// Optional credit limit for supplier purchases.
+    /// </summary>
     public decimal? CreditLimit { get; private set; }
+
+    /// <summary>
+    /// Days allowed for payment. Default: 30.
+    /// </summary>
     public int PaymentTermsDays { get; private set; }
+
+    /// <summary>
+    /// Indicates if the supplier is active.
+    /// </summary>
     public bool IsActive { get; private set; } = true;
-    public decimal Rating { get; private set; } = 0;
-    
-    
+
+    /// <summary>
+    /// Supplier rating between 0 and 5.
+    /// </summary>
+    public decimal Rating { get; private set; }
+
+
     public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
     public ICollection<PurchaseOrder> PurchaseOrders { get; private set; } = new List<PurchaseOrder>();
 

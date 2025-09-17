@@ -1,16 +1,64 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Represents a product (grocery item) stored and sold by the store.
+/// Contains pricing, stock and identification fields.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track stock levels and reorder points.
+/// - Provide pricing and weight details for orders.
+/// </remarks>
 public sealed class GroceryItem : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Stock keeping unit: short unique identifier. Example: "SKU-1234".
+    /// </summary>
     public string SKU { get; private set; } = default!;
+
+    /// <summary>
+    /// Product barcode. Example: "0123456789012".
+    /// </summary>
     public string Barcode { get; private set; } = default!;
+
+    /// <summary>
+    /// Selling price per unit. Default must be >= 0.
+    /// </summary>
     public decimal Price { get; private set; }
+
+    /// <summary>
+    /// Supplier cost per unit. Default must be >= 0.
+    /// </summary>
     public decimal Cost { get; private set; }
+
+    /// <summary>
+    /// Minimum stock to keep (safety stock). Example: 5.
+    /// </summary>
     public int MinimumStock { get; private set; }
+
+    /// <summary>
+    /// Maximum allowed stock (optional). Example: 100.
+    /// </summary>
     public int MaximumStock { get; private set; }
+
+    /// <summary>
+    /// Current available stock quantity. Default >= 0.
+    /// </summary>
     public int CurrentStock { get; private set; }
+
+    /// <summary>
+    /// Reorder point that triggers procurement. Example: 10.
+    /// </summary>
     public int ReorderPoint { get; private set; }
+
+    /// <summary>
+    /// Whether the item is perishable (affects expiry tracking).
+    /// </summary>
     public bool IsPerishable { get; private set; }
+
+    /// <summary>
+    /// Optional expiry date when the item is perishable.
+    /// </summary>
     public DateTime? ExpiryDate { get; private set; }
     public string? Brand { get; private set; }
     public string? Manufacturer { get; private set; }

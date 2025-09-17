@@ -1,14 +1,54 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Pricing tier tied to a wholesale contract for a specific grocery item.
+/// Defines quantity ranges, tier price and discount.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Apply volume-based pricing for wholesale customers.
+/// - Define effective/expiry dates for special pricing periods.
+/// </remarks>
 public sealed class WholesalePricing : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Parent wholesale contract id.
+    /// </summary>
     public DefaultIdType WholesaleContractId { get; private set; }
+
+    /// <summary>
+    /// Grocery item id this pricing applies to.
+    /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
+
+    /// <summary>
+    /// Minimum quantity required for this tier.
+    /// </summary>
     public int MinimumQuantity { get; private set; }
+
+    /// <summary>
+    /// Optional maximum quantity for the tier.
+    /// </summary>
     public int? MaximumQuantity { get; private set; }
+
+    /// <summary>
+    /// Price to charge for items in this tier.
+    /// </summary>
     public decimal TierPrice { get; private set; }
+
+    /// <summary>
+    /// Discount percentage applied at this tier (0-100).
+    /// </summary>
     public decimal DiscountPercentage { get; private set; }
+
+    /// <summary>
+    /// Effective date for this pricing tier.
+    /// </summary>
     public DateTime EffectiveDate { get; private set; }
+
+    /// <summary>
+    /// Optional expiry date after which this pricing is no longer valid.
+    /// </summary>
     public DateTime? ExpiryDate { get; private set; }
     public bool IsActive { get; private set; } = true;
     

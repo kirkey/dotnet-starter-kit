@@ -1,20 +1,77 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Represents a scheduled inventory cycle count in a warehouse.
+/// Use cycle counts to verify stock levels without doing a full inventory.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Schedule partial or full counts to find discrepancies.
+/// - Track progress (Scheduled, InProgress, Completed).
+/// - Attach counted items (<see cref="Items"/>) produced by counting activities.
+/// </remarks>
 public sealed class CycleCount : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Human-friendly identifier for the count. Example: "CC-2025-09-001".
+    /// </summary>
     public string CountNumber { get; private set; } = default!;
+
+    /// <summary>
+    /// Warehouse id where the count is taking place.
+    /// </summary>
     public DefaultIdType WarehouseId { get; private set; }
+
+    /// <summary>
+    /// Optional location within the warehouse (aisle/rack) being counted.
+    /// </summary>
     public DefaultIdType? WarehouseLocationId { get; private set; }
+
+    /// <summary>
+    /// Date the count is scheduled to run. Required.
+    /// </summary>
     public DateTime ScheduledDate { get; private set; }
+
+    /// <summary>
+    /// When the count actually started (set when started). null until started.
+    /// </summary>
     public DateTime? ActualStartDate { get; private set; }
+
+    /// <summary>
+    /// When the count was completed. null until completed.
+    /// </summary>
     public DateTime? CompletionDate { get; private set; }
+
+    /// <summary>
+    /// Status of the count (Scheduled, InProgress, Completed, Cancelled). Default: "Scheduled".
+    /// </summary>
     public string Status { get; private set; } = default!; // Scheduled, InProgress, Completed, Cancelled
+
+    /// <summary>
+    /// Type of count (Full, Partial, ABC, Random). Use to describe scope.
+    /// </summary>
     public string CountType { get; private set; } = default!; // Full, Partial, ABC, Random
+
+    /// <summary>
+    /// Name of the person who is counting (optional).
+    /// </summary>
     public string? CounterName { get; private set; }
+
+    /// <summary>
+    /// Supervisor name for the count (optional).
+    /// </summary>
     public string? SupervisorName { get; private set; }
+
+    /// <summary>
+    /// Totals for reporting: items to count, correct counts, discrepancies.
+    /// </summary>
     public int TotalItemsToCount { get; private set; }
     public int ItemsCountedCorrect { get; private set; }
     public int ItemsWithDiscrepancies { get; private set; }
+
+    /// <summary>
+    /// Accuracy percentage computed after completion. Range 0-100.
+    /// </summary>
     public decimal AccuracyPercentage { get; private set; }
     
     

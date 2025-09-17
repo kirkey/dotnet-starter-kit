@@ -1,32 +1,130 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Represents a transfer of inventory between warehouses or locations.
+/// Tracks items, status and timing for the shipment.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Move stock from central warehouse to store locations.
+/// - Track transfer lifecycle: Pending -> Approved -> InTransit -> Completed.
+/// </remarks>
 public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Optional human-readable reason for the transfer.
+    /// </summary>
     public string? Reason { get; private set; }
+
+    /// <summary>
+    /// Unique transfer number. Example: "TRF-2025-0001".
+    /// </summary>
     public string TransferNumber { get; private set; } = default!;
+
+    /// <summary>
+    /// Source warehouse identifier.
+    /// </summary>
     public DefaultIdType FromWarehouseId { get; private set; }
+
+    /// <summary>
+    /// Destination warehouse identifier.
+    /// </summary>
     public DefaultIdType ToWarehouseId { get; private set; }
-    public DefaultIdType? FromLocationId { get; private set; }
-    public DefaultIdType? ToLocationId { get; private set; }
+
+    /// <summary>
+    /// Date the transfer was created/sent.
+    /// </summary>
     public DateTime TransferDate { get; private set; }
-    public DateTime? ExpectedArrivalDate { get; private set; }
-    public DateTime? ActualArrivalDate { get; private set; }
-    public string Status { get; private set; } = default!; // Pending, Approved, InTransit, Completed, Cancelled
-    public string TransferType { get; private set; } = default!; // Standard, Express, etc.
-    public string Priority { get; private set; } = default!; // Low, Normal, High, Critical
+
+    /// <summary>
+    /// Current status: Pending, Approved, InTransit, Completed, Cancelled.
+    /// </summary>
+    public string Status { get; private set; } = default!;
+
+    /// <summary>
+    /// Total monetary value of items included in this transfer.
+    /// </summary>
     public decimal TotalValue { get; private set; }
+
+    /// <summary>
+    /// Optional transport method (e.g., truck, plane) for the transfer.
+    /// </summary>
     public string? TransportMethod { get; private set; }
+
+    /// <summary>
+    /// Optional tracking number for the transfer shipment.
+    /// </summary>
     public string? TrackingNumber { get; private set; }
+
+    /// <summary>
+    /// Optional identifier for the person who requested the transfer.
+    /// </summary>
     public string? RequestedBy { get; private set; }
+
+    /// <summary>
+    /// Optional identifier for the person who approved the transfer.
+    /// </summary>
     public string? ApprovedBy { get; private set; }
+
+    /// <summary>
+    /// Optional date when the transfer was approved.
+    /// </summary>
     public DateTime? ApprovalDate { get; private set; }
 
+    /// <summary>
+    /// Collection of items included in the transfer.
+    /// </summary>
     public ICollection<InventoryTransferItem> Items { get; private set; } = new List<InventoryTransferItem>();
 
+    /// <summary>
+    /// The source warehouse for this transfer.
+    /// </summary>
     public Warehouse FromWarehouse { get; private set; } = default!;
+
+    /// <summary>
+    /// The destination warehouse for this transfer.
+    /// </summary>
     public Warehouse ToWarehouse { get; private set; } = default!;
+
+    /// <summary>
+    /// Optional source location within the warehouse.
+    /// </summary>
     public WarehouseLocation? FromLocation { get; private set; }
+
+    /// <summary>
+    /// Optional destination location within the warehouse.
+    /// </summary>
     public WarehouseLocation? ToLocation { get; private set; }
+
+    /// <summary>
+    /// Optional source location id within the source warehouse (aisle/rack/bin).
+    /// </summary>
+    public DefaultIdType? FromLocationId { get; private set; }
+
+    /// <summary>
+    /// Optional destination location id within the destination warehouse.
+    /// </summary>
+    public DefaultIdType? ToLocationId { get; private set; }
+
+    /// <summary>
+    /// Optional expected arrival date for the transfer shipment.
+    /// </summary>
+    public DateTime? ExpectedArrivalDate { get; private set; }
+
+    /// <summary>
+    /// Type of transfer (e.g., Standard, Express).
+    /// </summary>
+    public string TransferType { get; private set; } = default!;
+
+    /// <summary>
+    /// Priority of the transfer (Low, Normal, High, Critical).
+    /// </summary>
+    public string Priority { get; private set; } = default!;
+
+    /// <summary>
+    /// Actual arrival date when the transfer was completed (set on Complete()).
+    /// </summary>
+    public DateTime? ActualArrivalDate { get; private set; }
 
     private InventoryTransfer() { }
 
@@ -60,6 +158,9 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         ToWarehouseId = toWarehouseId;
         FromLocationId = fromLocationId;
         ToLocationId = toLocationId;
+        // ensure navigation setters are used (assigned null) to avoid analyzer warnings
+        FromLocation = null;
+        ToLocation = null;
         TransferDate = transferDate;
         ExpectedArrivalDate = expectedArrivalDate;
         TransferType = transferType;

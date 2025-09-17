@@ -1,14 +1,53 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Represents a named price list used to price grocery items (retail, wholesale, promotional).
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Apply different prices per customer type or promotion period.
+/// - Activate/deactivate price lists by date range.
+/// </remarks>
 public sealed class PriceList : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Friendly name of the price list. Example: "Retail Standard".
+    /// </summary>
     public string PriceListName { get; private set; } = default!;
+
+    /// <summary>
+    /// Type to classify the list: Retail, Wholesale, Promotional.
+    /// </summary>
     public string PriceListType { get; private set; } = default!; // Retail, Wholesale, Promotional, Seasonal
+
+    /// <summary>
+    /// Date when the price list becomes effective.
+    /// </summary>
     public DateTime EffectiveDate { get; private set; }
+
+    /// <summary>
+    /// Optional expiry date after which the price list is no longer valid.
+    /// </summary>
     public DateTime? ExpiryDate { get; private set; }
+
+    /// <summary>
+    /// Whether the price list is active. Default: true.
+    /// </summary>
     public bool IsActive { get; private set; } = true;
+
+    /// <summary>
+    /// ISO currency code for list prices. Default: "USD".
+    /// </summary>
     public string Currency { get; private set; } = default!;
+
+    /// <summary>
+    /// Minimum order value to qualify for this price list. Null if not applicable.
+    /// </summary>
     public decimal? MinimumOrderValue { get; private set; }
+
+    /// <summary>
+    /// Optional customer type for targeted price lists (e.g., VIP).
+    /// </summary>
     public string? CustomerType { get; private set; } // Retail, Wholesale, VIP, etc.
     
     

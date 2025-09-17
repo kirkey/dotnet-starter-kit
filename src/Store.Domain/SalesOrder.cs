@@ -1,30 +1,72 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Sales order placed by a customer. Tracks items, payments, shipping and totals.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Create and process customer orders (retail or wholesale).
+/// - Track payment and delivery status.
+/// </remarks>
 public sealed class SalesOrder : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Public order identifier. Example: "SO-2025-001".
+    /// </summary>
     public string OrderNumber { get; private set; } = default!;
+
+    /// <summary>
+    /// Customer who placed the order.
+    /// </summary>
     public DefaultIdType CustomerId { get; private set; }
+
+    /// <summary>
+    /// Order creation date.
+    /// </summary>
     public DateTime OrderDate { get; private set; }
+
+    /// <summary>
+    /// Delivery address if different from customer address (optional).
+    /// </summary>
+    public string? DeliveryAddress { get; private set; }
+
+    /// <summary>
+    /// Delivery date (optional) for scheduled shipments.
+    /// </summary>
     public DateTime? DeliveryDate { get; private set; }
-    public string Status { get; private set; } = default!; // Draft, Confirmed, Processing, Shipped, Delivered, Cancelled
-    public string OrderType { get; private set; } = default!; // Retail, Wholesale, Online, InStore
+
+    /// <summary>
+    /// Optional order notes set by sales or customer service.
+    /// </summary>
+    public string? Notes { get; private set; }
+
+    /// <summary>
+    /// Order, payment and fulfillment related small enums/strings.
+    /// </summary>
+    public string Status { get; private set; } = default!;
+    public string OrderType { get; private set; } = default!;
+    public string PaymentStatus { get; private set; } = default!;
+    public string PaymentMethod { get; private set; } = default!;
+
+    /// <summary>
+    /// Totals and amounts.
+    /// </summary>
     public decimal SubTotal { get; private set; }
     public decimal TaxAmount { get; private set; }
     public decimal DiscountAmount { get; private set; }
     public decimal ShippingAmount { get; private set; }
     public decimal TotalAmount { get; private set; }
-    public string PaymentStatus { get; private set; } = default!; // Pending, Paid, Partial, Overdue
-    public string PaymentMethod { get; private set; } = default!; // Cash, Card, Transfer, Credit
-    public string? DeliveryAddress { get; private set; }
-    
+
+    /// <summary>
+    /// Flags and references.
+    /// </summary>
     public bool IsUrgent { get; private set; }
     public string? SalesPersonId { get; private set; }
     public DefaultIdType? WarehouseId { get; private set; }
-    
-    public Customer Customer { get; private set; } = default!;
-    public Warehouse? Warehouse { get; private set; }
 
-    // collection navigation for order line items
+    /// <summary>
+    /// Line items contained in the order.
+    /// </summary>
     public ICollection<SalesOrderItem> Items { get; private set; } = new List<SalesOrderItem>();
 
     // The parameterless constructor and private setters are required by EF Core for materialization.

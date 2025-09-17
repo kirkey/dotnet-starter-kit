@@ -89,6 +89,17 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/payees" }
                     ]
                 },
+                
+                new MenuSectionItemModel
+                {
+                    Title = "Store",
+                    Icon = Icons.Material.Filled.AddBox,
+                    IsParent = true,
+                    MenuItems =
+                    [
+                        new MenuSectionSubItemModel { Title = "Chart Of Accounts", Icon = Icons.Material.Filled.List, Href = "/chart-of-accounts" },
+                    ]
+                },
 
                 new MenuSectionItemModel
                 {

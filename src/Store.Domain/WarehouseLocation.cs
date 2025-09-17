@@ -1,23 +1,86 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Specific storage location inside a warehouse (aisle/section/shelf/bin).
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track where items are physically stored.
+/// - Enforce temperature requirements for perishable goods.
+/// </remarks>
 public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Short location code. Example: "A1-S1-SH1".
+    /// </summary>
     public string Code { get; private set; } = default!;
+
+    /// <summary>
+    /// Aisle identifier within the warehouse.
+    /// </summary>
     public string Aisle { get; private set; } = default!;
+
+    /// <summary>
+    /// Section identifier within the aisle.
+    /// </summary>
     public string Section { get; private set; } = default!;
+
+    /// <summary>
+    /// Shelf identifier within the section.
+    /// </summary>
     public string Shelf { get; private set; } = default!;
+
+    /// <summary>
+    /// Bin identifier within the shelf (optional).
+    /// </summary>
     public string? Bin { get; private set; }
+
+    /// <summary>
+    /// The warehouse this location belongs to.
+    /// </summary>
     public DefaultIdType WarehouseId { get; private set; }
-    public string LocationType { get; private set; } = default!; // Floor, Rack, Cold Storage, etc.
+
+    /// <summary>
+    /// Type of location (e.g., Floor, Rack, Cold Storage).
+    /// </summary>
+    public string LocationType { get; private set; } = default!;
+
+    /// <summary>
+    /// Capacity of this location (units) and the unit used.
+    /// </summary>
     public decimal Capacity { get; private set; }
-    public decimal UsedCapacity { get; private set; }
     public string CapacityUnit { get; private set; } = default!;
-    public bool IsActive { get; private set; } = true;
+
+    /// <summary>
+    /// Used capacity of this location (units).
+    /// </summary>
+    public decimal UsedCapacity { get; private set; }
+
+    /// <summary>
+    /// Indicates if this location requires temperature control.
+    /// </summary>
     public bool RequiresTemperatureControl { get; private set; }
+
+    /// <summary>
+    /// Minimum temperature (if applicable).
+    /// </summary>
     public decimal? MinTemperature { get; private set; }
+
+    /// <summary>
+    /// Maximum temperature (if applicable).
+    /// </summary>
     public decimal? MaxTemperature { get; private set; }
+
+    /// <summary>
+    /// Unit of measurement for temperature (e.g., Celsius, Fahrenheit).
+    /// </summary>
     public string? TemperatureUnit { get; private set; }
-    
+
+    /// <summary>
+    /// Indicates whether this warehouse location is active and usable.
+    /// </summary>
+    public bool IsActive { get; private set; } = true;
+
     public Warehouse Warehouse { get; private set; } = default!;
     public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
 

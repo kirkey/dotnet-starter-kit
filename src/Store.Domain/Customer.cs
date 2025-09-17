@@ -1,25 +1,112 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Represents a business or retail customer who places sales orders.
+/// Keep contact data accurate for invoicing and delivery.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track balances and credit limits for invoicing.
+/// - Differentiate behavior for retail vs wholesale customers.
+/// - Store contact info for delivery and notifications.
+/// </remarks>
 public sealed class Customer : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Short unique code for the customer. Example: "CUST-1001".
+    /// </summary>
     public string Code { get; private set; } = default!;
+
+    /// <summary>
+    /// Type of customer: e.g. "Retail", "Wholesale", "Corporate".
+    /// Use to apply pricing or payment rules. Default value expected from creator.
+    /// </summary>
     public string CustomerType { get; private set; } = default!; // Retail, Wholesale, Corporate
+
+    /// <summary>
+    /// Primary contact person for this customer. Example: "Jane Doe".
+    /// </summary>
     public string ContactPerson { get; private set; } = default!;
+
+    /// <summary>
+    /// Contact email used for notifications and invoices. Example: "contact@example.com".
+    /// </summary>
     public string Email { get; private set; } = default!;
+
+    /// <summary>
+    /// Contact phone number. Example: "+1-555-0100".
+    /// </summary>
     public string Phone { get; private set; } = default!;
+
+    /// <summary>
+    /// Primary postal address for deliveries.
+    /// </summary>
     public string Address { get; private set; } = default!;
+
+    /// <summary>
+    /// City of the customer's address. Example: "Seattle".
+    /// </summary>
     public string City { get; private set; } = default!;
+
+    /// <summary>
+    /// State or region (optional). Example: "WA".
+    /// </summary>
     public string? State { get; private set; }
+
+    /// <summary>
+    /// Country of the customer. Example: "US".
+    /// </summary>
     public string Country { get; private set; } = default!;
+
+    /// <summary>
+    /// Postal/ZIP code (optional). Example: "98101".
+    /// </summary>
     public string? PostalCode { get; private set; }
+
+    /// <summary>
+    /// Allowed credit limit for the customer. Default: 0.
+    /// Use to check if customer can place orders on credit.
+    /// </summary>
     public decimal CreditLimit { get; private set; }
+
+    /// <summary>
+    /// Current outstanding balance. Default: 0.
+    /// </summary>
     public decimal CurrentBalance { get; private set; }
+
+    /// <summary>
+    /// Number of days before payment is due. Default commonly 30.
+    /// </summary>
     public int PaymentTermsDays { get; private set; }
+
+    /// <summary>
+    /// Standard discount percentage to apply for this customer (0-100). Default: 0.
+    /// </summary>
     public decimal DiscountPercentage { get; private set; }
+
+    /// <summary>
+    /// Whether the customer account is active. Default: true.
+    /// </summary>
     public bool IsActive { get; private set; } = true;
+
+    /// <summary>
+    /// Tax identifier (optional). Example: VAT or GST number.
+    /// </summary>
     public string? TaxNumber { get; private set; }
+
+    /// <summary>
+    /// Business license number (optional) for corporate customers.
+    /// </summary>
     public string? BusinessLicense { get; private set; }
+
+    /// <summary>
+    /// Date of the customer's last order (optional).
+    /// </summary>
     public DateTime? LastOrderDate { get; private set; }
+
+    /// <summary>
+    /// Cumulative value of all orders placed by this customer. Default: 0.
+    /// </summary>
     public decimal LifetimeValue { get; private set; }
     
     

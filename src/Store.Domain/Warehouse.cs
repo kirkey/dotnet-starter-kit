@@ -1,24 +1,98 @@
 namespace Store.Domain;
 
+/// <summary>
+/// Physical storage location (warehouse) that holds stock and locations.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Track available capacity and used capacity.
+/// - Identify main warehouse vs satellite warehouses.
+/// </remarks>
 public sealed class Warehouse : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Short warehouse code. Example: "WH-SEA".
+    /// </summary>
     public string Code { get; private set; } = default!;
+
+    /// <summary>
+    /// Street address for the warehouse.
+    /// </summary>
     public string Address { get; private set; } = default!;
+
+    /// <summary>
+    /// City where the warehouse is located.
+    /// </summary>
     public string City { get; private set; } = default!;
+
+    /// <summary>
+    /// State where the warehouse is located (optional).
+    /// </summary>
     public string? State { get; private set; }
+
+    /// <summary>
+    /// Country where the warehouse is located.
+    /// </summary>
     public string Country { get; private set; } = default!;
+
+    /// <summary>
+    /// Postal code for the warehouse address (optional).
+    /// </summary>
     public string? PostalCode { get; private set; }
+
+    /// <summary>
+    /// Manager name responsible for warehouse operations.
+    /// </summary>
     public string ManagerName { get; private set; } = default!;
+
+    /// <summary>
+    /// Manager email for warehouse communications.
+    /// </summary>
     public string ManagerEmail { get; private set; } = default!;
+
+    /// <summary>
+    /// Manager phone number for warehouse contact.
+    /// </summary>
     public string ManagerPhone { get; private set; } = default!;
+
+    /// <summary>
+    /// Total storage capacity expressed in a unit (e.g., sqft or pallets).
+    /// </summary>
     public decimal TotalCapacity { get; private set; }
+
+    /// <summary>
+    /// Used portion of the capacity. Starts at 0.
+    /// </summary>
     public decimal UsedCapacity { get; private set; }
+
+    /// <summary>
+    /// Unit used for capacity measurements. Default: "sqft".
+    /// </summary>
     public string CapacityUnit { get; private set; } = default!;
+
+    /// <summary>
+    /// Indicates if the warehouse is active.
+    /// </summary>
     public bool IsActive { get; private set; } = true;
+
+    /// <summary>
+    /// Indicates if the warehouse is the main warehouse.
+    /// </summary>
     public bool IsMainWarehouse { get; private set; }
+
+    /// <summary>
+    /// Date of the last inventory count.
+    /// </summary>
     public DateTime? LastInventoryDate { get; private set; }
-    
+
+    /// <summary>
+    /// Collection of locations within the warehouse.
+    /// </summary>
     public ICollection<WarehouseLocation> Locations { get; private set; } = new List<WarehouseLocation>();
+
+    /// <summary>
+    /// Collection of inventory transactions for the warehouse.
+    /// </summary>
     public ICollection<InventoryTransaction> InventoryTransactions { get; private set; } = new List<InventoryTransaction>();
 
     private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -98,6 +172,25 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new WarehouseCreated { Warehouse = this });
     }
 
+    /// <summary>
+    /// Creates a new warehouse instance.
+    /// </summary>
+    /// <param name="name">Warehouse name.</param>
+    /// <param name="description">Optional warehouse description.</param>
+    /// <param name="code">Warehouse code.</param>
+    /// <param name="address">Street address.</param>
+    /// <param name="city">City.</param>
+    /// <param name="state">State (optional).</param>
+    /// <param name="country">Country.</param>
+    /// <param name="postalCode">Postal code (optional).</param>
+    /// <param name="managerName">Manager's full name.</param>
+    /// <param name="managerEmail">Manager's email address.</param>
+    /// <param name="managerPhone">Manager's phone number.</param>
+    /// <param name="totalCapacity">Total storage capacity.</param>
+    /// <param name="capacityUnit">Unit of measurement for capacity (default: "sqft").</param>
+    /// <param name="isActive">Indicates if the warehouse is active (default: true).</param>
+    /// <param name="isMainWarehouse">Indicates if this is the main warehouse (default: false).</param>
+    /// <returns>A new <see cref="Warehouse"/> instance.</returns>
     public static Warehouse Create(
         string name,
         string? description,
@@ -134,6 +227,23 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
             isMainWarehouse);
     }
 
+    /// <summary>
+    /// Updates the warehouse details.
+    /// </summary>
+    /// <param name="name">New name for the warehouse.</param>
+    /// <param name="description">New description.</param>
+    /// <param name="address">New street address.</param>
+    /// <param name="city">New city.</param>
+    /// <param name="state">New state.</param>
+    /// <param name="country">New country.</param>
+    /// <param name="postalCode">New postal code.</param>
+    /// <param name="managerName">New manager name.</param>
+    /// <param name="managerEmail">New manager email.</param>
+    /// <param name="managerPhone">New manager phone.</param>
+    /// <param name="totalCapacity">New total capacity.</param>
+    /// <param name="capacityUnit">New capacity unit.</param>
+    /// <param name="isMainWarehouse">Indicates if this should be the main warehouse.</param>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
     public Warehouse Update(
         string? name,
         string? description,
@@ -237,6 +347,11 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Updates the capacity usage of the warehouse.
+    /// </summary>
+    /// <param name="usedCapacity">New used capacity value.</param>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
     public Warehouse UpdateCapacityUsage(decimal usedCapacity)
     {
         if (UsedCapacity != usedCapacity)
@@ -255,6 +370,11 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Records the date of the last inventory count.
+    /// </summary>
+    /// <param name="inventoryDate">Date of the inventory count.</param>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
     public Warehouse RecordInventoryCount(DateTime inventoryDate)
     {
         LastInventoryDate = inventoryDate;
@@ -262,6 +382,10 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Activates the warehouse, making it available for operations.
+    /// </summary>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
     public Warehouse Activate()
     {
         if (!IsActive)
@@ -272,6 +396,10 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Deactivates the warehouse, preventing its use in operations.
+    /// </summary>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
     public Warehouse Deactivate()
     {
         if (IsActive)
@@ -282,11 +410,24 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Calculates the percentage of capacity utilization.
+    /// </summary>
+    /// <returns>Capacity utilization percentage.</returns>
     public decimal GetCapacityUtilizationPercentage() => 
         TotalCapacity > 0 ? (UsedCapacity / TotalCapacity) * 100 : 0;
 
+    /// <summary>
+    /// Gets the available capacity remaining in the warehouse.
+    /// </summary>
+    /// <returns>Available capacity.</returns>
     public decimal GetAvailableCapacity() => Math.Max(0, TotalCapacity - UsedCapacity);
 
+    /// <summary>
+    /// Checks if the warehouse is near its capacity limit.
+    /// </summary>
+    /// <param name="thresholdPercentage">Threshold percentage to consider as near capacity (default: 90%).</param>
+    /// <returns>True if near capacity, otherwise false.</returns>
     public bool IsNearCapacity(decimal thresholdPercentage = 90) => 
         GetCapacityUtilizationPercentage() >= thresholdPercentage;
 }
