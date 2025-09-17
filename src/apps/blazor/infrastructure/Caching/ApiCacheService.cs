@@ -1,5 +1,5 @@
-using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FSH.Starter.Blazor.Infrastructure.Caching;
 

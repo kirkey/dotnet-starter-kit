@@ -2,7 +2,7 @@
 
 namespace FSH.Starter.Blazor.Client.Pages.Identity.Users;
 
-public partial class Audit
+public partial class Audit : ComponentBase
 {
     [Inject]
     private IApiClient ApiClient { get; set; } = default!;

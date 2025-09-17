@@ -1,6 +1,6 @@
 ﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
 
-public partial class Roles
+public partial class Roles : ComponentBase
 {
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
@@ -8,9 +8,6 @@ public partial class Roles
     protected IAuthorizationService AuthService { get; set; } = default!;
     [Inject]
     private IApiClient RolesClient { get; set; } = default!;
-
-    // Explicitly inject NavigationManager here so the code-behind resolves Navigation.NavigateTo in IDE analyzers
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
 
     protected EntityClientTableContext<RoleDto, string?, CreateOrUpdateRoleCommand> Context { get; set; } = default!;
 

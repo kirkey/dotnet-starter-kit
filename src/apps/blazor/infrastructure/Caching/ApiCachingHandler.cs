@@ -1,9 +1,9 @@
 using System.Net.Http;
 using System.Text;
-using Microsoft.Extensions.Logging;
 using FSH.Starter.Blazor.Infrastructure.Connectivity;
-using FSH.Starter.Blazor.Infrastructure.Offline;
 using FSH.Starter.Blazor.Infrastructure.Metering;
+using FSH.Starter.Blazor.Infrastructure.Offline;
+using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.Blazor.Infrastructure.Caching;
 

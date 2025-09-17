@@ -2,7 +2,7 @@ using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.ChartOfAccounts;
 
-public partial class ChartOfAccounts : ComponentBase
+public partial class ChartOfAccounts
 {
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
@@ -11,7 +11,7 @@ public partial class ChartOfAccounts : ComponentBase
 
     private EntityTable<ChartOfAccountDto, DefaultIdType, ChartOfAccountViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<ChartOfAccountDto, DefaultIdType, ChartOfAccountViewModel>(
             entityName: "Chart Of Account",
@@ -44,6 +44,8 @@ public partial class ChartOfAccounts : ComponentBase
                 await ApiClient.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<UpdateChartOfAccountRequest>());
             },
             deleteFunc: async id => await ApiClient.ChartOfAccountDeleteEndpointAsync("1", id));
+
+        return Task.CompletedTask;
     }
 }
 

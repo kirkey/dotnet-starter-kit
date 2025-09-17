@@ -2,7 +2,7 @@ using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountingPeriods;
 
-public partial class AccountingPeriods : ComponentBase
+public partial class AccountingPeriods
 {
     [Inject]
     protected IApiClient ApiClient { get; set; } = default!;
@@ -11,7 +11,7 @@ public partial class AccountingPeriods : ComponentBase
 
     private EntityTable<AccountingPeriodDto, DefaultIdType, AccountingPeriodViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<AccountingPeriodDto, DefaultIdType, AccountingPeriodViewModel>(
             entityName: "Accounting Period",
@@ -46,6 +46,8 @@ public partial class AccountingPeriods : ComponentBase
                 await ApiClient.AccountingPeriodUpdateEndpointAsync("1", id, period.Adapt<UpdateAccountingPeriodRequest>());
             },
             deleteFunc: async id => await ApiClient.AccountingPeriodDeleteEndpointAsync("1", id));
+
+        return Task.CompletedTask;
     }
 }
 

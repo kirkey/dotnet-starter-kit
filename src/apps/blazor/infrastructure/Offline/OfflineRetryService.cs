@@ -1,5 +1,5 @@
-using Microsoft.Extensions.Logging;
 using FSH.Starter.Blazor.Infrastructure.Connectivity;
+using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.Blazor.Infrastructure.Offline;
 

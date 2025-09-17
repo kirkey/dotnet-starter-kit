@@ -6,7 +6,6 @@ public partial class Users
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Inject]
     protected IAuthorizationService AuthService { get; set; } = default!;
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
 
     [Inject]
     protected IApiClient UsersClient { get; set; } = default!;
