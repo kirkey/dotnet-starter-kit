@@ -46,12 +46,12 @@ public class SalesOrderItemConfiguration : IEntityTypeConfiguration<SalesOrderIt
             .OnDelete(DeleteBehavior.Restrict);
 
         // Use the ToTable(RelationalTableBuilder) overload to declare check constraints at table level
-        builder.ToTable("SalesOrderItems", SchemaNames.Store, tb =>
-        {
-            tb.HasCheckConstraint("CK_SalesOrderItems_Quantity_Positive", "Quantity > 0");
-            tb.HasCheckConstraint("CK_SalesOrderItems_ShippedRange", "ShippedQuantity >= 0 AND ShippedQuantity <= Quantity");
-            tb.HasCheckConstraint("CK_SalesOrderItems_DiscountRange", "DiscountAmount >= 0 AND DiscountAmount <= (Quantity * UnitPrice)");
-            tb.HasCheckConstraint("CK_SalesOrderItems_UnitPrice_NonNegative", "UnitPrice >= 0");
-        });
+        // builder.ToTable("SalesOrderItems", SchemaNames.Store, tb =>
+        // {
+        //     tb.HasCheckConstraint("CK_SalesOrderItems_Quantity_Positive", "Quantity > 0");
+        //     tb.HasCheckConstraint("CK_SalesOrderItems_ShippedRange", "ShippedQuantity >= 0 AND ShippedQuantity <= Quantity");
+        //     tb.HasCheckConstraint("CK_SalesOrderItems_DiscountRange", "DiscountAmount >= 0 AND DiscountAmount <= (Quantity * UnitPrice)");
+        //     tb.HasCheckConstraint("CK_SalesOrderItems_UnitPrice_NonNegative", "UnitPrice >= 0");
+        // });
     }
 }
