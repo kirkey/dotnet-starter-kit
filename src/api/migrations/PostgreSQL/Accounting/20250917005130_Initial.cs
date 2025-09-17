@@ -1,4 +1,7 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
@@ -559,6 +562,36 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateTable(
+                name: "PatronageCapitals",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    FiscalYear = table.Column<int>(type: "integer", nullable: false),
+                    AmountAllocated = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    AmountRetired = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    FilePath = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PatronageCapitals", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payees",
                 schema: "accounting",
                 columns: table => new
@@ -586,6 +619,39 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payees", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PaymentNumber = table.Column<string>(type: "text", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: true),
+                    PaymentDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    UnappliedAmount = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    PaymentMethod = table.Column<string>(type: "text", nullable: false),
+                    ReferenceNumber = table.Column<string>(type: "text", nullable: true),
+                    DepositToAccountCode = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    FilePath = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -655,6 +721,39 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateTable(
+                name: "RateSchedules",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RateCode = table.Column<string>(type: "text", nullable: false),
+                    RateName = table.Column<string>(type: "text", nullable: false),
+                    EffectiveDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EnergyRatePerKwh = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    DemandRatePerKw = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: true),
+                    FixedMonthlyCharge = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    IsTimeOfUse = table.Column<bool>(type: "boolean", nullable: false),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    FilePath = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RateSchedules", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RegulatoryReports",
                 schema: "accounting",
                 columns: table => new
@@ -701,6 +800,37 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RegulatoryReports", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SecurityDeposits",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DepositAmount = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    DepositDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsRefunded = table.Column<bool>(type: "boolean", nullable: false),
+                    RefundedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RefundReference = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    FilePath = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SecurityDeposits", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -837,6 +967,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentAllocations",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PaymentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    InvoiceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentAllocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentAllocations_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalSchema: "accounting",
+                        principalTable: "Payments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JournalEntries",
                 schema: "accounting",
                 columns: table => new
@@ -899,6 +1051,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         column: x => x.ProjectId,
                         principalSchema: "accounting",
                         principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RateTier",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RateScheduleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TierOrder = table.Column<int>(type: "integer", nullable: false),
+                    UpToKwh = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
+                    RatePerKwh = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RateTier", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RateTier_RateSchedules_RateScheduleId",
+                        column: x => x.RateScheduleId,
+                        principalSchema: "accounting",
+                        principalTable: "RateSchedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1040,6 +1215,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentAllocations_PaymentId",
+                schema: "accounting",
+                table: "PaymentAllocations",
+                column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RateTier_RateScheduleId",
+                schema: "accounting",
+                table: "RateTier",
+                column: "RateScheduleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RegulatoryReports_DueDate",
                 schema: "accounting",
                 table: "RegulatoryReports",
@@ -1149,11 +1336,27 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting");
 
             migrationBuilder.DropTable(
+                name: "PatronageCapitals",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
                 name: "Payees",
                 schema: "accounting");
 
             migrationBuilder.DropTable(
+                name: "PaymentAllocations",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "RateTier",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
                 name: "RegulatoryReports",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "SecurityDeposits",
                 schema: "accounting");
 
             migrationBuilder.DropTable(
@@ -1182,6 +1385,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.DropTable(
                 name: "Meters",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "Payments",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "RateSchedules",
                 schema: "accounting");
 
             migrationBuilder.DropTable(

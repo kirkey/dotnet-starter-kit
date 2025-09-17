@@ -40,6 +40,14 @@ public sealed class AccountingDbContext(
     public DbSet<PostingBatch> PostingBatches { get; set; } = null!;
     public DbSet<RegulatoryReport> RegulatoryReports { get; set; } = null!;
 
+    // Added missing DbSets for other accounting domains
+    public DbSet<InventoryItem> InventoryItems { get; set; } = null!;
+    public DbSet<Payment> Payments { get; set; } = null!;
+    public DbSet<PaymentAllocation> PaymentAllocations { get; set; } = null!;
+    public DbSet<PatronageCapital> PatronageCapitals { get; set; } = null!;
+    public DbSet<RateSchedule> RateSchedules { get; set; } = null!;
+    public DbSet<SecurityDeposit> SecurityDeposits { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
