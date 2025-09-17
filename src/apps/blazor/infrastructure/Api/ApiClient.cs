@@ -1111,6 +1111,98 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<AccountingPeriodDtoPagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// create an accounting period
+        /// </summary>
+        /// <remarks>
+        /// create an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// create an accounting period
+        /// </summary>
+        /// <remarks>
+        /// create an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// update an accounting period
+        /// </summary>
+        /// <remarks>
+        /// update an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update an accounting period
+        /// </summary>
+        /// <remarks>
+        /// update an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// delete accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// delete accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task AccountingPeriodDeleteEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// delete accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// delete accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task AccountingPeriodDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// get an accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// get an accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// get an accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// get an accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// creates a product
         /// </summary>
         /// <remarks>
@@ -7462,6 +7554,414 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<AccountingPeriodDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// create an accounting period
+        /// </summary>
+        /// <remarks>
+        /// create an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body)
+        {
+            return AccountingPeriodCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// create an accounting period
+        /// </summary>
+        /// <remarks>
+        /// create an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/periods"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/periods");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// update an accounting period
+        /// </summary>
+        /// <remarks>
+        /// update an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body)
+        {
+            return AccountingPeriodUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update an accounting period
+        /// </summary>
+        /// <remarks>
+        /// update an accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/periods/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/periods/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// delete accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// delete accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task AccountingPeriodDeleteEndpointAsync(string version, System.Guid id)
+        {
+            return AccountingPeriodDeleteEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// delete accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// delete accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task AccountingPeriodDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/periods/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/periods/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// get an accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// get an accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id)
+        {
+            return AccountingPeriodGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// get an accounting period by id
+        /// </summary>
+        /// <remarks>
+        /// get an accounting period by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/periods/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/periods/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AccountingPeriodDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -15202,63 +15702,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateChartOfAccountRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
-        public string? AccountCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
-        public string? AccountName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
-        public string? AccountType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
-        public string? UsoaCategory { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
-        public System.Guid? SubAccountOf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
-        public string? ParentCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("balance")]
-        public double Balance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
-        public bool IsControlAccount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
-        public string? NormalBalance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
-        public bool IsUsoaCompliant { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
-        public string? RegulatoryClassification { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ChartOfAccountDto
     {
 
@@ -15361,95 +15804,32 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchChartOfAccountRequest
+    public partial class CreateAccountingPeriodRequest
     {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
-        public string? AccountCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
+        public string? PeriodType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
+        public bool IsAdjustmentPeriod { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateChartOfAccountRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
-        public string? AccountCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
-        public string? AccountName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
-        public string? AccountType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
-        public string? UsoaCategory { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
-        public System.Guid? SubAccountOf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
-        public string? ParentCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
-        public bool IsControlAccount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("balance")]
-        public double Balance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
-        public string? NormalBalance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
-        public bool IsUsoaCompliant { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
-        public string? RegulatoryClassification { get; set; } = default!;
 
     }
 
@@ -15501,6 +15881,63 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
         public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateChartOfAccountRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
+        public string? AccountType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
+        public string? UsoaCategory { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
+        public System.Guid? SubAccountOf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
+        public string? ParentCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("balance")]
+        public double Balance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
+        public bool IsControlAccount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
+        public string? NormalBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
+        public bool IsUsoaCompliant { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
+        public string? RegulatoryClassification { get; set; } = default!;
 
     }
 
@@ -16936,6 +17373,42 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchChartOfAccountRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SearchCustomersRequest
     {
 
@@ -17182,6 +17655,39 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateAccountingPeriodRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
+        public bool IsAdjustmentPeriod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int? FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
+        public string? PeriodType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateBrandCommand
     {
 
@@ -17235,6 +17741,63 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
         public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateChartOfAccountRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
+        public string? AccountType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
+        public string? UsoaCategory { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
+        public System.Guid? SubAccountOf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
+        public string? ParentCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
+        public bool IsControlAccount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("balance")]
+        public double Balance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
+        public string? NormalBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
+        public bool IsUsoaCompliant { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
+        public string? RegulatoryClassification { get; set; } = default!;
 
     }
 

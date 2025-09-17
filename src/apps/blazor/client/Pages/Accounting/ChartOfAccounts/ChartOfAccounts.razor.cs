@@ -1,6 +1,6 @@
 using Mapster;
 
-namespace FSH.Starter.Blazor.Client.Pages.Accounting;
+namespace FSH.Starter.Blazor.Client.Pages.Accounting.ChartOfAccounts;
 
 public partial class ChartOfAccounts : ComponentBase
 {
