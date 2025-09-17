@@ -2,16 +2,58 @@ using Accounting.Domain.Events.Project;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a project for job costing and tracking of budget, actual costs, and revenues.
+/// </summary>
+/// <remarks>
+/// Tracks lifecycle (Active, Completed, On Hold, Canceled), client/department metadata, and costing entries.
+/// Defaults: <see cref="Status"/> is "Active"; <see cref="ActualCost"/> and <see cref="ActualRevenue"/> start at 0.
+/// </remarks>
 public class Project : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Project start date.
+    /// </summary>
     public DateTime StartDate { get; private set; }
+
+    /// <summary>
+    /// Project completion/cancellation date, when applicable.
+    /// </summary>
     public DateTime? EndDate { get; private set; }
+
+    /// <summary>
+    /// Approved budget amount for the project; must be non-negative.
+    /// </summary>
     public decimal BudgetedAmount { get; private set; }
+
+    /// <summary>
+    /// Status: Active, Completed, On Hold, or Cancelled.
+    /// </summary>
     public string Status { get; private set; } // Active, Completed, On Hold, Canceled
+
+    /// <summary>
+    /// Optional end-customer/client name.
+    /// </summary>
     public string? ClientName { get; private set; }
+
+    /// <summary>
+    /// Optional project manager name.
+    /// </summary>
     public string? ProjectManager { get; private set; }
+
+    /// <summary>
+    /// Owning department.
+    /// </summary>
     public string? Department { get; private set; }
+
+    /// <summary>
+    /// Accumulated actual costs from job costing entries (positive amounts).
+    /// </summary>
     public decimal ActualCost { get; private set; }
+
+    /// <summary>
+    /// Accumulated actual revenues (sum of negative amount entries categorized as revenue).
+    /// </summary>
     public decimal ActualRevenue { get; private set; }
     
     private Project()
@@ -20,6 +62,9 @@ public class Project : AuditableEntity, IAggregateRoot
     }
 
     private readonly List<JobCostingEntry> _costingEntries = new();
+    /// <summary>
+    /// Cost and revenue entries associated with this project.
+    /// </summary>
     public IReadOnlyCollection<JobCostingEntry> CostingEntries => _costingEntries.AsReadOnly();
 
     private Project(string projectName, DateTime startDate, decimal budgetedAmount,
@@ -41,6 +86,9 @@ public class Project : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new ProjectCreated(Id, Name, StartDate, BudgetedAmount, Description, Notes));
     }
 
+    /// <summary>
+    /// Create a project; budget must be non-negative.
+    /// </summary>
     public static Project Create(string projectName, DateTime startDate, decimal budgetedAmount,
         string? clientName = null, string? projectManager = null, string? department = null,
         string? description = null, string? notes = null)
@@ -51,6 +99,9 @@ public class Project : AuditableEntity, IAggregateRoot
         return new Project(projectName, startDate, budgetedAmount, clientName, projectManager, department, description, notes);
     }
 
+    /// <summary>
+    /// Update project metadata and figures; validates non-negative budgets.
+    /// </summary>
     public Project Update(string? projectName, DateTime? startDate, DateTime? endDate, decimal? budgetedAmount,
         string? status, string? clientName, string? projectManager, string? department,
         string? description, string? notes)
@@ -127,6 +178,9 @@ public class Project : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Add a cost entry; amount must be positive. Not allowed when project is Completed or Cancelled.
+    /// </summary>
     public Project AddCostEntry(DateTime date, string description, decimal amount, DefaultIdType expenseAccountId,
         DefaultIdType? journalEntryId = null, string? category = null)
     {
@@ -144,6 +198,9 @@ public class Project : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Add a revenue entry; amount must be positive. Not allowed when project is Completed or Cancelled.
+    /// </summary>
     public Project AddRevenueEntry(DateTime date, string description, decimal amount, DefaultIdType revenueAccountId,
         DefaultIdType? journalEntryId = null)
     {
@@ -161,6 +218,9 @@ public class Project : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Mark project as Completed and set <see cref="EndDate"/>.
+    /// </summary>
     public Project Complete(DateTime completionDate)
     {
         if (Status == "Completed")
@@ -172,6 +232,9 @@ public class Project : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Cancel project and set <see cref="EndDate"/> with a reason (logged in event).
+    /// </summary>
     public Project Cancel(DateTime cancellationDate, string reason)
     {
         if (Status == "Completed" || Status == "Cancelled")
@@ -183,30 +246,69 @@ public class Project : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Difference between budget and actual cost (positive = under budget).
+    /// </summary>
     public decimal GetBudgetVariance()
     {
         return BudgetedAmount - ActualCost;
     }
 
+    /// <summary>
+    /// Profit/Loss calculated as ActualRevenue - ActualCost.
+    /// </summary>
     public decimal GetProfitLoss()
     {
         return ActualRevenue - ActualCost;
     }
 
+    /// <summary>
+    /// Percentage of budget consumed by actual costs.
+    /// </summary>
     public decimal GetBudgetUtilizationPercentage()
     {
         return BudgetedAmount > 0 ? (ActualCost / BudgetedAmount) * 100 : 0;
     }
 }
 
+/// <summary>
+/// Represents a single job costing entry for a project, either cost (positive) or revenue (negative).
+/// </summary>
 public class JobCostingEntry : BaseEntity
 {
+    /// <summary>
+    /// Parent project identifier.
+    /// </summary>
     public DefaultIdType ProjectId { get; private set; }
+
+    /// <summary>
+    /// Date of the cost/revenue entry.
+    /// </summary>
     public DateTime Date { get; private set; }
+
+    /// <summary>
+    /// Description of the entry.
+    /// </summary>
     public string Description { get; private set; }
+
+    /// <summary>
+    /// Amount (positive for cost, negative for revenue).
+    /// </summary>
     public decimal Amount { get; private set; }
+
+    /// <summary>
+    /// Related GL account identifier.
+    /// </summary>
     public DefaultIdType AccountId { get; private set; }
+
+    /// <summary>
+    /// Optional link to the journal entry that recorded this transaction.
+    /// </summary>
     public DefaultIdType? JournalEntryId { get; private set; }
+
+    /// <summary>
+    /// Optional category text (e.g., Revenue when created via AddRevenueEntry).
+    /// </summary>
     public string? Category { get; private set; }
 
     private JobCostingEntry(DefaultIdType projectId, DateTime date, string description,
@@ -221,12 +323,18 @@ public class JobCostingEntry : BaseEntity
         Category = category?.Trim();
     }
 
+    /// <summary>
+    /// Create a job costing entry.
+    /// </summary>
     public static JobCostingEntry Create(DefaultIdType projectId, DateTime date, string description,
         decimal amount, DefaultIdType accountId, DefaultIdType? journalEntryId = null, string? category = null)
     {
         return new JobCostingEntry(projectId, date, description, amount, accountId, journalEntryId, category);
     }
 
+    /// <summary>
+    /// Update fields of the costing entry.
+    /// </summary>
     public JobCostingEntry Update(DateTime? date, string? description, decimal? amount, string? category)
     {
         if (date.HasValue && Date != date.Value)

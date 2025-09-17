@@ -2,6 +2,13 @@ using Accounting.Domain.Events.Customer;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a customer account for billing/accounts receivable, including contact details, terms, and credit control.
+/// </summary>
+/// <remarks>
+/// Tracks balance and credit limit for credit checks and supports activation/deactivation lifecycle.
+/// Defaults: <see cref="IsActive"/> true on creation via factory, <see cref="CurrentBalance"/> 0, <see cref="CreditLimit"/> as provided.
+/// </remarks>
 public class Customer : AuditableEntity, IAggregateRoot
 {
     private const int MaxCustomerCodeLength = 16;
@@ -17,18 +24,69 @@ public class Customer : AuditableEntity, IAggregateRoot
     private const int MaxDescriptionLength = 1000;
     private const int MaxNotesLength = 1000;
 
+    /// <summary>
+    /// Unique external code for the customer, trimmed and length-limited.
+    /// </summary>
     public string CustomerCode { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// Primary physical or service address.
+    /// </summary>
     public string? Address { get; private set; }
+
+    /// <summary>
+    /// Billing address if different from the service address.
+    /// </summary>
     public string? BillingAddress { get; private set; }
+
+    /// <summary>
+    /// Customer contact person name.
+    /// </summary>
     public string? ContactPerson { get; private set; }
+
+    /// <summary>
+    /// Customer email address.
+    /// </summary>
     public string? Email { get; private set; }
+
+    /// <summary>
+    /// Payment terms (e.g., Net 30).
+    /// </summary>
     public string? Terms { get; private set; }
+
+    /// <summary>
+    /// Default revenue account code for invoicing.
+    /// </summary>
     public string? RevenueAccountCode { get; private set; }
+
+    /// <summary>
+    /// Default revenue account name for invoicing.
+    /// </summary>
     public string? RevenueAccountName { get; private set; }
+
+    /// <summary>
+    /// Tax identification number (TIN/VAT) for regulatory purposes.
+    /// </summary>
     public string? Tin { get; private set; }
+
+    /// <summary>
+    /// Primary phone number.
+    /// </summary>
     public string? PhoneNumber { get; private set; }
+
+    /// <summary>
+    /// Whether the customer account is active. Defaults to true at creation.
+    /// </summary>
     public bool IsActive { get; private set; }
+
+    /// <summary>
+    /// Maximum allowed outstanding balance before new credit is restricted.
+    /// </summary>
     public decimal CreditLimit { get; private set; }
+
+    /// <summary>
+    /// Current outstanding balance.
+    /// </summary>
     public decimal CurrentBalance { get; private set; }
 
     private Customer()
@@ -87,6 +145,9 @@ public class Customer : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new CustomerCreated(Id, CustomerCode, Name, Email, Terms, CreditLimit, Description, Notes));
     }
 
+    /// <summary>
+    /// Factory to create a new customer with validation and sensible defaults.
+    /// </summary>
     public static Customer Create(string customerCode, string name, string? address = null, string? billingAddress = null,
         string? contactPerson = null, string? email = null, string? terms = null, string? revenueAccountCode = null,
         string? revenueAccountName = null, string? tin = null, string? phoneNumber = null, decimal creditLimit = 0,
@@ -96,6 +157,9 @@ public class Customer : AuditableEntity, IAggregateRoot
             email, terms, revenueAccountCode, revenueAccountName, tin, phoneNumber, creditLimit, description, notes);
     }
 
+    /// <summary>
+    /// Update customer metadata; trims and enforces length constraints where applicable.
+    /// </summary>
     public Customer Update(string? customerCode, string? name, string? address, string? billingAddress,
         string? contactPerson, string? email, string? terms, string? revenueAccountCode, string? revenueAccountName,
         string? tin, string? phoneNumber, decimal? creditLimit, string? description, string? notes)
@@ -240,6 +304,9 @@ public class Customer : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Increase balance due to e.g., invoice posting; emits a balance-changed event.
+    /// </summary>
     public Customer AddToBalance(decimal amount, string transactionType, string? reference = null)
     {
         if (amount <= 0)
@@ -250,6 +317,9 @@ public class Customer : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Reduce balance due to payment/credit memo; emits a balance-changed event.
+    /// </summary>
     public Customer ReduceBalance(decimal amount, string transactionType, string? reference = null)
     {
         if (amount <= 0)
@@ -260,6 +330,9 @@ public class Customer : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Set a new credit limit; emits a credit-limit-changed event.
+    /// </summary>
     public Customer SetCreditLimit(decimal newCreditLimit)
     {
         if (newCreditLimit < 0)
@@ -291,16 +364,26 @@ public class Customer : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Whether the current balance exceeds the allowed credit limit.
+    /// </summary>
     public bool IsCreditLimitExceeded()
     {
         return CurrentBalance > CreditLimit;
     }
 
+    /// <summary>
+    /// Available credit left before hitting the credit limit (not below zero).
+    /// </summary>
     public decimal GetAvailableCredit()
     {
         return Math.Max(0, CreditLimit - CurrentBalance);
     }
 
+    /// <summary>
+    /// Perform a credit check for a proposed order amount.
+    /// Throws when it would exceed the credit limit.
+    /// </summary>
     public bool CanProcessOrder(decimal orderAmount)
     {
         if ((CurrentBalance + orderAmount) > CreditLimit)

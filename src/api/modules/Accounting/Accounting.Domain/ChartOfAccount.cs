@@ -1,6 +1,15 @@
 using Accounting.Domain.Events.ChartOfAccount;
 
 namespace Accounting.Domain;
+
+/// <summary>
+/// Represents a single account in the chart of accounts, including type, hierarchy, and regulatory classification.
+/// </summary>
+/// <remarks>
+/// Accounts can be organized hierarchically via <see cref="SubAccountOf"/> and <see cref="ParentCode"/> and
+/// designated as control accounts. Defaults: <see cref="IsActive"/> true on creation; <see cref="AllowDirectPosting"/>
+/// is the inverse of <see cref="IsControlAccount"/>; <see cref="Balance"/> defaults to 0.
+/// </remarks>
 public class ChartOfAccount : AuditableEntity, IAggregateRoot
 {
     private const int MaxAccountCodeLength = 16;
@@ -13,21 +22,75 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     private const int MaxDescriptionLength = 2048;
     private const int MaxNotesLength = 2048;
 
+    /// <summary>
+    /// The unique account code (for example, USOA 101, 403). Trimmed and length-limited.
+    /// </summary>
     public string AccountCode { get; private set; } // USOA Account ID (e.g., 101, 403)
+
+    /// <summary>
+    /// The official account name. Also stored in base <c>Name</c> for compatibility.
+    /// </summary>
     public string AccountName { get; private set; } // Official USOA account name
+
+    /// <summary>
+    /// The account type: Asset, Liability, Equity, Revenue, or Expense.
+    /// </summary>
     public string AccountType { get; private set; } // Asset, Liability, Equity, Revenue, Expense
+
+    /// <summary>
+    /// Optional parent account identifier for hierarchical structures.
+    /// </summary>
     public DefaultIdType? SubAccountOf { get; private set; } // Hierarchical structure
+
+    /// <summary>
+    /// The USOA (Uniform System of Accounts) category, e.g., Production, Transmission, Distribution.
+    /// </summary>
     public string UsoaCategory { get; private set; } // Production, Transmission, Distribution
+
+    /// <summary>
+    /// Whether the account is active and can be used in postings. Defaults to true.
+    /// </summary>
     public bool IsActive { get; private set; }
     
     // Additional fields for enhanced functionality
+    /// <summary>
+    /// Optional dotted parent code path for hierarchy representation.
+    /// </summary>
     public string ParentCode { get; private set; }
+
+    /// <summary>
+    /// Current balance of the account. Defaults to 0 and updated via <see cref="UpdateBalance"/>.
+    /// </summary>
     public decimal Balance { get; private set; }
+
+    /// <summary>
+    /// Whether the account is a control account (summary) that disallows direct postings.
+    /// </summary>
     public bool IsControlAccount { get; private set; }
+
+    /// <summary>
+    /// Normal balance side, e.g., "Debit" or "Credit". Used for trial balance interpretation.
+    /// </summary>
     public string NormalBalance { get; private set; } // "Debit" or "Credit"
+
+    /// <summary>
+    /// Derived hierarchical depth computed from <see cref="ParentCode"/>.
+    /// </summary>
     public int AccountLevel { get; private set; }
+
+    /// <summary>
+    /// Whether direct postings are allowed. Set to <c>!IsControlAccount</c> by convention.
+    /// </summary>
     public bool AllowDirectPosting { get; private set; }
+
+    /// <summary>
+    /// Indicates if this account conforms to USOA standards.
+    /// </summary>
     public bool IsUsoaCompliant { get; private set; }
+
+    /// <summary>
+    /// Optional regulatory classification, e.g., FERC category text.
+    /// </summary>
     public string? RegulatoryClassification { get; private set; } // FERC classification
 
     // Parameterless constructor for EF Core
@@ -100,6 +163,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new ChartOfAccountCreated(Id, AccountCode, AccountName, AccountType, UsoaCategory, Description, Notes));
     }
 
+    /// <summary>
+    /// Factory method to create a new chart of account with validation for code, name, type, and category.
+    /// </summary>
     public static ChartOfAccount Create(string accountId, string accountName, string accountType, 
         string usoaCategory, DefaultIdType? subAccountOf = null, string? parentCode = null,
         decimal balance = 0, bool isControlAccount = false, string normalBalance = "Debit",
@@ -111,6 +177,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
             regulatoryClassification, description, notes);
     }
 
+    /// <summary>
+    /// Update account metadata while keeping invariants. Trims and length-limits inputs.
+    /// </summary>
     public ChartOfAccount Update(string? accountName = null, string? accountType = null, 
         string? usoaCategory = null, DefaultIdType? subAccountOf = null, string? parentCode = null,
         bool isControlAccount = false, string? normalBalance = null, bool isUsoaCompliant = false,
@@ -223,6 +292,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Update the current balance of the account and emit a balance update event.
+    /// </summary>
     public ChartOfAccount UpdateBalance(decimal newBalance)
     {
         if (Balance != newBalance)
@@ -233,6 +305,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Activate a previously deactivated account.
+    /// </summary>
     public ChartOfAccount Activate()
     {
         if (!IsActive)
@@ -243,6 +318,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Deactivate the account to prevent use in postings.
+    /// </summary>
     public ChartOfAccount Deactivate()
     {
         if (IsActive)

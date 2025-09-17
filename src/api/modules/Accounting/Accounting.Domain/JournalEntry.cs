@@ -2,20 +2,64 @@ using Accounting.Domain.Events.JournalEntry;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a journal entry grouping one or more debit/credit lines for posting to the general ledger.
+/// </summary>
+/// <remarks>
+/// Tracks posting status, approval workflow, and ensures the entry is balanced before posting.
+/// Defaults: <see cref="IsPosted"/> is false; <see cref="ApprovalStatus"/> starts as "Pending".
+/// </remarks>
 public class JournalEntry : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Effective date of the journal entry.
+    /// </summary>
     public DateTime Date { get; private set; }
+
+    /// <summary>
+    /// External reference or document number.
+    /// </summary>
     public string ReferenceNumber { get; private set; }
+
+    /// <summary>
+    /// Source system or module that created the entry.
+    /// </summary>
     public string Source { get; private set; }
+
+    /// <summary>
+    /// Indicates whether the entry has been posted to the general ledger.
+    /// </summary>
     public bool IsPosted { get; private set; }
+
+    /// <summary>
+    /// Optional accounting period identifier to which this entry belongs.
+    /// </summary>
     public DefaultIdType? PeriodId { get; private set; }
+
+    /// <summary>
+    /// Original amount for reference or control purposes; not used for balancing.
+    /// </summary>
     public decimal OriginalAmount { get; private set; }
     
     private readonly List<JournalEntryLine> _lines = new();
+    /// <summary>
+    /// The debit/credit lines that make up this journal entry.
+    /// </summary>
     public IReadOnlyCollection<JournalEntryLine> Lines => _lines.AsReadOnly();
     
+    /// <summary>
+    /// Approval state: Pending, Approved, or Rejected.
+    /// </summary>
     public string ApprovalStatus { get; private set; } // Pending, Approved, Rejected
+
+    /// <summary>
+    /// Approver identifier/name when approved or rejected.
+    /// </summary>
     public string? ApprovedBy { get; private set; }
+
+    /// <summary>
+    /// Date/time when approved or rejected.
+    /// </summary>
     public DateTime? ApprovedDate { get; private set; }
 
     private JournalEntry()
@@ -27,7 +71,8 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         DefaultIdType? periodId = null, decimal originalAmount = 0)
     {
         Date = date;
-        ReferenceNumber = referenceNumber.Trim();
+        ReferenceNumber = referenceNumber.Trim()
+;
         Description = description.Trim();
         Source = source.Trim();
         IsPosted = false;
@@ -38,12 +83,18 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new JournalEntryCreated(Id, Date, ReferenceNumber, Description, Source));
     }
 
+    /// <summary>
+    /// Create a new journal entry with meta and optional control amount.
+    /// </summary>
     public static JournalEntry Create(DateTime date, string referenceNumber, string description, string source,
         DefaultIdType? periodId = null, decimal originalAmount = 0)
     {
         return new JournalEntry(date, referenceNumber, description, source, periodId, originalAmount);
     }
 
+    /// <summary>
+    /// Update mutable metadata; denied if already posted.
+    /// </summary>
     public JournalEntry Update(DateTime? date, string? referenceNumber, string? description, string? source,
         DefaultIdType? periodId, decimal? originalAmount)
     {
@@ -96,6 +147,9 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Add a debit or credit line to the entry; denied if posted.
+    /// </summary>
     public JournalEntry AddLine(DefaultIdType accountId, decimal debitAmount, decimal creditAmount, string? description = null)
     {
         if (IsPosted)
@@ -108,6 +162,9 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Post the journal entry after verifying it is balanced (total debits equal total credits).
+    /// </summary>
     public JournalEntry Post()
     {
         if (IsPosted)
@@ -121,6 +178,9 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Reverse a posted journal entry by queuing a reversal; does not mutate existing lines.
+    /// </summary>
     public JournalEntry Reverse(DateTime reversalDate, string reversalReason)
     {
         if (!IsPosted)
@@ -130,6 +190,9 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Approve the journal entry, setting approver and timestamp.
+    /// </summary>
     public void Approve(string approvedBy)
     {
         if (ApprovalStatus == "Approved")
@@ -140,6 +203,9 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new JournalEntryApproved(Id, ApprovedBy, ApprovedDate.Value));
     }
 
+    /// <summary>
+    /// Reject the journal entry, setting reviewer and timestamp.
+    /// </summary>
     public void Reject(string rejectedBy)
     {
         if (ApprovalStatus == "Rejected")
@@ -158,12 +224,34 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     }
 }
 
+/// <summary>
+/// A line in a journal entry representing either a debit or credit to an account.
+/// </summary>
 public class JournalEntryLine : BaseEntity
 {
+    /// <summary>
+    /// Parent journal entry identifier.
+    /// </summary>
     public DefaultIdType JournalEntryId { get; private set; }
+
+    /// <summary>
+    /// Account identifier to be debited or credited.
+    /// </summary>
     public DefaultIdType AccountId { get; private set; }
+
+    /// <summary>
+    /// Debit amount; either this or <see cref="CreditAmount"/> must be set, but not both.
+    /// </summary>
     public decimal DebitAmount { get; private set; }
+
+    /// <summary>
+    /// Credit amount; either this or <see cref="DebitAmount"/> must be set, but not both.
+    /// </summary>
     public decimal CreditAmount { get; private set; }
+
+    /// <summary>
+    /// Optional description for this line.
+    /// </summary>
     public string? Description { get; private set; }
 
     private JournalEntryLine(DefaultIdType journalEntryId, DefaultIdType accountId, 
@@ -176,6 +264,9 @@ public class JournalEntryLine : BaseEntity
         Description = description?.Trim();
     }
 
+    /// <summary>
+    /// Create a line with validation: amounts must be non-negative and one-sided (debit XOR credit).
+    /// </summary>
     public static JournalEntryLine Create(DefaultIdType journalEntryId, DefaultIdType accountId,
         decimal debitAmount, decimal creditAmount, string? description = null)
     {
@@ -191,6 +282,9 @@ public class JournalEntryLine : BaseEntity
         return new JournalEntryLine(journalEntryId, accountId, debitAmount, creditAmount, description);
     }
 
+    /// <summary>
+    /// Update the line amounts and/or description.
+    /// </summary>
     public JournalEntryLine Update(decimal? debitAmount, decimal? creditAmount, string? description)
     {
         if (debitAmount.HasValue && DebitAmount != debitAmount.Value)

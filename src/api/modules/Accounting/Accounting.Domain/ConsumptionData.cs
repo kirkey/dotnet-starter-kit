@@ -2,6 +2,13 @@ using Accounting.Domain.Events.ConsumptionData;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Records a meter's consumption snapshot for a billing period, including readings, usage, and validation metadata.
+/// </summary>
+/// <remarks>
+/// Calculates <see cref="KWhUsed"/> from current/previous readings and multiplier and flags <see cref="IsValidReading"/>.
+/// Defaults: <see cref="Multiplier"/> defaults to 1 when null or non-positive; strings are trimmed and length-limited.
+/// </remarks>
 public class ConsumptionData : AuditableEntity, IAggregateRoot
 {
     private const int MaxBillingPeriodLength = 64;
@@ -10,15 +17,54 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
     private const int MaxDescriptionLength = 2048;
     private const int MaxNotesLength = 2048;
 
+    /// <summary>
+    /// Identifier of the meter this reading belongs to.
+    /// </summary>
     public DefaultIdType MeterId { get; private set; }
+
+    /// <summary>
+    /// When the reading was taken.
+    /// </summary>
     public DateTime ReadingDate { get; private set; }
+
+    /// <summary>
+    /// The new (current) register reading.
+    /// </summary>
     public decimal CurrentReading { get; private set; }
+
+    /// <summary>
+    /// The prior register reading used to compute consumption.
+    /// </summary>
     public decimal PreviousReading { get; private set; }
+
+    /// <summary>
+    /// Calculated usage in kWh for the period: (Current - Previous) * Multiplier.
+    /// </summary>
     public decimal KWhUsed { get; private set; }
+
+    /// <summary>
+    /// Human-friendly period label (e.g., "2025-08"). Trimmed and capped in length.
+    /// </summary>
     public string BillingPeriod { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// Reading classification: "Actual", "Estimated", or "Customer Read".
+    /// </summary>
     public string ReadingType { get; private set; } = string.Empty; // "Actual", "Estimated", "Customer Read"
+
+    /// <summary>
+    /// Optional ratio for CT/PT meters; defaults to 1 if not provided or invalid.
+    /// </summary>
     public decimal? Multiplier { get; private set; } // For CT/PT ratios
+
+    /// <summary>
+    /// Flag indicating whether the reading sequence appears valid (current >= previous).
+    /// </summary>
     public bool IsValidReading { get; private set; }
+
+    /// <summary>
+    /// Source of the reading: "AMR", "Manual", or "AMI".
+    /// </summary>
     public string? ReadingSource { get; private set; } // "AMR", "Manual", "AMI"
 
     // Parameterless constructor for EF Core
@@ -70,6 +116,9 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new ConsumptionDataCreated(Id, MeterId, ReadingDate, KWhUsed, BillingPeriod, Description, Notes));
     }
 
+    /// <summary>
+    /// Factory for creating a validated consumption record and computing kWh used.
+    /// </summary>
     public static ConsumptionData Create(DefaultIdType meterId, DateTime readingDate,
         decimal currentReading, decimal previousReading, string billingPeriod,
         string readingType = "Actual", decimal? multiplier = null, string? readingSource = null,
@@ -80,6 +129,9 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
             previousReading, billingPeriod, readingType, multiplier, readingSource, description, notes);
     }
 
+    /// <summary>
+    /// Update readings and related metadata; recalculates <see cref="KWhUsed"/> and validity.
+    /// </summary>
     public ConsumptionData Update(decimal? currentReading, decimal? previousReading,
         string? readingType, decimal? multiplier, string? readingSource,
         string? description, string? notes)
@@ -169,6 +221,9 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
         return current >= previous;
     }
 
+    /// <summary>
+    /// Mark this reading as estimated and append reason to notes.
+    /// </summary>
     public ConsumptionData MarkAsEstimated(string reason)
     {
         ReadingType = "Estimated";

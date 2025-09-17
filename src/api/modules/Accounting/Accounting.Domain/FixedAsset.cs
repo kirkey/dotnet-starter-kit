@@ -2,39 +2,155 @@ using Accounting.Domain.Events.FixedAsset;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a fixed asset tracked for depreciation, maintenance, and regulatory reporting.
+/// </summary>
+/// <remarks>
+/// Captures purchase details, service life, depreciation-related accounts, location/metadata, and lifecycle (disposed or not).
+/// Defaults: <see cref="IsDisposed"/> false; <see cref="CurrentBookValue"/> initialized to <see cref="PurchasePrice"/>; optional strings trimmed.
+/// </remarks>
 public class FixedAsset : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Human-readable name of the asset.
+    /// </summary>
     public string AssetName { get; private set; }
+
+    /// <summary>
+    /// Date the asset was acquired.
+    /// </summary>
     public DateTime PurchaseDate { get; private set; }
+
+    /// <summary>
+    /// Acquisition cost of the asset.
+    /// </summary>
     public decimal PurchasePrice { get; private set; }
+
+    /// <summary>
+    /// Useful life in periods (typically years) used for depreciation.
+    /// </summary>
     public int ServiceLife { get; private set; }
+
+    /// <summary>
+    /// Reference to the depreciation method used for this asset.
+    /// </summary>
     public DefaultIdType DepreciationMethodId { get; private set; }
+
+    /// <summary>
+    /// Expected residual value at end of life.
+    /// </summary>
     public decimal SalvageValue { get; private set; }
+
+    /// <summary>
+    /// Current net book value; starts at purchase price and reduces with depreciation.
+    /// </summary>
     public decimal CurrentBookValue { get; private set; }
+
+    /// <summary>
+    /// Account to post accumulated depreciation.
+    /// </summary>
     public DefaultIdType AccumulatedDepreciationAccountId { get; private set; }
+
+    /// <summary>
+    /// Account to post periodic depreciation expense.
+    /// </summary>
     public DefaultIdType DepreciationExpenseAccountId { get; private set; }
+
+    /// <summary>
+    /// Optional serial number for the asset.
+    /// </summary>
     public string? SerialNumber { get; private set; }
+
+    /// <summary>
+    /// Physical location description (e.g., facility or coordinates).
+    /// </summary>
     public string? Location { get; private set; } // Physical location (e.g., GPS coordinates, substation name)
+
+    /// <summary>
+    /// Owning or responsible department.
+    /// </summary>
     public string? Department { get; private set; }
+
+    /// <summary>
+    /// Whether the asset has been disposed.
+    /// </summary>
     public bool IsDisposed { get; private set; }
+
+    /// <summary>
+    /// When the asset was disposed, if applicable.
+    /// </summary>
     public DateTime? DisposalDate { get; private set; }
+
+    /// <summary>
+    /// Amount received or recorded upon disposal, if any.
+    /// </summary>
     public decimal? DisposalAmount { get; private set; }
     
     // Power Company-specific fields
+    /// <summary>
+    /// Asset category such as Transformer, Transmission Line, Power Plant, Vehicle.
+    /// </summary>
     public string AssetType { get; private set; } // "Transformer", "Transmission Line", "Power Plant", "Vehicle"
+
+    /// <summary>
+    /// Geographic coordinates in "lat,lng" format.
+    /// </summary>
     public string? GpsCoordinates { get; private set; } // "lat,lng" format
+
+    /// <summary>
+    /// Substation name where the asset is located, if relevant.
+    /// </summary>
     public string? SubstationName { get; private set; }
+
+    /// <summary>
+    /// Link to USOA account classification for the asset.
+    /// </summary>
     public DefaultIdType? AssetUsoaId { get; private set; } // Links to USOA account
+
+    /// <summary>
+    /// Regulatory classification such as FERC category text.
+    /// </summary>
     public string? RegulatoryClassification { get; private set; } // FERC classification
+
+    /// <summary>
+    /// Voltage rating for electrical equipment.
+    /// </summary>
     public decimal? VoltageRating { get; private set; } // For electrical equipment
+
+    /// <summary>
+    /// Capacity (e.g., MW for generators, MVA for transformers).
+    /// </summary>
     public decimal? Capacity { get; private set; } // MW for generators, MVA for transformers
+
+    /// <summary>
+    /// Manufacturer name.
+    /// </summary>
     public string? Manufacturer { get; private set; }
+
+    /// <summary>
+    /// Manufacturer model number.
+    /// </summary>
     public string? ModelNumber { get; private set; }
+
+    /// <summary>
+    /// Date of the last maintenance performed.
+    /// </summary>
     public DateTime? LastMaintenanceDate { get; private set; }
+
+    /// <summary>
+    /// Scheduled date for the next maintenance activity.
+    /// </summary>
     public DateTime? NextMaintenanceDate { get; private set; }
+
+    /// <summary>
+    /// Whether this asset requires USOA reporting in regulatory filings.
+    /// </summary>
     public bool RequiresUsoaReporting { get; private set; }
 
     private readonly List<DepreciationEntry> _depreciationEntries = new();
+    /// <summary>
+    /// Collection of depreciation entries that reduce book value over time.
+    /// </summary>
     public IReadOnlyCollection<DepreciationEntry> DepreciationEntries => _depreciationEntries.AsReadOnly();
     
     private FixedAsset()
@@ -83,6 +199,9 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new FixedAssetCreated(Id, AssetName, PurchaseDate, PurchasePrice, AssetType, Description, Notes));
     }
 
+    /// <summary>
+    /// Factory to create a fixed asset with validation for purchase price, service life, salvage value, and asset type.
+    /// </summary>
     public static FixedAsset Create(string assetName, DateTime purchaseDate, decimal purchasePrice,
         DefaultIdType depreciationMethodId, int serviceLife, decimal salvageValue,
         DefaultIdType accumulatedDepreciationAccountId, DefaultIdType depreciationExpenseAccountId,
@@ -114,6 +233,9 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
             capacity, manufacturer, modelNumber, requiresUsoaReporting, description, notes);
     }
 
+    /// <summary>
+    /// Update metadata fields (not financial) when the asset is not disposed.
+    /// </summary>
     public FixedAsset Update(string? assetName = null, string? location = null, string? department = null,
         string? serialNumber = null, string? gpsCoordinates = null, string? substationName = null,
         string? regulatoryClassification = null, decimal? voltageRating = null, decimal? capacity = null,
@@ -218,6 +340,9 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Update maintenance dates metadata.
+    /// </summary>
     public FixedAsset UpdateMaintenance(DateTime? lastMaintenanceDate, DateTime? nextMaintenanceDate)
     {
         bool isUpdated = false;
@@ -242,6 +367,9 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Add a depreciation entry and reduce the current book value by the amount.
+    /// </summary>
     public FixedAsset AddDepreciation(decimal depreciationAmount, DateTime depreciationDate, string? method = null)
     {
         if (IsDisposed)
@@ -260,6 +388,9 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Mark the asset as disposed and set disposal metadata.
+    /// </summary>
     public FixedAsset MarkAsDisposed(DateTime disposalDate, decimal? disposalAmount = null, string? disposalReason = null)
     {
         if (IsDisposed)
@@ -281,11 +412,29 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
     }
 }
 
+/// <summary>
+/// Represents a single depreciation event for an asset.
+/// </summary>
 public class DepreciationEntry : BaseEntity
 {
+    /// <summary>
+    /// The parent fixed asset identifier.
+    /// </summary>
     public DefaultIdType FixedAssetId { get; private set; }
+
+    /// <summary>
+    /// Depreciation amount applied on <see cref="Date"/>.
+    /// </summary>
     public decimal Amount { get; private set; }
+
+    /// <summary>
+    /// Date the depreciation was recorded.
+    /// </summary>
     public DateTime Date { get; private set; }
+
+    /// <summary>
+    /// Optional method hint used for this specific entry.
+    /// </summary>
     public string? Method { get; private set; }
 
     private DepreciationEntry(DefaultIdType fixedAssetId, decimal amount, DateTime date, string? method = null)
@@ -296,6 +445,9 @@ public class DepreciationEntry : BaseEntity
         Method = method?.Trim();
     }
 
+    /// <summary>
+    /// Create a depreciation entry with positive amount.
+    /// </summary>
     public static DepreciationEntry Create(DefaultIdType fixedAssetId, decimal amount, DateTime date, string? method = null)
     {
         if (amount <= 0)

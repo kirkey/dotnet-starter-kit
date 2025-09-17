@@ -1,17 +1,58 @@
 namespace Accounting.Domain
 {
+    /// <summary>
+    /// Groups multiple journal entries for approval and posting as a batch.
+    /// </summary>
+    /// <remarks>
+    /// Supports an approval workflow and a posting lifecycle. Defaults: <see cref="Status"/> starts as "Draft",
+    /// <see cref="ApprovalStatus"/> starts as "Pending". Only approved draft batches can be posted.
+    /// </remarks>
     public class PostingBatch : AuditableEntity, IAggregateRoot
     {
+        /// <summary>
+        /// Unique identifier for the batch (human-friendly).
+        /// </summary>
         public string BatchNumber { get; private set; }
+
+        /// <summary>
+        /// Date of the batch.
+        /// </summary>
         public DateTime BatchDate { get; private set; }
+
+        /// <summary>
+        /// Workflow status: Draft, Posted, Reversed.
+        /// </summary>
         public string Status { get; private set; } // Draft, Posted, Reversed
         // Hide base Description property with 'new' keyword to resolve warning
+        /// <summary>
+        /// Optional batch description.
+        /// </summary>
         public new string? Description { get; private set; }
+
+        /// <summary>
+        /// Optional accounting period the batch belongs to.
+        /// </summary>
         public DefaultIdType? PeriodId { get; private set; }
+
+        /// <summary>
+        /// Approval workflow state: Pending, Approved, Rejected.
+        /// </summary>
         public string ApprovalStatus { get; private set; } // Pending, Approved, Rejected
+
+        /// <summary>
+        /// Approver/reviewer identity.
+        /// </summary>
         public string? ApprovedBy { get; private set; }
+
+        /// <summary>
+        /// Timestamp when approved or rejected.
+        /// </summary>
         public DateTime? ApprovedDate { get; private set; }
+
         private readonly List<JournalEntry> _journalEntries = new();
+        /// <summary>
+        /// Journal entries included in this batch.
+        /// </summary>
         public IReadOnlyCollection<JournalEntry> JournalEntries => _journalEntries.AsReadOnly();
 
         // EF Core requires a parameterless constructor
@@ -27,6 +68,9 @@ namespace Accounting.Domain
             ApprovalStatus = "Pending";
         }
 
+        /// <summary>
+        /// Create a posting batch with initial status Draft and Pending approval.
+        /// </summary>
         public static PostingBatch Create(string batchNumber, DateTime batchDate, string? description = null, DefaultIdType? periodId = null)
         {
             if (string.IsNullOrWhiteSpace(batchNumber))
@@ -34,6 +78,9 @@ namespace Accounting.Domain
             return new PostingBatch(batchNumber, batchDate, description, periodId);
         }
 
+        /// <summary>
+        /// Add a journal entry to a draft batch only.
+        /// </summary>
         public void AddJournalEntry(JournalEntry entry)
         {
             if (Status != "Draft")
@@ -41,6 +88,9 @@ namespace Accounting.Domain
             _journalEntries.Add(entry);
         }
 
+        /// <summary>
+        /// Post all entries in the batch after approval; transitions status to Posted.
+        /// </summary>
         public void Post()
         {
             if (Status != "Draft")
@@ -55,6 +105,9 @@ namespace Accounting.Domain
             QueueDomainEvent(new Events.PostingBatch.PostingBatchPosted(Id, BatchNumber, BatchDate));
         }
 
+        /// <summary>
+        /// Reverse a posted batch by reversing each contained entry; sets status to Reversed.
+        /// </summary>
         public void Reverse(string reason)
         {
             if (Status != "Posted")
@@ -67,6 +120,9 @@ namespace Accounting.Domain
             QueueDomainEvent(new Events.PostingBatch.PostingBatchReversed(Id, BatchNumber, BatchDate, reason));
         }
 
+        /// <summary>
+        /// Approve the batch for posting and set approver metadata.
+        /// </summary>
         public void Approve(string approvedBy)
         {
             if (ApprovalStatus == "Approved")
@@ -77,6 +133,9 @@ namespace Accounting.Domain
             QueueDomainEvent(new Events.PostingBatch.PostingBatchApproved(Id, BatchNumber, ApprovedBy, ApprovedDate.Value));
         }
 
+        /// <summary>
+        /// Reject the batch; sets reviewer metadata.
+        /// </summary>
         public void Reject(string rejectedBy)
         {
             if (ApprovalStatus == "Rejected")

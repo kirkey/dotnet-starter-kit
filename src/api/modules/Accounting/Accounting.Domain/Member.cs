@@ -2,24 +2,93 @@ using Accounting.Domain.Events.Member;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a utility member/customer account with service location, contact info, rate schedule, and balance.
+/// </summary>
+/// <remarks>
+/// Tracks account status lifecycle, assigned meter, balance, and membership date. Defaults: <see cref="IsActive"/> true on create,
+/// <see cref="CurrentBalance"/> 0, <see cref="AccountStatus"/> "Active" unless provided.
+/// </remarks>
 public class Member : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Unique identifier assigned to the member.
+    /// </summary>
     public string MemberNumber { get; private set; } // MemberID equivalent
+
+    /// <summary>
+    /// Human-readable name for the member account.
+    /// </summary>
     public string MemberName { get; private set; }
+
+    /// <summary>
+    /// Service location where power is supplied.
+    /// </summary>
     public string ServiceAddress { get; private set; } // Physical location where power is supplied
+
+    /// <summary>
+    /// Mailing address for correspondence.
+    /// </summary>
     public string? MailingAddress { get; private set; } // Member's mailing address
+
+    /// <summary>
+    /// General contact information (phone, email), if not using <see cref="Email"/> and <see cref="PhoneNumber"/> fields.
+    /// </summary>
     public string? ContactInfo { get; private set; } // Phone, email, etc.
+
+    /// <summary>
+    /// Account status string (Active, Inactive, Past Due, Suspended, Closed).
+    /// </summary>
     public string AccountStatus { get; private set; } // "Active", "Inactive", "Past Due"
+
+    /// <summary>
+    /// Current meter assigned to this member, if any.
+    /// </summary>
     public DefaultIdType? MeterId { get; private set; } // Links to specific physical meter
-    // Link to RateSchedule entity (new)
+
+    /// <summary>
+    /// Rate schedule identifier (new model). Optional.
+    /// </summary>
     public DefaultIdType? RateScheduleId { get; private set; }
+
+    /// <summary>
+    /// Date when membership was established.
+    /// </summary>
     public DateTime MembershipDate { get; private set; }
+
+    /// <summary>
+    /// Current outstanding balance for the account.
+    /// </summary>
     public decimal CurrentBalance { get; private set; }
+
+    /// <summary>
+    /// Whether the member account is active.
+    /// </summary>
     public bool IsActive { get; private set; }
+
+    /// <summary>
+    /// Primary email address for the member.
+    /// </summary>
     public string? Email { get; private set; }
+
+    /// <summary>
+    /// Primary phone number.
+    /// </summary>
     public string? PhoneNumber { get; private set; }
+
+    /// <summary>
+    /// Contact person or secondary emergency contact.
+    /// </summary>
     public string? EmergencyContact { get; private set; }
+
+    /// <summary>
+    /// Service class such as Residential, Commercial, Industrial.
+    /// </summary>
     public string? ServiceClass { get; private set; } // Residential, Commercial, Industrial
+
+    /// <summary>
+    /// Legacy human-readable rate schedule text; prefer <see cref="RateScheduleId"/> for structured link.
+    /// </summary>
     public string? RateSchedule { get; private set; } // (legacy) Rate schedule applied (human-readable)
 
     private Member()
@@ -56,6 +125,9 @@ public class Member : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new MemberCreated(Id, MemberNumber, MemberName, ServiceAddress, MembershipDate, Description, Notes));
     }
 
+    /// <summary>
+    /// Factory to create a new member with validation for key fields and sensible defaults.
+    /// </summary>
     public static Member Create(string memberNumber, string memberName, string serviceAddress,
         DateTime membershipDate, string? mailingAddress = null, string? contactInfo = null,
         string accountStatus = "Active", DefaultIdType? meterId = null, string? email = null,
@@ -79,6 +151,9 @@ public class Member : AuditableEntity, IAggregateRoot
             serviceClass, rateScheduleId, rateSchedule, description, notes);
     }
 
+    /// <summary>
+    /// Update member metadata; trims inputs and enforces valid statuses.
+    /// </summary>
     public Member Update(string? memberName = null, string? serviceAddress = null, string? mailingAddress = null,
         string? contactInfo = null, string? accountStatus = null, DefaultIdType? meterId = null,
         string? email = null, string? phoneNumber = null, string? emergencyContact = null,
@@ -176,6 +251,9 @@ public class Member : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Replace current balance and emit a balance-updated event.
+    /// </summary>
     public Member UpdateBalance(decimal newBalance)
     {
         if (CurrentBalance != newBalance)
@@ -186,6 +264,9 @@ public class Member : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Activate the member account and set status to Active.
+    /// </summary>
     public Member Activate()
     {
         if (!IsActive)
@@ -197,6 +278,9 @@ public class Member : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Deactivate the member account and set status to Inactive.
+    /// </summary>
     public Member Deactivate()
     {
         if (IsActive)
@@ -208,6 +292,9 @@ public class Member : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Mark the account as Past Due (does not change IsActive flag).
+    /// </summary>
     public Member MarkPastDue()
     {
         if (AccountStatus != "Past Due")

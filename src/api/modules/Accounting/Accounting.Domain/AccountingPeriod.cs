@@ -2,6 +2,14 @@ using Accounting.Domain.Events.AccountingPeriod;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Defines a fiscal accounting period (monthly, quarterly, yearly) used to group and control financial postings.
+/// </summary>
+/// <remarks>
+/// An <see cref="AccountingPeriod"/> establishes a start and end date for financial activity, tracks whether the
+/// period is closed to prevent further modification, and records metadata like fiscal year and period type.
+/// Defaults: <see cref="IsClosed"/> is false on creation; <see cref="IsAdjustmentPeriod"/> is false unless specified.
+/// </remarks>
 public class AccountingPeriod : AuditableEntity, IAggregateRoot
 {
     private const int MaxNameLength = 1024; // aligns with AuditableEntity.Name VARCHAR(1024)
@@ -16,11 +24,37 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
         "Annual",
     };
 
+    /// <summary>
+    /// Inclusive start date of the accounting period.
+    /// </summary>
     public DateTime StartDate { get; private set; }
+
+    /// <summary>
+    /// Inclusive end date of the accounting period. Must be after <see cref="StartDate"/>.
+    /// </summary>
     public DateTime EndDate { get; private set; }
+
+    /// <summary>
+    /// Whether the period has been closed to postings and updates.
+    /// </summary>
+    /// <remarks>Defaults to <c>false</c> on creation and becomes <c>true</c> after calling <see cref="Close"/>.</remarks>
     public bool IsClosed { get; private set; }
+
+    /// <summary>
+    /// Indicates if this is an adjustment period (e.g., period 13).
+    /// </summary>
+    /// <remarks>Defaults to <c>false</c> unless specified.</remarks>
     public bool IsAdjustmentPeriod { get; private set; }
+
+    /// <summary>
+    /// The fiscal year the period belongs to. Enforced to be within a reasonable range (1900-2100).
+    /// </summary>
     public int FiscalYear { get; private set; }
+
+    /// <summary>
+    /// The period granularity, e.g. "Monthly", "Quarterly", or "Yearly".
+    /// </summary>
+    /// <remarks>Trimmed and validated against <see cref="AllowedPeriodTypes"/>. Defaults to empty for EF constructor.</remarks>
     public string PeriodType { get; private set; } = string.Empty; // Monthly, Quarterly, Yearly
 
     // Parameterless constructor for EF Core
@@ -41,7 +75,7 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
         if (startDate >= endDate)
             throw new InvalidAccountingPeriodDateRangeException();
 
-        if (fiscalYear < 1900 || fiscalYear > 2100)
+        if (fiscalYear is < 1900 or > 2100)
             throw new AccountingPeriodInvalidFiscalYearException(fiscalYear);
 
         if (string.IsNullOrWhiteSpace(periodType))
@@ -71,6 +105,9 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new AccountingPeriodCreated(Id, Name, StartDate, EndDate, FiscalYear, Description, Notes));
     }
 
+    /// <summary>
+    /// Factory method to create a new accounting period with validation for date range, fiscal year, and period type.
+    /// </summary>
     public static AccountingPeriod Create(string periodName, DateTime startDate, DateTime endDate,
         int fiscalYear, string periodType, bool isAdjustmentPeriod = false, string? description = null, string? notes = null)
     {
@@ -78,6 +115,9 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
         return new AccountingPeriod(periodName, startDate, endDate, fiscalYear, periodType, isAdjustmentPeriod, description, notes);
     }
 
+    /// <summary>
+    /// Update mutable fields while enforcing invariants. Throws if the period is already closed.
+    /// </summary>
     public AccountingPeriod Update(string? periodName, DateTime? startDate, DateTime? endDate,
         int? fiscalYear, string? periodType, bool isAdjustmentPeriod = false, string? description = null, string? notes = null)
     {
@@ -115,7 +155,7 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
 
         if (fiscalYear.HasValue && FiscalYear != fiscalYear.Value)
         {
-            if (fiscalYear.Value < 1900 || fiscalYear.Value > 2100)
+            if (fiscalYear.Value is < 1900 or > 2100)
                 throw new AccountingPeriodInvalidFiscalYearException(fiscalYear.Value);
 
             FiscalYear = fiscalYear.Value;
@@ -163,6 +203,9 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Close the period to further changes and postings.
+    /// </summary>
     public AccountingPeriod Close()
     {
         if (IsClosed)
@@ -173,6 +216,9 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Reopen a previously closed period to allow changes.
+    /// </summary>
     public AccountingPeriod Reopen()
     {
         if (!IsClosed)
@@ -183,6 +229,9 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Checks whether the provided date falls within the current period (inclusive).
+    /// </summary>
     public bool IsDateInPeriod(DateTime date)
     {
         return date >= StartDate && date <= EndDate;

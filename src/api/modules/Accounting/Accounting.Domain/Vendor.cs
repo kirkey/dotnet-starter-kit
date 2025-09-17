@@ -2,18 +2,67 @@ using Accounting.Domain.Events.Vendor;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a vendor/supplier with billing and contact details, default expense account mapping, and activation state.
+/// </summary>
+/// <remarks>
+/// Strings are trimmed; <see cref="IsActive"/> defaults to true on creation. Supports activate/deactivate lifecycle.
+/// </remarks>
 public class Vendor : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Unique vendor code.
+    /// </summary>
     public string VendorCode { get; private set; } = null!;
+
+    /// <summary>
+    /// Mailing or physical address.
+    /// </summary>
     public string? Address { get; private set; }
+
+    /// <summary>
+    /// Billing address used for invoices.
+    /// </summary>
     public string? BillingAddress { get; private set; }
+
+    /// <summary>
+    /// Primary contact person.
+    /// </summary>
     public string? ContactPerson { get; private set; }
+
+    /// <summary>
+    /// Vendor email address.
+    /// </summary>
     public string? Email { get; private set; }
+
+    /// <summary>
+    /// Payment terms (e.g., Net 30).
+    /// </summary>
     public string? Terms { get; private set; }
+
+    /// <summary>
+    /// Default expense account code for purchases from this vendor.
+    /// </summary>
     public string? ExpenseAccountCode { get; private set; }
+
+    /// <summary>
+    /// Default expense account name (display) for purchases.
+    /// </summary>
     public string? ExpenseAccountName { get; private set; }
+
+    /// <summary>
+    /// Tax identification number.
+    /// </summary>
     public string? Tin { get; private set; }
+
+    /// <summary>
+    /// Primary phone number.
+    /// </summary>
     public string? PhoneNumber { get; private set; }
+
+    /// <summary>
+    /// Whether the vendor is active.
+    /// </summary>
     public bool IsActive { get; private set; }
 
     // Parameterless constructor for EF Core
@@ -44,6 +93,9 @@ public class Vendor : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new VendorCreated(Id, VendorCode, Name, Email, Terms, Description, Notes));
     }
 
+    /// <summary>
+    /// Create a new vendor with default active status and optional metadata.
+    /// </summary>
     public static Vendor Create(string vendorCode, string name, string? address = null, string? billingAddress = null,
         string? contactPerson = null, string? email = null, string? terms = null, string? expenseAccountCode = null, 
         string? expenseAccountName = null, string? tin = null, string? phoneNumber = null, string? description = null, string? notes = null)
@@ -52,6 +104,9 @@ public class Vendor : AuditableEntity, IAggregateRoot
             email, terms, expenseAccountCode, expenseAccountName, tin, phoneNumber, description, notes);
     }
 
+    /// <summary>
+    /// Update vendor metadata; trims inputs and emits an update event if any changes occur.
+    /// </summary>
     public Vendor Update(string? vendorCode, string? name, string? address, string? billingAddress, 
         string? contactPerson, string? email, string? terms, string? expenseAccountCode, string? expenseAccountName, 
         string? tin, string? phoneNumber, string? description, string? notes)
@@ -144,6 +199,9 @@ public class Vendor : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Activate the vendor; throws if already active.
+    /// </summary>
     public Vendor Activate()
     {
         if (IsActive)
@@ -154,6 +212,9 @@ public class Vendor : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Deactivate the vendor; throws if already inactive.
+    /// </summary>
     public Vendor Deactivate()
     {
         if (!IsActive)

@@ -2,29 +2,114 @@ using Accounting.Domain.Events.Meter;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a physical or smart meter installed at a service location, including configuration and readings.
+/// </summary>
+/// <remarks>
+/// Tracks installation, last reading, multiplier (CT/PT), communication protocol, accuracy, and maintenance.
+/// Defaults: <see cref="Status"/> "Active"; <see cref="Multiplier"/> provided and must be positive; strings trimmed.
+/// </remarks>
 public class Meter : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Unique meter number.
+    /// </summary>
     public string MeterNumber { get; private set; }
+
+    /// <summary>
+    /// Meter type (Single Phase, Three Phase, Smart Meter, Analog, etc.).
+    /// </summary>
     public string MeterType { get; private set; } // "Single Phase", "Three Phase", "Smart Meter", "Analog"
+
+    /// <summary>
+    /// Meter manufacturer.
+    /// </summary>
     public string Manufacturer { get; private set; }
+
+    /// <summary>
+    /// Manufacturer model number.
+    /// </summary>
     public string ModelNumber { get; private set; }
+
+    /// <summary>
+    /// Optional manufacturer serial number.
+    /// </summary>
     public string? SerialNumber { get; private set; }
+
+    /// <summary>
+    /// Date the meter was installed.
+    /// </summary>
     public DateTime InstallationDate { get; private set; }
+
+    /// <summary>
+    /// Date of the most recent reading, if any.
+    /// </summary>
     public DateTime? LastReadingDate { get; private set; }
+
+    /// <summary>
+    /// Most recent reading value, if any.
+    /// </summary>
     public decimal? LastReading { get; private set; }
+
+    /// <summary>
+    /// Meter multiplier (CT/PT ratio). Must be positive.
+    /// </summary>
     public decimal Multiplier { get; private set; } // CT/PT ratio
+
+    /// <summary>
+    /// Operational status (Active, Inactive, Defective, Pending Installation, etc.).
+    /// </summary>
     public string Status { get; private set; } // "Active", "Inactive", "Defective", "Pending Installation"
+
+    /// <summary>
+    /// Physical location description.
+    /// </summary>
     public string? Location { get; private set; }
+
+    /// <summary>
+    /// GPS coordinates string for mapping.
+    /// </summary>
     public string? GpsCoordinates { get; private set; }
+
+    /// <summary>
+    /// Current member assigned to this meter.
+    /// </summary>
     public DefaultIdType? MemberId { get; private set; } // Current member assigned to this meter
+
+    /// <summary>
+    /// Whether the device is a smart meter.
+    /// </summary>
     public bool IsSmartMeter { get; private set; }
+
+    /// <summary>
+    /// Communication protocol (AMR, AMI, Manual).
+    /// </summary>
     public string? CommunicationProtocol { get; private set; } // "AMR", "AMI", "Manual"
+
+    /// <summary>
+    /// Date of last maintenance.
+    /// </summary>
     public DateTime? LastMaintenanceDate { get; private set; }
+
+    /// <summary>
+    /// Next calibration date.
+    /// </summary>
     public DateTime? NextCalibrationDate { get; private set; }
+
+    /// <summary>
+    /// Accuracy class for the meter.
+    /// </summary>
     public decimal? AccuracyClass { get; private set; } // Meter accuracy rating
+
+    /// <summary>
+    /// Configuration (Demand, Time of Use, Standard).
+    /// </summary>
     public string? MeterConfiguration { get; private set; } // "Demand", "Time of Use", "Standard"
 
     private readonly List<MeterReading> _readings = new();
+    /// <summary>
+    /// Collection of readings captured for this meter.
+    /// </summary>
     public IReadOnlyCollection<MeterReading> Readings => _readings.AsReadOnly();
     
     private Meter()
@@ -61,6 +146,9 @@ public class Meter : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new MeterCreated(Id, MeterNumber, MeterType, Manufacturer, ModelNumber, Description, Notes));
     }
 
+    /// <summary>
+    /// Create a meter with validation for type, manufacturer, model, and multiplier.
+    /// </summary>
     public static Meter Create(string meterNumber, string meterType, string manufacturer,
         string modelNumber, DateTime installationDate, decimal multiplier = 1,
         string? serialNumber = null, string? location = null, string? gpsCoordinates = null,
@@ -91,6 +179,9 @@ public class Meter : AuditableEntity, IAggregateRoot
             isSmartMeter, communicationProtocol, accuracyClass, meterConfiguration, description, notes);
     }
 
+    /// <summary>
+    /// Update location, mapping, assignment, communication and description fields.
+    /// </summary>
     public Meter Update(string? location = null, string? gpsCoordinates = null, DefaultIdType? memberId = null,
         string? communicationProtocol = null, string? meterConfiguration = null, 
         string? description = null, string? notes = null)
@@ -147,6 +238,9 @@ public class Meter : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Update meter status with validation of allowed values.
+    /// </summary>
     public Meter UpdateStatus(string status)
     {
         if (!IsValidStatus(status))
@@ -161,6 +255,9 @@ public class Meter : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Update maintenance/calibration dates.
+    /// </summary>
     public Meter UpdateMaintenance(DateTime? lastMaintenanceDate, DateTime? nextCalibrationDate)
     {
         bool isUpdated = false;
@@ -185,6 +282,9 @@ public class Meter : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Append a new reading with validation that it is not less than the last reading.
+    /// </summary>
     public Meter AddReading(decimal reading, DateTime readingDate, string readingType = "Actual", string? readBy = null)
     {
         if (reading < 0)
@@ -218,13 +318,39 @@ public class Meter : AuditableEntity, IAggregateRoot
     }
 }
 
+/// <summary>
+/// A single meter reading entry with type and optional reader info.
+/// </summary>
 public class MeterReading : BaseEntity
 {
+    /// <summary>
+    /// Parent meter identifier.
+    /// </summary>
     public DefaultIdType MeterId { get; private set; }
+
+    /// <summary>
+    /// Reading value captured.
+    /// </summary>
     public decimal Reading { get; private set; }
+
+    /// <summary>
+    /// Timestamp when the reading was taken.
+    /// </summary>
     public DateTime ReadingDate { get; private set; }
+
+    /// <summary>
+    /// Reading type: Actual, Estimated, or Customer Read.
+    /// </summary>
     public string ReadingType { get; private set; } // "Actual", "Estimated", "Customer Read"
+
+    /// <summary>
+    /// Optional operator/reader identifier.
+    /// </summary>
     public string? ReadBy { get; private set; }
+
+    /// <summary>
+    /// True if validated; defaults to true for Actual readings.
+    /// </summary>
     public bool IsValidated { get; private set; }
 
     private MeterReading(DefaultIdType meterId, decimal reading, DateTime readingDate,
@@ -238,6 +364,9 @@ public class MeterReading : BaseEntity
         IsValidated = readingType == "Actual";
     }
 
+    /// <summary>
+    /// Create a reading; reading must be non-negative and reading type non-empty.
+    /// </summary>
     public static MeterReading Create(DefaultIdType meterId, decimal reading, DateTime readingDate,
         string readingType, string? readBy = null)
     {
@@ -250,6 +379,9 @@ public class MeterReading : BaseEntity
         return new MeterReading(meterId, reading, readingDate, readingType, readBy);
     }
 
+    /// <summary>
+    /// Mark the reading as validated.
+    /// </summary>
     public MeterReading Validate()
     {
         if (!IsValidated)

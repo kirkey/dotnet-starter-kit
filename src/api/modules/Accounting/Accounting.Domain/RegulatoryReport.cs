@@ -2,32 +2,138 @@ using Accounting.Domain.Events.RegulatoryReport;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a regulatory report filing (e.g., FERC, EIA, or state commission) with period, status, and financials.
+/// </summary>
+/// <remarks>
+/// Tracks reporting period, due/submission dates, workflow status (Draft, In Review, Submitted, Approved, Rejected), and
+/// optional financial aggregates. Defaults: <see cref="Status"/> is "Draft"; strings are trimmed; dates validated on create.
+/// </remarks>
 public class RegulatoryReport : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Report display name.
+    /// </summary>
     public string ReportName { get; private set; }
+
+    /// <summary>
+    /// Report type/series (e.g., "FERC Form 1").
+    /// </summary>
     public string ReportType { get; private set; } // "FERC Form 1", "FERC Form 2", "FERC Form 6", "EIA Form 861", "State Commission"
+
+    /// <summary>
+    /// Frequency label for reporting (Annual, Monthly, Quarterly).
+    /// </summary>
     public string ReportingPeriod { get; private set; } // "Annual", "Monthly", "Quarterly"
+
+    /// <summary>
+    /// Start date of the reporting period.
+    /// </summary>
     public DateTime PeriodStartDate { get; private set; }
+
+    /// <summary>
+    /// End date of the reporting period.
+    /// </summary>
     public DateTime PeriodEndDate { get; private set; }
+
+    /// <summary>
+    /// Filing due date.
+    /// </summary>
     public DateTime DueDate { get; private set; }
+
+    /// <summary>
+    /// Date the report was submitted, if applicable.
+    /// </summary>
     public DateTime? SubmissionDate { get; private set; }
+
+    /// <summary>
+    /// Workflow status: Draft, In Review, Submitted, Approved, Rejected.
+    /// </summary>
     public string Status { get; private set; } // "Draft", "In Review", "Submitted", "Approved", "Rejected"
+
+    /// <summary>
+    /// Regulatory body (e.g., FERC, EIA, State Commission).
+    /// </summary>
     public string? RegulatoryBody { get; private set; } // "FERC", "EIA", "State Commission"
+
+    /// <summary>
+    /// Filing reference number if assigned.
+    /// </summary>
     public string? FilingNumber { get; private set; }
+
+    /// <summary>
+    /// Optional total assets figure.
+    /// </summary>
     public decimal? TotalAssets { get; private set; }
+
+    /// <summary>
+    /// Optional total liabilities figure.
+    /// </summary>
     public decimal? TotalLiabilities { get; private set; }
+
+    /// <summary>
+    /// Optional total equity figure.
+    /// </summary>
     public decimal? TotalEquity { get; private set; }
+
+    /// <summary>
+    /// Optional total revenue figure.
+    /// </summary>
     public decimal? TotalRevenue { get; private set; }
+
+    /// <summary>
+    /// Optional total expenses figure.
+    /// </summary>
     public decimal? TotalExpenses { get; private set; }
+
+    /// <summary>
+    /// Optional net income figure.
+    /// </summary>
     public decimal? NetIncome { get; private set; }
+
+    /// <summary>
+    /// Optional rate base.
+    /// </summary>
     public decimal? RateBase { get; private set; }
+
+    /// <summary>
+    /// Optional allowed return on rate base.
+    /// </summary>
     public decimal? AllowedReturn { get; private set; }
+
+    /// <summary>
+    /// Local path/URI to the generated report file (if any).
+    /// </summary>
     public string? FilePath { get; private set; } // Path to the report file
+
+    /// <summary>
+    /// Name/identifier of the preparer.
+    /// </summary>
     public string? PreparedBy { get; private set; }
+
+    /// <summary>
+    /// Name/identifier of the reviewer.
+    /// </summary>
     public string? ReviewedBy { get; private set; }
+
+    /// <summary>
+    /// Name/identifier of the approver.
+    /// </summary>
     public string? ApprovedBy { get; private set; }
+
+    /// <summary>
+    /// Whether this report requires an independent audit.
+    /// </summary>
     public bool RequiresAudit { get; private set; }
+
+    /// <summary>
+    /// Audit firm name, when applicable.
+    /// </summary>
     public string? AuditFirm { get; private set; }
+
+    /// <summary>
+    /// Audit completion date, when applicable.
+    /// </summary>
     public DateTime? AuditDate { get; private set; }
     
     private RegulatoryReport()
@@ -58,6 +164,9 @@ public class RegulatoryReport : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new RegulatoryReportCreated(Id, ReportName, ReportType, PeriodStartDate, PeriodEndDate, Description, Notes));
     }
 
+    /// <summary>
+    /// Create a regulatory report and enforce period/due date validation and required fields.
+    /// </summary>
     public static RegulatoryReport Create(string reportName, string reportType, string reportingPeriod,
         DateTime periodStartDate, DateTime periodEndDate, DateTime dueDate,
         string? regulatoryBody = null, bool requiresAudit = false,
@@ -78,6 +187,9 @@ public class RegulatoryReport : AuditableEntity, IAggregateRoot
         return new RegulatoryReport(reportName, reportType, reportingPeriod, periodStartDate, periodEndDate, dueDate, regulatoryBody, requiresAudit, description, notes);
     }
 
+    /// <summary>
+    /// Set top-level financial aggregates for the report.
+    /// </summary>
     public void UpdateFinancialData(decimal? totalAssets = null, decimal? totalLiabilities = null,
         decimal? totalEquity = null, decimal? totalRevenue = null, decimal? totalExpenses = null,
         decimal? netIncome = null, decimal? rateBase = null, decimal? allowedReturn = null)
@@ -94,6 +206,9 @@ public class RegulatoryReport : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new RegulatoryReportFinancialDataUpdated(Id, TotalAssets, TotalRevenue, NetIncome));
     }
 
+    /// <summary>
+    /// Move from In Review to Submitted and set submission metadata.
+    /// </summary>
     public void Submit(string submittedBy, string? filingNumber = null)
     {
         if (Status != "In Review")
@@ -106,6 +221,9 @@ public class RegulatoryReport : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new RegulatoryReportSubmitted(Id, ReportName, SubmissionDate.Value, submittedBy));
     }
 
+    /// <summary>
+    /// Move from Draft to In Review and set reviewer metadata.
+    /// </summary>
     public void MarkForReview(string reviewedBy)
     {
         if (Status != "Draft")
@@ -117,6 +235,9 @@ public class RegulatoryReport : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new RegulatoryReportMarkedForReview(Id, ReportName, reviewedBy));
     }
 
+    /// <summary>
+    /// Approve a submitted report.
+    /// </summary>
     public void Approve(string approvedBy)
     {
         if (Status != "Submitted")
@@ -128,6 +249,9 @@ public class RegulatoryReport : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new RegulatoryReportApproved(Id, ReportName, approvedBy));
     }
 
+    /// <summary>
+    /// Reject a submitted report and append reason to notes.
+    /// </summary>
     public void Reject(string reason)
     {
         if (Status != "Submitted")

@@ -2,31 +2,124 @@ using Accounting.Domain.Events.Invoice;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a customer/member invoice including usage-based and fixed charges, taxes, fees, and line items.
+/// </summary>
+/// <remarks>
+/// Tracks billing period, kWh usage, status lifecycle (Draft, Sent, Paid, Overdue, Cancelled), payments applied, and totals.
+/// Defaults: <see cref="Status"/> "Draft"; <see cref="PaidAmount"/> 0; string properties trimmed.
+/// </remarks>
 public class Invoice : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Unique invoice number.
+    /// </summary>
     public string InvoiceNumber { get; private set; } // InvoiceID equivalent
+
+    /// <summary>
+    /// Identifier of the billed member.
+    /// </summary>
     public DefaultIdType MemberId { get; private set; } // Foreign Key to Member
+
+    /// <summary>
+    /// Date when the invoice was created.
+    /// </summary>
     public DateTime InvoiceDate { get; private set; }
+
+    /// <summary>
+    /// Payment due date; must be on/after <see cref="InvoiceDate"/>.
+    /// </summary>
     public DateTime DueDate { get; private set; }
+
+    /// <summary>
+    /// Total amount billed across all components and line items.
+    /// </summary>
     public decimal TotalAmount { get; private set; }
+
+    /// <summary>
+    /// Amount paid towards this invoice.
+    /// </summary>
     public decimal PaidAmount { get; private set; }
+
+    /// <summary>
+    /// Workflow status: Draft, Sent, Paid, Overdue, Cancelled.
+    /// </summary>
     public string Status { get; private set; } // "Draft", "Sent", "Paid", "Overdue", "Cancelled"
+
+    /// <summary>
+    /// Optional link to the consumption record that informed this invoice.
+    /// </summary>
     public DefaultIdType? ConsumptionDataId { get; private set; } // Links to consumption record
+
+    /// <summary>
+    /// Usage-based charge (e.g., energy portion) for the period.
+    /// </summary>
     public decimal UsageCharge { get; private set; } // Charge based on kWhUsed
+
+    /// <summary>
+    /// Fixed monthly charge component.
+    /// </summary>
     public decimal BasicServiceCharge { get; private set; } // Fixed monthly charge
+
+    /// <summary>
+    /// Total tax amount.
+    /// </summary>
     public decimal TaxAmount { get; private set; } // Tax amount
+
+    /// <summary>
+    /// Other charges such as late fees or reconnection fees.
+    /// </summary>
     public decimal OtherCharges { get; private set; } // Late fees, reconnection fees, etc.
+
+    /// <summary>
+    /// Recorded kWh usage for the billing period.
+    /// </summary>
     public decimal KWhUsed { get; private set; }
+
+    /// <summary>
+    /// Human-friendly billing period label (e.g., "2025-08").
+    /// </summary>
     public string BillingPeriod { get; private set; }
+
+    /// <summary>
+    /// Date when the invoice was fully paid, if applicable.
+    /// </summary>
     public DateTime? PaidDate { get; private set; }
+
+    /// <summary>
+    /// Payment method used for full payment, if applicable.
+    /// </summary>
     public string? PaymentMethod { get; private set; }
+
+    /// <summary>
+    /// Optional late fee applied.
+    /// </summary>
     public decimal? LateFee { get; private set; }
+
+    /// <summary>
+    /// Optional reconnection fee applied.
+    /// </summary>
     public decimal? ReconnectionFee { get; private set; }
+
+    /// <summary>
+    /// Optional deposit amount included on the invoice.
+    /// </summary>
     public decimal? DepositAmount { get; private set; }
+
+    /// <summary>
+    /// Rate schedule identifier/name applied to this invoice.
+    /// </summary>
     public string? RateSchedule { get; private set; } // Rate schedule applied
+
+    /// <summary>
+    /// Optional demand charge component for C&I customers.
+    /// </summary>
     public decimal? DemandCharge { get; private set; } // For commercial/industrial customers
 
     private readonly List<InvoiceLineItem> _lineItems = new();
+    /// <summary>
+    /// Additional line items with description, quantity, and unit price.
+    /// </summary>
     public IReadOnlyCollection<InvoiceLineItem> LineItems => _lineItems.AsReadOnly();
     
     private Invoice()
@@ -70,6 +163,9 @@ public class Invoice : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new InvoiceCreated(Id, InvoiceNumber, MemberId, TotalAmount, DueDate, Description, Notes));
     }
 
+    /// <summary>
+    /// Factory to create a new invoice with validation for required fields and non-negative charges.
+    /// </summary>
     public static Invoice Create(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
         DateTime dueDate, DefaultIdType? consumptionDataId, decimal usageCharge, decimal basicServiceCharge,
         decimal taxAmount, decimal otherCharges, decimal kWhUsed, string billingPeriod,
@@ -93,6 +189,9 @@ public class Invoice : AuditableEntity, IAggregateRoot
             billingPeriod, lateFee, reconnectionFee, depositAmount, rateSchedule, demandCharge, description, notes);
     }
 
+    /// <summary>
+    /// Update invoice details and recompute total; disallowed when status is Paid.
+    /// </summary>
     public Invoice Update(DateTime? dueDate = null, decimal? usageCharge = null, decimal? basicServiceCharge = null,
         decimal? taxAmount = null, decimal? otherCharges = null, decimal? lateFee = null,
         decimal? reconnectionFee = null, decimal? depositAmount = null, decimal? demandCharge = null,
@@ -194,6 +293,9 @@ public class Invoice : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Set status to Sent; only allowed when in Draft.
+    /// </summary>
     public Invoice Send()
     {
         if (Status != "Draft")
@@ -204,6 +306,9 @@ public class Invoice : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Mark as fully paid, setting <see cref="PaidAmount"/>, <see cref="PaidDate"/>, and <see cref="PaymentMethod"/>.
+    /// </summary>
     public Invoice MarkPaid(DateTime paidDate, string? paymentMethod = null)
     {
         if (Status == "Paid")
@@ -218,6 +323,9 @@ public class Invoice : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Apply a partial payment; when cumulative paid amount meets or exceeds total, marks as Paid.
+    /// </summary>
     public Invoice ApplyPayment(decimal amount, DateTime paymentDate, string? paymentMethod = null)
     {
         if (amount <= 0) throw new ArgumentException("Payment amount must be positive");
@@ -238,8 +346,14 @@ public class Invoice : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Amount still due; never negative.
+    /// </summary>
     public decimal GetOutstandingAmount() => Math.Max(0, TotalAmount - PaidAmount);
 
+    /// <summary>
+    /// Mark as Overdue when past due date and not yet paid.
+    /// </summary>
     public Invoice MarkOverdue()
     {
         if (Status == "Paid")
@@ -254,6 +368,9 @@ public class Invoice : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Cancel an unpaid invoice.
+    /// </summary>
     public Invoice Cancel(string? reason = null)
     {
         if (Status == "Paid")
@@ -264,6 +381,9 @@ public class Invoice : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Append an additional line item to the invoice and update total.
+    /// </summary>
     public Invoice AddLineItem(string description, decimal quantity, decimal unitPrice, string? accountCode = null)
     {
         if (Status == "Paid")
@@ -286,13 +406,39 @@ public class Invoice : AuditableEntity, IAggregateRoot
     }
 }
 
+/// <summary>
+/// A single line item on an invoice with quantity and pricing.
+/// </summary>
 public class InvoiceLineItem : BaseEntity
 {
+    /// <summary>
+    /// Parent invoice identifier.
+    /// </summary>
     public DefaultIdType InvoiceId { get; private set; }
+
+    /// <summary>
+    /// Description of the charge.
+    /// </summary>
     public string Description { get; private set; }
+
+    /// <summary>
+    /// Quantity associated with this line item; must be positive.
+    /// </summary>
     public decimal Quantity { get; private set; }
+
+    /// <summary>
+    /// Unit price to multiply by <see cref="Quantity"/>.
+    /// </summary>
     public decimal UnitPrice { get; private set; }
+
+    /// <summary>
+    /// Calculated total price (Quantity * UnitPrice).
+    /// </summary>
     public decimal TotalPrice { get; private set; }
+
+    /// <summary>
+    /// Optional revenue account code for this line.
+    /// </summary>
     public string? AccountCode { get; private set; }
 
     private InvoiceLineItem(DefaultIdType invoiceId, string description, 
@@ -306,6 +452,9 @@ public class InvoiceLineItem : BaseEntity
         AccountCode = accountCode?.Trim();
     }
 
+    /// <summary>
+    /// Create a validated line item with positive quantity and non-negative unit price.
+    /// </summary>
     public static InvoiceLineItem Create(DefaultIdType invoiceId, string description,
         decimal quantity, decimal unitPrice, string? accountCode = null)
     {

@@ -2,12 +2,37 @@ using Accounting.Domain.Events.Payee;
 
 namespace Accounting.Domain;
 
+/// <summary>
+/// Represents a payee/vendor-like entity for expense payments, with default expense account mapping.
+/// </summary>
+/// <remarks>
+/// Stores address, expense account code/name, TIN, and descriptive notes. Strings are trimmed; optional fields may be null.
+/// </remarks>
 public class Payee : AuditableEntity, IAggregateRoot
 {
+    /// <summary>
+    /// Unique code identifying the payee.
+    /// </summary>
     public string PayeeCode { get; private set; }
+
+    /// <summary>
+    /// Mailing or physical address.
+    /// </summary>
     public string? Address { get; private set; }
+
+    /// <summary>
+    /// Default expense account code to use for payments to this payee.
+    /// </summary>
     public string? ExpenseAccountCode { get; private set; }
+
+    /// <summary>
+    /// Default expense account name for readability.
+    /// </summary>
     public string? ExpenseAccountName { get; private set; }
+
+    /// <summary>
+    /// Taxpayer identification number.
+    /// </summary>
     public string? Tin { get; private set; }
 
     private Payee()
@@ -27,11 +52,17 @@ public class Payee : AuditableEntity, IAggregateRoot
         Notes = notes?.Trim();
     }
 
+    /// <summary>
+    /// Create a payee with default expense account mapping and metadata.
+    /// </summary>
     public static Payee Create(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
     {
         return new Payee(payeeCode, name, address, expenseAccountCode, expenseAccountName, tin, description, notes);
     }
 
+    /// <summary>
+    /// Update the payee metadata; trims inputs.
+    /// </summary>
     public Payee Update(string? payeeCode, string? name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
     {
         bool isUpdated = false;
