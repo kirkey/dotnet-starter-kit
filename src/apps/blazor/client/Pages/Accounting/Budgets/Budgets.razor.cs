@@ -49,8 +49,29 @@ public partial class Budgets
     }
 }
 
-public class BudgetViewModel : UpdateBudgetRequest
+public class BudgetViewModel
 {
-    // Properties will be inherited from UpdateBudgetRequest
-    // This class serves as the view model for the entity table
+    // Core identifiers
+    public DefaultIdType Id { get; set; }
+    public string? Name { get; set; }
+
+    // Fields from CreateBudgetRequest / BudgetDto
+    public DefaultIdType PeriodId { get; set; }
+    public int FiscalYear { get; set; }
+    public string? BudgetType { get; set; }
+
+    // Optional status used in UpdateBudgetRequest
+    public string? Status { get; set; }
+
+    // Budget totals from BudgetDto
+    public decimal TotalBudgetedAmount { get; set; }
+    public decimal TotalActualAmount { get; set; }
+
+    // Approval info from BudgetDto
+    public DateTime? ApprovedDate { get; set; }
+    public string? ApprovedBy { get; set; }
+
+    // Common descriptive fields
+    public string? Description { get; set; }
+    public string? Notes { get; set; }
 }

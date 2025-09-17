@@ -10,52 +10,74 @@
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
             </MudItem>
         }
+
         <MudItem xs="12" sm="12" md="6" lg="4">
             <MudTextField @bind-Value="context.Name"
                           For="@(() => context.Name)"
                           Label="Name"
                           Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="3" lg="2">
-            <MudDatePicker @bind-Date="context.StartDate"
-                           For="@(() => context.StartDate)"
-                           Label="Start Date"
-                           Variant="Variant.Filled" />
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.PeriodId"
+                          For="@(() => context.PeriodId)"
+                          Label="Period Id"
+                          Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="3" lg="2">
-            <MudDatePicker @bind-Date="context.EndDate"
-                           For="@(() => context.EndDate)"
-                           Label="End Date"
-                           Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
-            <MudSwitch @bind-Value="context.IsAdjustmentPeriod"
-                       For="@(() => context.IsAdjustmentPeriod)"
-                       Label="Adjustment Period" />
-        </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="2">
             <MudNumericField @bind-Value="context.FiscalYear"
                              For="@(() => context.FiscalYear)"
                              Label="Fiscal Year"
                              Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
-            <MudTextField @bind-Value="context.PeriodType"
-                          For="@(() => context.PeriodType)"
-                          Label="Period Type"
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.BudgetType"
+                          For="@(() => context.BudgetType)"
+                          Label="Budget Type"
                           Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="12" md="6" lg="4">
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.Status"
+                          For="@(() => context.Status)"
+                          Label="Status"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="6" lg="6">
             <MudTextField @bind-Value="context.Description"
                           For="@(() => context.Description)"
                           Label="Description"
                           Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="12" md="6" lg="4">
+
+        <MudItem xs="12" sm="12" md="6" lg="6">
             <MudTextField @bind-Value="context.Notes"
                           For="@(() => context.Notes)"
                           Label="Notes"
                           Variant="Variant.Filled" />
         </MudItem>
+
+        @* Read-only totals and approval info: only visible when editing an existing budget *@
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField T="decimal" Value="context.TotalBudgetedAmount" ReadOnly Label="Total Budgeted" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField T="decimal" Value="context.TotalActualAmount" ReadOnly Label="Total Actual" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudDatePicker @bind-Date="context.ApprovedDate" Disabled="true" Label="Approved Date" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.ApprovedBy" ReadOnly Label="Approved By" />
+            </MudItem>
+        }
     </EditFormContent>
 </EntityTable>

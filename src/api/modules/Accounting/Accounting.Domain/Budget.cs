@@ -123,12 +123,20 @@ public class Budget : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Update editable properties when status allows (not Approved/Active).
     /// </summary>
-    public Budget Update(string? budgetName, string? budgetType, string? status, string? description, string? notes)
+    public Budget Update(int fiscalYear, string? budgetName, string? budgetType, string? status, string? description, string? notes)
     {
         bool isUpdated = false;
 
         if (Status is "Approved" or "Active")
             throw new BudgetCannotBeModifiedException(Id);
+        
+        if (fiscalYear is < 1900 or > 2100)
+            throw new ArgumentException("Fiscal year is out of range.");
+        if (fiscalYear != FiscalYear)
+        {
+            FiscalYear = fiscalYear;
+            isUpdated = true;
+        }
 
         if (!string.IsNullOrWhiteSpace(budgetName) && Name != budgetName)
         {

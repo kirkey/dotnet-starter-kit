@@ -83,20 +83,9 @@ public class MenuService : IMenuService
                     IsParent = true,
                     MenuItems =
                     [
-                        new MenuSectionSubItemModel
-                        {
-                            Title = "Chart Of Accounts",
-                            Icon = Icons.Material.Filled.List,
-                            Href = "/chart-of-accounts"
-                        },
-
-                        new MenuSectionSubItemModel
-                        {
-                            Title = "Accounting Periods",
-                            Icon = Icons.Material.Filled.List,
-                            Href = "/accounting-periods"
-                        },
-
+                        new MenuSectionSubItemModel { Title = "Chart Of Accounts", Icon = Icons.Material.Filled.List, Href = "/chart-of-accounts" },
+                        new MenuSectionSubItemModel { Title = "Accounting Periods", Icon = Icons.Material.Filled.List, Href = "/accounting-periods" },
+                        new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.List, Href = "/accounting-budgets" },
                         new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/payees" }
                     ]
                 },

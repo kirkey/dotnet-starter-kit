@@ -20350,6 +20350,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+        
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 

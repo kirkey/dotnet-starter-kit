@@ -25,7 +25,7 @@ public sealed class UpdateBudgetHandler(
                 throw new BudgetAlreadyExistsException(name, budget.PeriodId);
         }
 
-        budget.Update(name, request.BudgetType?.Trim(), request.Status?.Trim(), request.Description, request.Notes);
+        budget.Update(request.FiscalYear, name, request.BudgetType?.Trim(), request.Status?.Trim(), request.Description, request.Notes);
 
         await repository.UpdateAsync(budget, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
