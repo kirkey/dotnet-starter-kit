@@ -1,12 +1,5 @@
 using Accounting.Application.Budgets.Dtos;
 using Accounting.Application.Budgets.Search;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace Accounting.Infrastructure.Endpoints.Budgets.v1;
 

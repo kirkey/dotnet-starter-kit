@@ -1,8 +1,3 @@
-using Accounting.Domain;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Constants;
-
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
 public class ProjectConfiguration : IEntityTypeConfiguration<Project>

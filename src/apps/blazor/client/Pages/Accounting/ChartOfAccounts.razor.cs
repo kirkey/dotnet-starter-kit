@@ -1,10 +1,6 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
-using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
-using Microsoft.AspNetCore.Components;
-using Shared.Authorization;
 
-namespace FSH.Starter.Blazor.Client.Pages.Accounting.Accounts;
+namespace FSH.Starter.Blazor.Client.Pages.Accounting;
 
 public partial class ChartOfAccounts : ComponentBase
 {

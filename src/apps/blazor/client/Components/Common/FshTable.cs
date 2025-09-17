@@ -1,8 +1,5 @@
 ﻿using FSH.Starter.Blazor.Infrastructure.Notifications;
-using FSH.Starter.Blazor.Infrastructure.Preferences;
 using MediatR.Courier;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
 
 namespace FSH.Starter.Blazor.Client.Components.Common;
 

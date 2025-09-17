@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace FSH.Starter.Blazor.Client.Components.EntityTable;
+﻿namespace FSH.Starter.Blazor.Client.Components.EntityTable;
 
 public record EntityField<TEntity>(Func<TEntity, object?> ValueFunc, string DisplayName, string SortLabel = "", Type? Type = null, RenderFragment<TEntity>? Template = null)
 {

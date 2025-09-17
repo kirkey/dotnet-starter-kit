@@ -1,4 +1,4 @@
-namespace Accounting.Application.AccountingPeriods.Delete;
+namespace Accounting.Application.AccountingPeriods.Delete.v1;
 
 public class DeleteAccountingPeriodRequest(DefaultIdType id) : IRequest
 {

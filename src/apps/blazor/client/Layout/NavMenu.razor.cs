@@ -1,10 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Auth;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Shared.Authorization;
-
-namespace FSH.Starter.Blazor.Client.Layout;
+﻿namespace FSH.Starter.Blazor.Client.Layout;
 
 public partial class NavMenu
 {

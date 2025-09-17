@@ -1,7 +1,6 @@
 using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using FSH.Framework.Core.Domain.Contracts;
-using FSH.Framework.Core.Persistence;
 using Mapster;
 
 namespace Accounting.Infrastructure.Persistence;

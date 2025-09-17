@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Components.Autocompletes;
 
 public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TKey>

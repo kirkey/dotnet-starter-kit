@@ -1,9 +1,4 @@
 using Accounting.Application.DeferredRevenue.Queries;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 // Endpoint for searching deferred revenues
 namespace Accounting.Infrastructure.Endpoints.DeferredRevenue.v1;

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
-namespace FSH.Starter.Blazor.Client.Components.Common;
+﻿namespace FSH.Starter.Blazor.Client.Components.Common;
 
 public static class DialogServiceExtensions
 {

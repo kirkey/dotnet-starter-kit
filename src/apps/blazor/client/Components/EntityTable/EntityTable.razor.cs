@@ -1,13 +1,4 @@
-using FSH.Starter.Blazor.Client.Components.Common;
-using FSH.Starter.Blazor.Client.Components.Dialogs;
-using FSH.Starter.Blazor.Infrastructure.Api;
-using FSH.Starter.Blazor.Infrastructure.Auth;
-using FSH.Starter.Blazor.Infrastructure.Preferences;
 using Mapster;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using MudBlazor;
 
 namespace FSH.Starter.Blazor.Client.Components.EntityTable;
 

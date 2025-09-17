@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Components.EntityTable;
 
 public partial class AddEditModal<TRequest> : IAddEditModal<TRequest>

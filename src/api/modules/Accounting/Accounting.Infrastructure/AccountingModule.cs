@@ -1,4 +1,3 @@
-using Accounting.Domain;
 using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 using Accounting.Infrastructure.Endpoints.Budgets.v1;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
@@ -10,11 +9,7 @@ using Accounting.Infrastructure.Endpoints.Vendors.v1;
 using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Persistence.Configurations;
 using Carter;
-using FSH.Framework.Core.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Infrastructure;
@@ -64,6 +59,10 @@ public static class AccountingModule
 
             var periods = app.MapGroup("periods").WithTags("periods");
             periods.MapAccountingPeriodSearchEndpoint();
+            periods.MapAccountingPeriodCreateEndpoint();
+            periods.MapAccountingPeriodUpdateEndpoint();
+            periods.MapAccountingPeriodDeleteEndpoint();
+            periods.MapAccountingPeriodGetEndpoint();
 
             var budgets = app.MapGroup("budgets").WithTags("budgets");
             budgets.MapBudgetSearchEndpoint();

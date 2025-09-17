@@ -1,10 +1,5 @@
 using Accounting.Application.Projects.Dtos;
 using Accounting.Application.Projects.Get;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 

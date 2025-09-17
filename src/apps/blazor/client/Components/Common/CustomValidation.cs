@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-
-namespace FSH.Starter.Blazor.Client.Components.Common;
+﻿namespace FSH.Starter.Blazor.Client.Components.Common;
 
 // See https://docs.microsoft.com/en-us/aspnet/core/blazor/forms-validation?view=aspnetcore-6.0#server-validation-with-a-validator-component
 public class CustomValidation : ComponentBase

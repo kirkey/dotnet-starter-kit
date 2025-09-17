@@ -1,12 +1,5 @@
 using Accounting.Application.JournalEntries.Dtos;
 using Accounting.Application.JournalEntries.Search;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 

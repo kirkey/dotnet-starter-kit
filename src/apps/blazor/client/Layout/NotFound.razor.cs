@@ -1,6 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Preferences;
-using FSH.Starter.Blazor.Infrastructure.Themes;
-using MudBlazor;
+﻿using FSH.Starter.Blazor.Infrastructure.Themes;
 
 namespace FSH.Starter.Blazor.Client.Layout;
 

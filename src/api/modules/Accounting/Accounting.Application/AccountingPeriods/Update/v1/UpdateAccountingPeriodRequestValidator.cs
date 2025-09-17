@@ -1,4 +1,4 @@
-namespace Accounting.Application.AccountingPeriods.Update;
+namespace Accounting.Application.AccountingPeriods.Update.v1;
 
 public class UpdateAccountingPeriodRequestValidator : AbstractValidator<UpdateAccountingPeriodRequest>
 {

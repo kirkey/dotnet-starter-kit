@@ -1,6 +1,6 @@
 using Accounting.Application.AccountingPeriods.Dtos;
 
-namespace Accounting.Application.AccountingPeriods.Search;
+namespace Accounting.Application.AccountingPeriods.Search.v1;
 
 public sealed class SearchAccountingPeriodsSpec : EntitiesByPaginationFilterSpec<AccountingPeriod, AccountingPeriodDto>
 {

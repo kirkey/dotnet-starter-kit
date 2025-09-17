@@ -1,9 +1,4 @@
 using Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 // Endpoint for searching trial balances
 namespace Accounting.Infrastructure.Endpoints.TrialBalance.v1;

@@ -1,5 +1,4 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
-using Accounting.Domain;
 using Mapster;
 
 namespace Accounting.Infrastructure.Persistence.Configurations;

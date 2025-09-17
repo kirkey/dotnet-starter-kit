@@ -1,12 +1,6 @@
 using Accounting.Application.AccountingPeriods.Dtos;
 using Accounting.Application.AccountingPeriods.Search;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+using Accounting.Application.AccountingPeriods.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 

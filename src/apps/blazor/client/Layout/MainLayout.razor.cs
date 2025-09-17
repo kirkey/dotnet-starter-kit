@@ -1,8 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Preferences;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
-namespace FSH.Starter.Blazor.Client.Layout;
+﻿namespace FSH.Starter.Blazor.Client.Layout;
 
 public partial class MainLayout
 {

@@ -2,7 +2,7 @@ using Accounting.Application.AccountingPeriods.Exceptions;
 using Accounting.Application.AccountingPeriods.Queries;
 using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
 
-namespace Accounting.Application.AccountingPeriods.Update;
+namespace Accounting.Application.AccountingPeriods.Update.v1;
 
 public sealed class UpdateAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)

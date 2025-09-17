@@ -1,15 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Preferences;
-using FSH.Starter.Blazor.Infrastructure.Themes;
-using MudBlazor;
-using FSH.Starter.Blazor.Infrastructure.Connectivity;
-using FSH.Starter.Blazor.Infrastructure.Offline;
-using FSH.Starter.Blazor.Infrastructure.Features;
-using FSH.Starter.Blazor.Infrastructure.Session;
-using FSH.Starter.Blazor.Infrastructure.Auth;
-using Microsoft.JSInterop;
-using FSH.Starter.Blazor.Infrastructure.Palette;
-using FSH.Starter.Blazor.Infrastructure.Localization;
-using FSH.Starter.Blazor.Infrastructure.Sync;
+﻿using FSH.Starter.Blazor.Infrastructure.Themes;
 
 namespace FSH.Starter.Blazor.Client.Layout;
 

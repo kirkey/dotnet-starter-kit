@@ -1,6 +1,4 @@
 using FSH.Starter.Blazor.Infrastructure.Notifications;
-using FSH.Starter.Blazor.Infrastructure.Preferences;
-using Microsoft.AspNetCore.Components;
 
 namespace FSH.Starter.Blazor.Client.Components.ThemeManager;
 

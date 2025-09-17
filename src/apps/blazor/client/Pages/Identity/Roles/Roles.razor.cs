@@ -1,12 +1,4 @@
-﻿using FSH.Starter.Blazor.Client.Components.EntityTable;
-using FSH.Starter.Blazor.Infrastructure.Api;
-using FSH.Starter.Blazor.Infrastructure.Auth;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Shared.Authorization;
-
-namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
 
 public partial class Roles
 {

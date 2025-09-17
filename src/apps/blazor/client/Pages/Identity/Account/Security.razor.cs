@@ -1,9 +1,4 @@
-﻿using FSH.Starter.Blazor.Client.Components;
-using FSH.Starter.Blazor.Infrastructure.Api;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
-namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
 
 public partial class Security
 {

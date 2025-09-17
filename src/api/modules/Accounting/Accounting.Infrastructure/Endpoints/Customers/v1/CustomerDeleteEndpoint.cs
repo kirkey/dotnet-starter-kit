@@ -1,9 +1,4 @@
 using Accounting.Application.Customers.Delete;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace Accounting.Infrastructure.Endpoints.Customers.v1;
 

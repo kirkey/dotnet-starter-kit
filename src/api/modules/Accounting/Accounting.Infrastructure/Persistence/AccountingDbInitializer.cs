@@ -1,7 +1,4 @@
-using FSH.Framework.Core.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Accounting.Domain;
 
 namespace Accounting.Infrastructure.Persistence;
 

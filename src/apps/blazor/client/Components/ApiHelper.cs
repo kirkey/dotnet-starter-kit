@@ -1,8 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Api;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
-namespace FSH.Starter.Blazor.Client.Components;
+﻿namespace FSH.Starter.Blazor.Client.Components;
 
 public static class ApiHelper
 {

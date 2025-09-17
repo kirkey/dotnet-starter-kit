@@ -1,7 +1,3 @@
-using FSH.Starter.Blazor.Infrastructure.Api;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting;
 
 public class AutocompleteUsoaCategory : MudAutocomplete<string>

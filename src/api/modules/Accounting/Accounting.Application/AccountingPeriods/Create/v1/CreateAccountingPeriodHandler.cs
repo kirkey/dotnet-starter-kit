@@ -1,7 +1,7 @@
 using Accounting.Application.AccountingPeriods.Exceptions;
 using Accounting.Application.AccountingPeriods.Queries;
 
-namespace Accounting.Application.AccountingPeriods.Create;
+namespace Accounting.Application.AccountingPeriods.Create.v1;
 
 public sealed class CreateAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)

@@ -1,9 +1,4 @@
 using Accounting.Application.DepreciationMethods.Delete;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 // Endpoint for deleting a depreciation method
 namespace Accounting.Infrastructure.Endpoints.DepreciationMethods.v1;

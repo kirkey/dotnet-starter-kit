@@ -1,14 +1,4 @@
-﻿using FSH.Starter.Blazor.Client.Components;
-using FSH.Starter.Blazor.Client.Components.Dialogs;
-using FSH.Starter.Blazor.Infrastructure.Api;
-using FSH.Starter.Blazor.Infrastructure.Auth;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using MudBlazor;
-using Shared.Authorization;
-
-namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
 
 public partial class Profile
 {

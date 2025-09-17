@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Shared.Authorization;
-
-namespace FSH.Starter.Blazor.Client.Components;
+﻿namespace FSH.Starter.Blazor.Client.Components;
 
 public partial class PersonCard
 {

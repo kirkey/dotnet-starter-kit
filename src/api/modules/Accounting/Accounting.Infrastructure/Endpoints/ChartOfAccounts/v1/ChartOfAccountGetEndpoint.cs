@@ -1,10 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Application.ChartOfAccounts.Get.v1;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 

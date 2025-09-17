@@ -1,6 +1,6 @@
 using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
 
-namespace Accounting.Application.AccountingPeriods.Delete;
+namespace Accounting.Application.AccountingPeriods.Delete.v1;
 
 public sealed class DeleteAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)

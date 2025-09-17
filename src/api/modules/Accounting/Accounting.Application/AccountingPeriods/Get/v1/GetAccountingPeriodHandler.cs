@@ -1,7 +1,7 @@
 using Accounting.Application.AccountingPeriods.Dtos;
 using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
 
-namespace Accounting.Application.AccountingPeriods.Get;
+namespace Accounting.Application.AccountingPeriods.Get.v1;
 
 public sealed class GetAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IReadRepository<AccountingPeriod> repository,

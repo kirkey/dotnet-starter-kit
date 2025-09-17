@@ -1,6 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Api;
-
-namespace FSH.Starter.Blazor.Client.Components.EntityTable;
+﻿namespace FSH.Starter.Blazor.Client.Components.EntityTable;
 
 /// <summary>
 /// Initialization Context for the EntityTable Component.

@@ -1,4 +1,4 @@
-namespace Accounting.Application.AccountingPeriods.Create;
+namespace Accounting.Application.AccountingPeriods.Create.v1;
 
 public record CreateAccountingPeriodRequest(
     string Name,

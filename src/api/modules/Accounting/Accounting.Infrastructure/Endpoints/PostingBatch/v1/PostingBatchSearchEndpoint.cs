@@ -1,9 +1,4 @@
 using Accounting.Application.PostingBatch.Queries;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 // Endpoint for searching posting batches
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;

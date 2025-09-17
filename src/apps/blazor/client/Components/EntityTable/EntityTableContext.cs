@@ -1,7 +1,4 @@
-﻿using MudBlazor;
-using Shared.Authorization;
-
-namespace FSH.Starter.Blazor.Client.Components.EntityTable;
+﻿namespace FSH.Starter.Blazor.Client.Components.EntityTable;
 
 /// <summary>
 /// Abstract base class for the initialization Context of the EntityTable Component.

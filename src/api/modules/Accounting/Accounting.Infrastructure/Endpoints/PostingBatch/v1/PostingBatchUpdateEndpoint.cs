@@ -1,9 +1,4 @@
 using Accounting.Application.PostingBatch.Commands;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 // Endpoint for updating a posting batch
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;
