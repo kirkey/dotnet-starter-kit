@@ -1,44 +1,27 @@
 ﻿<PersonCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text); margin-bottom:0px!important" />
 <MudNavMenu>
-    <MudText Typo="Typo.subtitle2" Color="Color.Surface" Class="ml-4 my-3">Start</MudText>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
-    <MudNavLink Href="/app/settings" Icon="@Icons.Material.Filled.Settings">Settings</MudNavLink>
-    @if (_canViewHangfire)
+    @foreach (var sec in _sections)
     {
-        <MudNavLink Match="NavLinkMatch.Prefix" Href="https://localhost:7000/jobs" Icon="@Icons.Material.Filled.Engineering">Hangfire</MudNavLink>
-    }
-    @if (_canViewAuditTrails)
-    {
-        <MudNavLink Match="NavLinkMatch.Prefix" Href="/identity/audit-trail" Icon="@Icons.Material.Filled.WorkHistory">Audit Trail</MudNavLink>
-    }
-    <MudText Typo="Typo.subtitle2" Color="Color.Surface" Class="ml-4 my-3">Modules</MudText>
-    <MudNavGroup Title="Application" Icon="@Icons.Material.Filled.AddBox">
-        <MudNavLink Href="/app/groups" Icon="@Icons.Material.Filled.GroupWork" Class="fsh-nav-child">Groups</MudNavLink>
-    </MudNavGroup>
-    <MudNavGroup Title="Catalog" Icon="@Icons.Material.Filled.AddBox">
-        <MudNavLink Href="/catalog/products" Icon="@Icons.Material.Filled.ShoppingBag" Class="fsh-nav-child">Products</MudNavLink>
-        <MudNavLink Href="/catalog/brands" Icon="@Icons.Material.Filled.Label" Class="fsh-nav-child">Brands</MudNavLink>
-    </MudNavGroup>
-    <MudNavGroup Title="Accounting" Icon="@Icons.Material.Filled.AddBox">
-        <MudNavLink Href="/chart-of-accounts" Icon="@Icons.Material.Filled.List" Class="fsh-nav-child">Chart Of Accounts</MudNavLink>
-        <MudNavLink Href="/payees" Icon="@Icons.Material.Filled.Groups" Class="fsh-nav-child">Payees</MudNavLink>
-    </MudNavGroup>
-    <MudNavLink Href="/todos" Icon="@Icons.Material.Filled.Checklist" Class="fsh-nav-child">Todos</MudNavLink>
-    @if (CanViewAdministrationGroup)
-    {
-        <MudText Typo="Typo.subtitle2" Color="Color.Surface" Class="ml-4 my-3">Administration</MudText>
-        @if (_canViewUsers)
+        if (!string.IsNullOrWhiteSpace(sec.Title))
         {
-            <MudNavLink Match="NavLinkMatch.Prefix" Href="/identity/users" Icon="@Icons.Material.Filled.PeopleAlt">Users</MudNavLink>
+            <MudText Typo="Typo.subtitle2" Color="Color.Surface" Class="ml-4 my-3">@(sec.Title)</MudText>
         }
-        @if (_canViewRoles)
+
+        @foreach (var item in sec.SectionItems)
         {
-            <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Filled.EmojiPeople">Roles</MudNavLink>
-        }
-        @if (_canViewTenants)
-        {
-            <MudNavLink Href="/tenants" Icon="@Icons.Material.Filled.GroupWork" Disabled="!_canViewTenants">Tenants</MudNavLink>
+            if (item.IsParent && item.MenuItems is not null && item.MenuItems.Any())
+            {
+                <MudNavGroup Title="@item.Title" Icon="@item.Icon">
+                    @foreach (var sub in item.MenuItems)
+                    {
+                        <MudNavLink Href="@sub.Href" Icon="@sub.Icon" Class="fsh-nav-child" Disabled="@sub.Disabled" Target="@sub.Target">@sub.Title</MudNavLink>
+                    }
+                </MudNavGroup>
+            }
+            else if (!item.IsParent && !string.IsNullOrWhiteSpace(item.Href))
+            {
+                <MudNavLink Href="@item.Href" Icon="@item.Icon" Disabled="@item.Disabled" Target="@item.Target">@item.Title</MudNavLink>
+            }
         }
     }
 </MudNavMenu>

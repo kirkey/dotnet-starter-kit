@@ -1,35 +1,78 @@
 ﻿namespace FSH.Starter.Blazor.Client.Layout;
 
+using FSH.Starter.Blazor.Client.Models.NavigationMenu;
+using FSH.Starter.Blazor.Client.Services.Navigation;
+
 public partial class NavMenu
 {
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Inject]
     protected IAuthorizationService AuthService { get; set; } = default!;
+    [Inject]
+    private IMenuService MenuService { get; set; } = default!;
 
-    private bool _canViewHangfire;
-    private bool _canViewDashboard;
-    private bool _canViewRoles;
-    private bool _canViewUsers;
-    private bool _canViewProducts;
-    private bool _canViewBrands;
-    private bool _canViewTodos;
-    private bool _canViewTenants;
-    private bool _canViewAuditTrails;
-
-    private bool CanViewAdministrationGroup => _canViewUsers || _canViewRoles || _canViewTenants;
+    private List<MenuSectionModel> _sections = new();
 
     protected override async Task OnParametersSetAsync()
     {
         var user = (await AuthState).User;
-        _canViewHangfire = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Hangfire);
-        _canViewDashboard = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Dashboard);
-        _canViewRoles = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Roles);
-        _canViewUsers = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Users);
-        _canViewProducts = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Products);
-        _canViewBrands = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Brands);
-        _canViewTodos = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Todos);
-        _canViewTenants = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.Tenants);
-        _canViewAuditTrails = await AuthService.HasPermissionAsync(user, FshActions.View, FshResources.AuditTrails);
+
+        bool HasAnyRole(string[]? roles)
+            => roles is null || roles.Length == 0 || roles.Any(user.IsInRole);
+
+        async Task<bool> HasPermissionAsync(string? action, string? resource)
+        {
+            if (string.IsNullOrWhiteSpace(action) || string.IsNullOrWhiteSpace(resource))
+                return true;
+            return await AuthService.HasPermissionAsync(user, action, resource).ConfigureAwait(false);
+        }
+
+        var result = new List<MenuSectionModel>();
+        foreach (var section in MenuService.Features)
+        {
+            if (!HasAnyRole(section.Roles)) continue;
+
+            var filteredSection = new MenuSectionModel { Title = section.Title };
+
+            foreach (var item in section.SectionItems)
+            {
+                if (!HasAnyRole(item.Roles)) continue;
+
+                if (item.IsParent && item.MenuItems is not null)
+                {
+                    var filteredSubs = new List<MenuSectionSubItemModel>();
+                    foreach (var sub in item.MenuItems)
+                    {
+                        if (!HasAnyRole(sub.Roles)) continue;
+                        if (!await HasPermissionAsync(sub.Action, sub.Resource).ConfigureAwait(false)) continue;
+                        filteredSubs.Add(sub);
+                    }
+
+                    if (filteredSubs.Count > 0)
+                    {
+                        filteredSection.SectionItems.Add(new MenuSectionItemModel
+                        {
+                            Title = item.Title,
+                            Icon = item.Icon,
+                            IsParent = true,
+                            MenuItems = filteredSubs
+                        });
+                    }
+                }
+                else
+                {
+                    if (!await HasPermissionAsync(item.Action, item.Resource).ConfigureAwait(false)) continue;
+                    filteredSection.SectionItems.Add(item);
+                }
+            }
+
+            if (filteredSection.SectionItems.Count > 0)
+            {
+                result.Add(filteredSection);
+            }
+        }
+
+        _sections = result;
     }
 }
