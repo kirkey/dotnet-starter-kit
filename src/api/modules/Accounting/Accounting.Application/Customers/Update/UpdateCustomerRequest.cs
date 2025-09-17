@@ -14,7 +14,7 @@ public class UpdateCustomerRequest(
     string? tin = null,
     string? phoneNumber = null,
     decimal? creditLimit = null,
-    bool? isActive = null,
+    bool isActive = false,
     string? description = null,
     string? notes = null)
     : IRequest<DefaultIdType>
@@ -32,7 +32,7 @@ public class UpdateCustomerRequest(
     public string? Tin { get; set; } = tin;
     public string? PhoneNumber { get; set; } = phoneNumber;
     public decimal? CreditLimit { get; set; } = creditLimit;
-    public bool? IsActive { get; set; } = isActive;
+    public bool IsActive { get; set; } = isActive;
     public string? Description { get; set; } = description;
     public string? Notes { get; set; } = notes;
 }

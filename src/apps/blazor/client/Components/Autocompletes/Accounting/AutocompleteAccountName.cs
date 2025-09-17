@@ -2,11 +2,11 @@ using FSH.Starter.Blazor.Infrastructure.Api;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace FSH.Starter.Blazor.Client.Components.Autocompletes.App;
+namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting;
 
-public class AutocompleteGroupByParent : MudAutocomplete<string>
+public class AutocompleteAccountName : MudAutocomplete<string>
 {
-    private List<GroupDto> _list = new();
+    private List<ChartOfAccountDto> _list = new();
 
     [Parameter] public string Parent { get; set; } = default!;
 
@@ -29,20 +29,20 @@ public class AutocompleteGroupByParent : MudAutocomplete<string>
 
     private async Task<IEnumerable<string>>? SearchText(string? value, CancellationToken cancellationToken)
     {
-        var filter = new GroupSearchCommand
+        var filter = new ChartOfAccountSearchRequest
         {
-            AdvancedSearch = new Search { Fields = new[] { "code", "name", "description", "notes" }, Keyword = value },
+            AdvancedSearch = new Search { Fields = new[] { "accountName", "name", "description", "notes" }, Keyword = value },
             PageSize = 10
         };
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                    () => ApiClient.GroupSearchEndpointAsync("1", filter, cancellationToken), Toast, Navigation)
+                    () => ApiClient.ChartOfAccountSearchEndpointAsync("1", filter, cancellationToken), Toast, Navigation)
                 .ConfigureAwait(false)
             is var response)
         {
-            _list = response?.Items?.ToList() ?? new List<GroupDto>();
+            _list = response?.Items?.ToList() ?? new List<ChartOfAccountDto>();
         }
 
-        return _list.Where(x => x.Parent!.Equals(Parent, StringComparison.OrdinalIgnoreCase)).Select(x => x.Name)!;
+        return _list.Select(x => x.Name!);
     }
 }

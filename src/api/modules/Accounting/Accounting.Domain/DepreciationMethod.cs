@@ -30,7 +30,7 @@ public class DepreciationMethod : AuditableEntity, IAggregateRoot
         return new DepreciationMethod(methodCode, methodName, calculationFormula, description, notes);
     }
 
-    public DepreciationMethod Update(string? methodCode, string? methodName, string? calculationFormula, bool? isActive, string? description, string? notes)
+    public DepreciationMethod Update(string? methodCode, string? methodName, string? calculationFormula, bool isActive = false, string? description = null, string? notes = null)
     {
         bool isUpdated = false;
 
@@ -64,9 +64,9 @@ public class DepreciationMethod : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (isActive.HasValue && IsActive != isActive.Value)
+        if (IsActive != isActive)
         {
-            IsActive = isActive.Value;
+            IsActive = isActive;
             isUpdated = true;
         }
 

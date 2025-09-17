@@ -117,7 +117,7 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
     public FixedAsset Update(string? assetName = null, string? location = null, string? department = null,
         string? serialNumber = null, string? gpsCoordinates = null, string? substationName = null,
         string? regulatoryClassification = null, decimal? voltageRating = null, decimal? capacity = null,
-        string? manufacturer = null, string? modelNumber = null, bool? requiresUsoaReporting = null,
+        string? manufacturer = null, string? modelNumber = null, bool requiresUsoaReporting = false,
         string? description = null, string? notes = null)
     {
         if (IsDisposed)
@@ -192,9 +192,9 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (requiresUsoaReporting.HasValue && RequiresUsoaReporting != requiresUsoaReporting.Value)
+        if (RequiresUsoaReporting != requiresUsoaReporting)
         {
-            RequiresUsoaReporting = requiresUsoaReporting.Value;
+            RequiresUsoaReporting = requiresUsoaReporting;
             isUpdated = true;
         }
 

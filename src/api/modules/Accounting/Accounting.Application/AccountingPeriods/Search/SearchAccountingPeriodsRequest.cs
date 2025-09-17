@@ -6,7 +6,5 @@ public class SearchAccountingPeriodsRequest : PaginationFilter, IRequest<PagedLi
 {
     public string? Name { get; set; }
     public int? FiscalYear { get; set; }
-    public bool? IsClosed { get; set; }
+    public bool IsClosed { get; set; }
 }
-
-

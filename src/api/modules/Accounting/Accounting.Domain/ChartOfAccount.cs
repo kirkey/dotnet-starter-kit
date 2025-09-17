@@ -113,7 +113,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
     public ChartOfAccount Update(string? accountName = null, string? accountType = null, 
         string? usoaCategory = null, DefaultIdType? subAccountOf = null, string? parentCode = null,
-        bool? isControlAccount = null, string? normalBalance = null, bool? isUsoaCompliant = null,
+        bool isControlAccount = false, string? normalBalance = null, bool isUsoaCompliant = false,
         string? regulatoryClassification = null, string? description = null, string? notes = null)
     {
         bool isUpdated = false;
@@ -166,9 +166,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (isControlAccount.HasValue && IsControlAccount != isControlAccount.Value)
+        if (IsControlAccount != isControlAccount)
         {
-            IsControlAccount = isControlAccount.Value;
+            IsControlAccount = isControlAccount;
             AllowDirectPosting = !IsControlAccount;
             isUpdated = true;
         }
@@ -182,9 +182,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (isUsoaCompliant.HasValue && IsUsoaCompliant != isUsoaCompliant.Value)
+        if (IsUsoaCompliant != isUsoaCompliant)
         {
-            IsUsoaCompliant = isUsoaCompliant.Value;
+            IsUsoaCompliant = isUsoaCompliant;
             isUpdated = true;
         }
 

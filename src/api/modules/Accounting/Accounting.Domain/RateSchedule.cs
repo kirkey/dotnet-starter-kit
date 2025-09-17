@@ -49,7 +49,7 @@ public class RateSchedule : AuditableEntity, IAggregateRoot
         return new RateSchedule(rateCode, rateName, effectiveDate, energyRatePerKwh, fixedMonthlyCharge, isTimeOfUse, demandRatePerKw, expirationDate, description);
     }
 
-    public RateSchedule Update(string? rateName = null, DateTime? effectiveDate = null, DateTime? expirationDate = null, decimal? energyRatePerKwh = null, decimal? demandRatePerKw = null, decimal? fixedMonthlyCharge = null, bool? isTimeOfUse = null, string? description = null)
+    public RateSchedule Update(string? rateName = null, DateTime? effectiveDate = null, DateTime? expirationDate = null, decimal? energyRatePerKwh = null, decimal? demandRatePerKw = null, decimal? fixedMonthlyCharge = null, bool isTimeOfUse = false, string? description = null)
     {
         bool isUpdated = false;
         if (!string.IsNullOrWhiteSpace(rateName) && RateName != rateName.Trim()) { RateName = rateName.Trim(); isUpdated = true; }
@@ -58,7 +58,7 @@ public class RateSchedule : AuditableEntity, IAggregateRoot
         if (energyRatePerKwh.HasValue && EnergyRatePerKwh != energyRatePerKwh.Value) { EnergyRatePerKwh = energyRatePerKwh.Value; isUpdated = true; }
         if (demandRatePerKw.HasValue && DemandRatePerKw != demandRatePerKw.Value) { DemandRatePerKw = demandRatePerKw; isUpdated = true; }
         if (fixedMonthlyCharge.HasValue && FixedMonthlyCharge != fixedMonthlyCharge.Value) { FixedMonthlyCharge = fixedMonthlyCharge.Value; isUpdated = true; }
-        if (isTimeOfUse.HasValue && IsTimeOfUse != isTimeOfUse.Value) { IsTimeOfUse = isTimeOfUse.Value; isUpdated = true; }
+        if (IsTimeOfUse != isTimeOfUse) { IsTimeOfUse = isTimeOfUse; isUpdated = true; }
         if (description != Description) { Description = description?.Trim(); isUpdated = true; }
 
         if (isUpdated) QueueDomainEvent(new RateScheduleUpdated(this));

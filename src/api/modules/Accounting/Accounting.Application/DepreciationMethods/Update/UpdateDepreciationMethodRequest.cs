@@ -5,6 +5,6 @@ public record UpdateDepreciationMethodRequest(
     string? MethodCode = null,
     string? MethodName = null,
     string? CalculationFormula = null,
-    bool? IsActive = null,
+    bool IsActive = false,
     string? Description = null,
     string? Notes = null) : IRequest<DefaultIdType>;

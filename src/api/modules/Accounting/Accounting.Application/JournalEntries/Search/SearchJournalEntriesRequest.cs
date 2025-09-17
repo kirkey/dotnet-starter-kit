@@ -6,7 +6,5 @@ public class SearchJournalEntriesRequest : PaginationFilter, IRequest<PagedList<
 {
     public string? Name { get; set; }
     public string? ReferenceNumber { get; set; }
-    public bool? IsPosted { get; set; }
+    public bool IsPosted { get; set; }
 }
-
-

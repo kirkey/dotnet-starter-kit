@@ -15,7 +15,7 @@ public sealed class UpdateFixedAssetHandler(
 
         asset.Update(request.AssetName, request.Location, request.Department,
                     request.SerialNumber, null, null, null, null, null,
-                    null, null, null, request.Description, request.Notes);
+                    null, null, false, request.Description, request.Notes);
 
         await repository.UpdateAsync(asset, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

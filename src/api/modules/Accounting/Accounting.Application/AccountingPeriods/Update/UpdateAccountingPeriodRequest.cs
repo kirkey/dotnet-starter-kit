@@ -5,7 +5,7 @@ public record UpdateAccountingPeriodRequest(
     string? Name = null,
     DateTime? StartDate = null,
     DateTime? EndDate = null,
-    bool? IsAdjustmentPeriod = null,
+    bool IsAdjustmentPeriod = false,
     int? FiscalYear = null,
     string? PeriodType = null,
     string? Description = null,

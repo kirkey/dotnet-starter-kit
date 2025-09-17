@@ -64,8 +64,8 @@ public class FuelConsumption : AuditableEntity, IAggregateRoot
     }
 
     public FuelConsumption Update(decimal? quantity, decimal? unitCost, string? supplierId,
-        decimal? btuContent, decimal? sulfurContent, string? deliveryMethod, bool? isEmergencyFuel,
-        string? description, string? notes)
+        decimal? btuContent, decimal? sulfurContent, string? deliveryMethod, bool isEmergencyFuel = false,
+        string? description = null, string? notes = null)
     {
         bool isUpdated = false;
 
@@ -111,9 +111,9 @@ public class FuelConsumption : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (isEmergencyFuel.HasValue && IsEmergencyFuel != isEmergencyFuel.Value)
+        if (IsEmergencyFuel != isEmergencyFuel)
         {
-            IsEmergencyFuel = isEmergencyFuel.Value;
+            IsEmergencyFuel = isEmergencyFuel;
             isUpdated = true;
         }
 

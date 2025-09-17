@@ -1,6 +1,6 @@
 @page "/chart-of-accounts"
 
-@using FSH.Starter.Blazor.Client.Components.Autocompletes.App
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
 
 <PageHeader Title="Chart Of Accounts" Header="Chart Of Accounts" SubHeader="Manage Chart of Accounts." />
 
@@ -13,8 +13,8 @@
             </MudItem>
         }
         <MudItem xs="12" sm="12" md="6" lg="4">
-            <AutocompleteGroupByParent @bind-Value="context.UsoaCategory"
-                                       For="@(() => context.UsoaCategory)"
+            <AutocompleteUsoaCategory @bind-Value="context.UsoaCategory"
+                                       For="@(() => context.UsoaCategory!)"
                                        Label="Category"
                                        Parent="ACCOUNTCATEGORY"
                                        Variant="Variant.Filled" />

@@ -10,8 +10,6 @@ public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<Jo
             .OrderBy(e => e.Name!, !request.HasOrderBy())
             .Where(e => e.Name!.Contains(request.Name!), !string.IsNullOrEmpty(request.Name))
             .Where(e => e.ReferenceNumber!.Contains(request.ReferenceNumber!), !string.IsNullOrEmpty(request.ReferenceNumber))
-            .Where(e => e.IsPosted == request.IsPosted, request.IsPosted.HasValue);
+            .Where(e => e.IsPosted == request.IsPosted);
     }
 }
-
-

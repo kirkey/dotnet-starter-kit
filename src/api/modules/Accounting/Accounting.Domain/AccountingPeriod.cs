@@ -79,7 +79,7 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
     }
 
     public AccountingPeriod Update(string? periodName, DateTime? startDate, DateTime? endDate,
-        int? fiscalYear, string? periodType, bool? isAdjustmentPeriod, string? description, string? notes)
+        int? fiscalYear, string? periodType, bool isAdjustmentPeriod = false, string? description = null, string? notes = null)
     {
         bool isUpdated = false;
 
@@ -133,9 +133,9 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (isAdjustmentPeriod.HasValue && IsAdjustmentPeriod != isAdjustmentPeriod.Value)
+        if (IsAdjustmentPeriod != isAdjustmentPeriod)
         {
-            IsAdjustmentPeriod = isAdjustmentPeriod.Value;
+            IsAdjustmentPeriod = isAdjustmentPeriod;
             isUpdated = true;
         }
 

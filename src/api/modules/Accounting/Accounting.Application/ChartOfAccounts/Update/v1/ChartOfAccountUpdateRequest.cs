@@ -8,9 +8,9 @@ public class ChartOfAccountUpdateRequest : BaseRequest, IRequest<DefaultIdType>
     public string? UsoaCategory { get; set; }
     public DefaultIdType? SubAccountOf { get; set; }
     public string? ParentCode { get; set; }
-    public bool? IsControlAccount { get; set; }
+    public bool IsControlAccount { get; set; }
     public decimal Balance { get; set; }
     public string? NormalBalance { get; set; }
-    public bool? IsUsoaCompliant { get; set; }
+    public bool IsUsoaCompliant { get; set; }
     public string? RegulatoryClassification { get; set; }
 }
