@@ -12,7 +12,7 @@ using Store.Infrastructure.Persistence;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20250917010151_Initial")]
+    [Migration("20250917104000_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1311,7 +1311,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2000)
-                        .HasColumnType("VARCHAR(2048)");
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
@@ -2359,20 +2359,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
             modelBuilder.Entity("Store.Domain.SalesOrder", b =>
                 {
-                    b.HasOne("Store.Domain.Customer", "Customer")
+                    b.HasOne("Store.Domain.Customer", null)
                         .WithMany("SalesOrders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Store.Domain.Warehouse", "Warehouse")
+                    b.HasOne("Store.Domain.Warehouse", null)
                         .WithMany()
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Store.Domain.SalesOrderItem", b =>

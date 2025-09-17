@@ -31,5 +31,10 @@
 	 
 	   <ItemGroup>
 	     <Folder Include="Components\Autocompletes\App\" />
+	     <Folder Include="Pages\Store\Categories\" />
+	   </ItemGroup>
+	 
+	   <ItemGroup>
+	     <AdditionalFiles Include="Pages\Store\Categories\AccountingPeriods.razor" />
 	   </ItemGroup>
 	 </Project>
