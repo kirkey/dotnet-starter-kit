@@ -10,4 +10,3 @@ public sealed class InvalidDepreciationAmountException() : ForbiddenException("d
 public sealed class InvalidAssetPurchasePriceException() : ForbiddenException("asset purchase price must be positive");
 public sealed class InvalidAssetServiceLifeException() : ForbiddenException("asset service life must be positive");
 public sealed class InvalidAssetSalvageValueException() : ForbiddenException("salvage value cannot be negative or greater than purchase price");
-

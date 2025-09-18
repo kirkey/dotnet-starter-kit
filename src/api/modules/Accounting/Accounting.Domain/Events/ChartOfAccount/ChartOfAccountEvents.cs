@@ -16,4 +16,3 @@ public record ChartOfAccountBalanceUpdated(
     DefaultIdType Id, string AccountId, decimal Balance) : DomainEvent;
 
 public record ChartOfAccountStatusChanged(DefaultIdType Id, string AccountId, bool IsActive) : DomainEvent;
-

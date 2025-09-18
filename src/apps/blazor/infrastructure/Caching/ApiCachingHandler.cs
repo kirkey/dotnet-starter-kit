@@ -1,4 +1,3 @@
-using System.Net.Http;
 using System.Text;
 using FSH.Starter.Blazor.Infrastructure.Connectivity;
 using FSH.Starter.Blazor.Infrastructure.Metering;

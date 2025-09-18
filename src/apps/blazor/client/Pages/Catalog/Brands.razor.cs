@@ -41,6 +41,4 @@ public partial class Brands
             deleteFunc: async id => await _client.DeleteBrandEndpointAsync("1", id));
 }
 
-public partial class BrandViewModel : UpdateBrandCommand
-{
-}
+public partial class BrandViewModel : UpdateBrandCommand;

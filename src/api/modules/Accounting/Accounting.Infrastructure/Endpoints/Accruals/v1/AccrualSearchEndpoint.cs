@@ -1,5 +1,5 @@
-using Accounting.Application.Accruals.Queries;
 using Accounting.Application.Accruals.Dtos;
+using Accounting.Application.Accruals.Queries;
 
 // Endpoint for creating an accrual
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;

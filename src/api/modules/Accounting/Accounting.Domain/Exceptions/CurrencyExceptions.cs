@@ -1,6 +1,5 @@
 namespace Accounting.Domain.Exceptions;
 
-// Currency Exceptions
 public sealed class CurrencyByIdNotFoundException(DefaultIdType id) : NotFoundException($"currency with id {id} not found");
 public sealed class CurrencyByCodeNotFoundException(string currencyCode) : NotFoundException($"currency with code {currencyCode} not found");
 public sealed class CurrencyAlreadyActiveException(DefaultIdType id) : ForbiddenException($"currency with id {id} is already active");

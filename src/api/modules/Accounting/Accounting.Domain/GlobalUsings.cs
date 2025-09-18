@@ -1,5 +1,5 @@
 global using System;
-global using System.ComponentModel.DataAnnotations.Schema;
+global using Accounting.Domain;
 global using Accounting.Domain.Exceptions;
 global using FSH.Framework.Core.Caching;
 global using FSH.Framework.Core.Domain;

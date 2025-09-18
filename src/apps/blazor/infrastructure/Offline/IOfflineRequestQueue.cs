@@ -1,5 +1,3 @@
-using System.Net.Http;
-
 namespace FSH.Starter.Blazor.Infrastructure.Offline;
 
 public interface IOfflineRequestQueue

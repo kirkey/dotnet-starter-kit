@@ -1,5 +1,5 @@
-using Accounting.Application.PaymentAllocations.Queries;
 using Accounting.Application.PaymentAllocations.Dtos;
+using Accounting.Application.PaymentAllocations.Queries;
 
 namespace Accounting.Application.PaymentAllocations.Handlers;
 

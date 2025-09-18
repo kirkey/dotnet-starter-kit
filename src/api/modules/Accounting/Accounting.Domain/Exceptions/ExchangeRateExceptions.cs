@@ -1,6 +1,7 @@
+// ExchangeRate Exceptions
+
 namespace Accounting.Domain.Exceptions;
 
-// ExchangeRate Exceptions
 public sealed class ExchangeRateNotFoundException(DefaultIdType id) : NotFoundException($"exchange rate with id {id} not found");
 public sealed class ExchangeRateAlreadyActiveException(DefaultIdType id) : ForbiddenException($"exchange rate with id {id} is already active");
 public sealed class ExchangeRateAlreadyInactiveException(DefaultIdType id) : ForbiddenException($"exchange rate with id {id} is already inactive");

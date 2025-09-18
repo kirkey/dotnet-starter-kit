@@ -1,27 +1,25 @@
 using Accounting.Application.Accruals.Dtos;
 using Accounting.Application.Accruals.Queries;
 
-namespace Accounting.Application.Accruals.Handlers
+namespace Accounting.Application.Accruals.Handlers;
+
+public class GetAccrualByIdHandler(IReadRepository<Accrual> repository)
+    : IRequestHandler<GetAccrualByIdQuery, AccrualDto>
 {
-    public class GetAccrualByIdHandler(IReadRepository<Accrual> repository)
-        : IRequestHandler<GetAccrualByIdQuery, AccrualDto>
+    public async Task<AccrualDto> Handle(GetAccrualByIdQuery request, CancellationToken cancellationToken)
     {
-        public async Task<AccrualDto> Handle(GetAccrualByIdQuery request, CancellationToken cancellationToken)
+        var accrual = await repository.GetByIdAsync(request.Id, cancellationToken);
+        if (accrual == null)
+            throw new NotFoundException($"Accrual with Id {request.Id} not found");
+        return new AccrualDto
         {
-            var accrual = await repository.GetByIdAsync(request.Id, cancellationToken);
-            if (accrual == null)
-                throw new NotFoundException($"Accrual with Id {request.Id} not found");
-            return new AccrualDto
-            {
-                Id = accrual.Id,
-                AccrualNumber = accrual.AccrualNumber,
-                AccrualDate = accrual.AccrualDate,
-                Amount = accrual.Amount,
-                Description = accrual.Description,
-                IsReversed = accrual.IsReversed,
-                ReversalDate = accrual.ReversalDate
-            };
-        }
+            Id = accrual.Id,
+            AccrualNumber = accrual.AccrualNumber,
+            AccrualDate = accrual.AccrualDate,
+            Amount = accrual.Amount,
+            Description = accrual.Description,
+            IsReversed = accrual.IsReversed,
+            ReversalDate = accrual.ReversalDate
+        };
     }
 }
-

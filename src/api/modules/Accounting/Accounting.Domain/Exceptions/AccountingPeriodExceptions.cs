@@ -12,4 +12,3 @@ public sealed class InvalidAccountingPeriodDateRangeException() : ForbiddenExcep
 public sealed class AccountingPeriodInvalidNameException(string message) : ForbiddenException(message);
 public sealed class AccountingPeriodInvalidPeriodTypeException(string periodType) : ForbiddenException($"invalid accounting period type '{periodType}'");
 public sealed class AccountingPeriodInvalidFiscalYearException(int year) : ForbiddenException($"invalid fiscal year '{year}'");
-

@@ -1,4 +1,4 @@
-using Accounting.Application.DeferredRevenue.Commands;
+using Accounting.Application.DeferredRevenues.Commands;
 
 // Endpoint for updating a deferred revenue
 namespace Accounting.Infrastructure.Endpoints.DeferredRevenue.v1;

@@ -1,4 +1,4 @@
-using Accounting.Application.DeferredRevenue.Commands;
+using Accounting.Application.DeferredRevenues.Commands;
 
 namespace Accounting.Infrastructure.Endpoints.DeferredRevenue.v1;
 

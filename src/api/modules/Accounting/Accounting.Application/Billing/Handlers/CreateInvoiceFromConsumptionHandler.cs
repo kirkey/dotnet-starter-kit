@@ -4,12 +4,12 @@ namespace Accounting.Application.Billing.Handlers;
 
 public sealed class CreateInvoiceFromConsumptionHandler(
     IBillingService billingService,
-    [FromKeyedServices("accounting:consumptiondata")] IReadRepository<Domain.ConsumptionData> consumptionRepo,
+    [FromKeyedServices("accounting:consumptiondata")] IReadRepository<ConsumptionData> consumptionRepo,
     [FromKeyedServices("accounting:members")] IRepository<Member> memberRepo,
     [FromKeyedServices("accounting:rateschedules")] IReadRepository<RateSchedule> rateRepo,
     [FromKeyedServices("accounting:invoices")] IRepository<Invoice> invoiceRepo,
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> accountRepo,
-    [FromKeyedServices("accounting:postingbatches")] IRepository<Accounting.Domain.PostingBatch> postingBatchRepo
+    [FromKeyedServices("accounting:postingbatches")] IRepository<PostingBatch> postingBatchRepo
 ) : IRequestHandler<CreateInvoiceFromConsumptionCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(CreateInvoiceFromConsumptionCommand request, CancellationToken cancellationToken)
@@ -19,7 +19,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
         var consumption = await consumptionRepo.GetByIdAsync(request.ConsumptionId, cancellationToken);
         if (consumption == null) throw new KeyNotFoundException($"Consumption data {request.ConsumptionId} not found");
 
-        Member? member = null;
+        Domain.Member? member = null;
         // consumption.MeterId is DefaultIdType (non-nullable); find a member by matching MeterId
         member = (await memberRepo.ListAsync(cancellationToken: cancellationToken)).FirstOrDefault(m => m.MeterId.HasValue && m.MeterId.Value == consumption.MeterId);
 
@@ -86,7 +86,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
             je.AddLine(revenueAccount.Id, 0m, invoice.TotalAmount, $"Revenue for {invoice.InvoiceNumber}");
 
             var batchNumber = $"BATCH-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0,6)}";
-            var batch = Accounting.Domain.PostingBatch.Create(batchNumber, DateTime.UtcNow, description: $"Invoice posting for {invoice.InvoiceNumber}", periodId: null);
+            var batch = PostingBatch.Create(batchNumber, DateTime.UtcNow, description: $"Invoice posting for {invoice.InvoiceNumber}", periodId: null);
             batch.AddJournalEntry(je);
 
             await postingBatchRepo.AddAsync(batch, cancellationToken);

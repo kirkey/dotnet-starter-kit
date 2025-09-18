@@ -7,4 +7,3 @@ public record VendorUpdated(DefaultIdType Id, Accounting.Domain.Vendor Vendor) :
 public record VendorDeleted(DefaultIdType Id) : DomainEvent;
 
 public record VendorStatusChanged(DefaultIdType Id, string VendorCode, string Status) : DomainEvent;
-

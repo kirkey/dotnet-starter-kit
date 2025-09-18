@@ -1,4 +1,3 @@
-using System;
 namespace FSH.Starter.Blazor.Infrastructure.Session;
 public interface IIdleTimerService : IAsyncDisposable
 {

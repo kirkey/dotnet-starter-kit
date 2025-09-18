@@ -3,21 +3,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
+namespace FSH.Starter.WebApi.Migrations.MySQL.Identity;
+
+/// <inheritdoc />
+public partial class InitialIdentityDb : Migration
 {
     /// <inheritdoc />
-    public partial class InitialIdentityDb : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.EnsureSchema(
-                name: "identity");
+        migrationBuilder.EnsureSchema(
+            name: "identity");
 
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
+        migrationBuilder.AlterDatabase()
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "AuditTrails",
                 schema: "identity",
                 columns: table => new
@@ -46,9 +46,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                 {
                     table.PrimaryKey("PK_AuditTrails", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Roles",
                 schema: "identity",
                 columns: table => new
@@ -70,9 +70,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Users",
                 schema: "identity",
                 columns: table => new
@@ -128,9 +128,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 schema: "identity",
                 columns: table => new
@@ -160,9 +160,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "UserClaims",
                 schema: "identity",
                 columns: table => new
@@ -189,9 +189,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "UserLogins",
                 schema: "identity",
                 columns: table => new
@@ -218,9 +218,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "UserRoles",
                 schema: "identity",
                 columns: table => new
@@ -250,9 +250,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "UserTokens",
                 schema: "identity",
                 columns: table => new
@@ -279,87 +279,86 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Identity
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleClaims_RoleId",
-                schema: "identity",
-                table: "RoleClaims",
-                column: "RoleId");
+        migrationBuilder.CreateIndex(
+            name: "IX_RoleClaims_RoleId",
+            schema: "identity",
+            table: "RoleClaims",
+            column: "RoleId");
 
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                schema: "identity",
-                table: "Roles",
-                columns: new[] { "NormalizedName", "TenantId" },
-                unique: true);
+        migrationBuilder.CreateIndex(
+            name: "RoleNameIndex",
+            schema: "identity",
+            table: "Roles",
+            columns: new[] { "NormalizedName", "TenantId" },
+            unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_UserClaims_UserId",
-                schema: "identity",
-                table: "UserClaims",
-                column: "UserId");
+        migrationBuilder.CreateIndex(
+            name: "IX_UserClaims_UserId",
+            schema: "identity",
+            table: "UserClaims",
+            column: "UserId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_UserLogins_UserId",
-                schema: "identity",
-                table: "UserLogins",
-                column: "UserId");
+        migrationBuilder.CreateIndex(
+            name: "IX_UserLogins_UserId",
+            schema: "identity",
+            table: "UserLogins",
+            column: "UserId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_RoleId",
-                schema: "identity",
-                table: "UserRoles",
-                column: "RoleId");
+        migrationBuilder.CreateIndex(
+            name: "IX_UserRoles_RoleId",
+            schema: "identity",
+            table: "UserRoles",
+            column: "RoleId");
 
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                schema: "identity",
-                table: "Users",
-                column: "NormalizedEmail");
+        migrationBuilder.CreateIndex(
+            name: "EmailIndex",
+            schema: "identity",
+            table: "Users",
+            column: "NormalizedEmail");
 
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                schema: "identity",
-                table: "Users",
-                column: "NormalizedUserName",
-                unique: true);
-        }
+        migrationBuilder.CreateIndex(
+            name: "UserNameIndex",
+            schema: "identity",
+            table: "Users",
+            column: "NormalizedUserName",
+            unique: true);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "AuditTrails",
-                schema: "identity");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            name: "AuditTrails",
+            schema: "identity");
 
-            migrationBuilder.DropTable(
-                name: "RoleClaims",
-                schema: "identity");
+        migrationBuilder.DropTable(
+            name: "RoleClaims",
+            schema: "identity");
 
-            migrationBuilder.DropTable(
-                name: "UserClaims",
-                schema: "identity");
+        migrationBuilder.DropTable(
+            name: "UserClaims",
+            schema: "identity");
 
-            migrationBuilder.DropTable(
-                name: "UserLogins",
-                schema: "identity");
+        migrationBuilder.DropTable(
+            name: "UserLogins",
+            schema: "identity");
 
-            migrationBuilder.DropTable(
-                name: "UserRoles",
-                schema: "identity");
+        migrationBuilder.DropTable(
+            name: "UserRoles",
+            schema: "identity");
 
-            migrationBuilder.DropTable(
-                name: "UserTokens",
-                schema: "identity");
+        migrationBuilder.DropTable(
+            name: "UserTokens",
+            schema: "identity");
 
-            migrationBuilder.DropTable(
-                name: "Roles",
-                schema: "identity");
+        migrationBuilder.DropTable(
+            name: "Roles",
+            schema: "identity");
 
-            migrationBuilder.DropTable(
-                name: "Users",
-                schema: "identity");
-        }
+        migrationBuilder.DropTable(
+            name: "Users",
+            schema: "identity");
     }
 }

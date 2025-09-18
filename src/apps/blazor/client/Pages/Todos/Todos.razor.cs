@@ -43,6 +43,4 @@ public partial class Todos
             deleteFunc: async id => await ApiClient.DeleteTodoEndpointAsync("1", id));
 }
 
-public partial class TodoViewModel : UpdateTodoCommand
-{
-}
+public partial class TodoViewModel : UpdateTodoCommand;

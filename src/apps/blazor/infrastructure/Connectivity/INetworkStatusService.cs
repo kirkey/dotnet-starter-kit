@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-
 namespace FSH.Starter.Blazor.Infrastructure.Connectivity;
 
 public interface INetworkStatusService

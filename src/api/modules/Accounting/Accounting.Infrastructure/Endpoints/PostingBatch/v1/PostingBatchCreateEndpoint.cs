@@ -1,4 +1,4 @@
-using Accounting.Application.PostingBatch.Commands;
+using Accounting.Application.PostingBatches.Commands;
 
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;
 

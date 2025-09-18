@@ -2,24 +2,23 @@ using Accounting.Application.Accruals.Commands;
 using Accounting.Application.Accruals.Exceptions;
 using Accounting.Application.Accruals.Queries;
 
-namespace Accounting.Application.Accruals.Handlers
+namespace Accounting.Application.Accruals.Handlers;
+
+public class CreateAccrualHandler(IRepository<Accrual> repository)
+    : IRequestHandler<CreateAccrualCommand, DefaultIdType>
 {
-    public class CreateAccrualHandler(IRepository<Accrual> repository)
-        : IRequestHandler<CreateAccrualCommand, DefaultIdType>
+    public async Task<DefaultIdType> Handle(CreateAccrualCommand request, CancellationToken cancellationToken)
     {
-        public async Task<DefaultIdType> Handle(CreateAccrualCommand request, CancellationToken cancellationToken)
-        {
-            var accrualNumber = request.AccrualNumber?.Trim() ?? string.Empty;
+        var accrualNumber = request.AccrualNumber?.Trim() ?? string.Empty;
 
-            // Duplicate accrual number
-            var existing = await repository.FirstOrDefaultAsync(new AccrualByNumberSpec(accrualNumber), cancellationToken);
-            if (existing != null)
-                throw new AccrualAlreadyExistsException(accrualNumber);
+        // Duplicate accrual number
+        var existing = await repository.FirstOrDefaultAsync(new AccrualByNumberSpec(accrualNumber), cancellationToken);
+        if (existing != null)
+            throw new AccrualAlreadyExistsException(accrualNumber);
 
-            var accrual = Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description);
-            await repository.AddAsync(accrual, cancellationToken);
-            await repository.SaveChangesAsync(cancellationToken);
-            return accrual.Id;
-        }
+        var accrual = Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description);
+        await repository.AddAsync(accrual, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+        return accrual.Id;
     }
 }

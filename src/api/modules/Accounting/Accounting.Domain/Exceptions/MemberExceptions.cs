@@ -11,4 +11,3 @@ public sealed class InvalidMemberNumberException(string message) : ForbiddenExce
 public sealed class InvalidMemberContactException(string message) : ForbiddenException(message);
 public sealed class InvalidMemberAddressException(string message) : ForbiddenException(message);
 public sealed class NegativeMemberBalanceException(DefaultIdType id, decimal balance) : ForbiddenException($"member {id} has invalid negative balance {balance}");
-

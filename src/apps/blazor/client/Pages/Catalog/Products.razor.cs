@@ -98,6 +98,4 @@ public partial class Products
     }
 }
 
-public partial class ProductViewModel : UpdateProductCommand
-{
-}
+public partial class ProductViewModel : UpdateProductCommand;

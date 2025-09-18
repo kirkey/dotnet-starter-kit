@@ -1,4 +1,4 @@
-using Accounting.Application.Patronage.Commands;
+using Accounting.Application.Patronages.Commands;
 
 namespace Accounting.Infrastructure.Endpoints.Patronage.v1;
 

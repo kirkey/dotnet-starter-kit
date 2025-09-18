@@ -2,21 +2,21 @@
 
 #nullable disable
 
-namespace FSH.Starter.WebApi.Migrations.MySQL.Catalog
+namespace FSH.Starter.WebApi.Migrations.MySQL.Catalog;
+
+/// <inheritdoc />
+public partial class InitialCatalogDb : Migration
 {
     /// <inheritdoc />
-    public partial class InitialCatalogDb : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.EnsureSchema(
-                name: "catalog");
+        migrationBuilder.EnsureSchema(
+            name: "catalog");
 
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
+        migrationBuilder.AlterDatabase()
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Brands",
                 schema: "catalog",
                 columns: table => new
@@ -53,9 +53,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Catalog
                 {
                     table.PrimaryKey("PK_Brands", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Products",
                 schema: "catalog",
                 columns: table => new
@@ -100,25 +100,24 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Catalog
                         principalTable: "Brands",
                         principalColumn: "Id");
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_BrandId",
-                schema: "catalog",
-                table: "Products",
-                column: "BrandId");
-        }
+        migrationBuilder.CreateIndex(
+            name: "IX_Products_BrandId",
+            schema: "catalog",
+            table: "Products",
+            column: "BrandId");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Products",
-                schema: "catalog");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            name: "Products",
+            schema: "catalog");
 
-            migrationBuilder.DropTable(
-                name: "Brands",
-                schema: "catalog");
-        }
+        migrationBuilder.DropTable(
+            name: "Brands",
+            schema: "catalog");
     }
 }

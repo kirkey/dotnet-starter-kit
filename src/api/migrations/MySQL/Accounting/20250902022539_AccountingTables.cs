@@ -2,50 +2,50 @@
 
 #nullable disable
 
-namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
+namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting;
+
+/// <inheritdoc />
+public partial class AccountingTables : Migration
 {
     /// <inheritdoc />
-    public partial class AccountingTables : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Currencies",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Currencies",
+            schema: "accounting");
 
-            migrationBuilder.AddColumn<string>(
+        migrationBuilder.AddColumn<string>(
                 name: "ApprovalStatus",
                 schema: "accounting",
                 table: "JournalEntries",
                 type: "longtext",
                 nullable: false)
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<string>(
+        migrationBuilder.AddColumn<string>(
                 name: "ApprovedBy",
                 schema: "accounting",
                 table: "JournalEntries",
                 type: "longtext",
                 nullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "ApprovedDate",
-                schema: "accounting",
-                table: "JournalEntries",
-                type: "datetime(6)",
-                nullable: true);
+        migrationBuilder.AddColumn<DateTime>(
+            name: "ApprovedDate",
+            schema: "accounting",
+            table: "JournalEntries",
+            type: "datetime(6)",
+            nullable: true);
 
-            migrationBuilder.AddColumn<Guid>(
-                name: "PostingBatchId",
-                schema: "accounting",
-                table: "JournalEntries",
-                type: "char(36)",
-                nullable: true,
-                collation: "ascii_general_ci");
+        migrationBuilder.AddColumn<Guid>(
+            name: "PostingBatchId",
+            schema: "accounting",
+            table: "JournalEntries",
+            type: "char(36)",
+            nullable: true,
+            collation: "ascii_general_ci");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Accruals",
                 schema: "accounting",
                 columns: table => new
@@ -82,9 +82,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Accruals", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "DeferredRevenues",
                 schema: "accounting",
                 columns: table => new
@@ -121,9 +121,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_DeferredRevenues", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "PostingBatches",
                 schema: "accounting",
                 columns: table => new
@@ -165,9 +165,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_PostingBatches", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "RegulatoryReports",
                 schema: "accounting",
                 columns: table => new
@@ -232,111 +232,111 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_RegulatoryReports", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_JournalEntries_PostingBatchId",
-                schema: "accounting",
-                table: "JournalEntries",
-                column: "PostingBatchId");
+        migrationBuilder.CreateIndex(
+            name: "IX_JournalEntries_PostingBatchId",
+            schema: "accounting",
+            table: "JournalEntries",
+            column: "PostingBatchId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RegulatoryReports_DueDate",
-                schema: "accounting",
-                table: "RegulatoryReports",
-                column: "DueDate");
+        migrationBuilder.CreateIndex(
+            name: "IX_RegulatoryReports_DueDate",
+            schema: "accounting",
+            table: "RegulatoryReports",
+            column: "DueDate");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RegulatoryReports_PeriodStartDate_PeriodEndDate",
-                schema: "accounting",
-                table: "RegulatoryReports",
-                columns: new[] { "PeriodStartDate", "PeriodEndDate" });
+        migrationBuilder.CreateIndex(
+            name: "IX_RegulatoryReports_PeriodStartDate_PeriodEndDate",
+            schema: "accounting",
+            table: "RegulatoryReports",
+            columns: new[] { "PeriodStartDate", "PeriodEndDate" });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RegulatoryReports_RegulatoryBody",
-                schema: "accounting",
-                table: "RegulatoryReports",
-                column: "RegulatoryBody");
+        migrationBuilder.CreateIndex(
+            name: "IX_RegulatoryReports_RegulatoryBody",
+            schema: "accounting",
+            table: "RegulatoryReports",
+            column: "RegulatoryBody");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RegulatoryReports_ReportName",
-                schema: "accounting",
-                table: "RegulatoryReports",
-                column: "ReportName",
-                unique: true);
+        migrationBuilder.CreateIndex(
+            name: "IX_RegulatoryReports_ReportName",
+            schema: "accounting",
+            table: "RegulatoryReports",
+            column: "ReportName",
+            unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RegulatoryReports_ReportType",
-                schema: "accounting",
-                table: "RegulatoryReports",
-                column: "ReportType");
+        migrationBuilder.CreateIndex(
+            name: "IX_RegulatoryReports_ReportType",
+            schema: "accounting",
+            table: "RegulatoryReports",
+            column: "ReportType");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RegulatoryReports_Status",
-                schema: "accounting",
-                table: "RegulatoryReports",
-                column: "Status");
+        migrationBuilder.CreateIndex(
+            name: "IX_RegulatoryReports_Status",
+            schema: "accounting",
+            table: "RegulatoryReports",
+            column: "Status");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_JournalEntries_PostingBatches_PostingBatchId",
-                schema: "accounting",
-                table: "JournalEntries",
-                column: "PostingBatchId",
-                principalSchema: "accounting",
-                principalTable: "PostingBatches",
-                principalColumn: "Id");
-        }
+        migrationBuilder.AddForeignKey(
+            name: "FK_JournalEntries_PostingBatches_PostingBatchId",
+            schema: "accounting",
+            table: "JournalEntries",
+            column: "PostingBatchId",
+            principalSchema: "accounting",
+            principalTable: "PostingBatches",
+            principalColumn: "Id");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_JournalEntries_PostingBatches_PostingBatchId",
-                schema: "accounting",
-                table: "JournalEntries");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropForeignKey(
+            name: "FK_JournalEntries_PostingBatches_PostingBatchId",
+            schema: "accounting",
+            table: "JournalEntries");
 
-            migrationBuilder.DropTable(
-                name: "Accruals",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Accruals",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "DeferredRevenues",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "DeferredRevenues",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "PostingBatches",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "PostingBatches",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "RegulatoryReports",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "RegulatoryReports",
+            schema: "accounting");
 
-            migrationBuilder.DropIndex(
-                name: "IX_JournalEntries_PostingBatchId",
-                schema: "accounting",
-                table: "JournalEntries");
+        migrationBuilder.DropIndex(
+            name: "IX_JournalEntries_PostingBatchId",
+            schema: "accounting",
+            table: "JournalEntries");
 
-            migrationBuilder.DropColumn(
-                name: "ApprovalStatus",
-                schema: "accounting",
-                table: "JournalEntries");
+        migrationBuilder.DropColumn(
+            name: "ApprovalStatus",
+            schema: "accounting",
+            table: "JournalEntries");
 
-            migrationBuilder.DropColumn(
-                name: "ApprovedBy",
-                schema: "accounting",
-                table: "JournalEntries");
+        migrationBuilder.DropColumn(
+            name: "ApprovedBy",
+            schema: "accounting",
+            table: "JournalEntries");
 
-            migrationBuilder.DropColumn(
-                name: "ApprovedDate",
-                schema: "accounting",
-                table: "JournalEntries");
+        migrationBuilder.DropColumn(
+            name: "ApprovedDate",
+            schema: "accounting",
+            table: "JournalEntries");
 
-            migrationBuilder.DropColumn(
-                name: "PostingBatchId",
-                schema: "accounting",
-                table: "JournalEntries");
+        migrationBuilder.DropColumn(
+            name: "PostingBatchId",
+            schema: "accounting",
+            table: "JournalEntries");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Currencies",
                 schema: "accounting",
                 columns: table => new
@@ -374,14 +374,13 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Currencies", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Currencies_CurrencyCode",
-                schema: "accounting",
-                table: "Currencies",
-                column: "CurrencyCode",
-                unique: true);
-        }
+        migrationBuilder.CreateIndex(
+            name: "IX_Currencies_CurrencyCode",
+            schema: "accounting",
+            table: "Currencies",
+            column: "CurrencyCode",
+            unique: true);
     }
 }

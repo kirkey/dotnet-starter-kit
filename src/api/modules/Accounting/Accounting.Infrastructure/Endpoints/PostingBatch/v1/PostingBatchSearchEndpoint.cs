@@ -1,5 +1,5 @@
-using Accounting.Application.PostingBatch.Queries;
-using Accounting.Application.PostingBatch.Dtos;
+using Accounting.Application.PostingBatches.Dtos;
+using Accounting.Application.PostingBatches.Queries;
 
 // Endpoint for searching posting batches
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;

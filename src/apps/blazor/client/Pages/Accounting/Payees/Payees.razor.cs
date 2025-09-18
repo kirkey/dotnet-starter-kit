@@ -45,6 +45,4 @@ public partial class Payees : ComponentBase
             deleteFunc: async id => await ApiClient.PayeeDeleteEndpointAsync("1", id));
 }
 
-public class ResponseViewModel : PayeeUpdateCommand
-{
-}
+public class ResponseViewModel : PayeeUpdateCommand;

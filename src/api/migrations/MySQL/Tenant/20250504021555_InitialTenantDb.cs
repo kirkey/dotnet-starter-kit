@@ -2,21 +2,21 @@
 
 #nullable disable
 
-namespace FSH.Starter.WebApi.Migrations.MySQL.Tenant
+namespace FSH.Starter.WebApi.Migrations.MySQL.Tenant;
+
+/// <inheritdoc />
+public partial class InitialTenantDb : Migration
 {
     /// <inheritdoc />
-    public partial class InitialTenantDb : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.EnsureSchema(
-                name: "tenant");
+        migrationBuilder.EnsureSchema(
+            name: "tenant");
 
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
+        migrationBuilder.AlterDatabase()
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Tenants",
                 schema: "tenant",
                 columns: table => new
@@ -40,22 +40,21 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Tenant
                 {
                     table.PrimaryKey("PK_Tenants", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Tenants_Identifier",
-                schema: "tenant",
-                table: "Tenants",
-                column: "Identifier",
-                unique: true);
-        }
+        migrationBuilder.CreateIndex(
+            name: "IX_Tenants_Identifier",
+            schema: "tenant",
+            table: "Tenants",
+            column: "Identifier",
+            unique: true);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Tenants",
-                schema: "tenant");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            name: "Tenants",
+            schema: "tenant");
     }
 }

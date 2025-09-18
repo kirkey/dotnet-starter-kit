@@ -72,7 +72,7 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     {
         Date = date;
         ReferenceNumber = referenceNumber.Trim()
-;
+            ;
         Description = description.Trim();
         Source = source.Trim();
         IsPosted = false;

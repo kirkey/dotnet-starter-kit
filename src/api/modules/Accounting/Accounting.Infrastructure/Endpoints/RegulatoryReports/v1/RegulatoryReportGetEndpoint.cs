@@ -1,5 +1,5 @@
-using Accounting.Application.RegulatoryReports.Get.v1;
 using Accounting.Application.RegulatoryReports.Dtos;
+using Accounting.Application.RegulatoryReports.Get.v1;
 
 namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 

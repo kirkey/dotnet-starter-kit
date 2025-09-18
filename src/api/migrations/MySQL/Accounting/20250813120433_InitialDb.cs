@@ -2,21 +2,21 @@
 
 #nullable disable
 
-namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
+namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting;
+
+/// <inheritdoc />
+public partial class InitialDb : Migration
 {
     /// <inheritdoc />
-    public partial class InitialDb : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.EnsureSchema(
-                name: "accounting");
+        migrationBuilder.EnsureSchema(
+            name: "accounting");
 
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
+        migrationBuilder.AlterDatabase()
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "AccountingPeriods",
                 schema: "accounting",
                 columns: table => new
@@ -54,9 +54,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_AccountingPeriods", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Budgets",
                 schema: "accounting",
                 columns: table => new
@@ -98,9 +98,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Budgets", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "ChartOfAccounts",
                 schema: "accounting",
                 columns: table => new
@@ -152,9 +152,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_ChartOfAccounts", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "ConsumptionData",
                 schema: "accounting",
                 columns: table => new
@@ -198,9 +198,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_ConsumptionData", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Currencies",
                 schema: "accounting",
                 columns: table => new
@@ -238,9 +238,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Currencies", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Customers",
                 schema: "accounting",
                 columns: table => new
@@ -294,9 +294,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "DepreciationMethods",
                 schema: "accounting",
                 columns: table => new
@@ -332,9 +332,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_DepreciationMethods", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "FixedAssets",
                 schema: "accounting",
                 columns: table => new
@@ -402,9 +402,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_FixedAssets", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "FuelConsumptions",
                 schema: "accounting",
                 columns: table => new
@@ -451,9 +451,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_FuelConsumptions", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "GeneralLedgers",
                 schema: "accounting",
                 columns: table => new
@@ -496,9 +496,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_GeneralLedgers", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Invoices",
                 schema: "accounting",
                 columns: table => new
@@ -554,9 +554,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Invoices", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "JournalEntries",
                 schema: "accounting",
                 columns: table => new
@@ -595,9 +595,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_JournalEntries", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Members",
                 schema: "accounting",
                 columns: table => new
@@ -654,9 +654,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Members", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Meters",
                 schema: "accounting",
                 columns: table => new
@@ -716,9 +716,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Meters", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Payees",
                 schema: "accounting",
                 columns: table => new
@@ -759,9 +759,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Payees", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Projects",
                 schema: "accounting",
                 columns: table => new
@@ -805,9 +805,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Vendors",
                 schema: "accounting",
                 columns: table => new
@@ -859,9 +859,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                 {
                     table.PrimaryKey("PK_Vendors", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "BudgetLines",
                 schema: "accounting",
                 columns: table => new
@@ -885,9 +885,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "DepreciationEntry",
                 schema: "accounting",
                 columns: table => new
@@ -910,9 +910,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "InvoiceLineItem",
                 schema: "accounting",
                 columns: table => new
@@ -938,9 +938,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "JournalEntryLines",
                 schema: "accounting",
                 columns: table => new
@@ -964,9 +964,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "MeterReading",
                 schema: "accounting",
                 columns: table => new
@@ -992,9 +992,9 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "JobCostingEntries",
                 schema: "accounting",
                 columns: table => new
@@ -1021,181 +1021,180 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AccountingPeriods_FiscalYear_PeriodType",
-                schema: "accounting",
-                table: "AccountingPeriods",
-                columns: new[] { "FiscalYear", "PeriodType" },
-                unique: true);
+        migrationBuilder.CreateIndex(
+            name: "IX_AccountingPeriods_FiscalYear_PeriodType",
+            schema: "accounting",
+            table: "AccountingPeriods",
+            columns: new[] { "FiscalYear", "PeriodType" },
+            unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_BudgetLines_BudgetId",
-                schema: "accounting",
-                table: "BudgetLines",
-                column: "BudgetId");
+        migrationBuilder.CreateIndex(
+            name: "IX_BudgetLines_BudgetId",
+            schema: "accounting",
+            table: "BudgetLines",
+            column: "BudgetId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ChartOfAccounts_AccountCode",
-                schema: "accounting",
-                table: "ChartOfAccounts",
-                column: "AccountCode",
-                unique: true);
+        migrationBuilder.CreateIndex(
+            name: "IX_ChartOfAccounts_AccountCode",
+            schema: "accounting",
+            table: "ChartOfAccounts",
+            column: "AccountCode",
+            unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Currencies_CurrencyCode",
-                schema: "accounting",
-                table: "Currencies",
-                column: "CurrencyCode",
-                unique: true);
+        migrationBuilder.CreateIndex(
+            name: "IX_Currencies_CurrencyCode",
+            schema: "accounting",
+            table: "Currencies",
+            column: "CurrencyCode",
+            unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_CustomerCode",
-                schema: "accounting",
-                table: "Customers",
-                column: "CustomerCode",
-                unique: true);
+        migrationBuilder.CreateIndex(
+            name: "IX_Customers_CustomerCode",
+            schema: "accounting",
+            table: "Customers",
+            column: "CustomerCode",
+            unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_DepreciationEntry_FixedAssetId",
-                schema: "accounting",
-                table: "DepreciationEntry",
-                column: "FixedAssetId");
+        migrationBuilder.CreateIndex(
+            name: "IX_DepreciationEntry_FixedAssetId",
+            schema: "accounting",
+            table: "DepreciationEntry",
+            column: "FixedAssetId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_InvoiceLineItem_InvoiceId",
-                schema: "accounting",
-                table: "InvoiceLineItem",
-                column: "InvoiceId");
+        migrationBuilder.CreateIndex(
+            name: "IX_InvoiceLineItem_InvoiceId",
+            schema: "accounting",
+            table: "InvoiceLineItem",
+            column: "InvoiceId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_JobCostingEntries_ProjectId",
-                schema: "accounting",
-                table: "JobCostingEntries",
-                column: "ProjectId");
+        migrationBuilder.CreateIndex(
+            name: "IX_JobCostingEntries_ProjectId",
+            schema: "accounting",
+            table: "JobCostingEntries",
+            column: "ProjectId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_JournalEntries_ReferenceNumber",
-                schema: "accounting",
-                table: "JournalEntries",
-                column: "ReferenceNumber",
-                unique: true);
+        migrationBuilder.CreateIndex(
+            name: "IX_JournalEntries_ReferenceNumber",
+            schema: "accounting",
+            table: "JournalEntries",
+            column: "ReferenceNumber",
+            unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_JournalEntryLines_JournalEntryId",
-                schema: "accounting",
-                table: "JournalEntryLines",
-                column: "JournalEntryId");
+        migrationBuilder.CreateIndex(
+            name: "IX_JournalEntryLines_JournalEntryId",
+            schema: "accounting",
+            table: "JournalEntryLines",
+            column: "JournalEntryId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_MeterReading_MeterId",
-                schema: "accounting",
-                table: "MeterReading",
-                column: "MeterId");
+        migrationBuilder.CreateIndex(
+            name: "IX_MeterReading_MeterId",
+            schema: "accounting",
+            table: "MeterReading",
+            column: "MeterId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Payees_PayeeCode",
-                schema: "accounting",
-                table: "Payees",
-                column: "PayeeCode",
-                unique: true);
-        }
+        migrationBuilder.CreateIndex(
+            name: "IX_Payees_PayeeCode",
+            schema: "accounting",
+            table: "Payees",
+            column: "PayeeCode",
+            unique: true);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "AccountingPeriods",
-                schema: "accounting");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            name: "AccountingPeriods",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "BudgetLines",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "BudgetLines",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "ChartOfAccounts",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "ChartOfAccounts",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "ConsumptionData",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "ConsumptionData",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Currencies",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Currencies",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Customers",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Customers",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "DepreciationEntry",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "DepreciationEntry",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "DepreciationMethods",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "DepreciationMethods",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "FuelConsumptions",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "FuelConsumptions",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "GeneralLedgers",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "GeneralLedgers",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "InvoiceLineItem",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "InvoiceLineItem",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "JobCostingEntries",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "JobCostingEntries",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "JournalEntryLines",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "JournalEntryLines",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Members",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Members",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "MeterReading",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "MeterReading",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Payees",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Payees",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Vendors",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Vendors",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Budgets",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Budgets",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "FixedAssets",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "FixedAssets",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Invoices",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Invoices",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Projects",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "Projects",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "JournalEntries",
-                schema: "accounting");
+        migrationBuilder.DropTable(
+            name: "JournalEntries",
+            schema: "accounting");
 
-            migrationBuilder.DropTable(
-                name: "Meters",
-                schema: "accounting");
-        }
+        migrationBuilder.DropTable(
+            name: "Meters",
+            schema: "accounting");
     }
 }

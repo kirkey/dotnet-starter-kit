@@ -1,6 +1,7 @@
+// Budget Exceptions
+
 namespace Accounting.Domain.Exceptions;
 
-// Budget Exceptions
 public sealed class BudgetNotFoundException(DefaultIdType id) : NotFoundException($"budget with id {id} not found");
 public sealed class BudgetAlreadyApprovedException(DefaultIdType id) : ForbiddenException($"budget with id {id} is already approved");
 public sealed class BudgetNotApprovedException(DefaultIdType id) : ForbiddenException($"budget with id {id} is not approved");

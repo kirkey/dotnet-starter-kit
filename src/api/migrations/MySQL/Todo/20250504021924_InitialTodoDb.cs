@@ -2,21 +2,21 @@
 
 #nullable disable
 
-namespace FSH.Starter.WebApi.Migrations.MySQL.Todo
+namespace FSH.Starter.WebApi.Migrations.MySQL.Todo;
+
+/// <inheritdoc />
+public partial class InitialTodoDb : Migration
 {
     /// <inheritdoc />
-    public partial class InitialTodoDb : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.EnsureSchema(
-                name: "todo");
+        migrationBuilder.EnsureSchema(
+            name: "todo");
 
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
+        migrationBuilder.AlterDatabase()
+            .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+        migrationBuilder.CreateTable(
                 name: "Todos",
                 schema: "todo",
                 columns: table => new
@@ -53,15 +53,14 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Todo
                 {
                     table.PrimaryKey("PK_Todos", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
-        }
+            .Annotation("MySql:CharSet", "utf8mb4");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Todos",
-                schema: "todo");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            name: "Todos",
+            schema: "todo");
     }
 }

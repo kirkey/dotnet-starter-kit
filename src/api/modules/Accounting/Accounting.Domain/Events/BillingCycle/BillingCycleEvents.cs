@@ -5,4 +5,3 @@ public record BillingCycleCreated(DefaultIdType Id, string CycleName, DateTime S
 public record BillingCycleUpdated(DefaultIdType Id, string? CycleName) : DomainEvent;
 
 public record BillingCycleDeleted(DefaultIdType Id) : DomainEvent;
-

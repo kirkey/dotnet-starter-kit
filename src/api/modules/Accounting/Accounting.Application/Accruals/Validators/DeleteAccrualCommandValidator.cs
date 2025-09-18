@@ -1,13 +1,11 @@
 using Accounting.Application.Accruals.Commands;
 
-namespace Accounting.Application.Accruals.Validators
+namespace Accounting.Application.Accruals.Validators;
+
+public class DeleteAccrualCommandValidator : AbstractValidator<DeleteAccrualCommand>
 {
-    public class DeleteAccrualCommandValidator : AbstractValidator<DeleteAccrualCommand>
+    public DeleteAccrualCommandValidator()
     {
-        public DeleteAccrualCommandValidator()
-        {
-            RuleFor(x => x.Id).NotEmpty();
-        }
+        RuleFor(x => x.Id).NotEmpty();
     }
 }
-

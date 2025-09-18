@@ -1,11 +1,11 @@
-using Accounting.Application.GeneralLedger.Specifications;
+using Accounting.Application.GeneralLedgers.Specifications;
 
 namespace Accounting.Application.Budgets.Queries.GenerateBudgetVarianceAnalysis.v1;
 
 public sealed class GenerateBudgetVarianceAnalysisQueryHandler(
     ILogger<GenerateBudgetVarianceAnalysisQueryHandler> logger,
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> budgetRepository,
-    [FromKeyedServices("accounting:generalledger")] IRepository<Domain.GeneralLedger> ledgerRepository,
+    [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<GenerateBudgetVarianceAnalysisQuery, BudgetVarianceAnalysisDto>
 {

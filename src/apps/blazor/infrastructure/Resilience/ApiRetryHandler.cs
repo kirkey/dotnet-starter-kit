@@ -1,5 +1,4 @@
 using System.Net;
-using System.Net.Http;
 using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.Blazor.Infrastructure.Resilience;

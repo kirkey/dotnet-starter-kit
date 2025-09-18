@@ -1,18 +1,17 @@
 using Accounting.Application.Accruals.Commands;
 
-namespace Accounting.Application.Accruals.Handlers
+namespace Accounting.Application.Accruals.Handlers;
+
+public class ReverseAccrualHandler(IRepository<Accrual> repository) : IRequestHandler<ReverseAccrualCommand>
 {
-    public class ReverseAccrualHandler(IRepository<Accrual> repository) : IRequestHandler<ReverseAccrualCommand>
+    public async Task Handle(ReverseAccrualCommand request, CancellationToken cancellationToken)
     {
-        public async Task Handle(ReverseAccrualCommand request, CancellationToken cancellationToken)
-        {
-            var accrual = await repository.GetByIdAsync(request.Id, cancellationToken);
-            if (accrual == null)
-                throw new NotFoundException($"Accrual with Id {request.Id} not found");
-            accrual.Reverse(request.ReversalDate);
-            await repository.UpdateAsync(accrual, cancellationToken);
-            await repository.SaveChangesAsync(cancellationToken);
-            // No return needed for Task
-        }
+        var accrual = await repository.GetByIdAsync(request.Id, cancellationToken);
+        if (accrual == null)
+            throw new NotFoundException($"Accrual with Id {request.Id} not found");
+        accrual.Reverse(request.ReversalDate);
+        await repository.UpdateAsync(accrual, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+        // No return needed for Task
     }
 }

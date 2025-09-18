@@ -1,10 +1,10 @@
-using Accounting.Application.GeneralLedger.Specifications;
+using Accounting.Application.GeneralLedgers.Specifications;
 
 namespace Accounting.Application.FinancialStatements.Queries.GenerateIncomeStatement.v1;
 
 public sealed class GenerateIncomeStatementQueryHandler(
     ILogger<GenerateIncomeStatementQueryHandler> logger,
-    [FromKeyedServices("accounting:generalledger")] IRepository<Domain.GeneralLedger> ledgerRepository,
+    [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<GenerateIncomeStatementQuery, IncomeStatementDto>
 {

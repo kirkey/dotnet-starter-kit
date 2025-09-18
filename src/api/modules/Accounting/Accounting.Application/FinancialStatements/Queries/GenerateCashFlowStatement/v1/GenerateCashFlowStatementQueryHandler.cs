@@ -1,10 +1,10 @@
-using Accounting.Application.GeneralLedger.Specifications;
+using Accounting.Application.GeneralLedgers.Specifications;
 
 namespace Accounting.Application.FinancialStatements.Queries.GenerateCashFlowStatement.v1;
 
 public sealed class GenerateCashFlowStatementQueryHandler(
     ILogger<GenerateCashFlowStatementQueryHandler> logger,
-    [FromKeyedServices("accounting:generalledger")] IRepository<Domain.GeneralLedger> ledgerRepository,
+    [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<GenerateCashFlowStatementQuery, CashFlowStatementDto>
 {
@@ -69,7 +69,7 @@ public sealed class GenerateCashFlowStatementQueryHandler(
         return result;
     }
 
-    private decimal CalculateNetIncome(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateNetIncome(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         var revenueAccounts = accounts.Where(a => a.AccountType == "Revenue");
         var expenseAccounts = accounts.Where(a => a.AccountType.Contains("Expense"));
@@ -82,14 +82,14 @@ public sealed class GenerateCashFlowStatementQueryHandler(
         return revenue - expenses;
     }
 
-    private decimal CalculateDepreciation(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateDepreciation(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         var depreciationAccounts = accounts.Where(a => a.AccountName.Contains("Depreciation"));
         return depreciationAccounts.Sum(acc => 
             ledgerEntries.Where(le => le.AccountId == acc.Id).Sum(le => le.Debit));
     }
 
-    private decimal CalculateWorkingCapitalChanges(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateWorkingCapitalChanges(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         // Simplified calculation - would need more sophisticated logic in practice
         var currentAssets = accounts.Where(a => a.AccountType == "Current Asset" && !a.AccountName.Contains("Cash"));
@@ -103,41 +103,41 @@ public sealed class GenerateCashFlowStatementQueryHandler(
         return liabilityChanges - assetChanges;
     }
 
-    private decimal CalculateFixedAssetPurchases(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateFixedAssetPurchases(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         var fixedAssetAccounts = accounts.Where(a => a.AccountType == "Fixed Asset");
         return -fixedAssetAccounts.Sum(acc => 
             ledgerEntries.Where(le => le.AccountId == acc.Id).Sum(le => le.Debit));
     }
 
-    private decimal CalculateFixedAssetSales(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateFixedAssetSales(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         // This would need more sophisticated logic to track asset disposals
         return 0;
     }
 
-    private decimal CalculateLoanProceeds(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateLoanProceeds(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         var loanAccounts = accounts.Where(a => a.AccountName.Contains("Loan") && a.AccountType.Contains("Liability"));
         return loanAccounts.Sum(acc => 
             ledgerEntries.Where(le => le.AccountId == acc.Id).Sum(le => le.Credit));
     }
 
-    private decimal CalculateLoanPayments(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateLoanPayments(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         var loanAccounts = accounts.Where(a => a.AccountName.Contains("Loan") && a.AccountType.Contains("Liability"));
         return -loanAccounts.Sum(acc => 
             ledgerEntries.Where(le => le.AccountId == acc.Id).Sum(le => le.Debit));
     }
 
-    private decimal CalculateOwnerContributions(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries)
+    private decimal CalculateOwnerContributions(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries)
     {
         var equityAccounts = accounts.Where(a => a.AccountType == "Equity" && a.AccountName.Contains("Capital"));
         return equityAccounts.Sum(acc => 
             ledgerEntries.Where(le => le.AccountId == acc.Id).Sum(le => le.Credit));
     }
 
-    private decimal CalculateBeginningCashBalance(IEnumerable<ChartOfAccount> accounts, IEnumerable<Domain.GeneralLedger> ledgerEntries, DateTime startDate)
+    private decimal CalculateBeginningCashBalance(IEnumerable<ChartOfAccount> accounts, IEnumerable<GeneralLedger> ledgerEntries, DateTime startDate)
     {
         var cashAccounts = accounts.Where(a => a.AccountName.Contains("Cash") || a.AccountName.Contains("Bank"));
         return cashAccounts.Sum(acc => 

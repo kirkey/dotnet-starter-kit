@@ -1,4 +1,4 @@
-using Accounting.Application.AccountReconciliation.Commands.ReconcileAccount.v1;
+using Accounting.Application.AccountReconciliations.Commands.ReconcileAccount.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountReconciliation.v1;
 

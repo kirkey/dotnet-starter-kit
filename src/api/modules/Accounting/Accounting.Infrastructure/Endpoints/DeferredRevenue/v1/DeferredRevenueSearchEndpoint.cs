@@ -1,4 +1,4 @@
-using Accounting.Application.DeferredRevenue.Queries;
+using Accounting.Application.DeferredRevenues.Queries;
 
 // Endpoint for searching deferred revenues
 namespace Accounting.Infrastructure.Endpoints.DeferredRevenue.v1;

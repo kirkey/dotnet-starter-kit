@@ -5,5 +5,3 @@ public record RegulatoryAccountCreated(DefaultIdType Id, string AccountCode, str
 public record RegulatoryAccountUpdated(DefaultIdType Id) : DomainEvent;
 
 public record RegulatoryAccountDeleted(DefaultIdType Id) : DomainEvent;
-
-

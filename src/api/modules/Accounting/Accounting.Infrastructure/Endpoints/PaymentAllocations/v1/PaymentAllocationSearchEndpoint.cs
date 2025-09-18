@@ -1,5 +1,4 @@
 using Accounting.Application.PaymentAllocations.Queries;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 
