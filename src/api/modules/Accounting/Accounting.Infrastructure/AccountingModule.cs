@@ -131,8 +131,6 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>();
         builder.Services.AddScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>();
         builder.Services.AddScoped<IReadRepository<FixedAsset>, AccountingRepository<FixedAsset>>();
-        builder.Services.AddScoped<IRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>();
-        builder.Services.AddScoped<IReadRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>();
         builder.Services.AddScoped<IRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>();
         builder.Services.AddScoped<IReadRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>();
         builder.Services.AddScoped<IRepository<Invoice>, AccountingRepository<Invoice>>();
@@ -184,8 +182,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting");
-        builder.Services.AddKeyedScoped<IRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Invoice>, AccountingRepository<Invoice>>("accounting");
@@ -236,8 +232,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");
         builder.Services.AddKeyedScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting:fixedassets");
         builder.Services.AddKeyedScoped<IReadRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting:fixedassets");
-        builder.Services.AddKeyedScoped<IRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting:fuelconsumptions");
-        builder.Services.AddKeyedScoped<IReadRepository<FuelConsumption>, AccountingRepository<FuelConsumption>>("accounting:fuelconsumptions");
         builder.Services.AddKeyedScoped<IRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting:generalledger");
         builder.Services.AddKeyedScoped<IReadRepository<GeneralLedger>, AccountingRepository<GeneralLedger>>("accounting:generalledger");
         builder.Services.AddKeyedScoped<IRepository<Invoice>, AccountingRepository<Invoice>>("accounting:invoices");

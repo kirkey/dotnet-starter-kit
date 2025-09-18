@@ -21,7 +21,6 @@ public sealed class AccountingDbContext(
     public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<DepreciationMethod> DepreciationMethods { get; set; } = null!;
     public DbSet<FixedAsset> FixedAssets { get; set; } = null!;
-    public DbSet<FuelConsumption> FuelConsumptions { get; set; } = null!;
     public DbSet<GeneralLedger> GeneralLedgers { get; set; } = null!;
     public DbSet<Invoice> Invoices { get; set; } = null!;
     public DbSet<JournalEntry> JournalEntries { get; set; } = null!;
