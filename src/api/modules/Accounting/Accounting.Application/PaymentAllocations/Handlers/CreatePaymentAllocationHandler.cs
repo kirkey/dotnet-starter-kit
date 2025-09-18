@@ -3,12 +3,12 @@ using Accounting.Application.PaymentAllocations.Commands;
 
 namespace Accounting.Application.PaymentAllocations.Handlers
 {
-    public class CreatePaymentAllocationHandler(IRepository<Accounting.Domain.PaymentAllocation> repository)
+    public class CreatePaymentAllocationHandler(IRepository<PaymentAllocation> repository)
         : IRequestHandler<CreatePaymentAllocationCommand, DefaultIdType>
     {
         public async Task<DefaultIdType> Handle(CreatePaymentAllocationCommand request, CancellationToken cancellationToken)
         {
-            var pa = Accounting.Domain.PaymentAllocation.Create(
+            var pa = PaymentAllocation.Create(
                 request.PaymentId,
                 request.InvoiceId,
                 request.Amount,

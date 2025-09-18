@@ -6,7 +6,7 @@ namespace Accounting.Domain;
 /// <remarks>
 /// Used to split a single payment across multiple invoices. Amount must be positive.
 /// </remarks>
-public class PaymentAllocation : BaseEntity
+public class PaymentAllocation : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Parent payment identifier.
@@ -25,19 +25,20 @@ public class PaymentAllocation : BaseEntity
 
     private PaymentAllocation() { }
 
-    private PaymentAllocation(DefaultIdType paymentId, DefaultIdType invoiceId, decimal amount)
+    private PaymentAllocation(DefaultIdType paymentId, DefaultIdType invoiceId, decimal amount, string? notes)
     {
         PaymentId = paymentId;
         InvoiceId = invoiceId;
         Amount = amount;
+        Notes = notes;
     }
 
     /// <summary>
     /// Factory to create a payment allocation; validates positive amount.
     /// </summary>
-    public static PaymentAllocation Create(DefaultIdType paymentId, DefaultIdType invoiceId, decimal amount)
+    public static PaymentAllocation Create(DefaultIdType paymentId, DefaultIdType invoiceId, decimal amount, string? notes = null)
     {
         if (amount <= 0) throw new ArgumentException("Allocation amount must be positive.");
-        return new PaymentAllocation(paymentId, invoiceId, amount);
+        return new PaymentAllocation(paymentId, invoiceId, amount, notes);
     }
 }

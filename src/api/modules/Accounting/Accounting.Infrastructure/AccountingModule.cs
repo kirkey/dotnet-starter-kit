@@ -13,6 +13,7 @@ using Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
 using Accounting.Infrastructure.Endpoints.Inventory.v1;
 using Accounting.Infrastructure.Endpoints.Patronage.v1;
 using Accounting.Infrastructure.Endpoints.Payments.v1;
+using Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Persistence.Configurations;
 using Carter;
@@ -105,6 +106,11 @@ public static class AccountingModule
             var payments = app.MapGroup("payments").WithTags("payments");
             payments.MapAllocatePaymentEndpoint();
 
+            var paymentAllocations = app.MapGroup("payment-allocations").WithTags("payment-allocations");
+            paymentAllocations.MapPaymentAllocationSearchEndpoint();
+            paymentAllocations.MapPaymentAllocationGetEndpoint();
+            paymentAllocations.MapPaymentAllocationDeleteEndpoint();
+
             var journals = app.MapGroup("journals").WithTags("journals");
             journals.MapJournalEntrySearchEndpoint();
         }
@@ -164,6 +170,8 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<SecurityDeposit>, AccountingRepository<SecurityDeposit>>();
         builder.Services.AddScoped<IRepository<Payment>, AccountingRepository<Payment>>();
         builder.Services.AddScoped<IReadRepository<Payment>, AccountingRepository<Payment>>();
+        builder.Services.AddScoped<IRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>();
+        builder.Services.AddScoped<IReadRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>();
         // Billing service
         builder.Services.AddScoped<Application.Billing.IBillingService, Application.Billing.BillingService>();
 
@@ -213,6 +221,8 @@ public static class AccountingModule
         // Handlers use the key "accounting:consumption" (singular) in some places — register it as well
         builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumption");
         builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumption");
+        builder.Services.AddKeyedScoped<IRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting");
         // Register with specific keys (for handlers that use specific keys like "accounting:budgets", "accounting:accounts", etc.)
         builder.Services.AddKeyedScoped<IRepository<Accrual>, AccountingRepository<Accrual>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>("accounting");
@@ -248,6 +258,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting:projects");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
+        builder.Services.AddKeyedScoped<IRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting:paymentallocations");
+        builder.Services.AddKeyedScoped<IReadRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting:paymentallocations");
         // Added missing specific-key registrations for PostingBatch, DeferredRevenue, and Accrual
         builder.Services.AddKeyedScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting:postingbatches");
         builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting:postingbatches");
