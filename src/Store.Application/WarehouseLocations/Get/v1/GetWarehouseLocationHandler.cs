@@ -1,4 +1,3 @@
-
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Get.v1;

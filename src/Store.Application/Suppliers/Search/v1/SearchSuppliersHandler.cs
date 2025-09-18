@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
+using FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Search.v1;
 
@@ -17,4 +18,3 @@ public sealed class SearchSuppliersHandler(
         return new PagedList<SupplierResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
-

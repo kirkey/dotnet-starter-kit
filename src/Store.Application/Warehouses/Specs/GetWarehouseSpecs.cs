@@ -1,6 +1,4 @@
-
-
-namespace FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
+namespace FSH.Starter.WebApi.Store.Application.Warehouses.Specs;
 
 public class GetWarehouseSpecs : Specification<Warehouse, WarehouseResponse>
 {

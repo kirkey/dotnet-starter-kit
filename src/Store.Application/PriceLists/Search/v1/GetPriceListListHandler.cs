@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.PriceLists.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.PriceLists.Search.v1;
 
 public sealed class GetPriceListListHandler(
@@ -9,11 +11,10 @@ public sealed class GetPriceListListHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new Specs.GetPriceListListSpecification(request);
+        var spec = new GetPriceListListSpecification(request);
         var paged = await repository.PaginatedListAsync(spec, new PaginationFilter { PageNumber = request.PageNumber, PageSize = request.PageSize }, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation("Search complete: retrieved {Count} price lists", paged.TotalCount);
         return paged;
     }
 }
-

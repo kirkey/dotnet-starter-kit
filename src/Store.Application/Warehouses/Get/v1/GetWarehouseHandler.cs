@@ -1,5 +1,4 @@
-
-
+using FSH.Starter.WebApi.Store.Application.Warehouses.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
 
