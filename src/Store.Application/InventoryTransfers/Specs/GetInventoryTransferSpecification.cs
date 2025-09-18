@@ -1,6 +1,6 @@
 
 
-namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Get.v1;
+namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Specs;
 
 public class GetInventoryTransferSpecification : Specification<InventoryTransfer>
 {

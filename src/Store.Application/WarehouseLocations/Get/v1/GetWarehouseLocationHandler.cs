@@ -1,4 +1,6 @@
 
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Get.v1;
 
 public sealed class GetWarehouseLocationHandler(

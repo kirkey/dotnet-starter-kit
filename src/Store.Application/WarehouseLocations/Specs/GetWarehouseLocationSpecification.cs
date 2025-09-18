@@ -1,6 +1,6 @@
 
 
-namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Get.v1;
+namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Specs;
 
 public class GetWarehouseLocationSpecification : Specification<WarehouseLocation>
 {

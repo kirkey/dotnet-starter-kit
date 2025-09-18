@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.Categories.Specs;
 using Store.Domain.Exceptions.Category;
 
 namespace FSH.Starter.WebApi.Store.Application.Categories.Get.v1;

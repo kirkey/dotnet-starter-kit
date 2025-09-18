@@ -1,4 +1,6 @@
-namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Search.v1;
+using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Search.v1;
+
+namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Specs;
 
 public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer, GetInventoryTransferListResponse>
 {

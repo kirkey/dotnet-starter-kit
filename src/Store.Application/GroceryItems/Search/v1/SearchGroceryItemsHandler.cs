@@ -1,5 +1,7 @@
 
 
+using FSH.Starter.WebApi.Store.Application.GroceryItems.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Search.v1;
 
 public sealed class SearchGroceryItemsHandler(

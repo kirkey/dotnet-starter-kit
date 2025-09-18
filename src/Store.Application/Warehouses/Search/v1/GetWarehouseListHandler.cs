@@ -1,5 +1,7 @@
 
 
+using FSH.Starter.WebApi.Store.Application.Warehouses.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.Warehouses.Search.v1;
 
 public sealed class SearchWarehousesHandler(

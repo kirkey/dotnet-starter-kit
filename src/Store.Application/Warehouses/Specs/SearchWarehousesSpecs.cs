@@ -1,6 +1,8 @@
 
 
-namespace FSH.Starter.WebApi.Store.Application.Warehouses.Search.v1;
+using FSH.Starter.WebApi.Store.Application.Warehouses.Search.v1;
+
+namespace FSH.Starter.WebApi.Store.Application.Warehouses.Specs;
 
 public class SearchWarehousesSpecs : EntitiesByPaginationFilterSpec<Warehouse, WarehouseResponse>
 {

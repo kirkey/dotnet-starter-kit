@@ -1,4 +1,6 @@
-namespace FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
+using FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
+
+namespace FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
 public class GetSupplierSpecs : Specification<Supplier, SupplierResponse>
 {

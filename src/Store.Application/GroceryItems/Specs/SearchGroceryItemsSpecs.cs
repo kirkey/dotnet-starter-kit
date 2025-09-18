@@ -1,6 +1,8 @@
 
 
-namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Search.v1;
+using FSH.Starter.WebApi.Store.Application.GroceryItems.Search.v1;
+
+namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Specs;
 
 public class SearchGroceryItemsSpecs : EntitiesByPaginationFilterSpec<GroceryItem, GroceryItemResponse>
 {

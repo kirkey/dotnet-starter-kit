@@ -1,6 +1,7 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
+using FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
 
-namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
+namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.Specs;
 
 public class SearchStockAdjustmentsSpecs : EntitiesByPaginationFilterSpec<StockAdjustment, StockAdjustmentResponse>
 {

@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Specs;
 using Store.Domain.Exceptions.InventoryTransfer;
 
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Get.v1;

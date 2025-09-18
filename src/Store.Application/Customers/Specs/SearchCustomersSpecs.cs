@@ -1,7 +1,7 @@
 using FSH.Starter.WebApi.Store.Application.Customers.Get.v1;
+using FSH.Starter.WebApi.Store.Application.Customers.Search.v1;
 
-
-namespace FSH.Starter.WebApi.Store.Application.Customers.Search.v1;
+namespace FSH.Starter.WebApi.Store.Application.Customers.Specs;
 
 public class SearchCustomersSpecs : EntitiesByPaginationFilterSpec<Customer, CustomerResponse>
 {

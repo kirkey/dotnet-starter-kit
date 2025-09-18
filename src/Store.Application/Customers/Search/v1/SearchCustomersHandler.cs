@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Customers.Get.v1;
+using FSH.Starter.WebApi.Store.Application.Customers.Specs;
 
 
 namespace FSH.Starter.WebApi.Store.Application.Customers.Search.v1;
