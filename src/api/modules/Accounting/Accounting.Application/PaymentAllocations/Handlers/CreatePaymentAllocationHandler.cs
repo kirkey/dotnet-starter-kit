@@ -1,4 +1,3 @@
-using Accounting.Application.Member.Commands;
 using Accounting.Application.PaymentAllocations.Commands;
 
 namespace Accounting.Application.PaymentAllocations.Handlers
