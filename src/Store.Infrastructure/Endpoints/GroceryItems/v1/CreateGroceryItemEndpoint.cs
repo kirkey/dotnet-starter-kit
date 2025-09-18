@@ -14,6 +14,7 @@ public static class CreateGroceryItemEndpoint
         .WithName("CreateGroceryItem")
         .WithSummary("Create a new grocery item")
         .WithDescription("Creates a new grocery item with inventory tracking")
+        .Produces<CreateGroceryItemResponse>()
         .MapToApiVersion(1);
     }
 }

@@ -14,6 +14,7 @@ public static class GetInventoryTransferEndpoint
         .WithName("GetInventoryTransfer")
         .WithSummary("Get inventory transfer by ID")
         .WithDescription("Retrieves an inventory transfer by its unique identifier")
+        .Produces<GetInventoryTransferResponse>()
         .MapToApiVersion(1);
     }
 }

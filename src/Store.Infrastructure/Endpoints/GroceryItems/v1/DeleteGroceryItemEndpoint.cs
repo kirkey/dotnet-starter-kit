@@ -14,6 +14,7 @@ public static class DeleteGroceryItemEndpoint
         .WithName("DeleteGroceryItem")
         .WithSummary("Delete grocery item")
         .WithDescription("Deletes a grocery item by its unique identifier")
+        .Produces(StatusCodes.Status204NoContent)
         .MapToApiVersion(1);
     }
 }

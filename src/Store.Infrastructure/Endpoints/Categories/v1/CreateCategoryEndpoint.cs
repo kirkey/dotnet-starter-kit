@@ -14,6 +14,7 @@ public static class CreateCategoryEndpoint
         .WithName("CreateCategory")
         .WithSummary("Create a new category")
         .WithDescription("Creates a new category")
+        .Produces<CreateCategoryResponse>()
         .MapToApiVersion(1);
     }
 }

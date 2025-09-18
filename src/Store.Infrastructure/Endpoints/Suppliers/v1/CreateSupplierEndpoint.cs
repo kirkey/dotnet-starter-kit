@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Create.v1;
+using FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -14,7 +15,7 @@ public static class CreateSupplierEndpoint
         .WithName("CreateSupplier")
         .WithSummary("Create a new supplier")
         .WithDescription("Creates a new supplier")
+        .Produces<CreateSupplierResponse>()
         .MapToApiVersion(1);
     }
 }
-

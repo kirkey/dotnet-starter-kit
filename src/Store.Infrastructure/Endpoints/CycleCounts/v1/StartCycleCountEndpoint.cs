@@ -14,7 +14,7 @@ public static class StartCycleCountEndpoint
         .WithName("StartCycleCount")
         .WithSummary("Start a cycle count")
         .WithDescription("Marks a scheduled cycle count as in-progress")
+        .Produces<StartCycleCountResponse>()
         .MapToApiVersion(1);
     }
 }
-

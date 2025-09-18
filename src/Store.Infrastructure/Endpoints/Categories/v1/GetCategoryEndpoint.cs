@@ -14,7 +14,7 @@ public static class GetCategoryEndpoint
         .WithName("GetCategory")
         .WithSummary("Get category by ID")
         .WithDescription("Retrieves a category by its unique identifier")
+        .Produces<CategoryResponse>()
         .MapToApiVersion(1);
     }
 }
-

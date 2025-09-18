@@ -14,7 +14,7 @@ public static class GetSupplierEndpoint
         .WithName("GetSupplier")
         .WithSummary("Get a supplier")
         .WithDescription("Retrieves a supplier by id")
+        .Produces<SupplierResponse>()
         .MapToApiVersion(1);
     }
 }
-

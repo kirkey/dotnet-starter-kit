@@ -14,6 +14,7 @@ public static class CreateInventoryTransferEndpoint
         .WithName("CreateInventoryTransfer")
         .WithSummary("Create a new inventory transfer")
         .WithDescription("Creates a new transfer between warehouses")
+        .Produces<CreateInventoryTransferResponse>()
         .MapToApiVersion(1);
     }
 }

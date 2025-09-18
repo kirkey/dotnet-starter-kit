@@ -14,7 +14,7 @@ public static class DeleteSupplierEndpoint
         .WithName("DeleteSupplier")
         .WithSummary("Delete a supplier")
         .WithDescription("Deletes a supplier by id")
+        .Produces(StatusCodes.Status204NoContent)
         .MapToApiVersion(1);
     }
 }
-

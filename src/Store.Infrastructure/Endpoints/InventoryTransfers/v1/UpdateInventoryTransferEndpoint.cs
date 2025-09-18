@@ -15,6 +15,7 @@ public static class UpdateInventoryTransferEndpoint
         .WithName("UpdateInventoryTransfer")
         .WithSummary("Update inventory transfer")
         .WithDescription("Updates an existing inventory transfer with the provided details")
+        .Produces<UpdateInventoryTransferResponse>()
         .MapToApiVersion(1);
     }
 }

@@ -14,6 +14,7 @@ public static class CreateSalesOrderEndpoint
         .WithName("CreateSalesOrder")
         .WithSummary("Create a new sales order")
         .WithDescription("Creates a new sales order for retail or wholesale customers")
+        .Produces<CreateSalesOrderResponse>()
         .MapToApiVersion(1);
     }
 }

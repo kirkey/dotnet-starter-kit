@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Categories.Update.v1;
+using FSH.Starter.WebApi.Store.Application.Categories.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.Categories.v1;
 
@@ -15,7 +16,7 @@ public static class UpdateCategoryEndpoint
         .WithName("UpdateCategory")
         .WithSummary("Update category")
         .WithDescription("Updates an existing category")
+        .Produces<CategoryResponse>()
         .MapToApiVersion(1);
     }
 }
-

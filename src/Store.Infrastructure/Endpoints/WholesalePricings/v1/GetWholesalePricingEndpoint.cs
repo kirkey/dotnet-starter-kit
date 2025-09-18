@@ -14,7 +14,7 @@ public static class GetWholesalePricingEndpoint
         .WithName("GetWholesalePricing")
         .WithSummary("Get wholesale pricing by ID")
         .WithDescription("Retrieves a wholesale pricing entry by its unique identifier")
+        .Produces<GetWholesalePricingResponse>()
         .MapToApiVersion(1);
     }
 }
-

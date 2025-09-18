@@ -14,6 +14,7 @@ public static class DeleteWarehouseEndpoint
         .WithName("DeleteWarehouse")
         .WithSummary("Delete warehouse")
         .WithDescription("Deletes a warehouse by its unique identifier")
+        .Produces(StatusCodes.Status204NoContent)
         .MapToApiVersion(1);
     }
 }

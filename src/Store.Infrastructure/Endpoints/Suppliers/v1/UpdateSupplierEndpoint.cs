@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Update.v1;
+using FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -15,7 +16,7 @@ public static class UpdateSupplierEndpoint
         .WithName("UpdateSupplier")
         .WithSummary("Update a supplier")
         .WithDescription("Updates an existing supplier")
+        .Produces<UpdateSupplierResponse>()
         .MapToApiVersion(1);
     }
 }
-

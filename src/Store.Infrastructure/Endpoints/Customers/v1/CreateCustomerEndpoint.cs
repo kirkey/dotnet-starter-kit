@@ -14,6 +14,7 @@ public static class CreateCustomerEndpoint
         .WithName("CreateCustomer")
         .WithSummary("Create a new customer")
         .WithDescription("Creates a new customer (retail, wholesale, or corporate)")
+        .Produces<CreateCustomerResponse>()
         .MapToApiVersion(1);
     }
 }

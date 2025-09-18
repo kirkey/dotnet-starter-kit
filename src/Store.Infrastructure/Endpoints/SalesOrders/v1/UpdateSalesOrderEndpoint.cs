@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SalesOrders.Update.v1;
+using FSH.Starter.WebApi.Store.Application.SalesOrders.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.SalesOrders.v1;
 
@@ -15,6 +16,7 @@ public static class UpdateSalesOrderEndpoint
         .WithName("UpdateSalesOrder")
         .WithSummary("Update sales order")
         .WithDescription("Updates an existing sales order")
+        .Produces<UpdateSalesOrderResponse>()
         .MapToApiVersion(1);
     }
 }

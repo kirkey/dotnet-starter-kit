@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Warehouses.Update.v1;
+using FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.Warehouses.v1;
 
@@ -15,6 +16,7 @@ public static class UpdateWarehouseEndpoint
         .WithName("UpdateWarehouse")
         .WithSummary("Update warehouse")
         .WithDescription("Updates an existing warehouse with the provided details")
+        .Produces<UpdateWarehouseResponse>()
         .MapToApiVersion(1);
     }
 }

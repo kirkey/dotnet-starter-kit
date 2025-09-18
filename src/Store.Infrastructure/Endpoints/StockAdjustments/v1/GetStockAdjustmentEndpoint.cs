@@ -14,6 +14,7 @@ public static class GetStockAdjustmentEndpoint
         .WithName("GetStockAdjustment")
         .WithSummary("Get stock adjustment by ID")
         .WithDescription("Retrieves a stock adjustment by its unique identifier")
+        .Produces<StockAdjustmentResponse>()
         .MapToApiVersion(1);
     }
 }

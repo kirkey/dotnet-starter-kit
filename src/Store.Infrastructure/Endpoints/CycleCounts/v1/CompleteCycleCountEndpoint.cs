@@ -14,7 +14,7 @@ public static class CompleteCycleCountEndpoint
         .WithName("CompleteCycleCount")
         .WithSummary("Complete a cycle count")
         .WithDescription("Marks an in-progress cycle count as completed and computes metrics")
+        .Produces<CompleteCycleCountResponse>()
         .MapToApiVersion(1);
     }
 }
-

@@ -15,6 +15,7 @@ public static class UpdateGroceryItemEndpoint
         .WithName("UpdateGroceryItem")
         .WithSummary("Update grocery item")
         .WithDescription("Updates an existing grocery item")
+        .Produces<UpdateGroceryItemResponse>()
         .MapToApiVersion(1);
     }
 }

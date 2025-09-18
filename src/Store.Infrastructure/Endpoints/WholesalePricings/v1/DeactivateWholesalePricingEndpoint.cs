@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.WholesalePricings.Deactivate.v1;
+using FSH.Starter.WebApi.Store.Application.WholesalePricings.Deactivate.v1;
 
 namespace Store.Infrastructure.Endpoints.WholesalePricings.v1;
 
@@ -14,7 +15,7 @@ public static class DeactivateWholesalePricingEndpoint
         .WithName("DeactivateWholesalePricing")
         .WithSummary("Deactivate wholesale pricing")
         .WithDescription("Marks a wholesale pricing entry as inactive")
+        .Produces<DeactivateWholesalePricingResponse>()
         .MapToApiVersion(1);
     }
 }
-

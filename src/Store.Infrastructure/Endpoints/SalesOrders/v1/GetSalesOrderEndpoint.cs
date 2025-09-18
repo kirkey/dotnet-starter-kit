@@ -14,6 +14,7 @@ public static class GetSalesOrderEndpoint
         .WithName("GetSalesOrder")
         .WithSummary("Get sales order by ID")
         .WithDescription("Retrieves a sales order by its unique identifier")
+        .Produces<GetSalesOrderResponse>()
         .MapToApiVersion(1);
     }
 }

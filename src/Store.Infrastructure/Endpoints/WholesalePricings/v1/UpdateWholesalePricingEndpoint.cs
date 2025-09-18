@@ -15,7 +15,7 @@ public static class UpdateWholesalePricingEndpoint
         .WithName("UpdateWholesalePricing")
         .WithSummary("Update wholesale pricing tier")
         .WithDescription("Updates tier price and discount percentage for an existing wholesale pricing entry")
+        .Produces<UpdateWholesalePricingResponse>()
         .MapToApiVersion(1);
     }
 }
-

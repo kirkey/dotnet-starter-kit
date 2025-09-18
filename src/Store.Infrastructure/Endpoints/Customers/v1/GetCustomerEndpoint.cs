@@ -14,6 +14,7 @@ public static class GetCustomerEndpoint
         .WithName("GetCustomer")
         .WithSummary("Get customer by ID")
         .WithDescription("Retrieves a customer by their unique identifier")
+        .Produces<CustomerResponse>()
         .MapToApiVersion(1);
     }
 }

@@ -14,6 +14,7 @@ public static class ReconcileCycleCountEndpoint
         .WithName("ReconcileCycleCount")
         .WithSummary("Reconcile a cycle count")
         .WithDescription("Runs reconciliation for a completed cycle count and returns any discrepancies")
+        .Produces<ReconcileCycleCountResponse>()
         .MapToApiVersion(1);
     }
 }

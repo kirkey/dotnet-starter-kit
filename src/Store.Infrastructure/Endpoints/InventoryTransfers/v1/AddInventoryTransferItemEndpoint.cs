@@ -15,6 +15,7 @@ public static class AddInventoryTransferItemEndpoint
         .WithName("AddInventoryTransferItem")
         .WithSummary("Add item to inventory transfer")
         .WithDescription("Adds a grocery item line to an existing inventory transfer")
+        .Produces<AddInventoryTransferItemResponse>()
         .MapToApiVersion(1);
     }
 }

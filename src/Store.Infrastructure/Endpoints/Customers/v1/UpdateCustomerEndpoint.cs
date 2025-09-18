@@ -15,6 +15,7 @@ public static class UpdateCustomerEndpoint
         .WithName("UpdateCustomer")
         .WithSummary("Update customer")
         .WithDescription("Updates an existing customer")
+        .Produces<UpdateCustomerResponse>()
         .MapToApiVersion(1);
     }
 }

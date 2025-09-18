@@ -14,7 +14,7 @@ public static class CreateWholesalePricingEndpoint
         .WithName("CreateWholesalePricing")
         .WithSummary("Create a new wholesale pricing")
         .WithDescription("Creates a new wholesale pricing tier for a contract and grocery item")
+        .Produces<CreateWholesalePricingResponse>()
         .MapToApiVersion(1);
     }
 }
-

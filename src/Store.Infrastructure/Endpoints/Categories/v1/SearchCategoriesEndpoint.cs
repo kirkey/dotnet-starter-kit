@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.Categories.Get.v1;
 using FSH.Starter.WebApi.Store.Application.Categories.Search.v1;
 
 namespace Store.Infrastructure.Endpoints.Categories.v1;
@@ -24,6 +25,7 @@ public static class SearchCategoriesEndpoint
         .WithName("SearchCategories")
         .WithSummary("Search categories")
         .WithDescription("Searches categories with pagination and filters")
+        .Produces<PagedList<CategoryResponse>>()
         .MapToApiVersion(1);
     }
 }

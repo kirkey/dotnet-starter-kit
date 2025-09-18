@@ -14,6 +14,7 @@ public static class RemoveInventoryTransferItemEndpoint
         .WithName("RemoveInventoryTransferItem")
         .WithSummary("Remove item from inventory transfer")
         .WithDescription("Removes a grocery item line from an existing inventory transfer")
+        .Produces(StatusCodes.Status204NoContent)
         .MapToApiVersion(1);
     }
 }

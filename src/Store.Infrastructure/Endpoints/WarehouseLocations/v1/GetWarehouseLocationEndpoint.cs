@@ -14,6 +14,7 @@ public static class GetWarehouseLocationEndpoint
         .WithName("GetWarehouseLocation")
         .WithSummary("Get warehouse location by ID")
         .WithDescription("Retrieves a warehouse location by its unique identifier")
+        .Produces<GetWarehouseLocationResponse>()
         .MapToApiVersion(1);
     }
 }

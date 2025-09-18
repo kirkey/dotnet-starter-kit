@@ -14,6 +14,7 @@ public static class CreateWarehouseLocationEndpoint
         .WithName("CreateWarehouseLocation")
         .WithSummary("Create a new warehouse location")
         .WithDescription("Creates a new warehouse location for storing items")
+        .Produces<CreateWarehouseLocationResponse>()
         .MapToApiVersion(1);
     }
 }

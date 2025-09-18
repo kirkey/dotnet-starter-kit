@@ -14,6 +14,7 @@ public static class DeleteCategoryEndpoint
         .WithName("DeleteCategory")
         .WithSummary("Delete category")
         .WithDescription("Deletes a category by its unique identifier")
+        .Produces(StatusCodes.Status204NoContent)
         .MapToApiVersion(1);
     }
 }

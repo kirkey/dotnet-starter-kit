@@ -14,6 +14,7 @@ public static class GetGroceryItemEndpoint
         .WithName("GetGroceryItem")
         .WithSummary("Get grocery item by ID")
         .WithDescription("Retrieves a grocery item by its unique identifier")
+        .Produces<GroceryItemResponse>()
         .MapToApiVersion(1);
     }
 }

@@ -14,7 +14,7 @@ public static class CreateCycleCountEndpoint
         .WithName("CreateCycleCount")
         .WithSummary("Create a new cycle count")
         .WithDescription("Schedules a new cycle count for a warehouse or location")
+        .Produces<CreateCycleCountResponse>()
         .MapToApiVersion(1);
     }
 }
-

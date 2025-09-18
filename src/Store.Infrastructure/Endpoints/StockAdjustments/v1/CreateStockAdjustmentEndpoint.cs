@@ -14,6 +14,7 @@ public static class CreateStockAdjustmentEndpoint
         .WithName("CreateStockAdjustment")
         .WithSummary("Create a new stock adjustment")
         .WithDescription("Creates a stock adjustment for inventory")
+        .Produces<CreateStockAdjustmentResponse>()
         .MapToApiVersion(1);
     }
 }

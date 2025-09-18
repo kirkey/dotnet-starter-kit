@@ -14,7 +14,7 @@ public static class GetCycleCountEndpoint
         .WithName("GetCycleCount")
         .WithSummary("Get cycle count by ID")
         .WithDescription("Retrieves a cycle count by its unique identifier")
+        .Produces<CycleCountResponse>()
         .MapToApiVersion(1);
     }
 }
-

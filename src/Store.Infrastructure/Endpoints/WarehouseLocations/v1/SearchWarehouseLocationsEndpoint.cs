@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
 
 namespace Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 
@@ -14,6 +15,7 @@ public static class SearchWarehouseLocationsEndpoint
         .WithName("SearchWarehouseLocations")
         .WithSummary("Get list of warehouse locations")
         .WithDescription("Retrieves a paginated list of warehouse locations with optional filtering")
+        .Produces<PagedList<GetWarehouseLocationListResponse>>()
         .MapToApiVersion(1);
     }
 }

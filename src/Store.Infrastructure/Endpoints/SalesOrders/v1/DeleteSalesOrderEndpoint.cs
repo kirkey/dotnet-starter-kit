@@ -14,6 +14,7 @@ public static class DeleteSalesOrderEndpoint
         .WithName("DeleteSalesOrder")
         .WithSummary("Delete sales order")
         .WithDescription("Deletes a sales order by its unique identifier")
+        .Produces(StatusCodes.Status204NoContent)
         .MapToApiVersion(1);
     }
 }
