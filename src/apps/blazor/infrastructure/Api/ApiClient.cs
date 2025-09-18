@@ -406,7 +406,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateCategoryAsync(string version, CreateCategoryCommand body);
+        System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -418,7 +418,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateCategoryAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search categories
@@ -429,7 +429,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchCategoriesAsync(string version);
+        System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -441,7 +441,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchCategoriesAsync(string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get category by ID
@@ -452,7 +452,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetCategoryAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -464,7 +464,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update category
@@ -475,7 +475,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body);
+        System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -487,7 +487,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete category
@@ -496,7 +496,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a category by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id);
 
@@ -508,7 +508,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a category by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
@@ -636,7 +636,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateCustomerAsync(string version, CreateCustomerCommand body);
+        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -648,7 +648,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateCustomerAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get customer by ID
@@ -659,7 +659,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetCustomerAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -671,7 +671,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update customer
@@ -682,7 +682,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body);
+        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -694,7 +694,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete customer
@@ -728,7 +728,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateCycleCountAsync(string version, CreateCycleCountCommand body);
+        System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -740,7 +740,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateCycleCountAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Start a cycle count
@@ -751,7 +751,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task StartCycleCountAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -763,7 +763,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task StartCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add an item count to a cycle count
@@ -774,7 +774,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body);
+        System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -786,7 +786,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete a cycle count
@@ -797,7 +797,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteCycleCountAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -809,7 +809,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reconcile a cycle count
@@ -820,7 +820,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReconcileCycleCountAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -832,7 +832,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReconcileCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Generate Balance Sheet
@@ -1027,7 +1027,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateGroceryItemAsync(string version, CreateGroceryItemCommand body);
+        System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1039,7 +1039,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateGroceryItemAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get grocery item by ID
@@ -1050,7 +1050,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetGroceryItemAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1062,7 +1062,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update grocery item
@@ -1073,7 +1073,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body);
+        System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1085,7 +1085,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete grocery item
@@ -1094,7 +1094,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a grocery item by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id);
 
@@ -1106,7 +1106,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a grocery item by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
@@ -1142,7 +1142,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body);
+        System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1154,30 +1154,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get list of inventory transfers (not implemented)
+        /// Get list of inventory transfers
         /// </summary>
         /// <remarks>
-        /// Search endpoint pending implementation in the application layer
+        /// Retrieves a paginated list of inventory transfers with optional filtering
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchInventoryTransfersAsync(string version);
+        System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get list of inventory transfers (not implemented)
+        /// Get list of inventory transfers
         /// </summary>
         /// <remarks>
-        /// Search endpoint pending implementation in the application layer
+        /// Retrieves a paginated list of inventory transfers with optional filtering
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchInventoryTransfersAsync(string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get inventory transfer by ID
@@ -1188,7 +1188,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetInventoryTransferAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1200,7 +1200,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetInventoryTransferAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update inventory transfer
@@ -1211,7 +1211,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body);
+        System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1223,7 +1223,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add item to inventory transfer
@@ -1234,7 +1234,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body);
+        System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1246,7 +1246,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Remove item from inventory transfer
@@ -1255,7 +1255,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Removes a grocery item line from an existing inventory transfer
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId);
 
@@ -1267,7 +1267,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Removes a grocery item line from an existing inventory transfer
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId, System.Threading.CancellationToken cancellationToken);
 
@@ -1958,7 +1958,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateSalesOrderAsync(string version, CreateSalesOrderCommand body);
+        System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1970,7 +1970,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateSalesOrderAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get sales order by ID
@@ -1981,7 +1981,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetSalesOrderAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1993,7 +1993,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update sales order
@@ -2004,7 +2004,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body);
+        System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2016,7 +2016,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete sales order
@@ -2025,7 +2025,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a sales order by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id);
 
@@ -2037,7 +2037,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a sales order by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
@@ -2050,7 +2050,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body);
+        System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2062,7 +2062,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get stock adjustment by ID
@@ -2073,7 +2073,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetStockAdjustmentAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2085,7 +2085,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetStockAdjustmentAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Approve stock adjustment
@@ -2096,7 +2096,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body);
+        System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2108,7 +2108,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new supplier
@@ -2119,7 +2119,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateSupplierAsync(string version, CreateSupplierCommand body);
+        System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2131,7 +2131,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateSupplierAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search suppliers
@@ -2142,7 +2142,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchSuppliersAsync(string version);
+        System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2154,7 +2154,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a supplier
@@ -2165,7 +2165,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetSupplierAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2177,7 +2177,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update a supplier
@@ -2188,7 +2188,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body);
+        System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2200,7 +2200,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete a supplier
@@ -2209,7 +2209,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a supplier by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id);
 
@@ -2221,7 +2221,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a supplier by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
@@ -2968,7 +2968,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body);
+        System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2980,7 +2980,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get list of warehouse locations
@@ -2991,7 +2991,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl);
+        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3003,7 +3003,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get warehouse location by ID
@@ -3014,7 +3014,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetWarehouseLocationAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3026,7 +3026,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update warehouse location
@@ -3037,7 +3037,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body);
+        System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3049,7 +3049,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new warehouse
@@ -3060,7 +3060,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateWarehouseAsync(string version, CreateWarehouseCommand body);
+        System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3072,7 +3072,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateWarehouseAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get warehouse by ID
@@ -3083,7 +3083,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetWarehouseAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3095,7 +3095,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update warehouse
@@ -3106,7 +3106,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body);
+        System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3118,7 +3118,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete warehouse
@@ -3127,7 +3127,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a warehouse by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id);
 
@@ -3139,7 +3139,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a warehouse by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
@@ -3152,7 +3152,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body);
+        System.Threading.Tasks.Task<CreateWholesalePricingResponse> CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3164,7 +3164,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateWholesalePricingResponse> CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get wholesale pricing by ID
@@ -3175,7 +3175,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetWholesalePricingAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetWholesalePricingResponse> GetWholesalePricingAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3187,7 +3187,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetWholesalePricingResponse> GetWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update wholesale pricing tier
@@ -3198,7 +3198,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body);
+        System.Threading.Tasks.Task<UpdateWholesalePricingResponse> UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3210,7 +3210,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateWholesalePricingResponse> UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Deactivate wholesale pricing
@@ -3221,7 +3221,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeactivateWholesalePricingAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<DeactivateWholesalePricingResponse> DeactivateWholesalePricingAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3233,7 +3233,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeactivateWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<DeactivateWholesalePricingResponse> DeactivateWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -4918,7 +4918,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateCategoryAsync(string version, CreateCategoryCommand body)
+        public virtual System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body)
         {
             return CreateCategoryAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4933,7 +4933,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateCategoryAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4952,6 +4952,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -4985,7 +4986,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateCategoryResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -5016,7 +5022,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SearchCategoriesAsync(string version)
+        public virtual System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version)
         {
             return SearchCategoriesAsync(version, System.Threading.CancellationToken.None);
         }
@@ -5031,7 +5037,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SearchCategoriesAsync(string version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5043,6 +5049,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -5076,7 +5083,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CategoryResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -5107,7 +5119,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetCategoryAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id)
         {
             return GetCategoryAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -5122,7 +5134,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5137,6 +5149,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -5171,7 +5184,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CategoryResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -5202,7 +5220,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body)
+        public virtual System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body)
         {
             return UpdateCategoryAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -5217,7 +5235,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5239,6 +5257,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -5273,7 +5292,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CategoryResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -5302,7 +5326,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a category by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id)
         {
@@ -5317,7 +5341,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a category by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
@@ -5366,7 +5390,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
                         }
@@ -5911,7 +5935,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateCustomerAsync(string version, CreateCustomerCommand body)
+        public virtual System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body)
         {
             return CreateCustomerAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -5926,7 +5950,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateCustomerAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5945,6 +5969,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -5978,7 +6003,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateCustomerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6009,7 +6039,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetCustomerAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id)
         {
             return GetCustomerAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -6024,7 +6054,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6039,6 +6069,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -6073,7 +6104,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6104,7 +6140,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body)
         {
             return UpdateCustomerAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -6119,7 +6155,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6141,6 +6177,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -6175,7 +6212,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateCustomerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6301,7 +6343,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateCycleCountAsync(string version, CreateCycleCountCommand body)
+        public virtual System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body)
         {
             return CreateCycleCountAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -6316,7 +6358,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateCycleCountAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6335,6 +6377,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -6368,7 +6411,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateCycleCountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6399,7 +6447,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task StartCycleCountAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id)
         {
             return StartCycleCountAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -6414,7 +6462,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task StartCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6430,6 +6478,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 {
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -6465,7 +6514,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<StartCycleCountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6496,7 +6550,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body)
+        public virtual System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body)
         {
             return AddCycleCountItemAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -6511,7 +6565,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6533,6 +6587,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -6568,7 +6623,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<AddCycleCountItemResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6599,7 +6659,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CompleteCycleCountAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id)
         {
             return CompleteCycleCountAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -6614,7 +6674,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CompleteCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6630,6 +6690,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 {
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -6665,7 +6726,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CompleteCycleCountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6696,7 +6762,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ReconcileCycleCountAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id)
         {
             return ReconcileCycleCountAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -6711,7 +6777,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ReconcileCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6727,6 +6793,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 {
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -6762,7 +6829,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<ReconcileCycleCountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7617,7 +7689,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateGroceryItemAsync(string version, CreateGroceryItemCommand body)
+        public virtual System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body)
         {
             return CreateGroceryItemAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -7632,7 +7704,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateGroceryItemAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7651,6 +7723,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -7684,7 +7757,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateGroceryItemResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7715,7 +7793,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetGroceryItemAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id)
         {
             return GetGroceryItemAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -7730,7 +7808,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7745,6 +7823,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -7779,7 +7858,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GroceryItemResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7810,7 +7894,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body)
         {
             return UpdateGroceryItemAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -7825,7 +7909,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7847,6 +7931,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -7881,7 +7966,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateGroceryItemResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7910,7 +8000,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a grocery item by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id)
         {
@@ -7925,7 +8015,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a grocery item by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
@@ -7974,7 +8064,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
                         }
@@ -8111,7 +8201,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body)
+        public virtual System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body)
         {
             return CreateInventoryTransferAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -8126,7 +8216,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8145,6 +8235,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -8178,7 +8269,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateInventoryTransferResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -8201,30 +8297,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Get list of inventory transfers (not implemented)
+        /// Get list of inventory transfers
         /// </summary>
         /// <remarks>
-        /// Search endpoint pending implementation in the application layer
+        /// Retrieves a paginated list of inventory transfers with optional filtering
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SearchInventoryTransfersAsync(string version)
+        public virtual System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate)
         {
-            return SearchInventoryTransfersAsync(version, System.Threading.CancellationToken.None);
+            return SearchInventoryTransfersAsync(version, pageNumber, pageSize, searchTerm, fromWarehouseId, toWarehouseId, status, fromDate, toDate, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get list of inventory transfers (not implemented)
+        /// Get list of inventory transfers
         /// </summary>
         /// <remarks>
-        /// Search endpoint pending implementation in the application layer
+        /// Retrieves a paginated list of inventory transfers with optional filtering
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SearchInventoryTransfersAsync(string version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8236,6 +8332,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -8243,6 +8340,40 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/store/inventory-transfers");
+                    urlBuilder_.Append('?');
+                    if (pageNumber != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("PageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pageSize != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("PageSize")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (searchTerm != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("SearchTerm")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchTerm, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (fromWarehouseId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("FromWarehouseId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(fromWarehouseId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (toWarehouseId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("ToWarehouseId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(toWarehouseId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (status != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("Status")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (fromDate != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("FromDate")).Append('=').Append(System.Uri.EscapeDataString(fromDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (toDate != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("ToDate")).Append('=').Append(System.Uri.EscapeDataString(toDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -8269,7 +8400,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GetInventoryTransferListResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -8300,7 +8436,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetInventoryTransferAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id)
         {
             return GetInventoryTransferAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -8315,7 +8451,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetInventoryTransferAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8330,6 +8466,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -8364,7 +8501,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GetInventoryTransferResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -8395,7 +8537,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body)
         {
             return UpdateInventoryTransferAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -8410,7 +8552,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8432,6 +8574,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -8466,7 +8609,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateInventoryTransferResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -8497,7 +8645,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body)
+        public virtual System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body)
         {
             return AddInventoryTransferItemAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -8512,7 +8660,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8534,6 +8682,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -8569,7 +8718,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<AddInventoryTransferItemResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -8598,7 +8752,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Removes a grocery item line from an existing inventory transfer
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId)
         {
@@ -8613,7 +8767,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Removes a grocery item line from an existing inventory transfer
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId, System.Threading.CancellationToken cancellationToken)
         {
@@ -8667,7 +8821,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
                         }
@@ -11718,7 +11872,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateSalesOrderAsync(string version, CreateSalesOrderCommand body)
+        public virtual System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body)
         {
             return CreateSalesOrderAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -11733,7 +11887,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateSalesOrderAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11752,6 +11906,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -11785,7 +11940,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateSalesOrderResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -11816,7 +11976,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetSalesOrderAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id)
         {
             return GetSalesOrderAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -11831,7 +11991,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11846,6 +12006,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -11880,7 +12041,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GetSalesOrderResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -11911,7 +12077,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body)
         {
             return UpdateSalesOrderAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -11926,7 +12092,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11948,6 +12114,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -11982,7 +12149,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateSalesOrderResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12011,7 +12183,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a sales order by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id)
         {
@@ -12026,7 +12198,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a sales order by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
@@ -12075,7 +12247,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
                         }
@@ -12108,7 +12280,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body)
+        public virtual System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body)
         {
             return CreateStockAdjustmentAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -12123,7 +12295,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12142,6 +12314,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12175,7 +12348,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateStockAdjustmentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12206,7 +12384,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetStockAdjustmentAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id)
         {
             return GetStockAdjustmentAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -12221,7 +12399,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetStockAdjustmentAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12236,6 +12414,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12270,7 +12449,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<StockAdjustmentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12301,7 +12485,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body)
+        public virtual System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body)
         {
             return ApproveStockAdjustmentAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -12316,7 +12500,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12338,6 +12522,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12373,7 +12558,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<ApproveStockAdjustmentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12404,7 +12594,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateSupplierAsync(string version, CreateSupplierCommand body)
+        public virtual System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body)
         {
             return CreateSupplierAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -12419,7 +12609,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateSupplierAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12438,6 +12628,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12471,7 +12662,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateSupplierResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12502,7 +12698,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SearchSuppliersAsync(string version)
+        public virtual System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version)
         {
             return SearchSuppliersAsync(version, System.Threading.CancellationToken.None);
         }
@@ -12517,7 +12713,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12529,6 +12725,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12562,7 +12759,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<SupplierResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12593,7 +12795,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetSupplierAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id)
         {
             return GetSupplierAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -12608,7 +12810,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12623,6 +12825,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12657,7 +12860,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<SupplierResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12688,7 +12896,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body)
         {
             return UpdateSupplierAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -12703,7 +12911,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12725,6 +12933,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12759,7 +12968,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateSupplierResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -12788,7 +13002,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a supplier by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id)
         {
@@ -12803,7 +13017,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a supplier by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
@@ -12852,7 +13066,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
                         }
@@ -16198,7 +16412,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body)
+        public virtual System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body)
         {
             return CreateWarehouseLocationAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -16213,7 +16427,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16232,6 +16446,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -16265,7 +16480,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateWarehouseLocationResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -16296,7 +16516,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl)
+        public virtual System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl)
         {
             return SearchWarehouseLocationsAsync(version, pageNumber, pageSize, searchTerm, warehouseId, locationType, aisle, isActive, requiresTemperatureControl, System.Threading.CancellationToken.None);
         }
@@ -16311,7 +16531,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16323,6 +16543,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -16390,7 +16611,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseLocationListResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -16421,7 +16647,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetWarehouseLocationAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id)
         {
             return GetWarehouseLocationAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -16436,7 +16662,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16451,6 +16677,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -16485,7 +16712,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseLocationResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -16516,7 +16748,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body)
         {
             return UpdateWarehouseLocationAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -16531,7 +16763,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16553,6 +16785,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -16587,7 +16820,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateWarehouseLocationResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -16618,7 +16856,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateWarehouseAsync(string version, CreateWarehouseCommand body)
+        public virtual System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body)
         {
             return CreateWarehouseAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -16633,7 +16871,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateWarehouseAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16652,6 +16890,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -16685,7 +16924,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateWarehouseResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -16716,7 +16960,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetWarehouseAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id)
         {
             return GetWarehouseAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -16731,7 +16975,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16746,6 +16990,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -16780,7 +17025,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -16811,7 +17061,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body)
         {
             return UpdateWarehouseAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -16826,7 +17076,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16848,6 +17098,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -16882,7 +17133,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateWarehouseResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -16911,7 +17167,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a warehouse by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id)
         {
@@ -16926,7 +17182,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a warehouse by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
@@ -16975,7 +17231,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
                         }
@@ -17008,7 +17264,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body)
+        public virtual System.Threading.Tasks.Task<CreateWholesalePricingResponse> CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body)
         {
             return CreateWholesalePricingAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -17023,7 +17279,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateWholesalePricingResponse> CreateWholesalePricingAsync(string version, CreateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -17042,6 +17298,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -17075,7 +17332,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateWholesalePricingResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -17106,7 +17368,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task GetWholesalePricingAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetWholesalePricingResponse> GetWholesalePricingAsync(string version, System.Guid id)
         {
             return GetWholesalePricingAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -17121,7 +17383,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task GetWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetWholesalePricingResponse> GetWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -17136,6 +17398,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -17170,7 +17433,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<GetWholesalePricingResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -17201,7 +17469,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateWholesalePricingResponse> UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body)
         {
             return UpdateWholesalePricingAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -17216,7 +17484,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateWholesalePricingResponse> UpdateWholesalePricingAsync(string version, System.Guid id, UpdateWholesalePricingCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -17238,6 +17506,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -17272,7 +17541,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateWholesalePricingResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -17303,7 +17577,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeactivateWholesalePricingAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<DeactivateWholesalePricingResponse> DeactivateWholesalePricingAsync(string version, System.Guid id)
         {
             return DeactivateWholesalePricingAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -17318,7 +17592,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeactivateWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<DeactivateWholesalePricingResponse> DeactivateWholesalePricingAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -17334,6 +17608,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 {
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -17369,7 +17644,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<DeactivateWholesalePricingResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -17611,6 +17891,18 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddCycleCountItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AddInventoryTransferItemCommand
     {
 
@@ -17625,6 +17917,18 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
         public double UnitPrice { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddInventoryTransferItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
+        public System.Guid InventoryTransferId { get; set; } = default!;
 
     }
 
@@ -17649,6 +17953,18 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
         public string? ApprovedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApproveStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentId")]
+        public System.Guid AdjustmentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approved")]
+        public bool Approved { get; set; } = default!;
 
     }
 
@@ -17836,6 +18152,63 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CategoryResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
+        public System.Guid? ParentCategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
+        public int SortOrder { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CategoryResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CategoryResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ChangePasswordCommand
     {
 
@@ -17953,6 +18326,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CompleteCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateAccountingPeriodRequest
     {
 
@@ -18054,6 +18436,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
         public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCategoryResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -18223,6 +18614,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCustomerResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateCycleCountCommand
     {
 
@@ -18249,6 +18649,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -18361,6 +18770,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateGroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateInventoryItemCommand
     {
 
@@ -18420,6 +18838,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
         public string? RequestedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -18523,6 +18950,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateStockAdjustmentCommand
     {
 
@@ -18583,6 +19019,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateSupplierCommand
     {
 
@@ -18636,6 +19081,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
 
     }
 
@@ -18799,6 +19253,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateWholesalePricingCommand
     {
 
@@ -18828,6 +19300,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -18939,6 +19420,96 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
         public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomerResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
+        public string? TaxNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
+        public string? BusinessLicense { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CycleCountDiscrepancy
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
+        public int SystemQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
+        public int CountedQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("difference")]
+        public int Difference { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DeactivateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -19240,6 +19811,204 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetInventoryTransferListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
+        public string? FromWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
+        public string? ToWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetInventoryTransferListResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetInventoryTransferListResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
+        public string? FromWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
+        public string? ToWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
+        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actualArrivalDate")]
+        public System.DateTime? ActualArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalValue")]
+        public double TotalValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
+        public string? TransportMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("trackingNumber")]
+        public string? TrackingNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
+        public string? RequestedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
+        public string? ApprovedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approvalDate")]
+        public System.DateTime? ApprovalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryDate")]
+        public System.DateTime? DeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderType")]
+        public string? OrderType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subTotal")]
+        public double SubTotal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
+        public double TaxAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
+        public double DiscountAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shippingAmount")]
+        public double ShippingAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
+        public double TotalAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentStatus")]
+        public string? PaymentStatus { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentMethod")]
+        public string? PaymentMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salesPersonId")]
+        public string? SalesPersonId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid? WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetTodoResponse
     {
 
@@ -19254,6 +20023,321 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseLocationListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseLocationListResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetWarehouseLocationListResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
+        public double? MinTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
+        public double? MaxTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
+        public string? TemperatureUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastInventoryDate")]
+        public System.DateTime? LastInventoryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
+        public System.Guid WholesaleContractId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
+        public int MinimumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
+        public int? MaximumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
+        public double TierPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cost")]
+        public double Cost { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int MinimumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int MaximumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
+        public int CurrentStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int ReorderPoint { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public string? Brand { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
+        public string? Manufacturer { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double Weight { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = default!;
 
     }
 
@@ -19732,6 +20816,18 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconcileCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discrepancies")]
+        public System.Collections.Generic.ICollection<CycleCountDiscrepancy>? Discrepancies { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ReconciliationLineDto
     {
 
@@ -20170,6 +21266,135 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StartCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
+        public int QuantityAdjusted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
+        public System.DateTime AdjustmentDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public System.Guid? CreatedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("website")]
+        public string? Website { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("rating")]
+        public double Rating { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SupplierResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<SupplierResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class TenantDetail
     {
 
@@ -20352,7 +21577,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
         public int FiscalYear { get; set; } = default!;
-        
+
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
@@ -20575,6 +21800,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCustomerResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateFixedAssetRequest
     {
 
@@ -20677,6 +21911,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateGroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateInventoryTransferCommand
     {
 
@@ -20709,6 +21952,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("reason")]
         public string? Reason { get; set; } = "Inventory Rebalancing";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -20809,6 +22061,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateSupplierCommand
     {
 
@@ -20859,6 +22120,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
 
     }
 
@@ -21028,6 +22298,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateWholesalePricingCommand
     {
 
@@ -21039,6 +22327,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
         public double DiscountPercentage { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 

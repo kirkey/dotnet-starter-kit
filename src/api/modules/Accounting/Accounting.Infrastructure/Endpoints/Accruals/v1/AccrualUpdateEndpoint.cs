@@ -16,6 +16,7 @@ public static class AccrualUpdateEndpoint
             .WithName(nameof(AccrualUpdateEndpoint))
             .WithSummary("Reverse an accrual")
             .WithDescription("Reverses an accrual entry by ID")
+            .Produces(StatusCodes.Status204NoContent)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

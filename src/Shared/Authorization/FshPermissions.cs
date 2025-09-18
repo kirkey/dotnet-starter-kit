@@ -58,14 +58,6 @@ public static class FshPermissions
         //audit
         new("View Audit Trails", FshActions.View, FshResources.AuditTrails),
         
-        //App
-        new("View App", FshActions.View, FshResources.App),
-        new("Search App", FshActions.Search, FshResources.App),
-        new("Create App", FshActions.Create, FshResources.App),
-        new("Update App", FshActions.Update, FshResources.App),
-        new("Delete App", FshActions.Delete, FshResources.App),
-        new("Export App", FshActions.Export, FshResources.App),
-        
         //Accounting
         new("View Accounting", FshActions.View, FshResources.Accounting),
         new("Search Accounting", FshActions.Search, FshResources.Accounting),
@@ -74,6 +66,14 @@ public static class FshPermissions
         new("Delete Accounting", FshActions.Delete, FshResources.Accounting),
         new("Export Accounting", FshActions.Export, FshResources.Accounting),
 
+        //Store
+        new("View Store", FshActions.View, FshResources.Store),
+        new("Search Store", FshActions.Search, FshResources.Store),
+        new("Create Store", FshActions.Create, FshResources.Store),
+        new("Update Store", FshActions.Update, FshResources.Store),
+        new("Delete Store", FshActions.Delete, FshResources.Store),
+        new("Export Store", FshActions.Export, FshResources.Store),
+        
         //Warehouse
         new("View Warehouse", FshActions.View, FshResources.Warehouse),
         new("Search Warehouse", FshActions.Search, FshResources.Warehouse),

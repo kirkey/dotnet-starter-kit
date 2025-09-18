@@ -1,4 +1,5 @@
 using Accounting.Application.PostingBatch.Queries;
+using Accounting.Application.PostingBatch.Dtos;
 
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;
 
@@ -15,6 +16,7 @@ public static class PostingBatchGetEndpoint
             .WithName(nameof(PostingBatchGetEndpoint))
             .WithSummary("Get posting batch by ID")
             .WithDescription("Gets the details of a posting batch by its ID")
+            .Produces<PostingBatchDto>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

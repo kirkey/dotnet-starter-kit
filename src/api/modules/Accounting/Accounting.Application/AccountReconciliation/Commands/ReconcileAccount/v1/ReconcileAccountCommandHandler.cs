@@ -32,7 +32,7 @@ public sealed class ReconcileAccountCommandHandler(
         // Calculate reconciliation variance
         var variance = request.StatementBalance - accountBalance;
 
-        // Create reconciliation record
+        // Create a reconciliation record
         var reconciliationId = DefaultIdType.NewGuid();
 
         // Log reconciliation details

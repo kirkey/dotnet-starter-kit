@@ -1,4 +1,5 @@
 using Accounting.Application.Accruals.Queries;
+using Accounting.Application.Accruals.Dtos;
 
 // Endpoint for creating an accrual
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
@@ -16,9 +17,8 @@ public static class AccrualSearchEndpoint
             .WithName(nameof(AccrualSearchEndpoint))
             .WithSummary("Search accruals")
             .WithDescription("Searches accrual entries with filters and pagination")
+            .Produces<List<AccrualDto>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }
 }
-
-
