@@ -7,81 +7,111 @@ namespace Store.Domain;
 /// Use cases:
 /// - Track supplier contact details for orders and deliveries.
 /// - Apply supplier credit limits and payment terms.
+/// - Maintain supplier performance ratings and evaluations.
+/// - Store website and business information for procurement decisions.
+/// - Monitor supplier activity and relationship status.
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.SupplierCreated"/>
+/// <seealso cref="Store.Domain.Events.SupplierUpdated"/>
+/// <seealso cref="Store.Domain.Events.SupplierActivated"/>
+/// <seealso cref="Store.Domain.Events.SupplierDeactivated"/>
+/// <seealso cref="Store.Domain.Exceptions.Supplier.SupplierNotFoundException"/>
 public sealed class Supplier : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Short supplier code. Example: "SUP-001".
+    /// Max length: 50.
     /// </summary>
     public string Code { get; private set; } = default!;
 
     /// <summary>
     /// Main contact person at the supplier.
+    /// Example: "John Smith". Max length: 100.
     /// </summary>
     public string ContactPerson { get; private set; } = default!;
 
     /// <summary>
     /// Contact email for supplier communications.
+    /// Example: "orders@supplier.com". Max length: 255.
     /// </summary>
     public string Email { get; private set; } = default!;
 
     /// <summary>
     /// Contact phone number for the supplier.
+    /// Example: "+1-555-0200". Max length: 50.
     /// </summary>
     public string Phone { get; private set; } = default!;
 
     /// <summary>
     /// Supplier address used for deliveries and billing.
+    /// Max length: 500.
     /// </summary>
     public string Address { get; private set; } = default!;
 
     /// <summary>
     /// City where supplier is located.
+    /// Example: "Portland". Max length: 100.
     /// </summary>
     public string City { get; private set; } = default!;
 
     /// <summary>
     /// State or region (optional).
+    /// Example: "OR". Max length: 100.
     /// </summary>
     public string? State { get; private set; }
 
     /// <summary>
     /// Country of the supplier.
+    /// Example: "US". Max length: 100.
     /// </summary>
     public string Country { get; private set; } = default!;
 
     /// <summary>
     /// Postal code (optional).
+    /// Example: "97201". Max length: 20.
     /// </summary>
     public string? PostalCode { get; private set; }
 
     /// <summary>
     /// Supplier website (optional).
+    /// Example: "https://www.supplier.com". Max length: 255.
     /// </summary>
     public string? Website { get; private set; }
 
     /// <summary>
     /// Optional credit limit for supplier purchases.
+    /// Example: 50000.00. Must be &gt;= 0 if specified.
     /// </summary>
     public decimal? CreditLimit { get; private set; }
 
     /// <summary>
     /// Days allowed for payment. Default: 30.
+    /// Example: 30 for net-30 terms, 15 for net-15.
     /// </summary>
     public int PaymentTermsDays { get; private set; }
 
     /// <summary>
     /// Indicates if the supplier is active.
+    /// Default: true. Used to disable suppliers without deleting records.
     /// </summary>
     public bool IsActive { get; private set; } = true;
 
     /// <summary>
     /// Supplier rating between 0 and 5.
+    /// Example: 4.5 for excellent supplier, 2.0 for poor performance.
+    /// Default: 0.
     /// </summary>
     public decimal Rating { get; private set; }
 
 
+    /// <summary>
+    /// Navigation property to grocery items supplied by this supplier.
+    /// </summary>
     public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
+
+    /// <summary>
+    /// Navigation property to purchase orders placed with this supplier.
+    /// </summary>
     public ICollection<PurchaseOrder> PurchaseOrders { get; private set; } = new List<PurchaseOrder>();
 
     private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -166,7 +196,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         if (paymentTermsDays < 0)
             throw new ArgumentException("Payment terms days must be zero or greater", nameof(paymentTermsDays));
 
-        if (rating < 0m || rating > 5m)
+        if (rating is < 0m or > 5m)
             throw new ArgumentException("Rating must be between 0 and 5", nameof(rating));
 
         Id = id;
@@ -191,6 +221,28 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new SupplierCreated { Supplier = this });
     }
 
+    /// <summary>
+    /// Creates a new supplier with the specified details.
+    /// </summary>
+    /// <param name="name">The name of the supplier. Max length: 200.</param>
+    /// <param name="description">Optional description of the supplier. Max length: 2000.</param>
+    /// <param name="code">The supplier code. Max length: 50.</param>
+    /// <param name="contactPerson">The main contact person at the supplier. Max length: 100.</param>
+    /// <param name="email">The contact email for the supplier. Max length: 255.</param>
+    /// <param name="phone">The contact phone number for the supplier. Max length: 50.</param>
+    /// <param name="address">The address of the supplier. Max length: 500.</param>
+    /// <param name="city">The city where the supplier is located. Max length: 100.</param>
+    /// <param name="state">Optional state or region where the supplier is located. Max length: 100.</param>
+    /// <param name="country">The country where the supplier is located. Max length: 100.</param>
+    /// <param name="postalCode">Optional postal code for the supplier. Max length: 20.</param>
+    /// <param name="website">Optional website URL for the supplier. Max length: 255.</param>
+    /// <param name="creditLimit">Optional credit limit for the supplier. Must be &gt;= 0 if specified.</param>
+    /// <param name="paymentTermsDays">Optional payment terms in days. Default is 30.</param>
+    /// <param name="isActive">Optional flag indicating if the supplier is active. Default is true.</param>
+    /// <param name="rating">Optional initial rating for the supplier. Must be between 0 and 5.</param>
+    /// <param name="notes">Optional notes or comments about the supplier. Max length: 2000.</param>
+    /// <returns>A new <see cref="Supplier"/> instance.</returns>
+    /// <exception cref="ArgumentException">Thrown when any of the required fields are invalid.</exception>
     public static Supplier Create(
         string name,
         string? description,
@@ -231,6 +283,26 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
             notes);
     }
 
+    /// <summary>
+    /// Updates the details of an existing supplier.
+    /// </summary>
+    /// <param name="name">New name for the supplier. Max length: 200.</param>
+    /// <param name="description">New description for the supplier. Max length: 2000.</param>
+    /// <param name="contactPerson">New contact person for the supplier. Max length: 100.</param>
+    /// <param name="email">New email for the supplier. Max length: 255.</param>
+    /// <param name="phone">New phone number for the supplier. Max length: 50.</param>
+    /// <param name="address">New address for the supplier. Max length: 500.</param>
+    /// <param name="city">New city for the supplier. Max length: 100.</param>
+    /// <param name="state">New state or region for the supplier. Max length: 100.</param>
+    /// <param name="country">New country for the supplier. Max length: 100.</param>
+    /// <param name="postalCode">New postal code for the supplier. Max length: 20.</param>
+    /// <param name="website">New website URL for the supplier. Max length: 255.</param>
+    /// <param name="creditLimit">New credit limit for the supplier. Must be &gt;= 0 if specified.</param>
+    /// <param name="paymentTermsDays">New payment terms in days for the supplier. Must be zero or greater.</param>
+    /// <param name="rating">New rating for the supplier. Must be between 0 and 5.</param>
+    /// <param name="notes">New notes or comments about the supplier. Max length: 2000.</param>
+    /// <returns>The updated <see cref="Supplier"/> instance.</returns>
+    /// <exception cref="ArgumentException">Thrown when any of the updated fields are invalid.</exception>
     public Supplier Update(
         string? name,
         string? description,
@@ -343,7 +415,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (rating.HasValue && Rating != rating.Value)
         {
-            if (rating.Value < 0m || rating.Value > 5m) throw new ArgumentException("Rating must be between 0 and 5", nameof(rating));
+            if (rating.Value is < 0m or > 5m) throw new ArgumentException("Rating must be between 0 and 5", nameof(rating));
             Rating = rating.Value;
             isUpdated = true;
         }
@@ -363,6 +435,10 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Activates the supplier, allowing orders and transactions.
+    /// </summary>
+    /// <returns>The updated <see cref="Supplier"/> instance.</returns>
     public Supplier Activate()
     {
         if (!IsActive)
@@ -373,6 +449,10 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Deactivates the supplier, preventing further orders and transactions.
+    /// </summary>
+    /// <returns>The updated <see cref="Supplier"/> instance.</returns>
     public Supplier Deactivate()
     {
         if (IsActive)

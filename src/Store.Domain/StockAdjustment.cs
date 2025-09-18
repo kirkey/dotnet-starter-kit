@@ -8,101 +8,127 @@ namespace Store.Domain;
 /// Use cases:
 /// - Correct stock after a physical count or incidents.
 /// - Produce accounting entries for write-offs or found inventory.
+/// - Track shrinkage, damage, and theft losses.
+/// - Support regulatory compliance for inventory adjustments.
+/// - Maintain audit trail for all stock corrections.
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.StockAdjustmentCreated"/>
+/// <seealso cref="Store.Domain.Events.StockAdjustmentApproved"/>
+/// <seealso cref="Store.Domain.Events.StockAdjustmentUpdated"/>
+/// <seealso cref="Store.Domain.Exceptions.StockAdjustment.StockAdjustmentNotFoundException"/>
 public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Adjustment reference number. Example: "ADJ-2025-01".
+    /// Max length: 50.
     /// </summary>
     public string AdjustmentNumber { get; private set; } = default!;
 
     /// <summary>
     /// Grocery item affected by the adjustment.
+    /// Links to <see cref="GroceryItem"/> for inventory tracking.
     /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
 
     /// <summary>
     /// Warehouse where the adjustment occurred.
+    /// Links to <see cref="Warehouse"/> for location tracking.
     /// </summary>
     public DefaultIdType WarehouseId { get; private set; }
 
     /// <summary>
     /// Optional location within the warehouse.
+    /// Links to <see cref="WarehouseLocation"/> for precise placement.
     /// </summary>
     public DefaultIdType? WarehouseLocationId { get; private set; }
 
     /// <summary>
     /// Date of the adjustment.
+    /// Example: 2025-09-19T14:00:00Z. Defaults to current UTC if unspecified.
     /// </summary>
     public DateTime AdjustmentDate { get; private set; }
 
     /// <summary>
     /// Type of adjustment (Increase, Decrease, Write-Off, Found).
+    /// Allowed values: Physical Count, Damage, Loss, Found, Transfer, Other, Increase, Decrease, Write-Off.
     /// </summary>
     public string AdjustmentType { get; private set; } = default!;
 
     /// <summary>
     /// Reason for the adjustment (e.g., Damage, Theft, Expiry).
+    /// Example: "Damaged during shipping", "Expired product". Max length: 200.
     /// </summary>
     public string Reason { get; private set; } = default!;
 
     /// <summary>
     /// Quantity prior to adjustment.
+    /// Example: 100 items before adjustment. Must be &gt;= 0.
     /// </summary>
     public int QuantityBefore { get; private set; }
 
     /// <summary>
     /// Quantity adjusted (positive integer).
+    /// Example: 5 for 5 items adjusted. Must be &gt; 0.
     /// </summary>
     public int AdjustmentQuantity { get; private set; }
 
     /// <summary>
     /// Quantity after the adjustment (derived).
+    /// Calculated based on AdjustmentType and AdjustmentQuantity.
     /// </summary>
     public int QuantityAfter { get; private set; }
 
     /// <summary>
     /// Unit cost used to compute cost impact of the adjustment.
+    /// Example: 2.50 for $2.50 per unit. Must be &gt;= 0.
     /// </summary>
     public decimal UnitCost { get; private set; }
 
     /// <summary>
     /// Total cost impact for accounting (positive or negative depending on type).
+    /// Calculated as AdjustmentQuantity * UnitCost * adjustment direction.
     /// </summary>
     public decimal TotalCostImpact { get; private set; }
 
     /// <summary>
     /// Optional reference for external systems or notes.
+    /// Example: "Ref-12345", "Insurance claim #ABC123".
     /// </summary>
     public string? Reference { get; private set; }
     
     /// <summary>
     /// User who adjusted the stock.
+    /// Example: "john.doe", "system". Max length: 100.
     /// </summary>
     public string? AdjustedBy { get; private set; }
 
     /// <summary>
     /// User who approved the adjustment.
+    /// Example: "manager.smith". Max length: 100.
     /// </summary>
     public string? ApprovedBy { get; private set; }
 
     /// <summary>
     /// Date when the adjustment was approved.
+    /// Set when Approve() method is called.
     /// </summary>
     public DateTime? ApprovalDate { get; private set; }
 
     /// <summary>
     /// Indicates if the adjustment is approved.
+    /// Default: false. Set to true when approved.
     /// </summary>
     public bool IsApproved { get; private set; }
 
     /// <summary>
     /// Batch number for tracking adjustments in bulk.
+    /// Example: "BATCH-2025-09-001". Optional grouping identifier.
     /// </summary>
     public string? BatchNumber { get; private set; }
 
     /// <summary>
     /// Expiry date for perishable items, if applicable.
+    /// Example: 2025-12-31 for items with expiration concerns.
     /// </summary>
     public DateTime? ExpiryDate { get; private set; }
     
@@ -176,12 +202,12 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         Reason = reason;
         QuantityBefore = quantityBefore;
         AdjustmentQuantity = adjustmentQuantity;
-        QuantityAfter = (adjustmentType == "Increase" || adjustmentType == "Found") ? quantityBefore + adjustmentQuantity : quantityBefore - adjustmentQuantity;
+        QuantityAfter = adjustmentType is "Increase" or "Found" ? quantityBefore + adjustmentQuantity : quantityBefore - adjustmentQuantity;
         if (QuantityAfter < 0)
             throw new ArgumentException("Resulting QuantityAfter cannot be negative", nameof(adjustmentQuantity));
 
         UnitCost = unitCost;
-        TotalCostImpact = adjustmentQuantity * unitCost * ((adjustmentType == "Increase" || adjustmentType == "Found") ? 1m : -1m);
+        TotalCostImpact = adjustmentQuantity * unitCost * (adjustmentType is "Increase" or "Found" ? 1m : -1m);
         Reference = reference;
         Notes = notes;
         AdjustedBy = adjustedBy;
@@ -192,6 +218,25 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new StockAdjustmentCreated { StockAdjustment = this });
     }
 
+    /// <summary>
+    /// Creates a new StockAdjustment.
+    /// </summary>
+    /// <param name="adjustmentNumber">Adjustment reference number.</param>
+    /// <param name="groceryItemId">Grocery item ID.</param>
+    /// <param name="warehouseId">Warehouse ID.</param>
+    /// <param name="warehouseLocationId">Warehouse location ID (optional).</param>
+    /// <param name="adjustmentDate">Date of the adjustment.</param>
+    /// <param name="adjustmentType">Type of adjustment.</param>
+    /// <param name="reason">Reason for the adjustment.</param>
+    /// <param name="quantityBefore">Quantity before the adjustment.</param>
+    /// <param name="adjustmentQuantity">Quantity adjusted.</param>
+    /// <param name="unitCost">Unit cost for the adjustment.</param>
+    /// <param name="reference">Optional reference for external systems.</param>
+    /// <param name="notes">Optional notes.</param>
+    /// <param name="adjustedBy">User who made the adjustment.</param>
+    /// <param name="batchNumber">Optional batch number.</param>
+    /// <param name="expiryDate">Optional expiry date.</param>
+    /// <returns>Newly created StockAdjustment.</returns>
     public static StockAdjustment Create(
         string adjustmentNumber,
         DefaultIdType groceryItemId,
@@ -228,6 +273,11 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
             expiryDate);
     }
 
+    /// <summary>
+    /// Approves the stock adjustment.
+    /// </summary>
+    /// <param name="approvedBy">User who approved the adjustment.</param>
+    /// <returns>Updated StockAdjustment.</returns>
     public StockAdjustment Approve(string approvedBy)
     {
         if (IsApproved)
@@ -243,6 +293,16 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Updates an existing stock adjustment.
+    /// </summary>
+    /// <param name="groceryItemId">New grocery item ID.</param>
+    /// <param name="warehouseLocationId">New warehouse location ID (optional).</param>
+    /// <param name="adjustmentType">New type of adjustment.</param>
+    /// <param name="adjustmentQuantity">New adjustment quantity.</param>
+    /// <param name="reason">New reason for the adjustment.</param>
+    /// <param name="notes">New notes.</param>
+    /// <returns>Updated StockAdjustment.</returns>
     public StockAdjustment Update(
         DefaultIdType groceryItemId,
         DefaultIdType? warehouseLocationId,
@@ -307,14 +367,14 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         if (isUpdated)
         {
             // Recalculate derived fields
-            QuantityAfter = AdjustmentType == "Increase" || AdjustmentType == "Found"
+            QuantityAfter = AdjustmentType is "Increase" or "Found"
                 ? QuantityBefore + AdjustmentQuantity
                 : QuantityBefore - AdjustmentQuantity;
 
             if (QuantityAfter < 0)
                 throw new InvalidOperationException("Resulting QuantityAfter cannot be negative after update");
 
-            TotalCostImpact = AdjustmentQuantity * UnitCost * ((AdjustmentType == "Increase" || AdjustmentType == "Found") ? 1m : -1m);
+            TotalCostImpact = AdjustmentQuantity * UnitCost * (AdjustmentType is "Increase" or "Found" ? 1m : -1m);
 
             QueueDomainEvent(new StockAdjustmentUpdated { StockAdjustment = this });
         }
@@ -322,7 +382,21 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         return this;
     }
 
-    public bool IsStockIncrease() => AdjustmentType == "Increase" || AdjustmentType == "Found";
-    public bool IsStockDecrease() => AdjustmentType == "Decrease" || AdjustmentType == "Write-Off";
+    /// <summary>
+    /// Checks if the adjustment represents a stock increase.
+    /// </summary>
+    /// <returns>True if stock is increased, false otherwise.</returns>
+    public bool IsStockIncrease() => AdjustmentType is "Increase" or "Found";
+
+    /// <summary>
+    /// Checks if the adjustment represents a stock decrease.
+    /// </summary>
+    /// <returns>True if stock is decreased, false otherwise.</returns>
+    public bool IsStockDecrease() => AdjustmentType is "Decrease" or "Write-Off";
+
+    /// <summary>
+    /// Gets the absolute financial impact of the adjustment.
+    /// </summary>
+    /// <returns>Positive decimal value of the financial impact.</returns>
     public decimal GetFinancialImpact() => Math.Abs(TotalCostImpact);
 }

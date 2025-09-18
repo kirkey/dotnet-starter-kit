@@ -100,7 +100,7 @@ public sealed class WholesaleContract : AuditableEntity, IAggregateRoot
         if (endDate == default) throw new ArgumentException("EndDate is required", nameof(endDate));
         if (endDate < startDate) throw new ArgumentException("EndDate must be equal or later than StartDate", nameof(endDate));
         if (minimumOrderValue < 0m) throw new ArgumentException("MinimumOrderValue must be zero or greater", nameof(minimumOrderValue));
-        if (volumeDiscountPercentage < 0m || volumeDiscountPercentage > 100m) throw new ArgumentException("VolumeDiscountPercentage must be between 0 and 100", nameof(volumeDiscountPercentage));
+        if (volumeDiscountPercentage is < 0m or > 100m) throw new ArgumentException("VolumeDiscountPercentage must be between 0 and 100", nameof(volumeDiscountPercentage));
         if (paymentTermsDays < 0) throw new ArgumentException("PaymentTermsDays must be zero or greater", nameof(paymentTermsDays));
         if (creditLimit < 0m) throw new ArgumentException("CreditLimit must be zero or greater", nameof(creditLimit));
 
@@ -176,7 +176,7 @@ public sealed class WholesaleContract : AuditableEntity, IAggregateRoot
 
     public WholesaleContract Renew(DateTime newEndDate)
     {
-        if (Status == "Active" || Status == "Expired")
+        if (Status is "Active" or "Expired")
         {
             EndDate = newEndDate;
             Status = "Active";
@@ -223,7 +223,7 @@ public sealed class WholesaleContract : AuditableEntity, IAggregateRoot
 
         if (volumeDiscountPercentage.HasValue && volumeDiscountPercentage.Value != VolumeDiscountPercentage)
         {
-            if (volumeDiscountPercentage.Value < 0m || volumeDiscountPercentage.Value > 100m) throw new ArgumentException("VolumeDiscountPercentage must be between 0 and 100", nameof(volumeDiscountPercentage));
+            if (volumeDiscountPercentage.Value is < 0m or > 100m) throw new ArgumentException("VolumeDiscountPercentage must be between 0 and 100", nameof(volumeDiscountPercentage));
             VolumeDiscountPercentage = volumeDiscountPercentage.Value;
             isUpdated = true;
         }

@@ -9,57 +9,74 @@ namespace Store.Domain;
 /// - Track balances and credit limits for invoicing.
 /// - Differentiate behavior for retail vs wholesale customers.
 /// - Store contact info for delivery and notifications.
+/// - Maintain customer lifetime value and purchase history.
+/// - Apply customer-specific pricing and discount rules.
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.CustomerCreated"/>
+/// <seealso cref="Store.Domain.Events.CustomerUpdated"/>
+/// <seealso cref="Store.Domain.Events.CustomerBalanceUpdated"/>
+/// <seealso cref="Store.Domain.Events.CustomerLifetimeValueUpdated"/>
+/// <seealso cref="Store.Domain.Exceptions.Customer.CustomerNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.Customer.DuplicateCustomerCodeException"/>
 public sealed class Customer : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Short unique code for the customer. Example: "CUST-1001".
+    /// Max length: 50.
     /// </summary>
     public string Code { get; private set; } = default!;
 
     /// <summary>
     /// Type of customer: e.g. "Retail", "Wholesale", "Corporate".
-    /// Use to apply pricing or payment rules. Default value expected from creator.
+    /// Use to apply pricing or payment rules. Max length: 50.
     /// </summary>
     public string CustomerType { get; private set; } = default!; // Retail, Wholesale, Corporate
 
     /// <summary>
     /// Primary contact person for this customer. Example: "Jane Doe".
+    /// Max length: 100.
     /// </summary>
     public string ContactPerson { get; private set; } = default!;
 
     /// <summary>
     /// Contact email used for notifications and invoices. Example: "contact@example.com".
+    /// Max length: 255.
     /// </summary>
     public string Email { get; private set; } = default!;
 
     /// <summary>
     /// Contact phone number. Example: "+1-555-0100".
+    /// Max length: 50.
     /// </summary>
     public string Phone { get; private set; } = default!;
 
     /// <summary>
     /// Primary postal address for deliveries.
+    /// Max length: 500.
     /// </summary>
     public string Address { get; private set; } = default!;
 
     /// <summary>
     /// City of the customer's address. Example: "Seattle".
+    /// Max length: 100.
     /// </summary>
     public string City { get; private set; } = default!;
 
     /// <summary>
     /// State or region (optional). Example: "WA".
+    /// Max length: 100.
     /// </summary>
     public string? State { get; private set; }
 
     /// <summary>
     /// Country of the customer. Example: "US".
+    /// Max length: 100.
     /// </summary>
     public string Country { get; private set; } = default!;
 
     /// <summary>
     /// Postal/ZIP code (optional). Example: "98101".
+    /// Max length: 20.
     /// </summary>
     public string? PostalCode { get; private set; }
 
@@ -71,21 +88,25 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Current outstanding balance. Default: 0.
+    /// Updated when invoices are created or payments received.
     /// </summary>
     public decimal CurrentBalance { get; private set; }
 
     /// <summary>
     /// Number of days before payment is due. Default commonly 30.
+    /// Example: 30 for net-30 terms, 0 for immediate payment.
     /// </summary>
     public int PaymentTermsDays { get; private set; }
 
     /// <summary>
     /// Standard discount percentage to apply for this customer (0-100). Default: 0.
+    /// Example: 5.0 for 5% discount, 10.0 for 10% discount.
     /// </summary>
     public decimal DiscountPercentage { get; private set; }
 
     /// <summary>
     /// Whether the customer account is active. Default: true.
+    /// Used to disable customers without deleting records.
     /// </summary>
     public bool IsActive { get; private set; } = true;
 
@@ -101,16 +122,24 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Date of the customer's last order (optional).
+    /// Updated when sales orders are placed.
     /// </summary>
     public DateTime? LastOrderDate { get; private set; }
 
     /// <summary>
     /// Cumulative value of all orders placed by this customer. Default: 0.
+    /// Updated when orders are completed or invoiced.
     /// </summary>
     public decimal LifetimeValue { get; private set; }
     
-    
+    /// <summary>
+    /// Navigation property to sales orders placed by this customer.
+    /// </summary>
     public ICollection<SalesOrder> SalesOrders { get; private set; } = new List<SalesOrder>();
+
+    /// <summary>
+    /// Navigation property to wholesale contracts for this customer.
+    /// </summary>
     public ICollection<WholesaleContract> WholesaleContracts { get; private set; } = new List<WholesaleContract>();
 
     private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -173,7 +202,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
 
         if (creditLimit < 0m) throw new ArgumentException("CreditLimit cannot be negative", nameof(creditLimit));
         if (paymentTermsDays < 0) throw new ArgumentException("PaymentTermsDays must be zero or greater", nameof(paymentTermsDays));
-        if (discountPercentage < 0m || discountPercentage > 100m) throw new ArgumentException("DiscountPercentage must be between 0 and 100", nameof(discountPercentage));
+        if (discountPercentage is < 0m or > 100m) throw new ArgumentException("DiscountPercentage must be between 0 and 100", nameof(discountPercentage));
 
         Id = id;
         Name = name;
@@ -201,6 +230,28 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new CustomerCreated { Customer = this });
     }
 
+    /// <summary>
+    /// Factory method to create a new Customer.
+    /// </summary>
+    /// <param name="name">The name of the customer. Required.</param>
+    /// <param name="description">Optional description for the customer.</param>
+    /// <param name="code">Unique code for the customer. Required.</param>
+    /// <param name="customerType">Type of customer (e.g. Retail, Wholesale, Corporate). Required.</param>
+    /// <param name="contactPerson">Primary contact person for the customer. Required.</param>
+    /// <param name="email">Contact email for the customer. Required.</param>
+    /// <param name="phone">Contact phone number for the customer. Required.</param>
+    /// <param name="address">Primary address for the customer. Required.</param>
+    /// <param name="city">City of the customer's address. Required.</param>
+    /// <param name="state">State or region of the customer's address. Optional.</param>
+    /// <param name="country">Country of the customer. Required.</param>
+    /// <param name="postalCode">Postal/ZIP code of the customer. Optional.</param>
+    /// <param name="creditLimit">Allowed credit limit for the customer. Default: 0.</param>
+    /// <param name="paymentTermsDays">Number of days before payment is due. Default: 30.</param>
+    /// <param name="discountPercentage">Standard discount percentage for the customer. Default: 0.</param>
+    /// <param name="taxNumber">Tax identifier (e.g. VAT or GST number). Optional.</param>
+    /// <param name="businessLicense">Business license number for corporate customers. Optional.</param>
+    /// <param name="notes">Additional notes for the customer. Optional.</param>
+    /// <returns>A new instance of the <see cref="Customer"/> class.</returns>
     public static Customer Create(
         string name,
         string? description,
@@ -243,6 +294,13 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
             notes);
     }
 
+    /// <summary>
+    /// Updates the current balance of the customer.
+    /// </summary>
+    /// <param name="amount">The amount to update the balance by. Can be positive or negative.</param>
+    /// <param name="operation">The operation to perform: ADD, SUBTRACT, or SET.</param>
+    /// <returns>The updated <see cref="Customer"/> instance.</returns>
+    /// <exception cref="ArgumentException">Thrown when the operation is invalid.</exception>
     public Customer UpdateBalance(decimal amount, string operation)
     {
         var previousBalance = CurrentBalance;
@@ -274,6 +332,11 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Updates the lifetime value of the customer.
+    /// </summary>
+    /// <param name="additionalValue">The additional value to add to the lifetime value.</param>
+    /// <returns>The updated <see cref="Customer"/> instance.</returns>
     public Customer UpdateLifetimeValue(decimal additionalValue)
     {
         LifetimeValue += additionalValue;
@@ -281,17 +344,69 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Records the date of the customer's last order.
+    /// </summary>
+    /// <param name="orderDate">The date of the last order.</param>
+    /// <returns>The updated <see cref="Customer"/> instance.</returns>
     public Customer RecordLastOrder(DateTime orderDate)
     {
         LastOrderDate = orderDate;
         return this;
     }
 
+    /// <summary>
+    /// Checks if the customer is a wholesale customer.
+    /// </summary>
+    /// <returns>True if the customer is wholesale, false otherwise.</returns>
     public bool IsWholesaleCustomer() => CustomerType.Equals("Wholesale", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Checks if the customer is a retail customer.
+    /// </summary>
+    /// <returns>True if the customer is retail, false otherwise.</returns>
     public bool IsRetailCustomer() => CustomerType.Equals("Retail", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Checks if the customer is a corporate customer.
+    /// </summary>
+    /// <returns>True if the customer is corporate, false otherwise.</returns>
     public bool IsCorporateCustomer() => CustomerType.Equals("Corporate", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Checks if the customer is over their credit limit.
+    /// </summary>
+    /// <returns>True if the customer is over credit limit, false otherwise.</returns>
     public bool IsOverCreditLimit() => CurrentBalance > CreditLimit;
+
+    /// <summary>
+    /// Gets the available credit for the customer.
+    /// </summary>
+    /// <returns>The amount of available credit.</returns>
     public decimal GetAvailableCredit() => Math.Max(0, CreditLimit - CurrentBalance);
+
+    /// <summary>
+    /// Updates the customer information.
+    /// </summary>
+    /// <param name="name">The new name of the customer.</param>
+    /// <param name="description">The new description of the customer.</param>
+    /// <param name="code">The new unique code for the customer.</param>
+    /// <param name="customerType">The new type of customer.</param>
+    /// <param name="contactPerson">The new primary contact person for the customer.</param>
+    /// <param name="email">The new contact email for the customer.</param>
+    /// <param name="phone">The new contact phone number for the customer.</param>
+    /// <param name="address">The new primary address for the customer.</param>
+    /// <param name="city">The new city of the customer's address.</param>
+    /// <param name="state">The new state or region of the customer's address.</param>
+    /// <param name="country">The new country of the customer.</param>
+    /// <param name="postalCode">The new postal/ZIP code of the customer.</param>
+    /// <param name="creditLimit">The new allowed credit limit for the customer.</param>
+    /// <param name="paymentTermsDays">The new number of days before payment is due.</param>
+    /// <param name="discountPercentage">The new standard discount percentage for the customer.</param>
+    /// <param name="taxNumber">The new tax identifier for the customer.</param>
+    /// <param name="businessLicense">The new business license number for corporate customers.</param>
+    /// <param name="notes">The new additional notes for the customer.</param>
+    /// <returns>The updated <see cref="Customer"/> instance.</returns>
     public Customer Update(
         string? name,
         string? description,

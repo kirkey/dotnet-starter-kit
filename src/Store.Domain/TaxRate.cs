@@ -39,7 +39,7 @@ public sealed class TaxRate : AuditableEntity, IAggregateRoot
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
         if (name.Length > 100) throw new ArgumentException("Name must not exceed 100 characters", nameof(name));
-        if (rate < 0m || rate > 1m) throw new ArgumentException("Rate must be between 0.00 and 1.00", nameof(rate));
+        if (rate is < 0m or > 1m) throw new ArgumentException("Rate must be between 0.00 and 1.00", nameof(rate));
 
         Id = id;
         Name = name;
@@ -73,7 +73,7 @@ public sealed class TaxRate : AuditableEntity, IAggregateRoot
         }
         if (rate.HasValue && Rate != rate.Value)
         {
-            if (rate.Value < 0m || rate.Value > 1m) throw new ArgumentException("Rate must be between 0.00 and 1.00", nameof(rate));
+            if (rate.Value is < 0m or > 1m) throw new ArgumentException("Rate must be between 0.00 and 1.00", nameof(rate));
             Rate = rate.Value; changed = true;
         }
         if (isInclusive.HasValue && IsInclusive != isInclusive.Value)

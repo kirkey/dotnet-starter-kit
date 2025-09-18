@@ -6,92 +6,122 @@ namespace Store.Domain;
 /// <remarks>
 /// Use cases:
 /// - Track available capacity and used capacity.
-/// - Identify main warehouse vs satellite warehouses.
+/// - Identify the main warehouse vs satellite warehouses.
+/// - Manage warehouse operations and staff assignments.
+/// - Monitor inventory levels across multiple facilities.
+/// - Support location-based reporting and analytics.
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.WarehouseCreated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseUpdated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseCapacityUpdated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseInventoryCounted"/>
+/// <seealso cref="Store.Domain.Events.WarehouseActivated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseDeactivated"/>
+/// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseNotFoundByCodeException"/>
+/// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseInactiveException"/>
+/// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseCapacityExceededException"/>
 public sealed class Warehouse : AuditableEntity, IAggregateRoot
 {
     /// <summary>
-    /// Short warehouse code. Example: "WH-SEA".
+    /// Short warehouse code. Example: "WH-SEA", "WH-NYC".
+    /// Max length: 50.
     /// </summary>
     public string Code { get; private set; } = default!;
 
     /// <summary>
     /// Street address for the warehouse.
+    /// Example: "1234 Industrial Blvd". Max length: 500.
     /// </summary>
     public string Address { get; private set; } = default!;
 
     /// <summary>
     /// City where the warehouse is located.
+    /// Example: "Seattle". Max length: 100.
     /// </summary>
     public string City { get; private set; } = default!;
 
     /// <summary>
     /// State where the warehouse is located (optional).
+    /// Example: "WA". Max length: 100.
     /// </summary>
     public string? State { get; private set; }
 
     /// <summary>
     /// Country where the warehouse is located.
+    /// Example: "US". Max length: 100.
     /// </summary>
     public string Country { get; private set; } = default!;
 
     /// <summary>
     /// Postal code for the warehouse address (optional).
+    /// Example: "98101". Max length: 20.
     /// </summary>
     public string? PostalCode { get; private set; }
 
     /// <summary>
     /// Manager name responsible for warehouse operations.
+    /// Example: "Sarah Johnson". Max length: 100.
     /// </summary>
     public string ManagerName { get; private set; } = default!;
 
     /// <summary>
     /// Manager email for warehouse communications.
+    /// Example: "manager@warehouse.com". Max length: 255.
     /// </summary>
     public string ManagerEmail { get; private set; } = default!;
 
     /// <summary>
     /// Manager phone number for warehouse contact.
+    /// Example: "+1-555-0300". Max length: 50.
     /// </summary>
     public string ManagerPhone { get; private set; } = default!;
 
     /// <summary>
     /// Total storage capacity expressed in a unit (e.g., sqft or pallets).
+    /// Example: 50000.0 for 50,000 square feet. Must be &gt; 0.
     /// </summary>
     public decimal TotalCapacity { get; private set; }
 
     /// <summary>
-    /// Used portion of the capacity. Starts at 0.
+    /// Used portion of the capacity. Default: 0.
+    /// Example: 30000.0 for 30,000 square feet used.
     /// </summary>
     public decimal UsedCapacity { get; private set; }
 
     /// <summary>
     /// Unit used for capacity measurements. Default: "sqft".
+    /// Example: "sqft", "pallets", "cubic_meters".
     /// </summary>
     public string CapacityUnit { get; private set; } = default!;
 
     /// <summary>
     /// Indicates if the warehouse is active.
+    /// Default: true. Used to disable warehouses without deleting records.
     /// </summary>
     public bool IsActive { get; private set; } = true;
 
     /// <summary>
     /// Indicates if the warehouse is the main warehouse.
+    /// Default: false. Only one warehouse should be marked as main.
     /// </summary>
     public bool IsMainWarehouse { get; private set; }
 
     /// <summary>
     /// Date of the last inventory count.
+    /// Example: 2025-09-01T00:00:00Z. Updated when cycle counts are completed.
     /// </summary>
     public DateTime? LastInventoryDate { get; private set; }
 
     /// <summary>
     /// Collection of locations within the warehouse.
+    /// Example: aisles, racks, bins for detailed inventory placement.
     /// </summary>
     public ICollection<WarehouseLocation> Locations { get; private set; } = new List<WarehouseLocation>();
 
     /// <summary>
     /// Collection of inventory transactions for the warehouse.
+    /// Example: receipts, shipments, adjustments affecting this warehouse.
     /// </summary>
     public ICollection<InventoryTransaction> InventoryTransactions { get; private set; } = new List<InventoryTransaction>();
 

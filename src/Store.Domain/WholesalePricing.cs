@@ -76,7 +76,7 @@ public sealed class WholesalePricing : AuditableEntity, IAggregateRoot
         if (minimumQuantity <= 0) throw new ArgumentException("MinimumQuantity must be greater than zero", nameof(minimumQuantity));
         if (maximumQuantity.HasValue && maximumQuantity.Value < minimumQuantity) throw new ArgumentException("MaximumQuantity must be greater than or equal to MinimumQuantity", nameof(maximumQuantity));
         if (tierPrice < 0m) throw new ArgumentException("TierPrice must be zero or greater", nameof(tierPrice));
-        if (discountPercentage < 0m || discountPercentage > 100m) throw new ArgumentException("DiscountPercentage must be between 0 and 100", nameof(discountPercentage));
+        if (discountPercentage is < 0m or > 100m) throw new ArgumentException("DiscountPercentage must be between 0 and 100", nameof(discountPercentage));
         if (effectiveDate == default) throw new ArgumentException("EffectiveDate is required", nameof(effectiveDate));
         if (expiryDate.HasValue && expiryDate.Value < effectiveDate) throw new ArgumentException("ExpiryDate cannot be earlier than EffectiveDate", nameof(expiryDate));
 

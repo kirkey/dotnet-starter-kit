@@ -7,81 +7,119 @@ namespace Store.Domain;
 /// Use cases:
 /// - Track where items are physically stored.
 /// - Enforce temperature requirements for perishable goods.
+/// - Support pick/pack operations with precise location data.
+/// - Monitor location capacity and utilization.
+/// - Enable zone-based inventory management.
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.WarehouseLocationCreated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseLocationUpdated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseLocationCapacityUpdated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseLocationActivated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseLocationDeactivated"/>
+/// <seealso cref="Store.Domain.Exceptions.WarehouseLocation.WarehouseLocationNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.WarehouseLocation.WarehouseLocationNotFoundByCodeException"/>
+/// <seealso cref="Store.Domain.Exceptions.WarehouseLocation.WarehouseLocationInactiveException"/>
+/// <seealso cref="Store.Domain.Exceptions.WarehouseLocation.WarehouseLocationCapacityExceededException"/>
 public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
 {
     /// <summary>
-    /// Short location code. Example: "A1-S1-SH1".
+    /// Short location code. Example: "A1-S1-SH1", "COLD-01".
+    /// Max length: 50.
     /// </summary>
     public string Code { get; private set; } = default!;
 
     /// <summary>
     /// Aisle identifier within the warehouse.
+    /// Example: "A1", "A2", "COLD". Max length: 20.
     /// </summary>
     public string Aisle { get; private set; } = default!;
 
     /// <summary>
     /// Section identifier within the aisle.
+    /// Example: "S1", "S2", "ZONE-A". Max length: 20.
     /// </summary>
     public string Section { get; private set; } = default!;
 
     /// <summary>
     /// Shelf identifier within the section.
+    /// Example: "SH1", "TOP", "BOTTOM". Max length: 20.
     /// </summary>
     public string Shelf { get; private set; } = default!;
 
     /// <summary>
     /// Bin identifier within the shelf (optional).
+    /// Example: "BIN-01", "LEFT", "RIGHT". Max length: 20.
     /// </summary>
     public string? Bin { get; private set; }
 
     /// <summary>
     /// The warehouse this location belongs to.
+    /// Links to parent <see cref="Warehouse"/> for organization.
     /// </summary>
     public DefaultIdType WarehouseId { get; private set; }
 
     /// <summary>
     /// Type of location (e.g., Floor, Rack, Cold Storage).
+    /// Example: "Floor", "Rack", "Cold Storage", "Freezer".
     /// </summary>
     public string LocationType { get; private set; } = default!;
 
     /// <summary>
     /// Capacity of this location (units) and the unit used.
+    /// Example: 100.0 for 100 items or pallets. Must be &gt; 0.
     /// </summary>
     public decimal Capacity { get; private set; }
+
+    /// <summary>
+    /// Unit used for capacity measurement.
+    /// Example: "items", "pallets", "cubic_feet". Default: "units".
+    /// </summary>
     public string CapacityUnit { get; private set; } = default!;
 
     /// <summary>
     /// Used capacity of this location (units).
+    /// Example: 75.0 for 75 items currently stored. Default: 0.
     /// </summary>
     public decimal UsedCapacity { get; private set; }
 
     /// <summary>
     /// Indicates if this location requires temperature control.
+    /// Default: false. Set to true for cold storage, freezer zones.
     /// </summary>
     public bool RequiresTemperatureControl { get; private set; }
 
     /// <summary>
     /// Minimum temperature (if applicable).
+    /// Example: 2.0 for 2°C in cold storage. Required if temperature control enabled.
     /// </summary>
     public decimal? MinTemperature { get; private set; }
 
     /// <summary>
     /// Maximum temperature (if applicable).
+    /// Example: 8.0 for 8°C in cold storage. Required if temperature control enabled.
     /// </summary>
     public decimal? MaxTemperature { get; private set; }
 
     /// <summary>
     /// Unit of measurement for temperature (e.g., Celsius, Fahrenheit).
+    /// Example: "C" for Celsius, "F" for Fahrenheit.
     /// </summary>
     public string? TemperatureUnit { get; private set; }
 
     /// <summary>
-    /// Indicates whether this warehouse location is active and usable.
+    /// Whether this warehouse location is active and usable.
+    /// Default: true. Used to disable locations without deleting records.
     /// </summary>
     public bool IsActive { get; private set; } = true;
 
+    /// <summary>
+    /// Navigation property to the parent warehouse.
+    /// </summary>
     public Warehouse Warehouse { get; private set; } = default!;
+
+    /// <summary>
+    /// Navigation property to grocery items stored in this location.
+    /// </summary>
     public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
 
     private WarehouseLocation() { }
@@ -133,7 +171,7 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
             if (!maxTemperature.HasValue) throw new ArgumentException("MaxTemperature is required when temperature control is enabled", nameof(maxTemperature));
             if (maxTemperature.Value <= minTemperature.Value) throw new ArgumentException("MaxTemperature must be greater than MinTemperature", nameof(maxTemperature));
             if (string.IsNullOrWhiteSpace(temperatureUnit)) throw new ArgumentException("TemperatureUnit is required when temperature control is enabled", nameof(temperatureUnit));
-            if (!(temperatureUnit == "C" || temperatureUnit == "F")) throw new ArgumentException("TemperatureUnit must be 'C' or 'F'", nameof(temperatureUnit));
+            if (!(temperatureUnit is "C" or "F")) throw new ArgumentException("TemperatureUnit must be 'C' or 'F'", nameof(temperatureUnit));
         }
 
         Id = id;
