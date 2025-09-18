@@ -22,7 +22,7 @@ public class GetInvoiceByIdHandler(IReadRepository<Invoice> repository)
             TotalAmount = invoice.TotalAmount,
             PaidAmount = invoice.PaidAmount,
             Status = invoice.Status,
-            ConsumptionDataId = invoice.ConsumptionDataId,
+            ConsumptionId = invoice.ConsumptionId,
             UsageCharge = invoice.UsageCharge,
             BasicServiceCharge = invoice.BasicServiceCharge,
             TaxAmount = invoice.TaxAmount,

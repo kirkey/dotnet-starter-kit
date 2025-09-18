@@ -145,7 +145,7 @@ internal sealed class AccountingDbInitializer(
             logger.LogInformation("[{Tenant}] seeded Projects", context.TenantInfo!.Identifier);
         }
 
-        // Seed Members, Meters, ConsumptionData, Invoices and Payments
+        // Seed Members, Meters, Consumption, Invoices and Payments
         if (!await context.Members.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             // Create a default member
@@ -161,10 +161,10 @@ internal sealed class AccountingDbInitializer(
             logger.LogInformation("[{Tenant}] seeded Meter {MeterNumber} for Member {Member}", context.TenantInfo!.Identifier, meter.MeterNumber, member.MemberNumber);
 
             // Create a consumption record for the meter
-            var consumption = ConsumptionData.Create(meter.Id, DateTime.UtcNow.Date, 1500m, 1400m, DateTime.UtcNow.ToString("yyyy-MM"), "Actual", 1m, "AMR", "Seeded consumption");
-            await context.ConsumptionData.AddAsync(consumption, cancellationToken).ConfigureAwait(false);
+            var consumption = Consumption.Create(meter.Id, DateTime.UtcNow.Date, 1500m, 1400m, DateTime.UtcNow.ToString("yyyy-MM"), "Actual", 1m, "AMR", "Seeded consumption");
+            await context.Consumption.AddAsync(consumption, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            logger.LogInformation("[{Tenant}] seeded ConsumptionData for Meter {MeterNumber}", context.TenantInfo!.Identifier, meter.MeterNumber);
+            logger.LogInformation("[{Tenant}] seeded Consumption for Meter {MeterNumber}", context.TenantInfo!.Identifier, meter.MeterNumber);
 
             // Create an invoice for the member
             var invoice = Invoice.Create("INV-1000", member.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddDays(30), consumption.Id, 100m, 10m, 5m, 0m, 100m, DateTime.UtcNow.ToString("MMMM yyyy"), null, null, null, null, null, "Seeded invoice");

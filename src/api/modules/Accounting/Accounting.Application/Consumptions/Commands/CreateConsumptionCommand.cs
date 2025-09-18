@@ -1,6 +1,6 @@
 namespace Accounting.Application.Consumptions.Commands;
 
-public class CreateConsumptionDataCommand : IRequest<DefaultIdType>
+public class CreateConsumptionCommand : IRequest<DefaultIdType>
 {
     public DefaultIdType MeterId { get; set; }
     public DateTime ReadingDate { get; set; }

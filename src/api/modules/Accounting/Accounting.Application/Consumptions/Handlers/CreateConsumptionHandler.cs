@@ -3,11 +3,11 @@ using Accounting.Application.Consumptions.Queries;
 
 namespace Accounting.Application.Consumptions.Handlers;
 
-public class CreateConsumptionDataHandler(
-    [FromKeyedServices("accounting:consumption") ] IRepository<ConsumptionData> repository)
-    : IRequestHandler<CreateConsumptionDataCommand, DefaultIdType>
+public class CreateConsumptionHandler(
+    [FromKeyedServices("accounting:consumption") ] IRepository<Consumption> repository)
+    : IRequestHandler<CreateConsumptionCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(CreateConsumptionDataCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateConsumptionCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -15,11 +15,11 @@ public class CreateConsumptionDataHandler(
         var readingDate = request.ReadingDate;
 
         // Prevent duplicate consumption record for same meter/date
-        var existing = await repository.FirstOrDefaultAsync(new ConsumptionDataByMeterDateSpec(meterId, readingDate), cancellationToken);
+        var existing = await repository.FirstOrDefaultAsync(new ConsumptionByMeterDateSpec(meterId, readingDate), cancellationToken);
         if (existing != null)
-            throw new ConsumptionDataAlreadyExistsException(meterId, readingDate);
+            throw new ConsumptionAlreadyExistsException(meterId, readingDate);
 
-        var entity = ConsumptionData.Create(
+        var entity = Consumption.Create(
             meterId,
             readingDate,
             request.CurrentReading,

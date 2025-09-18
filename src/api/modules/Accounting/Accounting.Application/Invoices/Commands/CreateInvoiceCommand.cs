@@ -6,7 +6,7 @@ public class CreateInvoiceCommand : IRequest<DefaultIdType>
     public DefaultIdType MemberId { get; set; }
     public DateTime InvoiceDate { get; set; }
     public DateTime DueDate { get; set; }
-    public DefaultIdType? ConsumptionDataId { get; set; }
+    public DefaultIdType? ConsumptionId { get; set; }
     public decimal UsageCharge { get; set; }
     public decimal BasicServiceCharge { get; set; }
     public decimal TaxAmount { get; set; }

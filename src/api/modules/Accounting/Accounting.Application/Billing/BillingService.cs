@@ -2,7 +2,7 @@ namespace Accounting.Application.Billing;
 
 public class BillingService : IBillingService
 {
-    public InvoiceDraft CalculateInvoiceDraft(Domain.ConsumptionData consumption, RateSchedule rateSchedule)
+    public InvoiceDraft CalculateInvoiceDraft(Domain.Consumption consumption, RateSchedule rateSchedule)
     {
         if (consumption == null) throw new ArgumentNullException(nameof(consumption));
         if (rateSchedule == null) throw new ArgumentNullException(nameof(rateSchedule));

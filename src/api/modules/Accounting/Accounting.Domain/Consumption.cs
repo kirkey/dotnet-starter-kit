@@ -1,4 +1,4 @@
-using Accounting.Domain.Events.ConsumptionData;
+using Accounting.Domain.Events.Consumption;
 
 namespace Accounting.Domain;
 
@@ -9,7 +9,7 @@ namespace Accounting.Domain;
 /// Calculates <see cref="KWhUsed"/> from current/previous readings and multiplier and flags <see cref="IsValidReading"/>.
 /// Defaults: <see cref="Multiplier"/> defaults to 1 when null or non-positive; strings are trimmed and length-limited.
 /// </remarks>
-public class ConsumptionData : AuditableEntity, IAggregateRoot
+public class Consumption : AuditableEntity, IAggregateRoot
 {
     private const int MaxBillingPeriodLength = 64;
     private const int MaxReadingTypeLength = 32;
@@ -68,12 +68,12 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
     public string? ReadingSource { get; private set; } // "AMR", "Manual", "AMI"
 
     // Parameterless constructor for EF Core
-    private ConsumptionData()
+    private Consumption()
     {
         // EF Core requires a parameterless constructor for entity instantiation
     }
 
-    private ConsumptionData(DefaultIdType meterId, DateTime readingDate,
+    private Consumption(DefaultIdType meterId, DateTime readingDate,
         decimal currentReading, decimal previousReading, string billingPeriod,
         string readingType = "Actual", decimal? multiplier = null, string? readingSource = null,
         string? description = null, string? notes = null)
@@ -113,26 +113,26 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
         if (Notes?.Length > MaxNotesLength)
             Notes = Notes.Substring(0, MaxNotesLength);
 
-        QueueDomainEvent(new ConsumptionDataCreated(Id, MeterId, ReadingDate, KWhUsed, BillingPeriod, Description, Notes));
+        QueueDomainEvent(new ConsumptionCreated(Id, MeterId, ReadingDate, KWhUsed, BillingPeriod, Description, Notes));
     }
 
     /// <summary>
     /// Factory for creating a validated consumption record and computing kWh used.
     /// </summary>
-    public static ConsumptionData Create(DefaultIdType meterId, DateTime readingDate,
+    public static Consumption Create(DefaultIdType meterId, DateTime readingDate,
         decimal currentReading, decimal previousReading, string billingPeriod,
         string readingType = "Actual", decimal? multiplier = null, string? readingSource = null,
         string? description = null, string? notes = null)
     {
         // Domain-level validation occurs in the private constructor
-        return new ConsumptionData(meterId, readingDate, currentReading,
+        return new Consumption(meterId, readingDate, currentReading,
             previousReading, billingPeriod, readingType, multiplier, readingSource, description, notes);
     }
 
     /// <summary>
     /// Update readings and related metadata; recalculates <see cref="KWhUsed"/> and validity.
     /// </summary>
-    public ConsumptionData Update(decimal? currentReading, decimal? previousReading,
+    public Consumption Update(decimal? currentReading, decimal? previousReading,
         string? readingType, decimal? multiplier, string? readingSource,
         string? description, string? notes)
     {
@@ -203,7 +203,7 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
 
         if (isUpdated)
         {
-            QueueDomainEvent(new ConsumptionDataUpdated(this));
+            QueueDomainEvent(new ConsumptionUpdated(this));
         }
 
         return this;
@@ -224,11 +224,11 @@ public class ConsumptionData : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Mark this reading as estimated and append reason to notes.
     /// </summary>
-    public ConsumptionData MarkAsEstimated(string reason)
+    public Consumption MarkAsEstimated(string reason)
     {
         ReadingType = "Estimated";
         Notes = string.IsNullOrWhiteSpace(Notes) ? $"Estimated: {reason}" : $"{Notes}; Estimated: {reason}";
-        QueueDomainEvent(new ConsumptionDataMarkedAsEstimated(Id, MeterId, reason));
+        QueueDomainEvent(new ConsumptionMarkedAsEstimated(Id, MeterId, reason));
         return this;
     }
 }

@@ -10,6 +10,6 @@ public interface IBillingService
     /// Calculate invoice draft (line items and totals) for a given consumption record and rate schedule.
     /// Pure calculation (no persistence).
     /// </summary>
-    InvoiceDraft CalculateInvoiceDraft(Domain.ConsumptionData consumption, RateSchedule rateSchedule);
+    InvoiceDraft CalculateInvoiceDraft(Domain.Consumption consumption, RateSchedule rateSchedule);
 }
 

@@ -129,8 +129,8 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<Budget>, AccountingRepository<Budget>>();
         builder.Services.AddScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
         builder.Services.AddScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
-        builder.Services.AddScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>();
-        builder.Services.AddScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>();
+        builder.Services.AddScoped<IRepository<Consumption>, AccountingRepository<Consumption>>();
+        builder.Services.AddScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>();
         builder.Services.AddScoped<IRepository<Customer>, AccountingRepository<Customer>>();
         builder.Services.AddScoped<IReadRepository<Customer>, AccountingRepository<Customer>>();
         builder.Services.AddScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>();
@@ -182,8 +182,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Budget>, AccountingRepository<Budget>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting");
-        builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Consumption>, AccountingRepository<Consumption>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting");
@@ -219,8 +219,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IRepository<PatronageCapital>, AccountingRepository<PatronageCapital>>("accounting:patronagecapitals");
         builder.Services.AddKeyedScoped<IReadRepository<PatronageCapital>, AccountingRepository<PatronageCapital>>("accounting:patronagecapitals");
         // Handlers use the key "accounting:consumption" (singular) in some places — register it as well
-        builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumption");
-        builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumption");
+        builder.Services.AddKeyedScoped<IRepository<Consumption>, AccountingRepository<Consumption>>("accounting:consumption");
+        builder.Services.AddKeyedScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>("accounting:consumption");
         builder.Services.AddKeyedScoped<IRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting");
         // Register with specific keys (for handlers that use specific keys like "accounting:budgets", "accounting:accounts", etc.)
@@ -234,8 +234,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Budget>, AccountingRepository<Budget>>("accounting:budgets");
         builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
-        builder.Services.AddKeyedScoped<IRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumptiondata");
-        builder.Services.AddKeyedScoped<IReadRepository<ConsumptionData>, AccountingRepository<ConsumptionData>>("accounting:consumptiondata");
+        builder.Services.AddKeyedScoped<IRepository<Consumption>, AccountingRepository<Consumption>>("accounting:Consumption");
+        builder.Services.AddKeyedScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>("accounting:Consumption");
         builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
         builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
         builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");

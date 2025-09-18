@@ -1,6 +1,6 @@
 namespace Accounting.Application.Consumptions.Dtos;
 
-public class ConsumptionDataDto : BaseDto
+public class ConsumptionDto : BaseDto
 {
     // Provide a writable Id in the DTO to allow handler mapping when BaseDto's Id is read-only
     public new DefaultIdType Id { get; set; }

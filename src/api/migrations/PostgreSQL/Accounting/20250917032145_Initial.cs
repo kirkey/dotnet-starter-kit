@@ -145,7 +145,7 @@ public partial class Initial : Migration
             });
 
         migrationBuilder.CreateTable(
-            name: "ConsumptionData",
+            name: "Consumption",
             schema: "accounting",
             columns: table => new
             {
@@ -176,7 +176,7 @@ public partial class Initial : Migration
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_ConsumptionData", x => x.Id);
+                table.PrimaryKey("PK_Consumption", x => x.Id);
             });
 
         migrationBuilder.CreateTable(
@@ -440,7 +440,7 @@ public partial class Initial : Migration
                 TotalAmount = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
                 PaidAmount = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
                 Status = table.Column<string>(type: "text", nullable: false),
-                ConsumptionDataId = table.Column<Guid>(type: "uuid", nullable: true),
+                ConsumptionId = table.Column<Guid>(type: "uuid", nullable: true),
                 UsageCharge = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
                 BasicServiceCharge = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
                 TaxAmount = table.Column<decimal>(type: "numeric(16,2)", precision: 16, scale: 2, nullable: false),
@@ -1134,9 +1134,9 @@ public partial class Initial : Migration
             unique: true);
 
         migrationBuilder.CreateIndex(
-            name: "IX_ConsumptionData_MeterId_ReadingDate",
+            name: "IX_Consumption_MeterId_ReadingDate",
             schema: "accounting",
-            table: "ConsumptionData",
+            table: "Consumption",
             columns: new[] { "MeterId", "ReadingDate" },
             unique: true);
 
@@ -1281,7 +1281,7 @@ public partial class Initial : Migration
             schema: "accounting");
 
         migrationBuilder.DropTable(
-            name: "ConsumptionData",
+            name: "Consumption",
             schema: "accounting");
 
         migrationBuilder.DropTable(

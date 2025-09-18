@@ -2,7 +2,7 @@ using Accounting.Application.Consumptions.Dtos;
 
 namespace Accounting.Application.Consumptions.Queries;
 
-public class SearchConsumptionDataQuery : IRequest<List<ConsumptionDataDto>>
+public class SearchConsumptionQuery : IRequest<List<ConsumptionDto>>
 {
     public DefaultIdType? MeterId { get; set; }
     public string? BillingPeriod { get; set; }

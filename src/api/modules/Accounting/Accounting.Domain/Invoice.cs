@@ -49,7 +49,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Optional link to the consumption record that informed this invoice.
     /// </summary>
-    public DefaultIdType? ConsumptionDataId { get; private set; } // Links to consumption record
+    public DefaultIdType? ConsumptionId { get; private set; } // Links to consumption record
 
     /// <summary>
     /// Usage-based charge (e.g., energy portion) for the period.
@@ -132,7 +132,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
     }
 
     private Invoice(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
-        DateTime dueDate, DefaultIdType? consumptionDataId, decimal usageCharge, decimal basicServiceCharge,
+        DateTime dueDate, DefaultIdType? ConsumptionId, decimal usageCharge, decimal basicServiceCharge,
         decimal taxAmount, decimal otherCharges, decimal kWhUsed, string billingPeriod,
         decimal? lateFee = null, decimal? reconnectionFee = null, decimal? depositAmount = null,
         string? rateSchedule = null, decimal? demandCharge = null, string? description = null, string? notes = null)
@@ -142,7 +142,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
         MemberId = memberId;
         InvoiceDate = invoiceDate;
         DueDate = dueDate;
-        ConsumptionDataId = consumptionDataId;
+        ConsumptionId = ConsumptionId;
         UsageCharge = usageCharge;
         BasicServiceCharge = basicServiceCharge;
         TaxAmount = taxAmount;
@@ -167,7 +167,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
     /// Factory to create a new invoice with validation for required fields and non-negative charges.
     /// </summary>
     public static Invoice Create(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
-        DateTime dueDate, DefaultIdType? consumptionDataId, decimal usageCharge, decimal basicServiceCharge,
+        DateTime dueDate, DefaultIdType? ConsumptionId, decimal usageCharge, decimal basicServiceCharge,
         decimal taxAmount, decimal otherCharges, decimal kWhUsed, string billingPeriod,
         decimal? lateFee = null, decimal? reconnectionFee = null, decimal? depositAmount = null,
         string? rateSchedule = null, decimal? demandCharge = null, string? description = null, string? notes = null)
@@ -185,7 +185,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Due date cannot be before invoice date");
 
         return new Invoice(invoiceNumber, memberId, invoiceDate, dueDate,
-            consumptionDataId, usageCharge, basicServiceCharge, taxAmount, otherCharges, kWhUsed,
+            ConsumptionId, usageCharge, basicServiceCharge, taxAmount, otherCharges, kWhUsed,
             billingPeriod, lateFee, reconnectionFee, depositAmount, rateSchedule, demandCharge, description, notes);
     }
 

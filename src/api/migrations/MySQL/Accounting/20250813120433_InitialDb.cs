@@ -155,7 +155,7 @@ public partial class InitialDb : Migration
             .Annotation("MySql:CharSet", "utf8mb4");
 
         migrationBuilder.CreateTable(
-                name: "ConsumptionData",
+                name: "Consumption",
                 schema: "accounting",
                 columns: table => new
                 {
@@ -196,7 +196,7 @@ public partial class InitialDb : Migration
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConsumptionData", x => x.Id);
+                    table.PrimaryKey("PK_Consumption", x => x.Id);
                 })
             .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -512,7 +512,7 @@ public partial class InitialDb : Migration
                     TotalAmount = table.Column<decimal>(type: "decimal(16,2)", precision: 16, scale: 2, nullable: false),
                     Status = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConsumptionDataId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ConsumptionId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     UsageCharge = table.Column<decimal>(type: "decimal(16,2)", precision: 16, scale: 2, nullable: false),
                     BasicServiceCharge = table.Column<decimal>(type: "decimal(16,2)", precision: 16, scale: 2, nullable: false),
                     TaxAmount = table.Column<decimal>(type: "decimal(16,2)", precision: 16, scale: 2, nullable: false),
@@ -1118,7 +1118,7 @@ public partial class InitialDb : Migration
             schema: "accounting");
 
         migrationBuilder.DropTable(
-            name: "ConsumptionData",
+            name: "Consumption",
             schema: "accounting");
 
         migrationBuilder.DropTable(

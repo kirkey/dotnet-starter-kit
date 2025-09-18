@@ -10,7 +10,7 @@ public class InvoiceDto
     public decimal TotalAmount { get; set; }
     public decimal PaidAmount { get; set; }
     public string Status { get; set; } = default!;
-    public DefaultIdType? ConsumptionDataId { get; set; }
+    public DefaultIdType? ConsumptionId { get; set; }
     public decimal UsageCharge { get; set; }
     public decimal BasicServiceCharge { get; set; }
     public decimal TaxAmount { get; set; }

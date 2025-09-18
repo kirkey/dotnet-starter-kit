@@ -3,10 +3,10 @@ using Accounting.Application.Consumptions.Queries;
 
 namespace Accounting.Application.Consumptions.Handlers;
 
-public class SearchConsumptionDataHandler(IReadRepository<ConsumptionData> repository)
-    : IRequestHandler<SearchConsumptionDataQuery, List<ConsumptionDataDto>>
+public class SearchConsumptionHandler(IReadRepository<Consumption> repository)
+    : IRequestHandler<SearchConsumptionQuery, List<ConsumptionDto>>
 {
-    public async Task<List<ConsumptionDataDto>> Handle(SearchConsumptionDataQuery request, CancellationToken cancellationToken)
+    public async Task<List<ConsumptionDto>> Handle(SearchConsumptionQuery request, CancellationToken cancellationToken)
     {
         var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
 
@@ -27,7 +27,7 @@ public class SearchConsumptionDataHandler(IReadRepository<ConsumptionData> repos
         if (request.Take.HasValue)
             query = query.Take(request.Take.Value);
 
-        return query.Select(entity => new ConsumptionDataDto
+        return query.Select(entity => new ConsumptionDto
         {
             Id = entity.Id,
             MeterId = entity.MeterId,

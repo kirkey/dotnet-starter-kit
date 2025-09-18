@@ -8,7 +8,7 @@ Quick reference of aggregates and what they’re for:
 - Accrual: Records obligations/revenue recognized before cash; enforces positive Amount; immutable after Reverse().
 - Budget (+ BudgetLine): Annual/period budgets per account with status lifecycle; totals, actuals, variance helpers; defaults Status=Draft.
 - ChartOfAccount: USOA-style accounts with type, hierarchy, normal balance, regulatory classification.
-- ConsumptionData: Meter consumption snapshot; computes KWhUsed from readings and Multiplier; defaults Multiplier=1 if not provided.
+- Consumption: Meter consumption snapshot; computes KWhUsed from readings and Multiplier; defaults Multiplier=1 if not provided.
 - Customer: A/R customer with contacts, terms, credit limit, and CurrentBalance; defaults IsActive=true, CurrentBalance=0.
 - DeferredRevenue: Revenue billed/received but not yet earned; recognize via Recognize().
 - DepreciationMethod: Catalog of methods (code/name/formula) for FixedAssets; defaults IsActive=true.

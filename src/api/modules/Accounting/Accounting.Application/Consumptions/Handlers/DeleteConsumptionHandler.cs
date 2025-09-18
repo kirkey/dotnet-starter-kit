@@ -2,17 +2,17 @@ using Accounting.Application.Consumptions.Commands;
 
 namespace Accounting.Application.Consumptions.Handlers;
 
-public class DeleteConsumptionDataHandler(
-    IRepository<ConsumptionData> repository)
-    : IRequestHandler<DeleteConsumptionDataCommand>
+public class DeleteConsumptionHandler(
+    IRepository<Consumption> repository)
+    : IRequestHandler<DeleteConsumptionCommand>
 {
-    public async Task Handle(DeleteConsumptionDataCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteConsumptionCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null)
-            throw new ConsumptionDataNotFoundException(request.Id);
+            throw new ConsumptionNotFoundException(request.Id);
 
         await repository.DeleteAsync(entity, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

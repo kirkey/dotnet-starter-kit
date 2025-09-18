@@ -2,9 +2,9 @@ using Accounting.Application.Consumptions.Commands;
 
 namespace Accounting.Application.Consumptions.Validators;
 
-public class CreateConsumptionDataCommandValidator : AbstractValidator<CreateConsumptionDataCommand>
+public class CreateConsumptionCommandValidator : AbstractValidator<CreateConsumptionCommand>
 {
-    public CreateConsumptionDataCommandValidator()
+    public CreateConsumptionCommandValidator()
     {
         RuleFor(x => x.MeterId).NotEmpty();
         RuleFor(x => x.ReadingDate).NotEmpty();

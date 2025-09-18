@@ -1,6 +1,6 @@
 namespace Accounting.Application.Consumptions.Commands;
 
-public class UpdateConsumptionDataCommand : IRequest<DefaultIdType>
+public class UpdateConsumptionCommand : IRequest<DefaultIdType>
 {
     public DefaultIdType Id { get; set; }
     public decimal? CurrentReading { get; set; }

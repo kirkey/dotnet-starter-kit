@@ -376,7 +376,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("ChartOfAccounts", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.ConsumptionData", b =>
+            modelBuilder.Entity("Accounting.Domain.Consumption", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -468,7 +468,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("MeterId", "ReadingDate")
                         .IsUnique();
 
-                    b.ToTable("ConsumptionData", "accounting");
+                    b.ToTable("Consumption", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Customer", b =>
@@ -1143,7 +1143,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ConsumptionDataId")
+                    b.Property<Guid?>("ConsumptionId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CreatedBy")

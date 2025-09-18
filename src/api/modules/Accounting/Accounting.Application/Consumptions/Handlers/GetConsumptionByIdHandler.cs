@@ -3,15 +3,15 @@ using Accounting.Application.Consumptions.Queries;
 
 namespace Accounting.Application.Consumptions.Handlers;
 
-public class GetConsumptionDataByIdHandler(IReadRepository<ConsumptionData> repository)
-    : IRequestHandler<GetConsumptionDataByIdQuery, ConsumptionDataDto>
+public class GetConsumptionByIdHandler(IReadRepository<Consumption> repository)
+    : IRequestHandler<GetConsumptionByIdQuery, ConsumptionDto>
 {
-    public async Task<ConsumptionDataDto> Handle(GetConsumptionDataByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ConsumptionDto> Handle(GetConsumptionByIdQuery request, CancellationToken cancellationToken)
     {
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (entity == null) throw new ConsumptionDataNotFoundException(request.Id);
+        if (entity == null) throw new ConsumptionNotFoundException(request.Id);
 
-        return new ConsumptionDataDto
+        return new ConsumptionDto
         {
             Id = entity.Id,
             MeterId = entity.MeterId,

@@ -12,7 +12,7 @@ public class CreateInvoiceHandler(IRepository<Invoice> repository)
             request.MemberId,
             request.InvoiceDate,
             request.DueDate,
-            request.ConsumptionDataId,
+            request.ConsumptionId,
             request.UsageCharge,
             request.BasicServiceCharge,
             request.TaxAmount,

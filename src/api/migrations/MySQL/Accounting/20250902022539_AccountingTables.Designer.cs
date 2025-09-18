@@ -357,7 +357,7 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                     b.ToTable("ChartOfAccounts", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.ConsumptionData", b =>
+            modelBuilder.Entity("Accounting.Domain.Consumption", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -441,7 +441,7 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConsumptionData", "accounting");
+                    b.ToTable("Consumption", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Customer", b =>
@@ -1038,7 +1038,7 @@ namespace FSH.Starter.WebApi.Migrations.MySQL.Accounting
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("ConsumptionDataId")
+                    b.Property<Guid?>("ConsumptionId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("CreatedBy")

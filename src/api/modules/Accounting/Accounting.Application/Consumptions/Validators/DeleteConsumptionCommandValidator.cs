@@ -2,9 +2,9 @@ using Accounting.Application.Consumptions.Commands;
 
 namespace Accounting.Application.Consumptions.Validators;
 
-public class DeleteConsumptionDataCommandValidator : AbstractValidator<DeleteConsumptionDataCommand>
+public class DeleteConsumptionCommandValidator : AbstractValidator<DeleteConsumptionCommand>
 {
-    public DeleteConsumptionDataCommandValidator()
+    public DeleteConsumptionCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty();
     }

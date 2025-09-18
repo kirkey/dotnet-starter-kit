@@ -1,10 +1,10 @@
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
-public class ConsumptionDataConfiguration : IEntityTypeConfiguration<ConsumptionData>
+public class ConsumptionConfiguration : IEntityTypeConfiguration<Consumption>
 {
-    public void Configure(EntityTypeBuilder<ConsumptionData> builder)
+    public void Configure(EntityTypeBuilder<Consumption> builder)
     {
-        builder.ToTable("ConsumptionData", SchemaNames.Accounting);
+        builder.ToTable("Consumption", SchemaNames.Accounting);
 
         builder.HasKey(x => x.Id);
 

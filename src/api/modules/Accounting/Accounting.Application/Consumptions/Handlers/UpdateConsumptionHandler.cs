@@ -2,17 +2,17 @@ using Accounting.Application.Consumptions.Commands;
 
 namespace Accounting.Application.Consumptions.Handlers;
 
-public class UpdateConsumptionDataHandler(
-    [FromKeyedServices("accounting:consumption")] IRepository<ConsumptionData> repository)
-    : IRequestHandler<UpdateConsumptionDataCommand, DefaultIdType>
+public class UpdateConsumptionHandler(
+    [FromKeyedServices("accounting:consumption")] IRepository<Consumption> repository)
+    : IRequestHandler<UpdateConsumptionCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(UpdateConsumptionDataCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateConsumptionCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null)
-            throw new ConsumptionDataNotFoundException(request.Id);
+            throw new ConsumptionNotFoundException(request.Id);
 
         // Domain Update performs trimming, length enforcement and validation
         entity.Update(request.CurrentReading, request.PreviousReading, request.ReadingType, request.Multiplier, request.ReadingSource, request.Description, request.Notes);

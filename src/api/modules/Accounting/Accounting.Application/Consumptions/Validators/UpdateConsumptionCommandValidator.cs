@@ -2,9 +2,9 @@ using Accounting.Application.Consumptions.Commands;
 
 namespace Accounting.Application.Consumptions.Validators;
 
-public class UpdateConsumptionDataCommandValidator : AbstractValidator<UpdateConsumptionDataCommand>
+public class UpdateConsumptionCommandValidator : AbstractValidator<UpdateConsumptionCommand>
 {
-    public UpdateConsumptionDataCommandValidator()
+    public UpdateConsumptionCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.CurrentReading).GreaterThanOrEqualTo(0).When(x => x.CurrentReading.HasValue);
