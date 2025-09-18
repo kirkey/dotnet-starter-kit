@@ -24,10 +24,8 @@ namespace Accounting.Infrastructure;
 public static class AccountingModule
 {
     // Restore proper CarterModule subclass pattern and constructor
-    public class Endpoints : CarterModule
+    public class Endpoints() : CarterModule("accounting")
     {
-        public Endpoints() : base("accounting") { }
-
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             var account = app.MapGroup("accounts").WithTags("accounts");

@@ -16,10 +16,8 @@ namespace Store.Infrastructure;
 public static class StoreModule
 {
     // Optional Carter endpoints holder (not required if endpoints are registered via IEndpoint implementations)
-    public class Endpoints : CarterModule
+    public class Endpoints() : CarterModule("store")
     {
-        public Endpoints() : base("store") { }
-
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
             // Register endpoints using Catalog-style grouped mapping for clarity
