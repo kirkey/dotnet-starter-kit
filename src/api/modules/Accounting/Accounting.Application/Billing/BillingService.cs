@@ -10,7 +10,7 @@ public class BillingService : IBillingService
         var usage = consumption.KWhUsed;
         if (usage < 0) throw new ArgumentException("Consumption KWhUsed cannot be negative", nameof(consumption));
 
-        var lines = new List<InvoiceLineDto>();
+        var lines = new List<InvoiceLineResponse>();
         decimal usageCharge = 0m;
 
         // If the schedule has tiers, apply them in order (UpToKwh is treated as a cumulative cap; 0 means unlimited)
@@ -61,7 +61,7 @@ public class BillingService : IBillingService
                 if (qtyForThisTier > 0)
                 {
                     decimal charge = qtyForThisTier * tier.RatePerKwh;
-                    lines.Add(new InvoiceLineDto($"Energy - Tier {tier.TierOrder}", qtyForThisTier, tier.RatePerKwh, charge));
+                    lines.Add(new InvoiceLineResponse($"Energy - Tier {tier.TierOrder}", qtyForThisTier, tier.RatePerKwh, charge));
                     usageCharge += charge;
                     remaining -= qtyForThisTier;
                 }
@@ -75,7 +75,7 @@ public class BillingService : IBillingService
             if (tiers.All(t => t.UpToKwh != 0m) && remaining > 0)
             {
                 decimal charge = remaining * rateSchedule.EnergyRatePerKwh;
-                lines.Add(new InvoiceLineDto("Energy - Overage", remaining, rateSchedule.EnergyRatePerKwh, charge));
+                lines.Add(new InvoiceLineResponse("Energy - Overage", remaining, rateSchedule.EnergyRatePerKwh, charge));
                 usageCharge += charge;
             }
         }
@@ -83,14 +83,14 @@ public class BillingService : IBillingService
         {
             // No tiers - apply flat energy rate
             var charge = usage * rateSchedule.EnergyRatePerKwh;
-            lines.Add(new InvoiceLineDto("Energy", usage, rateSchedule.EnergyRatePerKwh, charge));
+            lines.Add(new InvoiceLineResponse("Energy", usage, rateSchedule.EnergyRatePerKwh, charge));
             usageCharge = charge;
         }
 
         // Fixed charge line
         if (rateSchedule.FixedMonthlyCharge > 0)
         {
-            lines.Add(new InvoiceLineDto("Fixed Monthly Charge", 1, rateSchedule.FixedMonthlyCharge, rateSchedule.FixedMonthlyCharge));
+            lines.Add(new InvoiceLineResponse("Fixed Monthly Charge", 1, rateSchedule.FixedMonthlyCharge, rateSchedule.FixedMonthlyCharge));
         }
 
         var total = usageCharge + rateSchedule.FixedMonthlyCharge;

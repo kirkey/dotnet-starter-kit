@@ -272,8 +272,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journalentries");
         builder.Services.AddKeyedScoped<IReadRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journalentries");
 
-        MappingConfiguration.RegisterMappings();
-    
         return builder;
     }
 

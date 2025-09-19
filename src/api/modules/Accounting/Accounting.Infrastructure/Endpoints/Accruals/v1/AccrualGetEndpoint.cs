@@ -1,4 +1,4 @@
-using Accounting.Application.Accruals.Dtos;
+using Accounting.Application.Accruals.Responses;
 using Accounting.Application.Accruals.Queries;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
@@ -16,7 +16,7 @@ public static class AccrualGetEndpoint
             .WithName(nameof(AccrualGetEndpoint))
             .WithSummary("Get an accrual by ID")
             .WithDescription("Gets the details of an accrual by its ID")
-            .Produces<AccrualDto>()
+            .Produces<AccrualResponse>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

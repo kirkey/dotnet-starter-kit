@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.Warehouses.Update.v1;
-using FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.Warehouses.v1;
 

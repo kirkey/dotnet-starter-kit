@@ -19,7 +19,7 @@ public class SearchAccrualsHandler(IReadRepository<Accrual> repository)
         if (request.Take.HasValue)
             query = query.Take(request.Take.Value);
 
-        return query.Select(accrual => new AccrualDto
+        return query.Select(accrual => new AccrualResponse
         {
             Id = accrual.Id,
             AccrualNumber = accrual.AccrualNumber,

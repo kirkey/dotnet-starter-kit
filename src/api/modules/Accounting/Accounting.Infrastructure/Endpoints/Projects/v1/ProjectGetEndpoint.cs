@@ -1,5 +1,5 @@
-using Accounting.Application.Projects.Dtos;
 using Accounting.Application.Projects.Get;
+using Accounting.Application.Projects.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 
@@ -16,7 +16,7 @@ public static class ProjectGetEndpoint
             .WithName(nameof(ProjectGetEndpoint))
             .WithSummary("get a project by id")
             .WithDescription("get a project by id")
-            .Produces<ProjectDto>()
+            .Produces<ProjectResponse>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

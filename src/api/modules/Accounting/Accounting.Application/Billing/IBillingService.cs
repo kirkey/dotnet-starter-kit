@@ -1,8 +1,8 @@
 namespace Accounting.Application.Billing;
 
-public record InvoiceLineDto(string Description, decimal Quantity, decimal UnitPrice, decimal TotalPrice);
+public record InvoiceLineResponse(string Description, decimal Quantity, decimal UnitPrice, decimal TotalPrice);
 
-public record InvoiceDraft(decimal UsageCharge, decimal FixedCharge, decimal TotalAmount, List<InvoiceLineDto> Lines);
+public record InvoiceDraft(decimal UsageCharge, decimal FixedCharge, decimal TotalAmount, List<InvoiceLineResponse> Lines);
 
 public interface IBillingService
 {
@@ -12,4 +12,3 @@ public interface IBillingService
     /// </summary>
     InvoiceDraft CalculateInvoiceDraft(Consumption consumption, RateSchedule rateSchedule);
 }
-

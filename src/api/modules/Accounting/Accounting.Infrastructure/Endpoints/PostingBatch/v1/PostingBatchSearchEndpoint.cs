@@ -1,5 +1,5 @@
-using Accounting.Application.PostingBatches.Dtos;
 using Accounting.Application.PostingBatches.Queries;
+using Accounting.Application.PostingBatches.Responses;
 
 // Endpoint for searching posting batches
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;
@@ -17,7 +17,7 @@ public static class PostingBatchSearchEndpoint
             .WithName(nameof(PostingBatchSearchEndpoint))
             .WithSummary("Search posting batches")
             .WithDescription("Searches posting batches with filters and pagination")
-            .Produces<List<PostingBatchDto>>()
+            .Produces<List<PostingBatchResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

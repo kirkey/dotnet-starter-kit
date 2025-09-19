@@ -13,14 +13,6 @@ public sealed class GetDepreciationMethodHandler(
         var method = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (method == null) throw new DepreciationMethodNotFoundException(request.Id);
 
-        return new DepreciationMethodResponse
-        {
-            Id = method.Id,
-            Code = method.Code,
-            Name = method.Name,
-            Description = method.Description,
-            UsefulLifeYears = method.UsefulLifeYears,
-            DepreciationRate = method.DepreciationRate
-        };
+        return method.Adapt<DepreciationMethodResponse>();
     }
 }

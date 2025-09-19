@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.WholesalePricings.Deactivate.v1;
-using FSH.Starter.WebApi.Store.Application.WholesalePricings.Deactivate.v1;
 
 namespace Store.Infrastructure.Endpoints.WholesalePricings.v1;
 

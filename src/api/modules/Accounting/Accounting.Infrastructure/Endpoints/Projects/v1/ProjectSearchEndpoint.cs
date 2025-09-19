@@ -1,4 +1,4 @@
-using Accounting.Application.Projects.Dtos;
+using Accounting.Application.Projects.Responses;
 using Accounting.Application.Projects.Search;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
@@ -16,7 +16,7 @@ public static class ProjectSearchEndpoint
             .WithName(nameof(ProjectSearchEndpoint))
             .WithSummary("Gets a list of projects")
             .WithDescription("Gets a list of projects with pagination and filtering support")
-            .Produces<PagedList<ProjectDto>>()
+            .Produces<PagedList<ProjectResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

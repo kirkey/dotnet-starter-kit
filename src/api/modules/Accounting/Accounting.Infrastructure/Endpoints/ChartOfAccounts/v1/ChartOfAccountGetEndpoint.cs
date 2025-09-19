@@ -1,5 +1,5 @@
-using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Application.ChartOfAccounts.Get.v1;
+using Accounting.Application.ChartOfAccounts.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 

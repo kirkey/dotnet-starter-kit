@@ -17,22 +17,10 @@ public sealed class GetFixedAssetHandler(
             {
                 var asset = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (asset == null) throw new FixedAssetNotFoundException(request.Id);
-                return new FixedAssetResponse
-                {
-                    Id = asset.Id,
-                    AssetNumber = asset.AssetNumber,
-                    Name = asset.Name,
-                    Description = asset.Description,
-                    AcquisitionDate = asset.AcquisitionDate,
-                    Cost = asset.Cost,
-                    UsefulLifeYears = asset.UsefulLifeYears,
-                    DepreciationMethodId = asset.DepreciationMethodId,
-                    IsActive = asset.IsActive,
-                    Notes = asset.Notes
-                };
+                return asset;
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 
-        return item!;
+        return item.Adapt<FixedAssetResponse>();
     }
 }

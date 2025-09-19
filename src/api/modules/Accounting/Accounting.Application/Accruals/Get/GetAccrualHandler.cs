@@ -1,16 +1,16 @@
 namespace Accounting.Application.Accruals.Get;
 
-using Dtos;
+using Responses;
 
 public class GetAccrualHandler(IReadRepository<Accrual> repository)
-    : IRequestHandler<GetAccrualRequest, AccrualDto>
+    : IRequestHandler<GetAccrualRequest, AccrualResponse>
 {
-    public async Task<AccrualDto> Handle(GetAccrualRequest request, CancellationToken cancellationToken)
+    public async Task<AccrualResponse> Handle(GetAccrualRequest request, CancellationToken cancellationToken)
     {
         var accrual = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (accrual == null)
             throw new NotFoundException($"Accrual with Id {request.Id} not found");
-        return new AccrualDto
+        return new AccrualResponse
         {
             Id = accrual.Id,
             AccrualNumber = accrual.AccrualNumber,
@@ -22,4 +22,3 @@ public class GetAccrualHandler(IReadRepository<Accrual> repository)
         };
     }
 }
-

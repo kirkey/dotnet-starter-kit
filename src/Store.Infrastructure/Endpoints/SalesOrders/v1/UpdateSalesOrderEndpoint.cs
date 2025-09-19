@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.SalesOrders.Update.v1;
-using FSH.Starter.WebApi.Store.Application.SalesOrders.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.SalesOrders.v1;
 

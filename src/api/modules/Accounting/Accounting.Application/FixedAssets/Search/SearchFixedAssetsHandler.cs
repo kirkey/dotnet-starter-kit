@@ -1,3 +1,5 @@
+using Accounting.Application.FixedAssets.Responses;
+
 namespace Accounting.Application.FixedAssets.Search;
 
 public sealed class SearchFixedAssetsHandler(

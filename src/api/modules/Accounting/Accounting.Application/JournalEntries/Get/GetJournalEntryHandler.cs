@@ -16,7 +16,7 @@ public sealed class GetJournalEntryHandler(
             async () =>
             {
                 var entry = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
-                if (entry == null) throw new JournalEntryNotFoundException(request.Id.ToString());
+                if (entry == null) throw new JournalEntryNotFoundException(request.Id);
                 return entry.Adapt<JournalEntryResponse>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);

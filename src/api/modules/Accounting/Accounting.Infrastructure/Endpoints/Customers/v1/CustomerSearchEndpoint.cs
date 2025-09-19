@@ -1,4 +1,4 @@
-using Accounting.Application.Customers.Dtos;
+using Accounting.Application.Customers.Responses;
 using Accounting.Application.Customers.Search;
 
 namespace Accounting.Infrastructure.Endpoints.Customers.v1;

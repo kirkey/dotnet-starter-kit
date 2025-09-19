@@ -19,7 +19,7 @@ public class SearchDeferredRevenuesHandler(IReadRepository<DeferredRevenue> repo
         if (request.Take.HasValue)
             query = query.Take(request.Take.Value);
 
-        return query.Select(deferred => new DeferredRevenueDto
+        return query.Select(deferred => new DeferredRevenueResponse
         {
             Id = deferred.Id,
             DeferredRevenueNumber = deferred.DeferredRevenueNumber,

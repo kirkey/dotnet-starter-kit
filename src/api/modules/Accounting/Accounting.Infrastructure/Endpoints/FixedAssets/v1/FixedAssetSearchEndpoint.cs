@@ -1,4 +1,4 @@
-using Accounting.Application.FixedAssets.Dtos;
+using Accounting.Application.FixedAssets.Responses;
 using Accounting.Application.FixedAssets.Search;
 
 namespace Accounting.Infrastructure.Endpoints.FixedAssets.v1;
@@ -16,7 +16,7 @@ public static class FixedAssetSearchEndpoint
             .WithName(nameof(FixedAssetSearchEndpoint))
             .WithSummary("Gets a list of fixed assets")
             .WithDescription("Gets a list of fixed assets with pagination and filtering support")
-            .Produces<PagedList<FixedAssetDto>>()
+            .Produces<PagedList<FixedAssetResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Approve.v1;
-using FSH.Starter.WebApi.Store.Application.StockAdjustments.Approve.v1;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 

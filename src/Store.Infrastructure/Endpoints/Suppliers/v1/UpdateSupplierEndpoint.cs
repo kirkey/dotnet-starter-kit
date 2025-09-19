@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Update.v1;
-using FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 

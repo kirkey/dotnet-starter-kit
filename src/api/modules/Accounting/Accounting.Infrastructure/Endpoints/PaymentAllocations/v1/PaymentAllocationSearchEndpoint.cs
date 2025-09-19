@@ -1,4 +1,5 @@
 using Accounting.Application.PaymentAllocations.Queries;
+using Accounting.Application.PaymentAllocations.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 
@@ -14,7 +15,7 @@ public static class PaymentAllocationSearchEndpoint
             })
             .WithName(nameof(PaymentAllocationSearchEndpoint))
             .WithSummary("Searches payment allocations")
-            .Produces<List<Application.PaymentAllocations.Dtos.PaymentAllocationDto>>()
+            .Produces<List<PaymentAllocationResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

@@ -1,5 +1,5 @@
-using Accounting.Application.Customers.Dtos;
 using Accounting.Application.Customers.Get;
+using Accounting.Application.Customers.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.Customers.v1;
 

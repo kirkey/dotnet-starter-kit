@@ -1,4 +1,4 @@
-using Accounting.Application.ChartOfAccounts.Dtos;
+using Accounting.Application.ChartOfAccounts.Responses;
 using Accounting.Application.ChartOfAccounts.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;

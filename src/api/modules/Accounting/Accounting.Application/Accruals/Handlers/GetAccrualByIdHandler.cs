@@ -1,4 +1,7 @@
 
+using Accounting.Application.Accruals.Queries;
+using Accounting.Application.Accruals.Responses;
+
 namespace Accounting.Application.Accruals.Handlers;
 
 public class GetAccrualByIdHandler(IReadRepository<Accrual> repository)

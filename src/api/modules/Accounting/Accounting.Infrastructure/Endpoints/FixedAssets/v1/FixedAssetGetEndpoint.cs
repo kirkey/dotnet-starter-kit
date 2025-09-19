@@ -1,5 +1,5 @@
-using Accounting.Application.FixedAssets.Dtos;
 using Accounting.Application.FixedAssets.Get;
+using Accounting.Application.FixedAssets.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 
@@ -16,7 +16,7 @@ public static class FixedAssetGetEndpoint
             .WithName(nameof(FixedAssetGetEndpoint))
             .WithSummary("get a fixed asset by id")
             .WithDescription("get a fixed asset by id")
-            .Produces<FixedAssetDto>()
+            .Produces<FixedAssetResponse>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

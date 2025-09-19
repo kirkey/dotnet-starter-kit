@@ -1,4 +1,5 @@
 using Accounting.Application.PaymentAllocations.Queries;
+using Accounting.Application.PaymentAllocations.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 
@@ -14,7 +15,7 @@ public static class PaymentAllocationGetEndpoint
             })
             .WithName(nameof(PaymentAllocationGetEndpoint))
             .WithSummary("Gets a payment allocation by id")
-            .Produces<Application.PaymentAllocations.Dtos.PaymentAllocationDto>()
+            .Produces<PaymentAllocationResponse>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

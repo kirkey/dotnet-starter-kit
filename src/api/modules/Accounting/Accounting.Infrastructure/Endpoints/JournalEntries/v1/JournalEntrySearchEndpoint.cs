@@ -1,4 +1,4 @@
-using Accounting.Application.JournalEntries.Dtos;
+using Accounting.Application.JournalEntries.Responses;
 using Accounting.Application.JournalEntries.Search;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
@@ -16,7 +16,7 @@ public static class JournalEntrySearchEndpoint
             .WithName(nameof(JournalEntrySearchEndpoint))
             .WithSummary("Gets a list of journal entries")
             .WithDescription("Gets a list of journal entries with pagination and filtering support")
-            .Produces<PagedList<JournalEntryDto>>()
+            .Produces<PagedList<JournalEntryResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

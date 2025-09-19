@@ -17,7 +17,7 @@ public sealed class GetProjectHandler(
             {
                 var project = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (project == null) throw new ProjectNotFoundException(request.Id);
-                return project.Adapt<ProjectDto>();
+                return project.Adapt<ProjectResponse>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

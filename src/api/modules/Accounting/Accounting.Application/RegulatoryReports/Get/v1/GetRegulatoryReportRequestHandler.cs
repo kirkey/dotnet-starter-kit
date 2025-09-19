@@ -19,6 +19,6 @@ public sealed class GetRegulatoryReportRequestHandler(
             throw new RegulatoryReportNotFoundException(request.Id);
         }
 
-        return report.Adapt<RegulatoryReportDto>();
+        return report.Adapt<RegulatoryReportResponse>();
     }
 }
