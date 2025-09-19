@@ -6,16 +6,17 @@ public static class UpdateCustomerEndpoint
 {
     internal static RouteHandlerBuilder MapUpdateCustomerEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/{id:guid}", async (DefaultIdType id, UpdateCustomerCommand command, ISender sender) =>
+        return endpoints.MapPut("/{id:guid}", async (DefaultIdType id, UpdateCustomerCommand request, ISender mediator) =>
         {
-            if (id != command.Id) return Results.BadRequest("ID mismatch");
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Ok(result);
+            if (id != request.Id) return Results.BadRequest("ID mismatch");
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("UpdateCustomer")
+        .WithName(nameof(UpdateCustomerEndpoint))
         .WithSummary("Update customer")
         .WithDescription("Updates an existing customer")
         .Produces<UpdateCustomerResponse>()
+        .RequirePermission("Permissions.Customers.Update")
         .MapToApiVersion(1);
     }
 }

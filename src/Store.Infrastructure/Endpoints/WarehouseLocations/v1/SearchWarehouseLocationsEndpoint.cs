@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 

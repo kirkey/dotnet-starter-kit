@@ -6,14 +6,16 @@ public static class DeleteCustomerEndpoint
 {
     internal static RouteHandlerBuilder MapDeleteCustomerEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapDelete("/{id:guid}", async (DefaultIdType id, ISender sender) =>
+        return endpoints.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
-            await sender.Send(new DeleteCustomerCommand(id)).ConfigureAwait(false);
+            await mediator.Send(new DeleteCustomerCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteCustomer")
+        .WithName(nameof(DeleteCustomerEndpoint))
         .WithSummary("Delete customer")
         .WithDescription("Deletes a customer by their unique identifier")
+        .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.Customers.Delete")
         .MapToApiVersion(1);
     }
 }
