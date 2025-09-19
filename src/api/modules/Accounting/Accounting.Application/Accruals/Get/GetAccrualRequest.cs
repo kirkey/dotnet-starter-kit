@@ -1,8 +1,8 @@
-using Accounting.Application.Accruals.Dtos;
+using Accounting.Application.Accruals.Responses;
 
 namespace Accounting.Application.Accruals.Get;
 
-public class GetAccrualRequest : IRequest<AccrualDto>
+public class GetAccrualRequest : IRequest<AccrualResponse>
 {
     public DefaultIdType Id { get; set; }
 }

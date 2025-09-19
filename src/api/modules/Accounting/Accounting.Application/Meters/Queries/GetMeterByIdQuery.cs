@@ -1,8 +1,8 @@
-using Accounting.Application.Meters.Dtos;
+using Accounting.Application.Meters.Responses;
 
 namespace Accounting.Application.Meters.Queries;
 
-public class GetMeterByIdQuery : IRequest<MeterDto>
+public class GetMeterByIdQuery(DefaultIdType id) : IRequest<MeterResponse>
 {
-    public DefaultIdType Id { get; set; }
+    public DefaultIdType Id { get; set; } = id;
 }

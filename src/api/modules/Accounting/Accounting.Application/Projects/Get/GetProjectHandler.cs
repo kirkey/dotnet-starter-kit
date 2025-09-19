@@ -1,14 +1,13 @@
-using Accounting.Application.Projects.Dtos;
-using ProjectNotFoundException = Accounting.Application.Projects.Exceptions.ProjectNotFoundException;
+using Accounting.Application.Projects.Responses;
 
 namespace Accounting.Application.Projects.Get;
 
 public sealed class GetProjectHandler(
     [FromKeyedServices("accounting:projects")] IReadRepository<Project> repository,
     ICacheService cache)
-    : IRequestHandler<GetProjectQuery, ProjectDto>
+    : IRequestHandler<GetProjectQuery, ProjectResponse>
 {
-    public async Task<ProjectDto> Handle(GetProjectQuery request, CancellationToken cancellationToken)
+    public async Task<ProjectResponse> Handle(GetProjectQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

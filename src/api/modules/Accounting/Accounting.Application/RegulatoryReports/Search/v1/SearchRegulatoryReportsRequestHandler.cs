@@ -1,12 +1,12 @@
-using Accounting.Application.RegulatoryReports.Dtos;
+using Accounting.Application.RegulatoryReports.Responses;
 
 namespace Accounting.Application.RegulatoryReports.Search.v1;
 
 public sealed class SearchRegulatoryReportsRequestHandler(
     [FromKeyedServices("accounting:regulatoryreports")] IReadRepository<RegulatoryReport> repository)
-    : IRequestHandler<SearchRegulatoryReportsRequest, PagedList<RegulatoryReportDto>>
+    : IRequestHandler<SearchRegulatoryReportsRequest, PagedList<RegulatoryReportResponse>>
 {
-    public async Task<PagedList<RegulatoryReportDto>> Handle(SearchRegulatoryReportsRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<RegulatoryReportResponse>> Handle(SearchRegulatoryReportsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -20,8 +20,8 @@ public sealed class SearchRegulatoryReportsRequestHandler(
 
         var totalCount = allReports.Count;
 
-        return new PagedList<RegulatoryReportDto>(
-            pagedReports.Adapt<List<RegulatoryReportDto>>(),
+        return new PagedList<RegulatoryReportResponse>(
+            pagedReports.Adapt<List<RegulatoryReportResponse>>(),
             request.PageNumber,
             request.PageSize,
             totalCount

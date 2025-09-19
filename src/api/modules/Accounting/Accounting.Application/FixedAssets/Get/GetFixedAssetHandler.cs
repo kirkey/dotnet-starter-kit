@@ -1,14 +1,13 @@
-using Accounting.Application.FixedAssets.Dtos;
-using FixedAssetNotFoundException = Accounting.Application.FixedAssets.Exceptions.FixedAssetNotFoundException;
+using Accounting.Application.FixedAssets.Responses;
 
 namespace Accounting.Application.FixedAssets.Get;
 
 public sealed class GetFixedAssetHandler(
     [FromKeyedServices("accounting:fixedassets")] IReadRepository<FixedAsset> repository,
     ICacheService cache)
-    : IRequestHandler<GetFixedAssetRequest, FixedAssetDto>
+    : IRequestHandler<GetFixedAssetRequest, FixedAssetResponse>
 {
-    public async Task<FixedAssetDto> Handle(GetFixedAssetRequest request, CancellationToken cancellationToken)
+    public async Task<FixedAssetResponse> Handle(GetFixedAssetRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -18,7 +17,19 @@ public sealed class GetFixedAssetHandler(
             {
                 var asset = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (asset == null) throw new FixedAssetNotFoundException(request.Id);
-                return asset.Adapt<FixedAssetDto>();
+                return new FixedAssetResponse
+                {
+                    Id = asset.Id,
+                    AssetNumber = asset.AssetNumber,
+                    Name = asset.Name,
+                    Description = asset.Description,
+                    AcquisitionDate = asset.AcquisitionDate,
+                    Cost = asset.Cost,
+                    UsefulLifeYears = asset.UsefulLifeYears,
+                    DepreciationMethodId = asset.DepreciationMethodId,
+                    IsActive = asset.IsActive,
+                    Notes = asset.Notes
+                };
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

@@ -1,14 +1,13 @@
-using Accounting.Application.JournalEntries.Dtos;
-using JournalEntryNotFoundException = Accounting.Application.JournalEntries.Exceptions.JournalEntryNotFoundException;
+using Accounting.Application.JournalEntries.Responses;
 
 namespace Accounting.Application.JournalEntries.Get;
 
 public sealed class GetJournalEntryHandler(
     [FromKeyedServices("accounting:journals")] IReadRepository<JournalEntry> repository,
     ICacheService cache)
-    : IRequestHandler<GetJournalEntryQuery, JournalEntryDto>
+    : IRequestHandler<GetJournalEntryQuery, JournalEntryResponse>
 {
-    public async Task<JournalEntryDto> Handle(GetJournalEntryQuery request, CancellationToken cancellationToken)
+    public async Task<JournalEntryResponse> Handle(GetJournalEntryQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -18,7 +17,7 @@ public sealed class GetJournalEntryHandler(
             {
                 var entry = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (entry == null) throw new JournalEntryNotFoundException(request.Id.ToString());
-                return entry.Adapt<JournalEntryDto>();
+                return entry.Adapt<JournalEntryResponse>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

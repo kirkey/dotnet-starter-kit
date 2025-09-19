@@ -1,12 +1,12 @@
-using Accounting.Application.PaymentAllocations.Dtos;
+using Accounting.Application.PaymentAllocations.Responses;
 using Accounting.Application.PaymentAllocations.Queries;
 
 namespace Accounting.Application.PaymentAllocations.Handlers;
 
 public class SearchPaymentAllocationsHandler(IReadRepository<PaymentAllocation> repository)
-    : IRequestHandler<SearchPaymentAllocationsQuery, List<PaymentAllocationDto>>
+    : IRequestHandler<SearchPaymentAllocationsQuery, List<PaymentAllocationResponse>>
 {
-    public async Task<List<PaymentAllocationDto>> Handle(SearchPaymentAllocationsQuery request, CancellationToken cancellationToken)
+    public async Task<List<PaymentAllocationResponse>> Handle(SearchPaymentAllocationsQuery request, CancellationToken cancellationToken)
     {
         var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
 
@@ -20,7 +20,7 @@ public class SearchPaymentAllocationsHandler(IReadRepository<PaymentAllocation> 
         if (request.Take.HasValue)
             query = query.Take(request.Take.Value);
 
-        return query.Select(x => new PaymentAllocationDto
+        return query.Select(x => new PaymentAllocationResponse
         {
             Id = x.Id,
             PaymentId = x.PaymentId,
@@ -30,4 +30,3 @@ public class SearchPaymentAllocationsHandler(IReadRepository<PaymentAllocation> 
         }).ToList();
     }
 }
-

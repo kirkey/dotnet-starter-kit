@@ -1,17 +1,15 @@
-using Accounting.Application.Accruals.Dtos;
-using Accounting.Application.Accruals.Queries;
 
 namespace Accounting.Application.Accruals.Handlers;
 
 public class GetAccrualByIdHandler(IReadRepository<Accrual> repository)
-    : IRequestHandler<GetAccrualByIdQuery, AccrualDto>
+    : IRequestHandler<GetAccrualByIdQuery, AccrualResponse>
 {
-    public async Task<AccrualDto> Handle(GetAccrualByIdQuery request, CancellationToken cancellationToken)
+    public async Task<AccrualResponse> Handle(GetAccrualByIdQuery request, CancellationToken cancellationToken)
     {
         var accrual = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (accrual == null)
             throw new NotFoundException($"Accrual with Id {request.Id} not found");
-        return new AccrualDto
+        return new AccrualResponse
         {
             Id = accrual.Id,
             AccrualNumber = accrual.AccrualNumber,

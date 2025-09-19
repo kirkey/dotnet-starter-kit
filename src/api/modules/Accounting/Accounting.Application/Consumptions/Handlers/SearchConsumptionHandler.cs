@@ -1,12 +1,12 @@
-using Accounting.Application.Consumptions.Dtos;
+using Accounting.Application.Consumptions.Responses;
 using Accounting.Application.Consumptions.Queries;
 
 namespace Accounting.Application.Consumptions.Handlers;
 
 public class SearchConsumptionHandler(IReadRepository<Consumption> repository)
-    : IRequestHandler<SearchConsumptionQuery, List<ConsumptionDto>>
+    : IRequestHandler<SearchConsumptionQuery, List<ConsumptionResponse>>
 {
-    public async Task<List<ConsumptionDto>> Handle(SearchConsumptionQuery request, CancellationToken cancellationToken)
+    public async Task<List<ConsumptionResponse>> Handle(SearchConsumptionQuery request, CancellationToken cancellationToken)
     {
         var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
 
@@ -27,7 +27,7 @@ public class SearchConsumptionHandler(IReadRepository<Consumption> repository)
         if (request.Take.HasValue)
             query = query.Take(request.Take.Value);
 
-        return query.Select(entity => new ConsumptionDto
+        return query.Select(entity => new ConsumptionResponse
         {
             Id = entity.Id,
             MeterId = entity.MeterId,
@@ -45,4 +45,3 @@ public class SearchConsumptionHandler(IReadRepository<Consumption> repository)
         }).ToList();
     }
 }
-

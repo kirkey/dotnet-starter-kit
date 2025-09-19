@@ -1,10 +1,10 @@
-using Accounting.Application.Projects.Dtos;
+using Accounting.Application.Projects.Responses;
 
 namespace Accounting.Application.Projects.Queries;
 
 public sealed class ProjectByNameSpec :
-    Specification<Project, ProjectDto>,
-    ISingleResultSpecification<Project, ProjectDto>
+    Specification<Project, ProjectResponse>,
+    ISingleResultSpecification<Project, ProjectResponse>
 {
     public ProjectByNameSpec(string name) =>
         Query.Where(w => w.Name == name);

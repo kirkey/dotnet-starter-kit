@@ -1,12 +1,12 @@
 namespace Accounting.Application.Accruals.Search;
 
-using Dtos;
+using Responses;
 using Queries;
 
 public class SearchAccrualsHandler(IReadRepository<Accrual> repository)
-    : IRequestHandler<SearchAccrualsQuery, List<AccrualDto>>
+    : IRequestHandler<SearchAccrualsQuery, List<AccrualResponse>>
 {
-    public async Task<List<AccrualDto>> Handle(SearchAccrualsQuery request, CancellationToken cancellationToken)
+    public async Task<List<AccrualResponse>> Handle(SearchAccrualsQuery request, CancellationToken cancellationToken)
     {
         var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
 
@@ -19,7 +19,7 @@ public class SearchAccrualsHandler(IReadRepository<Accrual> repository)
         if (request.Take.HasValue)
             query = query.Take(request.Take.Value);
 
-        return query.Select(accrual => new AccrualDto
+        return query.Select(accrual => new AccrualResponse
         {
             Id = accrual.Id,
             AccrualNumber = accrual.AccrualNumber,

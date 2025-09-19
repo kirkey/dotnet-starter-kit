@@ -1,12 +1,12 @@
-using Accounting.Application.DeferredRevenues.Dtos;
 using Accounting.Application.DeferredRevenues.Queries;
+using Accounting.Application.DeferredRevenues.Responses;
 
 namespace Accounting.Application.DeferredRevenues.Handlers;
 
 public class SearchDeferredRevenuesHandler(IReadRepository<DeferredRevenue> repository)
-    : IRequestHandler<SearchDeferredRevenuesQuery, List<DeferredRevenueDto>>
+    : IRequestHandler<SearchDeferredRevenuesQuery, List<DeferredRevenueResponse>>
 {
-    public async Task<List<DeferredRevenueDto>> Handle(SearchDeferredRevenuesQuery request, CancellationToken cancellationToken)
+    public async Task<List<DeferredRevenueResponse>> Handle(SearchDeferredRevenuesQuery request, CancellationToken cancellationToken)
     {
         var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
 

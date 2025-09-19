@@ -1,12 +1,13 @@
-using Accounting.Application.Projects.Dtos;
+using Accounting.Application.Projects.Responses;
+
 
 namespace Accounting.Application.Projects.Search;
 
 public sealed class SearchProjectsHandler(
     [FromKeyedServices("accounting:projects")] IReadRepository<Project> repository)
-    : IRequestHandler<SearchProjectsRequest, PagedList<ProjectDto>>
+    : IRequestHandler<SearchProjectsRequest, PagedList<ProjectResponse>>
 {
-    public async Task<PagedList<ProjectDto>> Handle(SearchProjectsRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<ProjectResponse>> Handle(SearchProjectsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -14,8 +15,8 @@ public sealed class SearchProjectsHandler(
         var list = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        return new PagedList<ProjectDto>(list, request.PageNumber, request.PageSize, totalCount);
+        var responses = list.Select(p => p.Adapt<ProjectResponse>()).ToList();
+
+        return new PagedList<ProjectResponse>(responses, request.PageNumber, request.PageSize, totalCount);
     }
 }
-
-

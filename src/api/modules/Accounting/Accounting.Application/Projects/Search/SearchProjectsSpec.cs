@@ -1,8 +1,8 @@
-using Accounting.Application.Projects.Dtos;
+using Accounting.Application.Projects.Responses;
 
 namespace Accounting.Application.Projects.Search;
 
-public sealed class SearchProjectsSpec : EntitiesByPaginationFilterSpec<Project, ProjectDto>
+public sealed class SearchProjectsSpec : EntitiesByPaginationFilterSpec<Project, ProjectResponse>
 {
     public SearchProjectsSpec(SearchProjectsRequest request) : base(request)
     {

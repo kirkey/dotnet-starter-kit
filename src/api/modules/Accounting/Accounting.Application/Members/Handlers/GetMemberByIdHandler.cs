@@ -1,18 +1,18 @@
-using Accounting.Application.Members.Dtos;
+using Accounting.Application.Members.Responses;
 using Accounting.Application.Members.Queries;
 
 namespace Accounting.Application.Members.Handlers;
 
 public class GetMemberByIdHandler(IReadRepository<Member> repository)
-    : IRequestHandler<GetMemberByIdQuery, MemberDto>
+    : IRequestHandler<GetMemberByIdQuery, MemberResponse>
 {
-    public async Task<MemberDto> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
+    public async Task<MemberResponse> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
     {
         var member = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (member == null)
             throw new NotFoundException($"Member with Id {request.Id} not found");
 
-        return new MemberDto
+        return new MemberResponse
         {
             Id = member.Id,
             MemberNumber = member.MemberNumber,

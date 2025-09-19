@@ -1,12 +1,12 @@
-using Accounting.Application.Invoices.Dtos;
 using Accounting.Application.Invoices.Queries;
+using Accounting.Application.Invoices.Responses;
 
 namespace Accounting.Application.Invoices.Handlers;
 
 public class GetInvoiceByIdHandler(IReadRepository<Invoice> repository)
-    : IRequestHandler<GetInvoiceByIdQuery, InvoiceDto>
+    : IRequestHandler<GetInvoiceByIdQuery, InvoiceResponse>
 {
-    public async Task<InvoiceDto> Handle(GetInvoiceByIdQuery request, CancellationToken cancellationToken)
+    public async Task<InvoiceResponse> Handle(GetInvoiceByIdQuery request, CancellationToken cancellationToken)
     {
         var invoice = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (invoice == null)

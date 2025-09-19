@@ -1,12 +1,12 @@
-using Accounting.Application.PostingBatches.Dtos;
+using Accounting.Application.PostingBatches.Responses;
 using Accounting.Application.PostingBatches.Queries;
 
 namespace Accounting.Application.PostingBatches.Handlers;
 
 public class SearchPostingBatchesHandler(IReadRepository<PostingBatch> repository)
-    : IRequestHandler<SearchPostingBatchesQuery, List<PostingBatchDto>>
+    : IRequestHandler<SearchPostingBatchesQuery, List<PostingBatchResponse>>
 {
-    public async Task<List<PostingBatchDto>> Handle(SearchPostingBatchesQuery request, CancellationToken cancellationToken)
+    public async Task<List<PostingBatchResponse>> Handle(SearchPostingBatchesQuery request, CancellationToken cancellationToken)
     {
         var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
 
@@ -21,7 +21,7 @@ public class SearchPostingBatchesHandler(IReadRepository<PostingBatch> repositor
         if (request.Take.HasValue)
             query = query.Take(request.Take.Value);
 
-        return query.Select(batch => new PostingBatchDto
+        return query.Select(batch => new PostingBatchResponse
         {
             Id = batch.Id,
             BatchNumber = batch.BatchNumber,

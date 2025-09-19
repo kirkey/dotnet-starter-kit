@@ -1,17 +1,17 @@
-using Accounting.Application.Consumptions.Dtos;
+using Accounting.Application.Consumptions.Responses;
 using Accounting.Application.Consumptions.Queries;
 
 namespace Accounting.Application.Consumptions.Handlers;
 
 public class GetConsumptionByIdHandler(IReadRepository<Consumption> repository)
-    : IRequestHandler<GetConsumptionByIdQuery, ConsumptionDto>
+    : IRequestHandler<GetConsumptionByIdQuery, ConsumptionResponse>
 {
-    public async Task<ConsumptionDto> Handle(GetConsumptionByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ConsumptionResponse> Handle(GetConsumptionByIdQuery request, CancellationToken cancellationToken)
     {
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) throw new ConsumptionNotFoundException(request.Id);
 
-        return new ConsumptionDto
+        return new ConsumptionResponse
         {
             Id = entity.Id,
             MeterId = entity.MeterId,
@@ -29,4 +29,3 @@ public class GetConsumptionByIdHandler(IReadRepository<Consumption> repository)
         };
     }
 }
-

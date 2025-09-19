@@ -1,8 +1,8 @@
-using Accounting.Application.FixedAssets.Dtos;
+using Accounting.Application.FixedAssets.Responses;
 
 namespace Accounting.Application.FixedAssets.Search;
 
-public sealed class SearchFixedAssetsSpec : EntitiesByPaginationFilterSpec<FixedAsset, FixedAssetDto>
+public sealed class SearchFixedAssetsSpec : EntitiesByPaginationFilterSpec<FixedAsset, FixedAssetResponse>
 {
     public SearchFixedAssetsSpec(SearchFixedAssetsRequest request) : base(request)
     {

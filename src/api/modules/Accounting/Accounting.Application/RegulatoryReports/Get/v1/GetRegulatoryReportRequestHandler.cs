@@ -1,13 +1,13 @@
-using Accounting.Application.RegulatoryReports.Dtos;
 using Accounting.Application.RegulatoryReports.Queries;
+using Accounting.Application.RegulatoryReports.Responses;
 
 namespace Accounting.Application.RegulatoryReports.Get.v1;
 
 public sealed class GetRegulatoryReportRequestHandler(
     [FromKeyedServices("accounting:regulatoryreports")] IReadRepository<RegulatoryReport> repository)
-    : IRequestHandler<GetRegulatoryReportRequest, RegulatoryReportDto>
+    : IRequestHandler<GetRegulatoryReportRequest, RegulatoryReportResponse>
 {
-    public async Task<RegulatoryReportDto> Handle(GetRegulatoryReportRequest request, CancellationToken cancellationToken)
+    public async Task<RegulatoryReportResponse> Handle(GetRegulatoryReportRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

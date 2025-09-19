@@ -1,9 +1,8 @@
-using Accounting.Application.Consumptions.Dtos;
+using Accounting.Application.Consumptions.Responses;
 
 namespace Accounting.Application.Consumptions.Queries;
 
-public class GetConsumptionByIdQuery(DefaultIdType id) : IRequest<ConsumptionDto>
+public class GetConsumptionByIdQuery(DefaultIdType id) : IRequest<ConsumptionResponse>
 {
     public DefaultIdType Id { get; set; } = id;
 }
-

@@ -1,17 +1,17 @@
-using Accounting.Application.PostingBatches.Dtos;
+using Accounting.Application.PostingBatches.Responses;
 using Accounting.Application.PostingBatches.Queries;
 
 namespace Accounting.Application.PostingBatches.Handlers;
 
 public class GetPostingBatchByIdHandler(IReadRepository<PostingBatch> repository)
-    : IRequestHandler<GetPostingBatchByIdQuery, PostingBatchDto>
+    : IRequestHandler<GetPostingBatchByIdQuery, PostingBatchResponse>
 {
-    public async Task<PostingBatchDto> Handle(GetPostingBatchByIdQuery request, CancellationToken cancellationToken)
+    public async Task<PostingBatchResponse> Handle(GetPostingBatchByIdQuery request, CancellationToken cancellationToken)
     {
         var batch = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (batch == null)
             throw new NotFoundException($"PostingBatch with Id {request.Id} not found");
-        return new PostingBatchDto
+        return new PostingBatchResponse
         {
             Id = batch.Id,
             BatchNumber = batch.BatchNumber,

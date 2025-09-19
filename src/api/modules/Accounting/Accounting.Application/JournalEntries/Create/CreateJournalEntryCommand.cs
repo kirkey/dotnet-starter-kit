@@ -1,4 +1,4 @@
-using Accounting.Application.JournalEntries.Dtos;
+using Accounting.Application.JournalEntries.Responses;
 
 namespace Accounting.Application.JournalEntries.Create;
 
@@ -11,7 +11,7 @@ public sealed record CreateJournalEntryCommand(
     string ReferenceNumber,
     string Source,
     string Description,
-    IReadOnlyCollection<JournalEntryLineDto>? Lines = null,
+    IReadOnlyCollection<JournalEntryLineResponse>? Lines = null,
     DefaultIdType? PeriodId = null,
     decimal OriginalAmount = 0,
     string? Notes = null

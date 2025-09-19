@@ -1,9 +1,8 @@
-using Accounting.Application.PaymentAllocations.Dtos;
+using Accounting.Application.PaymentAllocations.Responses;
 
 namespace Accounting.Application.PaymentAllocations.Queries;
 
-public class GetPaymentAllocationByIdQuery : IRequest<PaymentAllocationDto>
+public class GetPaymentAllocationByIdQuery : IRequest<PaymentAllocationResponse>
 {
     public DefaultIdType Id { get; set; }
 }
-

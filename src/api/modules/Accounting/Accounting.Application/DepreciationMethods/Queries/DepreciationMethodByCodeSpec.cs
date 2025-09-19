@@ -1,10 +1,11 @@
-using Accounting.Application.DepreciationMethods.Dtos;
+
+using Accounting.Application.DepreciationMethods.Responses;
 
 namespace Accounting.Application.DepreciationMethods.Queries;
 
 public sealed class DepreciationMethodByCodeSpec :
-    Specification<DepreciationMethod, DepreciationMethodDto>,
-    ISingleResultSpecification<DepreciationMethod, DepreciationMethodDto>
+    Specification<DepreciationMethod, DepreciationMethodResponse>,
+    ISingleResultSpecification<DepreciationMethod, DepreciationMethodResponse>
 {
     public DepreciationMethodByCodeSpec(string code) =>
         Query.Where(w => w.MethodCode == code);

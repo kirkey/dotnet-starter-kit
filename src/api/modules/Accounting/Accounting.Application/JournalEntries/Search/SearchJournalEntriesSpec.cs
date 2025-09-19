@@ -1,8 +1,8 @@
-using Accounting.Application.JournalEntries.Dtos;
+using Accounting.Application.JournalEntries.Responses;
 
 namespace Accounting.Application.JournalEntries.Search;
 
-public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<JournalEntry, JournalEntryDto>
+public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<JournalEntry, JournalEntryResponse>
 {
     public SearchJournalEntriesSpec(SearchJournalEntriesQuery request) : base(request)
     {

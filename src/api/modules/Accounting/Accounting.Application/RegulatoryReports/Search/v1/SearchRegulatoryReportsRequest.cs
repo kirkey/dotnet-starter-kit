@@ -1,8 +1,8 @@
-using Accounting.Application.RegulatoryReports.Dtos;
+using Accounting.Application.RegulatoryReports.Responses;
 
 namespace Accounting.Application.RegulatoryReports.Search.v1;
 
-public class SearchRegulatoryReportsRequest : PaginationFilter, IRequest<PagedList<RegulatoryReportDto>>
+public class SearchRegulatoryReportsRequest : PaginationFilter, IRequest<PagedList<RegulatoryReportResponse>>
 {
     public string? ReportType { get; set; }
     public string? Status { get; set; }

@@ -1,5 +1,5 @@
-using Accounting.Application.Customers.Dtos;
 using Accounting.Application.Customers.Exceptions;
+using Accounting.Application.Customers.Responses;
 
 namespace Accounting.Application.Customers.Get;
 

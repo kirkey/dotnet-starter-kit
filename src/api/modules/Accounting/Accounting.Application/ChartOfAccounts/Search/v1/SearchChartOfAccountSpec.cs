@@ -1,4 +1,4 @@
-using Accounting.Application.ChartOfAccounts.Dtos;
+using Accounting.Application.ChartOfAccounts.Responses;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
 public sealed class SearchChartOfAccountSpec : EntitiesByPaginationFilterSpec<ChartOfAccount, ChartOfAccountResponse>

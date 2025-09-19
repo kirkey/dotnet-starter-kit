@@ -1,12 +1,10 @@
-using Accounting.Application.FixedAssets.Dtos;
-
 namespace Accounting.Application.FixedAssets.Search;
 
 public sealed class SearchFixedAssetsHandler(
     [FromKeyedServices("accounting:fixedassets")] IReadRepository<FixedAsset> repository)
-    : IRequestHandler<SearchFixedAssetsRequest, PagedList<FixedAssetDto>>
+    : IRequestHandler<SearchFixedAssetsRequest, PagedList<FixedAssetResponse>>
 {
-    public async Task<PagedList<FixedAssetDto>> Handle(SearchFixedAssetsRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<FixedAssetResponse>> Handle(SearchFixedAssetsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -14,8 +12,28 @@ public sealed class SearchFixedAssetsHandler(
         var list = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        return new PagedList<FixedAssetDto>(list, request.PageNumber, request.PageSize, totalCount);
+        var responses = list.Select(entity => new FixedAssetResponse(
+                entity.PurchaseDate,
+                entity.PurchasePrice,
+                entity.ServiceLife,
+                entity.DepreciationMethodId,
+                entity.SalvageValue,
+                entity.CurrentBookValue,
+                entity.AccumulatedDepreciationAccountId,
+                entity.DepreciationExpenseAccountId,
+                entity.SerialNumber,
+                entity.Location,
+                entity.Department,
+                entity.IsDisposed,
+                entity.DisposalDate,
+                entity.DisposalAmount,
+                entity.Description)
+            {
+                Id = entity.Id
+                // Note: FixedAssetResponse sets core financial fields via constructor; additional metadata (AssetName, AssetType, Notes)
+                // can be included in the response class if needed — keep mapping minimal and stable.
+            }).ToList();
+
+        return new PagedList<FixedAssetResponse>(responses, request.PageNumber, request.PageSize, totalCount);
     }
 }
-
-

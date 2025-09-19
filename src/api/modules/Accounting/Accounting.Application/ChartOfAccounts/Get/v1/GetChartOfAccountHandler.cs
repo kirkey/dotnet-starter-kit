@@ -1,5 +1,5 @@
-using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Application.ChartOfAccounts.Queries;
+using Accounting.Application.ChartOfAccounts.Responses;
 
 namespace Accounting.Application.ChartOfAccounts.Get.v1;
 public sealed class GetChartOfAccountHandler(

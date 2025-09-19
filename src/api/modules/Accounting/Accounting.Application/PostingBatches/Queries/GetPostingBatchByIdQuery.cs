@@ -1,8 +1,8 @@
-using Accounting.Application.PostingBatches.Dtos;
+using Accounting.Application.PostingBatches.Responses;
 
 namespace Accounting.Application.PostingBatches.Queries;
 
-public class GetPostingBatchByIdQuery(DefaultIdType id) : IRequest<PostingBatchDto>
+public class GetPostingBatchByIdQuery(DefaultIdType id) : IRequest<PostingBatchResponse>
 {
     public DefaultIdType Id { get; set; } = id;
 }
