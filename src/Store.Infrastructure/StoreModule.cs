@@ -3,13 +3,16 @@ using Store.Infrastructure.Endpoints.Customers.v1;
 using Store.Infrastructure.Endpoints.CycleCounts.v1;
 using Store.Infrastructure.Endpoints.GroceryItems.v1;
 using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
+using Store.Infrastructure.Endpoints.PriceLists.v1;
+using Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 using Store.Infrastructure.Endpoints.SalesOrders.v1;
 using Store.Infrastructure.Endpoints.StockAdjustments.v1;
-using Store.Infrastructure.Endpoints.Suppliers.v1; // ...added supplier endpoints using
+using Store.Infrastructure.Endpoints.Suppliers.v1;
 using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 using Store.Infrastructure.Endpoints.Warehouses.v1;
+using Store.Infrastructure.Endpoints.WholesaleContracts.v1;
 using Store.Infrastructure.Endpoints.WholesalePricings.v1;
-using Store.Infrastructure.Persistence; // added wholesale pricings endpoints using
+using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
 
@@ -26,17 +29,20 @@ public static class StoreModule
             groceryGroup.MapGetGroceryItemEndpoint();
             groceryGroup.MapUpdateGroceryItemEndpoint();
             groceryGroup.MapDeleteGroceryItemEndpoint();
+            groceryGroup.MapSearchGroceryItemsEndpoint();
 
             var customerGroup = app.MapGroup("customers").WithTags("Customers");
             customerGroup.MapCreateCustomerEndpoint();
             customerGroup.MapGetCustomerEndpoint();
             customerGroup.MapUpdateCustomerEndpoint();
             customerGroup.MapDeleteCustomerEndpoint();
+            customerGroup.MapSearchCustomersEndpoint();
 
             var inventoryGroup = app.MapGroup("inventory-transfers").WithTags("Inventory Transfers");
             inventoryGroup.MapCreateInventoryTransferEndpoint();
             inventoryGroup.MapGetInventoryTransferEndpoint();
             inventoryGroup.MapUpdateInventoryTransferEndpoint();
+            inventoryGroup.MapDeleteInventoryTransferEndpoint();
             inventoryGroup.MapSearchInventoryTransfersEndpoint();
             inventoryGroup.MapAddInventoryTransferItemEndpoint();
             inventoryGroup.MapRemoveInventoryTransferItemEndpoint();
@@ -44,26 +50,47 @@ public static class StoreModule
             var stockGroup = app.MapGroup("stock-adjustments").WithTags("Stock Adjustments");
             stockGroup.MapCreateStockAdjustmentEndpoint();
             stockGroup.MapGetStockAdjustmentEndpoint();
+            stockGroup.MapUpdateStockAdjustmentEndpoint();
+            stockGroup.MapDeleteStockAdjustmentEndpoint();
             stockGroup.MapApproveStockAdjustmentEndpoint();
-            // Note: search endpoint removed until a SearchStockAdjustmentsQuery is implemented
+            stockGroup.MapSearchStockAdjustmentsEndpoint();
 
             var warehouses = app.MapGroup("warehouses").WithTags("Warehouses");
             warehouses.MapCreateWarehouseEndpoint();
             warehouses.MapGetWarehouseEndpoint();
             warehouses.MapUpdateWarehouseEndpoint();
             warehouses.MapDeleteWarehouseEndpoint();
+            warehouses.MapSearchWarehousesEndpoint();
 
             var whLocations = app.MapGroup("warehouse-locations").WithTags("Warehouse Locations");
             whLocations.MapCreateWarehouseLocationEndpoint();
             whLocations.MapGetWarehouseLocationEndpoint();
-            whLocations.MapSearchWarehouseLocationsEndpoint();
             whLocations.MapUpdateWarehouseLocationEndpoint();
+            whLocations.MapDeleteWarehouseLocationEndpoint();
+            whLocations.MapSearchWarehouseLocationsEndpoint();
 
             var sales = app.MapGroup("sales-orders").WithTags("Sales Orders");
             sales.MapCreateSalesOrderEndpoint();
             sales.MapGetSalesOrderEndpoint();
             sales.MapUpdateSalesOrderEndpoint();
             sales.MapDeleteSalesOrderEndpoint();
+            sales.MapSearchSalesOrdersEndpoint();
+
+            // Purchase Orders endpoints
+            var purchaseOrders = app.MapGroup("purchase-orders").WithTags("Purchase Orders");
+            purchaseOrders.MapCreatePurchaseOrderEndpoint();
+            purchaseOrders.MapGetPurchaseOrderEndpoint();
+            purchaseOrders.MapUpdatePurchaseOrderEndpoint();
+            purchaseOrders.MapDeletePurchaseOrderEndpoint();
+            purchaseOrders.MapSearchPurchaseOrdersEndpoint();
+
+            // Price Lists endpoints
+            var priceLists = app.MapGroup("price-lists").WithTags("Price Lists");
+            priceLists.MapCreatePriceListEndpoint();
+            priceLists.MapGetPriceListEndpoint();
+            priceLists.MapUpdatePriceListEndpoint();
+            priceLists.MapDeletePriceListEndpoint();
+            priceLists.MapSearchPriceListsEndpoint();
 
             var categories = app.MapGroup("categories").WithTags("Categories");
             categories.MapCreateCategoryEndpoint();
@@ -93,6 +120,12 @@ public static class StoreModule
             wholesalePricingGroup.MapGetWholesalePricingEndpoint();
             wholesalePricingGroup.MapUpdateWholesalePricingEndpoint();
             wholesalePricingGroup.MapDeactivateWholesalePricingEndpoint();
+
+            // Wholesale contract endpoints
+            var wholesaleContracts = app.MapGroup("wholesale-contracts").WithTags("Wholesale Contracts");
+            wholesaleContracts.MapCreateWholesaleContractEndpoint();
+            wholesaleContracts.MapGetWholesaleContractEndpoint();
+            wholesaleContracts.MapUpdateWholesaleContractEndpoint();
         }
     }
 
