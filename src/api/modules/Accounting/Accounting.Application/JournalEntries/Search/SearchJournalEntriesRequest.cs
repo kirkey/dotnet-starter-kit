@@ -2,9 +2,10 @@ using Accounting.Application.JournalEntries.Dtos;
 
 namespace Accounting.Application.JournalEntries.Search;
 
-public class SearchJournalEntriesRequest : PaginationFilter, IRequest<PagedList<JournalEntryDto>>
+public class SearchJournalEntriesQuery : PaginationFilter, IRequest<PagedList<JournalEntryDto>>
 {
-    public string? Name { get; set; }
     public string? ReferenceNumber { get; set; }
-    public bool IsPosted { get; set; }
+    public string? Source { get; set; }
+    public DateTime? FromDate { get; set; }
+    public DateTime? ToDate { get; set; }
 }

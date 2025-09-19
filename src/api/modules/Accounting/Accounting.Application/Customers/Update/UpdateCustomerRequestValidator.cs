@@ -1,8 +1,8 @@
 namespace Accounting.Application.Customers.Update;
 
-public class UpdateCustomerRequestValidator : AbstractValidator<UpdateCustomerRequest>
+public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCommand>
 {
-    public UpdateCustomerRequestValidator()
+    public UpdateCustomerCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty();

@@ -2,4 +2,7 @@ using FSH.Framework.Infrastructure.Abstract.Delete;
 
 namespace Accounting.Application.ChartOfAccounts.Delete.v1;
 
-public class DeleteChartOfAccountRequest(DefaultIdType id) : DeleteRequest<DefaultIdType>(id);
+public class DeleteChartOfAccountCommand(DefaultIdType id) : IRequest<DefaultIdType>
+{
+    public DefaultIdType Id { get; set; } = id;
+}

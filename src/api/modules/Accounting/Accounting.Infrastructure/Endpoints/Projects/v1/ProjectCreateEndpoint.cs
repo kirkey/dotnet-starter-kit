@@ -7,7 +7,7 @@ public static class ProjectCreateEndpoint
     internal static RouteHandlerBuilder MapProjectCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (CreateProjectRequest request, ISender mediator) =>
+            .MapPost("/", async (CreateProjectCommand request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

@@ -1,6 +1,6 @@
 namespace Accounting.Application.Customers.Create;
 
-public class CreateCustomerRequest(
+public class CreateCustomerCommand(
     string customerCode,
     string name,
     string? address = null,

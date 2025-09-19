@@ -1,6 +1,6 @@
 namespace Accounting.Application.Projects.Update;
 
-public class UpdateProjectRequestValidator : AbstractValidator<UpdateProjectRequest>
+public class UpdateProjectRequestValidator : AbstractValidator<UpdateProjectCommand>
 {
     public UpdateProjectRequestValidator()
     {

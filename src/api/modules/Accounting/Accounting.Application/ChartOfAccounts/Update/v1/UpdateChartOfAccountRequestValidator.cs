@@ -1,7 +1,7 @@
 using FSH.Framework.Core.Extensions;
 
 namespace Accounting.Application.ChartOfAccounts.Update.v1;
-public class UpdateChartOfAccountRequestValidator : BaseRequestValidator<UpdateChartOfAccountRequest>
+public class UpdateChartOfAccountCommandValidator : BaseRequestValidator<UpdateChartOfAccountCommand>
 {
     private static readonly HashSet<string> AllowedAccountTypes = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -26,7 +26,7 @@ public class UpdateChartOfAccountRequestValidator : BaseRequestValidator<UpdateC
         "Operation",
     };
 
-    public UpdateChartOfAccountRequestValidator()
+    public UpdateChartOfAccountCommandValidator()
     {
             RuleFor(a => a.AccountName)
                 .MaximumLength(1024)

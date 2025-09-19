@@ -5,9 +5,9 @@ namespace Accounting.Application.ChartOfAccounts.Update.v1;
 public sealed class UpdateChartOfAccountRequestHandler(
     ILogger<UpdateChartOfAccountRequestHandler> logger,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
-    : IRequestHandler<UpdateChartOfAccountRequest, DefaultIdType>
+    : IRequestHandler<UpdateChartOfAccountCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(UpdateChartOfAccountRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateChartOfAccountCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

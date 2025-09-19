@@ -6,9 +6,9 @@ namespace Accounting.Application.Projects.Get;
 public sealed class GetProjectHandler(
     [FromKeyedServices("accounting:projects")] IReadRepository<Project> repository,
     ICacheService cache)
-    : IRequestHandler<GetProjectRequest, ProjectDto>
+    : IRequestHandler<GetProjectQuery, ProjectDto>
 {
-    public async Task<ProjectDto> Handle(GetProjectRequest request, CancellationToken cancellationToken)
+    public async Task<ProjectDto> Handle(GetProjectQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

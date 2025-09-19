@@ -1,10 +1,17 @@
 namespace Accounting.Application.Accruals.Create;
 
-public class CreateAccrualRequest : IRequest<DefaultIdType>
+public class CreateAccrualCommand(
+    string referenceNumber,
+    DateTime accrualDate,
+    DefaultIdType? accountId,
+    decimal amount,
+    string? description = null,
+    string? notes = null) : IRequest<DefaultIdType>
 {
-    public string AccrualNumber { get; set; } = default!;
-    public DateTime AccrualDate { get; set; }
-    public decimal Amount { get; set; }
-    public string Description { get; set; } = default!;
+    public string ReferenceNumber { get; set; } = referenceNumber;
+    public DateTime AccrualDate { get; set; } = accrualDate;
+    public DefaultIdType? AccountId { get; set; } = accountId;
+    public decimal Amount { get; set; } = amount;
+    public string? Description { get; set; } = description;
+    public string? Notes { get; set; } = notes;
 }
-

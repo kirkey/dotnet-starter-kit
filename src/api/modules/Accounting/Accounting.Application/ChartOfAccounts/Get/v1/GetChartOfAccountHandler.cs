@@ -5,9 +5,9 @@ namespace Accounting.Application.ChartOfAccounts.Get.v1;
 public sealed class GetChartOfAccountHandler(
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> repository,
     ICacheService cache)
-    : IRequestHandler<GetChartOfAccountRequest, ChartOfAccountDto>
+    : IRequestHandler<GetChartOfAccountQuery, ChartOfAccountResponse>
 {
-    public async Task<ChartOfAccountDto> Handle(GetChartOfAccountRequest request, CancellationToken cancellationToken)
+    public async Task<ChartOfAccountResponse> Handle(GetChartOfAccountQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

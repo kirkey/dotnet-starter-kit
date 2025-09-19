@@ -1,6 +1,7 @@
 namespace FSH.Framework.Core.Extensions.Dto;
 
 public class BaseRequest : BaseRequest<DefaultIdType>;
+public class BaseCommand : BaseRequest<DefaultIdType>;
 
 public abstract class BaseRequest<TId>
 {

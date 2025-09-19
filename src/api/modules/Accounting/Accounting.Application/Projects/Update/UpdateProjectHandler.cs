@@ -6,9 +6,9 @@ namespace Accounting.Application.Projects.Update;
 
 public sealed class UpdateProjectHandler(
     [FromKeyedServices("accounting:projects")] IRepository<Project> repository)
-    : IRequestHandler<UpdateProjectRequest, DefaultIdType>
+    : IRequestHandler<UpdateProjectCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(UpdateProjectRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

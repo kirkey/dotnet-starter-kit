@@ -10,7 +10,7 @@ public static class ProjectGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetProjectRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetProjectQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ProjectGetEndpoint))

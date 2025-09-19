@@ -5,9 +5,9 @@ namespace Accounting.Application.Customers.Create;
 
 public sealed class CreateCustomerHandler(
     [FromKeyedServices("accounting:customers")] IRepository<Customer> repository)
-    : IRequestHandler<CreateCustomerRequest, DefaultIdType>
+    : IRequestHandler<CreateCustomerCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

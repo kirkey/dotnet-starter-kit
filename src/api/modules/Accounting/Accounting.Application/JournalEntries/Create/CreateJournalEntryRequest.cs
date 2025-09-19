@@ -1,9 +1,12 @@
+using Accounting.Application.JournalEntries.Dtos;
+
 namespace Accounting.Application.JournalEntries.Create;
 
-public record CreateJournalEntryRequest(
+public record CreateJournalEntryCommand(
+    DefaultIdType? Id,
     DateTime Date,
     string ReferenceNumber,
-    string Description,
     string Source,
-    DefaultIdType? PeriodId = null,
-    decimal OriginalAmount = 0) : IRequest<DefaultIdType>;
+    string Description,
+    List<JournalEntryLineDto> Lines,
+    string? Notes = null) : IRequest<DefaultIdType>;

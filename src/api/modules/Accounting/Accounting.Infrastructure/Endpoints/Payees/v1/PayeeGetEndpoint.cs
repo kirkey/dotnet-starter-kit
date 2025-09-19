@@ -9,7 +9,7 @@ public static class PayeeGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new PayeeGetRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new PayeeGetQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(PayeeGetEndpoint))

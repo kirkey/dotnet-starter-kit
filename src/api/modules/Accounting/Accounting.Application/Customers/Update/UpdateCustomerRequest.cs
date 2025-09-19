@@ -1,6 +1,6 @@
 namespace Accounting.Application.Customers.Update;
 
-public class UpdateCustomerRequest(
+public class UpdateCustomerCommand(
     DefaultIdType id,
     string? customerCode = null,
     string? name = null,

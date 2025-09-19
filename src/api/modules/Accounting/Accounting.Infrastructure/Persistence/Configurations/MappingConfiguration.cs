@@ -1,4 +1,4 @@
-using Accounting.Application.ChartOfAccounts.Dtos;
+using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
 
 namespace Accounting.Infrastructure.Persistence.Configurations;

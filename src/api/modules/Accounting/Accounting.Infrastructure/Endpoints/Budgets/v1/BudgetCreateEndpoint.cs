@@ -7,7 +7,7 @@ public static class BudgetCreateEndpoint
     internal static RouteHandlerBuilder MapBudgetCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (CreateBudgetRequest request, ISender mediator) =>
+            .MapPost("/", async (CreateBudgetCommand request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

@@ -10,13 +10,13 @@ public static class AccountingPeriodGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetAccountingPeriodRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetAccountingPeriodQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(AccountingPeriodGetEndpoint))
-            .WithSummary("get an accounting period by id")
-            .WithDescription("get an accounting period by id")
-            .Produces<AccountingPeriodDto>()
+            .WithSummary("get accounting period by id")
+            .WithDescription("get accounting period by id")
+            .Produces<AccountingPeriodResponse>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

@@ -1,16 +1,8 @@
 namespace Accounting.Application.AccountingPeriods.Update.v1;
 
-public class UpdateAccountingPeriodRequestValidator : AbstractValidator<UpdateAccountingPeriodRequest>
+public class UpdateAccountingPeriodCommandValidator : AbstractValidator<UpdateAccountingPeriodCommand>
 {
-    private static readonly HashSet<string> AllowedPeriodTypes = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "Monthly",
-        "Quarterly",
-        "Yearly",
-        "Annual",
-    };
-
-    public UpdateAccountingPeriodRequestValidator()
+    public UpdateAccountingPeriodCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty();
@@ -20,7 +12,7 @@ public class UpdateAccountingPeriodRequestValidator : AbstractValidator<UpdateAc
             .When(x => !string.IsNullOrEmpty(x.Name));
 
         RuleFor(x => x.EndDate)
-            .GreaterThan(x => x.StartDate)
+            .GreaterThan(x => x.StartDate!.Value)
             .When(x => x.StartDate.HasValue && x.EndDate.HasValue);
 
         RuleFor(x => x.FiscalYear)
@@ -29,10 +21,7 @@ public class UpdateAccountingPeriodRequestValidator : AbstractValidator<UpdateAc
             .When(x => x.FiscalYear.HasValue);
 
         RuleFor(x => x.PeriodType)
-            .Must(pt => string.IsNullOrWhiteSpace(pt) || (!string.IsNullOrWhiteSpace(pt) && pt!.Trim().Length <= 16))
-            .WithMessage("PeriodType cannot exceed 16 characters (trimmed).")
-            .Must(pt => string.IsNullOrWhiteSpace(pt) || AllowedPeriodTypes.Contains(pt!.Trim()))
-            .WithMessage(x => $"PeriodType must be one of: {string.Join(", ", AllowedPeriodTypes)}")
+            .MaximumLength(16)
             .When(x => !string.IsNullOrEmpty(x.PeriodType));
 
         RuleFor(x => x.Description)

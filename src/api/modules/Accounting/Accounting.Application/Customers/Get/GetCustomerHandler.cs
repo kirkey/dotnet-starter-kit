@@ -6,9 +6,9 @@ namespace Accounting.Application.Customers.Get;
 public sealed class GetCustomerHandler(
     [FromKeyedServices("accounting:customers")] IReadRepository<Customer> repository,
     ICacheService cache)
-    : IRequestHandler<GetCustomerRequest, CustomerDto>
+    : IRequestHandler<GetCustomerQuery, CustomerResponse>
 {
-    public async Task<CustomerDto> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
+    public async Task<CustomerResponse> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -18,7 +18,7 @@ public sealed class GetCustomerHandler(
             {
                 var customer = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (customer == null) throw new CustomerNotFoundException(request.Id);
-                return customer.Adapt<CustomerDto>();
+                return customer.Adapt<CustomerResponse>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

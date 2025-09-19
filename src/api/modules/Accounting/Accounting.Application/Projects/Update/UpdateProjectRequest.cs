@@ -1,6 +1,6 @@
 namespace Accounting.Application.Projects.Update;
 
-public class UpdateProjectRequest(
+public class UpdateProjectCommand(
     DefaultIdType id,
     string? name = null,
     DateTime? startDate = null,

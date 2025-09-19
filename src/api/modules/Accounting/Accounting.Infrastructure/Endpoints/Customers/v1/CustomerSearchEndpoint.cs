@@ -8,18 +8,16 @@ public static class CustomerSearchEndpoint
     internal static RouteHandlerBuilder MapCustomerSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] SearchCustomersRequest command) =>
+            .MapGet("/", async ([AsParameters] SearchCustomersQuery request, ISender mediator) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(CustomerSearchEndpoint))
-            .WithSummary("Gets a list of customers")
-            .WithDescription("Gets a list of customers with pagination and filtering support")
-            .Produces<PagedList<CustomerDto>>()
+            .WithSummary("search customers")
+            .WithDescription("search customers")
+            .Produces<PagedList<CustomerResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }
 }
-
-

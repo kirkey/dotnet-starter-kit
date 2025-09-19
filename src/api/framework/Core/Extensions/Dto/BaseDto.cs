@@ -18,3 +18,4 @@ public class BaseDto<TId>
 }
 
 public abstract class BaseDto : BaseDto<DefaultIdType>;
+public abstract class BaseResponse : BaseDto<DefaultIdType>;

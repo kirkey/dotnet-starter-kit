@@ -5,9 +5,9 @@ namespace Accounting.Application.Projects.Create;
 
 public sealed class CreateProjectHandler(
     [FromKeyedServices("accounting:projects")] IRepository<Project> repository)
-    : IRequestHandler<CreateProjectRequest, DefaultIdType>
+    : IRequestHandler<CreateProjectCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(CreateProjectRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

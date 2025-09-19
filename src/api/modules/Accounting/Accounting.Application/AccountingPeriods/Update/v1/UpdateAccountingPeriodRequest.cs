@@ -1,6 +1,6 @@
 namespace Accounting.Application.AccountingPeriods.Update.v1;
 
-public record UpdateAccountingPeriodRequest(
+public record UpdateAccountingPeriodCommand(
     DefaultIdType Id,
     string? Name = null,
     DateTime? StartDate = null,

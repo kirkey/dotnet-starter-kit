@@ -5,9 +5,9 @@ namespace Accounting.Application.AccountingPeriods.Create.v1;
 
 public sealed class CreateAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)
-    : IRequestHandler<CreateAccountingPeriodRequest, DefaultIdType>
+    : IRequestHandler<CreateAccountingPeriodCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(CreateAccountingPeriodRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateAccountingPeriodCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

@@ -2,9 +2,9 @@ namespace Accounting.Application.Payees.Get.v1;
 public sealed class PayeeGetHandler(
     [FromKeyedServices("accounting:payees")] IReadRepository<Payee> repository,
     ICacheService cache)
-    : IRequestHandler<PayeeGetRequest, PayeeResponse>
+    : IRequestHandler<PayeeGetQuery, PayeeResponse>
 {
-    public async Task<PayeeResponse> Handle(PayeeGetRequest request, CancellationToken cancellationToken)
+    public async Task<PayeeResponse> Handle(PayeeGetQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

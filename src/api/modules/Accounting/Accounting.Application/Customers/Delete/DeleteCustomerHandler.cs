@@ -4,9 +4,9 @@ namespace Accounting.Application.Customers.Delete;
 
 public sealed class DeleteCustomerHandler(
     [FromKeyedServices("accounting:customers")] IRepository<Customer> repository)
-    : IRequestHandler<DeleteCustomerRequest>
+    : IRequestHandler<DeleteCustomerCommand>
 {
-    public async Task Handle(DeleteCustomerRequest request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

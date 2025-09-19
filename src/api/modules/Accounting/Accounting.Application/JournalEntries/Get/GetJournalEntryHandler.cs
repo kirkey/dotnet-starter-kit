@@ -6,9 +6,9 @@ namespace Accounting.Application.JournalEntries.Get;
 public sealed class GetJournalEntryHandler(
     [FromKeyedServices("accounting:journals")] IReadRepository<JournalEntry> repository,
     ICacheService cache)
-    : IRequestHandler<GetJournalEntryRequest, JournalEntryDto>
+    : IRequestHandler<GetJournalEntryQuery, JournalEntryDto>
 {
-    public async Task<JournalEntryDto> Handle(GetJournalEntryRequest request, CancellationToken cancellationToken)
+    public async Task<JournalEntryDto> Handle(GetJournalEntryQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

@@ -1,14 +1,13 @@
 using Accounting.Application.AccountingPeriods.Dtos;
-using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
 
 namespace Accounting.Application.AccountingPeriods.Get.v1;
 
 public sealed class GetAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IReadRepository<AccountingPeriod> repository,
     ICacheService cache)
-    : IRequestHandler<GetAccountingPeriodRequest, AccountingPeriodDto>
+    : IRequestHandler<GetAccountingPeriodQuery, AccountingPeriodResponse>
 {
-    public async Task<AccountingPeriodDto> Handle(GetAccountingPeriodRequest request, CancellationToken cancellationToken)
+    public async Task<AccountingPeriodResponse> Handle(GetAccountingPeriodQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -18,7 +17,7 @@ public sealed class GetAccountingPeriodHandler(
             {
                 var period = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (period == null) throw new AccountingPeriodNotFoundException(request.Id);
-                return new AccountingPeriodDto(
+                return new AccountingPeriodResponse(
                     period.Id,
                     period.Name!,
                     period.StartDate,

@@ -2,7 +2,7 @@ using Accounting.Application.ChartOfAccounts.Dtos;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
 
-public class SearchChartOfAccountRequest : PaginationFilter, IRequest<PagedList<ChartOfAccountDto>>
+public class SearchChartOfAccountQuery : PaginationFilter, IRequest<PagedList<ChartOfAccountResponse>>
 {
     public string? AccountCode { get; set; }
     public string? Name { get; set; }

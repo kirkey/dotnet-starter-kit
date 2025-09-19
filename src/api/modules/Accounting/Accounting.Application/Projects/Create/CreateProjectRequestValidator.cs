@@ -1,6 +1,6 @@
 namespace Accounting.Application.Projects.Create;
 
-public class CreateProjectRequestValidator : AbstractValidator<CreateProjectRequest>
+public class CreateProjectRequestValidator : AbstractValidator<CreateProjectCommand>
 {
     public CreateProjectRequestValidator()
     {

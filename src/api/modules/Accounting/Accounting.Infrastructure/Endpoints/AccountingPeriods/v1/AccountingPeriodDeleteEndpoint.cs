@@ -9,7 +9,7 @@ public static class AccountingPeriodDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new DeleteAccountingPeriodRequest(id)).ConfigureAwait(false);
+                await mediator.Send(new DeleteAccountingPeriodCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(AccountingPeriodDeleteEndpoint))
@@ -20,4 +20,3 @@ public static class AccountingPeriodDeleteEndpoint
             .MapToApiVersion(1);
     }
 }
-

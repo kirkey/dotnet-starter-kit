@@ -2,7 +2,7 @@ using Accounting.Application.AccountingPeriods.Dtos;
 
 namespace Accounting.Application.AccountingPeriods.Get.v1;
 
-public class GetAccountingPeriodRequest(DefaultIdType id) : IRequest<AccountingPeriodDto>
+public class GetAccountingPeriodQuery(DefaultIdType id) : IRequest<AccountingPeriodResponse>
 {
     public DefaultIdType Id { get; set; } = id;
 }

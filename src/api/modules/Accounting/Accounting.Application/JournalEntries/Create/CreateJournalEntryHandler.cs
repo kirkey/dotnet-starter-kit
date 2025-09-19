@@ -2,9 +2,9 @@ namespace Accounting.Application.JournalEntries.Create;
 
 public sealed class CreateJournalEntryHandler(
     [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
-    : IRequestHandler<CreateJournalEntryRequest, DefaultIdType>
+    : IRequestHandler<CreateJournalEntryCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(CreateJournalEntryRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateJournalEntryCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

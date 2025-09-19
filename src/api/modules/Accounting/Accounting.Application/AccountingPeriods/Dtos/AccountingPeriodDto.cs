@@ -1,6 +1,6 @@
 namespace Accounting.Application.AccountingPeriods.Dtos;
 
-public class AccountingPeriodDto(
+public class AccountingPeriodResponse(
     DefaultIdType id,
     string name,
     DateTime startDate,

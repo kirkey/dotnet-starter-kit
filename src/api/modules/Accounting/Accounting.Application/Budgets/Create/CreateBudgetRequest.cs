@@ -1,9 +1,13 @@
 namespace Accounting.Application.Budgets.Create;
 
-public record CreateBudgetRequest(
-    string Name,
-    DefaultIdType PeriodId,
-    int FiscalYear,
-    string BudgetType,
-    string? Description = null,
-    string? Notes = null) : IRequest<DefaultIdType>;
+public class CreateBudgetCommand(
+    string name,
+    DefaultIdType? projectId = null,
+    decimal totalAmount = 0,
+    string? notes = null) : IRequest<DefaultIdType>
+{
+    public string Name { get; set; } = name;
+    public DefaultIdType? ProjectId { get; set; } = projectId;
+    public decimal TotalAmount { get; set; } = totalAmount;
+    public string? Notes { get; set; } = notes;
+}

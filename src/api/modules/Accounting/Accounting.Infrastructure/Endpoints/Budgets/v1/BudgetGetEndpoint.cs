@@ -10,7 +10,7 @@ public static class BudgetGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetBudgetRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetBudgetQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(BudgetGetEndpoint))

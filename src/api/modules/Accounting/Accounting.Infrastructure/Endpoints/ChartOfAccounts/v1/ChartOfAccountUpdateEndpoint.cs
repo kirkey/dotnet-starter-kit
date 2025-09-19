@@ -7,7 +7,7 @@ public static class ChartOfAccountUpdateEndpoint
     internal static RouteHandlerBuilder MapChartOfAccountUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateChartOfAccountRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateChartOfAccountCommand request, ISender mediator) =>
             {
                 if (id != request.Id) return Results.BadRequest();
                 var response = await mediator.Send(request).ConfigureAwait(false);

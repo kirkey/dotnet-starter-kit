@@ -3,8 +3,8 @@ using Accounting.Application.ChartOfAccounts.Dtos;
 namespace Accounting.Application.ChartOfAccounts.Queries;
 
 public sealed class ChartOfAccountByIdSpec :
-    Specification<ChartOfAccount, ChartOfAccountDto>,
-    ISingleResultSpecification<ChartOfAccount, ChartOfAccountDto>
+    Specification<ChartOfAccount, ChartOfAccountResponse>,
+    ISingleResultSpecification<ChartOfAccount, ChartOfAccountResponse>
 {
     public ChartOfAccountByIdSpec(DefaultIdType id) =>
         Query.Where(w => w.Id == id);

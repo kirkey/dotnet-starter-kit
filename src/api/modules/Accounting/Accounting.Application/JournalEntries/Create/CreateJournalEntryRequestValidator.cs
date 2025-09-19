@@ -1,6 +1,6 @@
 namespace Accounting.Application.JournalEntries.Create;
 
-public class CreateJournalEntryRequestValidator : AbstractValidator<CreateJournalEntryRequest>
+public class CreateJournalEntryRequestValidator : AbstractValidator<CreateJournalEntryCommand>
 {
     public CreateJournalEntryRequestValidator()
     {

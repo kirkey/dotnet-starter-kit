@@ -5,18 +5,18 @@ namespace Accounting.Application.ChartOfAccounts.Create.v1;
 public sealed class CreateChartOfAccountHandler(
     ILogger<CreateChartOfAccountHandler> logger,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> repository)
-    : IRequestHandler<CreateChartOfAccountRequest, DefaultIdType>
+    : IRequestHandler<CreateChartOfAccountCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(CreateChartOfAccountRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateChartOfAccountCommand command, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        ArgumentNullException.ThrowIfNull(command);
 
-        var accountCode = request.AccountCode?.Trim() ?? string.Empty;
-        var accountName = request.AccountName?.Trim() ?? string.Empty;
-        var accountType = request.AccountType?.Trim() ?? string.Empty;
-        var usoaCategory = request.UsoaCategory?.Trim() ?? string.Empty;
-        var parentCode = request.ParentCode?.Trim() ?? string.Empty;
-        var normalBalance = request.NormalBalance?.Trim() ?? "Debit";
+        var accountCode = command.AccountCode?.Trim() ?? string.Empty;
+        var accountName = command.AccountName?.Trim() ?? string.Empty;
+        var accountType = command.AccountType?.Trim() ?? string.Empty;
+        var usoaCategory = command.UsoaCategory?.Trim() ?? string.Empty;
+        var parentCode = command.ParentCode?.Trim() ?? string.Empty;
+        var normalBalance = command.NormalBalance?.Trim() ?? "Debit";
 
         // Check for duplicate account code
         var existingByCode = await repository.FirstOrDefaultAsync(
@@ -39,15 +39,15 @@ public sealed class CreateChartOfAccountHandler(
             accountName: accountName,
             accountType: accountType,
             usoaCategory: usoaCategory,
-            subAccountOf: request.SubAccountOf,
+            subAccountOf: command.SubAccountOf,
             parentCode: parentCode,
-            balance: request.Balance,
-            isControlAccount: request.IsControlAccount,
+            balance: command.Balance,
+            isControlAccount: command.IsControlAccount,
             normalBalance: normalBalance,
-            isUsoaCompliant: request.IsUsoaCompliant,
-            regulatoryClassification: request.RegulatoryClassification?.Trim(),
-            description: request.Description?.Trim(),
-            notes: request.Notes?.Trim());
+            isUsoaCompliant: command.IsUsoaCompliant,
+            regulatoryClassification: command.RegulatoryClassification?.Trim(),
+            description: command.Description?.Trim(),
+            notes: command.Notes?.Trim());
 
         await repository.AddAsync(account, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

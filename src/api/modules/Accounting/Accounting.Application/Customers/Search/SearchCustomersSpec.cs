@@ -2,9 +2,9 @@ using Accounting.Application.Customers.Dtos;
 
 namespace Accounting.Application.Customers.Search;
 
-public sealed class SearchCustomersSpec : EntitiesByPaginationFilterSpec<Customer, CustomerDto>
+public sealed class SearchCustomersSpec : EntitiesByPaginationFilterSpec<Customer, CustomerResponse>
 {
-    public SearchCustomersSpec(SearchCustomersRequest request) : base(request)
+    public SearchCustomersSpec(SearchCustomersQuery request) : base(request)
     {
         Query
             .OrderBy(c => c.CustomerCode, !request.HasOrderBy())
@@ -13,5 +13,3 @@ public sealed class SearchCustomersSpec : EntitiesByPaginationFilterSpec<Custome
             .Where(c => c.Email!.Contains(request.Email!), !string.IsNullOrEmpty(request.Email));
     }
 }
-
-

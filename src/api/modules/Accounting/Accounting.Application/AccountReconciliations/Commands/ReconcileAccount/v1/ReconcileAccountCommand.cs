@@ -7,7 +7,6 @@ public class ReconcileAccountCommand : BaseRequest, IRequest<DefaultIdType>
     public decimal StatementBalance { get; set; }
     public string? ReconciliationReference { get; set; }
     public List<ReconciliationLineDto> ReconciliationLines { get; set; } = new();
-    public string? Notes { get; set; }
 }
 
 public class ReconciliationLineDto

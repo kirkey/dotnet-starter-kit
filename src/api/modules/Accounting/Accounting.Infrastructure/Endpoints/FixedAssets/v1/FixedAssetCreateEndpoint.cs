@@ -7,7 +7,7 @@ public static class FixedAssetCreateEndpoint
     internal static RouteHandlerBuilder MapFixedAssetCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (CreateFixedAssetRequest request, ISender mediator) =>
+            .MapPost("/", async (CreateFixedAssetCommand request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

@@ -1,6 +1,6 @@
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
 
-public class CreateChartOfAccountRequest : BaseRequest, IRequest<DefaultIdType>
+public class CreateChartOfAccountCommand : BaseRequest, IRequest<DefaultIdType>
 {
     public string AccountCode { get; set; } = null!;
     public string AccountName { get; set; } = null!;

@@ -2,11 +2,9 @@ using Accounting.Application.Accruals.Dtos;
 
 namespace Accounting.Application.Accruals.Search;
 
-public class SearchAccrualsRequest : IRequest<List<AccrualDto>>
+public class SearchAccrualsQuery : PaginationFilter, IRequest<PagedList<AccrualDto>>
 {
-    public string? AccrualNumber { get; set; }
-    public string? Description { get; set; }
-    public int? Skip { get; set; }
-    public int? Take { get; set; }
+    public string? ReferenceNumber { get; set; }
+    public DateTime? FromDate { get; set; }
+    public DateTime? ToDate { get; set; }
 }
-

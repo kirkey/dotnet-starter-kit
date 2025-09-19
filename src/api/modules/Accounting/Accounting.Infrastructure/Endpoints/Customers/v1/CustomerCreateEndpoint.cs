@@ -7,7 +7,7 @@ public static class CustomerCreateEndpoint
     internal static RouteHandlerBuilder MapCustomerCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (CreateCustomerRequest request, ISender mediator) =>
+            .MapPost("/", async (CreateCustomerCommand request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -20,5 +20,3 @@ public static class CustomerCreateEndpoint
             .MapToApiVersion(1);
     }
 }
-
-

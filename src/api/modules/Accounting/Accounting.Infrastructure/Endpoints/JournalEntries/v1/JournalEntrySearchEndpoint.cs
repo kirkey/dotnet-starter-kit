@@ -8,7 +8,7 @@ public static class JournalEntrySearchEndpoint
     internal static RouteHandlerBuilder MapJournalEntrySearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] SearchJournalEntriesRequest command) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchJournalEntriesQuery command) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

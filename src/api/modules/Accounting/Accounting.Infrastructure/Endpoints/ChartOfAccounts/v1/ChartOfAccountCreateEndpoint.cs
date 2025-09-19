@@ -7,9 +7,9 @@ public static class ChartOfAccountCreateEndpoint
     internal static RouteHandlerBuilder MapChartOfAccountCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (CreateChartOfAccountRequest request, ISender mediator) =>
+            .MapPost("/", async (CreateChartOfAccountCommand command, ISender mediator) =>
             {
-                var response = await mediator.Send(request).ConfigureAwait(false);
+                var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ChartOfAccountCreateEndpoint))

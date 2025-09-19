@@ -1,8 +1,8 @@
 namespace Accounting.Application.Customers.Create;
 
-public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRequest>
+public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
 {
-    public CreateCustomerRequestValidator()
+    public CreateCustomerCommandValidator()
     {
         RuleFor(x => x.CustomerCode)
             .NotEmpty()

@@ -4,7 +4,7 @@ namespace Accounting.Application.JournalEntries.Search;
 
 public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<JournalEntry, JournalEntryDto>
 {
-    public SearchJournalEntriesSpec(SearchJournalEntriesRequest request) : base(request)
+    public SearchJournalEntriesSpec(SearchJournalEntriesQuery request) : base(request)
     {
         Query
             .OrderBy(e => e.Name!, !request.HasOrderBy())

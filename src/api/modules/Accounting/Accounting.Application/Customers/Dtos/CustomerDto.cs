@@ -1,6 +1,6 @@
 namespace Accounting.Application.Customers.Dtos;
 
-public class CustomerDto(
+public class CustomerResponse(
     string customerCode,
     string? address,
     string? billingAddress,
@@ -14,7 +14,7 @@ public class CustomerDto(
     bool isActive,
     decimal creditLimit,
     decimal currentBalance,
-    string? notes) : BaseDto
+    string? notes) : BaseResponse
 {
     public string CustomerCode { get; set; } = customerCode;
     public string? Address { get; set; } = address;

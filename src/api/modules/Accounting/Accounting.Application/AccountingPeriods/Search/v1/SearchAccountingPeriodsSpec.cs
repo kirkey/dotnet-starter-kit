@@ -2,9 +2,9 @@ using Accounting.Application.AccountingPeriods.Dtos;
 
 namespace Accounting.Application.AccountingPeriods.Search.v1;
 
-public sealed class SearchAccountingPeriodsSpec : EntitiesByPaginationFilterSpec<AccountingPeriod, AccountingPeriodDto>
+public sealed class SearchAccountingPeriodsSpec : EntitiesByPaginationFilterSpec<AccountingPeriod, AccountingPeriodResponse>
 {
-    public SearchAccountingPeriodsSpec(SearchAccountingPeriodsRequest request) : base(request)
+    public SearchAccountingPeriodsSpec(SearchAccountingPeriodsQuery request) : base(request)
     {
         Query
             .OrderBy(p => p.Name!, !request.HasOrderBy())

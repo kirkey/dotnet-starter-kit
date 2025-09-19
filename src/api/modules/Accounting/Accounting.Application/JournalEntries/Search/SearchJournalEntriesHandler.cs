@@ -4,9 +4,9 @@ namespace Accounting.Application.JournalEntries.Search;
 
 public sealed class SearchJournalEntriesHandler(
     [FromKeyedServices("accounting:journals")] IReadRepository<JournalEntry> repository)
-    : IRequestHandler<SearchJournalEntriesRequest, PagedList<JournalEntryDto>>
+    : IRequestHandler<SearchJournalEntriesQuery, PagedList<JournalEntryDto>>
 {
-    public async Task<PagedList<JournalEntryDto>> Handle(SearchJournalEntriesRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<JournalEntryDto>> Handle(SearchJournalEntriesQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

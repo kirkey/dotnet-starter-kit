@@ -5,9 +5,9 @@ namespace Accounting.Application.Customers.Update;
 
 public sealed class UpdateCustomerHandler(
     [FromKeyedServices("accounting:customers")] IRepository<Customer> repository)
-    : IRequestHandler<UpdateCustomerRequest, DefaultIdType>
+    : IRequestHandler<UpdateCustomerCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(UpdateCustomerRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

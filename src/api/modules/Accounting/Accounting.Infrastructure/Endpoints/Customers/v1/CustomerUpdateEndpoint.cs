@@ -7,7 +7,7 @@ public static class CustomerUpdateEndpoint
     internal static RouteHandlerBuilder MapCustomerUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateCustomerRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateCustomerCommand request, ISender mediator) =>
             {
                 if (id != request.Id) return Results.BadRequest();
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -21,5 +21,3 @@ public static class CustomerUpdateEndpoint
             .MapToApiVersion(1);
     }
 }
-
-

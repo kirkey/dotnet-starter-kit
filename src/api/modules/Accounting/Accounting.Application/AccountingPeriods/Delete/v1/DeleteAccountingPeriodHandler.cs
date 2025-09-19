@@ -1,12 +1,10 @@
-using AccountingPeriodNotFoundException = Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException;
-
 namespace Accounting.Application.AccountingPeriods.Delete.v1;
 
 public sealed class DeleteAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)
-    : IRequestHandler<DeleteAccountingPeriodRequest>
+    : IRequestHandler<DeleteAccountingPeriodCommand>
 {
-    public async Task Handle(DeleteAccountingPeriodRequest request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteAccountingPeriodCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

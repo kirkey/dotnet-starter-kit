@@ -4,9 +4,9 @@ namespace Accounting.Application.Customers.Search;
 
 public sealed class SearchCustomersHandler(
     [FromKeyedServices("accounting:customers")] IReadRepository<Customer> repository)
-    : IRequestHandler<SearchCustomersRequest, PagedList<CustomerDto>>
+    : IRequestHandler<SearchCustomersQuery, PagedList<CustomerResponse>>
 {
-    public async Task<PagedList<CustomerDto>> Handle(SearchCustomersRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<CustomerResponse>> Handle(SearchCustomersQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -14,8 +14,6 @@ public sealed class SearchCustomersHandler(
         var list = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        return new PagedList<CustomerDto>(list, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<CustomerResponse>(list, request.PageNumber, request.PageSize, totalCount);
     }
 }
-
-

@@ -7,7 +7,7 @@ public static class ProjectUpdateEndpoint
     internal static RouteHandlerBuilder MapProjectUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateProjectRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateProjectCommand request, ISender mediator) =>
             {
                 if (id != request.Id) return Results.BadRequest();
                 var response = await mediator.Send(request).ConfigureAwait(false);

@@ -8,18 +8,16 @@ public static class AccountingPeriodSearchEndpoint
     internal static RouteHandlerBuilder MapAccountingPeriodSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] SearchAccountingPeriodsRequest command) =>
+            .MapGet("/", async ([AsParameters] SearchAccountingPeriodsQuery query, ISender mediator) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(query).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(AccountingPeriodSearchEndpoint))
-            .WithSummary("Gets a list of accounting periods")
-            .WithDescription("Gets a list of accounting periods with pagination and filtering support")
-            .Produces<PagedList<AccountingPeriodDto>>()
+            .WithSummary("search accounting periods")
+            .WithDescription("search accounting periods")
+            .Produces<PagedList<AccountingPeriodResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }
 }
-
-

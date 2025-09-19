@@ -1,6 +1,6 @@
 namespace Accounting.Application.Projects.Create;
 
-public class CreateProjectRequest(
+public class CreateProjectCommand(
     string name,
     DateTime startDate,
     decimal budgetedAmount,

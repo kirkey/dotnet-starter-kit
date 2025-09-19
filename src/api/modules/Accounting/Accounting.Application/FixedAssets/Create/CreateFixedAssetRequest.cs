@@ -1,6 +1,6 @@
 namespace Accounting.Application.FixedAssets.Create;
 
-public class CreateFixedAssetRequest(
+public class CreateFixedAssetCommand(
     string assetName,
     DateTime purchaseDate,
     decimal purchasePrice,

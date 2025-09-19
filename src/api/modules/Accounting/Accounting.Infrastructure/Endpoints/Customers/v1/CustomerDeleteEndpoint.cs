@@ -9,7 +9,7 @@ public static class CustomerDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new DeleteCustomerRequest(id)).ConfigureAwait(false);
+                await mediator.Send(new DeleteCustomerCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(CustomerDeleteEndpoint))
@@ -20,5 +20,3 @@ public static class CustomerDeleteEndpoint
             .MapToApiVersion(1);
     }
 }
-
-

@@ -1,6 +1,6 @@
 namespace Accounting.Application.AccountingPeriods.Create.v1;
 
-public class CreateAccountingPeriodRequestValidator : AbstractValidator<CreateAccountingPeriodRequest>
+public class CreateAccountingPeriodCommandValidator : AbstractValidator<CreateAccountingPeriodCommand>
 {
     private static readonly HashSet<string> AllowedPeriodTypes = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -10,7 +10,7 @@ public class CreateAccountingPeriodRequestValidator : AbstractValidator<CreateAc
         "Annual",
     };
 
-    public CreateAccountingPeriodRequestValidator()
+    public CreateAccountingPeriodCommandValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()

@@ -1,5 +1,6 @@
-using Accounting.Application.Budgets.Dtos;
 using Accounting.Application.Budgets.Search;
+using FSH.Starter.Blazor.Infrastructure.Api;
+using BudgetDto = Accounting.Application.Budgets.Dtos.BudgetDto;
 
 namespace Accounting.Infrastructure.Endpoints.Budgets.v1;
 

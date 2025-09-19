@@ -1,6 +1,6 @@
 namespace Accounting.Application.ChartOfAccounts.Dtos;
 
-public class ChartOfAccountDto : BaseDto
+public class ChartOfAccountResponse : BaseDto
 {
     public string AccountCode { get; set; } = null!;
     public string AccountType { get; set; } = null!;
