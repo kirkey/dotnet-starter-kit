@@ -1,5 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
-using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 
@@ -7,9 +7,9 @@ public static class SearchWarehouseLocationsEndpoint
 {
     internal static RouteHandlerBuilder MapSearchWarehouseLocationsEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/", async ([AsParameters] SearchWarehouseLocationsCommand query, ISender sender) =>
+        return endpoints.MapPost("/search", async (ISender sender, [FromBody] SearchWarehouseLocationsCommand request) =>
         {
-            var result = await sender.Send(query).ConfigureAwait(false);
+            var result = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName("SearchWarehouseLocations")

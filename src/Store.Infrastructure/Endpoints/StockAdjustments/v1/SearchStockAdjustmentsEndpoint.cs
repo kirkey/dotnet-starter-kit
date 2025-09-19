@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
@@ -7,9 +8,9 @@ public static class SearchStockAdjustmentsEndpoint
 {
     internal static RouteHandlerBuilder MapSearchStockAdjustmentsEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/", async ([AsParameters] SearchStockAdjustmentsCommand query, ISender sender) =>
+        return endpoints.MapPost("/search", async (ISender sender, [FromBody] SearchStockAdjustmentsCommand request) =>
         {
-            var result = await sender.Send(query).ConfigureAwait(false);
+            var result = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName("SearchStockAdjustments")

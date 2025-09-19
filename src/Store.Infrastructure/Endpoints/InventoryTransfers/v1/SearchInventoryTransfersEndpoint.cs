@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Search.v1;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -6,9 +7,9 @@ public static class SearchInventoryTransfersEndpoint
 {
     internal static RouteHandlerBuilder MapSearchInventoryTransfersEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/", async ([AsParameters] SearchInventoryTransfersCommand query, ISender sender) =>
+        return endpoints.MapPost("/search", async (ISender sender, [FromBody] SearchInventoryTransfersCommand request) =>
         {
-            var result = await sender.Send(query).ConfigureAwait(false);
+            var result = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName("SearchInventoryTransfers")

@@ -8,7 +8,7 @@ public static class CustomerSearchEndpoint
     internal static RouteHandlerBuilder MapCustomerSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/", async ([AsParameters] SearchCustomersQuery request, ISender mediator) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchCustomersQuery request) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

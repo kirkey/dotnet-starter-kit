@@ -8,9 +8,9 @@ public static class AccountingPeriodSearchEndpoint
     internal static RouteHandlerBuilder MapAccountingPeriodSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/", async ([AsParameters] SearchAccountingPeriodsQuery query, ISender mediator) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchAccountingPeriodsQuery request) =>
             {
-                var response = await mediator.Send(query).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(AccountingPeriodSearchEndpoint))
