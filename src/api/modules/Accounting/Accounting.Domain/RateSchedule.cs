@@ -3,12 +3,47 @@ using Accounting.Domain.Events.RateSchedule;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a utility rate schedule with energy/demand rates, fixed charges, and optional time-of-use structure.
+/// Represents a utility rate schedule with energy/demand pricing, fixed charges, and time-of-use capabilities for customer billing.
 /// </summary>
 /// <remarks>
-/// Tracks effective and expiration dates, and supports tiered pricing via <see cref="RateTier"/> entries.
-/// Defaults: strings trimmed; numeric rates must be non-negative; <see cref="IsTimeOfUse"/> defaults to false.
+/// Use cases:
+/// - Define electricity pricing structures for different customer classes (residential, commercial, industrial).
+/// - Support tiered rate structures with increasing block rates based on usage levels.
+/// - Enable time-of-use pricing with peak, off-peak, and shoulder period rates.
+/// - Manage seasonal rate variations (summer/winter pricing differences).
+/// - Support demand charge calculations for commercial and industrial customers.
+/// - Enable regulatory compliance with approved tariff structures and rate schedules.
+/// - Track rate schedule effectiveness periods and automatic transitions.
+/// - Support special rate programs (low-income, economic development, green energy).
+/// 
+/// Default values:
+/// - RateCode: required unique identifier (example: "RES-1", "COM-2", "IND-TOU")
+/// - RateName: required display name (example: "Residential Standard Rate", "Commercial Time-of-Use")
+/// - EffectiveDate: required start date for rate applicability (example: 2025-10-01)
+/// - ExpirationDate: optional end date (example: 2026-09-30 for annual rates)
+/// - EnergyRate: base energy charge per kWh (example: 0.0875 for 8.75 cents/kWh)
+/// - DemandRate: demand charge per kW (example: 12.50 for commercial customers)
+/// - FixedCharge: monthly service charge (example: 25.00 for residential)
+/// - IsTimeOfUse: false (standard rates), true for TOU rates
+/// - IsActive: true (new rates are active by default)
+/// - CustomerClass: target customer segment (example: "Residential", "Commercial", "Industrial")
+/// 
+/// Business rules:
+/// - RateCode must be unique within the utility system
+/// - EffectiveDate cannot be in the past for new rate schedules
+/// - ExpirationDate must be after EffectiveDate when specified
+/// - All rate amounts must be non-negative
+/// - Cannot delete rate schedules assigned to active customers
+/// - Rate changes require regulatory approval and proper notice periods
+/// - Time-of-use rates must have associated rate tiers for different periods
+/// - Seasonal rates require proper effective date management
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.RateSchedule.RateScheduleCreated"/>
+/// <seealso cref="Accounting.Domain.Events.RateSchedule.RateScheduleUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.RateSchedule.RateScheduleActivated"/>
+/// <seealso cref="Accounting.Domain.Events.RateSchedule.RateScheduleExpired"/>
+/// <seealso cref="Accounting.Domain.Events.RateSchedule.RateScheduleTierAdded"/>
+/// <seealso cref="Accounting.Domain.Events.RateSchedule.RateScheduleApproved"/>
 public class RateSchedule : AuditableEntity, IAggregateRoot
 {
     /// <summary>

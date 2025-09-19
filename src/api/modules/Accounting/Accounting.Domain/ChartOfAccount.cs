@@ -6,10 +6,17 @@ namespace Accounting.Domain;
 /// Represents a single account in the chart of accounts, including type, hierarchy, and regulatory classification.
 /// </summary>
 /// <remarks>
-/// Accounts can be organized hierarchically via <see cref="SubAccountOf"/> and <see cref="ParentCode"/> and
-/// designated as control accounts. Defaults: <see cref="IsActive"/> true on creation; <see cref="AllowDirectPosting"/>
-/// is the inverse of <see cref="IsControlAccount"/>; <see cref="Balance"/> defaults to 0.
+/// Use cases:
+/// - Define USOA-compliant account structure for utility accounting.
+/// - Support hierarchical account organization with parent-child relationships.
+/// - Enable regulatory reporting and FERC compliance tracking.
+/// - Control posting permissions with control account designations.
+/// - Maintain account balances and trial balance calculations.
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.ChartOfAccount.ChartOfAccountCreated"/>
+/// <seealso cref="Accounting.Domain.Events.ChartOfAccount.ChartOfAccountUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.ChartOfAccount.ChartOfAccountActivated"/>
+/// <seealso cref="Accounting.Domain.Events.ChartOfAccount.ChartOfAccountDeactivated"/>
 public class ChartOfAccount : AuditableEntity, IAggregateRoot
 {
     private const int MaxAccountCodeLength = 16;
@@ -24,72 +31,86 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// The unique account code (for example, USOA 101, 403). Trimmed and length-limited.
+    /// Example: "101" for Cash, "403" for Overhead Line Expenses. Max length: 16.
     /// </summary>
     public string AccountCode { get; private set; } // USOA Account ID (e.g., 101, 403)
 
     /// <summary>
     /// The official account name. Also stored in base <c>Name</c> for compatibility.
+    /// Example: "Cash and Cash Equivalents", "Overhead Line Expenses". Max length: 1024.
     /// </summary>
     public string AccountName { get; private set; } // Official USOA account name
 
     /// <summary>
     /// The account type: Asset, Liability, Equity, Revenue, or Expense.
+    /// Example: "Asset" for cash accounts, "Revenue" for sales accounts.
     /// </summary>
     public string AccountType { get; private set; } // Asset, Liability, Equity, Revenue, Expense
 
     /// <summary>
     /// Optional parent account identifier for hierarchical structures.
+    /// Example: links sub-accounts to their parent control accounts.
     /// </summary>
     public DefaultIdType? SubAccountOf { get; private set; } // Hierarchical structure
 
     /// <summary>
     /// The USOA (Uniform System of Accounts) category, e.g., Production, Transmission, Distribution.
+    /// Example: "Production" for power generation costs, "Distribution" for delivery expenses.
     /// </summary>
     public string UsoaCategory { get; private set; } // Production, Transmission, Distribution
 
     /// <summary>
-    /// Whether the account is active and can be used in postings. Defaults to true.
+    /// Whether the account is active and can be used in postings. Default: true.
+    /// Used to retire accounts without deleting historical data.
     /// </summary>
     public bool IsActive { get; private set; }
     
     // Additional fields for enhanced functionality
     /// <summary>
     /// Optional dotted parent code path for hierarchy representation.
+    /// Example: "100.101" for cash under current assets. Max length: 16.
     /// </summary>
     public string ParentCode { get; private set; }
 
     /// <summary>
-    /// Current balance of the account. Defaults to 0 and updated via <see cref="UpdateBalance"/>.
+    /// Current balance of the account. Default: 0.00. Updated via UpdateBalance method.
+    /// Example: 150000.00 for cash account balance.
     /// </summary>
     public decimal Balance { get; private set; }
 
     /// <summary>
     /// Whether the account is a control account (summary) that disallows direct postings.
+    /// Default: false. Control accounts roll up sub-account balances.
     /// </summary>
     public bool IsControlAccount { get; private set; }
 
     /// <summary>
     /// Normal balance side, e.g., "Debit" or "Credit". Used for trial balance interpretation.
+    /// Example: "Debit" for assets/expenses, "Credit" for liabilities/revenues.
     /// </summary>
     public string NormalBalance { get; private set; } // "Debit" or "Credit"
 
     /// <summary>
-    /// Derived hierarchical depth computed from <see cref="ParentCode"/>.
+    /// Derived hierarchical depth computed from ParentCode.
+    /// Example: 0 for top-level, 1 for first sub-level, etc.
     /// </summary>
     public int AccountLevel { get; private set; }
 
     /// <summary>
-    /// Whether direct postings are allowed. Set to <c>!IsControlAccount</c> by convention.
+    /// Whether direct postings are allowed. Set to !IsControlAccount by convention.
+    /// Default: true for detail accounts, false for control accounts.
     /// </summary>
     public bool AllowDirectPosting { get; private set; }
 
     /// <summary>
     /// Indicates if this account conforms to USOA standards.
+    /// Default: true for regulatory compliance. Example: FERC account classifications.
     /// </summary>
     public bool IsUsoaCompliant { get; private set; }
 
     /// <summary>
     /// Optional regulatory classification, e.g., FERC category text.
+    /// Example: "Electric Plant in Service", "Operating Revenues". Max length: 256.
     /// </summary>
     public string? RegulatoryClassification { get; private set; } // FERC classification
 

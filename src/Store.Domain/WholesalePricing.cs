@@ -1,14 +1,48 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Pricing tier tied to a wholesale contract for a specific grocery item.
-/// Defines quantity ranges, tier price and discount.
+/// Represents volume-based pricing tiers for wholesale contracts with specific grocery items and quantity ranges.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Apply volume-based pricing for wholesale customers.
-/// - Define effective/expiry dates for special pricing periods.
+/// - Define tiered pricing structures for wholesale customers based on order quantities.
+/// - Support volume discounts and bulk pricing incentives for large orders.
+/// - Enable contract-specific pricing that overrides standard wholesale rates.
+/// - Manage time-limited promotional pricing for wholesale customers.
+/// - Support quantity break pricing with minimum and maximum quantity thresholds.
+/// - Track pricing effectiveness and volume commitment compliance.
+/// - Enable competitive pricing strategies for key wholesale accounts.
+/// - Support seasonal or event-based wholesale pricing adjustments.
+/// 
+/// Default values:
+/// - WholesaleContractId: required parent contract reference
+/// - GroceryItemId: required item reference for pricing
+/// - MinimumQuantity: required minimum order quantity (example: 100 units)
+/// - MaximumQuantity: optional maximum quantity for tier (example: 999 units)
+/// - UnitPrice: required wholesale price per unit (example: 2.50)
+/// - DiscountPercentage: optional additional discount (example: 5.0 for 5% off)
+/// - EffectiveDate: required pricing start date (example: 2025-10-01)
+/// - ExpiryDate: optional pricing end date (example: 2025-12-31)
+/// - IsActive: true (pricing is active by default)
+/// - Currency: "USD" (default currency unless specified)
+/// 
+/// Business rules:
+/// - MinimumQuantity must be positive and less than MaximumQuantity
+/// - UnitPrice must be positive
+/// - DiscountPercentage must be between 0 and 100
+/// - EffectiveDate cannot be in the past for new pricing
+/// - ExpiryDate must be after EffectiveDate when specified
+/// - Cannot have overlapping quantity ranges for same item and contract
+/// - Contract must be active to create new pricing tiers
+/// - Pricing tiers should not conflict with existing active pricing
+/// - Volume discounts should be progressive (higher quantities = better pricing)
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.WholesalePricingCreated"/>
+/// <seealso cref="Store.Domain.Events.WholesalePricingUpdated"/>
+/// <seealso cref="Store.Domain.Events.WholesalePricingActivated"/>
+/// <seealso cref="Store.Domain.Events.WholesalePricingExpired"/>
+/// <seealso cref="Store.Domain.Exceptions.WholesalePricing.WholesalePricingNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.WholesalePricing.InvalidWholesalePricingRangeException"/>
 public sealed class WholesalePricing : AuditableEntity, IAggregateRoot
 {
     /// <summary>

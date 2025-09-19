@@ -3,12 +3,48 @@ using Accounting.Domain.Events.Member;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a utility member/customer account with service location, contact info, rate schedule, and balance.
+/// Represents a utility member/customer account with service location, contact information, billing details, and account lifecycle management.
 /// </summary>
 /// <remarks>
-/// Tracks account status lifecycle, assigned meter, balance, and membership date. Defaults: <see cref="IsActive"/> true on create,
-/// <see cref="CurrentBalance"/> 0, <see cref="AccountStatus"/> "Active" unless provided.
+/// Use cases:
+/// - Manage utility member accounts for electric cooperative or municipal utility operations.
+/// - Track service locations and meter assignments for accurate billing and service delivery.
+/// - Maintain member contact information for communications and emergency notifications.
+/// - Support account lifecycle management (activation, suspension, disconnection, reconnection).
+/// - Enable rate schedule assignments and billing calculations based on member classifications.
+/// - Track account balances, payment history, and credit management.
+/// - Support regulatory reporting for member demographics and service statistics.
+/// - Manage member deposits, connection fees, and patronage capital allocations.
+/// 
+/// Default values:
+/// - MemberNumber: required unique identifier (example: "M-2025-001234")
+/// - MemberName: required member name (example: "John Smith" or "ABC Manufacturing Inc.")
+/// - ServiceAddress: required service location (example: "123 Main St, Anytown, ST 12345")
+/// - MailingAddress: optional separate mailing address (example: "PO Box 456, Anytown, ST 12345")
+/// - ContactInfo: optional general contact information (example: "phone: 555-1234, email: john@example.com")
+/// - AccountStatus: "Active" (new accounts start as active)
+/// - MeterId: null (meter assigned separately after account creation)
+/// - RateScheduleId: null (rate schedule assigned based on service type and usage)
+/// - CurrentBalance: 0.00 (no initial balance)
+/// - IsActive: true (accounts are active by default)
+/// - MembershipDate: account creation date
+/// 
+/// Business rules:
+/// - MemberNumber must be unique within the utility system
+/// - Service address is required for utility service delivery
+/// - Account status controls billing and service availability
+/// - Cannot delete members with transaction history
+/// - Meter assignments must be validated for service location
+/// - Rate schedule changes require effective dating
+/// - Balance adjustments require proper authorization
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Member.MemberCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Member.MemberUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Member.MemberActivated"/>
+/// <seealso cref="Accounting.Domain.Events.Member.MemberDeactivated"/>
+/// <seealso cref="Accounting.Domain.Events.Member.MemberMeterAssigned"/>
+/// <seealso cref="Accounting.Domain.Events.Member.MemberRateScheduleChanged"/>
+/// <seealso cref="Accounting.Domain.Events.Member.MemberBalanceAdjusted"/>
 public class Member : AuditableEntity, IAggregateRoot
 {
     /// <summary>

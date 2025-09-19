@@ -132,7 +132,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
     }
 
     private Invoice(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
-        DateTime dueDate, DefaultIdType? ConsumptionId, decimal usageCharge, decimal basicServiceCharge,
+        DateTime dueDate, DefaultIdType? consumptionId, decimal usageCharge, decimal basicServiceCharge,
         decimal taxAmount, decimal otherCharges, decimal kWhUsed, string billingPeriod,
         decimal? lateFee = null, decimal? reconnectionFee = null, decimal? depositAmount = null,
         string? rateSchedule = null, decimal? demandCharge = null, string? description = null, string? notes = null)
@@ -142,7 +142,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
         MemberId = memberId;
         InvoiceDate = invoiceDate;
         DueDate = dueDate;
-        ConsumptionId = ConsumptionId;
+        ConsumptionId = consumptionId;
         UsageCharge = usageCharge;
         BasicServiceCharge = basicServiceCharge;
         TaxAmount = taxAmount;
@@ -167,7 +167,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
     /// Factory to create a new invoice with validation for required fields and non-negative charges.
     /// </summary>
     public static Invoice Create(string invoiceNumber, DefaultIdType memberId, DateTime invoiceDate,
-        DateTime dueDate, DefaultIdType? ConsumptionId, decimal usageCharge, decimal basicServiceCharge,
+        DateTime dueDate, DefaultIdType? consumptionId, decimal usageCharge, decimal basicServiceCharge,
         decimal taxAmount, decimal otherCharges, decimal kWhUsed, string billingPeriod,
         decimal? lateFee = null, decimal? reconnectionFee = null, decimal? depositAmount = null,
         string? rateSchedule = null, decimal? demandCharge = null, string? description = null, string? notes = null)
@@ -185,7 +185,7 @@ public class Invoice : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Due date cannot be before invoice date");
 
         return new Invoice(invoiceNumber, memberId, invoiceDate, dueDate,
-            ConsumptionId, usageCharge, basicServiceCharge, taxAmount, otherCharges, kWhUsed,
+            consumptionId, usageCharge, basicServiceCharge, taxAmount, otherCharges, kWhUsed,
             billingPeriod, lateFee, reconnectionFee, depositAmount, rateSchedule, demandCharge, description, notes);
     }
 

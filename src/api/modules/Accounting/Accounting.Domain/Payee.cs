@@ -3,11 +3,43 @@ using Accounting.Domain.Events.Payee;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a payee/vendor-like entity for expense payments, with default expense account mapping.
+/// Represents a payee/vendor entity for expense payments with default account mapping and tax identification.
 /// </summary>
 /// <remarks>
-/// Stores address, expense account code/name, TIN, and descriptive notes. Strings are trimmed; optional fields may be null.
+/// Use cases:
+/// - Manage vendor master data for accounts payable processing and expense tracking.
+/// - Map payees to default expense accounts for automated journal entry creation.
+/// - Track tax identification numbers (TIN/EIN) for 1099 reporting and tax compliance.
+/// - Support vendor lifecycle management with activation/deactivation capabilities.
+/// - Enable vendor address management for check printing and correspondence.
+/// - Facilitate expense categorization by linking payees to specific chart of accounts.
+/// - Support vendor performance tracking and payment history analysis.
+/// - Enable duplicate vendor prevention through code and TIN validation.
+/// 
+/// Default values:
+/// - PayeeCode: required unique identifier (example: "VEND001", "UTIL-ELEC")
+/// - Address: optional mailing address (example: "123 Vendor St, Business City, ST 12345")
+/// - ExpenseAccountCode: optional default account code (example: "5100" for office supplies)
+/// - ExpenseAccountName: optional account name (example: "Office Supplies Expense")
+/// - TIN: optional tax identification number (example: "12-3456789" for EIN)
+/// - IsActive: true (new payees are active by default)
+/// - Name: inherited payee name (example: "ABC Office Supply Company")
+/// - Description: inherited detailed description (example: "Primary office supply vendor")
+/// 
+/// Business rules:
+/// - PayeeCode must be unique within the system
+/// - TIN format should be validated for tax reporting compliance
+/// - Cannot deactivate payees with pending payments or recent transaction history
+/// - ExpenseAccountCode must exist in chart of accounts if specified
+/// - Address format should support check printing requirements
+/// - Duplicate TIN validation to prevent vendor duplication
+/// - Name changes require careful tracking for audit purposes
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Payee.PayeeCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Payee.PayeeUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Payee.PayeeActivated"/>
+/// <seealso cref="Accounting.Domain.Events.Payee.PayeeDeactivated"/>
+/// <seealso cref="Accounting.Domain.Events.Payee.PayeeAccountMappingChanged"/>
 public class Payee : AuditableEntity, IAggregateRoot
 {
     /// <summary>

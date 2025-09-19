@@ -8,45 +8,64 @@ namespace Store.Domain;
 /// Use cases:
 /// - Define per-item pricing for a price list.
 /// - Support quantity-based pricing or discounts.
+/// - Enable tiered pricing strategies (bulk discounts).
+/// - Override default item pricing for specific customer segments.
+/// - Implement promotional pricing with effective date ranges.
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.PriceListItemCreated"/>
+/// <seealso cref="Store.Domain.Events.PriceListItemUpdated"/>
 public sealed class PriceListItem : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Parent price list id.
+    /// Links to <see cref="PriceList"/> for pricing organization.
     /// </summary>
     public DefaultIdType PriceListId { get; private set; }
 
     /// <summary>
     /// Grocery item id this price applies to.
+    /// Links to <see cref="GroceryItem"/> for product pricing.
     /// </summary>
     public DefaultIdType GroceryItemId { get; private set; }
 
     /// <summary>
-    /// Base price for the item. Must be >= 0.
+    /// Base price for the item. Must be &gt;= 0.
+    /// Example: 12.99 for premium pricing, 8.99 for wholesale.
     /// </summary>
     public decimal Price { get; private set; }
 
     /// <summary>
     /// Optional discount percentage (0-100). Example: 10 for 10% off.
+    /// Applied to the base price for final customer pricing.
     /// </summary>
     public decimal? DiscountPercentage { get; private set; }
 
     /// <summary>
-    /// Optional minimum quantity for the price to be effective. Must be >= 0.
+    /// Optional minimum quantity for the price to be effective. Must be &gt;= 0.
+    /// Example: 12 for case pricing, 50 for bulk discounts.
     /// </summary>
     public decimal? MinimumQuantity { get; private set; }
 
     /// <summary>
-    /// Optional maximum quantity for the price to be effective. Must be >= 0.
+    /// Optional maximum quantity for the price to be effective. Must be &gt;= 0.
+    /// Example: 100 for capped bulk pricing tiers.
     /// </summary>
     public decimal? MaximumQuantity { get; private set; }
 
     /// <summary>
     /// Indicates if the price list item is active.
+    /// Default: true. Used to disable pricing without deletion.
     /// </summary>
     public bool IsActive { get; private set; } = true;
     
+    /// <summary>
+    /// Navigation property to the parent price list.
+    /// </summary>
     public PriceList PriceList { get; private set; } = default!;
+
+    /// <summary>
+    /// Navigation property to the grocery item.
+    /// </summary>
     public GroceryItem GroceryItem { get; private set; } = default!;
 
     private PriceListItem() { }
@@ -81,6 +100,15 @@ public sealed class PriceListItem : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new PriceListItemCreated { PriceListItem = this });
     }
 
+    /// <summary>
+    /// Factory to create a new price list item.
+    /// </summary>
+    /// <param name="priceListId">Parent price list identifier.</param>
+    /// <param name="groceryItemId">Grocery item identifier.</param>
+    /// <param name="price">Base price for the item. Must be &gt;= 0.</param>
+    /// <param name="discountPercentage">Optional discount percentage (0-100).</param>
+    /// <param name="minimumQuantity">Optional minimum quantity for pricing tier.</param>
+    /// <param name="maximumQuantity">Optional maximum quantity for pricing tier.</param>
     public static PriceListItem Create(
         DefaultIdType priceListId,
         DefaultIdType groceryItemId,
@@ -99,6 +127,11 @@ public sealed class PriceListItem : AuditableEntity, IAggregateRoot
             maximumQuantity);
     }
 
+    /// <summary>
+    /// Updates the pricing for this item.
+    /// </summary>
+    /// <param name="price">New base price.</param>
+    /// <param name="discountPercentage">New discount percentage.</param>
     public PriceListItem UpdatePrice(decimal price, decimal? discountPercentage = null)
     {
         Price = price;
@@ -107,6 +140,10 @@ public sealed class PriceListItem : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Calculates the effective price after applying any discount.
+    /// </summary>
+    /// <returns>Final price after discount calculations.</returns>
     public decimal GetEffectivePrice()
     {
         return DiscountPercentage.HasValue 

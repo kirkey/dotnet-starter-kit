@@ -1,14 +1,43 @@
-
-
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a cooperative's patronage capital allocation and retirement for a member in a fiscal year.
+/// Represents a cooperative's patronage capital allocation and retirement for a member in a specific fiscal year.
 /// </summary>
 /// <remarks>
-/// Tracks amounts allocated and retired, and status transitions (Allocated, PartiallyRetired, Retired).
-/// Defaults: <see cref="AmountRetired"/> starts at 0; <see cref="Status"/> starts as "Allocated".
+/// Use cases:
+/// - Allocate patronage capital to cooperative members based on their annual patronage (purchases/usage).
+/// - Track capital credits accumulated by members over multiple years for equity accounting.
+/// - Manage patronage capital retirements when the cooperative returns capital to members.
+/// - Support cooperative financial reporting and member equity calculations.
+/// - Enable regulatory compliance for cooperative capital structure requirements.
+/// - Track partial retirements over multiple years based on board retirement policies.
+/// - Generate member capital credit statements and retirement notices.
+/// - Support estate settlements and membership transfers with capital credit tracking.
+/// 
+/// Default values:
+/// - MemberId: required reference to member receiving the allocation
+/// - FiscalYear: required year for the allocation (example: 2025)
+/// - AmountAllocated: required positive amount allocated (example: 1250.00 based on annual patronage)
+/// - AmountRetired: 0.00 (starts with no retirements)
+/// - Status: "Allocated" (new allocations start as allocated)
+/// - AllocationDate: date when allocation is recorded (typically end of fiscal year)
+/// - RetirementDate: null (set when retirement begins)
+/// - RetirementMethod: null (set when retirement policy is applied)
+/// 
+/// Business rules:
+/// - AmountAllocated must be positive
+/// - AmountRetired cannot exceed AmountAllocated
+/// - FiscalYear must be valid (not future year)
+/// - Cannot retire capital before board approval
+/// - Retirement follows FIFO (first allocated, first retired) or board policy
+/// - Member must be active to receive new allocations
+/// - Estate transfers require proper documentation
+/// - Tax reporting required for allocations and retirements
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.PatronageCapital.PatronageCapitalAllocated"/>
+/// <seealso cref="Accounting.Domain.Events.PatronageCapital.PatronageCapitalRetired"/>
+/// <seealso cref="Accounting.Domain.Events.PatronageCapital.PatronageCapitalPartiallyRetired"/>
+/// <seealso cref="Accounting.Domain.Events.PatronageCapital.PatronageCapitalTransferred"/>
 public class PatronageCapital : AuditableEntity, IAggregateRoot
 {
     /// <summary>

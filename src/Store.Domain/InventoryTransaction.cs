@@ -1,14 +1,50 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Records a single inventory movement affecting stock levels.
-/// Includes type (IN/OUT), reason, quantities and cost impact.
+/// Represents a single inventory movement transaction with comprehensive tracking for stock level changes and financial impact.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Track purchases, sales, adjustments and transfers.
-/// - Audit stock changes and compute financial impact.
+/// - Record all inventory movements including purchases, sales, adjustments, and transfers.
+/// - Maintain detailed audit trail for inventory changes with reasons and authorization.
+/// - Calculate financial impact of inventory transactions for cost accounting.
+/// - Support perpetual inventory tracking with real-time stock level updates.
+/// - Enable inventory reconciliation and variance analysis for discrepancy investigation.
+/// - Track transaction sources for integration with POS, procurement, and warehouse systems.
+/// - Support regulatory compliance with detailed inventory movement documentation.
+/// - Generate inventory reports for management analysis and operational planning.
+/// 
+/// Default values:
+/// - TransactionNumber: required unique identifier (example: "TXN-2025-09-001")
+/// - GroceryItemId: required item reference for stock movement
+/// - WarehouseId: optional warehouse location (example: main warehouse ID)
+/// - WarehouseLocationId: optional specific location (example: aisle, bin)
+/// - TransactionType: required movement type (example: "IN", "OUT", "ADJUSTMENT")
+/// - TransactionDate: required transaction date (example: 2025-09-19)
+/// - Quantity: required quantity moved (positive for IN, negative for OUT)
+/// - UnitCost: required cost per unit for financial tracking
+/// - TotalCost: calculated as Quantity × UnitCost
+/// - Reason: required reason code (example: "PURCHASE", "SALE", "DAMAGED")
+/// - ReferenceNumber: optional source document (example: PO number, invoice number)
+/// 
+/// Business rules:
+/// - TransactionNumber must be unique within the system
+/// - Quantity cannot be zero (must be positive or negative movement)
+/// - UnitCost must be non-negative for cost tracking
+/// - Transaction date cannot be in the future
+/// - Reason must be from approved reason code list
+/// - OUT transactions cannot exceed available inventory
+/// - Warehouse must be active for new transactions
+/// - Cost adjustments require proper authorization
+/// - Transaction reversals create offsetting entries
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.InventoryTransactionCreated"/>
+/// <seealso cref="Store.Domain.Events.InventoryTransactionUpdated"/>
+/// <seealso cref="Store.Domain.Events.InventoryTransactionReversed"/>
+/// <seealso cref="Store.Domain.Events.InventoryStockUpdated"/>
+/// <seealso cref="Store.Domain.Exceptions.InventoryTransaction.InventoryTransactionNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.InventoryTransaction.InsufficientInventoryException"/>
+/// <seealso cref="Store.Domain.Exceptions.InventoryTransaction.InvalidInventoryTransactionException"/>
 public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
 {
     /// <summary>

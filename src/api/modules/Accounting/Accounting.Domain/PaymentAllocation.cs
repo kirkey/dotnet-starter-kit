@@ -1,13 +1,36 @@
-
-
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents an allocation of a payment to a specific invoice.
+/// Represents an allocation of a payment amount to a specific invoice for accounts receivable management.
 /// </summary>
 /// <remarks>
-/// Used to split a single payment across multiple invoices. Amount must be positive.
+/// Use cases:
+/// - Split a single payment across multiple outstanding invoices for the same customer.
+/// - Apply partial payments to specific invoices based on customer preferences or aging.
+/// - Track payment application for accounts receivable aging and collection reporting.
+/// - Support payment reconciliation and dispute resolution with detailed allocation records.
+/// - Enable automatic payment allocation based on business rules (oldest first, by invoice number).
+/// - Handle overpayments by allocating exact amounts and tracking remaining credits.
+/// - Support payment reversals and reallocation for billing adjustments.
+/// 
+/// Default values:
+/// - PaymentId: required reference to parent payment entity
+/// - InvoiceId: required reference to target invoice being paid
+/// - Amount: required positive decimal amount (example: 150.00 for partial payment)
+/// - Notes: optional allocation notes (example: "Applied to oldest outstanding balance")
+/// - AllocationDate: system timestamp when allocation is created
+/// 
+/// Business rules:
+/// - Amount must be positive (cannot allocate negative amounts)
+/// - Total allocations for a payment cannot exceed the payment amount
+/// - Cannot allocate to an invoice that is already fully paid
+/// - Allocation creates a credit on the target invoice
+/// - Cannot delete allocation after invoice is marked as paid
+/// - Must maintain referential integrity with payment and invoice entities
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Payment.PaymentAllocated"/>
+/// <seealso cref="Accounting.Domain.Events.Payment.PaymentAllocationReversed"/>
+/// <seealso cref="Accounting.Domain.Events.Invoice.InvoicePaymentApplied"/>
 public class PaymentAllocation : AuditableEntity, IAggregateRoot
 {
     /// <summary>

@@ -1,18 +1,34 @@
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents an accrual entry in the accounting domain.
+/// Represents an accrual entry for recognizing expenses or revenues before associated cash movements occur.
 /// </summary>
 /// <remarks>
-/// An accrual records an obligation or revenue recognized before the associated
-/// cash movement happens. This aggregate enforces domain invariants such as non-empty
-/// accrual numbers, positive amounts and immutability after reversal.
-///
-/// Use <see cref="Create(string, DateTime, decimal, string)"/> to construct a new instance
-/// and <see cref="Update(string?, DateTime?, decimal?, string?)"/> to change mutable fields
-/// before a reversal. Once <see cref="Reverse(DateTime)"/> is called the accrual becomes
-/// immutable for updates.
+/// Use cases:
+/// - Record accrued expenses at the period end (utilities, interest, wages payable).
+/// - Recognize unbilled revenue for services provided but not yet invoiced.
+/// - Support matching principle by recording expenses in the period they occur.
+/// - Enable accurate financial reporting with proper period cutoffs.
+/// - Track reversing entries to eliminate accruals in subsequent periods.
+/// - Maintain audit trail for accrual adjustments and reversals.
+/// 
+/// Default values:
+/// - AccrualNumber: required, trimmed, max 50 characters (example: "ACR-2025-001")
+/// - AccrualDate: required accounting date (example: 2025-09-30 for month-end accrual)
+/// - Amount: required positive decimal (example: 15000.00 for accrued utilities)
+/// - Description: optional, trimmed, max 200 characters (example: "Accrued electricity expense for September")
+/// - IsReversed: false (accruals can be reversed later)
+/// - ReversalDate: null (set when accrual is reversed)
+/// 
+/// Business rules:
+/// - Amount must be positive (use negative amounts for reversals)
+/// - Once reversed, accrual becomes immutable
+/// - AccrualNumber must be unique within the system
+/// - ReversalDate can only be set when reversing an accrual
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Accrual.AccrualCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Accrual.AccrualUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Accrual.AccrualReversed"/>
 public class Accrual : AuditableEntity, IAggregateRoot
 {
     private const int MaxAccrualNumberLength = 50;

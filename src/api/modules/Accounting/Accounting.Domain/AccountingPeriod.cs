@@ -6,10 +6,16 @@ namespace Accounting.Domain;
 /// Defines a fiscal accounting period (monthly, quarterly, yearly) used to group and control financial postings.
 /// </summary>
 /// <remarks>
-/// An <see cref="AccountingPeriod"/> establishes a start and end date for financial activity, tracks whether the
-/// period is closed to prevent further modification, and records metadata like fiscal year and period type.
-/// Defaults: <see cref="IsClosed"/> is false on creation; <see cref="IsAdjustmentPeriod"/> is false unless specified.
+/// Use cases:
+/// - Establish fiscal periods for financial reporting and compliance.
+/// - Control when transactions can be posted (open periods) vs historical periods (closed).
+/// - Support period-end closing procedures and adjustments.
+/// - Enable regulatory reporting by fiscal year and period type.
+/// - Maintain audit trail of period opening/closing activities.
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.AccountingPeriod.AccountingPeriodCreated"/>
+/// <seealso cref="Accounting.Domain.Events.AccountingPeriod.AccountingPeriodClosed"/>
+/// <seealso cref="Accounting.Domain.Events.AccountingPeriod.AccountingPeriodReopened"/>
 public class AccountingPeriod : AuditableEntity, IAggregateRoot
 {
     private const int MaxNameLength = 1024; // aligns with AuditableEntity.Name VARCHAR(1024)
@@ -26,35 +32,38 @@ public class AccountingPeriod : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Inclusive start date of the accounting period.
+    /// Example: 2025-09-01 for September 2025 monthly period.
     /// </summary>
     public DateTime StartDate { get; private set; }
 
     /// <summary>
-    /// Inclusive end date of the accounting period. Must be after <see cref="StartDate"/>.
+    /// Inclusive end date of the accounting period. Must be after StartDate.
+    /// Example: 2025-09-30 for September 2025 monthly period.
     /// </summary>
     public DateTime EndDate { get; private set; }
 
     /// <summary>
     /// Whether the period has been closed to postings and updates.
+    /// Default: false. Becomes true after calling Close() method.
     /// </summary>
-    /// <remarks>Defaults to <c>false</c> on creation and becomes <c>true</c> after calling <see cref="Close"/>.</remarks>
     public bool IsClosed { get; private set; }
 
     /// <summary>
     /// Indicates if this is an adjustment period (e.g., period 13).
+    /// Default: false. Set to true for year-end adjustment periods.
     /// </summary>
-    /// <remarks>Defaults to <c>false</c> unless specified.</remarks>
     public bool IsAdjustmentPeriod { get; private set; }
 
     /// <summary>
     /// The fiscal year the period belongs to. Enforced to be within a reasonable range (1900-2100).
+    /// Example: 2025 for fiscal year 2025.
     /// </summary>
     public int FiscalYear { get; private set; }
 
     /// <summary>
     /// The period granularity, e.g. "Monthly", "Quarterly", or "Yearly".
+    /// Example: "Monthly" for monthly reporting cycles, "Quarterly" for quarterly periods.
     /// </summary>
-    /// <remarks>Trimmed and validated against <see cref="AllowedPeriodTypes"/>. Defaults to empty for EF constructor.</remarks>
     public string PeriodType { get; private set; } = string.Empty; // Monthly, Quarterly, Yearly
 
     // Parameterless constructor for EF Core

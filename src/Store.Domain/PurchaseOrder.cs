@@ -1,14 +1,51 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Represents a purchase order sent to a supplier to procure stock.
-/// Tracks items, delivery dates, and totals.
+/// Represents a purchase order sent to a supplier to procure inventory with comprehensive order lifecycle management.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Create orders to suppliers and track receipt of goods.
-/// - Compute totals, taxes, discounts, and delivery status.
+/// - Create purchase orders to suppliers for inventory replenishment and new product procurement.
+/// - Track order status from draft through delivered with approval workflows.
+/// - Manage expected vs actual delivery dates for supply chain planning.
+/// - Calculate order totals including taxes, discounts, and shipping costs.
+/// - Support partial deliveries and back-order management for incomplete shipments.
+/// - Enable three-way matching (PO, receipt, invoice) for accounts payable processing.
+/// - Track supplier performance metrics including on-time delivery and quality.
+/// - Support drop-shipping and direct-to-customer fulfillment scenarios.
+/// 
+/// Default values:
+/// - OrderNumber: required unique identifier (example: "PO-2025-09-001")
+/// - SupplierId: required supplier reference for procurement
+/// - OrderDate: required order placement date (example: 2025-09-19)
+/// - ExpectedDeliveryDate: optional expected delivery (example: 2025-09-26)
+/// - Status: "Draft" (new orders start as draft until submitted)
+/// - TotalAmount: 0.00 (calculated from order items)
+/// - TaxAmount: 0.00 (calculated based on tax rates)
+/// - DiscountAmount: 0.00 (applied discounts and rebates)
+/// - ShippingCost: 0.00 (transportation and handling charges)
+/// - DeliveredDate: null (set when order is received)
+/// - IsFullyDelivered: false (true when all items received)
+/// 
+/// Business rules:
+/// - OrderNumber must be unique within the system
+/// - Cannot modify submitted orders without proper authorization
+/// - Expected delivery date should be after order date
+/// - Total amount must equal sum of line items plus tax and shipping
+/// - Cannot delete orders with associated receipts or invoices
+/// - Partial deliveries update item received quantities
+/// - Supplier must be active to create new orders
+/// - Order approval required above specified dollar thresholds
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.PurchaseOrderCreated"/>
+/// <seealso cref="Store.Domain.Events.PurchaseOrderUpdated"/>
+/// <seealso cref="Store.Domain.Events.PurchaseOrderSubmitted"/>
+/// <seealso cref="Store.Domain.Events.PurchaseOrderApproved"/>
+/// <seealso cref="Store.Domain.Events.PurchaseOrderDelivered"/>
+/// <seealso cref="Store.Domain.Events.PurchaseOrderCancelled"/>
+/// <seealso cref="Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderCannotBeModifiedException"/>
+/// <seealso cref="Store.Domain.Exceptions.PurchaseOrder.InvalidPurchaseOrderStatusException"/>
 public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 {
     /// <summary>

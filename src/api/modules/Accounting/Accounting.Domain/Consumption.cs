@@ -3,12 +3,45 @@ using Accounting.Domain.Events.Consumption;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Records a meter's consumption snapshot for a billing period, including readings, usage, and validation metadata.
+/// Records a meter's consumption snapshot for a billing period with automated usage calculations and validation.
 /// </summary>
 /// <remarks>
-/// Calculates <see cref="KWhUsed"/> from current/previous readings and multiplier and flags <see cref="IsValidReading"/>.
-/// Defaults: <see cref="Multiplier"/> defaults to 1 when null or non-positive; strings are trimmed and length-limited.
+/// Use cases:
+/// - Capture meter readings for utility billing and consumption tracking.
+/// - Calculate kWh usage automatically from current and previous readings with CT/PT multipliers.
+/// - Support multiple reading types (actual, estimated, customer-read) for flexible data collection.
+/// - Validate reading sequences to detect meter rollover, tampering, or data entry errors.
+/// - Enable billing period organization for monthly, bi-monthly, or quarterly billing cycles.
+/// - Support automated meter reading (AMR) and advanced metering infrastructure (AMI) integration.
+/// - Track reading sources for audit trails and data quality management.
+/// - Handle estimated readings with reason codes for billing transparency.
+/// 
+/// Default values:
+/// - MeterId: required meter reference (links to physical meter)
+/// - ReadingDate: required timestamp when reading was taken (example: 2025-09-15 10:30:00)
+/// - CurrentReading: current meter register value (example: 45678.5 kWh)
+/// - PreviousReading: prior reading for usage calculation (example: 44523.2 kWh)
+/// - KWhUsed: calculated as (Current - Previous) × Multiplier (example: 1155.3 kWh)
+/// - BillingPeriod: human-readable period (example: "2025-09", "Sep-2025")
+/// - ReadingType: "Actual" (default), "Estimated", or "Customer Read"
+/// - Multiplier: 1.0 (default for residential), higher for CT/PT commercial meters
+/// - IsValidReading: true if current >= previous (detects rollover/errors)
+/// - ReadingSource: "Manual", "AMR", "AMI", or null
+/// 
+/// Business rules:
+/// - Current and previous readings must be non-negative
+/// - Multiplier must be positive (defaults to 1.0 if invalid)
+/// - IsValidReading flags potential meter rollover or data errors
+/// - Estimated readings require reason documentation
+/// - Reading sequence validation prevents billing errors
+/// - CT/PT multipliers ensure accurate commercial billing
+/// - Billing period format should be consistent for reporting
+/// - Reading sources enable data quality tracking
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionMarkedAsEstimated"/>
+/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionValidated"/>
 public class Consumption : AuditableEntity, IAggregateRoot
 {
     private const int MaxBillingPeriodLength = 64;

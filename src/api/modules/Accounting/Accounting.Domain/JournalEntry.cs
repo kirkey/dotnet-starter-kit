@@ -6,59 +6,78 @@ namespace Accounting.Domain;
 /// Represents a journal entry grouping one or more debit/credit lines for posting to the general ledger.
 /// </summary>
 /// <remarks>
-/// Tracks posting status, approval workflow, and ensures the entry is balanced before posting.
-/// Defaults: <see cref="IsPosted"/> is false; <see cref="ApprovalStatus"/> starts as "Pending".
+/// Use cases:
+/// - Record double-entry accounting transactions with balanced debits and credits.
+/// - Support approval workflow before posting to general ledger.
+/// - Track source systems and reference documents for audit trails.
+/// - Enable period-based accounting and financial reporting.
+/// - Maintain transaction integrity with validation rules.
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryCreated"/>
+/// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryPosted"/>
+/// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryApproved"/>
+/// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryRejected"/>
 public class JournalEntry : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Effective date of the journal entry.
+    /// Example: 2025-09-19 for transactions occurring on this date.
     /// </summary>
     public DateTime Date { get; private set; }
 
     /// <summary>
     /// External reference or document number.
+    /// Example: "INV-2025-001", "CHECK-12345". Used for cross-referencing source documents.
     /// </summary>
     public string ReferenceNumber { get; private set; }
 
     /// <summary>
     /// Source system or module that created the entry.
+    /// Example: "BillingSystem", "PayrollModule", "ManualEntry". Used for audit and reconciliation.
     /// </summary>
     public string Source { get; private set; }
 
     /// <summary>
     /// Indicates whether the entry has been posted to the general ledger.
+    /// Default: false. Once posted, the entry becomes immutable.
     /// </summary>
     public bool IsPosted { get; private set; }
 
     /// <summary>
     /// Optional accounting period identifier to which this entry belongs.
+    /// Example: links to monthly/quarterly accounting periods for reporting.
     /// </summary>
     public DefaultIdType? PeriodId { get; private set; }
 
     /// <summary>
     /// Original amount for reference or control purposes; not used for balancing.
+    /// Example: 1500.00 for the original invoice amount before adjustments.
     /// </summary>
     public decimal OriginalAmount { get; private set; }
     
     private readonly List<JournalEntryLine> _lines = new();
     /// <summary>
     /// The debit/credit lines that make up this journal entry.
+    /// Must be balanced (total debits = total credits) before posting.
     /// </summary>
     public IReadOnlyCollection<JournalEntryLine> Lines => _lines.AsReadOnly();
     
     /// <summary>
     /// Approval state: Pending, Approved, or Rejected.
+    /// Default: "Pending". Must be approved before posting to GL.
     /// </summary>
     public string ApprovalStatus { get; private set; } // Pending, Approved, Rejected
 
     /// <summary>
     /// Approver identifier/name when approved or rejected.
+    /// Example: "john.doe", "finance.manager". Set during approval workflow.
     /// </summary>
     public string? ApprovedBy { get; private set; }
 
     /// <summary>
     /// Date/time when approved or rejected.
+    /// Example: 2025-09-19T10:30:00Z. Set during approval workflow.
     /// </summary>
     public DateTime? ApprovedDate { get; private set; }
 

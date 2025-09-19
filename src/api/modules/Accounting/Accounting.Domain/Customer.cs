@@ -3,12 +3,35 @@ using Accounting.Domain.Events.Customer;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a customer account for billing/accounts receivable, including contact details, terms, and credit control.
+/// Represents a customer account for billing, account receivable management, and credit control operations.
 /// </summary>
 /// <remarks>
-/// Tracks balance and credit limit for credit checks and supports activation/deactivation lifecycle.
-/// Defaults: <see cref="IsActive"/> true on creation via factory, <see cref="CurrentBalance"/> 0, <see cref="CreditLimit"/> as provided.
+/// Use cases:
+/// - Manage customer master data for billing and invoicing processes.
+/// - Track accounts receivable balances and payment histories.
+/// - Implement credit control with credit limits and balance monitoring.
+/// - Support customer lifecycle management (activation/deactivation).
+/// - Enable customer segmentation and revenue account mapping.
+/// - Maintain regulatory compliance with tax identification tracking.
+/// - Process customer payments and balance adjustments.
+/// - Generate customer statements and aging reports.
+/// 
+/// Default values:
+/// - IsActive: true (new customers are active by default)
+/// - CurrentBalance: 0.00 (no outstanding balance initially)
+/// - CreditLimit: as specified during creation (no default limit)
+/// - Terms: null (payment terms to be specified)
+/// - ContactPerson: null (optional contact information)
+/// - Email: null (optional email address)
+/// - Address: null (optional service address)
+/// - BillingAddress: null (optional separate billing address)
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Customer.CustomerCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Customer.CustomerUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Customer.CustomerActivated"/>
+/// <seealso cref="Accounting.Domain.Events.Customer.CustomerDeactivated"/>
+/// <seealso cref="Accounting.Domain.Events.Customer.CustomerCreditLimitChanged"/>
+/// <seealso cref="Accounting.Domain.Events.Customer.CustomerBalanceUpdated"/>
 public class Customer : AuditableEntity, IAggregateRoot
 {
     private const int MaxCustomerCodeLength = 16;
@@ -25,67 +48,93 @@ public class Customer : AuditableEntity, IAggregateRoot
     private const int MaxNotesLength = 1000;
 
     /// <summary>
-    /// Unique external code for the customer, trimmed and length-limited.
+    /// Unique external identifier for the customer account.
+    /// Example: "CUST001", "ABC-CORP", "12345" for customer reference systems.
+    /// Max length: 16 characters. Must be unique across all customers.
     /// </summary>
     public string CustomerCode { get; private set; } = string.Empty;
 
     /// <summary>
-    /// Primary physical or service address.
+    /// Primary service or physical address for the customer.
+    /// Example: "123 Main St, Suite 100, Anytown, ST 12345" for service location.
+    /// Max length: 500 characters. Default: null (optional).
     /// </summary>
     public string? Address { get; private set; }
 
     /// <summary>
-    /// Billing address if different from the service address.
+    /// Billing address if different from the primary service address.
+    /// Example: "PO Box 9876, Billing Dept, Anytown, ST 12345" for separate billing.
+    /// Max length: 500 characters. Default: null (uses service address if not specified).
     /// </summary>
     public string? BillingAddress { get; private set; }
 
     /// <summary>
-    /// Customer contact person name.
+    /// Primary contact person name for customer communications.
+    /// Example: "John Smith" or "Jane Doe, Accounting Manager" for direct contact.
+    /// Max length: 256 characters. Default: null (optional contact information).
     /// </summary>
     public string? ContactPerson { get; private set; }
 
     /// <summary>
-    /// Customer email address.
+    /// Primary email address for customer communications and billing.
+    /// Example: "billing@customer.com" or "john.smith@company.com" for notifications.
+    /// Max length: 256 characters. Default: null (optional email contact).
     /// </summary>
     public string? Email { get; private set; }
 
     /// <summary>
-    /// Payment terms (e.g., Net 30).
+    /// Payment terms and conditions for the customer account.
+    /// Example: "Net 30" for 30-day payment terms, "Due on Receipt" for immediate payment.
+    /// Max length: 100 characters. Default: null (to be specified per customer).
     /// </summary>
     public string? Terms { get; private set; }
 
     /// <summary>
-    /// Default revenue account code for invoicing.
+    /// Default revenue account code used for customer invoicing and revenue recognition.
+    /// Example: "4010" for product sales, "4020" for service revenue accounts.
+    /// Max length: 16 characters. Links to Chart of Accounts for revenue posting.
     /// </summary>
     public string? RevenueAccountCode { get; private set; }
 
     /// <summary>
-    /// Default revenue account name for invoicing.
+    /// Default revenue account name corresponding to the revenue account code.
+    /// Example: "Product Sales Revenue", "Service Revenue" for revenue classification.
+    /// Max length: 256 characters. Provides readable description of revenue account.
     /// </summary>
     public string? RevenueAccountName { get; private set; }
 
     /// <summary>
-    /// Tax identification number (TIN/VAT) for regulatory purposes.
+    /// Tax identification number (TIN/VAT/GST) for regulatory and tax reporting.
+    /// Example: "12-3456789" for US TIN, "GB123456789" for UK VAT number.
+    /// Max length: 50 characters. Required for business customers in many jurisdictions.
     /// </summary>
     public string? Tin { get; private set; }
 
     /// <summary>
-    /// Primary phone number.
+    /// Primary phone number for customer contact and support.
+    /// Example: "+1-555-123-4567" or "(555) 123-4567" for voice communications.
+    /// Max length: 50 characters. Default: null (optional contact method).
     /// </summary>
     public string? PhoneNumber { get; private set; }
 
     /// <summary>
-    /// Whether the customer account is active. Defaults to true at creation.
+    /// Indicates whether the customer account is active and can process transactions.
+    /// Example: true for active customers, false for suspended or closed accounts.
+    /// Default: true (new customers are active unless specifically deactivated).
     /// </summary>
     public bool IsActive { get; private set; }
 
     /// <summary>
-    /// Maximum allowed outstanding balance before new credit is restricted.
+    /// Maximum allowed outstanding balance before credit restrictions apply.
+    /// Example: 50000.00 for the $ 50K credit limit, 0.00 for cash-only customers.
+    /// Used for credit control and risk management. Must be non-negative.
     /// </summary>
     public decimal CreditLimit { get; private set; }
 
     /// <summary>
-    /// Current outstanding balance.
+    /// Current outstanding accounts receivable balance for the customer.
+    /// Example: 15750.50 for $15,750.50 in unpaid invoices.
+    /// Default: 0.00 (no outstanding balance initially). Updated via balance adjustments.
     /// </summary>
     public decimal CurrentBalance { get; private set; }
 
@@ -382,13 +431,12 @@ public class Customer : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Perform a credit check for a proposed order amount.
-    /// Throws when it would exceed the credit limit.
+    /// Throws when it would exceeds the credit limit.
     /// </summary>
     public bool CanProcessOrder(decimal orderAmount)
     {
-        if ((CurrentBalance + orderAmount) > CreditLimit)
-            throw new CustomerCreditLimitExceededException(Id, CurrentBalance, CreditLimit);
-            
-        return (CurrentBalance + orderAmount) <= CreditLimit;
+        return (CurrentBalance + orderAmount) > CreditLimit
+            ? throw new CustomerCreditLimitExceededException(Id, CurrentBalance, CreditLimit)
+            : (CurrentBalance + orderAmount) <= CreditLimit;
     }
 }

@@ -3,12 +3,48 @@ using Accounting.Domain.Events.Project;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a project for job costing and tracking of budget, actual costs, and revenues.
+/// Represents a project for job costing, budget tracking, and financial performance analysis across multiple cost centers.
 /// </summary>
 /// <remarks>
-/// Tracks lifecycle (Active, Completed, On Hold, Canceled), client/department metadata, and costing entries.
-/// Defaults: <see cref="Status"/> is "Active"; <see cref="ActualCost"/> and <see cref="ActualRevenue"/> start at 0.
+/// Use cases:
+/// - Track project costs and revenues for construction, maintenance, and capital improvement projects.
+/// - Support job costing with actual vs. budgeted cost analysis and variance reporting.
+/// - Enable project-based financial reporting for management and regulatory compliance.
+/// - Manage project lifecycle from initiation through completion with status tracking.
+/// - Support work order integration and labor/material cost allocation to projects.
+/// - Track project profitability and performance metrics for future planning.
+/// - Enable project budget control with spend authorization and approval workflows.
+/// - Support grant-funded projects with specific cost tracking and reporting requirements.
+/// 
+/// Default values:
+/// - StartDate: required project initiation date (example: 2025-09-01)
+/// - EndDate: null (set when project is completed or cancelled)
+/// - BudgetedAmount: required approved budget (example: 125000.00 for construction project)
+/// - Status: "Active" (new projects start as active)
+/// - ActualCost: 0.00 (accumulated as costs are posted to project)
+/// - ActualRevenue: 0.00 (accumulated as revenues are recognized)
+/// - Client: optional client or department name (example: "Engineering Department")
+/// - ProjectManager: optional manager assignment (example: "John Smith")
+/// - Name: inherited project name (example: "Substation Alpha Upgrade")
+/// - Description: inherited project description (example: "Replace aging substation equipment")
+/// 
+/// Business rules:
+/// - BudgetedAmount must be non-negative
+/// - EndDate must be after StartDate when specified
+/// - Cannot change status to Completed without setting EndDate
+/// - ActualCost cannot exceed approved budget without authorization
+/// - Cannot post costs to Cancelled or Completed projects
+/// - Project codes must be unique within the organization
+/// - Status changes require proper approval workflows
+/// - Budget changes require documented approval process
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectCompleted"/>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectCancelled"/>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectBudgetAdjusted"/>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectCostPosted"/>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectRevenueRecognized"/>
 public class Project : AuditableEntity, IAggregateRoot
 {
     /// <summary>

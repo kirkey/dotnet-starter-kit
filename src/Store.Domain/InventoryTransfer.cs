@@ -1,14 +1,53 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Represents a transfer of inventory between warehouses or locations.
-/// Tracks items, status and timing for the shipment.
+/// Represents an inventory transfer between warehouses or locations with comprehensive tracking and approval workflows.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Move stock from central warehouse to store locations.
-/// - Track transfer lifecycle: Pending -> Approved -> InTransit -> Completed.
+/// - Transfer inventory between central warehouse and store locations for replenishment.
+/// - Move stock from overstocked locations to understocked locations for optimization.
+/// - Support inter-company transfers between different business units or entities.
+/// - Track transfer lifecycle with approval workflows (Pending → Approved → InTransit → Completed).
+/// - Handle emergency stock transfers for critical inventory shortages.
+/// - Support seasonal inventory redistribution and store closures/openings.
+/// - Enable inventory balancing across multiple distribution centers.
+/// - Track transfer costs including transportation and handling expenses.
+/// 
+/// Default values:
+/// - TransferNumber: required unique identifier (example: "TRF-2025-09-001")
+/// - FromWarehouseId: required source warehouse reference
+/// - ToWarehouseId: required destination warehouse reference
+/// - Status: "Pending" (new transfers start pending approval)
+/// - TransferDate: required transfer initiation date (example: 2025-09-19)
+/// - ExpectedDate: optional expected completion (example: 2025-09-21)
+/// - CompletedDate: null (set when transfer is completed)
+/// - Reason: optional transfer justification (example: "Store replenishment", "Emergency stock")
+/// - TotalCost: 0.00 (calculated from transportation and handling)
+/// - IsUrgent: false (standard priority unless marked urgent)
+/// - ApprovedBy: null (set when transfer is approved)
+/// - ApprovedDate: null (set when approval occurs)
+/// 
+/// Business rules:
+/// - TransferNumber must be unique within the system
+/// - Cannot transfer between the same warehouse (source ≠ destination)
+/// - Cannot modify approved transfers without proper authorization
+/// - Expected date should be after transfer date when specified
+/// - Cannot complete transfers with unresolved discrepancies
+/// - Approval required for transfers above specified value thresholds
+/// - Source warehouse must have sufficient inventory for transfer
+/// - Both warehouses must be active to create transfers
+/// - Transfer completion updates inventory balances automatically
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.InventoryTransferCreated"/>
+/// <seealso cref="Store.Domain.Events.InventoryTransferUpdated"/>
+/// <seealso cref="Store.Domain.Events.InventoryTransferApproved"/>
+/// <seealso cref="Store.Domain.Events.InventoryTransferShipped"/>
+/// <seealso cref="Store.Domain.Events.InventoryTransferCompleted"/>
+/// <seealso cref="Store.Domain.Events.InventoryTransferCancelled"/>
+/// <seealso cref="Store.Domain.Exceptions.InventoryTransfer.InventoryTransferNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.InventoryTransfer.InventoryTransferCannotBeModifiedException"/>
+/// <seealso cref="Store.Domain.Exceptions.InventoryTransfer.InvalidInventoryTransferStatusException"/>
 public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 {
     /// <summary>

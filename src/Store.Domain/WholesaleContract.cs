@@ -1,13 +1,54 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Contract with a wholesale customer that defines pricing, minimums and payment terms.
+/// Represents a wholesale contract with a customer defining pricing, terms, and volume commitments for bulk purchasing.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Store negotiated terms for large customers.
-/// - Apply wholesale pricing rules via linked <see cref="WholesalePricings"/>.
+/// - Establish formal agreements with wholesale customers for volume purchasing and special pricing.
+/// - Define minimum order quantities and volume commitments for preferential pricing tiers.
+/// - Manage contract lifecycle from negotiation through renewal with automated expiration tracking.
+/// - Support tiered pricing structures based on purchase volumes and contract terms.
+/// - Enable contract-specific payment terms different from standard customer terms.
+/// - Track contract performance against committed volumes and pricing compliance.
+/// - Support contract amendments and renegotiation with proper approval workflows.
+/// - Generate contract reports for sales management and customer relationship analysis.
+/// 
+/// Default values:
+/// - ContractNumber: required unique identifier (example: "WC-2025-09-001")
+/// - CustomerId: required customer reference for contract assignment
+/// - StartDate: required contract effective date (example: 2025-10-01)
+/// - EndDate: required contract expiration date (example: 2026-09-30)
+/// - Status: "Draft" (new contracts start as draft until signed)
+/// - MinimumOrderQuantity: 0 (no minimum unless specified)
+/// - MinimumOrderValue: 0.00 (no minimum unless specified)
+/// - AnnualVolumeCommitment: null (optional volume guarantee)
+/// - DiscountPercentage: 0.00 (standard pricing unless discount applied)
+/// - PaymentTerms: "Net 30" (default payment terms)
+/// - IsActive: true (contracts are active when within date range)
+/// - RenewalNoticeDate: null (set for automatic renewal notifications)
+/// 
+/// Business rules:
+/// - ContractNumber must be unique within the system
+/// - EndDate must be after StartDate
+/// - Cannot modify signed contracts without amendment process
+/// - Customer must be active to create new contracts
+/// - Minimum order requirements must be non-negative
+/// - Discount percentages must be between 0 and 100
+/// - Contract pricing takes precedence over standard customer pricing
+/// - Automatic expiration when EndDate is reached
+/// - Renewal requires new contract creation or amendment
+/// - Volume commitments tracked against actual purchases
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.WholesaleContractCreated"/>
+/// <seealso cref="Store.Domain.Events.WholesaleContractUpdated"/>
+/// <seealso cref="Store.Domain.Events.WholesaleContractSigned"/>
+/// <seealso cref="Store.Domain.Events.WholesaleContractExpired"/>
+/// <seealso cref="Store.Domain.Events.WholesaleContractRenewed"/>
+/// <seealso cref="Store.Domain.Events.WholesaleContractAmended"/>
+/// <seealso cref="Store.Domain.Exceptions.WholesaleContract.WholesaleContractNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.WholesaleContract.WholesaleContractCannotBeModifiedException"/>
+/// <seealso cref="Store.Domain.Exceptions.WholesaleContract.InvalidWholesaleContractStatusException"/>
 public sealed class WholesaleContract : AuditableEntity, IAggregateRoot
 {
     /// <summary>

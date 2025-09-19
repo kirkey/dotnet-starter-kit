@@ -6,9 +6,28 @@ namespace Accounting.Domain;
 /// Represents a financial budget for a fiscal year and period, comprised of budget lines per account.
 /// </summary>
 /// <remarks>
-/// Tracks type (Operating, Capital, etc.), status lifecycle (Draft, Approved, Active, Closed), totals, and approvals.
-/// Defaults: <see cref="Status"/> is "Draft"; <see cref="TotalBudgetedAmount"/> and <see cref="TotalActualAmount"/> start at 0.
+/// Use cases:
+/// - Create annual operating budgets for departments and cost centers.
+/// - Develop capital expenditure budgets for infrastructure investments.
+/// - Build cash flow budgets for liquidity planning and management.
+/// - Establish variance analysis by comparing budgeted vs actual amounts.
+/// - Support budget approval workflows with status progression (Draft → Approved → Active → Closed).
+/// - Enable budget vs actual reporting for management and regulatory compliance.
+/// - Track budget line items by account for detailed financial control.
+/// - Support budget amendments and revisions during the fiscal year.
+/// 
+/// Default values:
+/// - Status: "Draft" (new budgets start in draft state)
+/// - TotalBudgetedAmount: 0.00 (calculated from budget lines)
+/// - TotalActualAmount: 0.00 (updated from actual postings)
+/// - ApprovedDate: null (set when budget is approved)
+/// - ApprovedBy: null (set when budget is approved)
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Budget.BudgetCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Budget.BudgetUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Budget.BudgetApproved"/>
+/// <seealso cref="Accounting.Domain.Events.Budget.BudgetActivated"/>
+/// <seealso cref="Accounting.Domain.Events.Budget.BudgetClosed"/>
 public class Budget : AuditableEntity, IAggregateRoot
 {
     private const int MaxNameLength = 256;
@@ -18,51 +37,64 @@ public class Budget : AuditableEntity, IAggregateRoot
     private const int MaxNotesLength = 1000;
 
     /// <summary>
-    /// The accounting period the budget is associated with.
+    /// The accounting period this budget is associated with.
+    /// Example: References the period ID for "FY2025-Q1" or "2025-Annual" periods.
     /// </summary>
     public DefaultIdType PeriodId { get; private set; }
 
     /// <summary>
-    /// The fiscal year for which this budget applies.
+    /// The fiscal year for which this budget applies (1900-2100).
+    /// Example: 2025 for fiscal year 2025 budget planning.
     /// </summary>
     public int FiscalYear { get; private set; }
 
     /// <summary>
-    /// Budget classification, e.g. Operating, Capital, Cash Flow.
+    /// Budget classification indicating the type of budget.
+    /// Example: "Operating" for day-to-day expenses, "Capital" for asset purchases, "Cash Flow" for liquidity planning.
+    /// Allowed values: Operating, Capital, Cash Flow, Emergency, Special Projects.
     /// </summary>
     public string BudgetType { get; private set; } = string.Empty; // Operating, Capital, Cash Flow
 
     /// <summary>
-    /// Workflow status of the budget: Draft, Approved, Active, or Closed.
+    /// Current workflow status of the budget with lifecycle management.
+    /// Example: "Draft" (editable), "Approved" (finalized), "Active" (in use), "Closed" (period ended).
+    /// Default: "Draft" on creation. Allowed values: Draft, Approved, Active, Closed.
     /// </summary>
-    /// <remarks>Defaults to <c>"Draft"</c> on creation.</remarks>
     public string Status { get; private set; } = string.Empty; // Draft, Approved, Active, Closed
 
     /// <summary>
-    /// Sum of all budgeted amounts across lines.
+    /// Sum of all budgeted amounts across all budget lines.
+    /// Example: 1500000.00 for total annual operating budget of $1.5M.
+    /// Default: 0.00. Automatically recalculated when budget lines are added/updated/removed.
     /// </summary>
-    /// <remarks>Recomputed when lines are added/updated/removed. Defaults to 0.</remarks>
     public decimal TotalBudgetedAmount { get; private set; }
 
     /// <summary>
-    /// Sum of actual amounts posted against this budget.
+    /// Sum of actual amounts posted against this budget from accounting transactions.
+    /// Example: 375000.00 for $375K actual spending against budget (25% utilization).
+    /// Default: 0.00. Updated via UpdateActuals() method from general ledger postings.
     /// </summary>
-    /// <remarks>Updated via <see cref="UpdateActuals"/>. Defaults to 0.</remarks>
     public decimal TotalActualAmount { get; private set; }
 
     /// <summary>
-    /// When the budget was approved, if applicable.
+    /// Date and time when the budget was approved for execution.
+    /// Example: 2025-01-15T09:30:00Z for budget approved on January 15th, 2025.
+    /// Default: null until budget approval occurs.
     /// </summary>
     public DateTime? ApprovedDate { get; private set; }
 
     /// <summary>
-    /// User who approved the budget, if applicable.
+    /// Username or identifier of the person who approved the budget.
+    /// Example: "john.smith" or "CFO" for the approving authority.
+    /// Default: null until budget approval occurs.
     /// </summary>
     public string? ApprovedBy { get; private set; }
 
     private readonly List<BudgetLine> _budgetLines = new();
     /// <summary>
-    /// The collection of budget lines, one per account.
+    /// Collection of budget lines, each representing a budgeted amount for a specific chart of account.
+    /// Example: Budget line for account "501-Salaries" with $800,000 budgeted amount.
+    /// Default: Empty collection. Budget lines are added via AddBudgetLine() method.
     /// </summary>
     public IReadOnlyCollection<BudgetLine> BudgetLines => _budgetLines.AsReadOnly();
 

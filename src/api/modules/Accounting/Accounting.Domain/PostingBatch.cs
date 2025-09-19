@@ -1,12 +1,47 @@
 namespace Accounting.Domain;
 
 /// <summary>
-/// Groups multiple journal entries for approval and posting as a batch.
+/// Groups multiple journal entries for approval and posting as a batch to ensure transaction integrity and workflow control.
 /// </summary>
 /// <remarks>
-/// Supports an approval workflow and a posting lifecycle. Defaults: <see cref="Status"/> starts as "Draft",
-/// <see cref="ApprovalStatus"/> starts as "Pending". Only approved draft batches can be posted.
+/// Use cases:
+/// - Group related journal entries for batch processing and approval workflows.
+/// - Ensure transaction integrity by posting multiple entries atomically.
+/// - Support month-end closing procedures with organized batch posting.
+/// - Enable supervisor approval of journal entries before posting to general ledger.
+/// - Track posting batches for audit trails and error resolution.
+/// - Support batch reversal capabilities for correcting posting errors.
+/// - Facilitate reconciliation by grouping entries from the same source system.
+/// - Enable automated posting of recurring entries and system-generated transactions.
+/// 
+/// Default values:
+/// - BatchNumber: required unique identifier (example: "BATCH-2025-09-001", "MONTH-END-SEP-2025")
+/// - BatchDate: required effective date for the batch (example: 2025-09-30 for month-end entries)
+/// - Status: "Draft" (new batches start as draft until posted)
+/// - ApprovalStatus: "Pending" (awaiting approval before posting)
+/// - Description: optional batch description (example: "September 2025 month-end accruals")
+/// - ApprovedBy: null (set when batch is approved)
+/// - ApprovedDate: null (set when approval occurs)
+/// - PostedBy: null (set when batch is posted)
+/// - PostedDate: null (set when posting occurs)
+/// - TotalDebitAmount: calculated from journal entries in batch
+/// - TotalCreditAmount: calculated from journal entries in batch
+/// 
+/// Business rules:
+/// - BatchNumber must be unique within the system
+/// - Only approved batches can be posted to the general ledger
+/// - Batch must be balanced (total debits = total credits) before posting
+/// - Cannot modify batch contents after posting
+/// - Reversal creates a new batch with opposite entries
+/// - Approval requires proper authorization levels
+/// - Posted batches cannot be deleted, only reversed
+/// - All journal entries in batch must reference the same accounting period
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchCreated"/>
+/// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchApproved"/>
+/// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchPosted"/>
+/// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchReversed"/>
+/// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchRejected"/>
 public class PostingBatch : AuditableEntity, IAggregateRoot
 {
     /// <summary>

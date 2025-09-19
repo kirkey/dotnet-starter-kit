@@ -1,15 +1,53 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Represents a scheduled inventory cycle count in a warehouse.
-/// Use cycle counts to verify stock levels without doing a full inventory.
+/// Represents a scheduled inventory cycle count in a warehouse with comprehensive tracking and variance analysis.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Schedule partial or full counts to find discrepancies.
-/// - Track progress (Scheduled, InProgress, Completed).
-/// - Attach counted items (<see cref="Items"/>) produced by counting activities.
+/// - Schedule regular cycle counts to maintain inventory accuracy without full physical counts.
+/// - Track count progress from scheduled through completed with status management.
+/// - Identify and resolve inventory discrepancies between system and physical counts.
+/// - Support ABC analysis by counting high-value items more frequently than low-value items.
+/// - Enable perpetual inventory management with continuous counting cycles.
+/// - Generate variance reports for inventory adjustments and process improvements.
+/// - Support audit requirements for inventory accuracy and control procedures.
+/// - Track counter performance and accuracy metrics for training purposes.
+/// 
+/// Default values:
+/// - CountNumber: required unique identifier (example: "CC-2025-09-001")
+/// - WarehouseId: required warehouse reference for count location
+/// - WarehouseLocationId: optional specific location (example: aisle, rack, bin)
+/// - ScheduledDate: required scheduled count date (example: 2025-09-19)
+/// - Status: "Scheduled" (new counts start as scheduled)
+/// - CountType: required count classification (example: "ABC", "Full", "Spot")
+/// - StartedDate: null (set when counting begins)
+/// - CompletedDate: null (set when count is finished)
+/// - CountedBy: null (set to counter identifier when started)
+/// - TotalVariance: 0.00 (calculated from count discrepancies)
+/// - ItemsPlanned: 0 (number of items scheduled for counting)
+/// - ItemsCounted: 0 (number of items actually counted)
+/// 
+/// Business rules:
+/// - CountNumber must be unique within the system
+/// - Cannot modify completed counts without proper authorization
+/// - Scheduled date cannot be in the past for new counts
+/// - Cannot start count without proper counter assignment
+/// - Count completion requires all planned items to be counted or noted as missing
+/// - Variance calculations must account for system vs physical quantities
+/// - Count adjustments require approval above specified variance thresholds
+/// - Counter assignment requires active employee status
+/// - Location must be within the specified warehouse
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.CycleCountCreated"/>
+/// <seealso cref="Store.Domain.Events.CycleCountUpdated"/>
+/// <seealso cref="Store.Domain.Events.CycleCountStarted"/>
+/// <seealso cref="Store.Domain.Events.CycleCountCompleted"/>
+/// <seealso cref="Store.Domain.Events.CycleCountVarianceDetected"/>
+/// <seealso cref="Store.Domain.Events.CycleCountCancelled"/>
+/// <seealso cref="Store.Domain.Exceptions.CycleCount.CycleCountNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.CycleCount.CycleCountCannotBeModifiedException"/>
+/// <seealso cref="Store.Domain.Exceptions.CycleCount.InvalidCycleCountStatusException"/>
 public sealed class CycleCount : AuditableEntity, IAggregateRoot
 {
     /// <summary>

@@ -1,13 +1,56 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Sales order placed by a customer. Tracks items, payments, shipping and totals.
+/// Represents a sales order placed by a customer with comprehensive order lifecycle and fulfillment management.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Create and process customer orders (retail or wholesale).
-/// - Track payment and delivery status.
+/// - Process customer orders from retail, wholesale, and e-commerce channels.
+/// - Track order fulfillment from creation through delivery with status management.
+/// - Calculate order totals including taxes, discounts, shipping, and promotional pricing.
+/// - Support partial shipments and back-order management for out-of-stock items.
+/// - Enable order modification and cancellation with proper business rules.
+/// - Track payment status and integrate with payment processing systems.
+/// - Support multiple delivery options including pickup, delivery, and drop-shipping.
+/// - Generate pick lists and shipping labels for warehouse operations.
+/// 
+/// Default values:
+/// - OrderNumber: required unique identifier (example: "SO-2025-09-001")
+/// - CustomerId: required customer reference for order attribution
+/// - OrderDate: required order creation date (example: 2025-09-19)
+/// - DeliveryAddress: optional delivery location (defaults to customer address)
+/// - Status: "Draft" (new orders start as draft until confirmed)
+/// - PaymentStatus: "Pending" (awaiting payment processing)
+/// - FulfillmentStatus: "Pending" (awaiting warehouse processing)
+/// - TotalAmount: 0.00 (calculated from order items)
+/// - TaxAmount: 0.00 (calculated based on tax rates and location)
+/// - DiscountAmount: 0.00 (applied promotions and customer discounts)
+/// - ShippingCost: 0.00 (delivery charges based on method and distance)
+/// - RequestedDeliveryDate: null (optional customer preference)
+/// - ShippedDate: null (set when order ships)
+/// - DeliveredDate: null (set when delivery is confirmed)
+/// 
+/// Business rules:
+/// - OrderNumber must be unique within the system
+/// - Cannot modify confirmed orders without proper authorization
+/// - Requested delivery date must be in the future
+/// - Total amount must equal sum of line items plus tax and shipping minus discounts
+/// - Cannot delete orders with payment transactions or shipped items
+/// - Order confirmation requires inventory availability check
+/// - Customer must be active to place new orders
+/// - Payment authorization required before order fulfillment
+/// - Cancellation refund processing follows business policies
 /// </remarks>
+/// <seealso cref="Store.Domain.Events.SalesOrderCreated"/>
+/// <seealso cref="Store.Domain.Events.SalesOrderUpdated"/>
+/// <seealso cref="Store.Domain.Events.SalesOrderConfirmed"/>
+/// <seealso cref="Store.Domain.Events.SalesOrderShipped"/>
+/// <seealso cref="Store.Domain.Events.SalesOrderDelivered"/>
+/// <seealso cref="Store.Domain.Events.SalesOrderCancelled"/>
+/// <seealso cref="Store.Domain.Events.SalesOrderPaymentReceived"/>
+/// <seealso cref="Store.Domain.Exceptions.SalesOrder.SalesOrderNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.SalesOrder.SalesOrderCannotBeModifiedException"/>
+/// <seealso cref="Store.Domain.Exceptions.SalesOrder.InvalidSalesOrderStatusException"/>
 public sealed class SalesOrder : AuditableEntity, IAggregateRoot
 {
     /// <summary>

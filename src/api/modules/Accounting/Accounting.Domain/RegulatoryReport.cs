@@ -3,12 +3,47 @@ using Accounting.Domain.Events.RegulatoryReport;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a regulatory report filing (e.g., FERC, EIA, or state commission) with period, status, and financials.
+/// Represents a regulatory report filing with compliance tracking, financial data aggregation, and submission workflow management.
 /// </summary>
 /// <remarks>
-/// Tracks reporting period, due/submission dates, workflow status (Draft, In Review, Submitted, Approved, Rejected), and
-/// optional financial aggregates. Defaults: <see cref="Status"/> is "Draft"; strings are trimmed; dates validated on create.
+/// Use cases:
+/// - Generate and submit regulatory reports to FERC, EIA, state public utility commissions.
+/// - Track compliance deadlines and filing status for audit and regulatory oversight.
+/// - Aggregate financial data from general ledger for standardized regulatory reporting formats.
+/// - Support multi-period reporting (annual, quarterly, monthly) with proper data validation.
+/// - Enable regulatory report review and approval workflows before submission.
+/// - Maintain historical regulatory filings for compliance audits and trend analysis.
+/// - Support automated data extraction from accounting systems for report generation.
+/// - Track regulatory correspondence and amendment requirements.
+/// 
+/// Default values:
+/// - ReportName: required display name (example: "FERC Form 1 - 2025 Annual Report")
+/// - ReportType: required regulatory classification (example: "FERC Form 1", "EIA Form 861")
+/// - ReportingPeriod: required frequency (example: "Annual", "Quarterly", "Monthly")
+/// - PeriodStart: required start date of reporting period (example: 2025-01-01)
+/// - PeriodEnd: required end date of reporting period (example: 2025-12-31)
+/// - DueDate: required regulatory filing deadline (example: 2026-04-18 for annual reports)
+/// - Status: "Draft" (new reports start in draft status)
+/// - SubmissionDate: null (set when report is submitted)
+/// - TotalRevenue: null (calculated from financial data)
+/// - TotalExpenses: null (calculated from financial data)
+/// - NetIncome: null (calculated as revenue minus expenses)
+/// 
+/// Business rules:
+/// - PeriodEnd must be after PeriodStart
+/// - DueDate should be after PeriodEnd for filing deadline validation
+/// - Cannot submit reports with "Draft" status without approval
+/// - Financial amounts must reconcile with general ledger data
+/// - Report amendments require proper documentation and approval
+/// - Submission creates immutable filing record for compliance
+/// - Late filings require explanation and penalty tracking
+/// - Report data must comply with regulatory formatting standards
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.RegulatoryReport.RegulatoryReportCreated"/>
+/// <seealso cref="Accounting.Domain.Events.RegulatoryReport.RegulatoryReportSubmitted"/>
+/// <seealso cref="Accounting.Domain.Events.RegulatoryReport.RegulatoryReportApproved"/>
+/// <seealso cref="Accounting.Domain.Events.RegulatoryReport.RegulatoryReportRejected"/>
+/// <seealso cref="Accounting.Domain.Events.RegulatoryReport.RegulatoryReportAmended"/>
 public class RegulatoryReport : AuditableEntity, IAggregateRoot
 {
     /// <summary>

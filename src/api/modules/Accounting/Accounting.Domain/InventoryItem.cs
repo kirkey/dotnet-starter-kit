@@ -3,11 +3,41 @@ using Accounting.Domain.Events.Inventory;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a stock-keeping unit (SKU) tracked in inventory with quantity, unit price, and active status.
+/// Represents a stock-keeping unit (SKU) tracked in inventory with quantity, unit price, and lifecycle management.
 /// </summary>
 /// <remarks>
-/// Defaults: <see cref="Quantity"/> and <see cref="UnitPrice"/> default to 0 on creation; <see cref="IsActive"/> true until deactivated.
+/// Use cases:
+/// - Track inventory items for materials, supplies, and spare parts management.
+/// - Maintain accurate inventory valuation for financial reporting and cost accounting.
+/// - Support inventory transactions (receipts, issues, adjustments, transfers).
+/// - Enable perpetual inventory tracking with real-time quantity updates.
+/// - Manage item lifecycle with activation/deactivation capabilities.
+/// - Support inventory costing methods (FIFO, LIFO, weighted average).
+/// - Generate inventory reports for procurement and operations planning.
+/// - Track inventory turnover and identify slow-moving or obsolete items.
+/// 
+/// Default values:
+/// - Sku: required unique identifier, max 50 characters (example: "WIRE-12AWG-CU")
+/// - Quantity: 0.00 (starting inventory quantity)
+/// - UnitPrice: 0.00 (cost per unit for valuation)
+/// - IsActive: true (new items are active by default)
+/// - Name: inherited item name (example: "12 AWG Copper Wire")
+/// - Description: inherited detailed description (example: "12 gauge solid copper wire for electrical installations")
+/// 
+/// Business rules:
+/// - SKU must be unique within the system
+/// - Quantity cannot be negative (controlled through inventory transactions)
+/// - UnitPrice should reflect current or average cost
+/// - Cannot deactivate items with positive on-hand quantities
+/// - Inventory adjustments require proper authorization and documentation
+/// - Cost changes should be tracked for audit purposes
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Inventory.InventoryItemCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Inventory.InventoryItemUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Inventory.InventoryItemActivated"/>
+/// <seealso cref="Accounting.Domain.Events.Inventory.InventoryItemDeactivated"/>
+/// <seealso cref="Accounting.Domain.Events.Inventory.InventoryQuantityAdjusted"/>
+/// <seealso cref="Accounting.Domain.Events.Inventory.InventoryPriceChanged"/>
 public class InventoryItem : AuditableEntity, IAggregateRoot
 {
     private const int MaxSkuLength = 50;

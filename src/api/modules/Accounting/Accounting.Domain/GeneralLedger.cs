@@ -3,12 +3,42 @@ using Accounting.Domain.Events.GeneralLedger;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a single general ledger posting line tied to a journal entry and account, with debit/credit amounts.
+/// Represents a single general ledger posting line derived from journal entries for double-entry bookkeeping and financial reporting.
 /// </summary>
 /// <remarks>
-/// Enforces non-negative debit/credit amounts and validates USOA class labels.
-/// Defaults: optional strings are trimmed; <see cref="Memo"/> and <see cref="ReferenceNumber"/> are null or trimmed values.
+/// Use cases:
+/// - Record individual debit and credit postings to maintain the general ledger trial balance.
+/// - Support double-entry bookkeeping with balanced journal entry distributions.
+/// - Enable financial statement preparation with account-level detail and classifications.
+/// - Track USOA (Uniform System of Accounts) compliance for utility regulatory reporting.
+/// - Provide audit trail linking general ledger postings to source journal entries.
+/// - Support period-end reporting and account reconciliation processes.
+/// - Enable detailed transaction analysis and variance reporting by account.
+/// - Facilitate automated posting from subsidiary ledgers and system integrations.
+/// 
+/// Default values:
+/// - EntryId: required reference to source journal entry
+/// - AccountId: required reference to chart of accounts
+/// - Debit: 0.00 (either debit or credit will have an amount, not both)
+/// - Credit: 0.00 (either debit or credit will have an amount, not both)
+/// - Memo: null (optional transaction description)
+/// - UsoaClass: required for utility accounting (example: "Generation", "Transmission", "Distribution")
+/// - TransactionDate: required effective date for the posting
+/// - ReferenceNumber: null (optional external reference like invoice number)
+/// 
+/// Business rules:
+/// - Either Debit OR Credit must have an amount (not both, not neither)
+/// - Debit and Credit amounts must be non-negative
+/// - UsoaClass must be valid for regulatory compliance
+/// - TransactionDate must match the journal entry date
+/// - Cannot modify posted general ledger entries (immutable after posting)
+/// - Account must exist in chart of accounts
+/// - Journal entry must be approved before posting
+/// - Memo should provide meaningful transaction description
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.GeneralLedger.GeneralLedgerPosted"/>
+/// <seealso cref="Accounting.Domain.Events.GeneralLedger.GeneralLedgerReversed"/>
+/// <seealso cref="Accounting.Domain.Events.GeneralLedger.GeneralLedgerAdjusted"/>
 public class GeneralLedger : AuditableEntity, IAggregateRoot
 {
     /// <summary>

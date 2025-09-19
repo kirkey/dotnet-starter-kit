@@ -3,12 +3,49 @@ using Accounting.Domain.Events.FixedAsset;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a fixed asset tracked for depreciation, maintenance, and regulatory reporting.
+/// Represents a fixed asset tracked for depreciation, maintenance, regulatory reporting, and lifecycle management.
 /// </summary>
 /// <remarks>
-/// Captures purchase details, service life, depreciation-related accounts, location/metadata, and lifecycle (disposed or not).
-/// Defaults: <see cref="IsDisposed"/> false; <see cref="CurrentBookValue"/> initialized to <see cref="PurchasePrice"/>; optional strings trimmed.
+/// Use cases:
+/// - Track capital assets for financial reporting and regulatory compliance (FERC, tax reporting).
+/// - Calculate depreciation using various methods (straight-line, declining balance, etc.).
+/// - Manage asset lifecycle from acquisition through disposal with proper accounting.
+/// - Support regulatory asset tracking for utility rate-making and cost recovery.
+/// - Enable maintenance scheduling and asset condition monitoring.
+/// - Track asset locations and transfers between departments or facilities.
+/// - Support insurance valuation and risk management reporting.
+/// - Generate regulatory reports for plant in service and accumulated depreciation.
+/// 
+/// Default values:
+/// - AssetName: required descriptive name (example: "Distribution Transformer - Station A")
+/// - PurchaseDate: required acquisition date (example: 2025-03-15)
+/// - PurchasePrice: required acquisition cost (example: 25000.00)
+/// - UsefulLife: required useful life in years (example: 25 for utility equipment)
+/// - SalvageValue: estimated residual value (example: 2500.00 or 0.00)
+/// - CurrentBookValue: initially equals PurchasePrice, reduced by depreciation
+/// - IsDisposed: false (asset starts as active)
+/// - DisposalDate: null (set when asset is disposed)
+/// - DisposalProceeds: null (set when asset is sold/disposed)
+/// - DepreciationMethodId: required reference to depreciation calculation method
+/// - AssetAccountId: required GL account for asset cost tracking
+/// - AccumulatedDepreciationAccountId: required GL account for depreciation accumulation
+/// 
+/// Business rules:
+/// - PurchasePrice must be positive
+/// - UsefulLife must be greater than zero
+/// - SalvageValue cannot exceed PurchasePrice
+/// - CurrentBookValue cannot be negative (minimum zero after full depreciation)
+/// - Cannot dispose asset with negative book value without proper authorization
+/// - Depreciation stops when book value reaches salvage value
+/// - Asset transfers require proper approval and GL account updates
+/// - Disposal gains/losses must be properly recorded
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetCreated"/>
+/// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetDepreciated"/>
+/// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetDisposed"/>
+/// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetTransferred"/>
+/// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetRevalued"/>
 public class FixedAsset : AuditableEntity, IAggregateRoot
 {
     /// <summary>

@@ -3,12 +3,48 @@ using Accounting.Domain.Events.Meter;
 namespace Accounting.Domain;
 
 /// <summary>
-/// Represents a physical or smart meter installed at a service location, including configuration and readings.
+/// Represents a physical or smart meter installed at a service location for measuring electricity consumption and demand.
 /// </summary>
 /// <remarks>
-/// Tracks installation, last reading, multiplier (CT/PT), communication protocol, accuracy, and maintenance.
-/// Defaults: <see cref="Status"/> "Active"; <see cref="Multiplier"/> provided and must be positive; strings trimmed.
+/// Use cases:
+/// - Track physical meters installed at member service locations for accurate billing.
+/// - Support both analog and smart meter technologies with different reading capabilities.
+/// - Manage meter lifecycle from installation to retirement including maintenance schedules.
+/// - Enable automated meter reading (AMR) and advanced metering infrastructure (AMI) integration.
+/// - Track meter accuracy, calibration dates, and regulatory compliance requirements.
+/// - Support CT/PT multipliers for high-voltage commercial and industrial installations.
+/// - Monitor meter communication status and data collection reliability.
+/// - Maintain meter configuration for tariff calculations and demand billing.
+/// 
+/// Default values:
+/// - MeterNumber: required unique identifier (example: "M123456789" or serial number)
+/// - MeterType: required type classification (example: "Single Phase", "Three Phase", "Smart Meter")
+/// - Manufacturer: required manufacturer name (example: "Itron", "Landis+Gyr", "Sensus")
+/// - Model: required model number (example: "OpenWay CENTRON", "S4x")
+/// - Status: "Active" (new meters start as active)
+/// - InstallationDate: required installation date for service tracking
+/// - Multiplier: required positive multiplier for CT/PT calculations (default: 1.0)
+/// - LastReadingDate: null (set when first reading is taken)
+/// - LastReading: 0.0 (initial meter reading)
+/// - ServiceLocation: required physical installation address
+/// - CommunicationProtocol: optional for smart meters (example: "RF Mesh", "Cellular", "PLC")
+/// 
+/// Business rules:
+/// - MeterNumber must be unique within the utility system
+/// - Multiplier must be positive (typically 1.0 for residential, higher for CT/PT installations)
+/// - Cannot delete meters with reading history
+/// - Status changes require proper authorization and field verification
+/// - Installation date cannot be in the future
+/// - Meter readings must be sequential and increasing
+/// - Communication protocol required for smart meters
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Events.Meter.MeterCreated"/>
+/// <seealso cref="Accounting.Domain.Events.Meter.MeterUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.Meter.MeterInstalled"/>
+/// <seealso cref="Accounting.Domain.Events.Meter.MeterRetired"/>
+/// <seealso cref="Accounting.Domain.Events.Meter.MeterReadingTaken"/>
+/// <seealso cref="Accounting.Domain.Events.Meter.MeterStatusChanged"/>
+/// <seealso cref="Accounting.Domain.Events.Meter.MeterCommunicationLost"/>
 public class Meter : AuditableEntity, IAggregateRoot
 {
     /// <summary>

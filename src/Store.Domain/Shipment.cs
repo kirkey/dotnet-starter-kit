@@ -1,19 +1,53 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Represents an outbound shipment (typically for a Sales Order) moving goods to a customer.
+/// Represents an outbound shipment for customer deliveries with comprehensive tracking and fulfillment management.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Track outbound deliveries to customers.
-/// - Link shipments to sales orders for fulfillment tracking.
-/// - Monitor shipment status from pending to delivered.
-/// - Support partial shipments and multi-delivery orders.
+/// - Track outbound deliveries to customers from sales orders and direct shipments.
+/// - Support multiple shipment methods including ground, express, and freight delivery.
+/// - Monitor shipment lifecycle from preparation through delivered with status tracking.
+/// - Enable partial shipments for large orders and back-order management.
+/// - Support multi-warehouse shipments and consolidation for cost optimization.
+/// - Track carrier information and provide customer shipment visibility.
+/// - Handle delivery exceptions, returns, and customer notifications.
+/// - Generate shipping labels, packing slips, and delivery confirmations.
+/// 
+/// Default values:
+/// - ShipmentNumber: required unique identifier (example: "SH-2025-09-001")
+/// - SalesOrderId: optional sales order reference (null for direct shipments)
+/// - CustomerId: required customer reference for delivery
+/// - WarehouseId: required source warehouse for shipment
+/// - ShipmentDate: required shipment creation date (example: 2025-09-19)
+/// - EstimatedDeliveryDate: optional estimated delivery (example: 2025-09-21)
+/// - Status: "Pending" (new shipments start as pending preparation)
+/// - ShippingMethod: required delivery method (example: "Ground", "Express", "Freight")
+/// - TrackingNumber: null (set when carrier assigns tracking)
+/// - ShippingCost: 0.00 (calculated based on method and destination)
+/// - ActualDeliveryDate: null (set when delivery is confirmed)
+/// - DeliveryAddress: required destination address
+/// 
+/// Business rules:
+/// - ShipmentNumber must be unique within the system
+/// - Cannot modify shipped orders without proper authorization
+/// - Estimated delivery date should be after shipment date
+/// - Cannot ship without sufficient inventory at source warehouse
+/// - Tracking number required for shipped status
+/// - Delivery confirmation required for completion
+/// - Cannot delete shipments with tracking information
+/// - Carrier must be active to create new shipments
+/// - Address validation required for successful delivery
 /// </remarks>
 /// <seealso cref="Store.Domain.Events.ShipmentCreated"/>
-/// <seealso cref="Store.Domain.Events.ShipmentItemAdded"/>
+/// <seealso cref="Store.Domain.Events.ShipmentUpdated"/>
 /// <seealso cref="Store.Domain.Events.ShipmentShipped"/>
+/// <seealso cref="Store.Domain.Events.ShipmentDelivered"/>
+/// <seealso cref="Store.Domain.Events.ShipmentCancelled"/>
+/// <seealso cref="Store.Domain.Events.ShipmentTrackingUpdated"/>
 /// <seealso cref="Store.Domain.Exceptions.Shipment.ShipmentNotFoundException"/>
+/// <seealso cref="Store.Domain.Exceptions.Shipment.ShipmentCannotBeModifiedException"/>
+/// <seealso cref="Store.Domain.Exceptions.Shipment.InvalidShipmentStatusException"/>
 public sealed class Shipment : AuditableEntity, IAggregateRoot
 {
     /// <summary>
