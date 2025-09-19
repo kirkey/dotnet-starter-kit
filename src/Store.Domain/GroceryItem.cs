@@ -1,26 +1,59 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Represents a product (grocery item) stored and sold by the store.
-/// Contains pricing, stock and identification fields.
+/// Represents a product (grocery item) with comprehensive inventory management, pricing control, and lifecycle tracking.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Track stock levels and reorder points.
-/// - Provide pricing and weight details for orders.
-/// - Support barcode scanning and SKU-based lookups.
-/// - Manage perishable item expiry tracking.
-/// - Link items to categories and suppliers for organization.
-/// - Monitor low stock and overstock conditions.
+/// - Manage product catalog with SKU, barcode, and pricing information for retail operations.
+/// - Track inventory levels with automated reorder point notifications and stock optimization.
+/// - Support barcode scanning for point-of-sale transactions and inventory management.
+/// - Handle perishable items with expiration date tracking and automated rotation (FIFO).
+/// - Enable multi-location inventory tracking across warehouses and store locations.
+/// - Support supplier relationship management with cost tracking and lead time monitoring.
+/// - Facilitate category-based pricing strategies and promotional campaign management.
+/// - Generate inventory reports for purchasing decisions and financial analysis.
+/// 
+/// Default values:
+/// - SKU: required unique identifier, max 100 characters (example: "BANA-001", "MILK-2L-001")
+/// - Barcode: required scannable code, max 100 characters (example: "012345678901")
+/// - Price: required selling price per unit (example: 2.49 for $2.49)
+/// - Cost: required supplier cost per unit (example: 1.50 for cost tracking)
+/// - MinimumStock: required safety stock level (example: 5 units minimum)
+/// - MaximumStock: required maximum stock capacity (example: 100 units maximum)
+/// - CurrentStock: 0 (initial stock level, updated by transactions)
+/// - ReorderPoint: required reorder trigger level (example: 10 units)
+/// - IsPerishable: false (true for items requiring expiration tracking)
+/// - ExpiryDate: null (set for perishable items with known expiration)
+/// - Weight: null (weight per unit for shipping calculations)
+/// - CategoryId: required category assignment for organization
+/// - SupplierId: required primary supplier reference
+/// - IsActive: true (items are active by default)
+/// 
+/// Business rules:
+/// - SKU must be unique within the system
+/// - Barcode must be unique if specified
+/// - Price and Cost must be non-negative
+/// - MinimumStock must be less than MaximumStock
+/// - ReorderPoint should be between MinimumStock and MaximumStock
+/// - CurrentStock cannot be negative (controlled by inventory transactions)
+/// - Cannot delete items with transaction history or current stock
+/// - Perishable items require proper rotation (FIFO) management
+/// - Category and Supplier must exist and be active
+/// - Price changes require audit trail for cost analysis
 /// </remarks>
 /// <seealso cref="Store.Domain.Events.GroceryItemCreated"/>
 /// <seealso cref="Store.Domain.Events.GroceryItemUpdated"/>
 /// <seealso cref="Store.Domain.Events.GroceryItemStockUpdated"/>
 /// <seealso cref="Store.Domain.Events.GroceryItemStockLevelsUpdated"/>
 /// <seealso cref="Store.Domain.Events.GroceryItemLocationAssigned"/>
+/// <seealso cref="Store.Domain.Events.GroceryItemPriceChanged"/>
+/// <seealso cref="Store.Domain.Events.GroceryItemReorderPointReached"/>
+/// <seealso cref="Store.Domain.Events.GroceryItemExpiring"/>
 /// <seealso cref="Store.Domain.Exceptions.GroceryItem.GroceryItemNotFoundException"/>
 /// <seealso cref="Store.Domain.Exceptions.GroceryItem.DuplicateGroceryItemSkuException"/>
 /// <seealso cref="Store.Domain.Exceptions.GroceryItem.DuplicateGroceryItemBarcodeException"/>
+/// <seealso cref="Store.Domain.Exceptions.GroceryItem.InvalidGroceryItemStockLevelException"/>
 public sealed class GroceryItem : AuditableEntity, IAggregateRoot
 {
     /// <summary>

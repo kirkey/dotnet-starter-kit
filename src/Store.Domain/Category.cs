@@ -1,24 +1,52 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Represents a product category used to group grocery items.
-/// Use simple names and a short <c>Code</c> to identify a category.
+/// Represents a product category used to organize and group grocery items with hierarchical navigation and business rule management.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Group items in the storefront (e.g. Fruits, Dairy).
-/// - Build category trees with <see cref="ParentCategoryId"/> for navigation.
-/// - Apply category-specific pricing, promotions, or business rules.
-/// - Support inventory reporting and analysis by category.
+/// - Organize products into logical hierarchies for customer navigation and browsing experience.
+/// - Support multi-level category trees with parent-child relationships for complex product taxonomies.
+/// - Enable category-specific pricing rules, promotions, and discount strategies.
+/// - Facilitate inventory reporting and analysis by product category groupings.
+/// - Support category-based search and filtering for improved product discovery.
+/// - Enable category-specific business rules like tax rates, shipping restrictions, or age verification.
+/// - Manage seasonal categories and promotional product groupings.
+/// - Support category-based inventory planning and procurement strategies.
+/// 
+/// Default values:
+/// - Code: required unique identifier, max 50 characters (example: "FRUITS", "DAIRY", "MEAT")
+/// - ParentCategoryId: null for top-level categories (example: "Food" parent for "Fruits" subcategory)
+/// - IsActive: true (new categories are active by default)
+/// - SortOrder: 0 (categories with lower numbers appear first in listings)
+/// - ImageUrl: null (optional category image for display purposes)
+/// - Name: inherited display name (example: "Fresh Fruits", "Dairy Products")
+/// - Description: inherited detailed description (example: "Fresh seasonal fruits and produce")
+/// - TaxRate: null (optional category-specific tax rate override)
+/// - RequiresAgeVerification: false (true for alcohol, tobacco, etc.)
+/// - IsPerishable: false (true for categories requiring expiration tracking)
+/// 
+/// Business rules:
+/// - Code must be unique within the system
+/// - Cannot create circular parent-child relationships
+/// - Cannot deactivate categories with active subcategories
+/// - Cannot delete categories with assigned products
+/// - Parent category must exist and be active
+/// - Category hierarchy depth should be limited (typically 3-4 levels)
+/// - Sort order determines display sequence within parent level
+/// - Image URL must be valid if specified
+/// - Category codes should follow naming conventions
 /// </remarks>
 /// <seealso cref="Store.Domain.Events.CategoryCreated"/>
 /// <seealso cref="Store.Domain.Events.CategoryUpdated"/>
 /// <seealso cref="Store.Domain.Events.CategoryActivated"/>
 /// <seealso cref="Store.Domain.Events.CategoryDeactivated"/>
+/// <seealso cref="Store.Domain.Events.CategoryHierarchyChanged"/>
 /// <seealso cref="Store.Domain.Exceptions.Category.CategoryNotFoundException"/>
 /// <seealso cref="Store.Domain.Exceptions.Category.CategoryNotFoundByCodeException"/>
 /// <seealso cref="Store.Domain.Exceptions.Category.CategoryInactiveException"/>
 /// <seealso cref="Store.Domain.Exceptions.Category.DuplicateCategoryCodeException"/>
+/// <seealso cref="Store.Domain.Exceptions.Category.CircularCategoryReferenceException"/>
 public sealed class Category : AuditableEntity, IAggregateRoot
 {
     /// <summary>

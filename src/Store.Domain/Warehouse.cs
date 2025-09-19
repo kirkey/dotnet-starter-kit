@@ -1,15 +1,44 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Physical storage location (warehouse) that holds stock and locations.
+/// Represents a physical storage facility with comprehensive capacity management, location tracking, and operational control.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Track available capacity and used capacity.
-/// - Identify the main warehouse vs satellite warehouses.
-/// - Manage warehouse operations and staff assignments.
-/// - Monitor inventory levels across multiple facilities.
-/// - Support location-based reporting and analytics.
+/// - Manage multiple warehouse facilities for inventory distribution and storage optimization.
+/// - Track warehouse capacity utilization and available space for storage planning.
+/// - Support multi-location inventory management with location-specific operations.
+/// - Enable warehouse-specific picking, packing, and shipping operations.
+/// - Monitor warehouse performance metrics including throughput and accuracy.
+/// - Support temperature-controlled and specialized storage requirements.
+/// - Manage warehouse staff assignments and operational schedules.
+/// - Generate facility reports for operational analysis and cost allocation.
+/// 
+/// Default values:
+/// - Code: required unique identifier, max 50 characters (example: "WH-MAIN", "WH-NYC-01")
+/// - Address: required physical address, max 500 characters
+/// - City: required city name, max 100 characters (example: "Seattle")
+/// - State: optional state/region, max 100 characters (example: "WA")
+/// - Country: required country code, max 100 characters (example: "US")
+/// - PostalCode: optional postal code, max 20 characters (example: "98101")
+/// - Phone: optional contact phone number (example: "+1-555-0123")
+/// - Email: optional contact email (example: "warehouse@company.com")
+/// - ManagerName: optional warehouse manager name (example: "John Smith")
+/// - Capacity: total storage capacity in cubic units or square feet
+/// - UsedCapacity: 0.00 (current utilization, updated by inventory movements)
+/// - IsActive: true (warehouses are active by default)
+/// - WarehouseType: "Standard" (or "Cold Storage", "Hazmat", etc.)
+/// 
+/// Business rules:
+/// - Code must be unique within the system
+/// - Address must be complete for delivery and logistics coordination
+/// - Capacity must be positive if specified
+/// - UsedCapacity cannot exceed total Capacity
+/// - Cannot deactivate warehouses with current inventory
+/// - Cannot delete warehouses with transaction history
+/// - Warehouse type determines storage capabilities and restrictions
+/// - Contact information should be maintained for operational coordination
+/// - Location coordinates helpful for logistics optimization
 /// </remarks>
 /// <seealso cref="Store.Domain.Events.WarehouseCreated"/>
 /// <seealso cref="Store.Domain.Events.WarehouseUpdated"/>
@@ -17,6 +46,7 @@ namespace Store.Domain;
 /// <seealso cref="Store.Domain.Events.WarehouseInventoryCounted"/>
 /// <seealso cref="Store.Domain.Events.WarehouseActivated"/>
 /// <seealso cref="Store.Domain.Events.WarehouseDeactivated"/>
+/// <seealso cref="Store.Domain.Events.WarehouseManagerAssigned"/>
 /// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseNotFoundException"/>
 /// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseNotFoundByCodeException"/>
 /// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseInactiveException"/>

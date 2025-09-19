@@ -1,23 +1,58 @@
 namespace Store.Domain;
 
 /// <summary>
-/// Represents a business or retail customer who places sales orders.
-/// Keep contact data accurate for invoicing and delivery.
+/// Represents a business or retail customer with comprehensive account management, credit control, and relationship tracking.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Track balances and credit limits for invoicing.
-/// - Differentiate behavior for retail vs wholesale customers.
-/// - Store contact info for delivery and notifications.
-/// - Maintain customer lifetime value and purchase history.
-/// - Apply customer-specific pricing and discount rules.
+/// - Manage customer accounts for both retail and wholesale business segments.
+/// - Track customer balances, credit limits, and payment history for credit management.
+/// - Support customer segmentation with type-based pricing and discount strategies.
+/// - Maintain accurate contact information for delivery, invoicing, and communication.
+/// - Calculate customer lifetime value and purchase patterns for marketing insights.
+/// - Enable customer-specific pricing agreements and volume discounts.
+/// - Support multi-channel customer engagement (in-store, online, wholesale).
+/// - Generate customer reports for sales analysis and business development.
+/// 
+/// Default values:
+/// - Code: required unique identifier, max 50 characters (example: "CUST-001", "RETAIL-123")
+/// - CustomerType: required classification, max 50 characters (example: "Retail", "Wholesale", "Corporate")
+/// - ContactPerson: required primary contact, max 100 characters (example: "John Smith")
+/// - Email: required contact email, max 255 characters (example: "john@example.com")
+/// - Phone: required contact phone, max 50 characters (example: "+1-555-0123")
+/// - Address: required delivery address, max 500 characters
+/// - City: required city name, max 100 characters (example: "Seattle")
+/// - State: optional state/region, max 100 characters (example: "WA")
+/// - Country: required country code, max 100 characters (example: "US")
+/// - PostalCode: optional postal code, max 20 characters (example: "98101")
+/// - CreditLimit: 0.00 (no credit limit unless specified)
+/// - CurrentBalance: 0.00 (outstanding balance starts at zero)
+/// - LifetimeValue: 0.00 (calculated from purchase history)
+/// - IsActive: true (customers are active by default)
+/// 
+/// Business rules:
+/// - Code must be unique within the system
+/// - Email must be valid format and unique
+/// - Phone number should be valid format
+/// - CreditLimit must be non-negative
+/// - CurrentBalance represents outstanding amount owed
+/// - Cannot delete customers with transaction history
+/// - Wholesale customers typically have higher credit limits
+/// - Customer type determines pricing and payment terms
+/// - Address must be complete for delivery services
+/// - Inactive customers cannot place new orders
 /// </remarks>
 /// <seealso cref="Store.Domain.Events.CustomerCreated"/>
 /// <seealso cref="Store.Domain.Events.CustomerUpdated"/>
 /// <seealso cref="Store.Domain.Events.CustomerBalanceUpdated"/>
 /// <seealso cref="Store.Domain.Events.CustomerLifetimeValueUpdated"/>
+/// <seealso cref="Store.Domain.Events.CustomerActivated"/>
+/// <seealso cref="Store.Domain.Events.CustomerDeactivated"/>
+/// <seealso cref="Store.Domain.Events.CustomerCreditLimitChanged"/>
 /// <seealso cref="Store.Domain.Exceptions.Customer.CustomerNotFoundException"/>
 /// <seealso cref="Store.Domain.Exceptions.Customer.DuplicateCustomerCodeException"/>
+/// <seealso cref="Store.Domain.Exceptions.Customer.InvalidCustomerEmailException"/>
+/// <seealso cref="Store.Domain.Exceptions.Customer.CustomerCreditLimitExceededException"/>
 public sealed class Customer : AuditableEntity, IAggregateRoot
 {
     /// <summary>
