@@ -1,4 +1,4 @@
-namespace Accounting.Application.AccountingPeriods.Queries;
+namespace Accounting.Application.AccountingPeriods.Specs;
 
 public sealed class AccountingPeriodByFiscalYearTypeSpec : Specification<AccountingPeriod>, ISingleResultSpecification<AccountingPeriod>
 {

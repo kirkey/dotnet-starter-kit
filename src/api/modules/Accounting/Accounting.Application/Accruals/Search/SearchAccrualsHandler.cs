@@ -1,18 +1,19 @@
 namespace Accounting.Application.Accruals.Search;
 
 using Dtos;
+using Queries;
 
 public class SearchAccrualsHandler(IReadRepository<Accrual> repository)
-    : IRequestHandler<SearchAccrualsRequest, List<AccrualDto>>
+    : IRequestHandler<SearchAccrualsQuery, List<AccrualDto>>
 {
-    public async Task<List<AccrualDto>> Handle(SearchAccrualsRequest request, CancellationToken cancellationToken)
+    public async Task<List<AccrualDto>> Handle(SearchAccrualsQuery request, CancellationToken cancellationToken)
     {
         var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.AccrualNumber))
             query = query.Where(x => x.AccrualNumber.Contains(request.AccrualNumber));
         if (!string.IsNullOrWhiteSpace(request.Description))
-            query = query.Where(x => x.Description.Contains(request.Description));
+            query = query.Where(x => x.Description!.Contains(request.Description));
         if (request.Skip.HasValue)
             query = query.Skip(request.Skip.Value);
         if (request.Take.HasValue)
@@ -30,4 +31,3 @@ public class SearchAccrualsHandler(IReadRepository<Accrual> repository)
         }).ToList();
     }
 }
-

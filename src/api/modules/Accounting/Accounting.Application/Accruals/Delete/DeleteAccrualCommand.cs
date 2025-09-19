@@ -1,4 +1,4 @@
-namespace Accounting.Application.Accruals.Commands;
+namespace Accounting.Application.Accruals.Delete;
 
 public class DeleteAccrualCommand : IRequest
 {

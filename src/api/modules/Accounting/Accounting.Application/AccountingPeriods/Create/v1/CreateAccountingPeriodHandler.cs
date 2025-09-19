@@ -1,12 +1,22 @@
-using Accounting.Application.AccountingPeriods.Exceptions;
-using Accounting.Application.AccountingPeriods.Queries;
-
 namespace Accounting.Application.AccountingPeriods.Create.v1;
 
+using Exceptions;
+using Specs;
+
+/// <summary>
+/// Handles <see cref="CreateAccountingPeriodCommand"/> to create a new <see cref="AccountingPeriod"/> aggregate.
+/// Performs domain-level checks (duplicate name, duplicate fiscal-year+type, overlapping period) and persists the entity.
+/// </summary>
 public sealed class CreateAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> repository)
     : IRequestHandler<CreateAccountingPeriodCommand, DefaultIdType>
 {
+    /// <summary>
+    /// Creates a new accounting period after running all business validations.
+    /// </summary>
+    /// <param name="request">The create command containing period metadata.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The identifier of the created accounting period.</returns>
     public async Task<DefaultIdType> Handle(CreateAccountingPeriodCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);

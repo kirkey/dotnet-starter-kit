@@ -1,4 +1,4 @@
-namespace Accounting.Application.Accruals.Commands;
+namespace Accounting.Application.Accruals.Update;
 
 public class UpdateAccrualCommand : IRequest<DefaultIdType>
 {

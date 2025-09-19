@@ -2,9 +2,9 @@ namespace Accounting.Application.JournalEntries.Create;
 
 public sealed class CreateJournalEntryHandler(
     [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
-    : IRequestHandler<CreateJournalEntryCommand, DefaultIdType>
+    : IRequestHandler<CreateJournalEntryCommand, CreateJournalEntryResponse>
 {
-    public async Task<DefaultIdType> Handle(CreateJournalEntryCommand request, CancellationToken cancellationToken)
+    public async Task<CreateJournalEntryResponse> Handle(CreateJournalEntryCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -16,9 +16,18 @@ public sealed class CreateJournalEntryHandler(
             request.PeriodId,
             request.OriginalAmount);
 
+        // Add lines if provided
+        if (request.Lines != null && request.Lines.Count > 0)
+        {
+            foreach (var line in request.Lines)
+            {
+                journalEntry.AddLine(line.AccountId, line.DebitAmount, line.CreditAmount, line.Memo);
+            }
+        }
+
         await repository.AddAsync(journalEntry, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
-        return journalEntry.Id;
+        return new CreateJournalEntryResponse(journalEntry.Id);
     }
 }

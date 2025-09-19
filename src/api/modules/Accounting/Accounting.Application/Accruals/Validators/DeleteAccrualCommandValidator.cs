@@ -1,4 +1,4 @@
-using Accounting.Application.Accruals.Commands;
+using Accounting.Application.Accruals.Delete;
 
 namespace Accounting.Application.Accruals.Validators;
 

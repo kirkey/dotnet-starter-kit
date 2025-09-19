@@ -1,12 +1,12 @@
 namespace Accounting.Application.Accruals.Create;
 
-public class CreateAccrualRequestValidator : AbstractValidator<CreateAccrualRequest>
+public sealed class CreateAccrualCommandValidator : AbstractValidator<CreateAccrualCommand>
 {
-    public CreateAccrualRequestValidator()
+    public CreateAccrualCommandValidator()
     {
         RuleFor(x => x.AccrualNumber)
             .NotEmpty()
-            .MaximumLength(128);
+            .MaximumLength(50);
 
         RuleFor(x => x.AccrualDate)
             .NotEmpty();
@@ -15,8 +15,6 @@ public class CreateAccrualRequestValidator : AbstractValidator<CreateAccrualRequ
             .GreaterThan(0);
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
-            .When(x => !string.IsNullOrEmpty(x.Description));
+            .MaximumLength(200);
     }
 }
-

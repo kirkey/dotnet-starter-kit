@@ -1,4 +1,4 @@
-using Accounting.Application.AccountingPeriods.Dtos;
+using Accounting.Application.AccountingPeriods.Responses;
 using Accounting.Application.AccountingPeriods.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;

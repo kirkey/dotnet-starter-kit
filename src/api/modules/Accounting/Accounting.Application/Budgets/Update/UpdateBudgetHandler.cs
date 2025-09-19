@@ -5,9 +5,9 @@ using Queries;
 
 public sealed class UpdateBudgetHandler(
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)
-    : IRequestHandler<UpdateBudgetRequest, DefaultIdType>
+    : IRequestHandler<UpdateBudgetCommand, UpdateBudgetResponse>
 {
-    public async Task<DefaultIdType> Handle(UpdateBudgetRequest request, CancellationToken cancellationToken)
+    public async Task<UpdateBudgetResponse> Handle(UpdateBudgetCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -30,6 +30,6 @@ public sealed class UpdateBudgetHandler(
         await repository.UpdateAsync(budget, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
-        return budget.Id;
+        return new UpdateBudgetResponse(budget.Id);
     }
 }

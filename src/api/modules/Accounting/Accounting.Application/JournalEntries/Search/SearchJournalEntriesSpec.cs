@@ -7,9 +7,11 @@ public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<Jo
     public SearchJournalEntriesSpec(SearchJournalEntriesQuery request) : base(request)
     {
         Query
-            .OrderBy(e => e.Name!, !request.HasOrderBy())
-            .Where(e => e.Name!.Contains(request.Name!), !string.IsNullOrEmpty(request.Name))
+            .OrderBy(e => e.Date, !request.HasOrderBy())
             .Where(e => e.ReferenceNumber!.Contains(request.ReferenceNumber!), !string.IsNullOrEmpty(request.ReferenceNumber))
-            .Where(e => e.IsPosted == request.IsPosted);
+            .Where(e => e.Source!.Contains(request.Source!), !string.IsNullOrEmpty(request.Source))
+            .Where(e => e.Date >= request.FromDate, request.FromDate.HasValue)
+            .Where(e => e.Date <= request.ToDate, request.ToDate.HasValue)
+            .Where(e => e.IsPosted == request.IsPosted, request.IsPosted.HasValue);
     }
 }

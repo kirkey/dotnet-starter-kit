@@ -1,8 +1,9 @@
-using Accounting.Application.Budgets.Dtos;
+using Accounting.Application.Budgets.Responses;
 
 namespace Accounting.Application.Budgets.Get;
 
-public class GetBudgetQuery(DefaultIdType id) : IRequest<BudgetDto>
-{
-    public DefaultIdType Id { get; set; } = id;
-}
+/// <summary>
+/// Query to retrieve a single Budget by identifier.
+/// </summary>
+/// <param name="Id">Budget identifier.</param>
+public sealed record GetBudgetQuery(DefaultIdType Id) : IRequest<BudgetResponse>;

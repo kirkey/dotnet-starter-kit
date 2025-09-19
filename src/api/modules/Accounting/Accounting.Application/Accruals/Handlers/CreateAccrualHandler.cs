@@ -1,13 +1,13 @@
-using Accounting.Application.Accruals.Commands;
+using Accounting.Application.Accruals.Create;
 using Accounting.Application.Accruals.Exceptions;
 using Accounting.Application.Accruals.Queries;
 
 namespace Accounting.Application.Accruals.Handlers;
 
 public class CreateAccrualHandler(IRepository<Accrual> repository)
-    : IRequestHandler<CreateAccrualCommand, DefaultIdType>
+    : IRequestHandler<CreateAccrualCommand, CreateAccrualResponse>
 {
-    public async Task<DefaultIdType> Handle(CreateAccrualCommand request, CancellationToken cancellationToken)
+    public async Task<CreateAccrualResponse> Handle(CreateAccrualCommand request, CancellationToken cancellationToken)
     {
         var accrualNumber = request.AccrualNumber?.Trim() ?? string.Empty;
 
@@ -19,6 +19,7 @@ public class CreateAccrualHandler(IRepository<Accrual> repository)
         var accrual = Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description);
         await repository.AddAsync(accrual, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
-        return accrual.Id;
+
+        return new CreateAccrualResponse(accrual.Id);
     }
 }

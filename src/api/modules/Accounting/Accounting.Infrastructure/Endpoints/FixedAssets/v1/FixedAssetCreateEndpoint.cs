@@ -15,9 +15,8 @@ public static class FixedAssetCreateEndpoint
             .WithName(nameof(FixedAssetCreateEndpoint))
             .WithSummary("create a fixed asset")
             .WithDescription("create a fixed asset")
-            .Produces<DefaultIdType>()
+            .Produces<CreateFixedAssetResponse>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }
 }
-

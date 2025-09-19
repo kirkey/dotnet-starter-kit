@@ -5,9 +5,9 @@ namespace Accounting.Application.JournalEntries.Delete;
 
 public sealed class DeleteJournalEntryHandler(
     [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
-    : IRequestHandler<DeleteJournalEntryRequest>
+    : IRequestHandler<DeleteJournalEntryCommand>
 {
-    public async Task Handle(DeleteJournalEntryRequest request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteJournalEntryCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

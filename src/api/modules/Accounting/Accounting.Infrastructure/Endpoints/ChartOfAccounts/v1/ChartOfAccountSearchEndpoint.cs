@@ -1,6 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Dtos;
 using Accounting.Application.ChartOfAccounts.Search.v1;
-using FSH.Starter.Blazor.Infrastructure.Api;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 

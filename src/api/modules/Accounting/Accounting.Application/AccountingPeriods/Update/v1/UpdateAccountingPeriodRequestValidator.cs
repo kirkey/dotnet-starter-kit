@@ -1,5 +1,8 @@
 namespace Accounting.Application.AccountingPeriods.Update.v1;
 
+/// <summary>
+/// Validator for <see cref="UpdateAccountingPeriodCommand"/> ensuring provided updates are valid before applying them.
+/// </summary>
 public class UpdateAccountingPeriodCommandValidator : AbstractValidator<UpdateAccountingPeriodCommand>
 {
     public UpdateAccountingPeriodCommandValidator()

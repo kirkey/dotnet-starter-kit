@@ -4,9 +4,9 @@ using Exceptions;
 
 public sealed class DeleteBudgetHandler(
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)
-    : IRequestHandler<DeleteBudgetRequest>
+    : IRequestHandler<DeleteBudgetCommand>
 {
-    public async Task Handle(DeleteBudgetRequest request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteBudgetCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

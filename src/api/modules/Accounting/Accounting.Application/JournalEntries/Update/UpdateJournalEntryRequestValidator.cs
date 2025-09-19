@@ -1,6 +1,6 @@
 namespace Accounting.Application.JournalEntries.Update;
 
-public class UpdateJournalEntryRequestValidator : AbstractValidator<UpdateJournalEntryRequest>
+public class UpdateJournalEntryRequestValidator : AbstractValidator<UpdateJournalEntryCommand>
 {
     public UpdateJournalEntryRequestValidator()
     {

@@ -3,9 +3,9 @@ namespace Accounting.Application.Accruals.Delete;
 using Exceptions;
 
 public class DeleteAccrualHandler(IRepository<Accrual> repository)
-    : IRequestHandler<DeleteAccrualRequest, Unit>
+    : IRequestHandler<DeleteAccrualCommand>
 {
-    public async Task<Unit> Handle(DeleteAccrualRequest request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteAccrualCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -18,8 +18,6 @@ public class DeleteAccrualHandler(IRepository<Accrual> repository)
 
         await repository.DeleteAsync(accrual, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }
 

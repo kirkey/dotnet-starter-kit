@@ -9,7 +9,7 @@ public static class BudgetDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new DeleteBudgetRequest(id)).ConfigureAwait(false);
+                await mediator.Send(new DeleteBudgetCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(BudgetDeleteEndpoint))
@@ -19,4 +19,3 @@ public static class BudgetDeleteEndpoint
             .MapToApiVersion(1);
     }
 }
-

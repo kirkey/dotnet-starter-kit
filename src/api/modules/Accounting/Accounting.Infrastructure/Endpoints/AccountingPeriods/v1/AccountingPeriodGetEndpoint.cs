@@ -1,5 +1,5 @@
-using Accounting.Application.AccountingPeriods.Dtos;
 using Accounting.Application.AccountingPeriods.Get.v1;
+using Accounting.Application.AccountingPeriods.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 

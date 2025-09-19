@@ -1,8 +1,8 @@
 namespace Accounting.Application.FixedAssets.Create;
 
-public class CreateFixedAssetRequestValidator : AbstractValidator<CreateFixedAssetRequest>
+public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateFixedAssetCommand>
 {
-    public CreateFixedAssetRequestValidator()
+    public CreateFixedAssetCommandValidator()
     {
         RuleFor(x => x.AssetName)
             .NotEmpty()
@@ -31,15 +31,12 @@ public class CreateFixedAssetRequestValidator : AbstractValidator<CreateFixedAss
             .NotEmpty();
 
         RuleFor(x => x.SerialNumber)
-            .MaximumLength(100)
-            .When(x => !string.IsNullOrEmpty(x.SerialNumber));
+            .MaximumLength(100);
 
         RuleFor(x => x.Location)
-            .MaximumLength(256)
-            .When(x => !string.IsNullOrEmpty(x.Location));
+            .MaximumLength(256);
 
         RuleFor(x => x.Department)
-            .MaximumLength(100)
-            .When(x => !string.IsNullOrEmpty(x.Department));
+            .MaximumLength(100);
     }
 }

@@ -1,5 +1,9 @@
 namespace Accounting.Application.AccountingPeriods.Create.v1;
 
+/// <summary>
+/// Validator for <see cref="CreateAccountingPeriodCommand"/>. Enforces required fields and domain-friendly constraints
+/// such as maximum lengths, valid period types, fiscal year ranges and non-overlapping dates.
+/// </summary>
 public class CreateAccountingPeriodCommandValidator : AbstractValidator<CreateAccountingPeriodCommand>
 {
     private static readonly HashSet<string> AllowedPeriodTypes = new(StringComparer.OrdinalIgnoreCase)

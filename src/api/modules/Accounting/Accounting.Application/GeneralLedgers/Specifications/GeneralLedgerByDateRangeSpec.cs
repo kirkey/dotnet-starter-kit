@@ -1,6 +1,6 @@
 namespace Accounting.Application.GeneralLedgers.Specifications;
 
-public class GeneralLedgerByDateRangeSpec : Specification<Domain.GeneralLedger>
+public class GeneralLedgerByDateRangeSpec : Specification<GeneralLedger>
 {
     public GeneralLedgerByDateRangeSpec(DateTime? startDate, DateTime? endDate)
     {

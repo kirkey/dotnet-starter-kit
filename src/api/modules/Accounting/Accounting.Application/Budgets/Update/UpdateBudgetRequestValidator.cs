@@ -1,30 +1,28 @@
 namespace Accounting.Application.Budgets.Update;
 
-public class UpdateBudgetRequestValidator : AbstractValidator<UpdateBudgetRequest>
+public sealed class UpdateBudgetCommandValidator : AbstractValidator<UpdateBudgetCommand>
 {
-    public UpdateBudgetRequestValidator()
+    public UpdateBudgetCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty();
 
+        RuleFor(x => x.FiscalYear)
+            .InclusiveBetween(1900, 2100);
+
         RuleFor(x => x.Name)
-            .MaximumLength(256)
-            .When(x => !string.IsNullOrEmpty(x.Name));
+            .MaximumLength(256);
 
         RuleFor(x => x.BudgetType)
-            .MaximumLength(32)
-            .When(x => !string.IsNullOrEmpty(x.BudgetType));
+            .MaximumLength(32);
 
         RuleFor(x => x.Status)
-            .MaximumLength(16)
-            .When(x => !string.IsNullOrEmpty(x.Status));
+            .MaximumLength(16);
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
-            .When(x => !string.IsNullOrEmpty(x.Description));
+            .MaximumLength(1000);
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
-            .When(x => !string.IsNullOrEmpty(x.Notes));
+            .MaximumLength(1000);
     }
 }

@@ -1,6 +1,6 @@
 namespace Accounting.Application.GeneralLedgers.Specifications;
 
-public class GeneralLedgerByAccountAndDateSpec : Specification<Domain.GeneralLedger>
+public class GeneralLedgerByAccountAndDateSpec : Specification<GeneralLedger>
 {
     public GeneralLedgerByAccountAndDateSpec(DefaultIdType accountId, DateTime? endDate)
     {

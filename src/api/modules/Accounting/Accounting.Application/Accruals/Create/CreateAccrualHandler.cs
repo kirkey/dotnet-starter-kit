@@ -5,9 +5,9 @@ using Queries;
 
 public sealed class CreateAccrualHandler(
     [FromKeyedServices("accounting:accruals")] IRepository<Accrual> repository)
-    : IRequestHandler<CreateAccrualRequest, DefaultIdType>
+    : IRequestHandler<CreateAccrualCommand, CreateAccrualResponse>
 {
-    public async Task<DefaultIdType> Handle(CreateAccrualRequest request, CancellationToken cancellationToken)
+    public async Task<CreateAccrualResponse> Handle(CreateAccrualCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -18,10 +18,9 @@ public sealed class CreateAccrualHandler(
         if (existing != null)
             throw new AccrualAlreadyExistsException(accrualNumber);
 
-        var accrual = Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description);
+        var accrual = Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description ?? string.Empty);
         await repository.AddAsync(accrual, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
-        return accrual.Id;
+        return new CreateAccrualResponse(accrual.Id);
     }
 }
-

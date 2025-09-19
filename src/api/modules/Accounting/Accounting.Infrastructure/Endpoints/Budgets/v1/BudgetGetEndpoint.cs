@@ -1,4 +1,4 @@
-using Accounting.Application.Budgets.Dtos;
+using Accounting.Application.Budgets.Responses;
 using Accounting.Application.Budgets.Get;
 
 namespace Accounting.Infrastructure.Endpoints.Budgets.v1;
@@ -16,9 +16,8 @@ public static class BudgetGetEndpoint
             .WithName(nameof(BudgetGetEndpoint))
             .WithSummary("get a budget by id")
             .WithDescription("get a budget by id")
-            .Produces<BudgetDto>()
+            .Produces<BudgetResponse>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }
 }
-

@@ -1,4 +1,4 @@
-using Accounting.Application.Accruals.Commands;
+using Accounting.Application.Accruals.Create;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
@@ -15,9 +15,8 @@ public static class AccrualCreateEndpoint
             .WithName(nameof(AccrualCreateEndpoint))
             .WithSummary("Create an accrual")
             .WithDescription("Creates a new accrual entry")
-            .Produces<DefaultIdType>()
+            .Produces<CreateAccrualResponse>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }
 }
-

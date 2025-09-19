@@ -1,4 +1,4 @@
-using Accounting.Application.Accruals.Commands;
+using Accounting.Application.Accruals.Delete;
 using Accounting.Application.Accruals.Exceptions;
 
 namespace Accounting.Application.Accruals.Handlers;

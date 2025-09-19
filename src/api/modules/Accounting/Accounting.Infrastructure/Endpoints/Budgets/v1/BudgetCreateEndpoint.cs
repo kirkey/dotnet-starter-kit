@@ -15,9 +15,8 @@ public static class BudgetCreateEndpoint
             .WithName(nameof(BudgetCreateEndpoint))
             .WithSummary("create a budget")
             .WithDescription("create a budget")
-            .Produces<DefaultIdType>()
+            .Produces<CreateBudgetResponse>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }
 }
-

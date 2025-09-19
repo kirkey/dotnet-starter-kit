@@ -1,7 +1,12 @@
-using Accounting.Application.AccountingPeriods.Dtos;
+using Accounting.Application.AccountingPeriods.Responses;
+using Accounting.Application.AccountingPeriods.Search.v1;
 
-namespace Accounting.Application.AccountingPeriods.Search.v1;
+namespace Accounting.Application.AccountingPeriods.Specs;
 
+/// <summary>
+/// Specification used to apply search filters and paging to AccountingPeriod queries.
+/// Projects domain entities to <see cref="AccountingPeriodResponse"/> for the read model.
+/// </summary>
 public sealed class SearchAccountingPeriodsSpec : EntitiesByPaginationFilterSpec<AccountingPeriod, AccountingPeriodResponse>
 {
     public SearchAccountingPeriodsSpec(SearchAccountingPeriodsQuery request) : base(request)

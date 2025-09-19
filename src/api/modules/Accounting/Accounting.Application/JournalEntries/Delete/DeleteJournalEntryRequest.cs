@@ -1,6 +1,6 @@
 namespace Accounting.Application.JournalEntries.Delete;
 
-public class DeleteJournalEntryRequest(DefaultIdType id) : IRequest
-{
-    public DefaultIdType Id { get; set; } = id;
-}
+/// <summary>
+/// Command to delete a JournalEntry. Deletion is prevented for posted entries.
+/// </summary>
+public sealed record DeleteJournalEntryCommand(DefaultIdType Id) : IRequest;

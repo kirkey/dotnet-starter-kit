@@ -14,10 +14,8 @@ public class UpdateCustomerCommand(
     string? tin = null,
     string? phoneNumber = null,
     decimal? creditLimit = null,
-    bool isActive = false,
     string? description = null,
-    string? notes = null)
-    : IRequest<DefaultIdType>
+    string? notes = null) : IRequest<DefaultIdType>
 {
     public DefaultIdType Id { get; set; } = id;
     public string? CustomerCode { get; set; } = customerCode;
@@ -32,7 +30,6 @@ public class UpdateCustomerCommand(
     public string? Tin { get; set; } = tin;
     public string? PhoneNumber { get; set; } = phoneNumber;
     public decimal? CreditLimit { get; set; } = creditLimit;
-    public bool IsActive { get; set; } = isActive;
     public string? Description { get; set; } = description;
     public string? Notes { get; set; } = notes;
 }

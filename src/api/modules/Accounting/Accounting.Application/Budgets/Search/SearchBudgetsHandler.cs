@@ -1,12 +1,12 @@
-using Accounting.Application.Budgets.Dtos;
+using Accounting.Application.Budgets.Responses;
 
 namespace Accounting.Application.Budgets.Search;
 
 public sealed class SearchBudgetsHandler(
     [FromKeyedServices("accounting:budgets")] IReadRepository<Budget> repository)
-    : IRequestHandler<SearchBudgetsRequest, PagedList<BudgetDto>>
+    : IRequestHandler<SearchBudgetsQuery, PagedList<BudgetListItemResponse>>
 {
-    public async Task<PagedList<BudgetDto>> Handle(SearchBudgetsRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<BudgetListItemResponse>> Handle(SearchBudgetsQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -14,8 +14,6 @@ public sealed class SearchBudgetsHandler(
         var list = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        return new PagedList<BudgetDto>(list, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<BudgetListItemResponse>(list, request.PageNumber, request.PageSize, totalCount);
     }
 }
-
-

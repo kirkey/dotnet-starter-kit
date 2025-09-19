@@ -1,10 +1,10 @@
-using Accounting.Application.Budgets.Dtos;
+using Accounting.Application.Budgets.Responses;
 
 namespace Accounting.Application.Budgets.Search;
 
-public sealed class SearchBudgetsSpec : EntitiesByPaginationFilterSpec<Budget, BudgetDto>
+public sealed class SearchBudgetsSpec : EntitiesByPaginationFilterSpec<Budget, BudgetListItemResponse>
 {
-    public SearchBudgetsSpec(SearchBudgetsRequest request) : base(request)
+    public SearchBudgetsSpec(SearchBudgetsQuery request) : base(request)
     {
         Query
             .OrderBy(b => b.Name!, !request.HasOrderBy())
@@ -13,5 +13,3 @@ public sealed class SearchBudgetsSpec : EntitiesByPaginationFilterSpec<Budget, B
             .Where(b => b.Status!.Contains(request.Status!), !string.IsNullOrEmpty(request.Status));
     }
 }
-
-

@@ -1,8 +1,8 @@
 namespace Accounting.Application.Budgets.Create;
 
-public class CreateBudgetRequestValidator : AbstractValidator<CreateBudgetRequest>
+public sealed class CreateBudgetCommandValidator : AbstractValidator<CreateBudgetCommand>
 {
-    public CreateBudgetRequestValidator()
+    public CreateBudgetCommandValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()
@@ -12,19 +12,16 @@ public class CreateBudgetRequestValidator : AbstractValidator<CreateBudgetReques
             .NotEmpty();
 
         RuleFor(x => x.FiscalYear)
-            .GreaterThan(1900)
-            .LessThanOrEqualTo(2100);
+            .InclusiveBetween(1900, 2100);
 
         RuleFor(x => x.BudgetType)
             .NotEmpty()
             .MaximumLength(32);
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
-            .When(x => !string.IsNullOrEmpty(x.Description));
+            .MaximumLength(1000);
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
-            .When(x => !string.IsNullOrEmpty(x.Notes));
+            .MaximumLength(1000);
     }
 }

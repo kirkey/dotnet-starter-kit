@@ -1,6 +1,6 @@
 namespace Accounting.Application.Accruals.Delete;
 
-public class DeleteAccrualRequestValidator : AbstractValidator<DeleteAccrualRequest>
+public class DeleteAccrualRequestValidator : AbstractValidator<DeleteAccrualCommand>
 {
     public DeleteAccrualRequestValidator()
     {

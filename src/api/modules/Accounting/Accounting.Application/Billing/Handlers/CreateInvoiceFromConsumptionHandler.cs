@@ -19,7 +19,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
         var consumption = await consumptionRepo.GetByIdAsync(request.ConsumptionId, cancellationToken);
         if (consumption == null) throw new KeyNotFoundException($"Consumption data {request.ConsumptionId} not found");
 
-        Domain.Member? member = null;
+        Member? member = null;
         // consumption.MeterId is DefaultIdType (non-nullable); find a member by matching MeterId
         member = (await memberRepo.ListAsync(cancellationToken: cancellationToken)).FirstOrDefault(m => m.MeterId.HasValue && m.MeterId.Value == consumption.MeterId);
 

@@ -9,7 +9,7 @@ public sealed class PostJournalEntryCommandHandler(
     [FromKeyedServices("accounting:journalentries")]
     IRepository<JournalEntry> journalRepository,
     [FromKeyedServices("accounting:generalledger")]
-    IRepository<Domain.GeneralLedger> ledgerRepository,
+    IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")]
     IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<PostJournalEntryCommand, DefaultIdType>
@@ -47,7 +47,7 @@ public sealed class PostJournalEntryCommandHandler(
         {
             var account = await accountRepository.GetByIdAsync(line.AccountId, cancellationToken);
             var usoaClass = account?.UsoaCategory ?? "General";
-            var ledgerEntry = Domain.GeneralLedger.Create(
+            var ledgerEntry = GeneralLedger.Create(
                 journalEntry.Id,
                 line.AccountId,
                 line.DebitAmount,

@@ -9,3 +9,4 @@ public class UpdateAccrualRequest : IRequest<DefaultIdType>
     public string? Description { get; set; }
 }
 
+
