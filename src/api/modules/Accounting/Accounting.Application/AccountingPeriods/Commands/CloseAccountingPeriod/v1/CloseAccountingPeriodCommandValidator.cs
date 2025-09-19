@@ -1,5 +1,8 @@
 namespace Accounting.Application.AccountingPeriods.Commands.CloseAccountingPeriod.v1;
 
+/// <summary>
+/// Validator for <see cref="CloseAccountingPeriodCommand"/> ensuring required fields and reasonable constraints.
+/// </summary>
 public class CloseAccountingPeriodCommandValidator : AbstractValidator<CloseAccountingPeriodCommand>
 {
     public CloseAccountingPeriodCommandValidator()

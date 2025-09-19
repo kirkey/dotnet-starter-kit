@@ -1,5 +1,9 @@
 namespace Accounting.Application.AccountingPeriods.Commands.CloseAccountingPeriod.v1;
 
+/// <summary>
+/// Handles <see cref="CloseAccountingPeriodCommand"/>: validates the request, optionally generates closing entries
+/// and year-end adjustments, and marks the period as closed.
+/// </summary>
 public sealed class CloseAccountingPeriodCommandHandler(
     ILogger<CloseAccountingPeriodCommandHandler> logger,
     [FromKeyedServices("accounting:periods")] IRepository<AccountingPeriod> periodRepository,
@@ -7,6 +11,12 @@ public sealed class CloseAccountingPeriodCommandHandler(
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<CloseAccountingPeriodCommand, DefaultIdType>
 {
+    /// <summary>
+    /// Executes the closing process for an accounting period.
+    /// </summary>
+    /// <param name="request">Close command containing options.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The id of the closed period.</returns>
     public async Task<DefaultIdType> Handle(CloseAccountingPeriodCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -54,6 +64,9 @@ public sealed class CloseAccountingPeriodCommandHandler(
         return period.Id;
     }
 
+    /// <summary>
+    /// Generates closing journal entries for the period. (Placeholder - implement business rules.)
+    /// </summary>
     private async Task GenerateClosingEntries(AccountingPeriod period, DateTime closingDate, CancellationToken cancellationToken)
     {
         // Reference parameters to avoid unused-parameter warnings until implementation is added
@@ -80,6 +93,9 @@ public sealed class CloseAccountingPeriodCommandHandler(
         }
     }
 
+    /// <summary>
+    /// Performs year-end adjustment entries. (Placeholder - implement business rules.)
+    /// </summary>
     private Task PerformYearEndAdjustments(AccountingPeriod period, DateTime closingDate, CancellationToken cancellationToken)
     {
         // Implement year-end adjustments such as:
