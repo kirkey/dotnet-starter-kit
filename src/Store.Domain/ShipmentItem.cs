@@ -26,12 +26,6 @@ public sealed class ShipmentItem : AuditableEntity
     public DefaultIdType GroceryItemId { get; private set; }
 
     /// <summary>
-    /// Item name snapshot at time of shipment.
-    /// Example: "Bananas". Max length: 200.
-    /// </summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>
     /// Quantity being shipped. Must be positive.
     /// Example: 50.
     /// </summary>

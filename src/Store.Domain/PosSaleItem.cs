@@ -30,12 +30,6 @@ public sealed class PosSaleItem : AuditableEntity
     public DefaultIdType GroceryItemId { get; private set; }
 
     /// <summary>
-    /// Snapshot of the item name at the time of sale.
-    /// Example: "Bananas". Max length: 200.
-    /// </summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>
     /// Unit price used for this line.
     /// Example: 2.49. Default must be &gt;= 0.
     /// </summary>

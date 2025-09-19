@@ -15,12 +15,6 @@ namespace Store.Domain;
 public sealed class TaxRate : AuditableEntity, IAggregateRoot
 {
     /// <summary>
-    /// Descriptive name for the tax rate.
-    /// Example: "Standard VAT", "State Sales Tax". Max length: 100.
-    /// </summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>
     /// Tax rate as a decimal between 0.00 and 1.00.
     /// Example: 0.10 for 10% tax, 0.0825 for 8.25% tax.
     /// </summary>
