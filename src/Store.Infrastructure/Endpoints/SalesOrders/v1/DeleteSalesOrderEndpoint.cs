@@ -15,7 +15,7 @@ public static class DeleteSalesOrderEndpoint
         .WithSummary("Delete sales order")
         .WithDescription("Deletes a sales order by its unique identifier")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.SalesOrders.Delete")
+        .RequirePermission("Permissions.Store.Delete")
         .MapToApiVersion(1);
     }
 }

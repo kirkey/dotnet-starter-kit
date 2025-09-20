@@ -24,7 +24,7 @@ public static class UpdateStockAdjustmentEndpoint
         .WithSummary("Update a stock adjustment")
         .WithDescription("Updates an existing stock adjustment")
         .Produces<UpdateStockAdjustmentResponse>()
-        .RequirePermission("Permissions.StockAdjustments.Update")
+        .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }
 }

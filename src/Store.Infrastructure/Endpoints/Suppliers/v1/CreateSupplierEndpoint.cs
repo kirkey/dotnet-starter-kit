@@ -16,7 +16,7 @@ public static class CreateSupplierEndpoint
             .WithSummary("Create a new supplier")
             .WithDescription("Creates a new supplier")
             .Produces<CreateSupplierResponse>()
-            .RequirePermission("Permissions.Suppliers.Create")
+            .RequirePermission("Permissions.Store.Create")
             .MapToApiVersion(1);
     }
 }

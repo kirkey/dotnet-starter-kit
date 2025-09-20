@@ -15,7 +15,7 @@ public static class DeleteCategoryEndpoint
         .WithSummary("Delete category")
         .WithDescription("Deletes a category by its unique identifier")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Categories.Delete")
+        .RequirePermission("Permissions.Store.Delete")
         .MapToApiVersion(1);
     }
 }

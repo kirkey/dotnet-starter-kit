@@ -23,7 +23,7 @@ public static class DeleteStockAdjustmentEndpoint
         .WithSummary("Delete a stock adjustment")
         .WithDescription("Deletes a stock adjustment by ID")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.StockAdjustments.Delete")
+        .RequirePermission("Permissions.Store.Delete")
         .MapToApiVersion(1);
     }
 }

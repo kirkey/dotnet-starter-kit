@@ -23,7 +23,7 @@ public static class GetPriceListEndpoint
         .WithSummary("Get a price list")
         .WithDescription("Retrieves a price list by ID")
         .Produces<GetPriceListResponse>()
-        .RequirePermission("Permissions.PriceLists.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

@@ -25,7 +25,7 @@ public static class SearchGroceryItemsEndpoint
             .WithSummary("Search grocery items")
             .WithDescription("Search and filter grocery items with pagination support")
             .Produces<PagedList<GroceryItemResponse>>()
-            .RequirePermission("Permissions.GroceryItems.View")
+            .RequirePermission("Permissions.Store.View")
             .MapToApiVersion(1);
     }
 }

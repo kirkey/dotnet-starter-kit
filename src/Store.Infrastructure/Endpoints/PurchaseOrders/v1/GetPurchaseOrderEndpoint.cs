@@ -23,7 +23,7 @@ public static class GetPurchaseOrderEndpoint
         .WithSummary("Get a purchase order")
         .WithDescription("Retrieves a purchase order by ID")
         .Produces<GetPurchaseOrderResponse>()
-        .RequirePermission("Permissions.PurchaseOrders.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

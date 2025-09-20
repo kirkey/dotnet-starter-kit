@@ -16,7 +16,7 @@ public static class UpdateGroceryItemEndpoint
         .WithSummary("Update grocery item")
         .WithDescription("Updates an existing grocery item")
         .Produces<UpdateGroceryItemResponse>()
-        .RequirePermission("Permissions.GroceryItems.Update")
+        .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }
 }

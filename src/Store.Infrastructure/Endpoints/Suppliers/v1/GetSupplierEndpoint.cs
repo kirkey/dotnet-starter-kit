@@ -15,7 +15,7 @@ public static class GetSupplierEndpoint
         .WithSummary("Get a supplier")
         .WithDescription("Retrieves a supplier by id")
         .Produces<SupplierResponse>()
-        .RequirePermission("Permissions.Suppliers.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

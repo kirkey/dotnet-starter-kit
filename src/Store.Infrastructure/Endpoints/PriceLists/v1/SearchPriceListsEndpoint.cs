@@ -24,7 +24,7 @@ public static class SearchPriceListsEndpoint
         .WithSummary("Search price lists")
         .WithDescription("Search and filter price lists with pagination support")
         .Produces<PagedList<GetPriceListResponse>>()
-        .RequirePermission("Permissions.PriceLists.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

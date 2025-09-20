@@ -16,7 +16,7 @@ public static class ApproveStockAdjustmentEndpoint
         .WithSummary("Approve stock adjustment")
         .WithDescription("Approves a stock adjustment and applies changes to inventory")
         .Produces<ApproveStockAdjustmentResponse>()
-        .RequirePermission("Permissions.StockAdjustments.Approve")
+        .RequirePermission("Permissions.Store.Approve")
         .MapToApiVersion(1);
     }
 }

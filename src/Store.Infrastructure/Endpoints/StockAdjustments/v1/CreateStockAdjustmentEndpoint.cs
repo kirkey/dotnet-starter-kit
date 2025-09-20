@@ -15,7 +15,7 @@ public static class CreateStockAdjustmentEndpoint
         .WithSummary("Create a new stock adjustment")
         .WithDescription("Creates a stock adjustment for inventory")
         .Produces<CreateStockAdjustmentResponse>()
-        .RequirePermission("Permissions.StockAdjustments.Create")
+        .RequirePermission("Permissions.Store.Create")
         .MapToApiVersion(1);
     }
 }

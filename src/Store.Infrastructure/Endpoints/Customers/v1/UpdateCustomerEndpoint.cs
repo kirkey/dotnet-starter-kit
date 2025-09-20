@@ -16,7 +16,7 @@ public static class UpdateCustomerEndpoint
         .WithSummary("Update customer")
         .WithDescription("Updates an existing customer")
         .Produces<UpdateCustomerResponse>()
-        .RequirePermission("Permissions.Customers.Update")
+        .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }
 }

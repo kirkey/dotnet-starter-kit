@@ -24,7 +24,7 @@ public static class UpdatePurchaseOrderEndpoint
         .WithSummary("Update a purchase order")
         .WithDescription("Updates an existing purchase order")
         .Produces<UpdatePurchaseOrderResponse>()
-        .RequirePermission("Permissions.PurchaseOrders.Update")
+        .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }
 }

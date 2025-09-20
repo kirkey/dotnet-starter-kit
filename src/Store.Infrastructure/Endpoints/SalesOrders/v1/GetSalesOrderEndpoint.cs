@@ -15,7 +15,7 @@ public static class GetSalesOrderEndpoint
         .WithSummary("Get sales order by ID")
         .WithDescription("Retrieves a sales order by its unique identifier")
         .Produces<GetSalesOrderResponse>()
-        .RequirePermission("Permissions.SalesOrders.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

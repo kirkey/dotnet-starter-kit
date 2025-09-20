@@ -23,7 +23,7 @@ public static class DeletePurchaseOrderEndpoint
         .WithSummary("Delete a purchase order")
         .WithDescription("Deletes a purchase order by ID")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.PurchaseOrders.Delete")
+        .RequirePermission("Permissions.Store.Delete")
         .MapToApiVersion(1);
     }
 }

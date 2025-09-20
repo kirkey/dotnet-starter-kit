@@ -15,7 +15,7 @@ public static class GetCustomerEndpoint
         .WithSummary("Get customer by ID")
         .WithDescription("Retrieves a customer by their unique identifier")
         .Produces<CustomerResponse>()
-        .RequirePermission("Permissions.Customers.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

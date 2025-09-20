@@ -24,7 +24,7 @@ public static class UpdatePriceListEndpoint
         .WithSummary("Update a price list")
         .WithDescription("Updates an existing price list")
         .Produces<UpdatePriceListResponse>()
-        .RequirePermission("Permissions.PriceLists.Update")
+        .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }
 }

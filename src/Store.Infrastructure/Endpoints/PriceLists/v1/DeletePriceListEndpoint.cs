@@ -23,7 +23,7 @@ public static class DeletePriceListEndpoint
         .WithSummary("Delete a price list")
         .WithDescription("Deletes a price list by ID")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.PriceLists.Delete")
+        .RequirePermission("Permissions.Store.Delete")
         .MapToApiVersion(1);
     }
 }

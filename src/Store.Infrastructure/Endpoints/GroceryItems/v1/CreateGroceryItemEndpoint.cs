@@ -16,7 +16,7 @@ public static class CreateGroceryItemEndpoint
             .WithSummary("Create a new grocery item")
             .WithDescription("Creates a new grocery item with inventory tracking")
             .Produces<CreateGroceryItemResponse>()
-            .RequirePermission("Permissions.GroceryItems.Create")
+            .RequirePermission("Permissions.Store.Create")
             .MapToApiVersion(1);
     }
 }

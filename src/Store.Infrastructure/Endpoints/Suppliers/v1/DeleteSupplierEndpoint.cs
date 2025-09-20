@@ -15,7 +15,7 @@ public static class DeleteSupplierEndpoint
         .WithSummary("Delete a supplier")
         .WithDescription("Deletes a supplier by id")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Suppliers.Delete")
+        .RequirePermission("Permissions.Store.Delete")
         .MapToApiVersion(1);
     }
 }

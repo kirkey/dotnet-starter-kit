@@ -16,7 +16,7 @@ public static class UpdateSalesOrderEndpoint
         .WithSummary("Update sales order")
         .WithDescription("Updates an existing sales order")
         .Produces<UpdateSalesOrderResponse>()
-        .RequirePermission("Permissions.SalesOrders.Update")
+        .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }
 }

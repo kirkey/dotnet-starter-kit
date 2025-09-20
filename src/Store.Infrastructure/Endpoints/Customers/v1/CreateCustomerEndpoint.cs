@@ -25,7 +25,7 @@ public static class CreateCustomerEndpoint
             .WithSummary("Create a new customer")
             .WithDescription("Creates a new customer (retail, wholesale, or corporate) with comprehensive account information")
             .Produces<CreateCustomerResponse>()
-            .RequirePermission("Permissions.Customers.Create")
+            .RequirePermission("Permissions.Store.Create")
             .MapToApiVersion(1);
     }
 }

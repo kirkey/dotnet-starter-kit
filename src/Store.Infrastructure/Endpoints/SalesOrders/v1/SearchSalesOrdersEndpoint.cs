@@ -24,7 +24,7 @@ public static class SearchSalesOrdersEndpoint
         .WithSummary("Search sales orders")
         .WithDescription("Search and filter sales orders with pagination support")
         .Produces<PagedList<GetSalesOrderResponse>>()
-        .RequirePermission("Permissions.SalesOrders.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

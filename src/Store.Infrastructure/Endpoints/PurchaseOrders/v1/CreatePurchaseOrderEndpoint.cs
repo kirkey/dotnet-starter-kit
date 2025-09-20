@@ -23,7 +23,7 @@ public static class CreatePurchaseOrderEndpoint
         .WithSummary("Create a new purchase order")
         .WithDescription("Creates a new purchase order")
         .Produces<CreatePurchaseOrderResponse>()
-        .RequirePermission("Permissions.PurchaseOrders.Create")
+        .RequirePermission("Permissions.Store.Create")
         .MapToApiVersion(1);
     }
 }

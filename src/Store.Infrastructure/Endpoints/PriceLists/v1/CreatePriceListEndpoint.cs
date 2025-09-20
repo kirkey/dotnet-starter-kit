@@ -23,7 +23,7 @@ public static class CreatePriceListEndpoint
         .WithSummary("Create a new price list")
         .WithDescription("Creates a new price list")
         .Produces<CreatePriceListResponse>()
-        .RequirePermission("Permissions.PriceLists.Create")
+        .RequirePermission("Permissions.Store.Create")
         .MapToApiVersion(1);
     }
 }

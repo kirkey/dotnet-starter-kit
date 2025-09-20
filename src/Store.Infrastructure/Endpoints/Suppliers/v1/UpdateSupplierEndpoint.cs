@@ -16,7 +16,7 @@ public static class UpdateSupplierEndpoint
         .WithSummary("Update a supplier")
         .WithDescription("Updates an existing supplier")
         .Produces<UpdateSupplierResponse>()
-        .RequirePermission("Permissions.Suppliers.Update")
+        .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }
 }

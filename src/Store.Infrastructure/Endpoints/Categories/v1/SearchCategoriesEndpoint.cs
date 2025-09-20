@@ -17,7 +17,7 @@ public static class SearchCategoriesEndpoint
             .WithSummary("Search categories")
             .WithDescription("Searches categories with pagination and filters")
             .Produces<PagedList<CategoryResponse>>()
-            .RequirePermission("Permissions.Categories.View")
+            .RequirePermission("Permissions.Store.View")
             .MapToApiVersion(1);
     }
 }

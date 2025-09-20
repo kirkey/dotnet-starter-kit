@@ -15,7 +15,7 @@ public static class DeleteCustomerEndpoint
         .WithSummary("Delete customer")
         .WithDescription("Deletes a customer by their unique identifier")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Customers.Delete")
+        .RequirePermission("Permissions.Store.Delete")
         .MapToApiVersion(1);
     }
 }

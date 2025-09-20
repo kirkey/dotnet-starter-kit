@@ -15,7 +15,7 @@ public static class GetStockAdjustmentEndpoint
         .WithSummary("Get stock adjustment by ID")
         .WithDescription("Retrieves a stock adjustment by its unique identifier")
         .Produces<StockAdjustmentResponse>()
-        .RequirePermission("Permissions.StockAdjustments.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

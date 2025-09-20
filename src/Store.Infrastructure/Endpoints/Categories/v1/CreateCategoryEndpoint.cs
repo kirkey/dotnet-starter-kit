@@ -16,7 +16,7 @@ public static class CreateCategoryEndpoint
             .WithSummary("Create a new category")
             .WithDescription("Creates a new category")
             .Produces<CreateCategoryResponse>()
-            .RequirePermission("Permissions.Categories.Create")
+            .RequirePermission("Permissions.Store.Create")
             .MapToApiVersion(1);
     }
 }

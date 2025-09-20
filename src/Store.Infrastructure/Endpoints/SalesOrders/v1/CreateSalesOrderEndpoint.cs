@@ -15,7 +15,7 @@ public static class CreateSalesOrderEndpoint
         .WithSummary("Create a new sales order")
         .WithDescription("Creates a new sales order for retail or wholesale customers")
         .Produces<CreateSalesOrderResponse>()
-        .RequirePermission("Permissions.SalesOrders.Create")
+        .RequirePermission("Permissions.Store.Create")
         .MapToApiVersion(1);
     }
 }

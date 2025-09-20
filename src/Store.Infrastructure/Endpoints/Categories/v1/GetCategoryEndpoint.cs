@@ -15,7 +15,7 @@ public static class GetCategoryEndpoint
         .WithSummary("Get category by ID")
         .WithDescription("Retrieves a category by its unique identifier")
         .Produces<CategoryResponse>()
-        .RequirePermission("Permissions.Categories.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

@@ -25,7 +25,7 @@ public static class SearchCustomersEndpoint
             .WithSummary("Search customers")
             .WithDescription("Search and filter customers with pagination support")
             .Produces<PagedList<CustomerResponse>>()
-            .RequirePermission("Permissions.Customers.View")
+            .RequirePermission("Permissions.Store.View")
             .MapToApiVersion(1);
     }
 }

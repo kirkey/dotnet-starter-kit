@@ -16,7 +16,7 @@ public static class SearchStockAdjustmentsEndpoint
         .WithSummary("Search stock adjustments")
         .WithDescription("Retrieves a paginated list of stock adjustments with optional filtering")
         .Produces<PagedList<StockAdjustmentResponse>>()
-        .RequirePermission("Permissions.StockAdjustments.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }

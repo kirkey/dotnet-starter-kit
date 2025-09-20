@@ -15,7 +15,7 @@ public static class GetGroceryItemEndpoint
         .WithSummary("Get grocery item by ID")
         .WithDescription("Retrieves a grocery item by its unique identifier")
         .Produces<GroceryItemResponse>()
-        .RequirePermission("Permissions.GroceryItems.View")
+        .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }
 }
