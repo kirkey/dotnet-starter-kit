@@ -273,12 +273,38 @@ public partial class ImageUploader : ComponentBase
         // Convert to base64
         var base64String = Convert.ToBase64String(bytes);
 
+        string MapContentTypeToExtension(string? contentType, string fileName)
+        {
+            if (!string.IsNullOrWhiteSpace(contentType))
+            {
+                contentType = contentType.Split(';')[0].Trim().ToLowerInvariant();
+                return contentType switch
+                {
+                    "image/jpeg" => ".jpg",
+                    "image/jpg" => ".jpg",
+                    "image/png" => ".png",
+                    _ => string.Empty
+                };
+            }
+            return Path.GetExtension(fileName);
+        }
+
+        var dotExt = MapContentTypeToExtension(file.ContentType, file.Name);
+        if (string.IsNullOrWhiteSpace(dotExt))
+        {
+            dotExt = Path.GetExtension(file.Name);
+        }
+        if (!string.IsNullOrWhiteSpace(dotExt) && !dotExt.StartsWith('.'))
+        {
+            dotExt = "." + dotExt.TrimStart('.');
+        }
+
         UploadedImage = new FileUploadCommand
         {
             Name = file.Name,
             Data = base64String,
-            Extension = file.ContentType ?? Path.GetExtension(file.Name).TrimStart('.'),
-            // Size = file.Size
+            Extension = dotExt,
+            Size = file.Size
         };
 
         await UploadedImageChanged.InvokeAsync(UploadedImage);

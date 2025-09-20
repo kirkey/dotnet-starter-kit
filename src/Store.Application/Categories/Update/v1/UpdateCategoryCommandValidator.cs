@@ -46,10 +46,6 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
             .GreaterThanOrEqualTo(0)
             .When(x => x.SortOrder.HasValue);
 
-        RuleFor(x => x.ImageUrl)
-            .MaximumLength(500)
-            .When(x => !string.IsNullOrEmpty(x.ImageUrl));
-
         // Light validation for optional image payload: name and extension must be present when provided.
         RuleFor(x => x.Image!.Name)
             .NotEmpty()

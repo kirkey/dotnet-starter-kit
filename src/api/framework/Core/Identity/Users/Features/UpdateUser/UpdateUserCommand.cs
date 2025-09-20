@@ -1,4 +1,5 @@
 ﻿using FSH.Framework.Core.Storage.File;
+using FSH.Framework.Core.Storage.File.Features;
 using MediatR;
 
 namespace FSH.Framework.Core.Identity.Users.Features.UpdateUser;

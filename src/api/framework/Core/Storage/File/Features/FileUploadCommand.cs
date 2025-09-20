@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace FSH.Framework.Core.Storage.File;
+namespace FSH.Framework.Core.Storage.File.Features;
 
 /// <summary>
 /// Command for uploading files with validation and metadata.

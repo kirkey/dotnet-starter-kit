@@ -43,10 +43,24 @@ public partial class Categories
             },
             createFunc: async viewModel =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await ApiClient.CreateCategoryEndpointAsync("1", viewModel.Adapt<CreateCategoryCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await ApiClient.UpdateCategoryEndpointAsync("1", id, viewModel.Adapt<UpdateCategoryCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await ApiClient.DeleteCategoryEndpointAsync("1", id).ConfigureAwait(false));

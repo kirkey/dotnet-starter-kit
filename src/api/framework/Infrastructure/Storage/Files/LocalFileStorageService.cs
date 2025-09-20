@@ -18,12 +18,43 @@ public class LocalFileStorageService(IOptions<OriginOptions> originSettings) : I
             return null!;
         }
 
-        if (!supportedFileType.GetDescriptionList().Contains(request.Extension.ToLower(System.Globalization.CultureInfo.CurrentCulture)))
+        // Normalize extension: allow ".png", "png" or "image/png" and convert to ".png" style for validation and saving
+        static string NormalizeExtension(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+            var ext = input.Trim();
+            ext = ext.ToLower(System.Globalization.CultureInfo.CurrentCulture);
+            if (ext.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
+            {
+                ext = "." + ext.Split('/')[1];
+            }
+            else if (!ext.StartsWith('.'))
+            {
+                ext = "." + ext.TrimStart('.');
+            }
+            return ext;
+        }
+
+        var normalizedExt = NormalizeExtension(request.Extension);
+        if (!supportedFileType.GetDescriptionList().Contains(normalizedExt))
             throw new InvalidOperationException("File Format Not Supported.");
-        if (request.Name is null)
+        if (string.IsNullOrWhiteSpace(request.Name))
             throw new InvalidOperationException("Name is required.");
 
-        string base64Data = Regex.Match(request.Data, "data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+        // Accept both data URLs (data:image/*;base64,....) and raw base64 payloads
+        string base64Data;
+        if (request.Data.StartsWith("data:image/", StringComparison.OrdinalIgnoreCase))
+        {
+            var match = Regex.Match(request.Data, "data:image/(?<type>.+?),(?<data>.+)");
+            base64Data = match.Success ? match.Groups["data"].Value : string.Empty;
+        }
+        else
+        {
+            base64Data = request.Data;
+        }
+
+        if (string.IsNullOrWhiteSpace(base64Data))
+            throw new InvalidOperationException("Invalid image data provided.");
 
         var streamData = new MemoryStream(Convert.FromBase64String(base64Data));
         if (streamData.Length > 0)
@@ -45,10 +76,10 @@ public class LocalFileStorageService(IOptions<OriginOptions> originSettings) : I
             string fileName = request.Name.Trim('"');
             fileName = RemoveSpecialCharacters(fileName);
             fileName = fileName.ReplaceWhitespace("-");
-            fileName += request.Extension.Trim();
+            fileName += normalizedExt;
             string fullPath = Path.Combine(pathToSave, fileName);
             string dbPath = Path.Combine(folderName, fileName);
-            if (File.Exists(dbPath))
+            if (File.Exists(fullPath))
             {
                 dbPath = NextAvailableFilename(dbPath);
                 fullPath = NextAvailableFilename(fullPath);
@@ -58,8 +89,8 @@ public class LocalFileStorageService(IOptions<OriginOptions> originSettings) : I
             await using var stream1 = stream.ConfigureAwait(false);
             await streamData.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
             var path = dbPath.Replace("\\", "/", StringComparison.Ordinal);
-            var Uri = originSettings.Value.OriginUrl!;
-            var imageUri = new Uri(originSettings.Value.OriginUrl!, path);
+            var baseUri = originSettings.Value.OriginUrl!;
+            var imageUri = new Uri(baseUri, path);
             return imageUri;
         }
         else
