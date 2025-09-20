@@ -31,7 +31,6 @@
 	 
 	   <ItemGroup>
 	     <Folder Include="Components\Autocompletes\App\" />
-	     <Folder Include="Pages\Store\" />
 	     <Folder Include="Shared\" />
 	   </ItemGroup>
 	 </Project>

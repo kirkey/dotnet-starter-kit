@@ -5,15 +5,15 @@ public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TK
     where TClient : class
     where TKey : notnull
 {
-    private readonly Dictionary<TKey, TDto> Dictionary = new();
+    private Dictionary<TKey, TDto> _dictionary = [];
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
     [Inject] protected TClient Client { get; set; } = default!;
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
         CoerceText = CoerceValue = Clearable = Dense = ResetValueOnEmptyText = true;
-        SearchFunc = SearchText;
-        ToStringFunc = GetText;
+        SearchFunc = SearchText!;
+        ToStringFunc = GetValueText;
         Variant = Variant.Filled;
         return base.SetParametersAsync(parameters);
     }
@@ -21,14 +21,14 @@ public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TK
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender && !EqualityComparer<TKey>.Default.Equals(_value, default) &&
-            await GetItem(_value!).ConfigureAwait(false) is { } dto)
+            await GetItem(_value!)is { } dto)
         {
-            Dictionary[_value!] = dto;
+            _dictionary[_value!] = dto;
             ForceRender(true);
         }
     }
 
     protected abstract Task<TDto?> GetItem(TKey id);
-    protected abstract Task<IEnumerable<TKey>>? SearchText(string? value, CancellationToken cancellationToken);
-    protected abstract string? GetText(TKey? id);
+    protected abstract Task<IEnumerable<TKey>> SearchText(string? value, CancellationToken token);
+    protected abstract string GetValueText(TKey? id);
 }
