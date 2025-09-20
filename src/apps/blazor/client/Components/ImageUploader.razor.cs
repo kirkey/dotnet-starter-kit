@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
@@ -78,6 +79,11 @@ public partial class ImageUploader : ComponentBase
     /// </summary>
     private string _selectedFileName = string.Empty;
 
+    /// <summary>
+    /// Unique id for the native InputFile element to avoid collisions when multiple components are on the page.
+    /// </summary>
+    private readonly string _nativeInputId = "iuNative_" + System.Guid.NewGuid().ToString("N");
+
     #endregion
 
     #region Injected Services
@@ -91,6 +97,11 @@ public partial class ImageUploader : ComponentBase
     /// Injected navigation manager for URL construction.
     /// </summary>
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
+    /// <summary>
+    /// JS runtime for DOM fallback actions.
+    /// </summary>
+    [Inject] private IJSRuntime JS { get; set; } = default!;
 
     #endregion
 
@@ -143,12 +154,34 @@ public partial class ImageUploader : ComponentBase
 
     /// <summary>
     /// Opens the file picker dialog.
+    /// Tries MudFileUpload first, then falls back to clicking the native input via JS.
     /// </summary>
     public async Task OpenFilePicker()
     {
-        if (_fileUpload != null)
+        try
         {
-            await _fileUpload.OpenFilePickerAsync();
+            if (_fileUpload != null)
+            {
+                await _fileUpload.OpenFilePickerAsync();
+                return;
+            }
+
+            // Fallback: programmatically click the native input with the unique id
+            var js = $"(function(){{var el=document.getElementById('{_nativeInputId}'); if(el){{el.click();}}}})()";
+            await JS.InvokeVoidAsync("eval", js);
+        }
+        catch
+        {
+            // try JS fallback if MudFileUpload fails
+            try
+            {
+                var js = $"(function(){{var el=document.getElementById('{_nativeInputId}'); if(el){{el.click();}}}})()";
+                await JS.InvokeVoidAsync("eval", js);
+            }
+            catch
+            {
+                // ignore silently — user will still be able to use the transparent native input
+            }
         }
     }
 
@@ -181,79 +214,100 @@ public partial class ImageUploader : ComponentBase
     #region Private Methods
 
     /// <summary>
-    /// Handles the file selection change event.
-    /// Validates the selected file and converts it to base64 format.
+    /// Handles the file selection change event from the native InputFile control.
+    /// Delegates to the shared file processor so both native and MudFileUpload follow the same logic.
     /// </summary>
     /// <param name="e">The input file change event arguments.</param>
     private async Task OnFilesChanged(InputFileChangeEventArgs e)
     {
-        try
+        if (e == null || e.FileCount == 0)
         {
-            if (e.FileCount == 0)
-            {
-                await RemoveImage();
-                return;
-            }
-
-            var file = e.File;
-            
-            // Validate file type
-            if (!IsValidImageType(file.ContentType))
-            {
-                Snackbar.Add("Please select a valid image file (JPG, JPEG, PNG).", Severity.Error);
-                return;
-            }
-
-            // Validate file size
-            if (file.Size > MaxFileSize)
-            {
-                Snackbar.Add($"File size exceeds the maximum limit of {GetFileSizeText(MaxFileSize)}.", Severity.Error);
-                return;
-            }
-
-            _selectedFileName = file.Name;
-
-            // Convert to base64
-            using var stream = file.OpenReadStream(MaxFileSize);
-            using var memoryStream = new MemoryStream();
-            await stream.CopyToAsync(memoryStream);
-            var bytes = memoryStream.ToArray();
-            var base64String = Convert.ToBase64String(bytes);
-
-            UploadedImage = new FileUploadCommand
-            {
-                Name = file.Name,
-                Data = base64String,
-                Extension = file.ContentType,
-                // Size = file.Size
-            };
-
-            await UploadedImageChanged.InvokeAsync(UploadedImage);
-            StateHasChanged();
-
-            Snackbar.Add("Image uploaded successfully!", Severity.Success);
+            await RemoveImage();
+            return;
         }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Error uploading image: {ex.Message}", Severity.Error);
-        }
+
+        await ProcessBrowserFileAsync(e.File);
     }
 
     /// <summary>
-    /// Validates if the provided content type is a supported image format.
+    /// Shared file processing logic for a single IBrowserFile.
+    /// Performs size check, reads bytes, validates content and signature, converts to base64 and emits UploadedImage.
     /// </summary>
-    /// <param name="contentType">The MIME content type to validate.</param>
-    /// <returns>True if the content type is a supported image format; otherwise, false.</returns>
-    private static bool IsValidImageType(string contentType)
+    /// <param name="file">The browser file to process.</param>
+    private async Task ProcessBrowserFileAsync(IBrowserFile file)
     {
-        var supportedTypes = new[]
+        if (file == null)
+            return;
+
+        // Validate file size first
+        if (file.Size > MaxFileSize)
         {
-            "image/jpeg",
-            "image/jpg", 
-            "image/png"
+            Snackbar.Add($"File size exceeds the maximum limit of {GetFileSizeText(MaxFileSize)}.", Severity.Error);
+            return;
+        }
+
+        _selectedFileName = file.Name;
+
+        // Read file into memory (we already enforced MaxFileSize when opening stream)
+        using var stream = file.OpenReadStream(MaxFileSize);
+        using var memoryStream = new MemoryStream();
+        await stream.CopyToAsync(memoryStream);
+        var bytes = memoryStream.ToArray();
+
+        // Validate file type: accept if content-type indicates image OR extension matches OR magic-bytes check
+        var contentOk = !string.IsNullOrWhiteSpace(file.ContentType) && file.ContentType.Split(';')[0].Trim().StartsWith("image/", StringComparison.OrdinalIgnoreCase);
+        var ext = Path.GetExtension(file.Name).TrimStart('.');
+        var extOk = !string.IsNullOrWhiteSpace(ext) && (ext.Equals("jpg", StringComparison.OrdinalIgnoreCase) || ext.Equals("jpeg", StringComparison.OrdinalIgnoreCase) || ext.Equals("png", StringComparison.OrdinalIgnoreCase));
+        var bytesOk = IsImageBytes(bytes);
+
+        if (!contentOk && !extOk && !bytesOk)
+        {
+            // Build diagnostic info to help debug why a valid image might be rejected
+            var sig = bytes.Length > 0 ? BitConverter.ToString(bytes.Take(Math.Min(8, bytes.Length)).ToArray()).Replace("-", " ") : "<empty>";
+            var ct = file.ContentType ?? "<null>";
+            var message = $"Invalid image. contentType='{ct}', ext='{ext}', bytes={bytes.Length}, signature='{sig}'";
+            Snackbar.Add(message, Severity.Error);
+            return;
+        }
+
+        // Convert to base64
+        var base64String = Convert.ToBase64String(bytes);
+
+        UploadedImage = new FileUploadCommand
+        {
+            Name = file.Name,
+            Data = base64String,
+            Extension = file.ContentType ?? Path.GetExtension(file.Name).TrimStart('.'),
+            // Size = file.Size
         };
 
-        return supportedTypes.Contains(contentType.ToUpperInvariant());
+        await UploadedImageChanged.InvokeAsync(UploadedImage);
+        StateHasChanged();
+
+        Snackbar.Add("Image uploaded successfully!", Severity.Success);
+    }
+
+    /// <summary>
+    /// Checks common image file signatures (magic bytes) to determine file type.
+    /// Supports JPEG and PNG signatures.
+    /// </summary>
+    /// <param name="bytes">The file bytes to inspect.</param>
+    /// <returns>True if the bytes match a supported image signature.</returns>
+    private static bool IsImageBytes(byte[] bytes)
+    {
+        if (bytes == null || bytes.Length < 4)
+            return false;
+
+        // JPEG: FF D8 FF
+        if (bytes.Length >= 3 && bytes[0] == 0xFF && bytes[1] == 0xD8 && bytes[2] == 0xFF)
+            return true;
+
+        // PNG: 89 50 4E 47 0D 0A 1A 0A
+        if (bytes.Length >= 8 && bytes[0] == 0x89 && bytes[1] == 0x50 && bytes[2] == 0x4E && bytes[3] == 0x47
+            && bytes[4] == 0x0D && bytes[5] == 0x0A && bytes[6] == 0x1A && bytes[7] == 0x0A)
+            return true;
+
+        return false;
     }
 
     /// <summary>
@@ -304,5 +358,24 @@ public partial class ImageUploader : ComponentBase
         ClearDragClass();
     }
 
+    /// <summary>
+    /// Trigger a programmatic click on the native input element. Bound to the label's @onclick.
+    /// </summary>
+    /// <param name="e">Mouse event args (not used).</param>
+    private async Task TriggerNativeInputClick(MouseEventArgs e)
+    {
+        try
+        {
+            // Use a short JS snippet to click the native input. This is executed in response to a user interaction.
+            var js = $"(function(){{var el=document.getElementById('{_nativeInputId}'); if(el){{el.click();}}}})()";
+            await JS.InvokeVoidAsync("eval", js);
+        }
+        catch
+        {
+            // ignore failures silently; the native transparent input should still receive clicks
+        }
+    }
+
     #endregion
+
 }
