@@ -3,7 +3,7 @@
 public partial class Todos
 {
     [Inject]
-    protected IApiClient ApiClient { get; set; } = default!;
+    protected IClient ApiClient { get; set; } = default!;
 
     protected EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel> Context { get; set; } = default!;
 

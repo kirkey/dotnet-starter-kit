@@ -8,7 +8,7 @@ public partial class Users
     protected IAuthorizationService AuthService { get; set; } = default!;
 
     [Inject]
-    protected IApiClient UsersClient { get; set; } = default!;
+    protected IClient UsersClient { get; set; } = default!;
 
     protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = default!;
 

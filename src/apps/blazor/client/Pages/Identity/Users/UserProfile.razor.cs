@@ -7,7 +7,7 @@ public partial class UserProfile
     [Inject]
     protected IAuthorizationService AuthService { get; set; } = default!;
     [Inject]
-    protected IApiClient UsersClient { get; set; } = default!;
+    protected IClient UsersClient { get; set; } = default!;
 
     [Parameter]
     public string? Id { get; set; }

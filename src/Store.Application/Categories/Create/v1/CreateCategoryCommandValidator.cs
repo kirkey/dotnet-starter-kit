@@ -43,5 +43,20 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
         RuleFor(x => x.ImageUrl)
             .MaximumLength(500)
             .When(x => !string.IsNullOrEmpty(x.ImageUrl));
+
+        // Light validation for optional image payload: name and extension must be present when provided.
+        RuleFor(x => x.Image!.Name)
+            .NotEmpty()
+            .When(x => x.Image is not null);
+
+        RuleFor(x => x.Image!.Extension)
+            .NotEmpty()
+            .Must(ext => ext.StartsWith('.'))
+            .WithMessage("Image extension must start with '.' (example: .png, .jpg)")
+            .When(x => x.Image is not null);
+
+        RuleFor(x => x.Image!.Data)
+            .NotEmpty()
+            .When(x => x.Image is not null);
     }
 }

@@ -3,7 +3,7 @@
 public partial class Tenants
 {
     [Inject]
-    private IApiClient ApiClient { get; set; } = default!;
+    private IClient ApiClient { get; set; } = default!;
     private string? _searchString;
     protected EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand> Context { get; set; } = default!;
     private List<TenantViewModel> _tenants = [];

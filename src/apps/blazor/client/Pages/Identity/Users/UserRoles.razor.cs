@@ -9,7 +9,7 @@ public partial class UserRoles
     [Inject]
     protected IAuthorizationService AuthService { get; set; } = default!;
     [Inject]
-    protected IApiClient UsersClient { get; set; } = default!;
+    protected IClient UsersClient { get; set; } = default!;
 
     private List<UserRoleDetail> _userRolesList = default!;
 

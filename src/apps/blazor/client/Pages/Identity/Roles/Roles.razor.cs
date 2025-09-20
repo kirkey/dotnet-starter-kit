@@ -7,7 +7,7 @@ public partial class Roles : ComponentBase
     [Inject]
     protected IAuthorizationService AuthService { get; set; } = default!;
     [Inject]
-    private IApiClient RolesClient { get; set; } = default!;
+    private IClient RolesClient { get; set; } = default!;
 
     protected EntityClientTableContext<RoleDto, string?, CreateOrUpdateRoleCommand> Context { get; set; } = default!;
 

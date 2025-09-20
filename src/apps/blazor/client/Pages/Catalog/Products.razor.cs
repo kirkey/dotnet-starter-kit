@@ -2,7 +2,7 @@
 
 public partial class Products
 {
-    [Inject] protected IApiClient _client { get; set; } = default!;
+    [Inject] protected IClient _client { get; set; } = default!;
 
     protected EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel> Context { get; set; } = default!;
 

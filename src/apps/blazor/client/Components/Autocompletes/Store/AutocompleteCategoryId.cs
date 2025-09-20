@@ -5,7 +5,7 @@
 /// - Fetches a single Category by id when needed.
 /// - Searches Categories by code/name/description/notes and caches results in-memory.
 /// </summary>
-public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IApiClient, DefaultIdType?>
+public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient, DefaultIdType?>
 {
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
     private Dictionary<DefaultIdType, CategoryResponse> _cache = [];
@@ -62,10 +62,10 @@ public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IApiCli
         if (response?.Items is { } items)
         {
             // Overwrite cache with latest page of results; guard against null Ids.
-            _cache = items.Where(x => x.Id.HasValue)
-                .GroupBy(x => x.Id!.Value)
+            _cache = items
+                .GroupBy(x => x.Id)
                 .Select(g => g.First())
-                .ToDictionary(x => x.Id!.Value);
+                .ToDictionary(x => x.Id);
         }
 
         return _cache.Keys.Cast<DefaultIdType?>();

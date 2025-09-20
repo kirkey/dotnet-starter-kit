@@ -9,7 +9,7 @@ public partial class RolePermissions
     [Inject]
     protected IAuthorizationService AuthService { get; set; } = default!;
     [Inject]
-    protected IApiClient RolesClient { get; set; } = default!;
+    protected IClient RolesClient { get; set; } = default!;
 
     private Dictionary<string, List<PermissionViewModel>> _groupedRoleClaims = default!;
 

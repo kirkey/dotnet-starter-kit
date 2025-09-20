@@ -51,7 +51,7 @@ public static class Extensions
         services.AddScoped<IIdleTimerService, IdleTimerService>();
         services.AddTransient<ApiRetryHandler>();
         services.AddTransient<ApiCachingHandler>();
-        services.AddTransient<IApiClient, ApiClient>();
+        services.AddTransient<IClient, Client>();
         services.AddHttpClient(ClientName, client =>
         {
             client.DefaultRequestHeaders.AcceptLanguage.Clear();

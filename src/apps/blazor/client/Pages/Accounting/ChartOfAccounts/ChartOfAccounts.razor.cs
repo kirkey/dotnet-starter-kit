@@ -3,7 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.ChartOfAccounts;
 public partial class ChartOfAccounts
 {
     [Inject]
-    protected IApiClient ApiClient { get; set; } = default!;
+    protected IClient ApiClient { get; set; } = default!;
 
     protected EntityServerTableContext<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel> Context { get; set; } = default!;
 

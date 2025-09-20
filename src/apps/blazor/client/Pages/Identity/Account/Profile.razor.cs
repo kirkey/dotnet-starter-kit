@@ -7,7 +7,7 @@ public partial class Profile
     [Inject]
     protected IAuthenticationService AuthService { get; set; } = default!;
     [Inject]
-    protected IApiClient PersonalClient { get; set; } = default!;
+    protected IClient PersonalClient { get; set; } = default!;
 
     private readonly UpdateUserCommand _profileModel = new();
 

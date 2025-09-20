@@ -7,7 +7,7 @@ public partial class ForgotPassword
     private bool BusySubmitting { get; set; }
 
     [Inject]
-    private IApiClient UsersClient { get; set; } = default!;
+    private IClient UsersClient { get; set; } = default!;
 
     private string Tenant { get; set; } = TenantConstants.Root.Id;
 

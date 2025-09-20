@@ -3,7 +3,7 @@
 public partial class Audit : ComponentBase
 {
     [Inject]
-    private IApiClient ApiClient { get; set; } = default!;
+    private IClient ApiClient { get; set; } = default!;
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Parameter] public DefaultIdType Id { get; set; }
 

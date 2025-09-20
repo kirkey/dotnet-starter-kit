@@ -3,7 +3,7 @@
 public partial class Security
 {
     [Inject]
-    public IApiClient PersonalClient { get; set; } = default!;
+    public IClient PersonalClient { get; set; } = default!;
 
     private readonly ChangePasswordCommand _passwordModel = new();
 

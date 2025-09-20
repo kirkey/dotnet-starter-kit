@@ -3,7 +3,7 @@
 public partial class Brands
 {
     [Inject]
-    protected IApiClient _client { get; set; } = default!;
+    protected IClient _client { get; set; } = default!;
 
     protected EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel> Context { get; set; } = default!;
 

@@ -3,7 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 public partial class Payees : ComponentBase
 {
     [Inject]
-    protected IApiClient ApiClient { get; set; } = default!;
+    protected IClient ApiClient { get; set; } = default!;
 
     protected EntityServerTableContext<PayeeResponse, DefaultIdType, ResponseViewModel> Context { get; set; } = default!;
 
