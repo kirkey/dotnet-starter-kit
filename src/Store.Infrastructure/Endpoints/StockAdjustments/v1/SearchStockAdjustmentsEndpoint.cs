@@ -1,5 +1,5 @@
-using FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
+using FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 

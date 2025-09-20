@@ -1,5 +1,5 @@
-using Accounting.Application.PostingBatches.Responses;
 using Accounting.Application.PostingBatches.Queries;
+using Accounting.Application.PostingBatches.Responses;
 
 namespace Accounting.Application.PostingBatches.Handlers;
 

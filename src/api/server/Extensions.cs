@@ -12,7 +12,7 @@ public static class Extensions
             typeof(CatalogMetadata).Assembly,
             typeof(TodoModule).Assembly,
             typeof(AccountingMetadata).Assembly,
-            typeof(StoreModule).Assembly,
+            typeof(StoreMetadata).Assembly,
         };
 
         //register validators

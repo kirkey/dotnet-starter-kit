@@ -1,5 +1,5 @@
-using Accounting.Application.Members.Responses;
 using Accounting.Application.Members.Queries;
+using Accounting.Application.Members.Responses;
 
 namespace Accounting.Application.Members.Handlers;
 

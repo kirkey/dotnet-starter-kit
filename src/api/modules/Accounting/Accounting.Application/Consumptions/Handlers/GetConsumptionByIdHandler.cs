@@ -1,5 +1,5 @@
-using Accounting.Application.Consumptions.Responses;
 using Accounting.Application.Consumptions.Queries;
+using Accounting.Application.Consumptions.Responses;
 
 namespace Accounting.Application.Consumptions.Handlers;
 

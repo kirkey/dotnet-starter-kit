@@ -1,7 +1,7 @@
 namespace Accounting.Application.Accruals.Search;
 
-using Responses;
 using Queries;
+using Responses;
 
 public class SearchAccrualsHandler(IReadRepository<Accrual> repository)
     : IRequestHandler<SearchAccrualsQuery, List<AccrualResponse>>

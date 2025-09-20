@@ -1,5 +1,5 @@
-using Accounting.Application.PaymentAllocations.Responses;
 using Accounting.Application.PaymentAllocations.Queries;
+using Accounting.Application.PaymentAllocations.Responses;
 
 namespace Accounting.Application.PaymentAllocations.Handlers;
 
