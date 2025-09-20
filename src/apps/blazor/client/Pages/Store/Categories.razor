@@ -36,33 +36,12 @@
 
         <!-- Image Management -->
         <MudItem xs="12">
-            <MudPaper Class="pa-3">
-                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
-                    <MudStack Class="mr-4" Justify="Justify.Center" AlignItems="AlignItems.Center">
-                        @if (GetImagePreviewUrl(context) is { } previewUrl)
-                        {
-                            <img src="@previewUrl" alt="Category image" style="max-width:200px;max-height:200px;border-radius:8px;object-fit:cover;" />
-                        }
-                        else
-                        {
-                            <MudIcon Icon="@Icons.Material.Outlined.Image" Size="Size.Large" Color="Color.Default" />
-                            <MudText Typo="Typo.caption">No image</MudText>
-                        }
-                    </MudStack>
-                    <MudStack Spacing="1">
-                        <InputFile OnChange="@(e => OnImageSelected(e, context))" />
-                        <MudButton Color="Color.Error"
-                                   Disabled="@(string.IsNullOrWhiteSpace(context.ImageUrl) && string.IsNullOrWhiteSpace(context.Image?.Data))"
-                                   OnClick="@(() => RemoveImage(context))" Variant="Variant.Outlined">
-                            Remove Image
-                        </MudButton>
-                        @if (!string.IsNullOrWhiteSpace(context.ImageUrl))
-                        {
-                            <MudText Typo="Typo.caption">Current file: @context.ImageUrl</MudText>
-                        }
-                    </MudStack>
-                </MudStack>
-            </MudPaper>
+            <ImageUploader CurrentImageUrl="@context.ImageUrl"
+                          CurrentImageUrlChanged="@(url => context.ImageUrl = url)"
+                          UploadedImage="@context.Image"
+                          UploadedImageChanged="@(img => context.Image = img)"
+                          AltText="Category image"
+                          UploadLabel="Upload Category Image" />
         </MudItem>
     </EditFormContent>
 

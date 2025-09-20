@@ -1,0 +1,146 @@
+<style>
+    /* CSS for the file upload input overlay */
+    .file-upload-input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 10;
+        opacity: 0;
+        cursor: pointer;
+    }
+    
+    /* CSS for the drag and drop zone */
+    .image-drop-zone {
+        min-height: 150px;
+        transition: all 0.3s ease;
+    }
+    
+    /* CSS for drag hover state - using concrete colors for better compatibility */
+    .image-drop-zone.drag-hover {
+        border-color: #1e88e5 !important; /* MudBlazor primary blue */
+        background-color: rgba(30, 136, 229, 0.06) !important;
+    }
+</style>
+
+<!-- Image uploader component with preview and drag-drop functionality -->
+<MudPaper Class="pa-3">
+    <MudGrid AlignItems="Center" GutterSize="2">
+        <!-- Image Preview Section -->
+        <MudItem xs="12" md="4">
+            <MudText Typo="Typo.subtitle2" Class="mb-2">Image Preview</MudText>
+            <MudCard Class="d-flex justify-center image-preview-card" Style="min-height:180px; max-height:220px;">
+                <MudCardContent Class="d-flex flex-column align-center justify-center" Style="width:100%;">
+                    @if (GetImagePreviewUrl() is { } previewUrl)
+                    {
+                        <img src="@previewUrl"
+                             alt="@(AltText ?? "Image")"
+                             style="width:100%;height:100%;max-width:200px;max-height:200px;border-radius:8px;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center">
+                            <MudIcon Icon="@Icons.Material.Outlined.Image" Size="Size.Large" Color="Color.Warning" />
+                            <MudText Typo="Typo.caption" Class="mt-1">No image</MudText>
+                        </MudStack>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <!-- Upload Section -->
+        <MudItem xs="12" md="8">
+            <MudText Typo="Typo.subtitle2" Class="mb-2">@UploadLabel</MudText>
+            
+            <!-- File Upload Component with drag-drop support -->
+            <MudFileUpload T="IBrowserFile"
+                           @ref="_fileUpload"
+                           OnFilesChanged="@OnFilesChanged"
+                           Accept="image/*"
+                           MaximumFileCount="1"
+                           MaxFileSize="@MaxFileSize"
+                           Hidden="false"
+                           InputClass="file-upload-input"
+                           tabindex="-1"
+                           @ondrop="@OnDrop"
+                           @ondragenter="@OnDragEnter"
+                           @ondragleave="@OnDragLeave"
+                           @ondragend="@OnDragEnd">
+                <ActivatorContent>
+                    <!-- Drop zone with visual feedback -->
+                    <MudPaper Class="@($"{_dragClass} image-drop-zone d-flex flex-column align-center justify-center pa-4")"
+                              Outlined="true"
+                              Style="cursor: pointer;">
+                        <MudIcon Icon="@Icons.Material.Outlined.CloudUpload" 
+                                 Size="Size.Large" 
+                                 Color="Color.Primary" 
+                                 Class="mb-2" />
+                        <MudText Typo="Typo.h6" Align="Align.Center" Class="mb-1">
+                            Drag and drop image here or click to browse
+                        </MudText>
+                        <MudText Typo="Typo.caption" 
+                                 Color="Color.Secondary" 
+                                 Align="Align.Center">
+                            Supported formats: JPG, JPEG, PNG
+                        </MudText>
+                        <MudText Typo="Typo.caption" 
+                                 Color="Color.Secondary" 
+                                 Align="Align.Center">
+                            Max size: @GetFileSizeText(MaxFileSize)
+                        </MudText>
+                        
+                        <!-- Show selected file name if available -->
+                        @if (!string.IsNullOrWhiteSpace(_selectedFileName))
+                        {
+                            <MudChip T="string" 
+                                     Color="Color.Success" 
+                                     Text="@_selectedFileName" 
+                                     Class="mt-2" />
+                        }
+                    </MudPaper>
+                </ActivatorContent>
+            </MudFileUpload>
+            
+            <!-- Status and Action Buttons -->
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mt-3">
+                <MudStack>
+                    <!-- Show current image status -->
+                    @if (!string.IsNullOrWhiteSpace(CurrentImageUrl))
+                    {
+                        <MudText Typo="Typo.caption" Color="Color.Info">
+                            <MudIcon Icon="@Icons.Material.Outlined.Image" Size="Size.Small" Class="mr-1" />
+                            Current: @CurrentImageUrl
+                        </MudText>
+                    }
+                    <!-- Show uploaded image status -->
+                    @if (!string.IsNullOrWhiteSpace(UploadedImage?.Data))
+                    {
+                        <MudText Typo="Typo.caption" Color="Color.Success">
+                            <MudIcon Icon="@Icons.Material.Outlined.FileUpload" Size="Size.Small" Class="mr-1" />
+                            New image ready to upload
+                        </MudText>
+                    }
+                </MudStack>
+
+                <!-- Action buttons -->
+                <MudStack Row="true" Spacing="1">
+                    <MudButton Color="Color.Primary"
+                               OnClick="OpenFilePicker"
+                               Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Outlined.FolderOpen"
+                               Size="Size.Small">
+                        Browse
+                    </MudButton>
+                    <MudButton Color="Color.Error"
+                               Disabled="@(string.IsNullOrWhiteSpace(CurrentImageUrl) && string.IsNullOrWhiteSpace(UploadedImage?.Data))"
+                               OnClick="RemoveImage"
+                               Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Outlined.Delete"
+                               Size="Size.Small">
+                        Remove
+                    </MudButton>
+                </MudStack>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+</MudPaper>

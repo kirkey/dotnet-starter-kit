@@ -1,12 +1,9 @@
-﻿using MediatR;
-
 namespace FSH.Framework.Core.Storage.File;
 
 /// <summary>
-/// Command for uploading files with validation and metadata.
-/// Implements CQRS pattern by extending IRequest.
+/// Represents a file upload request containing file data and metadata.
 /// </summary>
-public class FileUploadCommand : IRequest<FileUploadResponse>
+public class FileUploadRequest
 {
     /// <summary>
     /// Gets or sets the name of the uploaded file.
@@ -34,9 +31,9 @@ public class FileUploadCommand : IRequest<FileUploadResponse>
     public Dictionary<string, string>? Metadata { get; set; }
 
     /// <summary>
-    /// Validates if the file upload command contains valid data.
+    /// Validates if the file upload request contains valid data.
     /// </summary>
-    /// <returns>True if the command is valid; otherwise, false.</returns>
+    /// <returns>True if the request is valid; otherwise, false.</returns>
     public bool IsValid()
     {
         return !string.IsNullOrWhiteSpace(Name) &&

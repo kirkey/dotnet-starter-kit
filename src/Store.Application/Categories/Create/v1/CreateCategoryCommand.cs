@@ -1,6 +1,6 @@
-namespace FSH.Starter.WebApi.Store.Application.Categories.Create.v1;
+using FSH.Framework.Core.Storage.File;
 
-using FSH.Framework.Core.Storage.File.Features;
+namespace FSH.Starter.WebApi.Store.Application.Categories.Create.v1;
 
 public sealed record CreateCategoryCommand(
     [property: DefaultValue("Sample Category")] string? Name,

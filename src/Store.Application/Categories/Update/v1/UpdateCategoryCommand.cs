@@ -1,6 +1,6 @@
-namespace FSH.Starter.WebApi.Store.Application.Categories.Update.v1;
+using FSH.Framework.Core.Storage.File;
 
-using FSH.Framework.Core.Storage.File.Features;
+namespace FSH.Starter.WebApi.Store.Application.Categories.Update.v1;
 
 public sealed record UpdateCategoryCommand(
     DefaultIdType Id,

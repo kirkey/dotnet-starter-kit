@@ -1,7 +1,6 @@
 using Store.Domain.Exceptions.Category;
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.File;
-using System.IO;
 
 namespace FSH.Starter.WebApi.Store.Application.Categories.Update.v1;
 
