@@ -6,42 +6,42 @@ public partial class Budgets
 {
     [Inject] protected IApiClient ApiClient { get; set; } = default!;
 
-    protected EntityServerTableContext<BudgetDto, DefaultIdType, BudgetViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel> Context { get; set; } = default!;
 
-    private EntityTable<BudgetDto, DefaultIdType, BudgetViewModel> _table = default!;
+    private EntityTable<BudgetResponse, DefaultIdType, BudgetViewModel> _table = default!;
 
     protected override Task OnInitializedAsync()
     {
-        Context = new EntityServerTableContext<BudgetDto, DefaultIdType, BudgetViewModel>(
+        Context = new EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel>(
             entityName: "Accounting Period",
             entityNamePlural: "Accounting Periods",
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<BudgetDto>(dto => dto.Name, "Name", "Name"),
-                new EntityField<BudgetDto>(dto => dto.FiscalYear, "Fiscal Year", "FiscalYear"),
-                new EntityField<BudgetDto>(dto => dto.BudgetType, "Type", "BudgetType"),
-                new EntityField<BudgetDto>(dto => dto.TotalBudgetedAmount, "Total Budgeted", "TotalBudgetedAmount", typeof(decimal)),
-                new EntityField<BudgetDto>(dto => dto.TotalActualAmount, "Total Actual", "TotalActualAmount", typeof(decimal)),
-                new EntityField<BudgetDto>(dto => dto.Description, "Description", "Description"),
-                new EntityField<BudgetDto>(dto => dto.Notes, "Notes", "Notes"),
+                new EntityField<BudgetResponse>(dto => dto.Name, "Name", "Name"),
+                new EntityField<BudgetResponse>(dto => dto.FiscalYear, "Fiscal Year", "FiscalYear"),
+                new EntityField<BudgetResponse>(dto => dto.BudgetType, "Type", "BudgetType"),
+                new EntityField<BudgetResponse>(dto => dto.TotalBudgetedAmount, "Total Budgeted", "TotalBudgetedAmount", typeof(decimal)),
+                new EntityField<BudgetResponse>(dto => dto.TotalActualAmount, "Total Actual", "TotalActualAmount", typeof(decimal)),
+                new EntityField<BudgetResponse>(dto => dto.Description, "Description", "Description"),
+                new EntityField<BudgetResponse>(dto => dto.Notes, "Notes", "Notes"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchBudgetsRequest>();
+                var paginationFilter = filter.Adapt<SearchBudgetsQuery>();
 
                 var result = await ApiClient.BudgetSearchEndpointAsync("1", paginationFilter);
-                return result.Adapt<PaginationResponse<BudgetDto>>();
+                return result.Adapt<PaginationResponse<BudgetResponse>>();
             },
             createFunc: async period =>
             {
-                await ApiClient.BudgetCreateEndpointAsync("1", period.Adapt<CreateBudgetRequest>());
+                await ApiClient.BudgetCreateEndpointAsync("1", period.Adapt<CreateBudgetCommand>());
             },
             updateFunc: async (id, period) =>
             {
-                await ApiClient.BudgetUpdateEndpointAsync("1", id, period.Adapt<UpdateBudgetRequest>());
+                await ApiClient.BudgetUpdateEndpointAsync("1", id, period.Adapt<UpdateBudgetCommand>());
             },
             deleteFunc: async id => await ApiClient.BudgetDeleteEndpointAsync("1", id));
 

@@ -31,12 +31,12 @@ public static class StoreModule
             groceryGroup.MapDeleteGroceryItemEndpoint();
             groceryGroup.MapSearchGroceryItemsEndpoint();
 
-            var customerGroup = app.MapGroup("customers").WithTags("Customers");
-            customerGroup.MapCreateCustomerEndpoint();
-            customerGroup.MapGetCustomerEndpoint();
-            customerGroup.MapUpdateCustomerEndpoint();
-            customerGroup.MapDeleteCustomerEndpoint();
-            customerGroup.MapSearchCustomersEndpoint();
+            // var customerGroup = app.MapGroup("customers").WithTags("Customers");
+            // customerGroup.MapCreateCustomerEndpoint();
+            // customerGroup.MapGetCustomerEndpoint();
+            // customerGroup.MapUpdateCustomerEndpoint();
+            // customerGroup.MapDeleteCustomerEndpoint();
+            // customerGroup.MapSearchCustomersEndpoint();
 
             var inventoryGroup = app.MapGroup("inventory-transfers").WithTags("Inventory Transfers");
             inventoryGroup.MapCreateInventoryTransferEndpoint();

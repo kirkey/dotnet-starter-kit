@@ -130,7 +130,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body);
+        System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -142,7 +142,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create invoice from consumption
@@ -268,7 +268,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body);
+        System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -280,7 +280,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets a list of budgets
@@ -291,7 +291,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body);
+        System.Threading.Tasks.Task<BudgetListItemResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -303,7 +303,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BudgetListItemResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create a budget
@@ -498,7 +498,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body);
+        System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -510,7 +510,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create a customer
@@ -613,7 +613,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body);
+        System.Threading.Tasks.Task<CustomerResponsePagedList> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -625,122 +625,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Create a new customer
-        /// </summary>
-        /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Create a new customer
-        /// </summary>
-        /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Get customer by ID
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get customer by ID
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Update customer
-        /// </summary>
-        /// <remarks>
-        /// Updates an existing customer
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Update customer
-        /// </summary>
-        /// <remarks>
-        /// Updates an existing customer
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Delete customer
-        /// </summary>
-        /// <remarks>
-        /// Deletes a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Delete customer
-        /// </summary>
-        /// <remarks>
-        /// Deletes a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Search customers
-        /// </summary>
-        /// <remarks>
-        /// Search and filter customers with pagination support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Search customers
-        /// </summary>
-        /// <remarks>
-        /// Search and filter customers with pagination support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomerResponsePagedList> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new cycle count
@@ -935,7 +820,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body);
+        System.Threading.Tasks.Task<FixedAssetResponsePagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -947,7 +832,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<FixedAssetResponsePagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a fixed asset by id
@@ -1142,7 +1027,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body);
+        System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1154,7 +1039,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create inventory item
@@ -1280,7 +1165,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body);
+        System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1292,7 +1177,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add item to inventory transfer
@@ -1349,7 +1234,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body);
+        System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1361,7 +1246,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retire patronage capital
@@ -1487,7 +1372,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body);
+        System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1499,7 +1384,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Searches payment allocations
@@ -1584,7 +1469,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body);
+        System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1596,7 +1481,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create accounting period
@@ -1791,7 +1676,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body);
+        System.Threading.Tasks.Task<GetPriceListResponsePagedList> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1803,7 +1688,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetPriceListResponsePagedList> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// creates a product
@@ -1906,7 +1791,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body);
+        System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1918,7 +1803,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create a project
@@ -2021,7 +1906,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body);
+        System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2033,7 +1918,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new purchase order
@@ -2136,7 +2021,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body);
+        System.Threading.Tasks.Task<GetPurchaseOrderResponsePagedList> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2148,7 +2033,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetPurchaseOrderResponsePagedList> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reconcile an account
@@ -2400,7 +2285,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body);
+        System.Threading.Tasks.Task<GetSalesOrderResponsePagedList> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2412,7 +2297,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetSalesOrderResponsePagedList> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new stock adjustment
@@ -2538,7 +2423,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body);
+        System.Threading.Tasks.Task<StockAdjustmentResponsePagedList> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2550,7 +2435,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StockAdjustmentResponsePagedList> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new supplier
@@ -2584,7 +2469,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version);
+        System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2596,7 +2481,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a supplier
@@ -2894,7 +2779,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body);
+        System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2906,7 +2791,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// refresh JWTs
@@ -3387,7 +3272,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body);
+        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3399,7 +3284,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new warehouse location
@@ -3502,7 +3387,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body);
+        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3514,7 +3399,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new warehouse
@@ -3617,7 +3502,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body);
+        System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3629,7 +3514,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new wholesale contract
@@ -4243,7 +4128,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body)
+        public virtual System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body)
         {
             return ChartOfAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4258,7 +4143,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4311,7 +4196,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ChartOfAccountResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4859,7 +4744,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body)
+        public virtual System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body)
         {
             return SearchBrandsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4874,7 +4759,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4927,7 +4812,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<BrandResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4963,7 +4848,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body)
+        public virtual System.Threading.Tasks.Task<BudgetListItemResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body)
         {
             return BudgetSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4978,7 +4863,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BudgetListItemResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5031,7 +4916,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<BudgetListItemResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5883,7 +5768,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body)
+        public virtual System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body)
         {
             return SearchCategoriesEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -5898,7 +5783,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5951,7 +5836,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CategoryResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -6395,7 +6280,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body)
+        public virtual System.Threading.Tasks.Task<CustomerResponsePagedList> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body)
         {
             return CustomerSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -6410,7 +6295,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomerResponsePagedList> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6463,519 +6348,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Create a new customer
-        /// </summary>
-        /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body)
-        {
-            return CreateCustomerEndpointAsync(version, body, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Create a new customer
-        /// </summary>
-        /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/customers"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/customers");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateCustomerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Get customer by ID
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id)
-        {
-            return GetCustomerEndpointAsync(version, id, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get customer by ID
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (id == null)
-                throw new System.ArgumentNullException("id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/customers/{id}"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/customers/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CustomerResponse2>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Update customer
-        /// </summary>
-        /// <remarks>
-        /// Updates an existing customer
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body)
-        {
-            return UpdateCustomerEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Update customer
-        /// </summary>
-        /// <remarks>
-        /// Updates an existing customer
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (id == null)
-                throw new System.ArgumentNullException("id");
-
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/customers/{id}"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/customers/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<UpdateCustomerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Delete customer
-        /// </summary>
-        /// <remarks>
-        /// Deletes a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id)
-        {
-            return DeleteCustomerEndpointAsync(version, id, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Delete customer
-        /// </summary>
-        /// <remarks>
-        /// Deletes a customer by their unique identifier
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (id == null)
-                throw new System.ArgumentNullException("id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/customers/{id}"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/customers/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Search customers
-        /// </summary>
-        /// <remarks>
-        /// Search and filter customers with pagination support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body)
-        {
-            return SearchCustomersEndpointAsync(version, body, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Search customers
-        /// </summary>
-        /// <remarks>
-        /// Search and filter customers with pagination support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/customers/search"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/customers/search");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomerResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -7845,7 +7218,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body)
+        public virtual System.Threading.Tasks.Task<FixedAssetResponsePagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body)
         {
             return FixedAssetSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -7860,7 +7233,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<FixedAssetResponsePagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7913,7 +7286,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<FixedAssetResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -8765,7 +8138,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body)
+        public virtual System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body)
         {
             return SearchGroceryItemsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -8780,7 +8153,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8833,7 +8206,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GroceryItemResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -9381,7 +8754,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body)
+        public virtual System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body)
         {
             return SearchInventoryTransfersEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -9396,7 +8769,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -9449,7 +8822,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetInventoryTransferListResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -9694,7 +9067,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body)
+        public virtual System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body)
         {
             return JournalEntrySearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -9709,7 +9082,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -9762,7 +9135,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<JournalEntryResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -10310,7 +9683,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body)
+        public virtual System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body)
         {
             return PayeeSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -10325,7 +9698,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10378,7 +9751,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PayeeResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -10794,7 +10167,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body)
+        public virtual System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body)
         {
             return AccountingPeriodSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -10809,7 +10182,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10862,7 +10235,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AccountingPeriodResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -11714,7 +11087,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body)
+        public virtual System.Threading.Tasks.Task<GetPriceListResponsePagedList> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body)
         {
             return SearchPriceListsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -11729,7 +11102,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetPriceListResponsePagedList> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11782,7 +11155,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetPriceListResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -12226,7 +11599,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body)
+        public virtual System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body)
         {
             return SearchProductsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -12241,7 +11614,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12294,7 +11667,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ProductResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -12738,7 +12111,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body)
+        public virtual System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body)
         {
             return ProjectSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -12753,7 +12126,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12806,7 +12179,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ProjectResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -13250,7 +12623,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body)
+        public virtual System.Threading.Tasks.Task<GetPurchaseOrderResponsePagedList> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body)
         {
             return SearchPurchaseOrdersEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -13265,7 +12638,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetPurchaseOrderResponsePagedList> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13318,7 +12691,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetPurchaseOrderResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -14426,7 +13799,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body)
+        public virtual System.Threading.Tasks.Task<GetSalesOrderResponsePagedList> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body)
         {
             return SearchSalesOrdersEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -14441,7 +13814,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetSalesOrderResponsePagedList> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14494,7 +13867,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetSalesOrderResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -15047,7 +14420,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body)
+        public virtual System.Threading.Tasks.Task<StockAdjustmentResponsePagedList> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body)
         {
             return SearchStockAdjustmentsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -15062,7 +14435,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StockAdjustmentResponsePagedList> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15115,7 +14488,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<StockAdjustmentResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -15255,7 +14628,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version)
+        public virtual System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version)
         {
             return SearchSuppliersAsync(version, System.Threading.CancellationToken.None);
         }
@@ -15270,7 +14643,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15316,7 +14689,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<SupplierResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -16634,7 +16007,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body)
+        public virtual System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body)
         {
             return GetTodoListEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -16649,7 +16022,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16702,7 +16075,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<TodoDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -18865,7 +18238,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body)
+        public virtual System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body)
         {
             return VendorSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -18880,7 +18253,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -18933,7 +18306,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<VendorSearchResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -19377,7 +18750,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body)
+        public virtual System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body)
         {
             return SearchWarehouseLocationsAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -19392,7 +18765,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -19445,7 +18818,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseLocationListResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -19889,7 +19262,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body)
+        public virtual System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body)
         {
             return SearchWarehousesAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -19904,7 +19277,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -19957,7 +19330,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<WarehouseResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -20843,96 +20216,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileAccountCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("chartOfAccountId")]
-        public System.Guid ChartOfAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reconciliationDate")]
-        public System.DateTime ReconciliationDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("statementBalance")]
-        public double StatementBalance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reconciliationReference")]
-        public string? ReconciliationReference { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reconciliationLines")]
-        public System.Collections.Generic.ICollection<ReconciliationLineDto>? ReconciliationLines { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconciliationLineDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("transactionId")]
-        public System.Guid? TransactionId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transactionDate")]
-        public System.DateTime TransactionDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isCleared")]
-        public bool IsCleared { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateAccountingPeriodCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public System.DateTime EndDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
-        public string? PeriodType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
-        public bool IsAdjustmentPeriod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AccountingPeriodResponse
     {
 
@@ -20969,17 +20252,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchAccountingPeriodsQuery
+    public partial class AccountingPeriodResponsePagedList
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<AccountingPeriodResponse>? Items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -20987,44 +20264,179 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int? FiscalYear { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("isClosed")]
-        public bool IsClosed { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateAccountingPeriodCommand
+    public partial class ActivateTenantResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddCycleCountItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
+        public int SystemQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
+        public int? CountedQuantity { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddCycleCountItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddInventoryTransferItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
+        public System.Guid InventoryTransferId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
+        public int Quantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
+        public double UnitPrice { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddInventoryTransferItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
+        public System.Guid InventoryTransferId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AllocatePaymentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
+        public System.Guid PaymentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("allocations")]
+        public System.Collections.Generic.ICollection<PaymentAllocationItem>? Allocations { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApproveStockAdjustmentCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
+        public string? ApprovedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApproveStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentId")]
+        public System.Guid AdjustmentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approved")]
+        public bool Approved { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AssignUserRoleCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userRoles")]
+        public System.Collections.Generic.ICollection<UserRoleDetail>? UserRoles { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AuditTrail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userName")]
+        public string? UserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("primaryKey")]
+        public string? PrimaryKey { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("operation")]
+        public string? Operation { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("entity")]
+        public string? Entity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateTime")]
+        public System.DateTime DateTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("previousValues")]
+        public string? PreviousValues { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("newValues")]
+        public string? NewValues { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("modifiedProperties")]
+        public string? ModifiedProperties { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BrandResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime? StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public System.DateTime? EndDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
-        public bool IsAdjustmentPeriod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int? FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
-        public string? PeriodType { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
@@ -21035,50 +20447,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInvoiceFromConsumptionCommand
+    public partial class BrandResponsePagedList
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("consumptionId")]
-        public System.Guid ConsumptionId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<BrandResponse>? Items { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("invoiceDate")]
-        public System.DateTime InvoiceDate { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("dueDays")]
-        public int DueDays { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
 
-    }
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBudgetCommand
-    {
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("periodId")]
-        public System.Guid PeriodId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
-        public string? BudgetType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBudgetResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
@@ -21106,6 +20497,33 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("totalActualAmount")]
         public double TotalActualAmount { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BudgetListItemResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<BudgetListItemResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
@@ -21152,17 +20570,41 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBudgetsQuery
+    public partial class CategoryResponse
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
+        public System.Guid? ParentCategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
+        public int SortOrder { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CategoryResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CategoryResponse>? Items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -21170,110 +20612,32 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int? FiscalYear { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBudgetCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
-        public string? BudgetType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBudgetResponse
+    public partial class ChangePasswordCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = default!;
 
-    }
+        [System.Text.Json.Serialization.JsonPropertyName("newPassword")]
+        public string? NewPassword { get; set; } = default!;
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateChartOfAccountCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
-        public string? AccountCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
-        public string? AccountName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
-        public string? AccountType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
-        public string? UsoaCategory { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
-        public System.Guid? SubAccountOf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
-        public string? ParentCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("balance")]
-        public double Balance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
-        public bool IsControlAccount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
-        public string? NormalBalance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
-        public bool IsUsoaCompliant { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
-        public string? RegulatoryClassification { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("confirmNewPassword")]
+        public string? ConfirmNewPassword { get; set; } = default!;
 
     }
 
@@ -21353,17 +20717,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchChartOfAccountQuery
+    public partial class ChartOfAccountResponsePagedList
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<ChartOfAccountResponse>? Items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -21371,14 +20729,50 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
-        public string? AccountCode { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CompleteCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateAccountingPeriodCommand
+    {
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
+        public string? PeriodType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
+        public bool IsAdjustmentPeriod { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
@@ -21389,7 +20783,100 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateChartOfAccountCommand
+    public partial class CreateBrandCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Brand";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Descriptive Description";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = "Descriptive Notes";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateBrandResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateBudgetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodId")]
+        public System.Guid PeriodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
+        public string? BudgetType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateBudgetResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCategoryCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Category";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary category";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "CAT001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
+        public System.Guid? ParentCategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
+        public int SortOrder { get; set; } = 0;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCategoryResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateChartOfAccountCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -21428,11 +20915,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
         public string? ParentCode { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
-        public bool IsControlAccount { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("balance")]
         public double Balance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
+        public bool IsControlAccount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
         public string? NormalBalance { get; set; } = default!;
@@ -21490,6 +20977,846 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCycleCountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("countNumber")]
+        public string? CountNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("scheduledDate")]
+        public System.DateTime ScheduledDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("countType")]
+        public string? CountType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("counterName")]
+        public string? CounterName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supervisorName")]
+        public string? SupervisorName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateFixedAssetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
+        public string? AssetName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
+        public System.DateTime PurchaseDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
+        public double PurchasePrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
+        public System.Guid DepreciationMethodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
+        public int ServiceLife { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
+        public double SalvageValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
+        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
+        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("location")]
+        public string? Location { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateFixedAssetResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateGroceryItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Grocery Item";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Descriptive Description";
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = "SKU001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = "1234567890123";
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = 10.99D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cost")]
+        public double Cost { get; set; } = 5.99D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int MinimumStock { get; set; } = 10;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int MaximumStock { get; set; } = 100;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
+        public int CurrentStock { get; set; } = 50;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int ReorderPoint { get; set; } = 20;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool IsPerishable { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public string? Brand { get; set; } = "Generic Brand";
+
+        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
+        public string? Manufacturer { get; set; } = "Generic Manufacturer";
+
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double Weight { get; set; } = 1D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = "kg";
+
+        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
+        public System.Guid? CategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateGroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateInventoryItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
+        public double Quantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
+        public double UnitPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateInventoryTransferCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = "TRF001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromLocationId")]
+        public System.Guid? FromLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toLocationId")]
+        public System.Guid? ToLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
+        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = "Standard";
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = "Normal";
+
+        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
+        public string? TransportMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
+        public string? RequestedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateInvoiceFromConsumptionCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("consumptionId")]
+        public System.Guid ConsumptionId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("invoiceDate")]
+        public System.DateTime InvoiceDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dueDays")]
+        public int DueDays { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateOrUpdateRoleCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePriceListCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Default Price List";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
+        public string? PriceListName { get; set; } = "DEFAULT";
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
+        public string? PriceListType { get; set; } = "Retail";
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currency")]
+        public string? Currency { get; set; } = "USD";
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePriceListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateProductCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Product";
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = 10D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Descriptive Description";
+
+        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
+        public System.Guid? BrandId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateProductResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateProjectCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetedAmount")]
+        public double BudgetedAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("clientName")]
+        public string? ClientName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectManager")]
+        public string? ProjectManager { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePurchaseOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = "PO-0001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
+        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Draft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
+        public string? ContactPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePurchaseOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSalesOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public double Total { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateStockAdjustmentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Stock Count Adjustment";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Inventory count adjustment";
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentNumber")]
+        public string? AdjustmentNumber { get; set; } = "ADJ001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
+        public System.DateTime AdjustmentDate { get; set; } = System.DateTime.Parse("2024-01-01");
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = "Physical Count";
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Pending";
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = "Monthly inventory count";
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantityBefore")]
+        public int QuantityBefore { get; set; } = 0;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentQuantity")]
+        public int AdjustmentQuantity { get; set; } = 0;
+
+        [System.Text.Json.Serialization.JsonPropertyName("unitCost")]
+        public double UnitCost { get; set; } = 0D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reference")]
+        public string? Reference { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustedBy")]
+        public string? AdjustedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("batchNumber")]
+        public string? BatchNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSupplierCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("website")]
+        public string? Website { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("rating")]
+        public double Rating { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTenantCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
+        public string? ConnectionString { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
+        public string? AdminEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
+        public string? Issuer { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTenantResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTodoCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Hello World!";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "This is desciption.";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = "Important Note.";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTodoResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Warehouse";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage facility";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "WH001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = "123 Storage Street";
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = "New York";
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = "NY";
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = "USA";
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = "10001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = "John Manager";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = "john.manager@example.com";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = 10000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseLocationCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "LOC001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = "Floor";
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = 1000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
+        public double? MinTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
+        public double? MaxTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
+        public string? TemperatureUnit { get; set; } = "C";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesaleContractCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractNumber")]
+        public string? ContractNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
+        public double VolumeDiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
+        public string? DeliveryTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
+        public string? ContractTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
+        public bool AutoRenewal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesaleContractResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesalePricingCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
+        public System.Guid WholesaleContractId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
+        public int MinimumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
+        public int? MaximumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
+        public double TierPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -21578,17 +21905,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchCustomersQuery
+    public partial class CustomerResponsePagedList
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CustomerResponse>? Items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -21596,68 +21917,212 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
-        public string? CustomerCode { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCustomerCommand
+    public partial class CycleCountDiscrepancy
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
+        public int SystemQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
+        public int CountedQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("difference")]
+        public int Difference { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DeactivateWholesalePricingResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
-        public string? CustomerCode { get; set; } = default!;
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DisableTenantResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FileUploadCommand
+    {
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("extension")]
+        public string? Extension { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("billingAddress")]
-        public string? BillingAddress { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("data")]
+        public string? Data { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
+    }
 
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Filter
+    {
 
-        [System.Text.Json.Serialization.JsonPropertyName("terms")]
-        public string? Terms { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("logic")]
+        public string? Logic { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountCode")]
-        public string? RevenueAccountCode { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("filters")]
+        public System.Collections.Generic.ICollection<Filter>? Filters { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountName")]
-        public string? RevenueAccountName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("field")]
+        public string? Field { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("tin")]
-        public string? Tin { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("operator")]
+        public string? Operator { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("value")]
+        public object? Value { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FixedAssetResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
+        public string? FilePath { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public System.Guid CreatedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
+        public string? CreatedByUserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
+        public System.Guid? LastModifiedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
+        public string? LastModifiedByUserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
+        public System.DateTime PurchaseDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
+        public double PurchasePrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
+        public int ServiceLife { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
+        public System.Guid DepreciationMethodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
+        public double SalvageValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentBookValue")]
+        public double CurrentBookValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
+        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
+        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("location")]
+        public string? Location { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isDisposed")]
+        public bool IsDisposed { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("disposalDate")]
+        public System.DateTime? DisposalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("disposalAmount")]
+        public double? DisposalAmount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FixedAssetResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<FixedAssetResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ForgotPasswordCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
 
     }
 
@@ -21791,158 +22256,47 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateFixedAssetCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
-        public string? AssetName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
-        public System.DateTime PurchaseDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
-        public double PurchasePrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
-        public System.Guid DepreciationMethodId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
-        public int ServiceLife { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
-        public double SalvageValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
-        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
-        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("location")]
-        public string? Location { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateFixedAssetResponse
+    public partial class GetInventoryTransferListResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-    }
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = default!;
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FixedAssetResponse
-    {
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
+        public string? FromWarehouseName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
+        public string? ToWarehouseName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
-        public string? FilePath { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
-        public System.Guid CreatedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
-        public string? CreatedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
-        public System.Guid? LastModifiedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
-        public string? LastModifiedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
-        public System.DateTime PurchaseDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
-        public double PurchasePrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
-        public int ServiceLife { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
-        public System.Guid DepreciationMethodId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
-        public double SalvageValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentBookValue")]
-        public double CurrentBookValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
-        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
-        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("location")]
-        public string? Location { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isDisposed")]
-        public bool IsDisposed { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("disposalDate")]
-        public System.DateTime? DisposalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("disposalAmount")]
-        public double? DisposalAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchFixedAssetsRequest
+    public partial class GetInventoryTransferListResponsePagedList
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetInventoryTransferListResponse>? Items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -21950,50 +22304,350 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
-        public string? AssetName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("assetType")]
-        public string? AssetType { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateFixedAssetRequest
+    public partial class GetInventoryTransferResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
-        public string? AssetName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
-        public System.Guid? DepreciationMethodId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
-        public int? ServiceLife { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
+        public string? FromWarehouseName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
-        public double? SalvageValue { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
+        public string? ToWarehouseName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("location")]
-        public string? Location { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
+        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actualArrivalDate")]
+        public System.DateTime? ActualArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalValue")]
+        public double TotalValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
+        public string? TransportMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("trackingNumber")]
+        public string? TrackingNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
+        public string? RequestedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
+        public string? ApprovedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approvalDate")]
+        public System.DateTime? ApprovalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPriceListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
+        public string? PriceListName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
+        public string? PriceListType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currency")]
+        public string? Currency { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPriceListResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetPriceListResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPurchaseOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
+        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actualDeliveryDate")]
+        public System.DateTime? ActualDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
+        public double TotalAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
+        public double TaxAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
+        public double DiscountAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("netAmount")]
+        public double NetAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
+        public string? ContactPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPurchaseOrderResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetPurchaseOrderResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryDate")]
+        public System.DateTime? DeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderType")]
+        public string? OrderType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subTotal")]
+        public double SubTotal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
+        public double TaxAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
+        public double DiscountAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shippingAmount")]
+        public double ShippingAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
+        public double TotalAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentStatus")]
+        public string? PaymentStatus { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentMethod")]
+        public string? PaymentMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salesPersonId")]
+        public string? SalesPersonId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid? WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetSalesOrderResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetSalesOrderResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTodoResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
@@ -22004,23 +22658,398 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInventoryItemCommand
+    public partial class GetWarehouseLocationListResponse
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public double Quantity { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
-        public double UnitPrice { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseLocationListResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetWarehouseLocationListResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
+        public double? MinTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
+        public double? MaxTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
+        public string? TemperatureUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastInventoryDate")]
+        public System.DateTime? LastInventoryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWholesaleContractResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractNumber")]
+        public string? ContractNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
+        public double VolumeDiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
+        public string? DeliveryTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
+        public string? ContractTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
+        public bool AutoRenewal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
+        public System.Guid WholesaleContractId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
+        public int MinimumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
+        public int? MaximumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
+        public double TierPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cost")]
+        public double Cost { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int MinimumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int MaximumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
+        public int CurrentStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int ReorderPoint { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public string? Brand { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
+        public string? Manufacturer { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double Weight { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GroceryItemResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GroceryItemResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
@@ -22088,7 +23117,34 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchJournalEntriesQuery
+    public partial class JournalEntryResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<JournalEntryResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PaginationFilter
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -22108,45 +23164,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
         public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("referenceNumber")]
-        public string? ReferenceNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("source")]
-        public string? Source { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
-        public System.DateTime? FromDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
-        public System.DateTime? ToDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPosted")]
-        public bool? IsPosted { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RetirePatronageCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("patronageCapitalId")]
-        public System.Guid PatronageCapitalId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("retirementDate")]
-        public System.DateTime RetirementDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("debitAccountId")]
-        public System.Guid DebitAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditAccountId")]
-        public System.Guid CreditAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
 
     }
 
@@ -22223,6 +23240,33 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PayeeResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<PayeeResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PayeeSearchCommand
     {
 
@@ -22289,20 +23333,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchPaymentAllocationsQuery
+    public partial class PaymentAllocationItem
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
-        public System.Guid? PaymentId { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("invoiceId")]
-        public System.Guid? InvoiceId { get; set; } = default!;
+        public System.Guid InvoiceId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("skip")]
-        public int? Skip { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("take")]
-        public int? Take { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
 
     }
 
@@ -22328,56 +23366,50 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AllocatePaymentCommand
+    public partial class ProductResponse
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
-        public System.Guid PaymentId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("allocations")]
-        public System.Collections.Generic.ICollection<PaymentAllocationItem>? Allocations { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PaymentAllocationItem
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("invoiceId")]
-        public System.Guid InvoiceId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProjectCommand
-    {
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("budgetedAmount")]
-        public double BudgetedAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("clientName")]
-        public string? ClientName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("projectManager")]
-        public string? ProjectManager { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public BrandResponse Brand { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ProductResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<ProductResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
@@ -22451,6 +23483,654 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ProjectResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<ProjectResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconcileAccountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("chartOfAccountId")]
+        public System.Guid ChartOfAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reconciliationDate")]
+        public System.DateTime ReconciliationDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("statementBalance")]
+        public double StatementBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reconciliationReference")]
+        public string? ReconciliationReference { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reconciliationLines")]
+        public System.Collections.Generic.ICollection<ReconciliationLineDto>? ReconciliationLines { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconcileCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discrepancies")]
+        public System.Collections.Generic.ICollection<CycleCountDiscrepancy>? Discrepancies { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconciliationLineDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("transactionId")]
+        public System.Guid? TransactionId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transactionDate")]
+        public System.DateTime TransactionDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isCleared")]
+        public bool IsCleared { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RefreshTokenCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string? Token { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
+        public string? RefreshToken { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RegisterUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string? FirstName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string? LastName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userName")]
+        public string? UserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("confirmPassword")]
+        public string? ConfirmPassword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RegisterUserResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public string? UserId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ResetPasswordCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string? Token { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RetirePatronageCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("patronageCapitalId")]
+        public System.Guid PatronageCapitalId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("retirementDate")]
+        public System.DateTime RetirementDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("debitAccountId")]
+        public System.Guid DebitAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditAccountId")]
+        public System.Guid CreditAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RoleDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
+        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Search
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("fields")]
+        public System.Collections.Generic.ICollection<string>? Fields { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchAccountingPeriodsQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int? FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isClosed")]
+        public bool IsClosed { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchBrandsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchBudgetsQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int? FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchCategoriesCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchChartOfAccountQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchCustomersQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
+        public string? CustomerCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchFixedAssetsRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
+        public string? AssetName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("assetType")]
+        public string? AssetType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchGroceryItemsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
+        public System.Guid? CategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isLowStock")]
+        public bool? IsLowStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isExpiringSoon")]
+        public bool? IsExpiringSoon { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool? IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minPrice")]
+        public double? MinPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxPrice")]
+        public double? MaxPrice { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchInventoryTransfersCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid? FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid? ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchJournalEntriesQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("referenceNumber")]
+        public string? ReferenceNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("source")]
+        public string? Source { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPosted")]
+        public bool? IsPosted { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchPaymentAllocationsQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
+        public System.Guid? PaymentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("invoiceId")]
+        public System.Guid? InvoiceId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("skip")]
+        public int? Skip { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("take")]
+        public int? Take { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchPriceListsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchProductsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
+        public System.Guid? BrandId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
+        public double? MinimumRate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumRate")]
+        public double? MaximumRate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SearchProjectsRequest
     {
 
@@ -22480,6 +24160,954 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("department")]
         public string? Department { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchPurchaseOrdersCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchSalesOrdersCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid? CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool? IsUrgent { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid? WarehouseId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchStockAdjustmentsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid? GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateFrom")]
+        public System.DateTime? DateFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateTo")]
+        public System.DateTime? DateTo { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchWarehouseLocationsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid? WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool? RequiresTemperatureControl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchWarehousesCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool? IsMainWarehouse { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StartCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
+        public int QuantityAdjusted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
+        public System.DateTime AdjustmentDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public System.Guid? CreatedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StockAdjustmentResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<StockAdjustmentResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("website")]
+        public string? Website { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("rating")]
+        public double Rating { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SupplierResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<SupplierResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TenantDetail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
+        public string? ConnectionString { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
+        public string? AdminEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("validUpto")]
+        public System.DateTime ValidUpto { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
+        public string? Issuer { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TodoDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TodoDtoPagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<TodoDto>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ToggleUserStatusCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("activateUser")]
+        public bool ActivateUser { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public string? UserId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TokenGenerationCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = "admin@root.com";
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = "123Pa$$word!";
+
+        [System.Text.Json.Serialization.JsonPropertyName("deviceType")]
+        public string? DeviceType { get; set; } = "admin@root.com";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TokenResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string? Token { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
+        public string? RefreshToken { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("refreshTokenExpiryTime")]
+        public System.DateTime RefreshTokenExpiryTime { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateAccountingPeriodCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
+        public bool IsAdjustmentPeriod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int? FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
+        public string? PeriodType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateBrandCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateBrandResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateBudgetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
+        public string? BudgetType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateBudgetResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCategoryCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
+        public System.Guid? ParentCategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
+        public int? SortOrder { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCategoryResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateChartOfAccountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
+        public string? AccountType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
+        public string? UsoaCategory { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
+        public System.Guid? SubAccountOf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
+        public string? ParentCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
+        public bool IsControlAccount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("balance")]
+        public double Balance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
+        public string? NormalBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
+        public bool IsUsoaCompliant { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
+        public string? RegulatoryClassification { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCustomerCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
+        public string? CustomerCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("billingAddress")]
+        public string? BillingAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("terms")]
+        public string? Terms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountCode")]
+        public string? RevenueAccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountName")]
+        public string? RevenueAccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tin")]
+        public string? Tin { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateFixedAssetRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
+        public string? AssetName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
+        public System.Guid? DepreciationMethodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
+        public int? ServiceLife { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
+        public double? SalvageValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("location")]
+        public string? Location { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateGroceryItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cost")]
+        public double Cost { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int MinimumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int MaximumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
+        public int CurrentStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int ReorderPoint { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public string? Brand { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
+        public string? Manufacturer { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double Weight { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
+        public System.Guid? CategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateGroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateInventoryTransferCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Transfer to Main Warehouse";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Transfer items between warehouses";
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = "TRF001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Pending";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = "Inventory Rebalancing";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePermissionsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
+        public string? RoleId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
+        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePriceListCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Default Price List";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
+        public string? PriceListName { get; set; } = "DEFAULT";
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
+        public string? PriceListType { get; set; } = "Retail";
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currency")]
+        public string? Currency { get; set; } = "USD";
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePriceListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateProductCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
+        public System.Guid? BrandId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateProductResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
 
     }
 
@@ -22519,6 +25147,510 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePurchaseOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = "PO-0001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
+        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Draft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
+        public string? ContactPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePurchaseOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSalesOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public double Total { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateStockAdjustmentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
+        public int QuantityAdjusted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSupplierCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("website")]
+        public string? Website { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int? PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("rating")]
+        public double? Rating { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateTodoCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateTodoResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string? FirstName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string? LastName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deleteCurrentImage")]
+        public bool DeleteCurrentImage { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Warehouse";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage facility";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "WH001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = "123 Storage Street";
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = "New York";
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = "NY";
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = "USA";
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = "10001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = "John Manager";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = "john.manager@example.com";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = 10000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseLocationCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "LOC001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = "Floor";
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = 1000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
+        public double? MinTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
+        public double? MaxTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
+        public string? TemperatureUnit { get; set; } = "C";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesaleContractCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
+        public double? VolumeDiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int? PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
+        public string? DeliveryTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
+        public string? ContractTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
+        public bool? AutoRenewal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesaleContractResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesalePricingCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
+        public double TierPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpgradeSubscriptionCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
+        public string? Tenant { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("extendedExpiryDate")]
+        public System.DateTime ExtendedExpiryDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpgradeSubscriptionResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("newValidity")]
+        public System.DateTime NewValidity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
+        public string? Tenant { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UserDetail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userName")]
+        public string? UserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string? FirstName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string? LastName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailConfirmed")]
+        public bool EmailConfirmed { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public System.Uri? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UserRoleDetail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
+        public string? RoleId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("roleName")]
+        public string? RoleName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("enabled")]
+        public bool Enabled { get; set; } = default!;
 
     }
 
@@ -22673,6 +25805,33 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class VendorSearchResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<VendorSearchResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VendorUpdateCommand
     {
 
@@ -22726,3624 +25885,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AuditTrail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userName")]
-        public string? UserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("primaryKey")]
-        public string? PrimaryKey { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("operation")]
-        public string? Operation { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("entity")]
-        public string? Entity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateTime")]
-        public System.DateTime DateTime { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("previousValues")]
-        public string? PreviousValues { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("newValues")]
-        public string? NewValues { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("modifiedProperties")]
-        public string? ModifiedProperties { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateOrUpdateRoleCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdatePermissionsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
-        public string? RoleId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
-        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RoleDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
-        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TokenGenerationCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = "admin@root.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = "123Pa$$word!";
-
-        [System.Text.Json.Serialization.JsonPropertyName("deviceType")]
-        public string? DeviceType { get; set; } = "admin@root.com";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RefreshTokenCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string? Token { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
-        public string? RefreshToken { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TokenResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string? Token { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
-        public string? RefreshToken { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("refreshTokenExpiryTime")]
-        public System.DateTime RefreshTokenExpiryTime { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserDetail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userName")]
-        public string? UserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
-        public string? FirstName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
-        public string? LastName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("emailConfirmed")]
-        public bool EmailConfirmed { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public System.Uri? ImageUrl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserRoleDetail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
-        public string? RoleId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("roleName")]
-        public string? RoleName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AssignUserRoleCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userRoles")]
-        public System.Collections.Generic.ICollection<UserRoleDetail>? UserRoles { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChangePasswordCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("newPassword")]
-        public string? NewPassword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("confirmNewPassword")]
-        public string? ConfirmNewPassword { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ForgotPasswordCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegisterUserCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
-        public string? FirstName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
-        public string? LastName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userName")]
-        public string? UserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("confirmPassword")]
-        public string? ConfirmPassword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegisterUserResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public string? UserId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResetPasswordCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string? Token { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ToggleUserStatusCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("activateUser")]
-        public bool ActivateUser { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public string? UserId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateUserCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
-        public string? FirstName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
-        public string? LastName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public FileUploadCommand Image { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deleteCurrentImage")]
-        public bool DeleteCurrentImage { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Filter
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("logic")]
-        public string? Logic { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("filters")]
-        public System.Collections.Generic.ICollection<Filter>? Filters { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("field")]
-        public string? Field { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("operator")]
-        public string? Operator { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public object? Value { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<AccountingPeriodResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<BudgetListItemResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<ChartOfAccountResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<CustomerResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<FixedAssetResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<JournalEntryResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<PayeeResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<ProjectResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<VendorSearchResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<BrandResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<ProductResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<CategoryResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<CustomerResponse2>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GroceryItemResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GetInventoryTransferListResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GetPriceListResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GetPurchaseOrderResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GetSalesOrderResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<StockAdjustmentResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<SupplierResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GetWarehouseLocationListResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<WarehouseResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<TodoDto>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PaginationFilter
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Search
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("fields")]
-        public System.Collections.Generic.ICollection<string>? Fields { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FileUploadCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("extension")]
-        public string? Extension { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public string? Data { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TenantDetail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
-        public string? ConnectionString { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
-        public string? AdminEmail { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("validUpto")]
-        public System.DateTime ValidUpto { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
-        public string? Issuer { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ActivateTenantResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTenantCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
-        public string? ConnectionString { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
-        public string? AdminEmail { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
-        public string? Issuer { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTenantResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DisableTenantResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpgradeSubscriptionCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
-        public string? Tenant { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("extendedExpiryDate")]
-        public System.DateTime ExtendedExpiryDate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpgradeSubscriptionResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("newValidity")]
-        public System.DateTime NewValidity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
-        public string? Tenant { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBrandCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Brand";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = "Descriptive Notes";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBrandsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBrandCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProductCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Product";
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
-
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProductResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ProductResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public BrandResponse Brand { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchProductsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
-        public double? MinimumRate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumRate")]
-        public double? MaximumRate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateProductCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateProductResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCategoryCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Category";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary category";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "CAT001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
-        public System.Guid? ParentCategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
-        public int SortOrder { get; set; } = 0;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public string? ImageUrl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCategoryResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CategoryResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
-        public System.Guid? ParentCategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
-        public int SortOrder { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public string? ImageUrl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchCategoriesCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCategoryCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
-        public System.Guid? ParentCategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
-        public int? SortOrder { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public string? ImageUrl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCategoryResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCustomerCommand2
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Customer";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary customer";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "CUST001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = "Retail";
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = "John Doe";
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = "john.doe@example.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = "+1-555-123-4567";
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = "123 Main Street";
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = "New York";
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = "NY";
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = "USA";
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = "10001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = 10000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = 30;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = 5D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
-        public string? TaxNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
-        public string? BusinessLicense { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCustomerResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CustomerResponse2
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
-        public string? TaxNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
-        public string? BusinessLicense { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchCustomersCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCustomerCommand2
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
-        public string? TaxNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
-        public string? BusinessLicense { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCustomerResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddCycleCountItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
-        public System.Guid CycleCountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
-        public int SystemQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
-        public int? CountedQuantity { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddCycleCountItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
-        public System.Guid ItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
-        public System.Guid CycleCountId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CompleteCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCycleCountCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("countNumber")]
-        public string? CountNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("scheduledDate")]
-        public System.DateTime ScheduledDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("countType")]
-        public string? CountType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("counterName")]
-        public string? CounterName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supervisorName")]
-        public string? SupervisorName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CycleCountDiscrepancy
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
-        public int SystemQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
-        public int CountedQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("difference")]
-        public int Difference { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
-        public System.Guid CycleCountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discrepancies")]
-        public System.Collections.Generic.ICollection<CycleCountDiscrepancy>? Discrepancies { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class StartCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateGroceryItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Grocery Item";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
-
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = "SKU001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string? Barcode { get; set; } = "1234567890123";
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10.99D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public double Cost { get; set; } = 5.99D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
-        public int MinimumStock { get; set; } = 10;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
-        public int MaximumStock { get; set; } = 100;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
-        public int CurrentStock { get; set; } = 50;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
-        public int ReorderPoint { get; set; } = 20;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
-        public bool IsPerishable { get; set; } = false;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public string? Brand { get; set; } = "Generic Brand";
-
-        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
-        public string? Manufacturer { get; set; } = "Generic Manufacturer";
-
-        [System.Text.Json.Serialization.JsonPropertyName("weight")]
-        public double Weight { get; set; } = 1D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
-        public string? WeightUnit { get; set; } = "kg";
-
-        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
-        public System.Guid? CategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid? SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateGroceryItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GroceryItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string? Barcode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public double Cost { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
-        public int MinimumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
-        public int MaximumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
-        public int CurrentStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
-        public int ReorderPoint { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
-        public bool IsPerishable { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public string? Brand { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
-        public string? Manufacturer { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weight")]
-        public double Weight { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
-        public string? WeightUnit { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchGroceryItemsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string? Barcode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
-        public System.Guid? CategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid? SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isLowStock")]
-        public bool? IsLowStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isExpiringSoon")]
-        public bool? IsExpiringSoon { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
-        public bool? IsPerishable { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minPrice")]
-        public double? MinPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maxPrice")]
-        public double? MaxPrice { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateGroceryItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string? Barcode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public double Cost { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
-        public int MinimumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
-        public int MaximumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
-        public int CurrentStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
-        public int ReorderPoint { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
-        public bool IsPerishable { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public string? Brand { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
-        public string? Manufacturer { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weight")]
-        public double Weight { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
-        public string? WeightUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
-        public System.Guid? CategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid? SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateGroceryItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInventoryTransferCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = "TRF001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromLocationId")]
-        public System.Guid? FromLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toLocationId")]
-        public System.Guid? ToLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
-
-        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
-        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
-        public string? TransferType { get; set; } = "Standard";
-
-        [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public string? Priority { get; set; } = "Normal";
-
-        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
-        public string? TransportMethod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
-        public string? RequestedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInventoryTransferResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetInventoryTransferResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
-        public string? FromWarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
-        public string? ToWarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
-        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("actualArrivalDate")]
-        public System.DateTime? ActualArrivalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
-        public string? TransferType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public string? Priority { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalValue")]
-        public double TotalValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
-        public string? TransportMethod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("trackingNumber")]
-        public string? TrackingNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
-        public string? RequestedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvalDate")]
-        public System.DateTime? ApprovalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime? LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddInventoryTransferItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
-        public System.Guid InventoryTransferId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public int Quantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
-        public double UnitPrice { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddInventoryTransferItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
-        public System.Guid ItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
-        public System.Guid InventoryTransferId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetInventoryTransferListResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
-        public string? FromWarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
-        public string? ToWarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
-        public string? TransferType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public string? Priority { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchInventoryTransfersCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
-        public string? SearchTerm { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid? FromWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid? ToWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
-        public System.DateTime? FromDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
-        public System.DateTime? ToDate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateInventoryTransferCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Transfer to Main Warehouse";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Transfer items between warehouses";
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = "TRF001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = "Pending";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = "Inventory Rebalancing";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateInventoryTransferResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreatePriceListCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Default Price List";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
-        public string? PriceListName { get; set; } = "DEFAULT";
-
-        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
-        public string? PriceListType { get; set; } = "Retail";
-
-        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
-        public System.DateTime EffectiveDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string? Currency { get; set; } = "USD";
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
-        public double? MinimumOrderValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreatePriceListResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetPriceListResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
-        public string? PriceListName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
-        public string? PriceListType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
-        public System.DateTime EffectiveDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string? Currency { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
-        public double? MinimumOrderValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchPriceListsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
-        public string? SearchTerm { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
-        public System.DateTime? FromDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
-        public System.DateTime? ToDate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdatePriceListCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Default Price List";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
-        public string? PriceListName { get; set; } = "DEFAULT";
-
-        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
-        public string? PriceListType { get; set; } = "Retail";
-
-        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
-        public System.DateTime EffectiveDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string? Currency { get; set; } = "USD";
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
-        public double? MinimumOrderValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdatePriceListResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreatePurchaseOrderCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
-        public string? OrderNumber { get; set; } = "PO-0001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
-        public System.DateTime OrderDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
-        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = "Draft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
-        public string? DeliveryAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
-        public string? ContactPhone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
-        public bool IsUrgent { get; set; } = false;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreatePurchaseOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetPurchaseOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
-        public string? OrderNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
-        public System.DateTime OrderDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
-        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("actualDeliveryDate")]
-        public System.DateTime? ActualDeliveryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
-        public double TotalAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
-        public double TaxAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
-        public double DiscountAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("netAmount")]
-        public double NetAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
-        public string? DeliveryAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
-        public string? ContactPhone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
-        public bool IsUrgent { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchPurchaseOrdersCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
-        public string? SearchTerm { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid? SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
-        public System.DateTime? FromDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
-        public System.DateTime? ToDate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdatePurchaseOrderCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
-        public string? OrderNumber { get; set; } = "PO-0001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
-        public System.DateTime OrderDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
-        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = "Draft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
-        public string? DeliveryAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
-        public string? ContactPhone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
-        public bool IsUrgent { get; set; } = false;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdatePurchaseOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSalesOrderCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSalesOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetSalesOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
-        public string? OrderNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
-        public System.DateTime OrderDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryDate")]
-        public System.DateTime? DeliveryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderType")]
-        public string? OrderType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("subTotal")]
-        public double SubTotal { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
-        public double TaxAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
-        public double DiscountAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("shippingAmount")]
-        public double ShippingAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
-        public double TotalAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentStatus")]
-        public string? PaymentStatus { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentMethod")]
-        public string? PaymentMethod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
-        public string? DeliveryAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
-        public bool IsUrgent { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("salesPersonId")]
-        public string? SalesPersonId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid? WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchSalesOrdersCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
-        public string? OrderNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid? CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
-        public System.DateTime? FromDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
-        public System.DateTime? ToDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
-        public bool? IsUrgent { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid? WarehouseId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSalesOrderCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSalesOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApproveStockAdjustmentCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApproveStockAdjustmentResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentId")]
-        public System.Guid AdjustmentId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approved")]
-        public bool Approved { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateStockAdjustmentCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Stock Count Adjustment";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Inventory count adjustment";
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentNumber")]
-        public string? AdjustmentNumber { get; set; } = "ADJ001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
-        public System.DateTime AdjustmentDate { get; set; } = System.DateTime.Parse("2024-01-01");
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
-        public string? AdjustmentType { get; set; } = "Physical Count";
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = "Pending";
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = "Monthly inventory count";
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantityBefore")]
-        public int QuantityBefore { get; set; } = 0;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentQuantity")]
-        public int AdjustmentQuantity { get; set; } = 0;
-
-        [System.Text.Json.Serialization.JsonPropertyName("unitCost")]
-        public double UnitCost { get; set; } = 0D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reference")]
-        public string? Reference { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustedBy")]
-        public string? AdjustedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("batchNumber")]
-        public string? BatchNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateStockAdjustmentResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class StockAdjustmentResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
-        public string? AdjustmentType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
-        public int QuantityAdjusted { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
-        public System.DateTime AdjustmentDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
-        public System.Guid? CreatedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchStockAdjustmentsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid? GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
-        public string? AdjustmentType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateFrom")]
-        public System.DateTime? DateFrom { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateTo")]
-        public System.DateTime? DateTo { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateStockAdjustmentCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
-        public string? AdjustmentType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
-        public int QuantityAdjusted { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateStockAdjustmentResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSupplierCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("website")]
-        public string? Website { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("rating")]
-        public double Rating { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSupplierResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SupplierResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("website")]
-        public string? Website { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("rating")]
-        public double Rating { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSupplierCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("website")]
-        public string? Website { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int? PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("rating")]
-        public double? Rating { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSupplierResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseLocationCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "LOC001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = "Floor";
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = 1000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = false;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
-        public double? MinTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
-        public double? MaxTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
-        public string? TemperatureUnit { get; set; } = "C";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseLocationResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseLocationResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
-        public string? WarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
-        public double UsedCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
-        public double? MinTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
-        public double? MaxTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
-        public string? TemperatureUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime? LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseLocationListResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
-        public string? WarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
-        public double UsedCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchWarehouseLocationsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
-        public string? SearchTerm { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid? WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool? RequiresTemperatureControl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseLocationCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "LOC001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = "Floor";
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = 1000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = false;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
-        public double? MinTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
-        public double? MaxTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
-        public string? TemperatureUnit { get; set; } = "C";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseLocationResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Warehouse";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage facility";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "WH001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = "123 Storage Street";
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = "New York";
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = "NY";
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = "USA";
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = "10001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
-        public string? ManagerName { get; set; } = "John Manager";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
-        public string? ManagerEmail { get; set; } = "john.manager@example.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
-        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
-        public double TotalCapacity { get; set; } = 10000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool IsMainWarehouse { get; set; } = false;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
-        public string? ManagerName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
-        public string? ManagerEmail { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
-        public string? ManagerPhone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
-        public double TotalCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
-        public double UsedCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool IsMainWarehouse { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastInventoryDate")]
-        public System.DateTime? LastInventoryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime? LastModifiedOn { get; set; } = default!;
 
     }
 
@@ -26402,17 +25943,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchWarehousesCommand
+    public partial class WarehouseResponsePagedList
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<WarehouseResponse>? Items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -26420,452 +25955,17 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool? IsMainWarehouse { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Warehouse";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage facility";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "WH001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = "123 Storage Street";
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = "New York";
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = "NY";
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = "USA";
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = "10001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
-        public string? ManagerName { get; set; } = "John Manager";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
-        public string? ManagerEmail { get; set; } = "john.manager@example.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
-        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
-        public double TotalCapacity { get; set; } = 10000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool IsMainWarehouse { get; set; } = false;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWholesaleContractCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("contractNumber")]
-        public string? ContractNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public System.DateTime EndDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
-        public double MinimumOrderValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
-        public double VolumeDiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
-        public string? DeliveryTerms { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
-        public string? ContractTerms { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
-        public bool AutoRenewal { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWholesaleContractResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWholesaleContractResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contractNumber")]
-        public string? ContractNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public System.DateTime EndDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
-        public double MinimumOrderValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
-        public double VolumeDiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
-        public string? DeliveryTerms { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
-        public string? ContractTerms { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
-        public bool AutoRenewal { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWholesaleContractCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime? StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public System.DateTime? EndDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
-        public double? MinimumOrderValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
-        public double? VolumeDiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int? PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
-        public string? DeliveryTerms { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
-        public string? ContractTerms { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
-        public bool? AutoRenewal { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWholesaleContractResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWholesalePricingCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
-        public System.Guid WholesaleContractId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
-        public int MinimumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
-        public int? MaximumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
-        public double TierPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
-        public System.DateTime EffectiveDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DeactivateWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
-        public System.Guid WholesaleContractId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
-        public int MinimumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
-        public int? MaximumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
-        public double TierPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
-        public System.DateTime EffectiveDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWholesalePricingCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
-        public double TierPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTodoCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Hello World!";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "This is desciption.";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = "Important Note.";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTodoResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetTodoResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TodoDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateTodoCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateTodoResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 

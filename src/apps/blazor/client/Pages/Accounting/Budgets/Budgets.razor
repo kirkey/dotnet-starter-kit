@@ -2,7 +2,7 @@
 
 <PageHeader Title="Accounting Periods" Header="Accounting Periods" SubHeader="Manage Accounting Periods." />
 
-<EntityTable @ref="_table" TEntity="BudgetDto" TId="DefaultIdType" TRequest="BudgetViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="BudgetResponse" TId="DefaultIdType" TRequest="BudgetViewModel" Context="@Context">
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting;
 
 public class AutocompleteUsoaCategory : MudAutocomplete<string>
 {
-    private List<ChartOfAccountDto> _list = new();
+    private List<ChartOfAccountResponse> _list = new();
 
     [Parameter] public string Parent { get; set; } = default!;
 
@@ -25,7 +25,7 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
 
     private async Task<IEnumerable<string>>? SearchText(string? value, CancellationToken cancellationToken)
     {
-        var filter = new SearchChartOfAccountRequest
+        var filter = new SearchChartOfAccountQuery
         {
             AdvancedSearch = new Search { Fields = new[] { "usoaCategory", "description", "notes" }, Keyword = value },
             PageSize = 10
@@ -36,7 +36,7 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
                 .ConfigureAwait(false)
             is var response)
         {
-            _list = response?.Items?.ToList() ?? new List<ChartOfAccountDto>();
+            _list = response?.Items?.ToList() ?? new List<ChartOfAccountResponse>();
         }
 
         return _list.Select(x => x.Name!);
