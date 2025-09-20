@@ -1,42 +1,79 @@
 ﻿namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 
-public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IApiClient, DefaultIdType>
+/// <summary>
+/// Autocomplete component for selecting a Category by its identifier.
+/// - Fetches a single Category by id when needed.
+/// - Searches Categories by code/name/description/notes and caches results in-memory.
+/// </summary>
+public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IApiClient, DefaultIdType?>
 {
+    // Local cache for id -> dto lookups. We don't rely on base's private cache.
+    private Dictionary<DefaultIdType, CategoryResponse> _cache = [];
+
+    [Inject] protected NavigationManager Navigation { get; set; } = default!;
     [Parameter] public bool ShowAll { get; set; }
 
-    protected override async Task<CategoryResponse?> GetItem(Guid id)
+    /// <summary>
+    /// Gets a single Category item by identifier.
+    /// </summary>
+    /// <param name="id">The category identifier.</param>
+    /// <returns>The category response, or null if not found.</returns>
+    protected override async Task<CategoryResponse?> GetItem(DefaultIdType? id)
     {
-        return _dictionary.TryGetValue(id, out var dto)
-            ? dto
-            : await ApiHelper.ExecuteCallGuardedAsync(() => Client.GetCategoryEndpointAsync(id), Snackbar).ConfigureAwait(false);
+        if (!id.HasValue) return null;
+        if (_cache.TryGetValue(id.Value, out var cached)) return cached;
+
+        var dto = await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.GetCategoryEndpointAsync("1", id.Value),
+                Snackbar,
+                Navigation)
+            .ConfigureAwait(false);
+
+        if (dto is not null) _cache[id.Value] = dto;
+
+        return dto;
     }
 
-    protected override async Task<IEnumerable<Guid>> SearchText(string? value, CancellationToken token)
+    /// <summary>
+    /// returns the first page of categories.
+    /// </summary>
+    /// <param name="value">The search text.</param>
+    /// <param name="token">Cancellation token.</param>
+    /// <returns>Enumerable of category ids matching the search.</returns>
+    protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
+        if (string.IsNullOrWhiteSpace(value) && !ShowAll) return Array.Empty<DefaultIdType?>();
         var request = new SearchCategoriesCommand
         {
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = ["code", "name", "description", "notes"],
+                Fields = new[] { "code", "name", "description", "notes" },
                 Keyword = value
             }
         };
 
-        if (await SearchEmployees(request)is { } response)
-            _dictionary = response.Data.To_dictionary(x => x.Id);
-
-        return _dictionary.Keys;
-    }
-
-    protected override string GetValueText(DefaultIdType id)
-    {
-        return _dictionary.TryGetValue(id, out var dto) ? dto.Name : string.Empty;
-    }
-
-    private async Task<CategoryResponsePagedList?> SearchEmployees(SearchCategoriesCommand filter)
-    {
-        return await ApiHelper.ExecuteCallGuardedAsync(() => Client.SearchCategoriesEndpointAsync(filter), Snackbar)
+        var response = await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.SearchCategoriesEndpointAsync("1", request, token),
+                Snackbar,
+                Navigation)
             .ConfigureAwait(false);
+
+        if (response?.Items is { } items)
+        {
+            // Overwrite cache with latest page of results; guard against null Ids.
+            _cache = items.Where(x => x.Id.HasValue)
+                .GroupBy(x => x.Id!.Value)
+                .Select(g => g.First())
+                .ToDictionary(x => x.Id!.Value);
+        }
+
+        return _cache.Keys.Cast<DefaultIdType?>();
+    }
+
+    protected override string GetValueText(DefaultIdType? id)
+    {
+        if (!id.HasValue) return string.Empty;
+        return _cache.TryGetValue(id.Value, out var dto) ? dto.Name ?? string.Empty : string.Empty;
     }
 }

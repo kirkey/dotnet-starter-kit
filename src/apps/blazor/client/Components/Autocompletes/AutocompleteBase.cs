@@ -5,7 +5,7 @@ public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TK
     where TClient : class
     where TKey : notnull
 {
-    private Dictionary<TKey, TDto> _dictionary = [];
+    protected Dictionary<TKey, TDto> _dictionary = [];
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
     [Inject] protected TClient Client { get; set; } = default!;
 

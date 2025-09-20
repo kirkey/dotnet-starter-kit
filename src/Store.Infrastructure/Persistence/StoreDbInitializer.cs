@@ -86,7 +86,7 @@ internal sealed class StoreDbInitializer(
                 ("Seasonal","Seasonal items", "SEASONAL")
             };
 
-            for (var i = existingCategories; i < 10; i++)
+            for (var i = existingCategories; i < templates.Length; i++)
             {
                 var t = templates[i % templates.Length];
                 categories.Add(Category.Create(t.Item1 + (i >= templates.Length ? $" {i+1}" : ""), t.Item2, t.Item3 + (i >= templates.Length ? $"{i+1}" : "")));
