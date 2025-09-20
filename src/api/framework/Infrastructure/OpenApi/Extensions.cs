@@ -20,6 +20,8 @@ public static class Extensions
             .AddSwaggerGen(options =>
             {
                 options.OperationFilter<SwaggerDefaultValues>();
+                // Ensure unique schema Ids across modules by using fully qualified type names
+                // options.CustomSchemaIds(t => t.FullName);
                 options.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,

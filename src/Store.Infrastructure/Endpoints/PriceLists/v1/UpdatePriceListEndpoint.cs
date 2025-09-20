@@ -20,10 +20,11 @@ public static class UpdatePriceListEndpoint
             var result = await sender.Send(updateCommand).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdatePriceList")
+        .WithName(nameof(UpdatePriceListEndpoint))
         .WithSummary("Update a price list")
         .WithDescription("Updates an existing price list")
         .Produces<UpdatePriceListResponse>()
+        .RequirePermission("Permissions.PriceLists.Update")
         .MapToApiVersion(1);
     }
 }

@@ -6,15 +6,16 @@ public static class GetCategoryEndpoint
 {
     internal static RouteHandlerBuilder MapGetCategoryEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
+        return endpoints.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
-            var result = await sender.Send(new GetCategoryRequest(id)).ConfigureAwait(false);
+            var result = await mediator.Send(new GetCategoryRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetCategory")
+        .WithName(nameof(GetCategoryEndpoint))
         .WithSummary("Get category by ID")
         .WithDescription("Retrieves a category by its unique identifier")
         .Produces<CategoryResponse>()
+        .RequirePermission("Permissions.Categories.View")
         .MapToApiVersion(1);
     }
 }

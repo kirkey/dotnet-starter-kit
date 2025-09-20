@@ -12,10 +12,11 @@ public static class UpdateInventoryTransferEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdateInventoryTransfer")
+        .WithName(nameof(UpdateInventoryTransferEndpoint))
         .WithSummary("Update inventory transfer")
         .WithDescription("Updates an existing inventory transfer with the provided details")
         .Produces<UpdateInventoryTransferResponse>()
+        .RequirePermission("Permissions.InventoryTransfers.Update")
         .MapToApiVersion(1);
     }
 }

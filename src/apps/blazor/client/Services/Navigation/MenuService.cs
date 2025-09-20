@@ -97,7 +97,7 @@ public class MenuService : IMenuService
                     IsParent = true,
                     MenuItems =
                     [
-                        new MenuSectionSubItemModel { Title = "Chart Of Accounts", Icon = Icons.Material.Filled.List, Href = "/chart-of-accounts" },
+                        new MenuSectionSubItemModel { Title = "Categories", Icon = Icons.Material.Filled.Category, Href = "/store/categories", Action = FshActions.View, Resource = FshResources.Store },
                     ]
                 },
 

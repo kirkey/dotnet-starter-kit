@@ -11,10 +11,11 @@ public static class DeleteSalesOrderEndpoint
             await sender.Send(new DeleteSalesOrderCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteSalesOrder")
+        .WithName(nameof(DeleteSalesOrderEndpoint))
         .WithSummary("Delete sales order")
         .WithDescription("Deletes a sales order by its unique identifier")
         .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.SalesOrders.Delete")
         .MapToApiVersion(1);
     }
 }

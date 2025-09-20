@@ -19,10 +19,11 @@ public static class GetPurchaseOrderEndpoint
             var result = await sender.Send(new GetPurchaseOrderQuery(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetPurchaseOrder")
+        .WithName(nameof(GetPurchaseOrderEndpoint))
         .WithSummary("Get a purchase order")
         .WithDescription("Retrieves a purchase order by ID")
         .Produces<GetPurchaseOrderResponse>()
+        .RequirePermission("Permissions.PurchaseOrders.View")
         .MapToApiVersion(1);
     }
 }

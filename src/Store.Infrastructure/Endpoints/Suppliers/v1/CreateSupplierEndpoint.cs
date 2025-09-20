@@ -6,15 +6,17 @@ public static class CreateSupplierEndpoint
 {
     internal static RouteHandlerBuilder MapCreateSupplierEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreateSupplierCommand command, ISender sender) =>
-        {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/suppliers/{result.SupplierId}", result);
-        })
-        .WithName("CreateSupplier")
-        .WithSummary("Create a new supplier")
-        .WithDescription("Creates a new supplier")
-        .Produces<CreateSupplierResponse>()
-        .MapToApiVersion(1);
+        return endpoints
+            .MapPost("/", async (CreateSupplierCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(CreateSupplierEndpoint))
+            .WithSummary("Create a new supplier")
+            .WithDescription("Creates a new supplier")
+            .Produces<CreateSupplierResponse>()
+            .RequirePermission("Permissions.Suppliers.Create")
+            .MapToApiVersion(1);
     }
 }

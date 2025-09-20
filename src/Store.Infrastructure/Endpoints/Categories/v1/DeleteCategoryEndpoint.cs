@@ -6,16 +6,16 @@ public static class DeleteCategoryEndpoint
 {
     internal static RouteHandlerBuilder MapDeleteCategoryEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapDelete("/{id:guid}", async (DefaultIdType id, ISender sender) =>
+        return endpoints.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
-            await sender.Send(new DeleteCategoryCommand(id)).ConfigureAwait(false);
+            await mediator.Send(new DeleteCategoryCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteCategory")
+        .WithName(nameof(DeleteCategoryEndpoint))
         .WithSummary("Delete category")
         .WithDescription("Deletes a category by its unique identifier")
         .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.Categories.Delete")
         .MapToApiVersion(1);
     }
 }
-

@@ -19,10 +19,11 @@ public static class DeletePriceListEndpoint
             await sender.Send(new DeletePriceListCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeletePriceList")
+        .WithName(nameof(DeletePriceListEndpoint))
         .WithSummary("Delete a price list")
         .WithDescription("Deletes a price list by ID")
-        .Produces(204)
+        .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.PriceLists.Delete")
         .MapToApiVersion(1);
     }
 }

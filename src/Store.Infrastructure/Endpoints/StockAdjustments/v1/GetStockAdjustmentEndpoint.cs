@@ -11,10 +11,11 @@ public static class GetStockAdjustmentEndpoint
             var result = await sender.Send(new GetStockAdjustmentQuery(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetStockAdjustment")
+        .WithName(nameof(GetStockAdjustmentEndpoint))
         .WithSummary("Get stock adjustment by ID")
         .WithDescription("Retrieves a stock adjustment by its unique identifier")
         .Produces<StockAdjustmentResponse>()
+        .RequirePermission("Permissions.StockAdjustments.View")
         .MapToApiVersion(1);
     }
 }

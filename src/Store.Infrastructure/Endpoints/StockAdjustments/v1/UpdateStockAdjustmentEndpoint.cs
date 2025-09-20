@@ -20,10 +20,11 @@ public static class UpdateStockAdjustmentEndpoint
             var result = await sender.Send(updateCommand).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdateStockAdjustment")
+        .WithName(nameof(UpdateStockAdjustmentEndpoint))
         .WithSummary("Update a stock adjustment")
         .WithDescription("Updates an existing stock adjustment")
         .Produces<UpdateStockAdjustmentResponse>()
+        .RequirePermission("Permissions.StockAdjustments.Update")
         .MapToApiVersion(1);
     }
 }

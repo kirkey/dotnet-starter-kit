@@ -15,7 +15,7 @@ public sealed record CreateCustomerCommand(
     [property: DefaultValue("10001")] string? PostalCode = null,
     [property: DefaultValue(10000)] decimal CreditLimit = 10000,
     [property: DefaultValue(30)] int PaymentTermsDays = 30,
-    [property: DefaultValue(5.0)] decimal DiscountPercentage = 5.0m,
+    [property: DefaultValue(5)] decimal DiscountPercentage = 5.0m,
     [property: DefaultValue(null)] string? TaxNumber = null,
     [property: DefaultValue(null)] string? BusinessLicense = null,
     [property: DefaultValue(null)] string? Notes = null

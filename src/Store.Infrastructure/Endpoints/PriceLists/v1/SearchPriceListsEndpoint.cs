@@ -15,15 +15,16 @@ public static class SearchPriceListsEndpoint
     /// <returns>Route handler builder for search price lists endpoint</returns>
     internal static RouteHandlerBuilder MapSearchPriceListsEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/search", async (SearchPriceListsCommand command, ISender sender) =>
+        return endpoints.MapPost("/search", async (ISender mediator, [FromBody] SearchPriceListsCommand command) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Ok(result);
+            var response = await mediator.Send(command).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("SearchPriceLists")
+        .WithName(nameof(SearchPriceListsEndpoint))
         .WithSummary("Search price lists")
         .WithDescription("Search and filter price lists with pagination support")
         .Produces<PagedList<GetPriceListResponse>>()
+        .RequirePermission("Permissions.PriceLists.View")
         .MapToApiVersion(1);
     }
 }

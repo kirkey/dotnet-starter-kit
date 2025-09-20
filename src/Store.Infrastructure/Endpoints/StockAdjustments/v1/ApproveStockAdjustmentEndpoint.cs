@@ -12,10 +12,11 @@ public static class ApproveStockAdjustmentEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("ApproveStockAdjustment")
+        .WithName(nameof(ApproveStockAdjustmentEndpoint))
         .WithSummary("Approve stock adjustment")
         .WithDescription("Approves a stock adjustment and applies changes to inventory")
         .Produces<ApproveStockAdjustmentResponse>()
+        .RequirePermission("Permissions.StockAdjustments.Approve")
         .MapToApiVersion(1);
     }
 }

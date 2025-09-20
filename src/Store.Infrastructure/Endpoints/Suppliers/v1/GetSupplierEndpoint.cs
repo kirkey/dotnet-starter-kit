@@ -11,10 +11,11 @@ public static class GetSupplierEndpoint
             var result = await sender.Send(new GetSupplierRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetSupplier")
+        .WithName(nameof(GetSupplierEndpoint))
         .WithSummary("Get a supplier")
         .WithDescription("Retrieves a supplier by id")
         .Produces<SupplierResponse>()
+        .RequirePermission("Permissions.Suppliers.View")
         .MapToApiVersion(1);
     }
 }

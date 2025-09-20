@@ -6,15 +6,16 @@ public static class CreateSalesOrderEndpoint
 {
     internal static RouteHandlerBuilder MapCreateSalesOrderEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreateSalesOrderCommand command, ISender sender) =>
+        return endpoints.MapPost("/", async (CreateSalesOrderCommand request, ISender mediator) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/sales-orders/{result.Id}", result);
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("CreateSalesOrder")
+        .WithName(nameof(CreateSalesOrderEndpoint))
         .WithSummary("Create a new sales order")
         .WithDescription("Creates a new sales order for retail or wholesale customers")
         .Produces<CreateSalesOrderResponse>()
+        .RequirePermission("Permissions.SalesOrders.Create")
         .MapToApiVersion(1);
     }
 }

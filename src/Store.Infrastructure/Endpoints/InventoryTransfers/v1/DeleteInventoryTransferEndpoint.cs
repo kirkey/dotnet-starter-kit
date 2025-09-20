@@ -19,10 +19,11 @@ public static class DeleteInventoryTransferEndpoint
             await sender.Send(new DeleteInventoryTransferCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteInventoryTransfer")
+        .WithName(nameof(DeleteInventoryTransferEndpoint))
         .WithSummary("Delete an inventory transfer")
         .WithDescription("Deletes an inventory transfer by ID")
-        .Produces(204)
+        .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.InventoryTransfers.Delete")
         .MapToApiVersion(1);
     }
 }

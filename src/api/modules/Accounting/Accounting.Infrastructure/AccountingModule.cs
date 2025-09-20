@@ -15,7 +15,6 @@ using Accounting.Infrastructure.Endpoints.Payments.v1;
 using Accounting.Infrastructure.Endpoints.Projects.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
 using Accounting.Infrastructure.Persistence;
-using Accounting.Infrastructure.Persistence.Configurations;
 using Carter;
 using FSH.Framework.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;

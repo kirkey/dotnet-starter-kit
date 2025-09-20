@@ -11,10 +11,11 @@ public static class SearchInventoryTransfersEndpoint
             var result = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("SearchInventoryTransfers")
+        .WithName(nameof(SearchInventoryTransfersEndpoint))
         .WithSummary("Get list of inventory transfers")
         .WithDescription("Retrieves a paginated list of inventory transfers with optional filtering")
         .Produces<PagedList<GetInventoryTransferListResponse>>()
+        .RequirePermission("Permissions.InventoryTransfers.View")
         .MapToApiVersion(1);
     }
 }

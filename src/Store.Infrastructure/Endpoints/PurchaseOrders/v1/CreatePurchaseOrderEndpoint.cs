@@ -14,15 +14,16 @@ public static class CreatePurchaseOrderEndpoint
     /// <returns>Route handler builder for create purchase order endpoint</returns>
     internal static RouteHandlerBuilder MapCreatePurchaseOrderEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreatePurchaseOrderCommand command, ISender sender) =>
+        return endpoints.MapPost("/", async (CreatePurchaseOrderCommand request, ISender mediator) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/purchase-orders/{result.Id}", result);
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("CreatePurchaseOrder")
+        .WithName(nameof(CreatePurchaseOrderEndpoint))
         .WithSummary("Create a new purchase order")
         .WithDescription("Creates a new purchase order")
         .Produces<CreatePurchaseOrderResponse>()
+        .RequirePermission("Permissions.PurchaseOrders.Create")
         .MapToApiVersion(1);
     }
 }

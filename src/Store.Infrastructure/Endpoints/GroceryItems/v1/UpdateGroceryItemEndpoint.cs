@@ -12,10 +12,11 @@ public static class UpdateGroceryItemEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdateGroceryItem")
+        .WithName(nameof(UpdateGroceryItemEndpoint))
         .WithSummary("Update grocery item")
         .WithDescription("Updates an existing grocery item")
         .Produces<UpdateGroceryItemResponse>()
+        .RequirePermission("Permissions.GroceryItems.Update")
         .MapToApiVersion(1);
     }
 }

@@ -6,15 +6,17 @@ public static class CreateGroceryItemEndpoint
 {
     internal static RouteHandlerBuilder MapCreateGroceryItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreateGroceryItemCommand command, ISender sender) =>
-        {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/grocery-items/{result.Id}", result);
-        })
-        .WithName("CreateGroceryItem")
-        .WithSummary("Create a new grocery item")
-        .WithDescription("Creates a new grocery item with inventory tracking")
-        .Produces<CreateGroceryItemResponse>()
-        .MapToApiVersion(1);
+        return endpoints
+            .MapPost("/", async (CreateGroceryItemCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(CreateGroceryItemEndpoint))
+            .WithSummary("Create a new grocery item")
+            .WithDescription("Creates a new grocery item with inventory tracking")
+            .Produces<CreateGroceryItemResponse>()
+            .RequirePermission("Permissions.GroceryItems.Create")
+            .MapToApiVersion(1);
     }
 }

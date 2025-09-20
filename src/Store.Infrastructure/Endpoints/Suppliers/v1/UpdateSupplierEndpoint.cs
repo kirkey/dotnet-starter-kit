@@ -12,10 +12,11 @@ public static class UpdateSupplierEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdateSupplier")
+        .WithName(nameof(UpdateSupplierEndpoint))
         .WithSummary("Update a supplier")
         .WithDescription("Updates an existing supplier")
         .Produces<UpdateSupplierResponse>()
+        .RequirePermission("Permissions.Suppliers.Update")
         .MapToApiVersion(1);
     }
 }

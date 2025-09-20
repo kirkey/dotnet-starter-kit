@@ -19,10 +19,11 @@ public static class DeleteStockAdjustmentEndpoint
             await sender.Send(new DeleteStockAdjustmentCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteStockAdjustment")
+        .WithName(nameof(DeleteStockAdjustmentEndpoint))
         .WithSummary("Delete a stock adjustment")
         .WithDescription("Deletes a stock adjustment by ID")
-        .Produces(204)
+        .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.StockAdjustments.Delete")
         .MapToApiVersion(1);
     }
 }

@@ -6,15 +6,16 @@ public static class CreateInventoryTransferEndpoint
 {
     internal static RouteHandlerBuilder MapCreateInventoryTransferEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreateInventoryTransferCommand command, ISender sender) =>
+        return endpoints.MapPost("/", async (CreateInventoryTransferCommand request, ISender mediator) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/inventory-transfers/{result.Id}", result);
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("CreateInventoryTransfer")
+        .WithName(nameof(CreateInventoryTransferEndpoint))
         .WithSummary("Create a new inventory transfer")
         .WithDescription("Creates a new transfer between warehouses")
         .Produces<CreateInventoryTransferResponse>()
+        .RequirePermission("Permissions.InventoryTransfers.Create")
         .MapToApiVersion(1);
     }
 }

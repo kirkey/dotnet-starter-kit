@@ -6,15 +6,16 @@ public static class CreateStockAdjustmentEndpoint
 {
     internal static RouteHandlerBuilder MapCreateStockAdjustmentEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreateStockAdjustmentCommand command, ISender sender) =>
+        return endpoints.MapPost("/", async (CreateStockAdjustmentCommand request, ISender mediator) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/stock-adjustments/{result.Id}", result);
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("CreateStockAdjustment")
+        .WithName(nameof(CreateStockAdjustmentEndpoint))
         .WithSummary("Create a new stock adjustment")
         .WithDescription("Creates a stock adjustment for inventory")
         .Produces<CreateStockAdjustmentResponse>()
+        .RequirePermission("Permissions.StockAdjustments.Create")
         .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,3 @@
-using MediatR;
 using FSH.Starter.WebApi.Store.Application.Customers.Create.v1;
 
 namespace Store.Infrastructure.Endpoints.Customers.v1;

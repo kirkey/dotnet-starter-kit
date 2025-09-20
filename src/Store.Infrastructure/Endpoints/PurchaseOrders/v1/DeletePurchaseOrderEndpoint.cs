@@ -19,10 +19,11 @@ public static class DeletePurchaseOrderEndpoint
             await sender.Send(new DeletePurchaseOrderCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeletePurchaseOrder")
+        .WithName(nameof(DeletePurchaseOrderEndpoint))
         .WithSummary("Delete a purchase order")
         .WithDescription("Deletes a purchase order by ID")
-        .Produces(204)
+        .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.PurchaseOrders.Delete")
         .MapToApiVersion(1);
     }
 }

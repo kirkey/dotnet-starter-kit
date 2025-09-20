@@ -7,26 +7,17 @@ public static class SearchCategoriesEndpoint
 {
     internal static RouteHandlerBuilder MapSearchCategoriesEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/", async (HttpRequest req, ISender sender) =>
-        {
-            // Bind query params to SearchCategoriesCommand
-            var cmd = new SearchCategoriesCommand
+        return endpoints
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchCategoriesCommand command) =>
             {
-                PageNumber = int.TryParse(req.Query["pageNumber"], out var pn) ? pn : 1,
-                PageSize = int.TryParse(req.Query["pageSize"], out var ps) ? ps : 10,
-                Name = req.Query["name"],
-                Code = req.Query["code"],
-                IsActive = string.IsNullOrEmpty(req.Query["isActive"]) ? null : (bool?)bool.Parse(req.Query["isActive"])
-            };
-
-            var result = await sender.Send(cmd).ConfigureAwait(false);
-            return Results.Ok(result);
-        })
-        .WithName("SearchCategories")
-        .WithSummary("Search categories")
-        .WithDescription("Searches categories with pagination and filters")
-        .Produces<PagedList<CategoryResponse>>()
-        .MapToApiVersion(1);
+                var response = await mediator.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(SearchCategoriesEndpoint))
+            .WithSummary("Search categories")
+            .WithDescription("Searches categories with pagination and filters")
+            .Produces<PagedList<CategoryResponse>>()
+            .RequirePermission("Permissions.Categories.View")
+            .MapToApiVersion(1);
     }
 }
-

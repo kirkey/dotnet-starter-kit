@@ -11,10 +11,11 @@ public static class DeleteGroceryItemEndpoint
             await sender.Send(new DeleteGroceryItemCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteGroceryItem")
+        .WithName(nameof(DeleteGroceryItemEndpoint))
         .WithSummary("Delete grocery item")
         .WithDescription("Deletes a grocery item by its unique identifier")
         .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.GroceryItems.Delete")
         .MapToApiVersion(1);
     }
 }

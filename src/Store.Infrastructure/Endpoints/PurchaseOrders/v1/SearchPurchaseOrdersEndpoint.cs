@@ -15,15 +15,16 @@ public static class SearchPurchaseOrdersEndpoint
     /// <returns>Route handler builder for search purchase orders endpoint</returns>
     internal static RouteHandlerBuilder MapSearchPurchaseOrdersEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/search", async (SearchPurchaseOrdersCommand command, ISender sender) =>
+        return endpoints.MapPost("/search", async (ISender mediator, [FromBody] SearchPurchaseOrdersCommand command) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Ok(result);
+            var response = await mediator.Send(command).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("SearchPurchaseOrders")
+        .WithName(nameof(SearchPurchaseOrdersEndpoint))
         .WithSummary("Search purchase orders")
         .WithDescription("Search and filter purchase orders with pagination support")
         .Produces<PagedList<GetPurchaseOrderResponse>>()
+        .RequirePermission("Permissions.PurchaseOrders.View")
         .MapToApiVersion(1);
     }
 }

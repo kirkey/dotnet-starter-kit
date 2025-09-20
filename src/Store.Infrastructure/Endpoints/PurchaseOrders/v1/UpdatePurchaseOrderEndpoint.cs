@@ -20,10 +20,11 @@ public static class UpdatePurchaseOrderEndpoint
             var result = await sender.Send(updateCommand).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdatePurchaseOrder")
+        .WithName(nameof(UpdatePurchaseOrderEndpoint))
         .WithSummary("Update a purchase order")
         .WithDescription("Updates an existing purchase order")
         .Produces<UpdatePurchaseOrderResponse>()
+        .RequirePermission("Permissions.PurchaseOrders.Update")
         .MapToApiVersion(1);
     }
 }

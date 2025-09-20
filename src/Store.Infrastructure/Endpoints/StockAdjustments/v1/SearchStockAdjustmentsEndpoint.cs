@@ -12,10 +12,11 @@ public static class SearchStockAdjustmentsEndpoint
             var result = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("SearchStockAdjustments")
+        .WithName(nameof(SearchStockAdjustmentsEndpoint))
         .WithSummary("Search stock adjustments")
         .WithDescription("Retrieves a paginated list of stock adjustments with optional filtering")
         .Produces<PagedList<StockAdjustmentResponse>>()
+        .RequirePermission("Permissions.StockAdjustments.View")
         .MapToApiVersion(1);
     }
 }

@@ -10,12 +10,13 @@ public static class AddInventoryTransferItemEndpoint
         {
             if (id != command.InventoryTransferId) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/inventory-transfers/{result.InventoryTransferId.ToString()}/items/{result.ItemId.ToString()}", result);
+            return Results.Ok(result);
         })
-        .WithName("AddInventoryTransferItem")
+        .WithName(nameof(AddInventoryTransferItemEndpoint))
         .WithSummary("Add item to inventory transfer")
         .WithDescription("Adds a grocery item line to an existing inventory transfer")
         .Produces<AddInventoryTransferItemResponse>()
+        .RequirePermission("Permissions.InventoryTransfers.Update")
         .MapToApiVersion(1);
     }
 }

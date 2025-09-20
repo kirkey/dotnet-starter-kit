@@ -38,7 +38,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body);
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -50,7 +50,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a chart of account by id
@@ -61,33 +61,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountDto> ChartOfAccountGetEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// get a chart of account by id
-        /// </summary>
-        /// <remarks>
-        /// get a chart of account by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountDto> ChartOfAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// update a chart of account
-        /// </summary>
-        /// <remarks>
-        /// update a chart of account
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body);
+        System.Threading.Tasks.Task<ChartOfAccountResponse> ChartOfAccountGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
+        /// get a chart of account by id
+        /// </summary>
+        /// <remarks>
+        /// get a chart of account by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ChartOfAccountResponse> ChartOfAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// update a chart of account
         /// </summary>
         /// <remarks>
@@ -96,7 +84,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a chart of account
+        /// </summary>
+        /// <remarks>
+        /// update a chart of account
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete chart of account by id
@@ -130,7 +130,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body);
+        System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -142,7 +142,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create invoice from consumption
@@ -268,7 +268,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body);
+        System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -280,7 +280,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets a list of budgets
@@ -291,7 +291,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BudgetDtoPagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body);
+        System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -303,7 +303,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BudgetDtoPagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create a budget
@@ -314,7 +314,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BudgetCreateEndpointAsync(string version, CreateBudgetRequest body);
+        System.Threading.Tasks.Task<CreateBudgetResponse> BudgetCreateEndpointAsync(string version, CreateBudgetCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -326,7 +326,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BudgetCreateEndpointAsync(string version, CreateBudgetRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateBudgetResponse> BudgetCreateEndpointAsync(string version, CreateBudgetCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a budget by id
@@ -337,33 +337,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BudgetDto> BudgetGetEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// get a budget by id
-        /// </summary>
-        /// <remarks>
-        /// get a budget by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BudgetDto> BudgetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// update a budget
-        /// </summary>
-        /// <remarks>
-        /// update a budget
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body);
+        System.Threading.Tasks.Task<BudgetResponse> BudgetGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
+        /// get a budget by id
+        /// </summary>
+        /// <remarks>
+        /// get a budget by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<BudgetResponse> BudgetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// update a budget
         /// </summary>
         /// <remarks>
@@ -372,7 +360,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateBudgetResponse> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a budget
+        /// </summary>
+        /// <remarks>
+        /// update a budget
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateBudgetResponse> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete budget by id
@@ -406,7 +406,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body);
+        System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryEndpointAsync(string version, CreateCategoryCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -418,30 +418,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Search categories
-        /// </summary>
-        /// <remarks>
-        /// Searches categories with pagination and filters
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Search categories
-        /// </summary>
-        /// <remarks>
-        /// Searches categories with pagination and filters
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryEndpointAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get category by ID
@@ -452,7 +429,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CategoryResponse> GetCategoryEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -464,7 +441,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CategoryResponse> GetCategoryEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update category
@@ -475,7 +452,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body);
+        System.Threading.Tasks.Task<UpdateCategoryResponse> UpdateCategoryEndpointAsync(string version, System.Guid id, UpdateCategoryCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -487,7 +464,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateCategoryResponse> UpdateCategoryEndpointAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete category
@@ -498,7 +475,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteCategoryEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -510,7 +487,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteCategoryEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search categories
+        /// </summary>
+        /// <remarks>
+        /// Searches categories with pagination and filters
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search categories
+        /// </summary>
+        /// <remarks>
+        /// Searches categories with pagination and filters
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create a customer
@@ -521,7 +521,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerRequest body);
+        System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -533,7 +533,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a customer by id
@@ -544,33 +544,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerDto> CustomerGetEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// get a customer by id
-        /// </summary>
-        /// <remarks>
-        /// get a customer by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerDto> CustomerGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// update a customer
-        /// </summary>
-        /// <remarks>
-        /// update a customer
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerRequest body);
+        System.Threading.Tasks.Task<CustomerResponse> CustomerGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
+        /// get a customer by id
+        /// </summary>
+        /// <remarks>
+        /// get a customer by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CustomerResponse> CustomerGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// update a customer
         /// </summary>
         /// <remarks>
@@ -579,7 +567,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a customer
+        /// </summary>
+        /// <remarks>
+        /// update a customer
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete customer by id
@@ -605,50 +605,50 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task CustomerDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a list of customers
+        /// search customers
         /// </summary>
         /// <remarks>
-        /// Gets a list of customers with pagination and filtering support
+        /// search customers
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerDtoPagedList> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body);
+        System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of customers
+        /// search customers
         /// </summary>
         /// <remarks>
-        /// Gets a list of customers with pagination and filtering support
+        /// search customers
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerDtoPagedList> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new customer
         /// </summary>
         /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate)
+        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body);
+        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Create a new customer
         /// </summary>
         /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate)
+        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get customer by ID
@@ -659,7 +659,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -671,7 +671,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update customer
@@ -682,7 +682,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body);
+        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -694,7 +694,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete customer
@@ -703,9 +703,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a customer by their unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteCustomerAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -715,9 +715,32 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a customer by their unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search customers
+        /// </summary>
+        /// <remarks>
+        /// Search and filter customers with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search customers
+        /// </summary>
+        /// <remarks>
+        /// Search and filter customers with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new cycle count
@@ -912,7 +935,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FixedAssetDtoPagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body);
+        System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -924,7 +947,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FixedAssetDtoPagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a fixed asset by id
@@ -935,7 +958,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FixedAssetDto> FixedAssetGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<FixedAssetResponse> FixedAssetGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -947,7 +970,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FixedAssetDto> FixedAssetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<FixedAssetResponse> FixedAssetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// update a fixed asset
@@ -1004,7 +1027,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetRequest body);
+        System.Threading.Tasks.Task<CreateFixedAssetResponse> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1016,7 +1039,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateFixedAssetResponse> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new grocery item
@@ -1027,7 +1050,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body);
+        System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemEndpointAsync(string version, CreateGroceryItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1039,7 +1062,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemEndpointAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get grocery item by ID
@@ -1050,7 +1073,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1062,7 +1085,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update grocery item
@@ -1073,7 +1096,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body);
+        System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemEndpointAsync(string version, System.Guid id, UpdateGroceryItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1085,7 +1108,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemEndpointAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete grocery item
@@ -1096,7 +1119,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteGroceryItemEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1108,7 +1131,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteGroceryItemEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search grocery items
+        /// </summary>
+        /// <remarks>
+        /// Search and filter grocery items with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search grocery items
+        /// </summary>
+        /// <remarks>
+        /// Search and filter grocery items with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create inventory item
@@ -1142,7 +1188,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body);
+        System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferEndpointAsync(string version, CreateInventoryTransferCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1154,30 +1200,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Get list of inventory transfers
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of inventory transfers with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get list of inventory transfers
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of inventory transfers with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferEndpointAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get inventory transfer by ID
@@ -1188,7 +1211,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1200,7 +1223,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update inventory transfer
@@ -1211,7 +1234,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body);
+        System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferEndpointAsync(string version, System.Guid id, UpdateInventoryTransferCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1223,7 +1246,53 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferEndpointAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete an inventory transfer
+        /// </summary>
+        /// <remarks>
+        /// Deletes an inventory transfer by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteInventoryTransferEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete an inventory transfer
+        /// </summary>
+        /// <remarks>
+        /// Deletes an inventory transfer by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteInventoryTransferEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get list of inventory transfers
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of inventory transfers with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get list of inventory transfers
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of inventory transfers with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add item to inventory transfer
@@ -1234,7 +1303,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body);
+        System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemEndpointAsync(string version, System.Guid id, AddInventoryTransferItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1246,7 +1315,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemEndpointAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Remove item from inventory transfer
@@ -1257,7 +1326,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId);
+        System.Threading.Tasks.Task RemoveInventoryTransferItemEndpointAsync(string version, System.Guid id, System.Guid itemId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1269,7 +1338,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task RemoveInventoryTransferItemEndpointAsync(string version, System.Guid id, System.Guid itemId, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets a list of journal entries
@@ -1280,7 +1349,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<JournalEntryDtoPagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body);
+        System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1292,7 +1361,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<JournalEntryDtoPagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retire patronage capital
@@ -1418,7 +1487,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body);
+        System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1430,7 +1499,58 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Searches payment allocations
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PaymentAllocationResponse>> PaymentAllocationSearchEndpointAsync(string version, SearchPaymentAllocationsQuery body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches payment allocations
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PaymentAllocationResponse>> PaymentAllocationSearchEndpointAsync(string version, SearchPaymentAllocationsQuery body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets a payment allocation by id
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PaymentAllocationResponse> PaymentAllocationGetEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a payment allocation by id
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PaymentAllocationResponse> PaymentAllocationGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Deletes a payment allocation
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task PaymentAllocationDeleteEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Deletes a payment allocation
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task PaymentAllocationDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Allocate a payment
@@ -1456,73 +1576,73 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task AllocatePaymentEndpointAsync(string version, AllocatePaymentCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a list of accounting periods
+        /// search accounting periods
         /// </summary>
         /// <remarks>
-        /// Gets a list of accounting periods with pagination and filtering support
+        /// search accounting periods
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountingPeriodDtoPagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body);
+        System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of accounting periods
+        /// search accounting periods
         /// </summary>
         /// <remarks>
-        /// Gets a list of accounting periods with pagination and filtering support
+        /// search accounting periods
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountingPeriodDtoPagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// create an accounting period
+        /// create accounting period
         /// </summary>
         /// <remarks>
-        /// create an accounting period
+        /// create accounting period
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// create an accounting period
-        /// </summary>
-        /// <remarks>
-        /// create an accounting period
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// update an accounting period
-        /// </summary>
-        /// <remarks>
-        /// update an accounting period
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body);
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update an accounting period
+        /// create accounting period
         /// </summary>
         /// <remarks>
-        /// update an accounting period
+        /// create accounting period
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// update accounting period
+        /// </summary>
+        /// <remarks>
+        /// update accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update accounting period
+        /// </summary>
+        /// <remarks>
+        /// update accounting period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete accounting period by id
@@ -1548,27 +1668,142 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task AccountingPeriodDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </summary>
         /// <remarks>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<AccountingPeriodResponse> AccountingPeriodGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </summary>
         /// <remarks>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AccountingPeriodResponse> AccountingPeriodGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Create a new price list
+        /// </summary>
+        /// <remarks>
+        /// Creates a new price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreatePriceListResponse> CreatePriceListEndpointAsync(string version, CreatePriceListCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new price list
+        /// </summary>
+        /// <remarks>
+        /// Creates a new price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreatePriceListResponse> CreatePriceListEndpointAsync(string version, CreatePriceListCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get a price list
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPriceListResponse> GetPriceListEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a price list
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPriceListResponse> GetPriceListEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Update a price list
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdatePriceListResponse> UpdatePriceListEndpointAsync(string version, System.Guid id, UpdatePriceListCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a price list
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdatePriceListResponse> UpdatePriceListEndpointAsync(string version, System.Guid id, UpdatePriceListCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete a price list
+        /// </summary>
+        /// <remarks>
+        /// Deletes a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeletePriceListEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a price list
+        /// </summary>
+        /// <remarks>
+        /// Deletes a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeletePriceListEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search price lists
+        /// </summary>
+        /// <remarks>
+        /// Search and filter price lists with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search price lists
+        /// </summary>
+        /// <remarks>
+        /// Search and filter price lists with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// creates a product
@@ -1671,7 +1906,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body);
+        System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1683,7 +1918,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create a project
@@ -1694,7 +1929,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectRequest body);
+        System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1706,7 +1941,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a project by id
@@ -1717,33 +1952,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProjectDto> ProjectGetEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// get a project by id
-        /// </summary>
-        /// <remarks>
-        /// get a project by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProjectDto> ProjectGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// update a project
-        /// </summary>
-        /// <remarks>
-        /// update a project
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectRequest body);
+        System.Threading.Tasks.Task<ProjectResponse> ProjectGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
+        /// get a project by id
+        /// </summary>
+        /// <remarks>
+        /// get a project by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ProjectResponse> ProjectGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// update a project
         /// </summary>
         /// <remarks>
@@ -1752,7 +1975,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a project
+        /// </summary>
+        /// <remarks>
+        /// update a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete project by id
@@ -1786,7 +2021,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProjectDtoPagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body);
+        System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1798,7 +2033,122 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProjectDtoPagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Create a new purchase order
+        /// </summary>
+        /// <remarks>
+        /// Creates a new purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreatePurchaseOrderResponse> CreatePurchaseOrderEndpointAsync(string version, CreatePurchaseOrderCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new purchase order
+        /// </summary>
+        /// <remarks>
+        /// Creates a new purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreatePurchaseOrderResponse> CreatePurchaseOrderEndpointAsync(string version, CreatePurchaseOrderCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPurchaseOrderResponse> GetPurchaseOrderEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPurchaseOrderResponse> GetPurchaseOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Update a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdatePurchaseOrderResponse> UpdatePurchaseOrderEndpointAsync(string version, System.Guid id, UpdatePurchaseOrderCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdatePurchaseOrderResponse> UpdatePurchaseOrderEndpointAsync(string version, System.Guid id, UpdatePurchaseOrderCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Deletes a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeletePurchaseOrderEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Deletes a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeletePurchaseOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search purchase orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter purchase orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search purchase orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter purchase orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reconcile an account
@@ -1958,7 +2308,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body);
+        System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderEndpointAsync(string version, CreateSalesOrderCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1970,7 +2320,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderEndpointAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get sales order by ID
@@ -1981,7 +2331,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1993,7 +2343,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update sales order
@@ -2004,7 +2354,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body);
+        System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderEndpointAsync(string version, System.Guid id, UpdateSalesOrderCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2016,7 +2366,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderEndpointAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete sales order
@@ -2027,7 +2377,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteSalesOrderEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2039,7 +2389,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteSalesOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search sales orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter sales orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search sales orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter sales orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new stock adjustment
@@ -2050,7 +2423,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body);
+        System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentEndpointAsync(string version, CreateStockAdjustmentCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2062,7 +2435,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentEndpointAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get stock adjustment by ID
@@ -2073,7 +2446,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2085,7 +2458,53 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Update a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing stock adjustment
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateStockAdjustmentResponse> UpdateStockAdjustmentEndpointAsync(string version, System.Guid id, UpdateStockAdjustmentCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing stock adjustment
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateStockAdjustmentResponse> UpdateStockAdjustmentEndpointAsync(string version, System.Guid id, UpdateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Deletes a stock adjustment by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteStockAdjustmentEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Deletes a stock adjustment by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteStockAdjustmentEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Approve stock adjustment
@@ -2096,7 +2515,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body);
+        System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentEndpointAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2108,7 +2527,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentEndpointAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search stock adjustments
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of stock adjustments with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search stock adjustments
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of stock adjustments with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new supplier
@@ -2119,7 +2561,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body);
+        System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierEndpointAsync(string version, CreateSupplierCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2131,7 +2573,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierEndpointAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search suppliers
@@ -2142,7 +2584,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version);
+        System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2154,7 +2596,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a supplier
@@ -2165,7 +2607,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<SupplierResponse> GetSupplierEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2177,7 +2619,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<SupplierResponse> GetSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update a supplier
@@ -2188,7 +2630,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body);
+        System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierEndpointAsync(string version, System.Guid id, UpdateSupplierCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2200,7 +2642,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierEndpointAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete a supplier
@@ -2211,7 +2653,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteSupplierEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2223,7 +2665,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// creates a tenant
@@ -2452,7 +2894,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body);
+        System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2464,7 +2906,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// refresh JWTs
@@ -2945,7 +3387,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body);
+        System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2957,7 +3399,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new warehouse location
@@ -2981,29 +3423,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Get list of warehouse locations
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of warehouse locations with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get list of warehouse locations
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of warehouse locations with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get warehouse location by ID
@@ -3052,27 +3471,73 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Create a new warehouse
+        /// Delete a warehouse location
         /// </summary>
         /// <remarks>
-        /// Creates a new warehouse with the provided details
+        /// Deletes a warehouse location by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a warehouse location
+        /// </summary>
+        /// <remarks>
+        /// Deletes a warehouse location by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get list of warehouse locations
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of warehouse locations with optional filtering
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body);
+        System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get list of warehouse locations
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of warehouse locations with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Create a new warehouse
+        /// </summary>
+        /// <remarks>
+        /// Creates a new warehouse
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseEndpointAsync(string version, CreateWarehouseCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Create a new warehouse
         /// </summary>
         /// <remarks>
-        /// Creates a new warehouse with the provided details
+        /// Creates a new warehouse
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseEndpointAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get warehouse by ID
@@ -3142,6 +3607,98 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search warehouses
+        /// </summary>
+        /// <remarks>
+        /// Search and filter warehouses with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search warehouses
+        /// </summary>
+        /// <remarks>
+        /// Search and filter warehouses with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Create a new wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Creates a new wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateWholesaleContractResponse> CreateWholesaleContractAsync(string version, CreateWholesaleContractCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Creates a new wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateWholesaleContractResponse> CreateWholesaleContractAsync(string version, CreateWholesaleContractCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a wholesale contract by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetWholesaleContractResponse> GetWholesaleContractAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a wholesale contract by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetWholesaleContractResponse> GetWholesaleContractAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Update a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateWholesaleContractResponse> UpdateWholesaleContractAsync(string version, System.Guid id, UpdateWholesaleContractCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateWholesaleContractResponse> UpdateWholesaleContractAsync(string version, System.Guid id, UpdateWholesaleContractCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new wholesale pricing
@@ -3278,7 +3835,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountCommand body)
         {
             return ChartOfAccountCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -3293,7 +3850,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3382,7 +3939,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ChartOfAccountDto> ChartOfAccountGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ChartOfAccountResponse> ChartOfAccountGetEndpointAsync(string version, System.Guid id)
         {
             return ChartOfAccountGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -3397,7 +3954,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ChartOfAccountDto> ChartOfAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ChartOfAccountResponse> ChartOfAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3447,7 +4004,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ChartOfAccountDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ChartOfAccountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -3483,7 +4040,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountCommand body)
         {
             return ChartOfAccountUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -3498,7 +4055,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> ChartOfAccountUpdateEndpointAsync(string version, System.Guid id, UpdateChartOfAccountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3686,7 +4243,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body)
         {
             return ChartOfAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -3701,7 +4258,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ChartOfAccountDtoPagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -3754,7 +4311,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ChartOfAccountDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4302,7 +4859,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body)
         {
             return SearchBrandsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4317,7 +4874,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4370,7 +4927,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<BrandResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4406,7 +4963,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BudgetDtoPagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body)
         {
             return BudgetSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4421,7 +4978,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BudgetDtoPagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4474,7 +5031,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<BudgetDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4510,7 +5067,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> BudgetCreateEndpointAsync(string version, CreateBudgetRequest body)
+        public virtual System.Threading.Tasks.Task<CreateBudgetResponse> BudgetCreateEndpointAsync(string version, CreateBudgetCommand body)
         {
             return BudgetCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4525,7 +5082,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> BudgetCreateEndpointAsync(string version, CreateBudgetRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateBudgetResponse> BudgetCreateEndpointAsync(string version, CreateBudgetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4578,7 +5135,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateBudgetResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4614,7 +5171,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BudgetDto> BudgetGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<BudgetResponse> BudgetGetEndpointAsync(string version, System.Guid id)
         {
             return BudgetGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -4629,7 +5186,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BudgetDto> BudgetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BudgetResponse> BudgetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4679,7 +5236,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<BudgetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<BudgetResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4715,7 +5272,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body)
+        public virtual System.Threading.Tasks.Task<UpdateBudgetResponse> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetCommand body)
         {
             return BudgetUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -4730,7 +5287,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateBudgetResponse> BudgetUpdateEndpointAsync(string version, System.Guid id, UpdateBudgetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4787,7 +5344,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateBudgetResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4918,9 +5475,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body)
+        public virtual System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryEndpointAsync(string version, CreateCategoryCommand body)
         {
-            return CreateCategoryAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateCategoryEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -4933,7 +5490,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateCategoryResponse> CreateCategoryEndpointAsync(string version, CreateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5014,103 +5571,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Search categories
-        /// </summary>
-        /// <remarks>
-        /// Searches categories with pagination and filters
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version)
-        {
-            return SearchCategoriesAsync(version, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Search categories
-        /// </summary>
-        /// <remarks>
-        /// Searches categories with pagination and filters
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CategoryResponsePagedList> SearchCategoriesAsync(string version, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/categories"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/categories");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CategoryResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Get category by ID
         /// </summary>
         /// <remarks>
@@ -5119,9 +5579,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CategoryResponse> GetCategoryEndpointAsync(string version, System.Guid id)
         {
-            return GetCategoryAsync(version, id, System.Threading.CancellationToken.None);
+            return GetCategoryEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -5134,7 +5594,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CategoryResponse> GetCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CategoryResponse> GetCategoryEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5220,9 +5680,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateCategoryResponse> UpdateCategoryEndpointAsync(string version, System.Guid id, UpdateCategoryCommand body)
         {
-            return UpdateCategoryAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateCategoryEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -5235,7 +5695,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CategoryResponse> UpdateCategoryAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateCategoryResponse> UpdateCategoryEndpointAsync(string version, System.Guid id, UpdateCategoryCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5292,7 +5752,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<CategoryResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateCategoryResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5328,9 +5788,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteCategoryEndpointAsync(string version, System.Guid id)
         {
-            return DeleteCategoryAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteCategoryEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -5343,7 +5803,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteCategoryAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteCategoryEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5415,6 +5875,110 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Search categories
+        /// </summary>
+        /// <remarks>
+        /// Searches categories with pagination and filters
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body)
+        {
+            return SearchCategoriesEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search categories
+        /// </summary>
+        /// <remarks>
+        /// Searches categories with pagination and filters
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchCategoriesEndpointAsync(string version, SearchCategoriesCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/categories/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/categories/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// create a customer
         /// </summary>
         /// <remarks>
@@ -5423,7 +5987,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerCommand body)
         {
             return CustomerCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -5438,7 +6002,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> CustomerCreateEndpointAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5527,7 +6091,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CustomerDto> CustomerGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CustomerResponse> CustomerGetEndpointAsync(string version, System.Guid id)
         {
             return CustomerGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -5542,7 +6106,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CustomerDto> CustomerGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomerResponse> CustomerGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5592,7 +6156,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<CustomerDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5628,7 +6192,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerCommand body)
         {
             return CustomerUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -5643,7 +6207,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> CustomerUpdateEndpointAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5823,30 +6387,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Gets a list of customers
+        /// search customers
         /// </summary>
         /// <remarks>
-        /// Gets a list of customers with pagination and filtering support
+        /// search customers
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CustomerDtoPagedList> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body)
         {
             return CustomerSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of customers
+        /// search customers
         /// </summary>
         /// <remarks>
-        /// Gets a list of customers with pagination and filtering support
+        /// search customers
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CustomerDtoPagedList> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> CustomerSearchEndpointAsync(string version, SearchCustomersQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -5899,7 +6463,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<CustomerDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5930,14 +6494,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Create a new customer
         /// </summary>
         /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate)
+        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body)
+        public virtual System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body)
         {
-            return CreateCustomerAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateCustomerEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -5945,12 +6509,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Create a new customer
         /// </summary>
         /// <remarks>
-        /// Creates a new customer (retail, wholesale, or corporate)
+        /// Creates a new customer (retail, wholesale, or corporate) with comprehensive account information
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerAsync(string version, CreateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateCustomerResponse> CreateCustomerEndpointAsync(string version, CreateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6039,9 +6603,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id)
         {
-            return GetCustomerAsync(version, id, System.Threading.CancellationToken.None);
+            return GetCustomerEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -6054,7 +6618,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CustomerResponse> GetCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomerResponse2> GetCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6104,7 +6668,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<CustomerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomerResponse2>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -6140,9 +6704,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body)
         {
-            return UpdateCustomerAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateCustomerEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -6155,7 +6719,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerAsync(string version, System.Guid id, UpdateCustomerCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateCustomerResponse> UpdateCustomerEndpointAsync(string version, System.Guid id, UpdateCustomerCommand2 body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6246,11 +6810,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a customer by their unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteCustomerAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id)
         {
-            return DeleteCustomerAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteCustomerEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -6261,9 +6825,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Deletes a customer by their unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteCustomerAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteCustomerEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -6310,9 +6874,113 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Search customers
+        /// </summary>
+        /// <remarks>
+        /// Search and filter customers with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body)
+        {
+            return SearchCustomersEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search customers
+        /// </summary>
+        /// <remarks>
+        /// Search and filter customers with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null> SearchCustomersEndpointAsync(string version, SearchCustomersCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/customers/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/customers/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7177,7 +7845,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FixedAssetDtoPagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body)
         {
             return FixedAssetSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -7192,7 +7860,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FixedAssetDtoPagedList> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> FixedAssetSearchEndpointAsync(string version, SearchFixedAssetsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7245,7 +7913,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FixedAssetDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -7281,7 +7949,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FixedAssetDto> FixedAssetGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<FixedAssetResponse> FixedAssetGetEndpointAsync(string version, System.Guid id)
         {
             return FixedAssetGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -7296,7 +7964,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FixedAssetDto> FixedAssetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<FixedAssetResponse> FixedAssetGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7346,7 +8014,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FixedAssetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<FixedAssetResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -7585,7 +8253,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetRequest body)
+        public virtual System.Threading.Tasks.Task<CreateFixedAssetResponse> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetCommand body)
         {
             return FixedAssetCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -7600,7 +8268,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateFixedAssetResponse> FixedAssetCreateEndpointAsync(string version, CreateFixedAssetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7653,7 +8321,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateFixedAssetResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -7689,9 +8357,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body)
+        public virtual System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemEndpointAsync(string version, CreateGroceryItemCommand body)
         {
-            return CreateGroceryItemAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateGroceryItemEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -7704,7 +8372,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateGroceryItemResponse> CreateGroceryItemEndpointAsync(string version, CreateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7793,9 +8461,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemEndpointAsync(string version, System.Guid id)
         {
-            return GetGroceryItemAsync(version, id, System.Threading.CancellationToken.None);
+            return GetGroceryItemEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -7808,7 +8476,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GroceryItemResponse> GetGroceryItemEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -7894,9 +8562,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemEndpointAsync(string version, System.Guid id, UpdateGroceryItemCommand body)
         {
-            return UpdateGroceryItemAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateGroceryItemEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -7909,7 +8577,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateGroceryItemResponse> UpdateGroceryItemEndpointAsync(string version, System.Guid id, UpdateGroceryItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8002,9 +8670,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteGroceryItemEndpointAsync(string version, System.Guid id)
         {
-            return DeleteGroceryItemAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteGroceryItemEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -8017,7 +8685,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteGroceryItemAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteGroceryItemEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8067,6 +8735,110 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Search grocery items
+        /// </summary>
+        /// <remarks>
+        /// Search and filter grocery items with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body)
+        {
+            return SearchGroceryItemsEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search grocery items
+        /// </summary>
+        /// <remarks>
+        /// Search and filter grocery items with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/grocery-items/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/grocery-items/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -8201,9 +8973,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body)
+        public virtual System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferEndpointAsync(string version, CreateInventoryTransferCommand body)
         {
-            return CreateInventoryTransferAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateInventoryTransferEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -8216,7 +8988,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateInventoryTransferResponse> CreateInventoryTransferEndpointAsync(string version, CreateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8297,137 +9069,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Get list of inventory transfers
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of inventory transfers with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate)
-        {
-            return SearchInventoryTransfersAsync(version, pageNumber, pageSize, searchTerm, fromWarehouseId, toWarehouseId, status, fromDate, toDate, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get list of inventory transfers
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of inventory transfers with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetInventoryTransferListResponsePagedList> SearchInventoryTransfersAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? fromWarehouseId, System.Guid? toWarehouseId, string? status, System.DateTime? fromDate, System.DateTime? toDate, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/inventory-transfers"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/inventory-transfers");
-                    urlBuilder_.Append('?');
-                    if (pageNumber != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("PageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (pageSize != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("PageSize")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (searchTerm != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("SearchTerm")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchTerm, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (fromWarehouseId != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("FromWarehouseId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(fromWarehouseId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (toWarehouseId != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("ToWarehouseId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(toWarehouseId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (status != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("Status")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (fromDate != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("FromDate")).Append('=').Append(System.Uri.EscapeDataString(fromDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (toDate != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("ToDate")).Append('=').Append(System.Uri.EscapeDataString(toDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetInventoryTransferListResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Get inventory transfer by ID
         /// </summary>
         /// <remarks>
@@ -8436,9 +9077,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferEndpointAsync(string version, System.Guid id)
         {
-            return GetInventoryTransferAsync(version, id, System.Threading.CancellationToken.None);
+            return GetInventoryTransferEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -8451,7 +9092,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetInventoryTransferResponse> GetInventoryTransferEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8537,9 +9178,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferEndpointAsync(string version, System.Guid id, UpdateInventoryTransferCommand body)
         {
-            return UpdateInventoryTransferAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateInventoryTransferEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -8552,7 +9193,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateInventoryTransferResponse> UpdateInventoryTransferEndpointAsync(string version, System.Guid id, UpdateInventoryTransferCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8637,6 +9278,205 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Delete an inventory transfer
+        /// </summary>
+        /// <remarks>
+        /// Deletes an inventory transfer by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteInventoryTransferEndpointAsync(string version, System.Guid id)
+        {
+            return DeleteInventoryTransferEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete an inventory transfer
+        /// </summary>
+        /// <remarks>
+        /// Deletes an inventory transfer by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task DeleteInventoryTransferEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/inventory-transfers/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/inventory-transfers/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get list of inventory transfers
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of inventory transfers with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body)
+        {
+            return SearchInventoryTransfersEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get list of inventory transfers
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of inventory transfers with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchInventoryTransfersEndpointAsync(string version, SearchInventoryTransfersCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/inventory-transfers/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/inventory-transfers/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Add item to inventory transfer
         /// </summary>
         /// <remarks>
@@ -8645,9 +9485,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body)
+        public virtual System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemEndpointAsync(string version, System.Guid id, AddInventoryTransferItemCommand body)
         {
-            return AddInventoryTransferItemAsync(version, id, body, System.Threading.CancellationToken.None);
+            return AddInventoryTransferItemEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -8660,7 +9500,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AddInventoryTransferItemResponse> AddInventoryTransferItemEndpointAsync(string version, System.Guid id, AddInventoryTransferItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8754,9 +9594,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId)
+        public virtual System.Threading.Tasks.Task RemoveInventoryTransferItemEndpointAsync(string version, System.Guid id, System.Guid itemId)
         {
-            return RemoveInventoryTransferItemAsync(version, id, itemId, System.Threading.CancellationToken.None);
+            return RemoveInventoryTransferItemEndpointAsync(version, id, itemId, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -8769,7 +9609,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RemoveInventoryTransferItemAsync(string version, System.Guid id, System.Guid itemId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task RemoveInventoryTransferItemEndpointAsync(string version, System.Guid id, System.Guid itemId, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8854,7 +9694,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<JournalEntryDtoPagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body)
         {
             return JournalEntrySearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -8869,7 +9709,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<JournalEntryDtoPagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -8922,7 +9762,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<JournalEntryDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -9470,7 +10310,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body)
         {
             return PayeeSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -9485,7 +10325,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PayeeResponsePagedList> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> PayeeSearchEndpointAsync(string version, PayeeSearchCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -9538,12 +10378,294 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PayeeResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Searches payment allocations
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PaymentAllocationResponse>> PaymentAllocationSearchEndpointAsync(string version, SearchPaymentAllocationsQuery body)
+        {
+            return PaymentAllocationSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches payment allocations
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PaymentAllocationResponse>> PaymentAllocationSearchEndpointAsync(string version, SearchPaymentAllocationsQuery body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/payment-allocations/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/payment-allocations/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<PaymentAllocationResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets a payment allocation by id
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PaymentAllocationResponse> PaymentAllocationGetEndpointAsync(string version, System.Guid id)
+        {
+            return PaymentAllocationGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a payment allocation by id
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PaymentAllocationResponse> PaymentAllocationGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/payment-allocations/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/payment-allocations/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PaymentAllocationResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Deletes a payment allocation
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task PaymentAllocationDeleteEndpointAsync(string version, System.Guid id)
+        {
+            return PaymentAllocationDeleteEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Deletes a payment allocation
+        /// </summary>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task PaymentAllocationDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/payment-allocations/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/payment-allocations/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            return;
                         }
                         else
                         {
@@ -9664,30 +10786,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Gets a list of accounting periods
+        /// search accounting periods
         /// </summary>
         /// <remarks>
-        /// Gets a list of accounting periods with pagination and filtering support
+        /// search accounting periods
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AccountingPeriodDtoPagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body)
         {
             return AccountingPeriodSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of accounting periods
+        /// search accounting periods
         /// </summary>
         /// <remarks>
-        /// Gets a list of accounting periods with pagination and filtering support
+        /// search accounting periods
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccountingPeriodDtoPagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -9740,7 +10862,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<AccountingPeriodDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -9768,30 +10890,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// create an accounting period
+        /// create accounting period
         /// </summary>
         /// <remarks>
-        /// create an accounting period
+        /// create accounting period
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodCommand body)
         {
             return AccountingPeriodCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// create an accounting period
+        /// create accounting period
         /// </summary>
         /// <remarks>
-        /// create an accounting period
+        /// create accounting period
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> AccountingPeriodCreateEndpointAsync(string version, CreateAccountingPeriodCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -9872,30 +10994,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// update an accounting period
+        /// update accounting period
         /// </summary>
         /// <remarks>
-        /// update an accounting period
+        /// update accounting period
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodCommand body)
         {
             return AccountingPeriodUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update an accounting period
+        /// update accounting period
         /// </summary>
         /// <remarks>
-        /// update an accounting period
+        /// update accounting period
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> AccountingPeriodUpdateEndpointAsync(string version, System.Guid id, UpdateAccountingPeriodCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10075,30 +11197,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </summary>
         /// <remarks>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<AccountingPeriodResponse> AccountingPeriodGetEndpointAsync(string version, System.Guid id)
         {
             return AccountingPeriodGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </summary>
         /// <remarks>
-        /// get an accounting period by id
+        /// get accounting period by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccountingPeriodDto> AccountingPeriodGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AccountingPeriodResponse> AccountingPeriodGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10148,7 +11270,519 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<AccountingPeriodDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AccountingPeriodResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Create a new price list
+        /// </summary>
+        /// <remarks>
+        /// Creates a new price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CreatePriceListResponse> CreatePriceListEndpointAsync(string version, CreatePriceListCommand body)
+        {
+            return CreatePriceListEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new price list
+        /// </summary>
+        /// <remarks>
+        /// Creates a new price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CreatePriceListResponse> CreatePriceListEndpointAsync(string version, CreatePriceListCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/price-lists"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/price-lists");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CreatePriceListResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get a price list
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetPriceListResponse> GetPriceListEndpointAsync(string version, System.Guid id)
+        {
+            return GetPriceListEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a price list
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetPriceListResponse> GetPriceListEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/price-lists/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/price-lists/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetPriceListResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Update a price list
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<UpdatePriceListResponse> UpdatePriceListEndpointAsync(string version, System.Guid id, UpdatePriceListCommand body)
+        {
+            return UpdatePriceListEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a price list
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing price list
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<UpdatePriceListResponse> UpdatePriceListEndpointAsync(string version, System.Guid id, UpdatePriceListCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/price-lists/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/price-lists/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdatePriceListResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete a price list
+        /// </summary>
+        /// <remarks>
+        /// Deletes a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeletePriceListEndpointAsync(string version, System.Guid id)
+        {
+            return DeletePriceListEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a price list
+        /// </summary>
+        /// <remarks>
+        /// Deletes a price list by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task DeletePriceListEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/price-lists/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/price-lists/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Search price lists
+        /// </summary>
+        /// <remarks>
+        /// Search and filter price lists with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body)
+        {
+            return SearchPriceListsEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search price lists
+        /// </summary>
+        /// <remarks>
+        /// Search and filter price lists with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPriceListsEndpointAsync(string version, SearchPriceListsCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/price-lists/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/price-lists/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -10592,7 +12226,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body)
         {
             return SearchProductsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -10607,7 +12241,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10660,7 +12294,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProductResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -10696,7 +12330,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectCommand body)
         {
             return ProjectCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -10711,7 +12345,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> ProjectCreateEndpointAsync(string version, CreateProjectCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10800,7 +12434,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProjectDto> ProjectGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ProjectResponse> ProjectGetEndpointAsync(string version, System.Guid id)
         {
             return ProjectGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -10815,7 +12449,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProjectDto> ProjectGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ProjectResponse> ProjectGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10865,7 +12499,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProjectDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ProjectResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -10901,7 +12535,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectCommand body)
         {
             return ProjectUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -10916,7 +12550,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11104,7 +12738,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProjectDtoPagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body)
         {
             return ProjectSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -11119,7 +12753,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProjectDtoPagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11172,7 +12806,519 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProjectDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Create a new purchase order
+        /// </summary>
+        /// <remarks>
+        /// Creates a new purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CreatePurchaseOrderResponse> CreatePurchaseOrderEndpointAsync(string version, CreatePurchaseOrderCommand body)
+        {
+            return CreatePurchaseOrderEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new purchase order
+        /// </summary>
+        /// <remarks>
+        /// Creates a new purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CreatePurchaseOrderResponse> CreatePurchaseOrderEndpointAsync(string version, CreatePurchaseOrderCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/purchase-orders"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/purchase-orders");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CreatePurchaseOrderResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetPurchaseOrderResponse> GetPurchaseOrderEndpointAsync(string version, System.Guid id)
+        {
+            return GetPurchaseOrderEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetPurchaseOrderResponse> GetPurchaseOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/purchase-orders/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/purchase-orders/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetPurchaseOrderResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Update a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<UpdatePurchaseOrderResponse> UpdatePurchaseOrderEndpointAsync(string version, System.Guid id, UpdatePurchaseOrderCommand body)
+        {
+            return UpdatePurchaseOrderEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing purchase order
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<UpdatePurchaseOrderResponse> UpdatePurchaseOrderEndpointAsync(string version, System.Guid id, UpdatePurchaseOrderCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/purchase-orders/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/purchase-orders/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdatePurchaseOrderResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Deletes a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeletePurchaseOrderEndpointAsync(string version, System.Guid id)
+        {
+            return DeletePurchaseOrderEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a purchase order
+        /// </summary>
+        /// <remarks>
+        /// Deletes a purchase order by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task DeletePurchaseOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/purchase-orders/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/purchase-orders/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Search purchase orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter purchase orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body)
+        {
+            return SearchPurchaseOrdersEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search purchase orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter purchase orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchPurchaseOrdersEndpointAsync(string version, SearchPurchaseOrdersCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/purchase-orders/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/purchase-orders/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -11872,9 +14018,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body)
+        public virtual System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderEndpointAsync(string version, CreateSalesOrderCommand body)
         {
-            return CreateSalesOrderAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateSalesOrderEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11887,7 +14033,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateSalesOrderResponse> CreateSalesOrderEndpointAsync(string version, CreateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11976,9 +14122,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderEndpointAsync(string version, System.Guid id)
         {
-            return GetSalesOrderAsync(version, id, System.Threading.CancellationToken.None);
+            return GetSalesOrderEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11991,7 +14137,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetSalesOrderResponse> GetSalesOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12077,9 +14223,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderEndpointAsync(string version, System.Guid id, UpdateSalesOrderCommand body)
         {
-            return UpdateSalesOrderAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateSalesOrderEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12092,7 +14238,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateSalesOrderResponse> UpdateSalesOrderEndpointAsync(string version, System.Guid id, UpdateSalesOrderCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12185,9 +14331,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteSalesOrderEndpointAsync(string version, System.Guid id)
         {
-            return DeleteSalesOrderAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteSalesOrderEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12200,7 +14346,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteSalesOrderAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteSalesOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12272,6 +14418,110 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Search sales orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter sales orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body)
+        {
+            return SearchSalesOrdersEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search sales orders
+        /// </summary>
+        /// <remarks>
+        /// Search and filter sales orders with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSalesOrdersEndpointAsync(string version, SearchSalesOrdersCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/sales-orders/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/sales-orders/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Create a new stock adjustment
         /// </summary>
         /// <remarks>
@@ -12280,9 +14530,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body)
+        public virtual System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentEndpointAsync(string version, CreateStockAdjustmentCommand body)
         {
-            return CreateStockAdjustmentAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateStockAdjustmentEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12295,7 +14545,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateStockAdjustmentResponse> CreateStockAdjustmentEndpointAsync(string version, CreateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12384,9 +14634,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentEndpointAsync(string version, System.Guid id)
         {
-            return GetStockAdjustmentAsync(version, id, System.Threading.CancellationToken.None);
+            return GetStockAdjustmentEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12399,7 +14649,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StockAdjustmentResponse> GetStockAdjustmentEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12477,6 +14727,209 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Update a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing stock adjustment
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<UpdateStockAdjustmentResponse> UpdateStockAdjustmentEndpointAsync(string version, System.Guid id, UpdateStockAdjustmentCommand body)
+        {
+            return UpdateStockAdjustmentEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing stock adjustment
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<UpdateStockAdjustmentResponse> UpdateStockAdjustmentEndpointAsync(string version, System.Guid id, UpdateStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/stock-adjustments/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/stock-adjustments/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateStockAdjustmentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Deletes a stock adjustment by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteStockAdjustmentEndpointAsync(string version, System.Guid id)
+        {
+            return DeleteStockAdjustmentEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a stock adjustment
+        /// </summary>
+        /// <remarks>
+        /// Deletes a stock adjustment by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task DeleteStockAdjustmentEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/stock-adjustments/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/stock-adjustments/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Approve stock adjustment
         /// </summary>
         /// <remarks>
@@ -12485,9 +14938,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body)
+        public virtual System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentEndpointAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body)
         {
-            return ApproveStockAdjustmentAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ApproveStockAdjustmentEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12500,7 +14953,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApproveStockAdjustmentResponse> ApproveStockAdjustmentEndpointAsync(string version, System.Guid id, ApproveStockAdjustmentCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12586,6 +15039,110 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Search stock adjustments
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of stock adjustments with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body)
+        {
+            return SearchStockAdjustmentsEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search stock adjustments
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of stock adjustments with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchStockAdjustmentsEndpointAsync(string version, SearchStockAdjustmentsCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/stock-adjustments/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/stock-adjustments/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Create a new supplier
         /// </summary>
         /// <remarks>
@@ -12594,9 +15151,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body)
+        public virtual System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierEndpointAsync(string version, CreateSupplierCommand body)
         {
-            return CreateSupplierAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateSupplierEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12609,7 +15166,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateSupplierResponse> CreateSupplierEndpointAsync(string version, CreateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12698,7 +15255,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version)
         {
             return SearchSuppliersAsync(version, System.Threading.CancellationToken.None);
         }
@@ -12713,7 +15270,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SupplierResponsePagedList> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchSuppliersAsync(string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12759,7 +15316,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<SupplierResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -12795,9 +15352,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<SupplierResponse> GetSupplierEndpointAsync(string version, System.Guid id)
         {
-            return GetSupplierAsync(version, id, System.Threading.CancellationToken.None);
+            return GetSupplierEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12810,7 +15367,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SupplierResponse> GetSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<SupplierResponse> GetSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12896,9 +15453,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierEndpointAsync(string version, System.Guid id, UpdateSupplierCommand body)
         {
-            return UpdateSupplierAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateSupplierEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12911,7 +15468,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateSupplierResponse> UpdateSupplierEndpointAsync(string version, System.Guid id, UpdateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13004,9 +15561,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteSupplierEndpointAsync(string version, System.Guid id)
         {
-            return DeleteSupplierAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteSupplierEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13019,7 +15576,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteSupplierAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14077,7 +16634,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body)
         {
             return GetTodoListEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -14092,7 +16649,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TodoDtoPagedList> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null> GetTodoListEndpointAsync(string version, PaginationFilter body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14145,7 +16702,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<TodoDtoPagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -16308,7 +18865,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body)
         {
             return VendorSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -16323,7 +18880,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16376,7 +18933,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<VendorSearchResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -16481,137 +19038,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<CreateWarehouseLocationResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Get list of warehouse locations
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of warehouse locations with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl)
-        {
-            return SearchWarehouseLocationsAsync(version, pageNumber, pageSize, searchTerm, warehouseId, locationType, aisle, isActive, requiresTemperatureControl, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get list of warehouse locations
-        /// </summary>
-        /// <remarks>
-        /// Retrieves a paginated list of warehouse locations with optional filtering
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, int? pageNumber, int? pageSize, string? searchTerm, System.Guid? warehouseId, string? locationType, string? aisle, bool? isActive, bool? requiresTemperatureControl, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/store/warehouse-locations"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/store/warehouse-locations");
-                    urlBuilder_.Append('?');
-                    if (pageNumber != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("PageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (pageSize != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("PageSize")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (searchTerm != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("SearchTerm")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchTerm, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (warehouseId != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("WarehouseId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(warehouseId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (locationType != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("LocationType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(locationType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (aisle != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("Aisle")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(aisle, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (isActive != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("IsActive")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(isActive, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (requiresTemperatureControl != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("RequiresTemperatureControl")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(requiresTemperatureControl, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseLocationListResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -16848,17 +19274,216 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Create a new warehouse
+        /// Delete a warehouse location
         /// </summary>
         /// <remarks>
-        /// Creates a new warehouse with the provided details
+        /// Deletes a warehouse location by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id)
+        {
+            return DeleteWarehouseLocationAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete a warehouse location
+        /// </summary>
+        /// <remarks>
+        /// Deletes a warehouse location by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/warehouse-locations/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/warehouse-locations/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get list of warehouse locations
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of warehouse locations with optional filtering
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body)
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body)
         {
-            return CreateWarehouseAsync(version, body, System.Threading.CancellationToken.None);
+            return SearchWarehouseLocationsAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get list of warehouse locations
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a paginated list of warehouse locations with optional filtering
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/warehouse-locations/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/warehouse-locations/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Create a new warehouse
+        /// </summary>
+        /// <remarks>
+        /// Creates a new warehouse
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseEndpointAsync(string version, CreateWarehouseCommand body)
+        {
+            return CreateWarehouseEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -16866,12 +19491,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Create a new warehouse
         /// </summary>
         /// <remarks>
-        /// Creates a new warehouse with the provided details
+        /// Creates a new warehouse
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateWarehouseResponse> CreateWarehouseEndpointAsync(string version, CreateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -17234,6 +19859,423 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Search warehouses
+        /// </summary>
+        /// <remarks>
+        /// Search and filter warehouses with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body)
+        {
+            return SearchWarehousesAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search warehouses
+        /// </summary>
+        /// <remarks>
+        /// Search and filter warehouses with pagination support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/warehouses/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/warehouses/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Create a new wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Creates a new wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CreateWholesaleContractResponse> CreateWholesaleContractAsync(string version, CreateWholesaleContractCommand body)
+        {
+            return CreateWholesaleContractAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Creates a new wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CreateWholesaleContractResponse> CreateWholesaleContractAsync(string version, CreateWholesaleContractCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/wholesale-contracts"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/wholesale-contracts");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateWholesaleContractResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a wholesale contract by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetWholesaleContractResponse> GetWholesaleContractAsync(string version, System.Guid id)
+        {
+            return GetWholesaleContractAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a wholesale contract by ID
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetWholesaleContractResponse> GetWholesaleContractAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/wholesale-contracts/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/wholesale-contracts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetWholesaleContractResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Update a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<UpdateWholesaleContractResponse> UpdateWholesaleContractAsync(string version, System.Guid id, UpdateWholesaleContractCommand body)
+        {
+            return UpdateWholesaleContractAsync(version, id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a wholesale contract
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing wholesale contract
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<UpdateWholesaleContractResponse> UpdateWholesaleContractAsync(string version, System.Guid id, UpdateWholesaleContractCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/wholesale-contracts/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/wholesale-contracts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateWholesaleContractResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -17801,7 +20843,97 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AccountingPeriodDto
+    public partial class ReconcileAccountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("chartOfAccountId")]
+        public System.Guid ChartOfAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reconciliationDate")]
+        public System.DateTime ReconciliationDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("statementBalance")]
+        public double StatementBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reconciliationReference")]
+        public string? ReconciliationReference { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reconciliationLines")]
+        public System.Collections.Generic.ICollection<ReconciliationLineDto>? ReconciliationLines { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconciliationLineDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("transactionId")]
+        public System.Guid? TransactionId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transactionDate")]
+        public System.DateTime TransactionDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isCleared")]
+        public bool IsCleared { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateAccountingPeriodCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
+        public string? PeriodType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
+        public bool IsAdjustmentPeriod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AccountingPeriodResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -17837,11 +20969,17 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AccountingPeriodDtoPagedList
+    public partial class SearchAccountingPeriodsQuery
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<AccountingPeriodDto>? Items { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -17849,179 +20987,44 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ActivateTenantResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddCycleCountItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
-        public System.Guid CycleCountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
-        public int SystemQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
-        public int? CountedQuantity { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddCycleCountItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
-        public System.Guid ItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
-        public System.Guid CycleCountId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddInventoryTransferItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
-        public System.Guid InventoryTransferId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public int Quantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
-        public double UnitPrice { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddInventoryTransferItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
-        public System.Guid ItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
-        public System.Guid InventoryTransferId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AllocatePaymentCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
-        public System.Guid PaymentId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("allocations")]
-        public System.Collections.Generic.ICollection<PaymentAllocationItem>? Allocations { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApproveStockAdjustmentCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApproveStockAdjustmentResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentId")]
-        public System.Guid AdjustmentId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approved")]
-        public bool Approved { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AssignUserRoleCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userRoles")]
-        public System.Collections.Generic.ICollection<UserRoleDetail>? UserRoles { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AuditTrail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userName")]
-        public string? UserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("primaryKey")]
-        public string? PrimaryKey { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("operation")]
-        public string? Operation { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("entity")]
-        public string? Entity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateTime")]
-        public System.DateTime DateTime { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("previousValues")]
-        public string? PreviousValues { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("newValues")]
-        public string? NewValues { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("modifiedProperties")]
-        public string? ModifiedProperties { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int? FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isClosed")]
+        public bool IsClosed { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateAccountingPeriodCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
+        public bool IsAdjustmentPeriod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int? FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
+        public string? PeriodType { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
@@ -18032,74 +21035,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BrandResponsePagedList
+    public partial class CreateInvoiceFromConsumptionCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<BrandResponse>? Items { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("consumptionId")]
+        public System.Guid ConsumptionId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("invoiceDate")]
+        public System.DateTime InvoiceDate { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("dueDays")]
+        public int DueDays { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BudgetDto
+    public partial class CreateBudgetCommand
     {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
-        public string? FilePath { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
-        public System.Guid CreatedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
-        public string? CreatedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
-        public System.Guid? LastModifiedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
-        public string? LastModifiedByUserName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("periodId")]
         public System.Guid PeriodId { get; set; } = default!;
@@ -18109,6 +21064,72 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
         public string? BudgetType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateBudgetResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BudgetListItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
+        public string? BudgetType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalBudgetedAmount")]
+        public double TotalBudgetedAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalActualAmount")]
+        public double TotalActualAmount { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BudgetResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodId")]
+        public System.Guid PeriodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
+        public string? BudgetType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("totalBudgetedAmount")]
         public double TotalBudgetedAmount { get; set; } = default!;
@@ -18122,14 +21143,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
         public string? ApprovedBy { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BudgetDtoPagedList
+    public partial class SearchBudgetsQuery
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<BudgetDto>? Items { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -18137,94 +21170,115 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CategoryResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int? FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateBudgetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
+        public string? BudgetType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
-        public System.Guid? ParentCategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
-        public int SortOrder { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public string? ImageUrl { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CategoryResponsePagedList
+    public partial class UpdateBudgetResponse
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<CategoryResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChangePasswordCommand
+    public partial class CreateChartOfAccountCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("newPassword")]
-        public string? NewPassword { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("confirmNewPassword")]
-        public string? ConfirmNewPassword { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
+        public string? AccountType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
+        public string? UsoaCategory { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
+        public System.Guid? SubAccountOf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
+        public string? ParentCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("balance")]
+        public double Balance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
+        public bool IsControlAccount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
+        public string? NormalBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
+        public bool IsUsoaCompliant { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
+        public string? RegulatoryClassification { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChartOfAccountDto
+    public partial class ChartOfAccountResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -18299,11 +21353,17 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChartOfAccountDtoPagedList
+    public partial class SearchChartOfAccountQuery
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<ChartOfAccountDto>? Items { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -18311,50 +21371,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CompleteCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateAccountingPeriodRequest
-    {
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public System.DateTime EndDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
-        public string? PeriodType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
-        public bool IsAdjustmentPeriod { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
@@ -18365,91 +21389,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBrandCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Brand";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = "Descriptive Notes";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBudgetRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("periodId")]
-        public System.Guid PeriodId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
-        public string? BudgetType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCategoryCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Category";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary category";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "CAT001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
-        public System.Guid? ParentCategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
-        public int SortOrder { get; set; } = 0;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public string? ImageUrl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCategoryResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateChartOfAccountRequest
+    public partial class UpdateChartOfAccountCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -18488,11 +21428,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
         public string? ParentCode { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("balance")]
-        public double Balance { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
         public bool IsControlAccount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("balance")]
+        public double Balance { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
         public string? NormalBalance { get; set; } = default!;
@@ -18507,66 +21447,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateCustomerCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Customer";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary customer";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "CUST001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = "Retail";
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = "John Doe";
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = "john.doe@example.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = "+1-555-123-4567";
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = "123 Main Street";
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = "New York";
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = "NY";
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = "USA";
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = "10001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = 10000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = 30;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = 5D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
-        public string? TaxNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
-        public string? BusinessLicense { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCustomerRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
@@ -18614,706 +21494,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCustomerResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCycleCountCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("countNumber")]
-        public string? CountNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("scheduledDate")]
-        public System.DateTime ScheduledDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("countType")]
-        public string? CountType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("counterName")]
-        public string? CounterName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supervisorName")]
-        public string? SupervisorName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateFixedAssetRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
-        public string? AssetName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
-        public System.DateTime PurchaseDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
-        public double PurchasePrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
-        public System.Guid DepreciationMethodId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
-        public int ServiceLife { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
-        public double SalvageValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
-        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
-        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("location")]
-        public string? Location { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateGroceryItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Grocery Item";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
-
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = "SKU001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string? Barcode { get; set; } = "1234567890123";
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10.99D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public double Cost { get; set; } = 5.99D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
-        public int MinimumStock { get; set; } = 10;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
-        public int MaximumStock { get; set; } = 100;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
-        public int CurrentStock { get; set; } = 50;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
-        public int ReorderPoint { get; set; } = 20;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
-        public bool IsPerishable { get; set; } = false;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public string? Brand { get; set; } = "Generic Brand";
-
-        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
-        public string? Manufacturer { get; set; } = "Generic Manufacturer";
-
-        [System.Text.Json.Serialization.JsonPropertyName("weight")]
-        public double Weight { get; set; } = 1D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
-        public string? WeightUnit { get; set; } = "kg";
-
-        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
-        public System.Guid? CategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid? SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateGroceryItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInventoryItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public double Quantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
-        public double UnitPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInventoryTransferCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = "TRF001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromLocationId")]
-        public System.Guid? FromLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toLocationId")]
-        public System.Guid? ToLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
-
-        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
-        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
-        public string? TransferType { get; set; } = "Standard";
-
-        [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public string? Priority { get; set; } = "Normal";
-
-        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
-        public string? TransportMethod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
-        public string? RequestedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInventoryTransferResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateInvoiceFromConsumptionCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("consumptionId")]
-        public System.Guid ConsumptionId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("invoiceDate")]
-        public System.DateTime InvoiceDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dueDays")]
-        public int DueDays { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateOrUpdateRoleCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProductCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Product";
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
-
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProductResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProjectRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("budgetedAmount")]
-        public double BudgetedAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("clientName")]
-        public string? ClientName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("projectManager")]
-        public string? ProjectManager { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSalesOrderCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSalesOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateStockAdjustmentCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Stock Count Adjustment";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Inventory count adjustment";
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentNumber")]
-        public string? AdjustmentNumber { get; set; } = "ADJ001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
-        public System.DateTime AdjustmentDate { get; set; } = System.DateTime.Parse("2024-01-01");
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
-        public string? AdjustmentType { get; set; } = "Physical Count";
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = "Pending";
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = "Monthly inventory count";
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantityBefore")]
-        public int QuantityBefore { get; set; } = 0;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentQuantity")]
-        public int AdjustmentQuantity { get; set; } = 0;
-
-        [System.Text.Json.Serialization.JsonPropertyName("unitCost")]
-        public double UnitCost { get; set; } = 0D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reference")]
-        public string? Reference { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustedBy")]
-        public string? AdjustedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("batchNumber")]
-        public string? BatchNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateStockAdjustmentResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSupplierCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("website")]
-        public string? Website { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("rating")]
-        public double Rating { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSupplierResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTenantCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
-        public string? ConnectionString { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
-        public string? AdminEmail { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
-        public string? Issuer { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTenantResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTodoCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Hello World!";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "This is desciption.";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = "Important Note.";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateTodoResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Warehouse";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage facility";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "WH001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = "123 Storage Street";
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = "New York";
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = "NY";
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = "USA";
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = "10001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
-        public string? ManagerName { get; set; } = "John Manager";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
-        public string? ManagerEmail { get; set; } = "john.manager@example.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
-        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
-        public double TotalCapacity { get; set; } = 10000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool IsMainWarehouse { get; set; } = false;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseLocationCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "LOC001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = "Floor";
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = 1000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = false;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
-        public double? MinTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
-        public double? MaxTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
-        public string? TemperatureUnit { get; set; } = "C";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseLocationResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWarehouseResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWholesalePricingCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
-        public System.Guid WholesaleContractId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
-        public int MinimumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
-        public int? MaximumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
-        public double TierPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
-        public System.DateTime EffectiveDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CustomerDto
+    public partial class CustomerResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -19397,11 +21578,17 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CustomerDtoPagedList
+    public partial class SearchCustomersQuery
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<CustomerDto>? Items { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -19409,38 +21596,38 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CustomerResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
+        public string? CustomerCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
+    }
 
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCustomerCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
+        public string? CustomerCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("billingAddress")]
+        public string? BillingAddress { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
         public string? ContactPerson { get; set; } = default!;
@@ -19448,236 +21635,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("email")]
         public string? Email { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("terms")]
+        public string? Terms { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountCode")]
+        public string? RevenueAccountCode { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountName")]
+        public string? RevenueAccountName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("tin")]
+        public string? Tin { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
-        public string? TaxNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
-        public string? BusinessLicense { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CycleCountDiscrepancy
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
-        public int SystemQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
-        public int CountedQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("difference")]
-        public int Difference { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DeactivateWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DisableTenantResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FileUploadCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("extension")]
-        public string? Extension { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public string? Data { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Filter
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("logic")]
-        public string? Logic { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("filters")]
-        public System.Collections.Generic.ICollection<Filter>? Filters { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("field")]
-        public string? Field { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("operator")]
-        public string? Operator { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public object? Value { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FixedAssetDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
-        public string? FilePath { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
-        public System.Guid CreatedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
-        public string? CreatedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
-        public System.Guid? LastModifiedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
-        public string? LastModifiedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
-        public System.DateTime PurchaseDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
-        public double PurchasePrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
-        public int ServiceLife { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
-        public System.Guid DepreciationMethodId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
-        public double SalvageValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentBookValue")]
-        public double CurrentBookValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
-        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
-        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("location")]
-        public string? Location { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isDisposed")]
-        public bool IsDisposed { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("disposalDate")]
-        public System.DateTime? DisposalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("disposalAmount")]
-        public double? DisposalAmount { get; set; } = default!;
+        public double? CreditLimit { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FixedAssetDtoPagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<FixedAssetDto>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ForgotPasswordCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
@@ -19811,47 +21791,158 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetInventoryTransferListResponse
+    public partial class CreateFixedAssetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
+        public string? AssetName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
+        public System.DateTime PurchaseDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
+        public double PurchasePrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
+        public System.Guid DepreciationMethodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
+        public int ServiceLife { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
+        public double SalvageValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
+        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
+        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("location")]
+        public string? Location { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateFixedAssetResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = default!;
+    }
 
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FixedAssetResponse
+    {
 
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
-        public string? FromWarehouseName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
-        public string? ToWarehouseName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
-        public string? TransferType { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
+        public string? FilePath { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public string? Priority { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public System.Guid CreatedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
+        public string? CreatedByUserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
+        public System.Guid? LastModifiedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
+        public string? LastModifiedByUserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchaseDate")]
+        public System.DateTime PurchaseDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("purchasePrice")]
+        public double PurchasePrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
+        public int ServiceLife { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
+        public System.Guid DepreciationMethodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
+        public double SalvageValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentBookValue")]
+        public double CurrentBookValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accumulatedDepreciationAccountId")]
+        public System.Guid AccumulatedDepreciationAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationExpenseAccountId")]
+        public System.Guid DepreciationExpenseAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("location")]
+        public string? Location { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isDisposed")]
+        public bool IsDisposed { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("disposalDate")]
+        public System.DateTime? DisposalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("disposalAmount")]
+        public double? DisposalAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetInventoryTransferListResponsePagedList
+    public partial class SearchFixedAssetsRequest
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GetInventoryTransferListResponse>? Items { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -19859,164 +21950,50 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
         public int PageSize { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
+        public string? AssetName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("assetType")]
+        public string? AssetType { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetInventoryTransferResponse
+    public partial class UpdateFixedAssetRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
+        public string? AssetName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
+        public System.Guid? DepreciationMethodId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
-        public string? FromWarehouseName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
+        public int? ServiceLife { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
+        public double? SalvageValue { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
-        public string? ToWarehouseName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
+        public string? SerialNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("location")]
+        public string? Location { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
-        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("actualArrivalDate")]
-        public System.DateTime? ActualArrivalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
-        public string? TransferType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public string? Priority { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalValue")]
-        public double TotalValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
-        public string? TransportMethod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("trackingNumber")]
-        public string? TrackingNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
-        public string? RequestedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvalDate")]
-        public System.DateTime? ApprovalDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime? LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetSalesOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
-        public string? OrderNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
-        public System.DateTime OrderDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryDate")]
-        public System.DateTime? DeliveryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderType")]
-        public string? OrderType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("subTotal")]
-        public double SubTotal { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
-        public double TaxAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
-        public double DiscountAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("shippingAmount")]
-        public double ShippingAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
-        public double TotalAmount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentStatus")]
-        public string? PaymentStatus { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentMethod")]
-        public string? PaymentMethod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
-        public string? DeliveryAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
-        public bool IsUrgent { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("salesPersonId")]
-        public string? SalesPersonId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid? WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetTodoResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
@@ -20027,322 +22004,28 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseLocationListResponse
+    public partial class CreateInventoryItemCommand
     {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
-        public string? WarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
-        public double UsedCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseLocationListResponsePagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<GetWarehouseLocationListResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseLocationResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
-        public string? WarehouseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
-        public double UsedCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
-        public double? MinTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
-        public double? MaxTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
-        public string? TemperatureUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime? LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
-        public string? ManagerName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
-        public string? ManagerEmail { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
-        public string? ManagerPhone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
-        public double TotalCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
-        public double UsedCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool IsMainWarehouse { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastInventoryDate")]
-        public System.DateTime? LastInventoryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime? LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
-        public System.Guid WholesaleContractId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
-        public int MinimumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
-        public int? MaximumQuantity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
-        public double TierPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
-        public System.DateTime EffectiveDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GroceryItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sku")]
         public string? Sku { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string? Barcode { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
+        public double Quantity { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public double Cost { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
+        public double UnitPrice { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
-        public int MinimumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
-        public int MaximumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
-        public int CurrentStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
-        public int ReorderPoint { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
-        public bool IsPerishable { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public string? Brand { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
-        public string? Manufacturer { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weight")]
-        public double Weight { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
-        public string? WeightUnit { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class JournalEntryDto
+    public partial class JournalEntryResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -20405,34 +22088,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class JournalEntryDtoPagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<JournalEntryDto>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PaginationFilter
+    public partial class SearchJournalEntriesQuery
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -20452,6 +22108,45 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
         public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("referenceNumber")]
+        public string? ReferenceNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("source")]
+        public string? Source { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPosted")]
+        public bool? IsPosted { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RetirePatronageCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("patronageCapitalId")]
+        public System.Guid PatronageCapitalId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("retirementDate")]
+        public System.DateTime RetirementDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("debitAccountId")]
+        public System.Guid DebitAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditAccountId")]
+        public System.Guid CreditAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
 
     }
 
@@ -20528,33 +22223,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PayeeResponsePagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<PayeeResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PayeeSearchCommand
     {
 
@@ -20621,6 +22289,57 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchPaymentAllocationsQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
+        public System.Guid? PaymentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("invoiceId")]
+        public System.Guid? InvoiceId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("skip")]
+        public int? Skip { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("take")]
+        public int? Take { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PaymentAllocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
+        public System.Guid PaymentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("invoiceId")]
+        public System.Guid InvoiceId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AllocatePaymentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
+        public System.Guid PaymentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("allocations")]
+        public System.Collections.Generic.ICollection<PaymentAllocationItem>? Allocations { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PaymentAllocationItem
     {
 
@@ -20633,55 +22352,37 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ProductResponse
+    public partial class CreateProjectCommand
     {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetedAmount")]
+        public double BudgetedAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("clientName")]
+        public string? ClientName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectManager")]
+        public string? ProjectManager { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("department")]
+        public string? Department { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public BrandResponse Brand { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ProductResponsePagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<ProductResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ProjectDto
+    public partial class ProjectResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -20750,489 +22451,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ProjectDtoPagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<ProjectDto>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileAccountCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("chartOfAccountId")]
-        public System.Guid ChartOfAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reconciliationDate")]
-        public System.DateTime ReconciliationDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("statementBalance")]
-        public double StatementBalance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reconciliationReference")]
-        public string? ReconciliationReference { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reconciliationLines")]
-        public System.Collections.Generic.ICollection<ReconciliationLineDto>? ReconciliationLines { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
-        public System.Guid CycleCountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discrepancies")]
-        public System.Collections.Generic.ICollection<CycleCountDiscrepancy>? Discrepancies { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconciliationLineDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("transactionId")]
-        public System.Guid? TransactionId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transactionDate")]
-        public System.DateTime TransactionDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isCleared")]
-        public bool IsCleared { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RefreshTokenCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string? Token { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
-        public string? RefreshToken { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegisterUserCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
-        public string? FirstName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
-        public string? LastName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userName")]
-        public string? UserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("confirmPassword")]
-        public string? ConfirmPassword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegisterUserResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public string? UserId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResetPasswordCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string? Token { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RetirePatronageCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("patronageCapitalId")]
-        public System.Guid PatronageCapitalId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("retirementDate")]
-        public System.DateTime RetirementDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("debitAccountId")]
-        public System.Guid DebitAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditAccountId")]
-        public System.Guid CreditAccountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RoleDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
-        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Search
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("fields")]
-        public System.Collections.Generic.ICollection<string>? Fields { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchAccountingPeriodsRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int? FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isClosed")]
-        public bool IsClosed { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBrandsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBudgetsRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int? FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchChartOfAccountRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
-        public string? AccountCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchCustomersRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
-        public string? CustomerCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchFixedAssetsRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
-        public string? AssetName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("assetType")]
-        public string? AssetType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchJournalEntriesRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("referenceNumber")]
-        public string? ReferenceNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPosted")]
-        public bool IsPosted { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchProductsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
-        public Search AdvancedSearch { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
-        public Filter AdvancedFilter { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
-        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
-        public double? MinimumRate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumRate")]
-        public double? MaximumRate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SearchProjectsRequest
     {
 
@@ -21266,748 +22484,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class StartCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class StockAdjustmentResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid WarehouseLocationId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
-        public string? AdjustmentType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
-        public int QuantityAdjusted { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
-        public System.DateTime AdjustmentDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
-        public System.Guid? CreatedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SupplierResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("website")]
-        public string? Website { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("rating")]
-        public double Rating { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SupplierResponsePagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<SupplierResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TenantDetail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
-        public string? ConnectionString { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
-        public string? AdminEmail { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("validUpto")]
-        public System.DateTime ValidUpto { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
-        public string? Issuer { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TodoDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TodoDtoPagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<TodoDto>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ToggleUserStatusCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("activateUser")]
-        public bool ActivateUser { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public string? UserId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TokenGenerationCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = "admin@root.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string? Password { get; set; } = "123Pa$$word!";
-
-        [System.Text.Json.Serialization.JsonPropertyName("deviceType")]
-        public string? DeviceType { get; set; } = "admin@root.com";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TokenResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string? Token { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
-        public string? RefreshToken { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("refreshTokenExpiryTime")]
-        public System.DateTime RefreshTokenExpiryTime { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateAccountingPeriodRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime? StartDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public System.DateTime? EndDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isAdjustmentPeriod")]
-        public bool IsAdjustmentPeriod { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int? FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("periodType")]
-        public string? PeriodType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBrandCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBudgetRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
-        public int FiscalYear { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("budgetType")]
-        public string? BudgetType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCategoryCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
-        public System.Guid? ParentCategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
-        public int? SortOrder { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public string? ImageUrl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateChartOfAccountRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
-        public string? AccountCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
-        public string? AccountName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountType")]
-        public string? AccountType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("usoaCategory")]
-        public string? UsoaCategory { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("subAccountOf")]
-        public System.Guid? SubAccountOf { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("parentCode")]
-        public string? ParentCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isControlAccount")]
-        public bool IsControlAccount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("balance")]
-        public double Balance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("normalBalance")]
-        public string? NormalBalance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isUsoaCompliant")]
-        public bool IsUsoaCompliant { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
-        public string? RegulatoryClassification { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCustomerCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
-        public string? TaxNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
-        public string? BusinessLicense { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCustomerRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerCode")]
-        public string? CustomerCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("billingAddress")]
-        public string? BillingAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("terms")]
-        public string? Terms { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountCode")]
-        public string? RevenueAccountCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("revenueAccountName")]
-        public string? RevenueAccountName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tin")]
-        public string? Tin { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateCustomerResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateFixedAssetRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("assetName")]
-        public string? AssetName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("depreciationMethodId")]
-        public System.Guid? DepreciationMethodId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serviceLife")]
-        public int? ServiceLife { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("salvageValue")]
-        public double? SalvageValue { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("serialNumber")]
-        public string? SerialNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("location")]
-        public string? Location { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateGroceryItemCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string? Sku { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string? Barcode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public double Cost { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
-        public int MinimumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
-        public int MaximumStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
-        public int CurrentStock { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
-        public int ReorderPoint { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
-        public bool IsPerishable { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
-        public System.DateTime? ExpiryDate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public string? Brand { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
-        public string? Manufacturer { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weight")]
-        public double Weight { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
-        public string? WeightUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
-        public System.Guid? CategoryId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid? SupplierId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
-        public System.Guid? WarehouseLocationId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateGroceryItemResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateInventoryTransferCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Transfer to Main Warehouse";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Transfer items between warehouses";
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
-        public string? TransferNumber { get; set; } = "TRF001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
-        public System.Guid FromWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
-        public System.Guid ToWarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = "Pending";
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("reason")]
-        public string? Reason { get; set; } = "Inventory Rebalancing";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateInventoryTransferResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdatePermissionsCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
-        public string? RoleId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
-        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateProductCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateProductResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateProjectRequest
+    public partial class UpdateProjectCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -22042,375 +22519,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSalesOrderCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSalesOrderResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSupplierCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("website")]
-        public string? Website { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
-        public double? CreditLimit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
-        public int? PaymentTermsDays { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("rating")]
-        public double? Rating { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSupplierResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateTodoCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateTodoResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateUserCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
-        public string? FirstName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
-        public string? LastName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public FileUploadCommand Image { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("deleteCurrentImage")]
-        public bool DeleteCurrentImage { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Warehouse";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage facility";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "WH001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = "123 Storage Street";
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = "New York";
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = "NY";
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = "USA";
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = "10001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
-        public string? ManagerName { get; set; } = "John Manager";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
-        public string? ManagerEmail { get; set; } = "john.manager@example.com";
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
-        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
-        public double TotalCapacity { get; set; } = 10000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool IsMainWarehouse { get; set; } = false;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseLocationCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Main Location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Primary storage location";
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = "LOC001";
-
-        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
-        public string? Aisle { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("section")]
-        public string? Section { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
-        public string? Shelf { get; set; } = "01";
-
-        [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string? Bin { get; set; } = "A";
-
-        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
-        public System.Guid WarehouseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
-        public string? LocationType { get; set; } = "Floor";
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
-        public double Capacity { get; set; } = 1000D;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = "sqft";
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = true;
-
-        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
-        public bool RequiresTemperatureControl { get; set; } = false;
-
-        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
-        public double? MinTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
-        public double? MaxTemperature { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
-        public string? TemperatureUnit { get; set; } = "C";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseLocationResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWarehouseResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWholesalePricingCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
-        public double TierPrice { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
-        public double DiscountPercentage { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateWholesalePricingResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpgradeSubscriptionCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
-        public string? Tenant { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("extendedExpiryDate")]
-        public System.DateTime ExtendedExpiryDate { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpgradeSubscriptionResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("newValidity")]
-        public System.DateTime NewValidity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
-        public string? Tenant { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserDetail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("userName")]
-        public string? UserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
-        public string? FirstName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
-        public string? LastName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("emailConfirmed")]
-        public bool EmailConfirmed { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
-        public System.Uri? ImageUrl { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserRoleDetail
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
-        public string? RoleId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("roleName")]
-        public string? RoleName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
 
     }
 
@@ -22565,33 +22673,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class VendorSearchResponsePagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<VendorSearchResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VendorUpdateCommand
     {
 
@@ -22645,6 +22726,4146 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AuditTrail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userName")]
+        public string? UserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("primaryKey")]
+        public string? PrimaryKey { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("operation")]
+        public string? Operation { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("entity")]
+        public string? Entity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateTime")]
+        public System.DateTime DateTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("previousValues")]
+        public string? PreviousValues { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("newValues")]
+        public string? NewValues { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("modifiedProperties")]
+        public string? ModifiedProperties { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateOrUpdateRoleCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePermissionsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
+        public string? RoleId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
+        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RoleDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("permissions")]
+        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TokenGenerationCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = "admin@root.com";
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = "123Pa$$word!";
+
+        [System.Text.Json.Serialization.JsonPropertyName("deviceType")]
+        public string? DeviceType { get; set; } = "admin@root.com";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RefreshTokenCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string? Token { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
+        public string? RefreshToken { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TokenResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string? Token { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("refreshToken")]
+        public string? RefreshToken { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("refreshTokenExpiryTime")]
+        public System.DateTime RefreshTokenExpiryTime { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UserDetail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userName")]
+        public string? UserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string? FirstName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string? LastName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailConfirmed")]
+        public bool EmailConfirmed { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public System.Uri? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UserRoleDetail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
+        public string? RoleId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("roleName")]
+        public string? RoleName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("enabled")]
+        public bool Enabled { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AssignUserRoleCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userRoles")]
+        public System.Collections.Generic.ICollection<UserRoleDetail>? UserRoles { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ChangePasswordCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("newPassword")]
+        public string? NewPassword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("confirmNewPassword")]
+        public string? ConfirmNewPassword { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ForgotPasswordCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RegisterUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string? FirstName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string? LastName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userName")]
+        public string? UserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("confirmPassword")]
+        public string? ConfirmPassword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RegisterUserResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public string? UserId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ResetPasswordCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string? Password { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string? Token { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ToggleUserStatusCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("activateUser")]
+        public bool ActivateUser { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public string? UserId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string? FirstName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string? LastName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deleteCurrentImage")]
+        public bool DeleteCurrentImage { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Filter
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("logic")]
+        public string? Logic { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("filters")]
+        public System.Collections.Generic.ICollection<Filter>? Filters { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("field")]
+        public string? Field { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("operator")]
+        public string? Operator { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("value")]
+        public object? Value { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfAccountingPeriodResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<AccountingPeriodResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfBudgetListItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<BudgetListItemResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfChartOfAccountResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<ChartOfAccountResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfCustomerResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CustomerResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfFixedAssetResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<FixedAssetResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfJournalEntryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<JournalEntryResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfPayeeResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<PayeeResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfProjectResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<ProjectResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfVendorSearchResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<VendorSearchResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfBrandResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<BrandResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfProductResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<ProductResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfCategoryResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CategoryResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList`1OfOfCustomerResponseAndApplicationAnd_0AndCulture=neutralAndPublicKeyToken=null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CustomerResponse2>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfGroceryItemResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GroceryItemResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfGetInventoryTransferListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetInventoryTransferListResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfGetPriceListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetPriceListResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfGetPurchaseOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetPurchaseOrderResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfGetSalesOrderResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetSalesOrderResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfStockAdjustmentResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<StockAdjustmentResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfSupplierResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<SupplierResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfGetWarehouseLocationListResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetWarehouseLocationListResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfWarehouseResponseAndApplicationAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<WarehouseResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfTodoDtoAndTodoAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<TodoDto>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PaginationFilter
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Search
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("fields")]
+        public System.Collections.Generic.ICollection<string>? Fields { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FileUploadCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("extension")]
+        public string? Extension { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("data")]
+        public string? Data { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TenantDetail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
+        public string? ConnectionString { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
+        public string? AdminEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("validUpto")]
+        public System.DateTime ValidUpto { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
+        public string? Issuer { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ActivateTenantResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTenantCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
+        public string? ConnectionString { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
+        public string? AdminEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuer")]
+        public string? Issuer { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTenantResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DisableTenantResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpgradeSubscriptionCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
+        public string? Tenant { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("extendedExpiryDate")]
+        public System.DateTime ExtendedExpiryDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpgradeSubscriptionResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("newValidity")]
+        public System.DateTime NewValidity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tenant")]
+        public string? Tenant { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateBrandCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Brand";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Descriptive Description";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = "Descriptive Notes";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateBrandResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BrandResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchBrandsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateBrandCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateBrandResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateProductCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Product";
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = 10D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Descriptive Description";
+
+        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
+        public System.Guid? BrandId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateProductResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ProductResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public BrandResponse Brand { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchProductsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
+        public System.Guid? BrandId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
+        public double? MinimumRate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumRate")]
+        public double? MaximumRate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateProductCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
+        public System.Guid? BrandId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateProductResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCategoryCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Category";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary category";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "CAT001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
+        public System.Guid? ParentCategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
+        public int SortOrder { get; set; } = 0;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCategoryResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CategoryResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
+        public System.Guid? ParentCategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
+        public int SortOrder { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchCategoriesCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCategoryCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("parentCategoryId")]
+        public System.Guid? ParentCategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sortOrder")]
+        public int? SortOrder { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCategoryResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCustomerCommand2
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Customer";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary customer";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "CUST001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = "Retail";
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = "John Doe";
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = "john.doe@example.com";
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = "+1-555-123-4567";
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = "123 Main Street";
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = "New York";
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = "NY";
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = "USA";
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = "10001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = 10000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = 30;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = 5D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
+        public string? TaxNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
+        public string? BusinessLicense { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCustomerResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomerResponse2
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
+        public string? TaxNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
+        public string? BusinessLicense { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchCustomersCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCustomerCommand2
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxNumber")]
+        public string? TaxNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("businessLicense")]
+        public string? BusinessLicense { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCustomerResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddCycleCountItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
+        public int SystemQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
+        public int? CountedQuantity { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddCycleCountItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CompleteCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCycleCountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("countNumber")]
+        public string? CountNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("scheduledDate")]
+        public System.DateTime ScheduledDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("countType")]
+        public string? CountType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("counterName")]
+        public string? CounterName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supervisorName")]
+        public string? SupervisorName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CycleCountDiscrepancy
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
+        public int SystemQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("countedQuantity")]
+        public int CountedQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("difference")]
+        public int Difference { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconcileCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discrepancies")]
+        public System.Collections.Generic.ICollection<CycleCountDiscrepancy>? Discrepancies { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StartCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateGroceryItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Sample Grocery Item";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Descriptive Description";
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = "SKU001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = "1234567890123";
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = 10.99D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cost")]
+        public double Cost { get; set; } = 5.99D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int MinimumStock { get; set; } = 10;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int MaximumStock { get; set; } = 100;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
+        public int CurrentStock { get; set; } = 50;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int ReorderPoint { get; set; } = 20;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool IsPerishable { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public string? Brand { get; set; } = "Generic Brand";
+
+        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
+        public string? Manufacturer { get; set; } = "Generic Manufacturer";
+
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double Weight { get; set; } = 1D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = "kg";
+
+        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
+        public System.Guid? CategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateGroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cost")]
+        public double Cost { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int MinimumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int MaximumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
+        public int CurrentStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int ReorderPoint { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public string? Brand { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
+        public string? Manufacturer { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double Weight { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchGroceryItemsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
+        public System.Guid? CategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isLowStock")]
+        public bool? IsLowStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isExpiringSoon")]
+        public bool? IsExpiringSoon { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool? IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minPrice")]
+        public double? MinPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxPrice")]
+        public double? MaxPrice { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateGroceryItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sku")]
+        public string? Sku { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("barcode")]
+        public string? Barcode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("price")]
+        public double Price { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("cost")]
+        public double Cost { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int MinimumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int MaximumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentStock")]
+        public int CurrentStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int ReorderPoint { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("brand")]
+        public string? Brand { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("manufacturer")]
+        public string? Manufacturer { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double Weight { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
+        public System.Guid? CategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateGroceryItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateInventoryTransferCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = "TRF001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromLocationId")]
+        public System.Guid? FromLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toLocationId")]
+        public System.Guid? ToLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
+        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = "Standard";
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = "Normal";
+
+        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
+        public string? TransportMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
+        public string? RequestedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
+        public string? FromWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
+        public string? ToWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
+        public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actualArrivalDate")]
+        public System.DateTime? ActualArrivalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalValue")]
+        public double TotalValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transportMethod")]
+        public string? TransportMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("trackingNumber")]
+        public string? TrackingNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestedBy")]
+        public string? RequestedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
+        public string? ApprovedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approvalDate")]
+        public System.DateTime? ApprovalDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddInventoryTransferItemCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
+        public System.Guid InventoryTransferId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
+        public int Quantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
+        public double UnitPrice { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddInventoryTransferItemResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("inventoryTransferId")]
+        public System.Guid InventoryTransferId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetInventoryTransferListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseName")]
+        public string? FromWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseName")]
+        public string? ToWarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferType")]
+        public string? TransferType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priority")]
+        public string? Priority { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchInventoryTransfersCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid? FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid? ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateInventoryTransferCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Transfer to Main Warehouse";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Transfer items between warehouses";
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferNumber")]
+        public string? TransferNumber { get; set; } = "TRF001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromWarehouseId")]
+        public System.Guid FromWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toWarehouseId")]
+        public System.Guid ToWarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
+        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Pending";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = "Inventory Rebalancing";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateInventoryTransferResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePriceListCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Default Price List";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
+        public string? PriceListName { get; set; } = "DEFAULT";
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
+        public string? PriceListType { get; set; } = "Retail";
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currency")]
+        public string? Currency { get; set; } = "USD";
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePriceListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPriceListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
+        public string? PriceListName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
+        public string? PriceListType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currency")]
+        public string? Currency { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchPriceListsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePriceListCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Default Price List";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListName")]
+        public string? PriceListName { get; set; } = "DEFAULT";
+
+        [System.Text.Json.Serialization.JsonPropertyName("priceListType")]
+        public string? PriceListType { get; set; } = "Retail";
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("currency")]
+        public string? Currency { get; set; } = "USD";
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePriceListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePurchaseOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = "PO-0001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
+        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Draft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
+        public string? ContactPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatePurchaseOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPurchaseOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
+        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actualDeliveryDate")]
+        public System.DateTime? ActualDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
+        public double TotalAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
+        public double TaxAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
+        public double DiscountAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("netAmount")]
+        public double NetAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
+        public string? ContactPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchPurchaseOrdersCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePurchaseOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = "PO-0001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
+        public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Draft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPhone")]
+        public string? ContactPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdatePurchaseOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSalesOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public double Total { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
+        public System.DateTime OrderDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryDate")]
+        public System.DateTime? DeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderType")]
+        public string? OrderType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subTotal")]
+        public double SubTotal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
+        public double TaxAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
+        public double DiscountAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shippingAmount")]
+        public double ShippingAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalAmount")]
+        public double TotalAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentStatus")]
+        public string? PaymentStatus { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentMethod")]
+        public string? PaymentMethod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool IsUrgent { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("salesPersonId")]
+        public string? SalesPersonId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid? WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchSalesOrdersCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderNumber")]
+        public string? OrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid? CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fromDate")]
+        public System.DateTime? FromDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("toDate")]
+        public System.DateTime? ToDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
+        public bool? IsUrgent { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid? WarehouseId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSalesOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public double Total { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSalesOrderResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApproveStockAdjustmentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
+        public string? ApprovedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApproveStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentId")]
+        public System.Guid AdjustmentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approved")]
+        public bool Approved { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateStockAdjustmentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Stock Count Adjustment";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Inventory count adjustment";
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentNumber")]
+        public string? AdjustmentNumber { get; set; } = "ADJ001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
+        public System.DateTime AdjustmentDate { get; set; } = System.DateTime.Parse("2024-01-01");
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = "Physical Count";
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = "Pending";
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = "Monthly inventory count";
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantityBefore")]
+        public int QuantityBefore { get; set; } = 0;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentQuantity")]
+        public int AdjustmentQuantity { get; set; } = 0;
+
+        [System.Text.Json.Serialization.JsonPropertyName("unitCost")]
+        public double UnitCost { get; set; } = 0D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reference")]
+        public string? Reference { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustedBy")]
+        public string? AdjustedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("batchNumber")]
+        public string? BatchNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
+        public int QuantityAdjusted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentDate")]
+        public System.DateTime AdjustmentDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public System.Guid? CreatedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchStockAdjustmentsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid? GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid? WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateFrom")]
+        public System.DateTime? DateFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateTo")]
+        public System.DateTime? DateTo { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateStockAdjustmentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
+        public System.Guid WarehouseLocationId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adjustmentType")]
+        public string? AdjustmentType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("quantityAdjusted")]
+        public int QuantityAdjusted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reason")]
+        public string? Reason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateStockAdjustmentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSupplierCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("website")]
+        public string? Website { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("rating")]
+        public double Rating { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("website")]
+        public string? Website { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("rating")]
+        public double Rating { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSupplierCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("website")]
+        public string? Website { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int? PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("rating")]
+        public double? Rating { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateSupplierResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid SupplierId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseLocationCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "LOC001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = "Floor";
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = 1000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
+        public double? MinTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
+        public double? MaxTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
+        public string? TemperatureUnit { get; set; } = "C";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
+        public double? MinTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
+        public double? MaxTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
+        public string? TemperatureUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseLocationListResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchWarehouseLocationsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid? WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool? RequiresTemperatureControl { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseLocationCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage location";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "LOC001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("aisle")]
+        public string? Aisle { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("section")]
+        public string? Section { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelf")]
+        public string? Shelf { get; set; } = "01";
+
+        [System.Text.Json.Serialization.JsonPropertyName("bin")]
+        public string? Bin { get; set; } = "A";
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
+        public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("locationType")]
+        public string? LocationType { get; set; } = "Floor";
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacity")]
+        public double Capacity { get; set; } = 1000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiresTemperatureControl")]
+        public bool RequiresTemperatureControl { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minTemperature")]
+        public double? MinTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maxTemperature")]
+        public double? MaxTemperature { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("temperatureUnit")]
+        public string? TemperatureUnit { get; set; } = "C";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseLocationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Warehouse";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage facility";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "WH001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = "123 Storage Street";
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = "New York";
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = "NY";
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = "USA";
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = "10001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = "John Manager";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = "john.manager@example.com";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = 10000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("usedCapacity")]
+        public double UsedCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastInventoryDate")]
+        public System.DateTime? LastInventoryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class WarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchWarehousesCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool? IsMainWarehouse { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Main Warehouse";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "Primary storage facility";
+
+        [System.Text.Json.Serialization.JsonPropertyName("code")]
+        public string? Code { get; set; } = "WH001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = "123 Storage Street";
+
+        [System.Text.Json.Serialization.JsonPropertyName("city")]
+        public string? City { get; set; } = "New York";
+
+        [System.Text.Json.Serialization.JsonPropertyName("state")]
+        public string? State { get; set; } = "NY";
+
+        [System.Text.Json.Serialization.JsonPropertyName("country")]
+        public string? Country { get; set; } = "USA";
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = "10001";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
+        public string? ManagerName { get; set; } = "John Manager";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
+        public string? ManagerEmail { get; set; } = "john.manager@example.com";
+
+        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
+        public string? ManagerPhone { get; set; } = "+1-555-123-4567";
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
+        public double TotalCapacity { get; set; } = 10000D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
+        public string? CapacityUnit { get; set; } = "sqft";
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = true;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
+        public bool IsMainWarehouse { get; set; } = false;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWarehouseResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesaleContractCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractNumber")]
+        public string? ContractNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
+        public double VolumeDiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
+        public string? DeliveryTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
+        public string? ContractTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
+        public bool AutoRenewal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesaleContractResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWholesaleContractResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractNumber")]
+        public string? ContractNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
+        public double VolumeDiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
+        public string? DeliveryTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
+        public string? ContractTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
+        public bool AutoRenewal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesaleContractCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumOrderValue")]
+        public double? MinimumOrderValue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("volumeDiscountPercentage")]
+        public double? VolumeDiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTermsDays")]
+        public int? PaymentTermsDays { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
+        public double? CreditLimit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deliveryTerms")]
+        public string? DeliveryTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractTerms")]
+        public string? ContractTerms { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("autoRenewal")]
+        public bool? AutoRenewal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesaleContractResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesalePricingCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
+        public System.Guid WholesaleContractId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
+        public int MinimumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
+        public int? MaximumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
+        public double TierPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DeactivateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("wholesaleContractId")]
+        public System.Guid WholesaleContractId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
+        public System.Guid GroceryItemId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumQuantity")]
+        public int MinimumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumQuantity")]
+        public int? MaximumQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
+        public double TierPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("effectiveDate")]
+        public System.DateTime EffectiveDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryDate")]
+        public System.DateTime? ExpiryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesalePricingCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tierPrice")]
+        public double TierPrice { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountPercentage")]
+        public double DiscountPercentage { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateWholesalePricingResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTodoCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Hello World!";
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = "This is desciption.";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = "Important Note.";
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateTodoResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTodoResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TodoDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateTodoCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateTodoResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
 
     }
 

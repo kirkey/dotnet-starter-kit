@@ -15,15 +15,17 @@ public static class SearchGroceryItemsEndpoint
     /// <returns>Route handler builder for search grocery items endpoint</returns>
     internal static RouteHandlerBuilder MapSearchGroceryItemsEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/search", async (SearchGroceryItemsCommand command, ISender sender) =>
-        {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Ok(result);
-        })
-        .WithName("SearchGroceryItems")
-        .WithSummary("Search grocery items")
-        .WithDescription("Search and filter grocery items with pagination support")
-        .Produces<PagedList<GroceryItemResponse>>()
-        .MapToApiVersion(1);
+        return endpoints
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchGroceryItemsCommand command) =>
+            {
+                var response = await mediator.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(SearchGroceryItemsEndpoint))
+            .WithSummary("Search grocery items")
+            .WithDescription("Search and filter grocery items with pagination support")
+            .Produces<PagedList<GroceryItemResponse>>()
+            .RequirePermission("Permissions.GroceryItems.View")
+            .MapToApiVersion(1);
     }
 }

@@ -11,10 +11,11 @@ public static class DeleteSupplierEndpoint
             await sender.Send(new DeleteSupplierCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteSupplier")
+        .WithName(nameof(DeleteSupplierEndpoint))
         .WithSummary("Delete a supplier")
         .WithDescription("Deletes a supplier by id")
         .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.Suppliers.Delete")
         .MapToApiVersion(1);
     }
 }

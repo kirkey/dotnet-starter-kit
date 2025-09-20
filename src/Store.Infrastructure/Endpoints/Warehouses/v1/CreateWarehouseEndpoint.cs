@@ -6,15 +6,16 @@ public static class CreateWarehouseEndpoint
 {
     internal static RouteHandlerBuilder MapCreateWarehouseEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreateWarehouseCommand command, ISender sender) =>
+        return endpoints.MapPost("/", async (CreateWarehouseCommand request, ISender mediator) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/warehouses/{result.Id}", result);
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("CreateWarehouse")
+        .WithName(nameof(CreateWarehouseEndpoint))
         .WithSummary("Create a new warehouse")
-        .WithDescription("Creates a new warehouse with the provided details")
+        .WithDescription("Creates a new warehouse")
         .Produces<CreateWarehouseResponse>()
+        .RequirePermission("Permissions.Warehouses.Create")
         .MapToApiVersion(1);
     }
 }

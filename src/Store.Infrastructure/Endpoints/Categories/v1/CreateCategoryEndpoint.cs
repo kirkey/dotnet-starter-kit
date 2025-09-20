@@ -6,16 +6,17 @@ public static class CreateCategoryEndpoint
 {
     internal static RouteHandlerBuilder MapCreateCategoryEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreateCategoryCommand command, ISender sender) =>
-        {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/categories/{result.Id}", result);
-        })
-        .WithName("CreateCategory")
-        .WithSummary("Create a new category")
-        .WithDescription("Creates a new category")
-        .Produces<CreateCategoryResponse>()
-        .MapToApiVersion(1);
+        return endpoints
+            .MapPost("/", async (CreateCategoryCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(CreateCategoryEndpoint))
+            .WithSummary("Create a new category")
+            .WithDescription("Creates a new category")
+            .Produces<CreateCategoryResponse>()
+            .RequirePermission("Permissions.Categories.Create")
+            .MapToApiVersion(1);
     }
 }
-

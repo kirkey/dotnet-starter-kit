@@ -12,10 +12,11 @@ public static class UpdateSalesOrderEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdateSalesOrder")
+        .WithName(nameof(UpdateSalesOrderEndpoint))
         .WithSummary("Update sales order")
         .WithDescription("Updates an existing sales order")
         .Produces<UpdateSalesOrderResponse>()
+        .RequirePermission("Permissions.SalesOrders.Update")
         .MapToApiVersion(1);
     }
 }

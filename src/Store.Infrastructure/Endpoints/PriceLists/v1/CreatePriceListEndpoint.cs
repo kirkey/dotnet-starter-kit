@@ -14,15 +14,16 @@ public static class CreatePriceListEndpoint
     /// <returns>Route handler builder for create price list endpoint</returns>
     internal static RouteHandlerBuilder MapCreatePriceListEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/", async (CreatePriceListCommand command, ISender sender) =>
+        return endpoints.MapPost("/", async (CreatePriceListCommand request, ISender mediator) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
-            return Results.Created($"/price-lists/{result.Id}", result);
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
         })
-        .WithName("CreatePriceList")
+        .WithName(nameof(CreatePriceListEndpoint))
         .WithSummary("Create a new price list")
         .WithDescription("Creates a new price list")
         .Produces<CreatePriceListResponse>()
+        .RequirePermission("Permissions.PriceLists.Create")
         .MapToApiVersion(1);
     }
 }

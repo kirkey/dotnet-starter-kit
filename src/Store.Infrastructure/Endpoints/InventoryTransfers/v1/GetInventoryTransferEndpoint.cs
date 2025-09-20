@@ -11,10 +11,11 @@ public static class GetInventoryTransferEndpoint
             var result = await sender.Send(new GetInventoryTransferQuery(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetInventoryTransfer")
+        .WithName(nameof(GetInventoryTransferEndpoint))
         .WithSummary("Get inventory transfer by ID")
         .WithDescription("Retrieves an inventory transfer by its unique identifier")
         .Produces<GetInventoryTransferResponse>()
+        .RequirePermission("Permissions.InventoryTransfers.View")
         .MapToApiVersion(1);
     }
 }

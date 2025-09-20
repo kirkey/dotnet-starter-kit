@@ -19,10 +19,11 @@ public static class GetPriceListEndpoint
             var result = await sender.Send(new GetPriceListQuery(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetPriceList")
+        .WithName(nameof(GetPriceListEndpoint))
         .WithSummary("Get a price list")
         .WithDescription("Retrieves a price list by ID")
         .Produces<GetPriceListResponse>()
+        .RequirePermission("Permissions.PriceLists.View")
         .MapToApiVersion(1);
     }
 }

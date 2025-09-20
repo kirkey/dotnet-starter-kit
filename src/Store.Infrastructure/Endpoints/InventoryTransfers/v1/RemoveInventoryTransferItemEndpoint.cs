@@ -11,10 +11,11 @@ public static class RemoveInventoryTransferItemEndpoint
             await sender.Send(new RemoveInventoryTransferItemCommand(id, itemId)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("RemoveInventoryTransferItem")
+        .WithName(nameof(RemoveInventoryTransferItemEndpoint))
         .WithSummary("Remove item from inventory transfer")
         .WithDescription("Removes a grocery item line from an existing inventory transfer")
         .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission("Permissions.InventoryTransfers.Update")
         .MapToApiVersion(1);
     }
 }
