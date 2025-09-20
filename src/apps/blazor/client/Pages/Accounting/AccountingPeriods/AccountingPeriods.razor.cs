@@ -4,8 +4,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountingPeriods;
 
 public partial class AccountingPeriods
 {
-    [Inject]
-    protected IApiClient ApiClient { get; set; } = default!;
+    [Inject] protected IApiClient ApiClient { get; set; } = default!;
 
     protected EntityServerTableContext<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> Context { get; set; } = default!;
 

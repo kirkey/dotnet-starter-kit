@@ -13,7 +13,7 @@ public partial class Categories
 
     private EntityTable<CategoryResponse, DefaultIdType, CategoryViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel>(
             entityName: "Category",
@@ -29,14 +29,14 @@ public partial class Categories
                 new EntityField<CategoryResponse>(c => c.ParentCategoryId, "Parent", "ParentCategoryId")
             ],
             enableAdvancedSearch: true,
-            idFunc: c => c.Id!.Value,
+            idFunc: response => response.Id!.Value,
             searchFunc: async filter =>
             {
-                var cmd = filter.Adapt<SearchCategoriesCommand>();
-                cmd.Name = _searchName;
-                cmd.Code = _searchCode;
-                cmd.IsActive = _searchIsActive;
-                var result = await _client.SearchCategoriesEndpointAsync("1", cmd);
+                var command = filter.Adapt<SearchCategoriesCommand>();
+                command.Name = _searchName;
+                command.Code = _searchCode;
+                command.IsActive = _searchIsActive;
+                var result = await _client.SearchCategoriesEndpointAsync("1", command);
                 return result.Adapt<PaginationResponse<CategoryResponse>>();
             },
             createFunc: async vm =>
@@ -48,6 +48,8 @@ public partial class Categories
                 await _client.UpdateCategoryEndpointAsync("1", id, vm.Adapt<UpdateCategoryCommand>());
             },
             deleteFunc: async id => await _client.DeleteCategoryEndpointAsync("1", id));
+
+        return Task.CompletedTask;
     }
 
     // Advanced Search State

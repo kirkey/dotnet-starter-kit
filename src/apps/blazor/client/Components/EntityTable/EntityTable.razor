@@ -57,7 +57,7 @@
                     @if (_canCreate)
                     {
                         <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false"
-                                   OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add"
+                                   OnClick="@(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add"
                             IconColor="Color.Surface" Class="mr-4">Create</MudButton>
                     }
                     <MudButton Variant="Variant.Filled" OnClick="ReloadDataAsync" DropShadow="false"

@@ -19,4 +19,3 @@ public sealed class SearchCategoriesHandler(
         return new PagedList<CategoryResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
-
