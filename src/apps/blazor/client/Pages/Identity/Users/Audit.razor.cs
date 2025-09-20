@@ -1,6 +1,4 @@
-﻿using Mapster;
-
-namespace FSH.Starter.Blazor.Client.Pages.Identity.Users;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Users;
 
 public partial class Audit : ComponentBase
 {
@@ -11,12 +9,12 @@ public partial class Audit : ComponentBase
 
     protected EntityClientTableContext<AuditTrailExtension, DefaultIdType, object> Context { get; set; } = default!;
 
-    private string? _searchString;
+    private readonly string? _searchString;
     private string? _subHeader;
-    private MudDateRangePicker _dateRangePicker = default!;
-    private DateRange? _dateRange;
-    private bool _searchInOldValues;
-    private bool _searchInNewValues;
+    private readonly MudDateRangePicker _dateRangePicker = default!;
+    private readonly DateRange? _dateRange;
+    private readonly bool _searchInOldValues;
+    private readonly bool _searchInNewValues;
     private List<AuditTrailExtension> _trails = [];
 
     // Configure Automapper

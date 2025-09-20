@@ -1,5 +1,3 @@
-using Mapster;
-
 namespace FSH.Starter.Blazor.Client.Components.EntityTable;
 
 public partial class EntityTable<TEntity, TId, TRequest>

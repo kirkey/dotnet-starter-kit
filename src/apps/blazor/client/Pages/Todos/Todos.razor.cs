@@ -1,6 +1,4 @@
-﻿using Mapster;
-
-namespace FSH.Starter.Blazor.Client.Pages.Todos;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Todos;
 
 public partial class Todos
 {

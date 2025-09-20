@@ -1,6 +1,4 @@
-﻿using Mapster;
-
-namespace FSH.Starter.Blazor.Client.Pages.Multitenancy;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Multitenancy;
 
 public partial class Tenants
 {

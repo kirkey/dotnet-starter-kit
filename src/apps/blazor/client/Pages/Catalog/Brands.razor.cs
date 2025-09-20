@@ -1,6 +1,4 @@
-﻿using Mapster;
-
-namespace FSH.Starter.Blazor.Client.Pages.Catalog;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Catalog;
 
 public partial class Brands
 {

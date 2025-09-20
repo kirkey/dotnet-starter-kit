@@ -23,6 +23,7 @@ global using FSH.Starter.Blazor.Infrastructure.Palette;
 global using FSH.Starter.Blazor.Infrastructure.Preferences;
 global using FSH.Starter.Blazor.Infrastructure.Session;
 global using FSH.Starter.Blazor.Infrastructure.Sync;
+global using Mapster;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Authorization;

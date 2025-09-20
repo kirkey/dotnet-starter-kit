@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Layout;
 public partial class NotFound
 {
     private ClientPreference? _themePreference;
-    private MudTheme _theme = new FshTheme();
+    private readonly MudTheme _theme = new FshTheme();
     private bool _isDarkMode;
 
     protected override async Task OnInitializedAsync()
