@@ -74,12 +74,6 @@ public sealed class Category : AuditableEntity, IAggregateRoot
     public int SortOrder { get; private set; }
 
     /// <summary>
-    /// Optional URL to a representative image for the category. Example: "https://cdn.example.com/images/fruits.png".
-    /// Max length: 500.
-    /// </summary>
-    public string? ImageUrl { get; private set; }
-    
-    /// <summary>
     /// Navigation property to parent category if this is a subcategory.
     /// </summary>
     public Category? ParentCategory { get; private set; }
