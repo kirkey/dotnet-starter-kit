@@ -56,9 +56,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasMaxLength(1000)
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<string>("ImageUrl")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
@@ -178,7 +175,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -288,7 +285,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<int>("ItemsCountedCorrect")
@@ -387,11 +384,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -482,7 +479,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsPerishable")
@@ -592,11 +589,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsApproved")
                         .HasColumnType("boolean");
@@ -726,14 +723,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<DateTime?>("ExpectedArrivalDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid?>("FromLocationId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("FromWarehouseId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -843,11 +840,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("InventoryTransferId")
                         .HasColumnType("uuid");
@@ -931,7 +928,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -1005,11 +1002,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasPrecision(16, 2)
                         .HasColumnType("decimal(5,2)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -1103,7 +1100,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<DateTime?>("ExpectedDeliveryDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsUrgent")
@@ -1195,11 +1192,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasPrecision(16, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -1287,7 +1284,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasPrecision(16, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsUrgent")
@@ -1406,11 +1403,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsWholesaleItem")
                         .HasColumnType("boolean");
@@ -1526,11 +1523,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsApproved")
                         .HasColumnType("boolean");
@@ -1661,7 +1658,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -1770,7 +1767,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasMaxLength(1000)
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -1891,7 +1888,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasMaxLength(1000)
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -2016,7 +2013,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
@@ -2102,11 +2099,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("GroceryItemId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");

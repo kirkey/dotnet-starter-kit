@@ -54,11 +54,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<int>("FiscalYear")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsAdjustmentPeriod")
                         .HasColumnType("boolean");
@@ -140,7 +140,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsReversed")
@@ -213,11 +213,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(1000)
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<int>("FiscalYear")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -314,7 +314,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(2048)
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -410,7 +410,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(2048)
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsValidReading")
@@ -525,7 +525,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -615,7 +615,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsRecognized")
@@ -705,7 +705,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -802,10 +802,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime?>("DisposalDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("GpsCoordinates")
                         .HasColumnType("text");
 
-                    b.Property<string>("GpsCoordinates")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDisposed")
@@ -879,100 +879,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("FixedAssets", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.FuelConsumption", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal?>("BtuContent")
-                        .HasPrecision(16, 2)
-                        .HasColumnType("numeric(16,2)");
-
-                    b.Property<DateTime>("ConsumptionDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CreatedByUserName")
-                        .HasColumnType("VARCHAR(64)");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("DeletedByUserName")
-                        .HasColumnType("VARCHAR(64)");
-
-                    b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DeliveryMethod")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FuelType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsEmergencyFuel")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid?>("LastModifiedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("LastModifiedByUserName")
-                        .HasColumnType("VARCHAR(64)");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(1024)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<Guid>("PowerPlantId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("Quantity")
-                        .HasPrecision(16, 2)
-                        .HasColumnType("numeric(16,2)");
-
-                    b.Property<string>("QuantityUnit")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal?>("SulfurContent")
-                        .HasPrecision(16, 2)
-                        .HasColumnType("numeric(16,2)");
-
-                    b.Property<string>("SupplierId")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("TotalCost")
-                        .HasPrecision(16, 2)
-                        .HasColumnType("numeric(16,2)");
-
-                    b.Property<decimal>("UnitCost")
-                        .HasPrecision(16, 2)
-                        .HasColumnType("numeric(16,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FuelConsumptions", "accounting");
-                });
-
             modelBuilder.Entity("Accounting.Domain.GeneralLedger", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1014,7 +920,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<Guid>("EntryId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
@@ -1082,7 +988,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(1000)
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -1175,7 +1081,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("InvoiceDate")
@@ -1329,7 +1235,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsPosted")
@@ -1425,7 +1331,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("EmergencyContact")
                         .HasColumnType("text");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -1519,10 +1425,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("GpsCoordinates")
                         .HasColumnType("text");
 
-                    b.Property<string>("GpsCoordinates")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("InstallationDate")
@@ -1669,11 +1575,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<int>("FiscalYear")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -1742,7 +1648,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
@@ -1811,7 +1717,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
@@ -1866,8 +1772,48 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasPrecision(16, 2)
                         .HasColumnType("numeric(16,2)");
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
                     b.Property<Guid>("InvoiceId")
                         .HasColumnType("uuid");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<Guid>("PaymentId")
                         .HasColumnType("uuid");
@@ -1923,7 +1869,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
@@ -2004,7 +1950,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
@@ -2081,12 +2027,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<decimal>("FixedMonthlyCharge")
                         .HasPrecision(16, 2)
                         .HasColumnType("numeric(16,2)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsTimeOfUse")
                         .HasColumnType("boolean");
@@ -2199,6 +2145,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("FilingNumber")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -2342,7 +2291,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsRefunded")
@@ -2427,7 +2376,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")

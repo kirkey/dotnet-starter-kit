@@ -18,7 +18,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Todo
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("todo")
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -33,7 +33,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Todo
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -42,40 +42,32 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Todo
                         .HasColumnType("uuid");
 
                     b.Property<string>("DeletedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
 
                     b.Property<string>("LastModifiedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("VARCHAR(32)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("VARCHAR(32)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()

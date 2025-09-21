@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Catalog
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20250503072740_InitialCatalogDb")]
-    partial class InitialCatalogDb
+    [Migration("20250921013034_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Catalog
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("catalog")
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -36,7 +36,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Catalog
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -45,40 +45,33 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Catalog
                         .HasColumnType("uuid");
 
                     b.Property<string>("DeletedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
 
                     b.Property<string>("LastModifiedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("VARCHAR(32)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("VARCHAR(32)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -105,7 +98,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Catalog
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -114,43 +107,37 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Catalog
                         .HasColumnType("uuid");
 
                     b.Property<string>("DeletedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasColumnType("VARCHAR(2048)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
 
                     b.Property<string>("LastModifiedByUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(64)");
 
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("VARCHAR(32)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("VARCHAR(32)");
+                        .HasPrecision(16, 2)
+                        .HasColumnType("numeric(16,2)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
