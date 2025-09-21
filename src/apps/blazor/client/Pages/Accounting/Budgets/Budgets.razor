@@ -5,7 +5,7 @@
 
 <EntityTable @ref="_table" TEntity="BudgetResponse" TId="DefaultIdType" TRequest="BudgetViewModel" Context="@Context">
     <ExtraActions Context="context">
-        <MudMenuItem Icon="@Icons.Material.Filled.List" Href="@($"/accounting-budgetlines/{Context.IdFunc!(context)}")">
+        <MudMenuItem Icon="@Icons.Material.Filled.List" Href="@($"/accounting-budgetdetails/{Context.IdFunc!(context)}")">
             Details
         </MudMenuItem>
     </ExtraActions>
