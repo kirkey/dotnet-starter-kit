@@ -46,3 +46,16 @@
     </EditFormContent>
 
 </EntityTable>
+
+@code {
+    private RenderFragment<CategoryResponse> TemplateImage => dto => __builder =>
+    {
+        <MudItem Class="d-flex justify-center align-center">
+            @if (dto.ImageUrl is not null)
+            {
+                @* <MudImage Src="@(string.IsNullOrEmpty(dto.ImageUrl) ? string.Empty : Config[ConfigNames.ApiImageUrl] + dto.FilePathOut1)" Height="100"/> *@
+                <MudImage Src="@(string.IsNullOrEmpty(dto.ImageUrl) ? string.Empty : ImageUrlService.GetAbsoluteUrl(dto.ImageUrl))" Height="100"/>
+            }
+        </MudItem>
+    };
+}

@@ -1,30 +1,3 @@
-<style>
-    /* CSS for the file upload input overlay */
-    .file-upload-input {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: 10;
-        opacity: 0;
-        cursor: pointer;
-        /* allow clicks to pass through to our native InputFile overlay */
-        pointer-events: none;
-    }
-    
-    /* CSS for the drag and drop zone */
-    .image-drop-zone {
-        min-height: 150px;
-        transition: all 0.3s ease;
-    }
-    
-    /* CSS for drag hover state - using concrete colors for better compatibility */
-    .image-drop-zone.drag-hover {
-        border-color: #1e88e5 !important; /* MudBlazor primary blue */
-        background-color: rgba(30, 136, 229, 0.06) !important;
-    }
-</style>
-
 <!-- Image uploader component with preview and drag-drop functionality -->
 <MudPaper Class="pa-3" Elevation="0">
     <MudGrid Justify="Justify.Center">
@@ -107,8 +80,8 @@
                             }
                         </MudPaper>
                     </label>
-                 </ActivatorContent>
-             </MudFileUpload>
+                </ActivatorContent>
+            </MudFileUpload>
             
             <!-- Hidden off-screen native InputFile (moved outside MudFileUpload to avoid nesting issues) -->
             <InputFile id="@_nativeInputId" OnChange="@OnFilesChanged" accept="image/*" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" />
@@ -137,23 +110,23 @@
                 <!-- Action buttons -->
                 <MudStack Row="true" Spacing="1">
                     <MudButton Color="Color.Primary"
-                               OnClick="OpenFilePicker"
+                               OnClick="@(() => OpenFilePicker())"
                                Variant="Variant.Outlined"
                                StartIcon="@Icons.Material.Outlined.FolderOpen"
                                Size="Size.Small">
                         Browse
                     </MudButton>
                     <!-- Visible debug button to directly trigger native input click (reliable test) -->
-                    @*<MudButton Color="Color.Secondary"
+                    <MudButton Color="Color.Secondary"
                                OnClick="TriggerNativeInputClick"
                                Variant="Variant.Outlined"
                                StartIcon="@Icons.Material.Outlined.TouchApp"
                                Size="Size.Small">
                         Select (debug)
-                    </MudButton>*@
+                    </MudButton>
                     <MudButton Color="Color.Error"
                                Disabled="@(string.IsNullOrWhiteSpace(CurrentImageUrl) && string.IsNullOrWhiteSpace(UploadedImage?.Data))"
-                               OnClick="RemoveImage"
+                               OnClick="@(() => RemoveImage())"
                                Variant="Variant.Outlined"
                                StartIcon="@Icons.Material.Outlined.Delete"
                                Size="Size.Small">
@@ -164,3 +137,30 @@
         </MudItem>
     </MudGrid>
 </MudPaper>
+
+<style>
+    /* CSS for the file upload input overlay */
+    .file-upload-input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 10;
+        opacity: 0;
+        cursor: pointer;
+        /* allow clicks to pass through to our native InputFile overlay */
+        pointer-events: none;
+    }
+    
+    /* CSS for the drag and drop zone */
+    .image-drop-zone {
+        min-height: 150px;
+        transition: all 0.3s ease;
+    }
+    
+    /* CSS for drag hover state - using concrete colors for better compatibility */
+    .image-drop-zone.drag-hover {
+        border-color: #1e88e5 !important; /* MudBlazor primary blue */
+        background-color: rgba(30, 136, 229, 0.06) !important;
+    }
+</style>

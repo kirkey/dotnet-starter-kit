@@ -1,3 +1,5 @@
+using FSH.Starter.Blazor.Client.Services;
+
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
@@ -6,6 +8,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 public partial class Categories
 {
     [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     private EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = default!;
     private EntityTable<CategoryResponse, DefaultIdType, CategoryViewModel> _table = default!;
@@ -17,6 +20,7 @@ public partial class Categories
             entityResource: FshResources.Store,
             fields:
             [
+                new EntityField<CategoryResponse>(response => response.ImageUrl, "Image", "ImageUrl", Template: TemplateImage),
                 new EntityField<CategoryResponse>(response => response.ParentCategoryId, "Parent", "ParentCategoryId"),
                 new EntityField<CategoryResponse>(response => response.Code, "Code", "Code"),
                 new EntityField<CategoryResponse>(response => response.Name, "Name", "Name"),

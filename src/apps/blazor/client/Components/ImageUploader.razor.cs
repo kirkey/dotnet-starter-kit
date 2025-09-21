@@ -1,9 +1,3 @@
-using System.IO;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Web;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Components;
 
 /// <summary>
