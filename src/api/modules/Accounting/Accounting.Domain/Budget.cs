@@ -43,6 +43,12 @@ public class Budget : AuditableEntity, IAggregateRoot
     public DefaultIdType PeriodId { get; private set; }
 
     /// <summary>
+    /// The human-readable name of the accounting period (denormalized for display).
+    /// Example: "FY2025-Q1" or "2025 - Annual".
+    /// </summary>
+    public string PeriodName { get; private set; } = string.Empty;
+
+    /// <summary>
     /// The fiscal year for which this budget applies (1900-2100).
     /// Example: 2025 for fiscal year 2025 budget planning.
     /// </summary>
@@ -103,7 +109,7 @@ public class Budget : AuditableEntity, IAggregateRoot
     {
     }
 
-    private Budget(string budgetName, DefaultIdType periodId, int fiscalYear, string budgetType, string? description = null, string? notes = null)
+    private Budget(string budgetName, DefaultIdType periodId, string periodName, int fiscalYear, string budgetType, string? description = null, string? notes = null)
     {
         var name = (budgetName ?? string.Empty).Trim();
         if (string.IsNullOrWhiteSpace(name))
@@ -113,6 +119,12 @@ public class Budget : AuditableEntity, IAggregateRoot
 
         if (periodId == default)
             throw new ArgumentException("PeriodId is required.");
+
+        var pName = (periodName ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(pName))
+            throw new ArgumentException("PeriodName is required.");
+        if (pName.Length > 128)
+            pName = pName.Substring(0, 128);
 
         if (fiscalYear is < 1900 or > 2100)
             throw new ArgumentException("Fiscal year is out of range.");
@@ -125,6 +137,7 @@ public class Budget : AuditableEntity, IAggregateRoot
 
         Name = name;
         PeriodId = periodId;
+        PeriodName = pName;
         FiscalYear = fiscalYear;
         BudgetType = bt;
         Status = "Draft";
@@ -141,23 +154,41 @@ public class Budget : AuditableEntity, IAggregateRoot
             nts = nts.Substring(0, MaxNotesLength);
         Notes = nts;
 
-        QueueDomainEvent(new BudgetCreated(Id, Name, PeriodId, FiscalYear, BudgetType, Description, Notes));
+        QueueDomainEvent(new BudgetCreated(Id, Name, PeriodId, PeriodName, FiscalYear, BudgetType, Description, Notes));
     }
 
     /// <summary>
     /// Factory method to create a budget with initial metadata.
     /// </summary>
-    public static Budget Create(string budgetName, DefaultIdType periodId, int fiscalYear, string budgetType, string? description = null, string? notes = null)
+    public static Budget Create(string budgetName, DefaultIdType periodId, string periodName, int fiscalYear, string budgetType, string? description = null, string? notes = null)
     {
-        return new Budget(budgetName, periodId, fiscalYear, budgetType, description, notes);
+        return new Budget(budgetName, periodId, periodName, fiscalYear, budgetType, description, notes);
     }
 
     /// <summary>
     /// Update editable properties when status allows (not Approved/Active).
     /// </summary>
-    public Budget Update(int fiscalYear, string? budgetName, string? budgetType, string? status, string? description, string? notes)
+    public Budget Update(DefaultIdType periodId, string periodName, int fiscalYear, string? budgetName, string? budgetType, string? status, string? description, string? notes)
     {
         bool isUpdated = false;
+        
+        if (periodId == default)
+            throw new ArgumentException("PeriodId is required.");
+        if (PeriodId != periodId)
+        {
+            PeriodId = periodId;
+            isUpdated = true;
+        }
+        
+        if (string.IsNullOrWhiteSpace(periodName))
+            throw new ArgumentException("PeriodName is required.");
+        if (periodName.Length > 128)
+            periodName = periodName.Substring(0, 128);
+        if (periodName != PeriodName)
+        {
+            PeriodName = periodName;
+            isUpdated = true;
+        }
 
         if (Status is "Approved" or "Active")
             throw new BudgetCannotBeModifiedException(Id);
@@ -167,6 +198,15 @@ public class Budget : AuditableEntity, IAggregateRoot
         if (fiscalYear != FiscalYear)
         {
             FiscalYear = fiscalYear;
+            isUpdated = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(periodName) && PeriodName != periodName)
+        {
+            var pn = periodName.Trim();
+            if (pn.Length > 128)
+                pn = pn.Substring(0, 128);
+            PeriodName = pn;
             isUpdated = true;
         }
 

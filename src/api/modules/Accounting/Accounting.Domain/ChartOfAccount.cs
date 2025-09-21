@@ -1,4 +1,5 @@
 using Accounting.Domain.Events.ChartOfAccount;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Accounting.Domain;
 
@@ -33,31 +34,31 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     /// The unique account code (for example, USOA 101, 403). Trimmed and length-limited.
     /// Example: "101" for Cash, "403" for Overhead Line Expenses. Max length: 16.
     /// </summary>
-    public string AccountCode { get; private set; } // USOA Account ID (e.g., 101, 403)
+    public string AccountCode { get; private set; } = string.Empty; // USOA Account ID (e.g., 101, 403)
 
     /// <summary>
     /// The official account name. Also stored in base <c>Name</c> for compatibility.
     /// Example: "Cash and Cash Equivalents", "Overhead Line Expenses". Max length: 1024.
     /// </summary>
-    public string AccountName { get; private set; } // Official USOA account name
+    public string AccountName { get; private set; } = string.Empty; // Official USOA account name
 
     /// <summary>
     /// The account type: Asset, Liability, Equity, Revenue, or Expense.
     /// Example: "Asset" for cash accounts, "Revenue" for sales accounts.
     /// </summary>
-    public string AccountType { get; private set; } // Asset, Liability, Equity, Revenue, Expense
+    public string AccountType { get; private set; } = string.Empty; // Asset, Liability, Equity, Revenue, Expense
 
     /// <summary>
     /// Optional parent account identifier for hierarchical structures.
     /// Example: links sub-accounts to their parent control accounts.
     /// </summary>
-    public DefaultIdType? SubAccountOf { get; private set; } // Hierarchical structure
+    public DefaultIdType? ParentAccountId { get; private set; } // Parent account reference only if it is a sub-account
 
     /// <summary>
     /// The USOA (Uniform System of Accounts) category, e.g., Production, Transmission, Distribution.
     /// Example: "Production" for power generation costs, "Distribution" for delivery expenses.
     /// </summary>
-    public string UsoaCategory { get; private set; } // Production, Transmission, Distribution
+    public string UsoaCategory { get; private set; } = string.Empty; // Production, Transmission, Distribution
 
     /// <summary>
     /// Whether the account is active and can be used in postings. Default: true.
@@ -70,7 +71,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     /// Optional dotted parent code path for hierarchy representation.
     /// Example: "100.101" for cash under current assets. Max length: 16.
     /// </summary>
-    public string ParentCode { get; private set; }
+    public string ParentCode { get; private set; } = string.Empty;
 
     /// <summary>
     /// Current balance of the account. Default: 0.00. Updated via UpdateBalance method.
@@ -88,7 +89,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     /// Normal balance side, e.g., "Debit" or "Credit". Used for trial balance interpretation.
     /// Example: "Debit" for assets/expenses, "Credit" for liabilities/revenues.
     /// </summary>
-    public string NormalBalance { get; private set; } // "Debit" or "Credit"
+    public string NormalBalance { get; private set; } = "Debit"; // "Debit" or "Credit"
 
     /// <summary>
     /// Derived hierarchical depth computed from ParentCode.
@@ -120,7 +121,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     }
     
     private ChartOfAccount(string accountCode, string accountName, string accountType, 
-        string usoaCategory, DefaultIdType? subAccountOf = null, string? parentCode = null,
+        string usoaCategory, DefaultIdType? parentAccountId = null, string? parentCode = null,
         decimal balance = 0, bool isControlAccount = false, string normalBalance = "Debit",
         bool isUsoaCompliant = true, string? regulatoryClassification = null,
         string? description = null, string? notes = null)
@@ -153,7 +154,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         AccountName = an;
         Name = an; // Keep for compatibility
         AccountType = at;
-        SubAccountOf = subAccountOf;
+        ParentAccountId = parentAccountId;
         UsoaCategory = uc;
         IsActive = true;
         ParentCode = (parentCode ?? string.Empty).Trim();
@@ -188,13 +189,13 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     /// Factory method to create a new chart of account with validation for code, name, type, and category.
     /// </summary>
     public static ChartOfAccount Create(string accountId, string accountName, string accountType, 
-        string usoaCategory, DefaultIdType? subAccountOf = null, string? parentCode = null,
+        string usoaCategory, DefaultIdType? parentAccountId = null, string? parentCode = null,
         decimal balance = 0, bool isControlAccount = false, string normalBalance = "Debit",
         bool isUsoaCompliant = true, string? regulatoryClassification = null,
         string? description = null, string? notes = null)
     {
         return new ChartOfAccount(accountId, accountName, accountType, usoaCategory,
-            subAccountOf, parentCode, balance, isControlAccount, normalBalance, isUsoaCompliant,
+            parentAccountId, parentCode, balance, isControlAccount, normalBalance, isUsoaCompliant,
             regulatoryClassification, description, notes);
     }
 
@@ -202,7 +203,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
     /// Update account metadata while keeping invariants. Trims and length-limits inputs.
     /// </summary>
     public ChartOfAccount Update(string? accountName = null, string? accountType = null, 
-        string? usoaCategory = null, DefaultIdType? subAccountOf = null, string? parentCode = null,
+        string? usoaCategory = null, DefaultIdType? parentAccountId = null, string? parentCode = null,
         bool isControlAccount = false, string? normalBalance = null, bool isUsoaCompliant = false,
         string? regulatoryClassification = null, string? description = null, string? notes = null)
     {
@@ -240,9 +241,9 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (subAccountOf != SubAccountOf)
+        if (parentAccountId != ParentAccountId)
         {
-            SubAccountOf = subAccountOf;
+            ParentAccountId = parentAccountId;
             isUpdated = true;
         }
 

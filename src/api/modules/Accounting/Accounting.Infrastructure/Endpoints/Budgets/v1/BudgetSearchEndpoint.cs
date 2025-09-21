@@ -16,7 +16,7 @@ public static class BudgetSearchEndpoint
             .WithName(nameof(BudgetSearchEndpoint))
             .WithSummary("Gets a list of budgets")
             .WithDescription("Gets a list of budgets with pagination and filtering support")
-            .Produces<PagedList<BudgetListItemResponse>>()
+            .Produces<PagedList<BudgetResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

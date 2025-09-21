@@ -39,7 +39,7 @@ public sealed class CreateChartOfAccountHandler(
             accountName: accountName,
             accountType: accountType,
             usoaCategory: usoaCategory,
-            subAccountOf: command.SubAccountOf,
+            parentAccountId: command.ParentAccountId,
             parentCode: parentCode,
             balance: command.Balance,
             isControlAccount: command.IsControlAccount,

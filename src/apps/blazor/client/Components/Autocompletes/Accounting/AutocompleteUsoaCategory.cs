@@ -4,8 +4,6 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
 {
     private List<ChartOfAccountResponse> _list = new();
 
-    [Parameter] public string Parent { get; set; } = default!;
-
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
     [Inject] protected IClient ApiClient { get; set; } = default!;
     [Inject] protected ISnackbar Toast { get; set; } = default!;

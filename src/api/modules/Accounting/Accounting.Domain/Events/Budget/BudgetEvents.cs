@@ -1,6 +1,6 @@
 namespace Accounting.Domain.Events.Budget;
 
-public record BudgetCreated(DefaultIdType Id, string BudgetName, DefaultIdType PeriodId, int FiscalYear, string BudgetType, string? Description, string? Notes) : DomainEvent;
+public record BudgetCreated(DefaultIdType Id, string BudgetName, DefaultIdType PeriodId, string PeriodName, int FiscalYear, string BudgetType, string? Description, string? Notes) : DomainEvent;
 
 public record BudgetUpdated(Accounting.Domain.Budget Budget) : DomainEvent;
 

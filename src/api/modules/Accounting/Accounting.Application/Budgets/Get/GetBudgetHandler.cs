@@ -11,28 +11,16 @@ public sealed class GetBudgetHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var item = await cache.GetOrSetAsync(
+        var response = await cache.GetOrSetAsync(
             $"budget:{request.Id}",
             async () =>
             {
                 var budget = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (budget == null) throw new BudgetNotFoundException(request.Id);
-                return new BudgetResponse(
-                    budget.Id,
-                    budget.Name,
-                    budget.PeriodId,
-                    budget.FiscalYear,
-                    budget.BudgetType,
-                    budget.Status,
-                    budget.TotalBudgetedAmount,
-                    budget.TotalActualAmount,
-                    budget.ApprovedDate,
-                    budget.ApprovedBy,
-                    budget.Description,
-                    budget.Notes);
+                return budget.Adapt<BudgetResponse>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 
-        return item!;
+        return response!;
     }
 }

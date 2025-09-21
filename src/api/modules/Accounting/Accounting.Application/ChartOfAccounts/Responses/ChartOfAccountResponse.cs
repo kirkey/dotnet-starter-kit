@@ -19,7 +19,7 @@ public class ChartOfAccountResponse : BaseDto
     /// <summary>
     /// Parent account identifier for hierarchical account structure.
     /// </summary>
-    public DefaultIdType? SubAccountOf { get; set; } = null!;
+    public DefaultIdType? ParentAccountId { get; set; } = null!;
     
     /// <summary>
     /// Uniform System of Accounts category classification.

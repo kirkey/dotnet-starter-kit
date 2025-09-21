@@ -5,6 +5,7 @@ namespace Accounting.Application.Budgets.Create;
 /// </summary>
 /// <param name="Name">Human-friendly budget name. Required, max 256.</param>
 /// <param name="PeriodId">Accounting period identifier. Required.</param>
+/// <param name="PeriodName">Accounting period human-readable name. Required, max 128.</param>
 /// <param name="FiscalYear">Fiscal year (1900-2100). Required.</param>
 /// <param name="BudgetType">Budget type (e.g., Operating, Capital, Cash Flow). Required, max 32.</param>
 /// <param name="Description">Optional description, max 1000.</param>
@@ -12,6 +13,7 @@ namespace Accounting.Application.Budgets.Create;
 public sealed record CreateBudgetCommand(
     string Name,
     DefaultIdType PeriodId,
+    string PeriodName,
     int FiscalYear,
     string BudgetType,
     string? Description = null,

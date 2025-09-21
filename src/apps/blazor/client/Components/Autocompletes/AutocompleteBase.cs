@@ -13,7 +13,7 @@ public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TK
     {
         CoerceText = CoerceValue = Clearable = Dense = ResetValueOnEmptyText = true;
         SearchFunc = SearchText!;
-        ToStringFunc = GetValueText;
+        ToStringFunc = GetTextValue;
         Variant = Variant.Filled;
         return base.SetParametersAsync(parameters);
     }
@@ -30,5 +30,5 @@ public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TK
 
     protected abstract Task<TDto?> GetItem(TKey id);
     protected abstract Task<IEnumerable<TKey>> SearchText(string? value, CancellationToken token);
-    protected abstract string GetValueText(TKey? id);
+    protected abstract string GetTextValue(TKey? id);
 }

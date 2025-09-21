@@ -70,7 +70,7 @@ internal sealed class AccountingDbInitializer(
             // Seed a default Budget referencing the created period
             if (!await context.Budgets.AnyAsync(cancellationToken).ConfigureAwait(false))
             {
-                var budget = Budget.Create("Default Operating Budget", period.Id, fiscalYear, "Operating", "Auto-created default budget");
+                var budget = Budget.Create("Default Operating Budget", period.Id, "Operating Budget", fiscalYear, "Operating", "Auto-created default budget");
                 // Add a few budget lines using the existing chart of accounts (if present)
                 var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1010", cancellationToken).ConfigureAwait(false);
                 var salariesAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);

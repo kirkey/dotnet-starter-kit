@@ -16,6 +16,7 @@ public partial class Budgets
             entityResource: FshResources.Accounting,
             fields:
             [
+                new EntityField<BudgetResponse>(dto => dto.PeriodName, "Period", "PeriodName"),
                 new EntityField<BudgetResponse>(dto => dto.Name, "Name", "Name"),
                 new EntityField<BudgetResponse>(dto => dto.FiscalYear, "Fiscal Year", "FiscalYear"),
                 new EntityField<BudgetResponse>(dto => dto.BudgetType, "Type", "BudgetType"),
@@ -55,6 +56,7 @@ public class BudgetViewModel
 
     // Fields from CreateBudgetRequest / BudgetDto
     public DefaultIdType PeriodId { get; set; }
+    public string? PeriodName { get; set; }
     public int FiscalYear { get; set; }
     public string? BudgetType { get; set; }
 

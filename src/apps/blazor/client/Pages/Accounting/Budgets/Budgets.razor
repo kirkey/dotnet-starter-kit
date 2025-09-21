@@ -1,4 +1,5 @@
 @page "/accounting-budgets"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
 
 <PageHeader Title="Accounting Periods" Header="Accounting Periods" SubHeader="Manage Accounting Periods." />
 
@@ -11,49 +12,60 @@
             </MudItem>
         }
 
-        <MudItem xs="12" sm="12" md="6" lg="4">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Name"
                           For="@(() => context.Name)"
                           Label="Name"
                           Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.PeriodId"
-                          For="@(() => context.PeriodId)"
-                          Label="Period Id"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12" sm="12" md="6" lg="4">
+            <AutocompleteAccountingPeriodId @bind-Value="context.PeriodId"
+                                            For="@(() => context.PeriodId)"
+                                            Label="Accounting Period"
+                                            Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="6" sm="4" md="3" lg="2">
             <MudNumericField @bind-Value="context.FiscalYear"
                              For="@(() => context.FiscalYear)"
                              Label="Fiscal Year"
                              Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.BudgetType"
-                          For="@(() => context.BudgetType)"
-                          Label="Budget Type"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12" sm="12" md="6" lg="4">
+            <MudSelect T="string"
+                       @bind-Value="context.BudgetType"
+                       For="@(() => context.BudgetType!)"
+                       Label="Budget Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Operating Budget")">Operating Budget</MudSelectItem>
+                <MudSelectItem Value="@("Capital Budget")">Capital Budget</MudSelectItem>
+                <MudSelectItem Value="@("Cash Flow Budget")">Cash Flow Budget</MudSelectItem>
+                <MudSelectItem Value="@("Master Budget")">Master Budget</MudSelectItem>
+                <MudSelectItem Value="@("Static Budget")">Static Budget</MudSelectItem>
+                <MudSelectItem Value="@("Flexible Budget")">Flexible Budget</MudSelectItem>
+                <MudSelectItem Value="@("Zero-based Budget")">Zero-based Budget</MudSelectItem>
+                <MudSelectItem Value="@("Rolling Budget")">Rolling Budget</MudSelectItem>
+                <MudSelectItem Value="@("Project Budget")">Project Budget</MudSelectItem>
+            </MudSelect>
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.Status"
                           For="@(() => context.Status)"
                           Label="Status"
-                          Variant="Variant.Filled" />
+                          ReadOnly="true"/>
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="6" lg="6">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Description"
                           For="@(() => context.Description)"
                           Label="Description"
                           Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="6" lg="6">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Notes"
                           For="@(() => context.Notes)"
                           Label="Notes"
@@ -64,11 +76,11 @@
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
-                <MudNumericField T="decimal" Value="context.TotalBudgetedAmount" ReadOnly Label="Total Budgeted" Variant="Variant.Outlined" />
+                <MudNumericField Format="N2" Label="Total Budgeted" ReadOnly T="decimal" Value="context.TotalBudgetedAmount" Variant="Variant.Outlined" />
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4" lg="3">
-                <MudNumericField T="decimal" Value="context.TotalActualAmount" ReadOnly Label="Total Actual" Variant="Variant.Outlined" />
+                <MudNumericField Format="N2" Label="Total Actual" ReadOnly T="decimal" Value="context.TotalActualAmount" Variant="Variant.Outlined" />
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4" lg="3">

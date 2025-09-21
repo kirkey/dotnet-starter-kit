@@ -11,20 +11,20 @@ public partial class BaseLayout : IDisposable
     private string? _idleWarning;
     private bool _showIdleWarning;
 
-    [Microsoft.AspNetCore.Components.Inject] private INetworkStatusService Network { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private IOfflineRequestQueue OfflineQueue { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private IOfflineRetryService OfflineRetry { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private HttpClient Http { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private IShortcutService Shortcuts { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private IIdleTimerService Idle { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private IAuthenticationService Auth { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private IJSRuntime JS { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private ICommandPaletteService Palette { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private ILocalizationService L10n { get; set; } = default!;
-    [Microsoft.AspNetCore.Components.Inject] private IBroadcastSyncService Broadcaster { get; set; } = default!;
+    [Inject] private INetworkStatusService Network { get; set; } = default!;
+    [Inject] private IOfflineRequestQueue OfflineQueue { get; set; } = default!;
+    [Inject] private IOfflineRetryService OfflineRetry { get; set; } = default!;
+    [Inject] private HttpClient Http { get; set; } = default!;
+    [Inject] private IShortcutService Shortcuts { get; set; } = default!;
+    [Inject] private IIdleTimerService Idle { get; set; } = default!;
+    [Inject] private IAuthenticationService Auth { get; set; } = default!;
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+    [Inject] private ICommandPaletteService Palette { get; set; } = default!;
+    [Inject] private ILocalizationService L10n { get; set; } = default!;
+    [Inject] private IBroadcastSyncService Broadcaster { get; set; } = default!;
 
-    private Components.Common.ShortcutHelp? _shortcutHelp;
-    private Components.Common.CommandPalette? _commandPalette;
+    private ShortcutHelp? _shortcutHelp;
+    private CommandPalette? _commandPalette;
 
     private bool _online;
     private int _pending;

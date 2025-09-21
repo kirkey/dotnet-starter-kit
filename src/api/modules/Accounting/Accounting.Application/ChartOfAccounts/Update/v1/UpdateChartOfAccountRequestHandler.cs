@@ -30,7 +30,7 @@ public sealed class UpdateChartOfAccountRequestHandler(
             accountName: request.AccountName,
             accountType: request.AccountType,
             usoaCategory: request.UsoaCategory,
-            subAccountOf: request.SubAccountOf,
+            parentAccountId: request.ParentAccountId,
             parentCode: request.ParentCode,
             isControlAccount: request.IsControlAccount,
             normalBalance: request.NormalBalance,

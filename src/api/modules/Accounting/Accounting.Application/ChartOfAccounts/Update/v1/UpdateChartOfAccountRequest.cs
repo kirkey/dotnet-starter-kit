@@ -6,7 +6,13 @@ public class UpdateChartOfAccountCommand : BaseRequest, IRequest<DefaultIdType>
     public string? AccountName { get; set; }
     public string? AccountType { get; set; }
     public string? UsoaCategory { get; set; }
-    public DefaultIdType? SubAccountOf { get; set; }
+
+    /// <summary>
+    /// Optional parent account id linking this account into a hierarchy.
+    /// Maps to domain property <c>ParentAccountId</c> (stored in DB column SubAccountOf).
+    /// </summary>
+    public DefaultIdType? ParentAccountId { get; set; }
+
     public string? ParentCode { get; set; }
     public bool IsControlAccount { get; set; }
     public decimal Balance { get; set; }

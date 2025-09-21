@@ -10,52 +10,59 @@
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
             </MudItem>
         }
-        <MudItem xs="12" sm="12" md="6" lg="4">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Name"
                           For="@(() => context.Name)"
                           Label="Name"
                           Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="3" lg="2">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.StartDate"
                            For="@(() => context.StartDate)"
+                           DateFormat="MMMM dd, yyyy"
                            Label="Start Date"
                            Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="3" lg="2">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.EndDate"
                            For="@(() => context.EndDate)"
+                           DateFormat="MMMM dd, yyyy"
                            Label="End Date"
                            Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch @bind-Value="context.IsAdjustmentPeriod"
+                       Class="mt-3"
                        For="@(() => context.IsAdjustmentPeriod)"
                        Label="Adjustment Period" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField @bind-Value="context.FiscalYear"
                              For="@(() => context.FiscalYear)"
                              Label="Fiscal Year"
                              Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
-            <MudTextField @bind-Value="context.PeriodType"
-                          For="@(() => context.PeriodType)"
-                          Label="Period Type"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect T="string"
+                       @bind-Value="context.PeriodType"
+                       For="@(() => context.PeriodType!)"
+                       Label="Period Type"
+                       Variant="Variant.Filled">
+                  <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                  <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                  <MudSelectItem Value="@("Yearly")">Yearly</MudSelectItem>
+                  <MudSelectItem Value="@("Annual")">Annual</MudSelectItem>
+            </MudSelect>
         </MudItem>
-        <MudItem xs="12" sm="12" md="6" lg="4">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Description"
                           For="@(() => context.Description)"
-                          Label="Description"
-                          Variant="Variant.Filled" />
+                          Label="Description"/>
         </MudItem>
-        <MudItem xs="12" sm="12" md="6" lg="4">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Notes"
                           For="@(() => context.Notes)"
-                          Label="Notes"
-                          Variant="Variant.Filled" />
+                          Label="Notes"/>
         </MudItem>
     </EditFormContent>
 </EntityTable>

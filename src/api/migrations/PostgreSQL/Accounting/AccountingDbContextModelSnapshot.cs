@@ -240,6 +240,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<Guid>("PeriodId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("PeriodName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(16)
@@ -348,6 +352,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(2048)
                         .HasColumnType("VARCHAR(2048)");
 
+                    b.Property<Guid?>("ParentAccountId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ParentCode")
                         .IsRequired()
                         .HasMaxLength(16)
@@ -356,9 +363,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("RegulatoryClassification")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
-
-                    b.Property<Guid?>("SubAccountOf")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("UsoaCategory")
                         .IsRequired()

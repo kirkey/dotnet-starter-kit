@@ -7,6 +7,7 @@ public sealed record BudgetResponse(
     DefaultIdType Id,
     string? Name,
     DefaultIdType PeriodId,
+    string? PeriodName,
     int FiscalYear,
     string BudgetType,
     string Status,
@@ -17,4 +18,3 @@ public sealed record BudgetResponse(
     string? Description,
     string? Notes
 );
-

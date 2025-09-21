@@ -4,6 +4,7 @@ using Exceptions;
 using Queries;
 
 public sealed class UpdateBudgetHandler(
+    [FromKeyedServices("accounting:periods")] IReadRepository<AccountingPeriod> accountingPeriodRepository,
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)
     : IRequestHandler<UpdateBudgetCommand, UpdateBudgetResponse>
 {
@@ -24,8 +25,11 @@ public sealed class UpdateBudgetHandler(
             if (existing != null && existing.Id != request.Id)
                 throw new BudgetAlreadyExistsException(name, budget.PeriodId);
         }
+        
+        var period = await accountingPeriodRepository.GetByIdAsync(request.PeriodId, cancellationToken);
+        if (period == null) throw new AccountingPeriodNotFoundException(request.PeriodId);
 
-        budget.Update(request.FiscalYear, name, request.BudgetType?.Trim(), request.Status?.Trim(), request.Description, request.Notes);
+        budget.Update(request.PeriodId, period.Name, request.FiscalYear, name, request.BudgetType?.Trim(), request.Status?.Trim(), request.Description, request.Notes);
 
         await repository.UpdateAsync(budget, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

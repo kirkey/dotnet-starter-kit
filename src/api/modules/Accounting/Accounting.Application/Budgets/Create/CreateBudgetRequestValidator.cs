@@ -11,6 +11,10 @@ public sealed class CreateBudgetCommandValidator : AbstractValidator<CreateBudge
         RuleFor(x => x.PeriodId)
             .NotEmpty();
 
+        RuleFor(x => x.PeriodName)
+            .NotEmpty()
+            .MaximumLength(128);
+
         RuleFor(x => x.FiscalYear)
             .InclusiveBetween(1900, 2100);
 

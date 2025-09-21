@@ -20,7 +20,7 @@ public partial class AccountingPeriods
                 new EntityField<AccountingPeriodResponse>(dto => dto.StartDate, "Start Date", "StartDate", typeof(DateTime)),
                 new EntityField<AccountingPeriodResponse>(dto => dto.EndDate, "End Date", "EndDate", typeof(DateTime)),
                 new EntityField<AccountingPeriodResponse>(dto => dto.IsAdjustmentPeriod, "Adjustment Period", "IsAdjustmentPeriod", typeof(bool)),
-                new EntityField<AccountingPeriodResponse>(dto => dto.FiscalYear, "Fiscal Year", "FiscalYear", typeof(int)),
+                new EntityField<AccountingPeriodResponse>(dto => dto.FiscalYear, "Fiscal Year", "FiscalYear"),
                 new EntityField<AccountingPeriodResponse>(dto => dto.PeriodType, "Period Type", "PeriodType"),
                 new EntityField<AccountingPeriodResponse>(dto => dto.Description, "Description", "Description"),
                 new EntityField<AccountingPeriodResponse>(dto => dto.Notes, "Notes", "Notes"),

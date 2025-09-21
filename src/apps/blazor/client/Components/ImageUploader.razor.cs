@@ -76,7 +76,7 @@ public partial class ImageUploader : ComponentBase
     /// <summary>
     /// Unique id for the native InputFile element to avoid collisions when multiple components are on the page.
     /// </summary>
-    private readonly string _nativeInputId = "iuNative_" + System.Guid.NewGuid().ToString("N");
+    private readonly string _nativeInputId = "iuNative_" + Guid.NewGuid().ToString("N");
 
     #endregion
 

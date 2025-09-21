@@ -2,7 +2,7 @@ using Accounting.Application.Budgets.Responses;
 
 namespace Accounting.Application.Budgets.Search;
 
-public sealed class SearchBudgetsSpec : EntitiesByPaginationFilterSpec<Budget, BudgetListItemResponse>
+public sealed class SearchBudgetsSpec : EntitiesByPaginationFilterSpec<Budget, BudgetResponse>
 {
     public SearchBudgetsSpec(SearchBudgetsQuery request) : base(request)
     {

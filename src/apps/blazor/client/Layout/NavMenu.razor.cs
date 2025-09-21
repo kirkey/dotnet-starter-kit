@@ -1,7 +1,7 @@
 ﻿namespace FSH.Starter.Blazor.Client.Layout;
 
-using FSH.Starter.Blazor.Client.Models.NavigationMenu;
-using FSH.Starter.Blazor.Client.Services.Navigation;
+using Models.NavigationMenu;
+using Services.Navigation;
 
 public partial class NavMenu
 {

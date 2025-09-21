@@ -23,7 +23,7 @@ public class FileUploadRequest
     /// <summary>
     /// Gets or sets the file size in bytes.
     /// </summary>
-    public long Size { get; set; }
+    public long Size { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets additional metadata for the file.
