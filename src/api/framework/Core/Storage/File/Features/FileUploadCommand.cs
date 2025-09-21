@@ -26,7 +26,7 @@ public class FileUploadCommand : IRequest<FileUploadResponse>
     /// <summary>
     /// Gets or sets the file size in bytes.
     /// </summary>
-    public long Size { get; set; } = default!;
+    public long? Size { get; set; }
 
     /// <summary>
     /// Gets or sets additional metadata for the file.

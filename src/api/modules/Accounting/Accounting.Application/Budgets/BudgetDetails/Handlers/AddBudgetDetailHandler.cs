@@ -1,12 +1,12 @@
-using Accounting.Application.Budgets.BudgetLines.Commands;
+using Accounting.Application.Budgets.BudgetDetails.Commands;
 
-namespace Accounting.Application.Budgets.BudgetLines.Handlers;
+namespace Accounting.Application.Budgets.BudgetDetails.Handlers;
 
-public class AddBudgetLineHandler(
+public class AddBudgetDetailHandler(
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)
-    : IRequestHandler<AddBudgetLineCommand, DefaultIdType>
+    : IRequestHandler<AddBudgetDetailCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(AddBudgetLineCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(AddBudgetDetailCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -14,7 +14,7 @@ public class AddBudgetLineHandler(
         if (budget == null)
             throw new BudgetNotFoundException(request.BudgetId);
 
-        budget.AddBudgetLine(request.AccountId, request.BudgetedAmount, request.Description);
+        budget.AddBudgetDetail(request.AccountId, request.BudgetedAmount, request.Description);
 
         await repository.UpdateAsync(budget, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
@@ -22,4 +22,3 @@ public class AddBudgetLineHandler(
         return budget.Id;
     }
 }
-

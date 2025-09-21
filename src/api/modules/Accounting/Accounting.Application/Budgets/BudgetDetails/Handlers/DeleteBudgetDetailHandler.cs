@@ -1,12 +1,12 @@
-using Accounting.Application.Budgets.BudgetLines.Commands;
+using Accounting.Application.Budgets.BudgetDetails.Commands;
 
-namespace Accounting.Application.Budgets.BudgetLines.Handlers;
+namespace Accounting.Application.Budgets.BudgetDetails.Handlers;
 
-public class DeleteBudgetLineHandler(
+public class DeleteBudgetDetailHandler(
     IRepository<Budget> repository)
-    : IRequestHandler<DeleteBudgetLineCommand>
+    : IRequestHandler<DeleteBudgetDetailCommand>
 {
-    public async Task Handle(DeleteBudgetLineCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteBudgetDetailCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -14,7 +14,7 @@ public class DeleteBudgetLineHandler(
         if (budget == null)
             throw new BudgetNotFoundException(request.BudgetId);
 
-        budget.RemoveBudgetLine(request.AccountId);
+        budget.RemoveBudgetDetail(request.AccountId);
 
         await repository.UpdateAsync(budget, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

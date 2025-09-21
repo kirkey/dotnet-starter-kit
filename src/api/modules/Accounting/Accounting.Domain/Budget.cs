@@ -96,13 +96,13 @@ public class Budget : AuditableEntity, IAggregateRoot
     /// </summary>
     public string? ApprovedBy { get; private set; }
 
-    private readonly List<BudgetLine> _budgetLines = new();
+    private readonly List<BudgetDetail> _budgetDetails = new();
     /// <summary>
-    /// Collection of budget lines, each representing a budgeted amount for a specific chart of account.
-    /// Example: Budget line for account "501-Salaries" with $800,000 budgeted amount.
-    /// Default: Empty collection. Budget lines are added via AddBudgetLine() method.
+    /// Collection of budget details, each representing a budgeted amount for a specific chart of account.
+    /// Example: Budget detail for account "501-Salaries" with $800,000 budgeted amount.
+    /// Default: Empty collection. Budget details are added via AddBudgetDetail() method.
     /// </summary>
-    public IReadOnlyCollection<BudgetLine> BudgetLines => _budgetLines.AsReadOnly();
+    public IReadOnlyCollection<BudgetDetail> BudgetDetails => _budgetDetails.AsReadOnly();
 
     // Parameterless constructor for EF Core
     private Budget()
@@ -264,9 +264,9 @@ public class Budget : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Add a new budget line for a given account and amount.
+    /// Add a new budget detail for a given account and amount.
     /// </summary>
-    public Budget AddBudgetLine(DefaultIdType accountId, decimal budgetedAmount, string? description = null)
+    public Budget AddBudgetDetail(DefaultIdType accountId, decimal budgetedAmount, string? description = null)
     {
         if (Status is "Approved" or "Active")
             throw new BudgetCannotBeModifiedException(Id);
@@ -274,51 +274,33 @@ public class Budget : AuditableEntity, IAggregateRoot
         if (budgetedAmount < 0)
             throw new InvalidBudgetAmountException();
 
-        var existingLine = _budgetLines.FirstOrDefault(bl => bl.AccountId == accountId);
-        if (existingLine != null)
-            throw new BudgetLineAlreadyExistsException(Id, accountId);
+        var existingDetail = _budgetDetails.FirstOrDefault(d => d.AccountId == accountId);
+        if (existingDetail != null)
+            throw new BudgetDetailAlreadyExistsException(Id, accountId);
 
-        var budgetLine = BudgetLine.Create(Id, accountId, budgetedAmount, description);
-        _budgetLines.Add(budgetLine);
+        var detail = BudgetDetail.Create(Id, accountId, budgetedAmount, description);
+        _budgetDetails.Add(detail);
 
         RecalculateTotalBudgetedAmount();
-        QueueDomainEvent(new BudgetLineAdded(Id, accountId, budgetedAmount));
+        QueueDomainEvent(new BudgetDetailAdded(Id, accountId, budgetedAmount));
         return this;
     }
 
     /// <summary>
-    /// Update an existing budget line for a given account.
+    /// Remove a budget detail for a given account.
     /// </summary>
-    public Budget UpdateBudgetLine(DefaultIdType accountId, decimal? budgetedAmount, string? description)
+    public Budget RemoveBudgetDetail(DefaultIdType accountId)
     {
         if (Status is "Approved" or "Active")
             throw new BudgetCannotBeModifiedException(Id);
 
-        var budgetLine = _budgetLines.FirstOrDefault(bl => bl.AccountId == accountId);
+        var budgetLine = _budgetDetails.FirstOrDefault(bl => bl.AccountId == accountId);
         if (budgetLine == null)
-            throw new BudgetLineNotFoundException(Id, accountId);
+            throw new BudgetDetailNotFoundException(Id, accountId);
 
-        budgetLine.Update(budgetedAmount, description);
+        _budgetDetails.Remove(budgetLine);
         RecalculateTotalBudgetedAmount();
-        QueueDomainEvent(new BudgetLineUpdated(Id, accountId, budgetLine.BudgetedAmount));
-        return this;
-    }
-
-    /// <summary>
-    /// Remove a budget line for a given account.
-    /// </summary>
-    public Budget RemoveBudgetLine(DefaultIdType accountId)
-    {
-        if (Status is "Approved" or "Active")
-            throw new BudgetCannotBeModifiedException(Id);
-
-        var budgetLine = _budgetLines.FirstOrDefault(bl => bl.AccountId == accountId);
-        if (budgetLine == null)
-            throw new BudgetLineNotFoundException(Id, accountId);
-
-        _budgetLines.Remove(budgetLine);
-        RecalculateTotalBudgetedAmount();
-        QueueDomainEvent(new BudgetLineRemoved(Id, accountId));
+        QueueDomainEvent(new BudgetDetailRemoved(Id, accountId));
         return this;
     }
 
@@ -330,7 +312,7 @@ public class Budget : AuditableEntity, IAggregateRoot
         if (Status == "Approved")
             throw new BudgetAlreadyApprovedException(Id);
 
-        if (_budgetLines.Count == 0)
+        if (_budgetDetails.Count == 0)
             throw new EmptyBudgetCannotBeApprovedException(Id);
 
         Status = "Approved";
@@ -372,7 +354,7 @@ public class Budget : AuditableEntity, IAggregateRoot
     /// </summary>
     public Budget UpdateActuals(DefaultIdType accountId, decimal actualAmount)
     {
-        var budgetLine = _budgetLines.FirstOrDefault(bl => bl.AccountId == accountId);
+        var budgetLine = _budgetDetails.FirstOrDefault(bl => bl.AccountId == accountId);
         if (budgetLine == null)
             throw new InvalidOperationException("Budget line not found");
 
@@ -381,14 +363,33 @@ public class Budget : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Update an existing budget detail for a given account.
+    /// </summary>
+    public Budget UpdateBudgetDetail(DefaultIdType accountId, decimal? budgetedAmount, string? description)
+    {
+        if (Status is "Approved" or "Active")
+            throw new BudgetCannotBeModifiedException(Id);
+
+        var detail = _budgetDetails.FirstOrDefault(d => d.AccountId == accountId);
+        if (detail == null)
+            throw new BudgetDetailNotFoundException(Id, accountId);
+
+        detail.Update(budgetedAmount, description);
+
+        RecalculateTotalBudgetedAmount();
+        QueueDomainEvent(new BudgetDetailUpdated(Id, accountId, detail.BudgetedAmount));
+        return this;
+    }
+
     private void RecalculateTotalBudgetedAmount()
     {
-        TotalBudgetedAmount = _budgetLines.Sum(bl => bl.BudgetedAmount);
+        TotalBudgetedAmount = _budgetDetails.Sum(bl => bl.BudgetedAmount);
     }
 
     private void RecalculateTotalActualAmount()
     {
-        TotalActualAmount = _budgetLines.Sum(bl => bl.ActualAmount);
+        TotalActualAmount = _budgetDetails.Sum(bl => bl.ActualAmount);
     }
 
     /// <summary>
@@ -411,7 +412,7 @@ public class Budget : AuditableEntity, IAggregateRoot
 /// <summary>
 /// A single line item within a budget representing an amount allocated to an account.
 /// </summary>
-public class BudgetLine : BaseEntity
+public class BudgetDetail : AuditableEntity, IAggregateRoot
 {
     private const int MaxBudgetLineDescriptionLength = 500;
 
@@ -441,7 +442,7 @@ public class BudgetLine : BaseEntity
     /// </summary>
     public string? Description { get; private set; }
 
-    private BudgetLine(DefaultIdType budgetId, DefaultIdType accountId, 
+    private BudgetDetail(DefaultIdType budgetId, DefaultIdType accountId, 
         decimal budgetedAmount, string? description = null)
     {
         if (budgetedAmount < 0)
@@ -461,19 +462,19 @@ public class BudgetLine : BaseEntity
     /// <summary>
     /// Create a new budget line for the specified account.
     /// </summary>
-    public static BudgetLine Create(DefaultIdType budgetId, DefaultIdType accountId,
+    public static BudgetDetail Create(DefaultIdType budgetId, DefaultIdType accountId,
         decimal budgetedAmount, string? description = null)
     {
         if (budgetedAmount < 0)
             throw new InvalidBudgetAmountException();
 
-        return new BudgetLine(budgetId, accountId, budgetedAmount, description);
+        return new BudgetDetail(budgetId, accountId, budgetedAmount, description);
     }
 
     /// <summary>
     /// Update budgeted amount and/or description.
     /// </summary>
-    public BudgetLine Update(decimal? budgetedAmount, string? description)
+    public BudgetDetail Update(decimal? budgetedAmount, string? description)
     {
         if (budgetedAmount.HasValue && BudgetedAmount != budgetedAmount.Value)
         {
@@ -496,7 +497,7 @@ public class BudgetLine : BaseEntity
     /// <summary>
     /// Update the actual amount posted for this account.
     /// </summary>
-    public BudgetLine UpdateActual(decimal actualAmount)
+    public BudgetDetail UpdateActual(decimal actualAmount)
     {
         ActualAmount = actualAmount;
         return this;

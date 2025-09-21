@@ -30,7 +30,7 @@ public sealed class GenerateBudgetVarianceAnalysisQueryHandler(
         // Calculate variance for each budget line
         var varianceLines = new List<BudgetVarianceLineDto>();
 
-        foreach (var budgetLine in budget.BudgetLines ?? [])
+        foreach (var budgetLine in budget.BudgetDetails ?? [])
         {
             var account = accounts.FirstOrDefault(a => a.Id == budgetLine.AccountId);
             if (account == null) continue;

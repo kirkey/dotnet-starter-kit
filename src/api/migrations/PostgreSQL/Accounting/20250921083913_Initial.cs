@@ -82,6 +82,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     PeriodId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PeriodName = table.Column<string>(type: "text", nullable: false),
                     FiscalYear = table.Column<int>(type: "integer", nullable: false),
                     BudgetType = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     Status = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
@@ -117,7 +118,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     AccountCode = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
                     AccountName = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
                     AccountType = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
-                    SubAccountOf = table.Column<Guid>(type: "uuid", nullable: true),
+                    ParentAccountId = table.Column<Guid>(type: "uuid", nullable: true),
                     UsoaCategory = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     ParentCode = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
@@ -834,7 +835,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateTable(
-                name: "BudgetLines",
+                name: "BudgetDetails",
                 schema: "accounting",
                 columns: table => new
                 {
@@ -843,13 +844,25 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     AccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     BudgetedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     ActualAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
+                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BudgetLines", x => x.Id);
+                    table.PrimaryKey("PK_BudgetDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BudgetLines_Budgets_BudgetId",
+                        name: "FK_BudgetDetails_Budgets_BudgetId",
                         column: x => x.BudgetId,
                         principalSchema: "accounting",
                         principalTable: "Budgets",
@@ -1094,9 +1107,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BudgetLines_BudgetId",
+                name: "IX_BudgetDetails_BudgetId",
                 schema: "accounting",
-                table: "BudgetLines",
+                table: "BudgetDetails",
                 column: "BudgetId");
 
             migrationBuilder.CreateIndex(
@@ -1253,7 +1266,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting");
 
             migrationBuilder.DropTable(
-                name: "BudgetLines",
+                name: "BudgetDetails",
                 schema: "accounting");
 
             migrationBuilder.DropTable(

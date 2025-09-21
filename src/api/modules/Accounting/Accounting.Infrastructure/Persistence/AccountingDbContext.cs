@@ -16,6 +16,7 @@ public sealed class AccountingDbContext(
 {
     public DbSet<AccountingPeriod> AccountingPeriods { get; set; } = null!;
     public DbSet<Budget> Budgets { get; set; } = null!;
+    public DbSet<BudgetDetail> BudgetDetails { get; set; } = null!; // Re-added: BudgetDetail is now a regular entity (HasMany relationship)
     public DbSet<ChartOfAccount> ChartOfAccounts { get; set; } = null!;
     public DbSet<Consumption> Consumption { get; set; } = null!;
     public DbSet<Customer> Customers { get; set; } = null!;
@@ -56,6 +57,5 @@ public sealed class AccountingDbContext(
 
         configurationBuilder.Properties<decimal>().HavePrecision(16, 2);
         configurationBuilder.Properties<double>().HavePrecision(8, 2);
-        // configurationBuilder.Properties<string>().HaveMaxLength(8192);
     }
 }

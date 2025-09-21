@@ -1,0 +1,33 @@
+@page "/accounting-budgetdetails/{BudgetId:guid}"
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets
+
+<PageHeader Title="Budget Lines" Header="Budget Lines" SubHeader="Manage Budget Lines for the selected Budget." />
+
+<EntityTable @ref="_table" TEntity="BudgetLineResponse" TId="DefaultIdType" TRequest="BudgetDetailViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField @bind-Value="context.BudgetedAmount"
+                             For="@(() => context.BudgetedAmount)"
+                             Label="Budgeted Amount"
+                             Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField @bind-Value="context.ActualAmount"
+                             For="@(() => context.ActualAmount)"
+                             Label="Actual Amount"
+                             Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

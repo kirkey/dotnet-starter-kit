@@ -4,6 +4,11 @@
 <PageHeader Title="Accounting Periods" Header="Accounting Periods" SubHeader="Manage Accounting Periods." />
 
 <EntityTable @ref="_table" TEntity="BudgetResponse" TId="DefaultIdType" TRequest="BudgetViewModel" Context="@Context">
+    <ExtraActions Context="context">
+        <MudMenuItem Icon="@Icons.Material.Filled.List" Href="@($"/accounting-budgetlines/{Context.IdFunc!(context)}")">
+            Details
+        </MudMenuItem>
+    </ExtraActions>
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

@@ -75,9 +75,9 @@ internal sealed class AccountingDbInitializer(
                 var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1010", cancellationToken).ConfigureAwait(false);
                 var salariesAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
                 if (cashAccount != null)
-                    budget = budget.AddBudgetLine(cashAccount.Id, 100000m, "Cash reserve");
+                    budget = budget.AddBudgetDetail(cashAccount.Id, 100000m, "Cash reserve");
                 if (salariesAccount != null)
-                    budget = budget.AddBudgetLine(salariesAccount.Id, 50000m, "Salaries budget");
+                    budget = budget.AddBudgetDetail(salariesAccount.Id, 50000m, "Salaries budget");
 
                 await context.Budgets.AddAsync(budget, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

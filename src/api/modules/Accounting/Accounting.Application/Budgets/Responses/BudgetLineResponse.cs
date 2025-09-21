@@ -1,10 +1,10 @@
 namespace Accounting.Application.Budgets.Responses;
 
 /// <summary>
-/// Response model representing a budget line item.
+/// Response model representing a budget detail (formerly budget line) item.
 /// Contains detailed line information for each account within a budget.
 /// </summary>
-public class BudgetLineResponse(
+public class BudgetDetailResponse(
     DefaultIdType id,
     DefaultIdType budgetId,
     DefaultIdType accountId,
@@ -13,7 +13,7 @@ public class BudgetLineResponse(
     string? description)
 {
     /// <summary>
-    /// Unique identifier for the budget line.
+    /// Unique identifier for the budget detail.
     /// </summary>
     public DefaultIdType Id { get; set; } = id;
     
@@ -23,7 +23,7 @@ public class BudgetLineResponse(
     public DefaultIdType BudgetId { get; set; } = budgetId;
     
     /// <summary>
-    /// Account identifier for this budget line.
+    /// Account identifier for this budget detail.
     /// </summary>
     public DefaultIdType AccountId { get; set; } = accountId;
     
@@ -38,7 +38,7 @@ public class BudgetLineResponse(
     public decimal ActualAmount { get; set; } = actualAmount;
     
     /// <summary>
-    /// Optional description or notes for this budget line.
+    /// Optional description or notes for this budget detail.
     /// </summary>
     public string? Description { get; set; } = description;
 }

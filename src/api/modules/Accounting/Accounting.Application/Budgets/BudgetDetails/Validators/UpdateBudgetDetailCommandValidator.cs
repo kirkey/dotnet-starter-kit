@@ -1,10 +1,10 @@
-using Accounting.Application.Budgets.BudgetLines.Commands;
+using Accounting.Application.Budgets.BudgetDetails.Commands;
 
-namespace Accounting.Application.Budgets.BudgetLines.Validators;
+namespace Accounting.Application.Budgets.BudgetDetails.Validators;
 
-public class AddBudgetLineCommandValidator : AbstractValidator<AddBudgetLineCommand>
+public class UpdateBudgetDetailCommandValidator : AbstractValidator<UpdateBudgetDetailCommand>
 {
-    public AddBudgetLineCommandValidator()
+    public UpdateBudgetDetailCommandValidator()
     {
         RuleFor(x => x.BudgetId).NotEmpty();
         RuleFor(x => x.AccountId).NotEmpty();

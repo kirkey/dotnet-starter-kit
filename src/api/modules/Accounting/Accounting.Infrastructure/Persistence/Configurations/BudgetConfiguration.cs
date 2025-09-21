@@ -48,27 +48,12 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
         builder.Property(x => x.ApprovedBy)
             .HasMaxLength(256);
 
-        // Configure owned entity for BudgetLines
-        builder.OwnsMany(x => x.BudgetLines, bl =>
-        {
-            bl.ToTable("BudgetLines", schema: SchemaNames.Accounting);
-            bl.WithOwner().HasForeignKey("BudgetId");
-            bl.HasKey("Id");
-            
-            bl.Property(x => x.AccountId)
-                .IsRequired();
-                
-            bl.Property(x => x.BudgetedAmount)
-                .HasPrecision(18, 2)
-                .IsRequired();
-                
-            bl.Property(x => x.ActualAmount)
-                .HasPrecision(18, 2)
-                .IsRequired();
-                
-            // Keep BudgetLine description max 500 (application validators can be tightened if needed)
-            bl.Property(x => x.Description)
-                .HasMaxLength(500);
-        });
+        // Configure BudgetDetails as a normal one-to-many relationship (entity) instead of owned
+        builder.HasMany(x => x.BudgetDetails)
+            .WithOne()
+            .HasForeignKey(x => x.BudgetId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Note: Property-level configuration for BudgetDetail is handled in BudgetDetailConfiguration
     }
 }

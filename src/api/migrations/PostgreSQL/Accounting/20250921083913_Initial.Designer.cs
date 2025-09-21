@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20250921055629_AccountingPeriodName")]
-    partial class AccountingPeriodName
+    [Migration("20250921083913_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -266,6 +266,74 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .IsUnique();
 
                     b.ToTable("Budgets", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.BudgetDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("ActualAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("BudgetId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("BudgetedAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BudgetId");
+
+                    b.ToTable("BudgetDetails", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.ChartOfAccount", b =>
@@ -2428,43 +2496,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Vendors", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Budget", b =>
+            modelBuilder.Entity("Accounting.Domain.BudgetDetail", b =>
                 {
-                    b.OwnsMany("Accounting.Domain.BudgetLine", "BudgetLines", b1 =>
-                        {
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("AccountId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<decimal>("ActualAmount")
-                                .HasPrecision(18, 2)
-                                .HasColumnType("numeric(18,2)");
-
-                            b1.Property<Guid>("BudgetId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<decimal>("BudgetedAmount")
-                                .HasPrecision(18, 2)
-                                .HasColumnType("numeric(18,2)");
-
-                            b1.Property<string>("Description")
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("BudgetId");
-
-                            b1.ToTable("BudgetLines", "accounting");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BudgetId");
-                        });
-
-                    b.Navigation("BudgetLines");
+                    b.HasOne("Accounting.Domain.Budget", null)
+                        .WithMany("BudgetDetails")
+                        .HasForeignKey("BudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Accounting.Domain.DepreciationEntry", b =>
@@ -2596,6 +2634,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasForeignKey("RateScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Budget", b =>
+                {
+                    b.Navigation("BudgetDetails");
                 });
 
             modelBuilder.Entity("Accounting.Domain.FixedAsset", b =>
