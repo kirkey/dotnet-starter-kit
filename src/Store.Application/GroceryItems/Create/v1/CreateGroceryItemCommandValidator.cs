@@ -11,9 +11,9 @@ public class CreateGroceryItemCommandValidator : AbstractValidator<CreateGrocery
         RuleFor(x => x.Description)
             .MaximumLength(1000);
 
-        RuleFor(x => x.SKU)
+        RuleFor(x => x.Sku)
             .NotEmpty()
-            .MaximumLength(50)
+            .MaximumLength(100)
             .Matches(@"^[A-Z0-9]+$")
             .WithMessage("SKU must contain only uppercase letters and numbers");
 
@@ -49,19 +49,19 @@ public class CreateGroceryItemCommandValidator : AbstractValidator<CreateGrocery
         RuleFor(x => x.CurrentStock)
             .GreaterThanOrEqualTo(0)
             .LessThanOrEqualTo(x => x.MaximumStock)
-            .When(x => x.MaximumStock > 0)
             .WithMessage("CurrentStock must be between 0 and MaximumStock");
 
         RuleFor(x => x.ReorderPoint)
             .GreaterThanOrEqualTo(0)
-            .LessThanOrEqualTo(x => Math.Max(x.MaximumStock, x.CurrentStock))
-            .WithMessage("ReorderPoint must be between 0 and the greater of MaximumStock or CurrentStock");
+            .LessThanOrEqualTo(x => x.MaximumStock)
+            .WithMessage("ReorderPoint must be between 0 and MaximumStock");
 
         RuleFor(x => x.Weight)
             .GreaterThanOrEqualTo(0)
             .LessThan(100000);
 
         RuleFor(x => x.WeightUnit)
+            .NotEmpty()
             .MaximumLength(20)
             .When(x => x.Weight > 0)
             .WithMessage("WeightUnit is required when Weight > 0");
@@ -72,19 +72,23 @@ public class CreateGroceryItemCommandValidator : AbstractValidator<CreateGrocery
         RuleFor(x => x.SupplierId)
             .NotEmpty();
 
-        RuleFor(x => x.ExpiryDate)
-            .GreaterThan(DateTime.UtcNow)
-            .When(x => x.IsPerishable && x.ExpiryDate.HasValue)
-            .WithMessage("Expiry date must be in the future for perishable items");
+        // For perishable items, expiry date is required and must be in the future
+        When(x => x.IsPerishable, () =>
+        {
+            RuleFor(x => x.ExpiryDate)
+                .NotNull()
+                .Must(d => d!.Value > DateTime.UtcNow)
+                .WithMessage("Expiry date must be in the future for perishable items");
+        });
 
         RuleFor(x => x.Brand)
-            .MaximumLength(100);
+            .MaximumLength(200);
 
         RuleFor(x => x.Manufacturer)
-            .MaximumLength(100);
+            .MaximumLength(200);
 
         // Async uniqueness checks
-        RuleFor(x => x.SKU).MustAsync(async (sku, ct) =>
+        RuleFor(x => x.Sku).MustAsync(async (sku, ct) =>
         {
             if (string.IsNullOrWhiteSpace(sku)) return true;
             var existing = await readRepository.FirstOrDefaultAsync(new Specs.GroceryItemBySkuSpec(sku), ct).ConfigureAwait(false);

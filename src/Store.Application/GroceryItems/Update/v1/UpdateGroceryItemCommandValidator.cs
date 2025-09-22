@@ -11,17 +11,17 @@ public class UpdateGroceryItemCommandValidator : AbstractValidator<UpdateGrocery
             .MaximumLength(200)
             .When(x => !string.IsNullOrEmpty(x.Name));
 
-        RuleFor(x => x.SKU)
-            .MaximumLength(50)
-            .Matches(@"^[A-Z0-9]+$")
-            .WithMessage("SKU must contain only uppercase letters and numbers")
-            .When(x => !string.IsNullOrEmpty(x.SKU));
-
-        RuleFor(x => x.Barcode)
+        RuleFor(x => x.Sku)
+            .NotEmpty()
             .MaximumLength(100)
             .Matches(@"^[A-Z0-9]+$")
-            .WithMessage("Barcode must contain only uppercase letters and numbers")
-            .When(x => !string.IsNullOrEmpty(x.Barcode));
+            .WithMessage("SKU must contain only uppercase letters and numbers");
+
+        RuleFor(x => x.Barcode)
+            .NotEmpty()
+            .MaximumLength(100)
+            .Matches(@"^[A-Z0-9]+$")
+            .WithMessage("Barcode must contain only uppercase letters and numbers");
 
         RuleFor(x => x.Description)
             .MaximumLength(1000)
@@ -29,63 +29,70 @@ public class UpdateGroceryItemCommandValidator : AbstractValidator<UpdateGrocery
 
         RuleFor(x => x.Price)
             .GreaterThanOrEqualTo(0)
-            .LessThan(1000000)
-            .When(x => x.Price != 0);
+            .LessThan(1000000);
 
         RuleFor(x => x.Cost)
             .GreaterThanOrEqualTo(0)
-            .LessThan(1000000)
-            .When(x => x.Cost != 0);
+            .LessThan(1000000);
 
-        // If both provided, price >= cost
+        // price >= cost
         RuleFor(x => x)
-            .Must(x => x.Price == 0 || x.Cost == 0 || x.Price >= x.Cost)
-            .WithMessage("Price must be greater than or equal to Cost when both are provided");
+            .Must(x => x.Price >= x.Cost)
+            .WithMessage("Price must be greater than or equal to Cost");
 
         RuleFor(x => x.MinimumStock)
-            .GreaterThanOrEqualTo(0)
-            .When(x => x.MinimumStock != 0);
+            .GreaterThanOrEqualTo(0);
 
         RuleFor(x => x.MaximumStock)
             .GreaterThan(0)
-            .When(x => x.MaximumStock != 0)
-            .Must((cmd, max) => cmd.MinimumStock == 0 || max >= cmd.MinimumStock)
+            .Must((cmd, max) => max >= cmd.MinimumStock)
             .WithMessage("MaximumStock must be greater than or equal to MinimumStock");
-
-        RuleFor(x => x.ReorderPoint)
-            .GreaterThanOrEqualTo(0)
-            .When(x => x.ReorderPoint != 0);
 
         RuleFor(x => x.CurrentStock)
             .GreaterThanOrEqualTo(0)
-            .When(x => x.CurrentStock != 0)
-            .WithMessage("CurrentStock must be non-negative");
+            .LessThanOrEqualTo(x => x.MaximumStock)
+            .WithMessage("CurrentStock must be between 0 and MaximumStock");
+
+        RuleFor(x => x.ReorderPoint)
+            .GreaterThanOrEqualTo(0)
+            .LessThanOrEqualTo(x => x.MaximumStock)
+            .WithMessage("ReorderPoint must be between 0 and MaximumStock");
 
         RuleFor(x => x.Weight)
             .GreaterThanOrEqualTo(0)
-            .LessThan(100000)
-            .When(x => x.Weight != 0);
+            .LessThan(100000);
 
         RuleFor(x => x.WeightUnit)
+            .NotEmpty()
             .MaximumLength(20)
-            .When(x => x.Weight != 0)
+            .When(x => x.Weight > 0)
             .WithMessage("WeightUnit is required when Weight > 0");
 
-        RuleFor(x => x.ExpiryDate)
-            .GreaterThan(DateTime.UtcNow)
-            .When(x => x.IsPerishable && x.ExpiryDate.HasValue)
-            .WithMessage("Expiry date must be in the future for perishable items");
+        // For perishable items, expiry date is required and must be in the future
+        When(x => x.IsPerishable, () =>
+        {
+            RuleFor(x => x.ExpiryDate)
+                .NotNull()
+                .Must(d => d!.Value > DateTime.UtcNow)
+                .WithMessage("Expiry date must be in the future for perishable items");
+        });
 
         RuleFor(x => x.Brand)
-            .MaximumLength(100)
+            .MaximumLength(200)
             .When(x => x.Brand != null);
 
         RuleFor(x => x.Manufacturer)
-            .MaximumLength(100)
+            .MaximumLength(200)
             .When(x => x.Manufacturer != null);
 
+        RuleFor(x => x.CategoryId)
+            .NotEmpty();
+
+        RuleFor(x => x.SupplierId)
+            .NotEmpty();
+
         // Async uniqueness checks that exclude the current entity by Id
-        RuleFor(x => x.SKU).MustAsync(async (cmd, sku, ct) =>
+        RuleFor(x => x.Sku).MustAsync(async (cmd, sku, ct) =>
         {
             if (string.IsNullOrWhiteSpace(sku)) return true;
             var existing = await readRepository.FirstOrDefaultAsync(new Specs.GroceryItemBySkuSpec(sku), ct).ConfigureAwait(false);

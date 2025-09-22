@@ -14,29 +14,30 @@ namespace Store.Domain;
 /// - Facilitate category-based pricing strategies and promotional campaign management.
 /// - Generate inventory reports for purchasing decisions and financial analysis.
 /// 
-/// Default values:
+/// Default values and constraints:
 /// - SKU: required unique identifier, max 100 characters (example: "BANA-001", "MILK-2L-001")
 /// - Barcode: required scannable code, max 100 characters (example: "012345678901")
-/// - Price: required selling price per unit (example: 2.49 for $2.49)
-/// - Cost: required supplier cost per unit (example: 1.50 for cost tracking)
-/// - MinimumStock: required safety stock level (example: 5 units minimum)
-/// - MaximumStock: required maximum stock capacity (example: 100 units maximum)
-/// - CurrentStock: 0 (initial stock level, updated by transactions)
-/// - ReorderPoint: required reorder trigger level (example: 10 units)
+/// - Price: required selling price per unit, must be >= Cost (example: 2.49 for $2.49)
+/// - Cost: required supplier cost per unit, must be >= 0 (example: 1.50)
+/// - MinimumStock: required safety stock level, >= 0 (example: 5 units minimum)
+/// - MaximumStock: required maximum stock capacity, > 0 (example: 100 units maximum)
+/// - CurrentStock: 0 (initial), must be between 0 and MaximumStock
+/// - ReorderPoint: required reorder trigger level, 0..MaximumStock
 /// - IsPerishable: false (true for items requiring expiration tracking)
-/// - ExpiryDate: null (set for perishable items with known expiration)
-/// - Weight: null (weight per unit for shipping calculations)
+/// - ExpiryDate: required and must be in the future when IsPerishable = true; otherwise null
+/// - Weight: 0 by default, must be >= 0
+/// - WeightUnit: optional, required when Weight > 0, max 20 characters
 /// - CategoryId: required category assignment for organization
 /// - SupplierId: required primary supplier reference
 /// - IsActive: true (items are active by default)
 /// 
 /// Business rules:
 /// - SKU must be unique within the system
-/// - Barcode must be unique if specified
-/// - Price and Cost must be non-negative
-/// - MinimumStock must be less than MaximumStock
-/// - ReorderPoint should be between MinimumStock and MaximumStock
-/// - CurrentStock cannot be negative (controlled by inventory transactions)
+/// - Barcode must be unique
+/// - Price and Cost must be non-negative and Price >= Cost
+/// - MinimumStock must be less than or equal to MaximumStock
+/// - ReorderPoint must be between 0 and MaximumStock
+/// - CurrentStock cannot be negative and cannot exceed MaximumStock
 /// - Cannot delete items with transaction history or current stock
 /// - Perishable items require proper rotation (FIFO) management
 /// - Category and Supplier must exist and be active
@@ -60,7 +61,7 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
     /// Stock keeping unit: short unique identifier. Example: "SKU-1234".
     /// Max length: 100.
     /// </summary>
-    public string SKU { get; private set; } = default!;
+    public string Sku { get; private set; } = default!;
 
     /// <summary>
     /// Product barcode for scanning. Example: "0123456789012".
@@ -209,26 +210,38 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
 
         if (price < 0m) throw new ArgumentException("Price must be zero or greater", nameof(price));
         if (cost < 0m) throw new ArgumentException("Cost must be zero or greater", nameof(cost));
+        if (price < cost) throw new ArgumentException("Price must be greater than or equal to Cost", nameof(price));
 
         if (minimumStock < 0) throw new ArgumentException("MinimumStock must be zero or greater", nameof(minimumStock));
-        if (maximumStock < 0) throw new ArgumentException("MaximumStock must be zero or greater", nameof(maximumStock));
-        if (maximumStock > 0 && minimumStock > maximumStock) throw new ArgumentException("MinimumStock cannot be greater than MaximumStock", nameof(minimumStock));
+        if (maximumStock <= 0) throw new ArgumentException("MaximumStock must be greater than zero", nameof(maximumStock));
+        if (minimumStock > maximumStock) throw new ArgumentException("MinimumStock cannot be greater than MaximumStock", nameof(minimumStock));
 
         if (currentStock < 0) throw new ArgumentException("CurrentStock must be zero or greater", nameof(currentStock));
-        if (maximumStock > 0 && currentStock > maximumStock) throw new ArgumentException("CurrentStock cannot exceed MaximumStock", nameof(currentStock));
+        if (currentStock > maximumStock) throw new ArgumentException("CurrentStock cannot exceed MaximumStock", nameof(currentStock));
 
         if (reorderPoint < 0) throw new ArgumentException("ReorderPoint must be zero or greater", nameof(reorderPoint));
+        if (reorderPoint > maximumStock) throw new ArgumentException("ReorderPoint cannot exceed MaximumStock", nameof(reorderPoint));
 
         if (weight < 0m) throw new ArgumentException("Weight must be zero or greater", nameof(weight));
+        if (weight > 0 && string.IsNullOrWhiteSpace(weightUnit)) throw new ArgumentException("WeightUnit is required when Weight > 0", nameof(weightUnit));
         if (weightUnit is { Length: > 20 }) throw new ArgumentException("WeightUnit must not exceed 20 characters", nameof(weightUnit));
 
         if (brand is { Length: > 200 }) throw new ArgumentException("Brand must not exceed 200 characters", nameof(brand));
         if (manufacturer is { Length: > 200 }) throw new ArgumentException("Manufacturer must not exceed 200 characters", nameof(manufacturer));
 
+        if (!categoryId.HasValue || categoryId == Guid.Empty) throw new ArgumentException("CategoryId is required", nameof(categoryId));
+        if (!supplierId.HasValue || supplierId == Guid.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+
+        if (isPerishable)
+        {
+            if (!expiryDate.HasValue) throw new ArgumentException("ExpiryDate is required for perishable items", nameof(expiryDate));
+            if (expiryDate.Value <= DateTime.UtcNow.Date) throw new ArgumentException("ExpiryDate must be in the future for perishable items", nameof(expiryDate));
+        }
+
         Id = id;
         Name = name;
         Description = description;
-        SKU = sku;
+        Sku = sku;
         Barcode = barcode;
         Price = price;
         Cost = cost;
@@ -358,6 +371,35 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
     {
         bool isUpdated = false;
 
+        if (!string.IsNullOrWhiteSpace(name) && name.Length > 200)
+            throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+
+        if (price.HasValue && price.Value < 0m)
+            throw new ArgumentException("Price must be zero or greater", nameof(price));
+
+        if (cost.HasValue && cost.Value < 0m)
+            throw new ArgumentException("Cost must be zero or greater", nameof(cost));
+
+        // Ensure price >= cost if both known after update
+        var newPrice = price ?? Price;
+        var newCost = cost ?? Cost;
+        if (newPrice < newCost)
+            throw new ArgumentException("Price must be greater than or equal to Cost", nameof(price));
+
+        if (brand is { Length: > 200 })
+            throw new ArgumentException("Brand must not exceed 200 characters", nameof(brand));
+
+        if (manufacturer is { Length: > 200 })
+            throw new ArgumentException("Manufacturer must not exceed 200 characters", nameof(manufacturer));
+
+        if (weight.HasValue && weight.Value < 0m)
+            throw new ArgumentException("Weight must be zero or greater", nameof(weight));
+
+        if (weight.HasValue && weight.Value > 0 && string.IsNullOrWhiteSpace(weightUnit) && string.IsNullOrWhiteSpace(WeightUnit))
+            throw new ArgumentException("WeightUnit is required when Weight > 0", nameof(weightUnit));
+
+        decimal oldPrice = Price;
+
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
             Name = name;
@@ -374,6 +416,7 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
         {
             Price = price.Value;
             isUpdated = true;
+            QueueDomainEvent(new GroceryItemPriceChanged { GroceryItem = this, OldPrice = oldPrice, NewPrice = Price });
         }
 
         if (cost.HasValue && Cost != cost.Value)
@@ -439,30 +482,47 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
     public GroceryItem UpdateStock(int quantity, string operation)
     {
         var previousStock = CurrentStock;
-        
-        switch (operation.ToUpper())
+
+        switch (operation.ToUpperInvariant())
         {
             case "ADD":
+                if (quantity < 0) throw new ArgumentException("Quantity must be non-negative for ADD", nameof(quantity));
+                if (MaximumStock > 0 && CurrentStock + quantity > MaximumStock)
+                    throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("Adding quantity would exceed MaximumStock.");
                 CurrentStock += quantity;
                 break;
             case "REMOVE":
+                if (quantity < 0) throw new ArgumentException("Quantity must be non-negative for REMOVE", nameof(quantity));
                 CurrentStock = Math.Max(0, CurrentStock - quantity);
                 break;
             case "SET":
+                if (quantity < 0) throw new ArgumentException("Quantity must be non-negative for SET", nameof(quantity));
+                if (MaximumStock > 0 && quantity > MaximumStock)
+                    throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("SET quantity cannot exceed MaximumStock.");
                 CurrentStock = quantity;
                 break;
             default:
                 throw new ArgumentException("Invalid stock operation. Use ADD, REMOVE, or SET.", nameof(operation));
         }
 
-        QueueDomainEvent(new GroceryItemStockUpdated 
-        { 
-            GroceryItem = this, 
-            PreviousStock = previousStock, 
+        QueueDomainEvent(new GroceryItemStockUpdated
+        {
+            GroceryItem = this,
+            PreviousStock = previousStock,
             NewStock = CurrentStock,
-            Operation = operation,
-            Quantity = quantity
+            Operation = operation.ToUpperInvariant(),
+            Quantity = operation.ToUpperInvariant() == "REMOVE" ? previousStock - CurrentStock : CurrentStock - previousStock
         });
+
+        if (previousStock > ReorderPoint && CurrentStock <= ReorderPoint)
+        {
+            QueueDomainEvent(new GroceryItemReorderPointReached
+            {
+                GroceryItem = this,
+                CurrentStock = CurrentStock,
+                ReorderPoint = ReorderPoint
+            });
+        }
 
         return this;
     }
@@ -482,21 +542,30 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
     {
         bool isUpdated = false;
 
-        if (minimumStock.HasValue && MinimumStock != minimumStock.Value)
+        var newMin = minimumStock ?? MinimumStock;
+        var newMax = maximumStock ?? MaximumStock;
+        var newReorder = reorderPoint ?? ReorderPoint;
+
+        if (newMin < 0) throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("MinimumStock must be zero or greater.");
+        if (newMax <= 0) throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("MaximumStock must be greater than zero.");
+        if (newMin > newMax) throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("MinimumStock cannot be greater than MaximumStock.");
+        if (CurrentStock > newMax) throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("CurrentStock cannot exceed MaximumStock.");
+        if (newReorder < 0) throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("ReorderPoint must be zero or greater.");
+        if (newReorder > newMax) throw new Exceptions.GroceryItem.InvalidGroceryItemStockLevelException("ReorderPoint cannot exceed MaximumStock.");
+
+        if (MinimumStock != newMin)
         {
-            MinimumStock = minimumStock.Value;
+            MinimumStock = newMin;
             isUpdated = true;
         }
-
-        if (maximumStock.HasValue && MaximumStock != maximumStock.Value)
+        if (MaximumStock != newMax)
         {
-            MaximumStock = maximumStock.Value;
+            MaximumStock = newMax;
             isUpdated = true;
         }
-
-        if (reorderPoint.HasValue && ReorderPoint != reorderPoint.Value)
+        if (ReorderPoint != newReorder)
         {
-            ReorderPoint = reorderPoint.Value;
+            ReorderPoint = newReorder;
             isUpdated = true;
         }
 
@@ -605,9 +674,50 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
         DefaultIdType? supplierId,
         DefaultIdType? warehouseLocationId)
     {
+        // Validate inputs similarly to constructor, using new values
+        if (!string.IsNullOrWhiteSpace(name) && name.Length > 200)
+            throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+
+        if (string.IsNullOrWhiteSpace(sku)) throw new ArgumentException("SKU is required", nameof(sku));
+        if (sku.Length > 100) throw new ArgumentException("SKU must not exceed 100 characters", nameof(sku));
+
+        if (string.IsNullOrWhiteSpace(barcode)) throw new ArgumentException("Barcode is required", nameof(barcode));
+        if (barcode.Length > 100) throw new ArgumentException("Barcode must not exceed 100 characters", nameof(barcode));
+
+        if (price < 0m) throw new ArgumentException("Price must be zero or greater", nameof(price));
+        if (cost < 0m) throw new ArgumentException("Cost must be zero or greater", nameof(cost));
+        if (price < cost) throw new ArgumentException("Price must be greater than or equal to Cost", nameof(price));
+
+        if (minimumStock < 0) throw new ArgumentException("MinimumStock must be zero or greater", nameof(minimumStock));
+        if (maximumStock <= 0) throw new ArgumentException("MaximumStock must be greater than zero", nameof(maximumStock));
+        if (minimumStock > maximumStock) throw new ArgumentException("MinimumStock cannot be greater than MaximumStock", nameof(minimumStock));
+
+        if (currentStock < 0) throw new ArgumentException("CurrentStock must be zero or greater", nameof(currentStock));
+        if (currentStock > maximumStock) throw new ArgumentException("CurrentStock cannot exceed MaximumStock", nameof(currentStock));
+
+        if (reorderPoint < 0) throw new ArgumentException("ReorderPoint must be zero or greater", nameof(reorderPoint));
+        if (reorderPoint > maximumStock) throw new ArgumentException("ReorderPoint cannot exceed MaximumStock", nameof(reorderPoint));
+
+        if (weight < 0m) throw new ArgumentException("Weight must be zero or greater", nameof(weight));
+        if (weight > 0 && string.IsNullOrWhiteSpace(weightUnit)) throw new ArgumentException("WeightUnit is required when Weight > 0", nameof(weightUnit));
+        if (weightUnit is { Length: > 20 }) throw new ArgumentException("WeightUnit must not exceed 20 characters", nameof(weightUnit));
+
+        if (brand is { Length: > 200 }) throw new ArgumentException("Brand must not exceed 200 characters", nameof(brand));
+        if (manufacturer is { Length: > 200 }) throw new ArgumentException("Manufacturer must not exceed 200 characters", nameof(manufacturer));
+
+        if (!categoryId.HasValue || categoryId == Guid.Empty) throw new ArgumentException("CategoryId is required", nameof(categoryId));
+        if (!supplierId.HasValue || supplierId == Guid.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+
+        if (isPerishable)
+        {
+            if (!expiryDate.HasValue) throw new ArgumentException("ExpiryDate is required for perishable items", nameof(expiryDate));
+            if (expiryDate.Value <= DateTime.UtcNow.Date) throw new ArgumentException("ExpiryDate must be in the future for perishable items", nameof(expiryDate));
+        }
+
         bool isUpdated = false;
         bool stockChanged = false;
         var previousStock = CurrentStock;
+        var oldPrice = Price;
 
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
@@ -621,9 +731,9 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (!string.Equals(SKU, sku, StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(Sku, sku, StringComparison.OrdinalIgnoreCase))
         {
-            SKU = sku;
+            Sku = sku;
             isUpdated = true;
         }
 
@@ -637,6 +747,7 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
         {
             Price = price;
             isUpdated = true;
+            QueueDomainEvent(new GroceryItemPriceChanged { GroceryItem = this, OldPrice = oldPrice, NewPrice = Price });
         }
 
         if (Cost != cost)
@@ -680,6 +791,14 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
         {
             ExpiryDate = expiryDate;
             isUpdated = true;
+            if (IsPerishable && ExpiryDate.HasValue)
+            {
+                var daysRemaining = (ExpiryDate.Value.Date - DateTime.UtcNow.Date).Days;
+                if (daysRemaining <= 7)
+                {
+                    QueueDomainEvent(new GroceryItemExpiring { GroceryItem = this, ExpiryDate = ExpiryDate.Value, DaysRemaining = daysRemaining });
+                }
+            }
         }
 
         if (!string.Equals(Brand, brand, StringComparison.OrdinalIgnoreCase))
@@ -739,6 +858,16 @@ public sealed class GroceryItem : AuditableEntity, IAggregateRoot
                 Operation = "SET",
                 Quantity = CurrentStock - previousStock
             });
+
+            if (previousStock > ReorderPoint && CurrentStock <= ReorderPoint)
+            {
+                QueueDomainEvent(new GroceryItemReorderPointReached
+                {
+                    GroceryItem = this,
+                    CurrentStock = CurrentStock,
+                    ReorderPoint = ReorderPoint
+                });
+            }
         }
 
         return this;

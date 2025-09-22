@@ -4,7 +4,7 @@ public sealed record UpdateGroceryItemCommand(
     DefaultIdType Id,
     string? Name,
     string? Description = null,
-    string? SKU = null,
+    string? Sku = null,
     string? Barcode = null,
     decimal Price = 0,
     decimal Cost = 0,

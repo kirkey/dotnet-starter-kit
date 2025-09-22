@@ -12,7 +12,7 @@ using Store.Infrastructure.Persistence;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20250921012730_Initial")]
+    [Migration("20250922081501_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("store")
-                .HasAnnotation("ProductVersion", "9.0.8")
+                .HasAnnotation("ProductVersion", "9.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -522,7 +522,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<int>("ReorderPoint")
                         .HasColumnType("integer");
 
-                    b.Property<string>("SKU")
+                    b.Property<string>("Sku")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -548,7 +548,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SKU")
+                    b.HasIndex("Sku")
                         .IsUnique();
 
                     b.HasIndex("SupplierId");

@@ -3,7 +3,7 @@ namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Create.v1;
 public sealed record CreateGroceryItemCommand(
     [property: DefaultValue("Sample Grocery Item")] string? Name,
     [property: DefaultValue("Descriptive Description")] string? Description = null,
-    [property: DefaultValue("SKU001")] string? SKU = null,
+    [property: DefaultValue("SKU001")] string? Sku = null,
     [property: DefaultValue("1234567890123")] string? Barcode = null,
     [property: DefaultValue(10.99)] decimal Price = 10.99m,
     [property: DefaultValue(5.99)] decimal Cost = 5.99m,

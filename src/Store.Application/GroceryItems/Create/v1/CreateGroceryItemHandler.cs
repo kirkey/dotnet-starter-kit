@@ -13,9 +13,9 @@ public sealed class CreateGroceryItemHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         // Check for duplicate SKU
-        var existingBySku = await readRepository.FirstOrDefaultAsync(new Specs.GroceryItemBySkuSpec(request.SKU!), cancellationToken).ConfigureAwait(false);
+        var existingBySku = await readRepository.FirstOrDefaultAsync(new Specs.GroceryItemBySkuSpec(request.Sku!), cancellationToken).ConfigureAwait(false);
         if (existingBySku is not null)
-            throw new DuplicateGroceryItemSkuException(request.SKU!);
+            throw new DuplicateGroceryItemSkuException(request.Sku!);
 
         // Check for duplicate Barcode
         var existingByBarcode = await readRepository.FirstOrDefaultAsync(new Specs.GroceryItemByBarcodeSpec(request.Barcode!), cancellationToken).ConfigureAwait(false);
@@ -25,7 +25,7 @@ public sealed class CreateGroceryItemHandler(
         var groceryItem = GroceryItem.Create(
             request.Name!,
             request.Description,
-            request.SKU!,
+            request.Sku!,
             request.Barcode!,
             request.Price,
             request.Cost,

@@ -34,16 +34,8 @@ public partial class Categories
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchCategoriesCommand>();
-
-                var apiResult = await ApiClient.SearchCategoriesEndpointAsync("1", command).ConfigureAwait(false);
-
-                return new PaginationResponse<CategoryResponse>
-                {
-                    Items = apiResult.Items?.ToList() ?? [],
-                    TotalCount = apiResult.TotalCount,
-                    CurrentPage = apiResult.PageNumber,
-                    PageSize = apiResult.PageSize
-                };
+                var result = await ApiClient.SearchCategoriesEndpointAsync("1", command).ConfigureAwait(false);
+                return result.Adapt<PaginationResponse<CategoryResponse>>();
             },
             createFunc: async viewModel =>
             {

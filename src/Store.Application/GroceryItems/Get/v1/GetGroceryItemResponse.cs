@@ -4,7 +4,7 @@ public sealed record GroceryItemResponse(
     DefaultIdType? Id, 
     string Name, 
     string? Description, 
-    string SKU,
+    string Sku,
     string Barcode,
     decimal Price, 
     decimal Cost,
@@ -17,4 +17,8 @@ public sealed record GroceryItemResponse(
     string? Brand,
     string? Manufacturer,
     decimal Weight,
-    string? WeightUnit);
+    string? WeightUnit,
+    // Added related entity identifiers for client-side editing and consistency
+    DefaultIdType? CategoryId,
+    DefaultIdType? SupplierId,
+    DefaultIdType? WarehouseLocationId);

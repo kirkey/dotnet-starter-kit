@@ -34,10 +34,7 @@ public partial class Accruals
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                // Map UI pagination/filter model to the API search query used by the Accounting module.
                 var query = filter.Adapt<SearchAccrualsQuery>();
-
-                // The generated Accrual search endpoint returns a collection (non-paginated). Adapt to PaginationResponse used by the table component.
                 var result = await ApiClient.AccrualSearchEndpointAsync("1", query).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<AccrualResponse>>();
             },

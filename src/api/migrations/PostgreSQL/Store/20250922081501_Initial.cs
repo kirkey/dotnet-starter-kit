@@ -458,7 +458,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    SKU = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Sku = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Barcode = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "numeric(18,2)", precision: 16, scale: 2, nullable: false),
                     Cost = table.Column<decimal>(type: "numeric(18,2)", precision: 16, scale: 2, nullable: false),
@@ -1067,10 +1067,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroceryItems_SKU",
+                name: "IX_GroceryItems_Sku",
                 schema: "store",
                 table: "GroceryItems",
-                column: "SKU",
+                column: "Sku",
                 unique: true);
 
             migrationBuilder.CreateIndex(

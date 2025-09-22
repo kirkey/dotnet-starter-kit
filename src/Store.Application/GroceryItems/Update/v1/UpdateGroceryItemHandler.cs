@@ -15,11 +15,11 @@ public sealed class UpdateGroceryItemHandler(
         _ = groceryItem ?? throw new GroceryItemNotFoundException(request.Id);
 
         // Check SKU uniqueness (other than this item)
-        if (!string.IsNullOrWhiteSpace(request.SKU))
+        if (!string.IsNullOrWhiteSpace(request.Sku))
         {
-            var otherWithSku = await readRepository.FirstOrDefaultAsync(new Specs.GroceryItemBySkuSpec(request.SKU!), cancellationToken).ConfigureAwait(false);
+            var otherWithSku = await readRepository.FirstOrDefaultAsync(new Specs.GroceryItemBySkuSpec(request.Sku!), cancellationToken).ConfigureAwait(false);
             if (otherWithSku is not null && otherWithSku.Id != request.Id)
-                throw new DuplicateGroceryItemSkuException(request.SKU!);
+                throw new DuplicateGroceryItemSkuException(request.Sku!);
         }
 
         // Check Barcode uniqueness (other than this item)
@@ -33,7 +33,7 @@ public sealed class UpdateGroceryItemHandler(
         var updated = groceryItem.Update(
             request.Name,
             request.Description,
-            request.SKU!,
+            request.Sku!,
             request.Barcode!,
             request.Price,
             request.Cost,

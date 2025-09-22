@@ -4,7 +4,7 @@ public class GroceryItemBySkuSpec : Specification<GroceryItem>
 {
     public GroceryItemBySkuSpec(string sku)
     {
-        Query.Where(g => g.SKU == sku);
+        Query.Where(g => g.Sku == sku);
     }
 }
 

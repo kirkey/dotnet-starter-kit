@@ -11,7 +11,7 @@ public class SearchGroceryItemsSpecs : EntitiesByPaginationFilterSpec<GroceryIte
         Query
             .OrderBy(g => g.Name, !command.HasOrderBy())
             .Where(g => g.Name!.Contains(command.Name!), !string.IsNullOrEmpty(command.Name))
-            .Where(g => g.SKU == command.SKU, !string.IsNullOrEmpty(command.SKU))
+            .Where(g => g.Sku == command.Sku, !string.IsNullOrEmpty(command.Sku))
             .Where(g => g.Barcode == command.Barcode, !string.IsNullOrEmpty(command.Barcode))
             .Where(g => g.CategoryId == command.CategoryId!.Value, command.CategoryId.HasValue)
             .Where(g => g.SupplierId == command.SupplierId!.Value, command.SupplierId.HasValue)

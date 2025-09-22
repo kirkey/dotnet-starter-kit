@@ -13,11 +13,11 @@ public class GroceryItemConfiguration : IEntityTypeConfiguration<GroceryItem>
         builder.Property(x => x.Description)
             .HasMaxLength(1000);
 
-        builder.Property(x => x.SKU)
+        builder.Property(x => x.Sku)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasIndex(x => x.SKU)
+        builder.HasIndex(x => x.Sku)
             .IsUnique();
 
         builder.Property(x => x.Barcode)
