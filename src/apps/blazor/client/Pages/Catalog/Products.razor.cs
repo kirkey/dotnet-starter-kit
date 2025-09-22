@@ -18,14 +18,14 @@ public partial class Products
             entityResource: FshResources.Products,
             fields:
             [
-                new EntityField<ProductResponse>(prod => prod.Id, "Id", "Id"),
-                new EntityField<ProductResponse>(prod => prod.Name, "Name", "Name"),
-                new EntityField<ProductResponse>(prod => prod.Description, "Description", "Description"),
-                new EntityField<ProductResponse>(prod => prod.Price, "Price", "Price"),
-                new EntityField<ProductResponse>(prod => prod.Brand?.Name, "Brand", "Brand")
+                new EntityField<ProductResponse>(response => response.Id, "Id", "Id"),
+                new EntityField<ProductResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<ProductResponse>(response => response.Description, "Description", "Description"),
+                new EntityField<ProductResponse>(response => response.Price, "Price", "Price"),
+                new EntityField<ProductResponse>(response => response.Brand?.Name, "Brand", "Brand")
             ],
             enableAdvancedSearch: true,
-            idFunc: prod => prod.Id!.Value,
+            idFunc: response => response.Id!.Value,
             searchFunc: async filter =>
             {
                 var productFilter = filter.Adapt<SearchProductsCommand>();

@@ -17,7 +17,7 @@ public static class AccrualSearchEndpoint
             .WithName(nameof(AccrualSearchEndpoint))
             .WithSummary("Search accruals")
             .WithDescription("Search accrual entries with filters and pagination")
-            .Produces<List<AccrualResponse>>()
+            .Produces<PagedList<AccrualResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

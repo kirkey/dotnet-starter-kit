@@ -24,7 +24,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
         member = (await memberRepo.ListAsync(cancellationToken: cancellationToken)).FirstOrDefault(m => m.MeterId.HasValue && m.MeterId.Value == consumption.MeterId);
 
         RateSchedule? rateSchedule = null;
-        if (member != null && member.RateScheduleId.HasValue)
+        if (member is { RateScheduleId: not null })
         {
             rateSchedule = await rateRepo.GetByIdAsync(member.RateScheduleId.Value, cancellationToken);
         }

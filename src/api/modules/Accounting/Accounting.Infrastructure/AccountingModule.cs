@@ -289,9 +289,9 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting:postingbatches");
         builder.Services.AddKeyedScoped<IReadRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>("accounting:deferredrevenues");
         builder.Services.AddKeyedScoped<IRepository<Accrual>, AccountingRepository<Accrual>>("accounting:accruals");
+        builder.Services.AddKeyedScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>("accounting:accruals");
         builder.Services.AddKeyedScoped<IRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>("accounting:regulatoryreports");
         builder.Services.AddKeyedScoped<IReadRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>("accounting:regulatoryreports");
-        builder.Services.AddKeyedScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>("accounting:accruals");
         // Ensure there's a keyed registration matching the handler expectation for journal entries
         builder.Services.AddKeyedScoped<IRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journalentries");
         builder.Services.AddKeyedScoped<IReadRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journalentries");

@@ -17,12 +17,12 @@ public partial class ChartOfAccounts
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<ChartOfAccountResponse>(dto => dto.UsoaCategory, "Category", "UsoaCategory"),
-                new EntityField<ChartOfAccountResponse>(dto => dto.AccountType, "Type", "AccountType"),
-                new EntityField<ChartOfAccountResponse>(dto => dto.ParentCode, "Parent", "ParentCode"),
-                new EntityField<ChartOfAccountResponse>(dto => dto.AccountCode, "Code", "AccountCode"),
-                new EntityField<ChartOfAccountResponse>(dto => dto.Name, "Name", "Name"),
-                new EntityField<ChartOfAccountResponse>(dto => dto.Balance, "Balance", "Balance", typeof(decimal)),
+                new EntityField<ChartOfAccountResponse>(response => response.UsoaCategory, "Category", "UsoaCategory"),
+                new EntityField<ChartOfAccountResponse>(response => response.AccountType, "Type", "AccountType"),
+                new EntityField<ChartOfAccountResponse>(response => response.ParentCode, "Parent", "ParentCode"),
+                new EntityField<ChartOfAccountResponse>(response => response.AccountCode, "Code", "AccountCode"),
+                new EntityField<ChartOfAccountResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<ChartOfAccountResponse>(response => response.Balance, "Balance", "Balance", typeof(decimal)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

@@ -16,10 +16,10 @@ public partial class Todos
             entityResource: FshResources.Todos,
             fields:
             [
-                new EntityField<GetTodoResponse>(prod => prod.Id, "Id", "Id"),
-                new EntityField<GetTodoResponse>(prod => prod.Name, "Name", "Name"),
-                new EntityField<GetTodoResponse>(prod => prod.Description, "Description", "Description"),
-                new EntityField<GetTodoResponse>(prod => prod.Notes, "Notes", "Notes")
+                new EntityField<GetTodoResponse>(response => response.Id, "Id", "Id"),
+                new EntityField<GetTodoResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<GetTodoResponse>(response => response.Description, "Description", "Description"),
+                new EntityField<GetTodoResponse>(response => response.Notes, "Notes", "Notes")
             ],
             enableAdvancedSearch: false,
             idFunc: prod => prod.Id!.Value,

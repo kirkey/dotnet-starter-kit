@@ -1,22 +1,28 @@
-using Accounting.Application.Accruals.Reverse;
+using Accounting.Application.Accruals.Update;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
+/// <summary>
+/// Endpoints for editing Accruals.
+/// </summary>
 public static class AccrualUpdateEndpoint
 {
-    internal static RouteHandlerBuilder MapAccrualUpdateEndpoint(this IEndpointRouteBuilder endpoints)
+    /// <summary>
+    /// Maps PUT /{id:guid} to update mutable fields of an accrual.
+    /// </summary>
+    internal static RouteHandlerBuilder MapAccrualEditEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/reverse", async (DefaultIdType id, ReverseAccrualCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateAccrualCommand request, ISender mediator) =>
             {
-                command.Id = id;
-                await mediator.Send(command).ConfigureAwait(false);
-                return Results.NoContent();
+                if (id != request.Id) return Results.BadRequest();
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
             })
             .WithName(nameof(AccrualUpdateEndpoint))
-            .WithSummary("Reverse an accrual")
-            .WithDescription("Reverses an accrual entry by ID")
-            .Produces(StatusCodes.Status204NoContent)
+            .WithSummary("Update an accrual")
+            .WithDescription("Updates an accrual's mutable fields")
+            .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

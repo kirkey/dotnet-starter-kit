@@ -1,4 +1,3 @@
-// filepath: /Users/kirkeypsalms/Projects/dotnet-starter-kit/src/apps/blazor/client/Pages/Accounting/Budgets/BudgetLines.razor.cs
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets;
 
 public partial class BudgetDetails

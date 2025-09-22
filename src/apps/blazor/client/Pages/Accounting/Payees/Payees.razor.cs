@@ -16,12 +16,12 @@ public partial class Payees : ComponentBase
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<PayeeResponse>(dto => dto.PayeeCode, "Payee Code", "PayeeCode"),
-                new EntityField<PayeeResponse>(dto => dto.Name, "Name", "Name"),
-                new EntityField<PayeeResponse>(dto => dto.ExpenseAccountCode, "Account Code", "ExpenseAccountCode"),
-                new EntityField<PayeeResponse>(dto => dto.ExpenseAccountName, "Account Name", "ExpenseAccountName"),
-                new EntityField<PayeeResponse>(dto => dto.Description, "Description", "Description"),
-                new EntityField<PayeeResponse>(dto => dto.Notes, "Notes", "Notes"),
+                new EntityField<PayeeResponse>(response => response.PayeeCode, "Payee Code", "PayeeCode"),
+                new EntityField<PayeeResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<PayeeResponse>(response => response.ExpenseAccountCode, "Account Code", "ExpenseAccountCode"),
+                new EntityField<PayeeResponse>(response => response.ExpenseAccountName, "Account Name", "ExpenseAccountName"),
+                new EntityField<PayeeResponse>(response => response.Description, "Description", "Description"),
+                new EntityField<PayeeResponse>(response => response.Notes, "Notes", "Notes"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

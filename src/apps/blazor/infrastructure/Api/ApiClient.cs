@@ -199,7 +199,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> AccrualEditEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body);
+        System.Threading.Tasks.Task<System.Guid> AccrualUpdateEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -211,7 +211,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> AccrualEditEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> AccrualUpdateEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete accrual by id
@@ -245,7 +245,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AccrualResponse>> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body);
+        System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -257,7 +257,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AccrualResponse>> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reverse an accrual
@@ -268,7 +268,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AccrualUpdateEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body);
+        System.Threading.Tasks.Task AccrualReverseEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -280,7 +280,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AccrualUpdateEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task AccrualReverseEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create invoice from consumption
@@ -4660,9 +4660,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> AccrualEditEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body)
+        public virtual System.Threading.Tasks.Task<System.Guid> AccrualUpdateEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body)
         {
-            return AccrualEditEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return AccrualUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -4675,7 +4675,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> AccrualEditEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> AccrualUpdateEndpointAsync(string version, System.Guid id, UpdateAccrualCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4863,7 +4863,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AccrualResponse>> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body)
+        public virtual System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body)
         {
             return AccrualSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -4878,7 +4878,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AccrualResponse>> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4931,7 +4931,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<AccrualResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AccrualResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4967,9 +4967,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AccrualUpdateEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body)
+        public virtual System.Threading.Tasks.Task AccrualReverseEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body)
         {
-            return AccrualUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return AccrualReverseEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -4982,7 +4982,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AccrualUpdateEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task AccrualReverseEndpointAsync(string version, System.Guid id, ReverseAccrualCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -21623,6 +21623,33 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AccrualResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<AccrualResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ActivateTenantResponse
     {
 
@@ -25153,6 +25180,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SearchAccrualsQuery
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("numberLike")]
         public string? NumberLike { get; set; } = default!;

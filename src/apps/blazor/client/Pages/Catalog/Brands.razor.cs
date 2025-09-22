@@ -16,12 +16,12 @@ public partial class Brands
             entityResource: FshResources.Brands,
             fields:
             [
-                new EntityField<BrandResponse>(brand => brand.Id, "Id", "Id"),
-                new EntityField<BrandResponse>(brand => brand.Name, "Name", "Name"),
-                new EntityField<BrandResponse>(brand => brand.Description, "Description", "Description")
+                new EntityField<BrandResponse>(response => response.Id, "Id", "Id"),
+                new EntityField<BrandResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<BrandResponse>(response => response.Description, "Description", "Description")
             ],
             enableAdvancedSearch: true,
-            idFunc: brand => brand.Id!.Value,
+            idFunc: response => response.Id!.Value,
             searchFunc: async filter =>
             {
                 var brandFilter = filter.Adapt<SearchBrandsCommand>();

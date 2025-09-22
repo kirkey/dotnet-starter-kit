@@ -17,7 +17,7 @@ public sealed class CreateJournalEntryHandler(
             request.OriginalAmount);
 
         // Add lines if provided
-        if (request.Lines != null && request.Lines.Count > 0)
+        if (request.Lines is { Count: > 0 })
         {
             foreach (var line in request.Lines)
             {

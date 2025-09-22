@@ -25,11 +25,11 @@ public partial class Roles : ComponentBase
             searchAction: FshActions.View,
             fields:
             [
-                new EntityField<RoleDto>(role => role.Id, "Id"),
-                new EntityField<RoleDto>(role => role.Name, "Name"),
-                new EntityField<RoleDto>(role => role.Description, "Description")
+                new EntityField<RoleDto>(dto => dto.Id, "Id"),
+                new EntityField<RoleDto>(dto => dto.Name, "Name"),
+                new EntityField<RoleDto>(dto => dto.Description, "Description")
             ],
-            idFunc: role => role.Id,
+            idFunc: dto => dto.Id,
             loadDataFunc: async () => [.. (await RolesClient.GetRolesEndpointAsync())],
             searchFunc: (searchString, role) =>
                 string.IsNullOrWhiteSpace(searchString)
