@@ -3,7 +3,7 @@ namespace Store.Domain.Events;
 /// <summary>
 /// Event raised when a goods receipt item is updated.
 /// </summary>
-public record GoodsReceiptItemUpdated(Store.Domain.GoodsReceiptItem GoodsReceiptItem) : DomainEvent;
+public record GoodsReceiptItemUpdated(GoodsReceiptItem GoodsReceiptItem) : DomainEvent;
 
 /// <summary>
 /// Event raised when a goods receipt item is removed.

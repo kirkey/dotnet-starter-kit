@@ -16,7 +16,7 @@ public record SalesOrderItemAdded(
 /// <summary>
 /// Event raised when a sales order item is updated.
 /// </summary>
-public record SalesOrderItemUpdated(Store.Domain.SalesOrderItem SalesOrderItem) : DomainEvent;
+public record SalesOrderItemUpdated(SalesOrderItem SalesOrderItem) : DomainEvent;
 
 /// <summary>
 /// Event raised when a sales order item quantity is adjusted.

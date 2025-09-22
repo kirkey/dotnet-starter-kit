@@ -3,7 +3,7 @@ namespace Store.Domain.Events;
 /// <summary>
 /// Event raised when a purchase order item is updated.
 /// </summary>
-public record PurchaseOrderItemUpdated(Store.Domain.PurchaseOrderItem PurchaseOrderItem) : DomainEvent;
+public record PurchaseOrderItemUpdated(PurchaseOrderItem PurchaseOrderItem) : DomainEvent;
 
 /// <summary>
 /// Event raised when a purchase order item quantity is adjusted.

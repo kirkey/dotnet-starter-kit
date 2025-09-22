@@ -3,7 +3,7 @@ namespace Store.Domain.Events;
 /// <summary>
 /// Event raised when a cycle count item is updated.
 /// </summary>
-public record CycleCountItemUpdated(Store.Domain.CycleCountItem CycleCountItem) : DomainEvent;
+public record CycleCountItemUpdated(CycleCountItem CycleCountItem) : DomainEvent;
 
 /// <summary>
 /// Event raised when a cycle count item is removed.

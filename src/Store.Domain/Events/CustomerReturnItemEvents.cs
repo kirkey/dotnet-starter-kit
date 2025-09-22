@@ -3,7 +3,7 @@ namespace Store.Domain.Events;
 /// <summary>
 /// Event raised when a customer return item is updated.
 /// </summary>
-public record CustomerReturnItemUpdated(Store.Domain.CustomerReturnItem CustomerReturnItem) : DomainEvent;
+public record CustomerReturnItemUpdated(CustomerReturnItem CustomerReturnItem) : DomainEvent;
 
 /// <summary>
 /// Event raised when a customer return item is removed.

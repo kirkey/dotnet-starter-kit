@@ -3,7 +3,7 @@ namespace Store.Domain.Events;
 /// <summary>
 /// Event raised when a shipment item is updated.
 /// </summary>
-public record ShipmentItemUpdated(Store.Domain.ShipmentItem ShipmentItem) : DomainEvent;
+public record ShipmentItemUpdated(ShipmentItem ShipmentItem) : DomainEvent;
 
 /// <summary>
 /// Event raised when a shipment item is removed.

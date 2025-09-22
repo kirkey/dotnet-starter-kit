@@ -14,7 +14,7 @@ public record PosPaymentCreated(
 /// <summary>
 /// Event raised when a POS payment is updated.
 /// </summary>
-public record PosPaymentUpdated(Store.Domain.PosPayment PosPayment) : DomainEvent;
+public record PosPaymentUpdated(PosPayment PosPayment) : DomainEvent;
 
 /// <summary>
 /// Event raised when a POS payment is deleted.

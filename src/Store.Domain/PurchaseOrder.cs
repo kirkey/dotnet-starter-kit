@@ -1,3 +1,6 @@
+using Store.Domain.Exceptions.PurchaseOrder;
+using Store.Domain.Exceptions.PurchaseOrderItem;
+
 namespace Store.Domain;
 
 /// <summary>
@@ -123,7 +126,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Expected delivery date must be on or after the order date", nameof(expectedDeliveryDate));
 
         if (!PurchaseOrderStatus.IsAllowed(status))
-            throw new Store.Domain.Exceptions.PurchaseOrder.InvalidPurchaseOrderStatusException(status);
+            throw new InvalidPurchaseOrderStatusException(status);
 
         if (deliveryAddress is { Length: > 500 }) throw new ArgumentException("DeliveryAddress must not exceed 500 characters", nameof(deliveryAddress));
         if (contactPerson is { Length: > 100 }) throw new ArgumentException("ContactPerson must not exceed 100 characters", nameof(contactPerson));
@@ -177,13 +180,13 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     private void EnsureModifiable()
     {
         if (!PurchaseOrderStatus.IsModifiable(Status))
-            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderCannotBeModifiedException(Id, Status);
+            throw new PurchaseOrderCannotBeModifiedException(Id, Status);
     }
 
     public PurchaseOrder UpdateStatus(string status)
     {
         if (!PurchaseOrderStatus.IsAllowed(status))
-            throw new Store.Domain.Exceptions.PurchaseOrder.InvalidPurchaseOrderStatusException(status);
+            throw new InvalidPurchaseOrderStatusException(status);
 
         if (!string.Equals(Status, status, StringComparison.OrdinalIgnoreCase))
         {
@@ -240,6 +243,9 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         var item = Items.FirstOrDefault(i => i.GroceryItemId == groceryItemId);
         if (item != null)
         {
+            if (item.ReceivedQuantity > 0)
+                throw new CannotRemoveReceivedPurchaseOrderItemException(item.Id);
+
             Items.Remove(item);
             RecalculateTotals();
             QueueDomainEvent(new PurchaseOrderItemRemoved { PurchaseOrder = this, GroceryItemId = groceryItemId });
@@ -255,7 +261,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
         var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
         if (item is null)
-            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
+            throw new PurchaseOrderItemNotFoundException(purchaseOrderItemId);
 
         item.UpdateQuantity(quantity);
         RecalculateTotals();
@@ -270,7 +276,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
         var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
         if (item is null)
-            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
+            throw new PurchaseOrderItemNotFoundException(purchaseOrderItemId);
 
         item.UpdatePrice(unitPrice, discountAmount);
         RecalculateTotals();
@@ -283,7 +289,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     {
         var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
         if (item is null)
-            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
+            throw new PurchaseOrderItemNotFoundException(purchaseOrderItemId);
 
         item.ReceiveQuantity(receivedQuantity);
         RecalculateTotals();
@@ -348,7 +354,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         if (expectedDeliveryDate.HasValue && expectedDeliveryDate.Value.Date < orderDate.Date)
             throw new ArgumentException("Expected delivery date must be on or after the order date", nameof(expectedDeliveryDate));
         if (!PurchaseOrderStatus.IsAllowed(status))
-            throw new Store.Domain.Exceptions.PurchaseOrder.InvalidPurchaseOrderStatusException(status);
+            throw new InvalidPurchaseOrderStatusException(status);
         if (deliveryAddress is { Length: > 500 }) throw new ArgumentException("DeliveryAddress must not exceed 500 characters", nameof(deliveryAddress));
         if (contactPerson is { Length: > 100 }) throw new ArgumentException("ContactPerson must not exceed 100 characters", nameof(contactPerson));
         if (contactPhone is { Length: > 50 }) throw new ArgumentException("ContactPhone must not exceed 50 characters", nameof(contactPhone));

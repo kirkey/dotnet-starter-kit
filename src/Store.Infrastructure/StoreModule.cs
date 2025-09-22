@@ -10,8 +10,6 @@ using Store.Infrastructure.Endpoints.StockAdjustments.v1;
 using Store.Infrastructure.Endpoints.Suppliers.v1;
 using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 using Store.Infrastructure.Endpoints.Warehouses.v1;
-using Store.Infrastructure.Endpoints.WholesaleContracts.v1;
-using Store.Infrastructure.Endpoints.WholesalePricings.v1;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
@@ -83,6 +81,13 @@ public static class StoreModule
             purchaseOrders.MapDeletePurchaseOrderEndpoint();
             purchaseOrders.MapSearchPurchaseOrdersEndpoint();
 
+            // Purchase Order Items endpoints
+            purchaseOrders.MapAddPurchaseOrderItemEndpoint();
+            purchaseOrders.MapUpdatePurchaseOrderItemQuantityEndpoint();
+            purchaseOrders.MapUpdatePurchaseOrderItemPriceEndpoint();
+            purchaseOrders.MapReceivePurchaseOrderItemQuantityEndpoint();
+            purchaseOrders.MapRemovePurchaseOrderItemEndpoint();
+
             // Price Lists endpoints
             var priceLists = app.MapGroup("price-lists").WithTags("Price Lists");
             priceLists.MapCreatePriceListEndpoint();
@@ -116,15 +121,15 @@ public static class StoreModule
             suppliers.MapDeactivateSupplierEndpoint();
 
             // Customer endpoints
-            // var customers = app.MapGroup("customers").WithTags("Customers");
-            // customers.MapCreateCustomerEndpoint();
-            // customers.MapGetCustomerEndpoint();
-            // customers.MapUpdateCustomerEndpoint();
-            // customers.MapDeleteCustomerEndpoint();
-            // customers.MapSearchCustomersEndpoint();
-            // customers.MapActivateCustomerEndpoint();
-            // customers.MapDeactivateCustomerEndpoint();
-            // customers.MapChangeCustomerCreditLimitEndpoint();
+            var customers = app.MapGroup("customers").WithTags("Customers");
+            customers.MapCreateCustomerEndpoint();
+            customers.MapGetCustomerEndpoint();
+            customers.MapUpdateCustomerEndpoint();
+            customers.MapDeleteCustomerEndpoint();
+            customers.MapSearchCustomersEndpoint();
+            customers.MapActivateCustomerEndpoint();
+            customers.MapDeactivateCustomerEndpoint();
+            customers.MapChangeCustomerCreditLimitEndpoint();
         }
     }
 

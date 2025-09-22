@@ -565,7 +565,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
             if (creditLimit < 0m) throw new ArgumentException("CreditLimit cannot be negative", nameof(creditLimit));
             var previous = CreditLimit;
             CreditLimit = creditLimit;
-            QueueDomainEvent(new Events.CustomerCreditLimitChanged { Customer = this, PreviousCreditLimit = previous, NewCreditLimit = CreditLimit });
+            QueueDomainEvent(new CustomerCreditLimitChanged { Customer = this, PreviousCreditLimit = previous, NewCreditLimit = CreditLimit });
             isUpdated = true;
         }
 
@@ -606,7 +606,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
 
         if (isUpdated)
         {
-            QueueDomainEvent(new Events.CustomerUpdated { Customer = this });
+            QueueDomainEvent(new CustomerUpdated { Customer = this });
         }
 
         return this;
@@ -620,7 +620,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         if (!IsActive)
         {
             IsActive = true;
-            QueueDomainEvent(new Events.CustomerActivated { Customer = this });
+            QueueDomainEvent(new CustomerActivated { Customer = this });
         }
         return this;
     }
@@ -633,7 +633,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         if (IsActive)
         {
             IsActive = false;
-            QueueDomainEvent(new Events.CustomerDeactivated { Customer = this });
+            QueueDomainEvent(new CustomerDeactivated { Customer = this });
         }
         return this;
     }
@@ -648,7 +648,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
         {
             var prev = CreditLimit;
             CreditLimit = newCreditLimit;
-            QueueDomainEvent(new Events.CustomerCreditLimitChanged { Customer = this, PreviousCreditLimit = prev, NewCreditLimit = CreditLimit });
+            QueueDomainEvent(new CustomerCreditLimitChanged { Customer = this, PreviousCreditLimit = prev, NewCreditLimit = CreditLimit });
         }
         return this;
     }

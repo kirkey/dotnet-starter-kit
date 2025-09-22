@@ -3,7 +3,7 @@ namespace Store.Domain.Events;
 /// <summary>
 /// Event raised when a POS sale item is updated.
 /// </summary>
-public record PosSaleItemUpdated(Store.Domain.PosSaleItem PosSaleItem) : DomainEvent;
+public record PosSaleItemUpdated(PosSaleItem PosSaleItem) : DomainEvent;
 
 /// <summary>
 /// Event raised when a POS sale item is removed.

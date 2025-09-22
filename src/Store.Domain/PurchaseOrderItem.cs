@@ -1,3 +1,5 @@
+using Store.Domain.Exceptions.PurchaseOrderItem;
+
 namespace Store.Domain;
 
 /// <summary>
@@ -60,10 +62,10 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
         string? notes)
     {
         // validations
-        if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
-        if (unitPrice < 0m) throw new ArgumentException("UnitPrice must be zero or greater", nameof(unitPrice));
-        if (discountAmount < 0m) throw new ArgumentException("DiscountAmount must be zero or greater", nameof(discountAmount));
-        if (discountAmount > quantity * unitPrice) throw new ArgumentException("Discount cannot exceed line total", nameof(discountAmount));
+        if (quantity <= 0) throw new InvalidPurchaseOrderItemQuantityException();
+        if (unitPrice < 0m) throw new InvalidPurchaseOrderItemCostException();
+        if (discountAmount < 0m) throw new InvalidPurchaseOrderItemCostException();
+        if (discountAmount > quantity * unitPrice) throw new DiscountExceedsLineTotalException(id);
 
         Id = id;
         PurchaseOrderId = purchaseOrderId;
@@ -79,6 +81,10 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new PurchaseOrderItemCreated { PurchaseOrderItem = this });
     }
 
+    /// <summary>
+    /// Factory method to create a new <see cref="PurchaseOrderItem"/>.
+    /// Throws domain exceptions when inputs are invalid.
+    /// </summary>
     public static PurchaseOrderItem Create(
         DefaultIdType purchaseOrderId,
         DefaultIdType groceryItemId,
@@ -97,18 +103,25 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
             notes);
     }
 
+    /// <summary>
+    /// Updates the ordered quantity for this line item.
+    /// Quantity must be positive and cannot be less than already received quantity.
+    /// Emits a <see cref="Store.Domain.Events.PurchaseOrderItemQuantityUpdated"/> domain event when changed.
+    /// </summary>
+    /// <exception cref="InvalidPurchaseOrderItemQuantityException">Thrown when the quantity is not positive.</exception>
+    /// <exception cref="CannotReduceQuantityBelowReceivedException">Thrown when attempting to set quantity less than already received.</exception>
     public PurchaseOrderItem UpdateQuantity(int quantity)
     {
-        if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+        if (quantity <= 0) throw new InvalidPurchaseOrderItemQuantityException();
         if (quantity < ReceivedQuantity)
-            throw new ArgumentException("Quantity cannot be less than already received quantity", nameof(quantity));
+            throw new CannotReduceQuantityBelowReceivedException(Id);
 
         if (Quantity != quantity)
         {
             Quantity = quantity;
             // Ensure discount still valid under new quantity
             if (DiscountAmount > Quantity * UnitPrice)
-                throw new ArgumentException("Discount cannot exceed line total after quantity update", nameof(quantity));
+                throw new DiscountExceedsLineTotalException(Id);
             CalculateTotalPrice();
             QueueDomainEvent(new PurchaseOrderItemQuantityUpdated { PurchaseOrderItem = this });
         }
@@ -116,10 +129,15 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Updates the unit price and optionally the discount for this line item.
+    /// Unit price and discount must be non-negative and discount cannot exceed the line total.
+    /// Emits a <see cref="Store.Domain.Events.PurchaseOrderItemPriceUpdated"/> domain event when changed.
+    /// </summary>
     public PurchaseOrderItem UpdatePrice(decimal unitPrice, decimal? discountAmount = null)
     {
-        if (unitPrice < 0m) throw new ArgumentException("UnitPrice must be zero or greater", nameof(unitPrice));
-        if (discountAmount is < 0m) throw new ArgumentException("Discount must be zero or greater", nameof(discountAmount));
+        if (unitPrice < 0m) throw new InvalidPurchaseOrderItemCostException();
+        if (discountAmount is < 0m) throw new InvalidPurchaseOrderItemCostException();
 
         bool isUpdated = false;
 
@@ -137,7 +155,7 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
 
         // Validate discount vs current quantity and unit price
         if (DiscountAmount > Quantity * UnitPrice)
-            throw new ArgumentException("Discount cannot exceed line total (quantity * unit price)", nameof(discountAmount));
+            throw new DiscountExceedsLineTotalException(Id);
 
         if (isUpdated)
         {
@@ -148,11 +166,18 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Sets the received quantity for this line item. Received quantity cannot be negative or exceed the ordered quantity.
+    /// Emits a <see cref="Store.Domain.Events.PurchaseOrderItemReceived"/> domain event when changed.
+    /// </summary>
+    /// <exception cref="InvalidPurchaseOrderItemQuantityException">Thrown when received quantity is negative.</exception>
+    /// <exception cref="ReceivedQuantityExceedsOrderedException">Thrown when received quantity exceeds ordered quantity.</exception>
     public PurchaseOrderItem ReceiveQuantity(int receivedQuantity)
     {
-        if (receivedQuantity < 0 || receivedQuantity > Quantity)
+        if (receivedQuantity < 0) throw new InvalidPurchaseOrderItemQuantityException();
+        if (receivedQuantity > Quantity)
         {
-            throw new ArgumentException("Received quantity cannot be negative or exceed ordered quantity.", nameof(receivedQuantity));
+            throw new ReceivedQuantityExceedsOrderedException(Id);
         }
 
         if (ReceivedQuantity != receivedQuantity)
