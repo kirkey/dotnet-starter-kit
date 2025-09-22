@@ -75,7 +75,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     public DateTime? ActualDeliveryDate { get; private set; }
 
     /// <summary>
-    /// Order status: Draft, Sent, Confirmed, Received, Cancelled.
+    /// Order status: Draft, Submitted, Approved, Sent, Received, Cancelled.
     /// </summary>
     public string Status { get; private set; } = default!;
 
@@ -119,9 +119,15 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
         if (orderDate == default) throw new ArgumentException("OrderDate is required", nameof(orderDate));
 
-        if (status is { Length: > 50 }) throw new ArgumentException("Status must not exceed 50 characters", nameof(status));
+        if (expectedDeliveryDate.HasValue && expectedDeliveryDate.Value.Date < orderDate.Date)
+            throw new ArgumentException("Expected delivery date must be on or after the order date", nameof(expectedDeliveryDate));
+
+        if (!PurchaseOrderStatus.IsAllowed(status))
+            throw new Store.Domain.Exceptions.PurchaseOrder.InvalidPurchaseOrderStatusException(status);
 
         if (deliveryAddress is { Length: > 500 }) throw new ArgumentException("DeliveryAddress must not exceed 500 characters", nameof(deliveryAddress));
+        if (contactPerson is { Length: > 100 }) throw new ArgumentException("ContactPerson must not exceed 100 characters", nameof(contactPerson));
+        if (contactPhone is { Length: > 50 }) throw new ArgumentException("ContactPhone must not exceed 50 characters", nameof(contactPhone));
 
         Id = id;
         OrderNumber = orderNumber;
@@ -147,7 +153,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         DefaultIdType supplierId,
         DateTime orderDate,
         DateTime? expectedDeliveryDate = null,
-        string status = "Draft",
+        string status = PurchaseOrderStatus.Draft,
         string? notes = null,
         string? deliveryAddress = null,
         string? contactPerson = null,
@@ -168,8 +174,17 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
             isUrgent);
     }
 
+    private void EnsureModifiable()
+    {
+        if (!PurchaseOrderStatus.IsModifiable(Status))
+            throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderCannotBeModifiedException(Id, Status);
+    }
+
     public PurchaseOrder UpdateStatus(string status)
     {
+        if (!PurchaseOrderStatus.IsAllowed(status))
+            throw new Store.Domain.Exceptions.PurchaseOrder.InvalidPurchaseOrderStatusException(status);
+
         if (!string.Equals(Status, status, StringComparison.OrdinalIgnoreCase))
         {
             var previousStatus = Status;
@@ -181,6 +196,16 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
                 PreviousStatus = previousStatus, 
                 NewStatus = status 
             });
+
+            // Emit explicit lifecycle events for certain statuses
+            if (string.Equals(status, PurchaseOrderStatus.Submitted, StringComparison.OrdinalIgnoreCase))
+                QueueDomainEvent(new PurchaseOrderSubmitted { PurchaseOrder = this });
+            else if (string.Equals(status, PurchaseOrderStatus.Approved, StringComparison.OrdinalIgnoreCase))
+                QueueDomainEvent(new PurchaseOrderApproved { PurchaseOrder = this });
+            else if (string.Equals(status, PurchaseOrderStatus.Cancelled, StringComparison.OrdinalIgnoreCase))
+                QueueDomainEvent(new PurchaseOrderCancelled { PurchaseOrder = this });
+            else if (string.Equals(status, PurchaseOrderStatus.Sent, StringComparison.OrdinalIgnoreCase))
+                QueueDomainEvent(new PurchaseOrderSentEvent { PurchaseOrder = this });
         }
 
         return this;
@@ -188,6 +213,8 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
     public PurchaseOrder AddItem(DefaultIdType groceryItemId, int quantity, decimal unitPrice, decimal? discount = null)
     {
+        EnsureModifiable();
+
         var existingItem = Items.FirstOrDefault(i => i.GroceryItemId == groceryItemId);
         
         if (existingItem != null)
@@ -208,6 +235,8 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
     public PurchaseOrder RemoveItem(DefaultIdType groceryItemId)
     {
+        EnsureModifiable();
+
         var item = Items.FirstOrDefault(i => i.GroceryItemId == groceryItemId);
         if (item != null)
         {
@@ -222,6 +251,8 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     // Update a child item's quantity and recalculate totals
     public PurchaseOrder UpdateItemQuantity(DefaultIdType purchaseOrderItemId, int quantity)
     {
+        EnsureModifiable();
+
         var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
         if (item is null)
             throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
@@ -235,6 +266,8 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     // Update a child item's price and optionally discount, then recalc totals
     public PurchaseOrder UpdateItemPrice(DefaultIdType purchaseOrderItemId, decimal unitPrice, decimal? discountAmount = null)
     {
+        EnsureModifiable();
+
         var item = Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
         if (item is null)
             throw new Store.Domain.Exceptions.PurchaseOrder.PurchaseOrderItemNotFoundException(purchaseOrderItemId);
@@ -266,7 +299,11 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
             
             if (actualDeliveryDate.HasValue)
             {
+                // When delivery date is set, consider the order received
+                var previousStatus = Status;
+                Status = PurchaseOrderStatus.Received;
                 QueueDomainEvent(new PurchaseOrderDelivered { PurchaseOrder = this });
+                QueueDomainEvent(new PurchaseOrderStatusChanged { PurchaseOrder = this, PreviousStatus = previousStatus, NewStatus = PurchaseOrderStatus.Received });
             }
         }
 
@@ -275,6 +312,9 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
     public PurchaseOrder ApplyDiscount(decimal discountAmount)
     {
+        EnsureModifiable();
+
+        if (discountAmount < 0m) throw new ArgumentException("Discount must be zero or greater", nameof(discountAmount));
         if (DiscountAmount != discountAmount)
         {
             DiscountAmount = discountAmount;
@@ -298,6 +338,21 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         string? contactPhone,
         bool isUrgent)
     {
+        EnsureModifiable();
+
+        // validate inputs similar to constructor
+        if (string.IsNullOrWhiteSpace(orderNumber)) throw new ArgumentException("Order number is required", nameof(orderNumber));
+        if (orderNumber.Length > 100) throw new ArgumentException("Order number must not exceed 100 characters", nameof(orderNumber));
+        if (supplierId == default) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+        if (orderDate == default) throw new ArgumentException("OrderDate is required", nameof(orderDate));
+        if (expectedDeliveryDate.HasValue && expectedDeliveryDate.Value.Date < orderDate.Date)
+            throw new ArgumentException("Expected delivery date must be on or after the order date", nameof(expectedDeliveryDate));
+        if (!PurchaseOrderStatus.IsAllowed(status))
+            throw new Store.Domain.Exceptions.PurchaseOrder.InvalidPurchaseOrderStatusException(status);
+        if (deliveryAddress is { Length: > 500 }) throw new ArgumentException("DeliveryAddress must not exceed 500 characters", nameof(deliveryAddress));
+        if (contactPerson is { Length: > 100 }) throw new ArgumentException("ContactPerson must not exceed 100 characters", nameof(contactPerson));
+        if (contactPhone is { Length: > 50 }) throw new ArgumentException("ContactPhone must not exceed 50 characters", nameof(contactPhone));
+
         var changed = false;
 
         if (OrderNumber != orderNumber)
@@ -324,10 +379,12 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
             changed = true;
         }
 
-        if (Status != status)
+        if (!string.Equals(Status, status, StringComparison.OrdinalIgnoreCase))
         {
+            var previousStatus = Status;
             Status = status;
             changed = true;
+            QueueDomainEvent(new PurchaseOrderStatusChanged { PurchaseOrder = this, PreviousStatus = previousStatus, NewStatus = status });
         }
 
         if (Notes != notes)
@@ -378,7 +435,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         ExpectedDeliveryDate is { } ed &&
         ed < DateTime.UtcNow &&
         !ActualDeliveryDate.HasValue &&
-        Status != "Cancelled";
+        !string.Equals(Status, PurchaseOrderStatus.Cancelled, StringComparison.OrdinalIgnoreCase);
 
     public bool IsDelivered() => ActualDeliveryDate.HasValue;
 

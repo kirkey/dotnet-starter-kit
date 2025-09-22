@@ -19,7 +19,7 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
             .WithMessage("Customer code must contain only uppercase letters, numbers, and hyphens")
             .MustAsync(async (code, ct) =>
             {
-                var existing = await repository.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Customers.Specs.CustomerByCodeSpec(code!), ct).ConfigureAwait(false);
+                var existing = await repository.FirstOrDefaultAsync(new Specs.CustomerByCodeSpec(code!), ct).ConfigureAwait(false);
                 return existing is null;
             }).WithMessage("Customer code must be unique");
 
@@ -38,7 +38,7 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
             .MaximumLength(255)
             .MustAsync(async (email, ct) =>
             {
-                var existing = await repository.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Customers.Specs.CustomerByEmailSpec(email!), ct).ConfigureAwait(false);
+                var existing = await repository.FirstOrDefaultAsync(new Specs.CustomerByEmailSpec(email!), ct).ConfigureAwait(false);
                 return existing is null;
             }).WithMessage("A customer with the same email already exists");
 

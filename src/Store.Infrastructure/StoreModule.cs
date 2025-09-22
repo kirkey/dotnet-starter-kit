@@ -179,6 +179,10 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IRepository<WholesalePricing>, StoreRepository<WholesalePricing>>("store:wholesale-pricings");
         builder.Services.AddKeyedScoped<IReadRepository<WholesalePricing>, StoreRepository<WholesalePricing>>("store:wholesale-pricings");
 
+        // New: inventory transactions repository for guards and reporting
+        builder.Services.AddKeyedScoped<IRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventory-transactions");
+        builder.Services.AddKeyedScoped<IReadRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventory-transactions");
+
         return builder;
     }
 

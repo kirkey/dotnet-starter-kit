@@ -27,6 +27,12 @@ public sealed class UpdateWarehouseHandler(
             request.CapacityUnit,
             request.IsMainWarehouse);
 
+        // Update code via domain method if changed
+        if (!string.Equals(warehouse.Code, request.Code, StringComparison.OrdinalIgnoreCase))
+        {
+            updatedWarehouse.UpdateCode(request.Code);
+        }
+
         // Update warehouse type separately if changed
         if (!string.Equals(warehouse.WarehouseType, request.WarehouseType, StringComparison.OrdinalIgnoreCase))
         {

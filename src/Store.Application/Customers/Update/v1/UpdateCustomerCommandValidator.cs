@@ -26,7 +26,7 @@ public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCo
             .MustAsync(async (cmd, code, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(code)) return true;
-                var existing = await repository.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Customers.Specs.CustomerByCodeSpec(code), ct).ConfigureAwait(false);
+                var existing = await repository.FirstOrDefaultAsync(new Specs.CustomerByCodeSpec(code), ct).ConfigureAwait(false);
                 return existing is null || existing.Id == cmd.Id;
             }).WithMessage("Customer code must be unique");
 
@@ -46,7 +46,7 @@ public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCo
             .MustAsync(async (cmd, email, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(email)) return true;
-                var existing = await repository.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Customers.Specs.CustomerByEmailSpec(email), ct).ConfigureAwait(false);
+                var existing = await repository.FirstOrDefaultAsync(new Specs.CustomerByEmailSpec(email), ct).ConfigureAwait(false);
                 return existing is null || existing.Id == cmd.Id;
             }).WithMessage("A customer with the same email already exists");
 

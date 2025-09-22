@@ -99,9 +99,16 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
 
     public PurchaseOrderItem UpdateQuantity(int quantity)
     {
+        if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+        if (quantity < ReceivedQuantity)
+            throw new ArgumentException("Quantity cannot be less than already received quantity", nameof(quantity));
+
         if (Quantity != quantity)
         {
             Quantity = quantity;
+            // Ensure discount still valid under new quantity
+            if (DiscountAmount > Quantity * UnitPrice)
+                throw new ArgumentException("Discount cannot exceed line total after quantity update", nameof(quantity));
             CalculateTotalPrice();
             QueueDomainEvent(new PurchaseOrderItemQuantityUpdated { PurchaseOrderItem = this });
         }
@@ -111,6 +118,9 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
 
     public PurchaseOrderItem UpdatePrice(decimal unitPrice, decimal? discountAmount = null)
     {
+        if (unitPrice < 0m) throw new ArgumentException("UnitPrice must be zero or greater", nameof(unitPrice));
+        if (discountAmount is < 0m) throw new ArgumentException("Discount must be zero or greater", nameof(discountAmount));
+
         bool isUpdated = false;
 
         if (UnitPrice != unitPrice)
@@ -124,6 +134,10 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
             DiscountAmount = discountAmount.Value;
             isUpdated = true;
         }
+
+        // Validate discount vs current quantity and unit price
+        if (DiscountAmount > Quantity * UnitPrice)
+            throw new ArgumentException("Discount cannot exceed line total (quantity * unit price)", nameof(discountAmount));
 
         if (isUpdated)
         {

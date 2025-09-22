@@ -14,7 +14,7 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
             .MustAsync(async (request, name, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(name)) return true;
-                var existing = await categories.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Categories.Specs.CategoryByNameSpec(name, request.Id), ct);
+                var existing = await categories.FirstOrDefaultAsync(new Specs.CategoryByNameSpec(name, request.Id), ct);
                 return existing is null;
             })
             .WithMessage("A category with the same name already exists.")
@@ -27,7 +27,7 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
             .MustAsync(async (request, code, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(code)) return true;
-                var existing = await categories.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Categories.Specs.CategoryByCodeSpec(code, request.Id), ct);
+                var existing = await categories.FirstOrDefaultAsync(new Specs.CategoryByCodeSpec(code, request.Id), ct);
                 return existing is null;
             })
             .WithMessage("A category with the same code already exists.")

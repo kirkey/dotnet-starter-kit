@@ -13,7 +13,7 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
             .MustAsync(async (name, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(name)) return true;
-                return await categories.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Categories.Specs.CategoryByNameSpec(name), ct) is null;
+                return await categories.FirstOrDefaultAsync(new Specs.CategoryByNameSpec(name), ct) is null;
             })
             .WithMessage("A category with the same name already exists.");
 
@@ -25,7 +25,7 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
             .MustAsync(async (code, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(code)) return true;
-                return await categories.FirstOrDefaultAsync(new FSH.Starter.WebApi.Store.Application.Categories.Specs.CategoryByCodeSpec(code), ct) is null;
+                return await categories.FirstOrDefaultAsync(new Specs.CategoryByCodeSpec(code), ct) is null;
             })
             .WithMessage("A category with the same code already exists.");
 

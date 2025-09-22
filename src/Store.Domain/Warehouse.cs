@@ -336,74 +336,102 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     {
         bool isUpdated = false;
 
+        // Validate and apply name
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
+            if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
             Name = name;
             isUpdated = true;
         }
 
-        if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
+        // Description can be null/empty but check length if provided
+        if (description is not null && !string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
         {
             Description = description;
             isUpdated = true;
         }
 
+        // Address
         if (!string.IsNullOrWhiteSpace(address) && !string.Equals(Address, address, StringComparison.OrdinalIgnoreCase))
         {
+            if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
             Address = address;
             isUpdated = true;
         }
 
+        // City
         if (!string.IsNullOrWhiteSpace(city) && !string.Equals(City, city, StringComparison.OrdinalIgnoreCase))
         {
+            if (city.Length > 100) throw new ArgumentException("City must not exceed 100 characters", nameof(city));
             City = city;
             isUpdated = true;
         }
 
-        if (!string.Equals(State, state, StringComparison.OrdinalIgnoreCase))
+        // State (nullable)
+        if (state is not null && !string.Equals(State, state, StringComparison.OrdinalIgnoreCase))
         {
+            if (state.Length > 100) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
             State = state;
             isUpdated = true;
         }
 
+        // Country
         if (!string.IsNullOrWhiteSpace(country) && !string.Equals(Country, country, StringComparison.OrdinalIgnoreCase))
         {
+            if (country.Length > 100) throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
             Country = country;
             isUpdated = true;
         }
 
-        if (!string.Equals(PostalCode, postalCode, StringComparison.OrdinalIgnoreCase))
+        // Postal code
+        if (postalCode is not null && !string.Equals(PostalCode, postalCode, StringComparison.OrdinalIgnoreCase))
         {
+            if (postalCode.Length > 20) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
             PostalCode = postalCode;
             isUpdated = true;
         }
 
+        // Manager fields
         if (!string.IsNullOrWhiteSpace(managerName) && !string.Equals(ManagerName, managerName, StringComparison.OrdinalIgnoreCase))
         {
+            if (managerName.Length > 100) throw new ArgumentException("Manager name must not exceed 100 characters", nameof(managerName));
             ManagerName = managerName;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(managerEmail) && !string.Equals(ManagerEmail, managerEmail, StringComparison.OrdinalIgnoreCase))
         {
+            if (managerEmail.Length > 255) throw new ArgumentException("Manager email must not exceed 255 characters", nameof(managerEmail));
+            if (!EmailRegex.IsMatch(managerEmail)) throw new ArgumentException("Manager email format is invalid", nameof(managerEmail));
             ManagerEmail = managerEmail;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(managerPhone) && !string.Equals(ManagerPhone, managerPhone, StringComparison.OrdinalIgnoreCase))
         {
+            if (managerPhone.Length > 50) throw new ArgumentException("Manager phone must not exceed 50 characters", nameof(managerPhone));
             ManagerPhone = managerPhone;
             isUpdated = true;
         }
 
+        // Total capacity: cannot reduce below used capacity
         if (totalCapacity.HasValue && TotalCapacity != totalCapacity.Value)
         {
+            if (totalCapacity.Value <= 0) throw new ArgumentException("Total capacity must be greater than 0", nameof(totalCapacity));
+            if (totalCapacity.Value < UsedCapacity)
+            {
+                // Business rule: cannot set total capacity below currently used capacity
+                throw new Exceptions.Warehouse.WarehouseCapacityExceededException(Id, totalCapacity.Value, UsedCapacity);
+            }
+
             TotalCapacity = totalCapacity.Value;
             isUpdated = true;
         }
 
+        // Capacity unit
         if (!string.IsNullOrWhiteSpace(capacityUnit) && !string.Equals(CapacityUnit, capacityUnit, StringComparison.OrdinalIgnoreCase))
         {
+            if (capacityUnit.Length > 20) throw new ArgumentException("Capacity unit must not exceed 20 characters", nameof(capacityUnit));
             CapacityUnit = capacityUnit;
             isUpdated = true;
         }
@@ -429,16 +457,23 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
     public Warehouse UpdateCapacityUsage(decimal usedCapacity)
     {
+        // Enforce strict validation: cannot be negative or exceed TotalCapacity
+        if (usedCapacity < 0)
+            throw new ArgumentException("Used capacity cannot be negative", nameof(usedCapacity));
+
+        if (usedCapacity > TotalCapacity)
+            throw new Exceptions.Warehouse.WarehouseCapacityExceededException(Id, TotalCapacity, usedCapacity);
+
         if (UsedCapacity != usedCapacity)
         {
             var previousUsage = UsedCapacity;
-            UsedCapacity = Math.Max(0, Math.Min(usedCapacity, TotalCapacity));
-            
-            QueueDomainEvent(new WarehouseCapacityUpdated 
-            { 
-                Warehouse = this, 
-                PreviousUsage = previousUsage, 
-                NewUsage = UsedCapacity 
+            UsedCapacity = usedCapacity;
+
+            QueueDomainEvent(new WarehouseCapacityUpdated
+            {
+                Warehouse = this,
+                PreviousUsage = previousUsage,
+                NewUsage = UsedCapacity
             });
         }
 
@@ -479,6 +514,12 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     {
         if (IsActive)
         {
+            // Enforce business rule: cannot deactivate warehouses with current inventory
+            if (!CanBeDeactivated())
+            {
+                throw new Exceptions.Warehouse.WarehouseDeactivationNotAllowedException(Id, InventoryTransactions.Count);
+            }
+
             IsActive = false;
             QueueDomainEvent(new WarehouseDeactivated { Warehouse = this });
         }
@@ -566,6 +607,28 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
             QueueDomainEvent(new WarehouseUpdated { Warehouse = this });
         }
         
+        return this;
+    }
+
+    /// <summary>
+    /// Updates the warehouse code with validation.
+    /// </summary>
+    /// <param name="newCode">New warehouse code (e.g., "WH-NYC-01").</param>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
+    /// <exception cref="ArgumentException">Thrown when code is invalid.</exception>
+    public Warehouse UpdateCode(string newCode)
+    {
+        if (string.IsNullOrWhiteSpace(newCode)) throw new ArgumentException("Code is required", nameof(newCode));
+        if (newCode.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(newCode));
+        // allow uppercase letters, numbers and hyphens
+        if (!Regex.IsMatch(newCode, @"^[A-Z0-9-]+$")) throw new ArgumentException("Code must contain only uppercase letters, numbers, and hyphens", nameof(newCode));
+
+        if (!string.Equals(Code, newCode, StringComparison.OrdinalIgnoreCase))
+        {
+            Code = newCode;
+            QueueDomainEvent(new WarehouseUpdated { Warehouse = this });
+        }
+
         return this;
     }
 

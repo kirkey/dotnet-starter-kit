@@ -6,8 +6,12 @@ public class CreatePurchaseOrderCommandValidator : AbstractValidator<CreatePurch
     {
         RuleFor(x => x.OrderNumber)
             .NotEmpty().WithMessage("Order number is required")
-            .MaximumLength(50).WithMessage("Order number must not exceed 50 characters")
+            .MaximumLength(100).WithMessage("Order number must not exceed 100 characters")
             .Matches("^[A-Z0-9-]+$").WithMessage("Order number must contain only uppercase letters, numbers and hyphens");
+
+        RuleFor(x => x.Status)
+            .Must(PurchaseOrderStatus.IsAllowed)
+            .WithMessage("Status is invalid");
 
         RuleFor(x => x.SupplierId).NotEmpty().WithMessage("Supplier is required");
 
@@ -28,10 +32,8 @@ public class CreatePurchaseOrderCommandValidator : AbstractValidator<CreatePurch
             return existing is null;
         }).WithMessage("A purchase order with the same OrderNumber already exists.");
 
-        RuleFor(x => x.ContactPhone)
-            .MaximumLength(50).WithMessage("Contact phone must not exceed 50 characters");
-
-        RuleFor(x => x.DeliveryAddress)
-            .MaximumLength(500).WithMessage("Delivery address must not exceed 500 characters");
+        RuleFor(x => x.ContactPerson).MaximumLength(100);
+        RuleFor(x => x.ContactPhone).MaximumLength(50);
+        RuleFor(x => x.DeliveryAddress).MaximumLength(500);
     }
 }

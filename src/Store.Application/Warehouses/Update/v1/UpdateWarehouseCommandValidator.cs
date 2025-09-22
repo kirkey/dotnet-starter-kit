@@ -17,10 +17,10 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
         RuleFor(x => x.Code)
             .NotEmpty()
             .WithMessage("Warehouse code is required")
-            .MaximumLength(20)
-            .WithMessage("Warehouse code must not exceed 20 characters")
-            .Matches(@"^[A-Z0-9]+$")
-            .WithMessage("Warehouse code must contain only uppercase letters and numbers")
+            .MaximumLength(50)
+            .WithMessage("Warehouse code must not exceed 50 characters")
+            .Matches(@"^[A-Z0-9\-]+$")
+            .WithMessage("Warehouse code must contain only uppercase letters, numbers, and hyphens")
             .MustAsync(async (cmd, code, ct) =>
             {
                 var existing = await repository.FirstOrDefaultAsync(new WarehouseByCodeSpec(code), ct).ConfigureAwait(false);
@@ -78,7 +78,14 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
 
         RuleFor(x => x.TotalCapacity)
             .GreaterThan(0)
-            .WithMessage("Total capacity must be greater than 0");
+            .WithMessage("Total capacity must be greater than 0")
+            .MustAsync(async (cmd, totalCapacity, ct) =>
+            {
+                // Ensure we don't reduce total capacity below currently used capacity
+                var warehouse = await repository.GetByIdAsync(cmd.Id, ct).ConfigureAwait(false);
+                if (warehouse is null) return true; // other rules will catch missing warehouse
+                return totalCapacity >= warehouse.UsedCapacity;
+            }).WithMessage("Total capacity cannot be less than the current used capacity of the warehouse");
 
         RuleFor(x => x.CapacityUnit)
             .NotEmpty()

@@ -1,4 +1,5 @@
 using Store.Domain.Exceptions.Supplier;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Create.v1;
 
@@ -15,6 +16,8 @@ public sealed class CreatePurchaseOrderHandler(
         // Verify supplier exists
         var supplier = await supplierRepository.GetByIdAsync(request.SupplierId, cancellationToken).ConfigureAwait(false);
         _ = supplier ?? throw new SupplierNotFoundException(request.SupplierId);
+        if (!supplier.IsActive)
+            throw new ConflictException($"Supplier '{supplier.Id}' is inactive and cannot accept new purchase orders.");
 
         var po = PurchaseOrder.Create(
             request.OrderNumber,
@@ -33,4 +36,3 @@ public sealed class CreatePurchaseOrderHandler(
         return new CreatePurchaseOrderResponse(po.Id);
     }
 }
-
