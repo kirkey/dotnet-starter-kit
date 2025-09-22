@@ -4,7 +4,6 @@ using Accounting.Infrastructure.Endpoints.Billing.v1;
 using Accounting.Infrastructure.Endpoints.Budgets.v1;
 using Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
-using Accounting.Infrastructure.Endpoints.Customers.v1;
 using Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
 using Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 using Accounting.Infrastructure.Endpoints.Inventory.v1;
@@ -50,13 +49,6 @@ public static class AccountingModule
             vendor.MapVendorSearchEndpoint();
             vendor.MapVendorUpdateEndpoint();
             vendor.MapVendorDeleteEndpoint();
-
-            var customer = app.MapGroup("customers").WithTags("customers");
-            customer.MapCustomerCreateEndpoint();
-            customer.MapCustomerGetEndpoint();
-            customer.MapCustomerSearchEndpoint();
-            customer.MapCustomerUpdateEndpoint();
-            customer.MapCustomerDeleteEndpoint();
 
             var projects = app.MapGroup("projects").WithTags("projects");
             projects.MapProjectCreateEndpoint();
@@ -151,8 +143,6 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
         builder.Services.AddScoped<IRepository<Consumption>, AccountingRepository<Consumption>>();
         builder.Services.AddScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>();
-        builder.Services.AddScoped<IRepository<Customer>, AccountingRepository<Customer>>();
-        builder.Services.AddScoped<IReadRepository<Customer>, AccountingRepository<Customer>>();
         builder.Services.AddScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>();
         builder.Services.AddScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>();
         builder.Services.AddScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>();
@@ -206,8 +196,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Consumption>, AccountingRepository<Consumption>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>("accounting");
-        builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting");
@@ -260,8 +248,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
         builder.Services.AddKeyedScoped<IRepository<Consumption>, AccountingRepository<Consumption>>("accounting:Consumption");
         builder.Services.AddKeyedScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>("accounting:Consumption");
-        builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
-        builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
         builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");
         builder.Services.AddKeyedScoped<IReadRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");
         builder.Services.AddKeyedScoped<IRepository<FixedAsset>, AccountingRepository<FixedAsset>>("accounting:fixedassets");

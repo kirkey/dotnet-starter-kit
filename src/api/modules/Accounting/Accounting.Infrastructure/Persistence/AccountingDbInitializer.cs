@@ -143,21 +143,6 @@ internal sealed class AccountingDbInitializer(
             logger.LogInformation("[{Tenant}] seeded DepreciationMethods", context.TenantInfo!.Identifier);
         }
 
-        // Seed Customers (increase count)
-        if (!await context.Customers.AnyAsync(cancellationToken).ConfigureAwait(false))
-        {
-            var customers = new List<Customer>();
-            for (int i = 1; i <= 10; i++)
-            {
-                var num = $"CUST-{1000 + i}";
-                customers.Add(Customer.Create(num, $"Customer {i}", $"{i} Example St", null, $"Contact {i}", $"cust{i}@example.com", "Net 30", "4010", "Service Revenue", null, $"+1555000{i:D4}", 10000m + i * 1000m, $"Seeded customer {i}"));
-            }
-
-            await context.Customers.AddRangeAsync(customers, cancellationToken).ConfigureAwait(false);
-            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            logger.LogInformation("[{Tenant}] seeded {Count} Customers", context.TenantInfo!.Identifier, customers.Count);
-        }
-
         // Seed Vendors (increase count)
         if (!await context.Vendors.AnyAsync(cancellationToken).ConfigureAwait(false))
         {

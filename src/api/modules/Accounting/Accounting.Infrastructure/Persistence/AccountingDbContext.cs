@@ -19,7 +19,6 @@ public sealed class AccountingDbContext(
     public DbSet<BudgetDetail> BudgetDetails { get; set; } = null!; // Re-added: BudgetDetail is now a regular entity (HasMany relationship)
     public DbSet<ChartOfAccount> ChartOfAccounts { get; set; } = null!;
     public DbSet<Consumption> Consumption { get; set; } = null!;
-    public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<DepreciationMethod> DepreciationMethods { get; set; } = null!;
     public DbSet<FixedAsset> FixedAssets { get; set; } = null!;
     public DbSet<GeneralLedger> GeneralLedgers { get; set; } = null!;
