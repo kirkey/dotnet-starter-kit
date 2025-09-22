@@ -35,7 +35,9 @@ public class BudgetDetailConfiguration : IEntityTypeConfiguration<BudgetDetail>
 
         builder.HasIndex(x => x.BudgetId);
 
+        // Ensure one detail per (BudgetId, AccountId)
+        builder.HasIndex(x => new { x.BudgetId, x.AccountId }).IsUnique();
+
         // Relationship to Budget is configured from BudgetConfiguration.HasMany(...).WithOne()
     }
 }
-

@@ -19,6 +19,11 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
         builder.Property(x => x.PeriodId)
             .IsRequired();
 
+        // PeriodName is a denormalized display field
+        builder.Property(x => x.PeriodName)
+            .HasMaxLength(128)
+            .IsRequired();
+
         builder.Property(x => x.FiscalYear)
             .IsRequired();
 
@@ -53,6 +58,10 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
             .WithOne()
             .HasForeignKey(x => x.BudgetId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Ensure EF uses the backing field for change tracking to reliably detect additions
+        var navigation = builder.Metadata.FindNavigation(nameof(Budget.BudgetDetails));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
 
         // Note: Property-level configuration for BudgetDetail is handled in BudgetDetailConfiguration
     }

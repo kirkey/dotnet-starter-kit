@@ -1,9 +1,10 @@
-@page "/accounting-budgetdetails/{BudgetId:guid}"
+@page "/accounting-budgetdetails/{budgetId:guid}"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
 @namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets
 
-<PageHeader Title="Budget Lines" Header="Budget Lines" SubHeader="Manage Budget Lines for the selected Budget." />
+<PageHeader Title="Budget Details" Header="Budget Details" SubHeader="Manage Budget Details for the selected Budget." />
 
-<EntityTable @ref="_table" TEntity="BudgetLineResponse" TId="DefaultIdType" TRequest="BudgetDetailViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="BudgetDetailResponse" TId="DefaultIdType" TRequest="BudgetDetailViewModel" Context="@Context">
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
@@ -11,15 +12,23 @@
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
             </MudItem>
         }
+        <MudItem xs="12">
+            <AutocompleteChartOfAccountId @bind-Value="context.AccountId"
+                                          For="@(() => context.AccountId)"
+                                          Label="Chart of Account"
+                                          Variant="Variant.Filled" />
+        </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField @bind-Value="context.BudgetedAmount"
                              For="@(() => context.BudgetedAmount)"
+                             Format="N2"
                              Label="Budgeted Amount"
                              Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField @bind-Value="context.ActualAmount"
                              For="@(() => context.ActualAmount)"
+                             Format="N2"
                              Label="Actual Amount"
                              Variant="Variant.Filled" />
         </MudItem>

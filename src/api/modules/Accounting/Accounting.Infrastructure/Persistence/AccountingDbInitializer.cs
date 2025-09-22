@@ -71,15 +71,30 @@ internal sealed class AccountingDbInitializer(
             if (!await context.Budgets.AnyAsync(cancellationToken).ConfigureAwait(false))
             {
                 var budget = Budget.Create("Default Operating Budget", period.Id, "Operating Budget", fiscalYear, "Operating", "Auto-created default budget");
-                // Add a few budget lines using the existing chart of accounts (if present)
+
+                // Add the budget to the context first so the entity is tracked
+                await context.Budgets.AddAsync(budget, cancellationToken).ConfigureAwait(false);
+
+                // Add a few budget details using the existing chart of accounts (if present)
                 var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1010", cancellationToken).ConfigureAwait(false);
                 var salariesAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
-                if (cashAccount != null)
-                    budget = budget.AddBudgetDetail(cashAccount.Id, 100000m, "Cash reserve");
-                if (salariesAccount != null)
-                    budget = budget.AddBudgetDetail(salariesAccount.Id, 50000m, "Salaries budget");
 
-                await context.Budgets.AddAsync(budget, cancellationToken).ConfigureAwait(false);
+                var seededDetails = new List<BudgetDetail>();
+                if (cashAccount is not null)
+                    seededDetails.Add(BudgetDetail.Create(budget.Id, cashAccount.Id, 100000m, "Cash reserve"));
+                if (salariesAccount is not null)
+                    seededDetails.Add(BudgetDetail.Create(budget.Id, salariesAccount.Id, 50000m, "Salaries budget"));
+
+                if (seededDetails.Count > 0)
+                {
+                    await context.BudgetDetails.AddRangeAsync(seededDetails, cancellationToken).ConfigureAwait(false);
+
+                    // Update budget totals to reflect seeded details
+                    var totalBudgeted = seededDetails.Sum(d => d.BudgetedAmount);
+                    var totalActual = seededDetails.Sum(d => d.ActualAmount);
+                    budget.SetTotals(totalBudgeted, totalActual);
+                }
+
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 logger.LogInformation("[{Tenant}] seeded default Budget {BudgetName}", context.TenantInfo!.Identifier, budget.Name);
             }

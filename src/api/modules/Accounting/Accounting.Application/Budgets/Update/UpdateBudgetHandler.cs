@@ -2,6 +2,7 @@ namespace Accounting.Application.Budgets.Update;
 
 using Exceptions;
 using Queries;
+using Microsoft.EntityFrameworkCore;
 
 public sealed class UpdateBudgetHandler(
     [FromKeyedServices("accounting:periods")] IReadRepository<AccountingPeriod> accountingPeriodRepository,
@@ -31,8 +32,15 @@ public sealed class UpdateBudgetHandler(
 
         budget.Update(request.PeriodId, period.Name, request.FiscalYear, name, request.BudgetType?.Trim(), request.Status?.Trim(), request.Description, request.Notes);
 
-        await repository.UpdateAsync(budget, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
+        try
+        {
+            // budget was loaded from the repository and is tracked by the DbContext; just save.
+            await repository.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConflictException("The budget was modified concurrently. Please reload and retry.");
+        }
 
         return new UpdateBudgetResponse(budget.Id);
     }

@@ -2,6 +2,7 @@ using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 using Accounting.Infrastructure.Endpoints.AccountReconciliation.v1;
 using Accounting.Infrastructure.Endpoints.Billing.v1;
 using Accounting.Infrastructure.Endpoints.Budgets.v1;
+using Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 using Accounting.Infrastructure.Endpoints.Customers.v1;
 using Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
@@ -76,12 +77,14 @@ public static class AccountingModule
             budgets.MapBudgetGetEndpoint();
             budgets.MapBudgetUpdateEndpoint();
             budgets.MapBudgetDeleteEndpoint();
-            // Budget line endpoints (add/update/delete lines)
-            budgets.MapBudgetAddLineEndpoint();
-            budgets.MapBudgetUpdateLineEndpoint();
-            budgets.MapBudgetDeleteLineEndpoint();
-            // Get all lines for a budget (non-paginated)
-            budgets.MapBudgetGetLinesEndpoint();
+
+            // New budget details endpoints group
+            var details = app.MapGroup("budgetdetails").WithTags("budgetdetails");
+            details.MapBudgetDetailSearchEndpoint();
+            details.MapBudgetDetailCreateEndpoint();
+            details.MapBudgetDetailGetEndpoint();
+            details.MapBudgetDetailUpdateEndpoint();
+            details.MapBudgetDetailDeleteEndpoint();
 
             var fixedAssets = app.MapGroup("fixedassets").WithTags("fixedassets");
             fixedAssets.MapFixedAssetSearchEndpoint();
