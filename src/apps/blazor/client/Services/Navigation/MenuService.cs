@@ -99,7 +99,8 @@ public class MenuService : IMenuService
                     MenuItems =
                     [
                         new MenuSectionSubItemModel { Title = "Categories", Icon = Icons.Material.Filled.Category, Href = "/store/categories", Action = FshActions.View, Resource = FshResources.Store },
-                        new MenuSectionSubItemModel { Title = "Suppliers", Icon = Icons.Material.Filled.Category, Href = "/store/suppliers", Action = FshActions.View, Resource = FshResources.Store },
+                        new MenuSectionSubItemModel { Title = "Suppliers", Icon = Icons.Material.Filled.Groups, Href = "/store/suppliers", Action = FshActions.View, Resource = FshResources.Store },
+                        new MenuSectionSubItemModel { Title = "Customers", Icon = Icons.Material.Filled.Groups, Href = "/store/customers", Action = FshActions.View, Resource = FshResources.Store },
                         new MenuSectionSubItemModel { Title = "Grocery Items", Icon = Icons.Material.Filled.Category, Href = "/store/grocery-items", Action = FshActions.View, Resource = FshResources.Store },
                     ]
                 },

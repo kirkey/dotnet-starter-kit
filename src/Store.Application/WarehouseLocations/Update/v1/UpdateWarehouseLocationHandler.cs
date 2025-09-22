@@ -1,4 +1,3 @@
-
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Update.v1;
 
 public sealed class UpdateWarehouseLocationHandler(
@@ -20,6 +19,15 @@ public sealed class UpdateWarehouseLocationHandler(
             var warehouse = await warehouseRepository.GetByIdAsync(request.WarehouseId, cancellationToken).ConfigureAwait(false);
             _ = warehouse ?? throw new WarehouseNotFoundException(request.WarehouseId);
         }
+
+        // Enforce business rule: cannot deactivate a location that contains inventory or used capacity
+        if (warehouseLocation.IsActive && !request.IsActive)
+        {
+            if (!warehouseLocation.CanBeDeactivated())
+            {
+                throw new WarehouseLocationDeactivationNotAllowedException(warehouseLocation.Id, warehouseLocation.UsedCapacity);
+            }
+        }
         
         var updatedWarehouseLocation = warehouseLocation.Update(
             request.Name,
@@ -38,6 +46,12 @@ public sealed class UpdateWarehouseLocationHandler(
             request.MinTemperature,
             request.MaxTemperature,
             request.TemperatureUnit);
+
+        // If temperature settings changed, use the domain helper to validate and event
+        if (request.RequiresTemperatureControl)
+        {
+            updatedWarehouseLocation.UpdateTemperatureSettings(request.RequiresTemperatureControl, request.MinTemperature, request.MaxTemperature, request.TemperatureUnit);
+        }
             
         await repository.UpdateAsync(updatedWarehouseLocation, cancellationToken).ConfigureAwait(false);
         

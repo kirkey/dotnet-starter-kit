@@ -178,6 +178,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
     public ICollection<WholesaleContract> WholesaleContracts { get; private set; } = new List<WholesaleContract>();
 
     private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex PhoneRegex = new(@"^[0-9+()\-\s]{5,50}$", RegexOptions.Compiled);
 
     private Customer() { }
 
@@ -221,6 +222,7 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
 
         if (string.IsNullOrWhiteSpace(phone)) throw new ArgumentException("Phone is required", nameof(phone));
         if (phone.Length > 50) throw new ArgumentException("Phone must not exceed 50 characters", nameof(phone));
+        if (!PhoneRegex.IsMatch(phone)) throw new ArgumentException("Phone format is invalid", nameof(phone));
 
         if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Address is required", nameof(address));
         if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
@@ -466,117 +468,188 @@ public sealed class Customer : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
+            if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
             Name = name;
             isUpdated = true;
         }
 
         if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
         {
+            if (description is { Length: > 2000 }) throw new ArgumentException("Description must not exceed 2000 characters", nameof(description));
             Description = description;
             isUpdated = true;
         }
 
         if (!string.Equals(Code, code, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is required", nameof(code));
+            if (code.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
             Code = code;
             isUpdated = true;
         }
 
         if (!string.Equals(CustomerType, customerType, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(customerType)) throw new ArgumentException("CustomerType is required", nameof(customerType));
+            if (customerType.Length > 50) throw new ArgumentException("CustomerType must not exceed 50 characters", nameof(customerType));
             CustomerType = customerType;
             isUpdated = true;
         }
 
         if (!string.Equals(ContactPerson, contactPerson, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(contactPerson)) throw new ArgumentException("ContactPerson is required", nameof(contactPerson));
+            if (contactPerson.Length > 100) throw new ArgumentException("ContactPerson must not exceed 100 characters", nameof(contactPerson));
             ContactPerson = contactPerson;
             isUpdated = true;
         }
 
         if (!string.Equals(Email, email, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email is required", nameof(email));
+            if (email.Length > 255) throw new ArgumentException("Email must not exceed 255 characters", nameof(email));
+            if (!EmailRegex.IsMatch(email)) throw new Exceptions.Customer.InvalidCustomerEmailException(email);
             Email = email;
             isUpdated = true;
         }
 
         if (!string.Equals(Phone, phone, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(phone)) throw new ArgumentException("Phone is required", nameof(phone));
+            if (phone.Length > 50) throw new ArgumentException("Phone must not exceed 50 characters", nameof(phone));
+            if (!PhoneRegex.IsMatch(phone)) throw new ArgumentException("Phone format is invalid", nameof(phone));
             Phone = phone;
             isUpdated = true;
         }
 
         if (!string.Equals(Address, address, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Address is required", nameof(address));
+            if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
             Address = address;
             isUpdated = true;
         }
 
         if (!string.Equals(City, city, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentException("City is required", nameof(city));
+            if (city.Length > 100) throw new ArgumentException("City must not exceed 100 characters", nameof(city));
             City = city;
             isUpdated = true;
         }
 
         if (!string.Equals(State, state, StringComparison.OrdinalIgnoreCase))
         {
+            if (state is { Length: > 100 }) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
             State = state;
             isUpdated = true;
         }
 
         if (!string.Equals(Country, country, StringComparison.OrdinalIgnoreCase))
         {
+            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentException("Country is required", nameof(country));
+            if (country.Length > 100) throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
             Country = country;
             isUpdated = true;
         }
 
         if (!string.Equals(PostalCode, postalCode, StringComparison.OrdinalIgnoreCase))
         {
+            if (postalCode is { Length: > 20 }) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
             PostalCode = postalCode;
             isUpdated = true;
         }
 
         if (CreditLimit != creditLimit)
         {
+            if (creditLimit < 0m) throw new ArgumentException("CreditLimit cannot be negative", nameof(creditLimit));
+            var previous = CreditLimit;
             CreditLimit = creditLimit;
+            QueueDomainEvent(new Events.CustomerCreditLimitChanged { Customer = this, PreviousCreditLimit = previous, NewCreditLimit = CreditLimit });
             isUpdated = true;
         }
 
         if (PaymentTermsDays != paymentTermsDays)
         {
+            if (paymentTermsDays < 0) throw new ArgumentException("PaymentTermsDays must be zero or greater", nameof(paymentTermsDays));
             PaymentTermsDays = paymentTermsDays;
             isUpdated = true;
         }
 
         if (DiscountPercentage != discountPercentage)
         {
+            if (discountPercentage is < 0m or > 100m) throw new ArgumentException("DiscountPercentage must be between 0 and 100", nameof(discountPercentage));
             DiscountPercentage = discountPercentage;
             isUpdated = true;
         }
 
         if (!string.Equals(TaxNumber, taxNumber, StringComparison.OrdinalIgnoreCase))
         {
+            if (taxNumber is { Length: > 50 }) throw new ArgumentException("TaxNumber must not exceed 50 characters", nameof(taxNumber));
             TaxNumber = taxNumber;
             isUpdated = true;
         }
 
         if (!string.Equals(BusinessLicense, businessLicense, StringComparison.OrdinalIgnoreCase))
         {
+            if (businessLicense is { Length: > 100 }) throw new ArgumentException("BusinessLicense must not exceed 100 characters", nameof(businessLicense));
             BusinessLicense = businessLicense;
             isUpdated = true;
         }
 
         if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
         {
+            if (notes is { Length: > 2000 }) throw new ArgumentException("Notes must not exceed 2000 characters", nameof(notes));
             Notes = notes;
             isUpdated = true;
         }
 
         if (isUpdated)
         {
-            QueueDomainEvent(new CustomerUpdated { Customer = this });
+            QueueDomainEvent(new Events.CustomerUpdated { Customer = this });
         }
 
+        return this;
+    }
+
+    /// <summary>
+    /// Activates the customer account if not already active.
+    /// </summary>
+    public Customer Activate()
+    {
+        if (!IsActive)
+        {
+            IsActive = true;
+            QueueDomainEvent(new Events.CustomerActivated { Customer = this });
+        }
+        return this;
+    }
+
+    /// <summary>
+    /// Deactivates the customer account if currently active.
+    /// </summary>
+    public Customer Deactivate()
+    {
+        if (IsActive)
+        {
+            IsActive = false;
+            QueueDomainEvent(new Events.CustomerDeactivated { Customer = this });
+        }
+        return this;
+    }
+
+    /// <summary>
+    /// Changes the customer's credit limit with validation and emits a domain event when changed.
+    /// </summary>
+    public Customer ChangeCreditLimit(decimal newCreditLimit)
+    {
+        if (newCreditLimit < 0m) throw new ArgumentException("CreditLimit cannot be negative", nameof(newCreditLimit));
+        if (newCreditLimit != CreditLimit)
+        {
+            var prev = CreditLimit;
+            CreditLimit = newCreditLimit;
+            QueueDomainEvent(new Events.CustomerCreditLimitChanged { Customer = this, PreviousCreditLimit = prev, NewCreditLimit = CreditLimit });
+        }
         return this;
     }
 }

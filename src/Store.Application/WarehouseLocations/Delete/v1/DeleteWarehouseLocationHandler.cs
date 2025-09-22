@@ -1,4 +1,3 @@
-
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Delete.v1;
 
 public sealed class DeleteWarehouseLocationHandler(
@@ -12,6 +11,12 @@ public sealed class DeleteWarehouseLocationHandler(
         
         var warehouseLocation = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = warehouseLocation ?? throw new WarehouseLocationNotFoundException(request.Id);
+        
+        // Enforce business rule: cannot delete location with used capacity or stored items
+        if (!warehouseLocation.CanBeDeleted())
+        {
+            throw new WarehouseLocationDeletionNotAllowedException(warehouseLocation.Id, warehouseLocation.UsedCapacity);
+        }
         
         await repository.DeleteAsync(warehouseLocation, cancellationToken).ConfigureAwait(false);
         

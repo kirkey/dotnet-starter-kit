@@ -25,3 +25,19 @@ public record CustomerLifetimeValueUpdated : DomainEvent
     public decimal AdditionalValue { get; init; }
 }
 
+public record CustomerActivated : DomainEvent
+{
+    public Customer Customer { get; init; } = default!;
+}
+
+public record CustomerDeactivated : DomainEvent
+{
+    public Customer Customer { get; init; } = default!;
+}
+
+public record CustomerCreditLimitChanged : DomainEvent
+{
+    public Customer Customer { get; init; } = default!;
+    public decimal PreviousCreditLimit { get; init; }
+    public decimal NewCreditLimit { get; init; }
+}

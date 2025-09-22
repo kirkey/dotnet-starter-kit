@@ -132,10 +132,17 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     public bool IsActive { get; private set; } = true;
 
     /// <summary>
-    /// Indicates if the warehouse is the main warehouse.
+    /// Indicates if this is the main warehouse (default: false).
     /// Default: false. Only one warehouse should be marked as main.
     /// </summary>
     public bool IsMainWarehouse { get; private set; }
+
+    /// <summary>
+    /// Type of warehouse storage capabilities.
+    /// Example: "Standard", "Cold Storage", "Hazmat", "Frozen". Default: "Standard".
+    /// Max length: 50 characters.
+    /// </summary>
+    public string WarehouseType { get; private set; } = "Standard";
 
     /// <summary>
     /// Date of the last inventory count.
@@ -174,6 +181,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         string managerPhone,
         decimal totalCapacity,
         string capacityUnit,
+        string warehouseType,
         bool isActive,
         bool isMainWarehouse)
     {
@@ -211,6 +219,9 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(capacityUnit)) throw new ArgumentException("Capacity unit is required", nameof(capacityUnit));
         if (capacityUnit.Length > 20) throw new ArgumentException("Capacity unit must not exceed 20 characters", nameof(capacityUnit));
 
+        if (string.IsNullOrWhiteSpace(warehouseType)) throw new ArgumentException("Warehouse type is required", nameof(warehouseType));
+        if (warehouseType.Length > 50) throw new ArgumentException("Warehouse type must not exceed 50 characters", nameof(warehouseType));
+
         Id = id;
         Name = name;
         Description = description;
@@ -226,6 +237,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         TotalCapacity = totalCapacity;
         UsedCapacity = 0;
         CapacityUnit = capacityUnit;
+        WarehouseType = warehouseType;
         IsActive = isActive;
         IsMainWarehouse = isMainWarehouse;
 
@@ -248,6 +260,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// <param name="managerPhone">Manager's phone number.</param>
     /// <param name="totalCapacity">Total storage capacity.</param>
     /// <param name="capacityUnit">Unit of measurement for capacity (default: "sqft").</param>
+    /// <param name="warehouseType">Type of warehouse storage (default: "Standard").</param>
     /// <param name="isActive">Indicates if the warehouse is active (default: true).</param>
     /// <param name="isMainWarehouse">Indicates if this is the main warehouse (default: false).</param>
     /// <returns>A new <see cref="Warehouse"/> instance.</returns>
@@ -265,6 +278,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         string managerPhone,
         decimal totalCapacity,
         string capacityUnit = "sqft",
+        string warehouseType = "Standard",
         bool isActive = true,
         bool isMainWarehouse = false)
     {
@@ -283,6 +297,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
             managerPhone,
             totalCapacity,
             capacityUnit,
+            warehouseType,
             isActive,
             isMainWarehouse);
     }
@@ -490,4 +505,79 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// <returns>True if near capacity, otherwise false.</returns>
     public bool IsNearCapacity(decimal thresholdPercentage = 90) => 
         GetCapacityUtilizationPercentage() >= thresholdPercentage;
+
+    /// <summary>
+    /// Assigns a new manager to the warehouse with proper validation and event tracking.
+    /// </summary>
+    /// <param name="newManagerName">New manager's full name.</param>
+    /// <param name="newManagerEmail">New manager's email address.</param>
+    /// <param name="newManagerPhone">New manager's phone number.</param>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
+    /// <exception cref="ArgumentException">Thrown when manager details are invalid.</exception>
+    public Warehouse AssignManager(string newManagerName, string newManagerEmail, string newManagerPhone)
+    {
+        // Validate new manager details
+        if (string.IsNullOrWhiteSpace(newManagerName)) throw new ArgumentException("Manager name is required", nameof(newManagerName));
+        if (newManagerName.Length > 100) throw new ArgumentException("Manager name must not exceed 100 characters", nameof(newManagerName));
+        
+        if (string.IsNullOrWhiteSpace(newManagerEmail)) throw new ArgumentException("Manager email is required", nameof(newManagerEmail));
+        if (newManagerEmail.Length > 255) throw new ArgumentException("Manager email must not exceed 255 characters", nameof(newManagerEmail));
+        if (!EmailRegex.IsMatch(newManagerEmail)) throw new ArgumentException("Manager email format is invalid", nameof(newManagerEmail));
+        
+        if (string.IsNullOrWhiteSpace(newManagerPhone)) throw new ArgumentException("Manager phone is required", nameof(newManagerPhone));
+        if (newManagerPhone.Length > 50) throw new ArgumentException("Manager phone must not exceed 50 characters", nameof(newManagerPhone));
+
+        var previousManagerName = ManagerName;
+        
+        // Only update if there's an actual change
+        if (!string.Equals(ManagerName, newManagerName, StringComparison.OrdinalIgnoreCase) ||
+            !string.Equals(ManagerEmail, newManagerEmail, StringComparison.OrdinalIgnoreCase) ||
+            !string.Equals(ManagerPhone, newManagerPhone, StringComparison.OrdinalIgnoreCase))
+        {
+            ManagerName = newManagerName;
+            ManagerEmail = newManagerEmail;
+            ManagerPhone = newManagerPhone;
+            
+            QueueDomainEvent(new WarehouseManagerAssigned 
+            { 
+                Warehouse = this, 
+                PreviousManagerName = previousManagerName, 
+                NewManagerName = newManagerName 
+            });
+        }
+        
+        return this;
+    }
+
+    /// <summary>
+    /// Updates the warehouse type with validation.
+    /// </summary>
+    /// <param name="newWarehouseType">New warehouse type (e.g., "Standard", "Cold Storage", "Hazmat").</param>
+    /// <returns>The updated <see cref="Warehouse"/> instance.</returns>
+    /// <exception cref="ArgumentException">Thrown when warehouse type is invalid.</exception>
+    public Warehouse UpdateWarehouseType(string newWarehouseType)
+    {
+        if (string.IsNullOrWhiteSpace(newWarehouseType)) throw new ArgumentException("Warehouse type is required", nameof(newWarehouseType));
+        if (newWarehouseType.Length > 50) throw new ArgumentException("Warehouse type must not exceed 50 characters", nameof(newWarehouseType));
+        
+        if (!string.Equals(WarehouseType, newWarehouseType, StringComparison.OrdinalIgnoreCase))
+        {
+            WarehouseType = newWarehouseType;
+            QueueDomainEvent(new WarehouseUpdated { Warehouse = this });
+        }
+        
+        return this;
+    }
+
+    /// <summary>
+    /// Validates if the warehouse can be safely deactivated (no current inventory).
+    /// </summary>
+    /// <returns>True if deactivation is allowed, false otherwise.</returns>
+    public bool CanBeDeactivated() => !InventoryTransactions.Any() || UsedCapacity == 0;
+
+    /// <summary>
+    /// Validates if the warehouse can be safely deleted (no transaction history).
+    /// </summary>
+    /// <returns>True if deletion is allowed, false otherwise.</returns>
+    public bool CanBeDeleted() => !InventoryTransactions.Any();
 }

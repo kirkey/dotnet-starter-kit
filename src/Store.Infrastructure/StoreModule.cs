@@ -1,4 +1,5 @@
 using Store.Infrastructure.Endpoints.Categories.v1;
+using Store.Infrastructure.Endpoints.Customers.v1;
 using Store.Infrastructure.Endpoints.CycleCounts.v1;
 using Store.Infrastructure.Endpoints.GroceryItems.v1;
 using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
@@ -29,13 +30,6 @@ public static class StoreModule
             groceryGroup.MapUpdateGroceryItemEndpoint();
             groceryGroup.MapDeleteGroceryItemEndpoint();
             groceryGroup.MapSearchGroceryItemsEndpoint();
-
-            // var customerGroup = app.MapGroup("customers").WithTags("Customers");
-            // customerGroup.MapCreateCustomerEndpoint();
-            // customerGroup.MapGetCustomerEndpoint();
-            // customerGroup.MapUpdateCustomerEndpoint();
-            // customerGroup.MapDeleteCustomerEndpoint();
-            // customerGroup.MapSearchCustomersEndpoint();
 
             var inventoryGroup = app.MapGroup("inventory-transfers").WithTags("Inventory Transfers");
             inventoryGroup.MapCreateInventoryTransferEndpoint();
@@ -115,18 +109,16 @@ public static class StoreModule
             suppliers.MapActivateSupplierEndpoint();
             suppliers.MapDeactivateSupplierEndpoint();
 
-            // Wholesale pricing endpoints
-            var wholesalePricingGroup = app.MapGroup("wholesale-pricings").WithTags("Wholesale Pricings");
-            wholesalePricingGroup.MapCreateWholesalePricingEndpoint();
-            wholesalePricingGroup.MapGetWholesalePricingEndpoint();
-            wholesalePricingGroup.MapUpdateWholesalePricingEndpoint();
-            wholesalePricingGroup.MapDeactivateWholesalePricingEndpoint();
-
-            // Wholesale contract endpoints
-            var wholesaleContracts = app.MapGroup("wholesale-contracts").WithTags("Wholesale Contracts");
-            wholesaleContracts.MapCreateWholesaleContractEndpoint();
-            wholesaleContracts.MapGetWholesaleContractEndpoint();
-            wholesaleContracts.MapUpdateWholesaleContractEndpoint();
+            // Customer endpoints
+            // var customers = app.MapGroup("customers").WithTags("Customers");
+            // customers.MapCreateCustomerEndpoint();
+            // customers.MapGetCustomerEndpoint();
+            // customers.MapUpdateCustomerEndpoint();
+            // customers.MapDeleteCustomerEndpoint();
+            // customers.MapSearchCustomersEndpoint();
+            // customers.MapActivateCustomerEndpoint();
+            // customers.MapDeactivateCustomerEndpoint();
+            // customers.MapChangeCustomerCreditLimitEndpoint();
         }
     }
 

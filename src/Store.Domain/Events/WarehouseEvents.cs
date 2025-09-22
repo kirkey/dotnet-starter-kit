@@ -32,3 +32,10 @@ public record WarehouseDeactivated : DomainEvent
 {
     public Warehouse Warehouse { get; init; } = default!;
 }
+
+public record WarehouseManagerAssigned : DomainEvent
+{
+    public Warehouse Warehouse { get; init; } = default!;
+    public string PreviousManagerName { get; init; } = default!;
+    public string NewManagerName { get; init; } = default!;
+}

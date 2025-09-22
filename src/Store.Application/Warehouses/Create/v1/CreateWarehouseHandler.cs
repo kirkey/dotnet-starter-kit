@@ -1,5 +1,3 @@
-
-
 namespace FSH.Starter.WebApi.Store.Application.Warehouses.Create.v1;
 
 public sealed class CreateWarehouseHandler(
@@ -25,6 +23,7 @@ public sealed class CreateWarehouseHandler(
             request.ManagerPhone,
             request.TotalCapacity,
             request.CapacityUnit,
+            request.WarehouseType,
             request.IsActive,
             request.IsMainWarehouse);
             

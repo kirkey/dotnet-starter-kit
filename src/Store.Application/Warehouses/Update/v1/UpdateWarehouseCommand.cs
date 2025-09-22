@@ -2,9 +2,9 @@ namespace FSH.Starter.WebApi.Store.Application.Warehouses.Update.v1;
 
 public record UpdateWarehouseCommand(
     DefaultIdType Id,
+    [property: DefaultValue("WH001")] string Code,
     [property: DefaultValue("Main Warehouse")] string Name,
     [property: DefaultValue("Primary storage facility")] string? Description,
-    [property: DefaultValue("WH001")] string Code,
     [property: DefaultValue("123 Storage Street")] string Address,
     [property: DefaultValue("New York")] string City,
     [property: DefaultValue("NY")] string? State,
@@ -15,5 +15,6 @@ public record UpdateWarehouseCommand(
     [property: DefaultValue("+1-555-123-4567")] string ManagerPhone,
     [property: DefaultValue(10000)] decimal TotalCapacity,
     [property: DefaultValue("sqft")] string CapacityUnit,
+    [property: DefaultValue("Standard")] string WarehouseType,
     [property: DefaultValue(true)] bool IsActive,
     [property: DefaultValue(false)] bool IsMainWarehouse) : IRequest<UpdateWarehouseResponse>;

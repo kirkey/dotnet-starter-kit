@@ -1,8 +1,12 @@
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Update.v1;
 
 public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateWarehouseLocationCommand>
 {
-    public UpdateWarehouseLocationCommandValidator()
+    public UpdateWarehouseLocationCommandValidator(
+        [FromKeyedServices("store:warehouse-locations")] IReadRepository<WarehouseLocation> repository,
+        [FromKeyedServices("store:warehouses")] IReadRepository<Warehouse> warehouseRepository)
     {
         RuleFor(x => x.Id)
             .NotEmpty()
@@ -23,8 +27,13 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
             .WithMessage("Location code is required")
             .MaximumLength(50)
             .WithMessage("Location code must not exceed 50 characters")
-            .Matches(@"^[A-Z0-9]+$")
-            .WithMessage("Location code must contain only uppercase letters and numbers");
+            .Matches(@"^[A-Z0-9\-]+$")
+            .WithMessage("Location code must contain only uppercase letters, numbers and hyphens")
+            .MustAsync(async (cmd, code, ct) =>
+            {
+                var existing = await repository.FirstOrDefaultAsync(new WarehouseLocationByCodeSpec(code), ct).ConfigureAwait(false);
+                return existing is null || existing.Id == cmd.Id;
+            }).WithMessage("Location code must be unique");
 
         RuleFor(x => x.Aisle)
             .NotEmpty()
@@ -50,7 +59,12 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
 
         RuleFor(x => x.WarehouseId)
             .NotEmpty()
-            .WithMessage("Warehouse ID is required");
+            .WithMessage("Warehouse ID is required")
+            .MustAsync(async (id, ct) =>
+            {
+                var w = await warehouseRepository.GetByIdAsync(id, ct).ConfigureAwait(false);
+                return w is not null;
+            }).WithMessage("Warehouse not found");
 
         RuleFor(x => x.LocationType)
             .NotEmpty()
@@ -69,8 +83,8 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
             .WithMessage("Capacity unit is required")
             .MaximumLength(20)
             .WithMessage("Capacity unit must not exceed 20 characters")
-            .Must(unit => new[] { "sqft", "sqm", "cbft", "cbm", "tons", "kg" }.Contains(unit?.ToLower()))
-            .WithMessage("Capacity unit must be one of: sqft, sqm, cbft, cbm, tons, kg");
+            .Must(unit => new[] { "sqft", "sqm", "cbft", "cbm", "tons", "kg", "units" }.Contains(unit?.ToLower()))
+            .WithMessage("Capacity unit must be one of: sqft, sqm, cbft, cbm, tons, kg, units");
 
         When(x => x.RequiresTemperatureControl, () =>
         {
@@ -90,5 +104,19 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
                 .Must(unit => new[] { "C", "F" }.Contains(unit))
                 .WithMessage("Temperature unit must be either 'C' or 'F'");
         });
+
+        // Business rule: cannot deactivate a location that still contains inventory or used capacity
+        RuleFor(x => x)
+            .MustAsync(async (cmd, ct) =>
+            {
+                if (!cmd.IsActive)
+                {
+                    var existing = await repository.GetByIdAsync(cmd.Id, ct).ConfigureAwait(false);
+                    return existing?.CanBeDeactivated() ?? false;
+                }
+                return true;
+            })
+            .WithMessage("Cannot deactivate warehouse location with used capacity or stored items. Remove or relocate inventory before deactivating.")
+            .When(x => !x.IsActive);
     }
 }

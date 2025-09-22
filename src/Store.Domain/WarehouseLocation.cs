@@ -165,6 +165,9 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(capacityUnit)) throw new ArgumentException("CapacityUnit is required", nameof(capacityUnit));
         if (capacityUnit.Length > 20) throw new ArgumentException("CapacityUnit must not exceed 20 characters", nameof(capacityUnit));
 
+        if (string.IsNullOrWhiteSpace(locationType)) throw new ArgumentException("LocationType is required", nameof(locationType));
+        if (locationType.Length > 50) throw new ArgumentException("LocationType must not exceed 50 characters", nameof(locationType));
+
         if (requiresTemperatureControl)
         {
             if (!minTemperature.HasValue) throw new ArgumentException("MinTemperature is required when temperature control is enabled", nameof(minTemperature));
@@ -304,6 +307,7 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(locationType) && !string.Equals(LocationType, locationType, StringComparison.OrdinalIgnoreCase))
         {
+            if (locationType.Length > 50) throw new ArgumentException("LocationType must not exceed 50 characters", nameof(locationType));
             LocationType = locationType;
             isUpdated = true;
         }
@@ -375,6 +379,42 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
 
         return this;
     }
+
+    /// <summary>
+    /// Update temperature control settings with validation and eventing.
+    /// </summary>
+    public WarehouseLocation UpdateTemperatureSettings(bool requiresTemperatureControl, decimal? minTemperature, decimal? maxTemperature, string? temperatureUnit)
+    {
+        if (requiresTemperatureControl)
+        {
+            if (!minTemperature.HasValue) throw new ArgumentException("MinTemperature is required when temperature control is enabled", nameof(minTemperature));
+            if (!maxTemperature.HasValue) throw new ArgumentException("MaxTemperature is required when temperature control is enabled", nameof(maxTemperature));
+            if (maxTemperature.Value <= minTemperature.Value) throw new ArgumentException("MaxTemperature must be greater than MinTemperature", nameof(maxTemperature));
+            if (string.IsNullOrWhiteSpace(temperatureUnit)) throw new ArgumentException("TemperatureUnit is required when temperature control is enabled", nameof(temperatureUnit));
+            if (!(temperatureUnit is "C" or "F")) throw new ArgumentException("TemperatureUnit must be 'C' or 'F'", nameof(temperatureUnit));
+        }
+
+        if (RequiresTemperatureControl != requiresTemperatureControl || MinTemperature != minTemperature || MaxTemperature != maxTemperature || !string.Equals(TemperatureUnit, temperatureUnit, StringComparison.OrdinalIgnoreCase))
+        {
+            RequiresTemperatureControl = requiresTemperatureControl;
+            MinTemperature = minTemperature;
+            MaxTemperature = maxTemperature;
+            TemperatureUnit = temperatureUnit;
+            QueueDomainEvent(new WarehouseLocationUpdated { WarehouseLocation = this });
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Returns true if the location can be deactivated safely (no used capacity and no stored items).
+    /// </summary>
+    public bool CanBeDeactivated() => UsedCapacity == 0 && (GroceryItems == null || !GroceryItems.Any());
+
+    /// <summary>
+    /// Returns true if the location can be deleted safely (no used capacity and no stored items).
+    /// </summary>
+    public bool CanBeDeleted() => UsedCapacity == 0 && (GroceryItems == null || !GroceryItems.Any());
 
     public WarehouseLocation Activate()
     {
