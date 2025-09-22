@@ -1,5 +1,4 @@
 using Store.Infrastructure.Endpoints.Categories.v1;
-using Store.Infrastructure.Endpoints.Customers.v1;
 using Store.Infrastructure.Endpoints.CycleCounts.v1;
 using Store.Infrastructure.Endpoints.GroceryItems.v1;
 using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
@@ -113,6 +112,8 @@ public static class StoreModule
             suppliers.MapUpdateSupplierEndpoint();
             suppliers.MapDeleteSupplierEndpoint();
             suppliers.MapSearchSuppliersEndpoint();
+            suppliers.MapActivateSupplierEndpoint();
+            suppliers.MapDeactivateSupplierEndpoint();
 
             // Wholesale pricing endpoints
             var wholesalePricingGroup = app.MapGroup("wholesale-pricings").WithTags("Wholesale Pricings");

@@ -1,0 +1,73 @@
+@page "/store/suppliers"
+
+<PageHeader Title="Suppliers" Header="Store Suppliers" SubHeader="Manage supplier contacts and terms." />
+
+<EntityTable @ref="_table" TEntity="SupplierResponse" TId="DefaultIdType" TRequest="SupplierViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Supplier Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Contact Person" For="@(() => context.ContactPerson)" @bind-Value="context.ContactPerson" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Email" For="@(() => context.Email)" @bind-Value="context.Email" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Phone" For="@(() => context.Phone)" @bind-Value="context.Phone" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="8">
+            <MudTextField Label="Address" For="@(() => context.Address)" @bind-Value="context.Address" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudTextField Label="City" For="@(() => context.City)" @bind-Value="context.City" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudTextField Label="State" For="@(() => context.State)" @bind-Value="context.State" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Country" For="@(() => context.Country)" @bind-Value="context.Country" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Postal Code" For="@(() => context.PostalCode)" @bind-Value="context.PostalCode" />
+        </MudItem>
+        <MudItem xs="12" md="8">
+            <MudTextField Label="Website" For="@(() => context.Website)" @bind-Value="context.Website" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal?" @bind-Value="context.CreditLimit" For="@(() => context.CreditLimit)" Label="Credit Limit" Immediate="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="int" @bind-Value="context.PaymentTermsDays" For="@(() => context.PaymentTermsDays)" Label="Payment Terms (Days)" Immediate="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch T="bool" @bind-Checked="context.IsActive" Color="Color.Primary">Active</MudSwitch>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal" @bind-Value="context.Rating" For="@(() => context.Rating)" Label="Rating (0-5)" Immediate="true" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

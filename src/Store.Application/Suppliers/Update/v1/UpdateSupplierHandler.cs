@@ -2,6 +2,9 @@ using Store.Domain.Exceptions.Supplier;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Update.v1;
 
+/// <summary>
+/// Handles updates to Supplier aggregates.
+/// </summary>
 public sealed class UpdateSupplierHandler(
     ILogger<UpdateSupplierHandler> logger,
     [FromKeyedServices("store:suppliers")] IRepository<Supplier> repository)
@@ -36,4 +39,3 @@ public sealed class UpdateSupplierHandler(
         return new UpdateSupplierResponse(supplier.Id);
     }
 }
-

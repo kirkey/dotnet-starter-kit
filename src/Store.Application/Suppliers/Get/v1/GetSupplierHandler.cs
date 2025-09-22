@@ -3,6 +3,9 @@ using Store.Domain.Exceptions.Supplier;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
 
+/// <summary>
+/// Handles retrieval of a single Supplier by identifier.
+/// </summary>
 public sealed class GetSupplierHandler(
     [FromKeyedServices("store:suppliers")] IReadRepository<Supplier> repository,
     ICacheService cache)
@@ -26,4 +29,3 @@ public sealed class GetSupplierHandler(
         return item!;
     }
 }
-

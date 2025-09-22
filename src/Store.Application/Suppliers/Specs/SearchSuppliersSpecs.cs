@@ -3,6 +3,9 @@ using FSH.Starter.WebApi.Store.Application.Suppliers.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
+/// <summary>
+/// Specification to filter and order suppliers for search queries.
+/// </summary>
 public class SearchSuppliersSpecs : EntitiesByPaginationFilterSpec<Supplier, SupplierResponse>
 {
     public SearchSuppliersSpecs(SearchSuppliersCommand command)

@@ -1,5 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Create.v1;
 
+/// <summary>
+/// Handles the creation of Supplier aggregates.
+/// </summary>
 public sealed class CreateSupplierHandler(
     ILogger<CreateSupplierHandler> logger,
     [FromKeyedServices("store:suppliers")] IRepository<Supplier> repository)
@@ -34,4 +37,3 @@ public sealed class CreateSupplierHandler(
         return new CreateSupplierResponse(supplier.Id);
     }
 }
-

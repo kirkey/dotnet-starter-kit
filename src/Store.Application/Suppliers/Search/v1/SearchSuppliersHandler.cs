@@ -3,6 +3,9 @@ using FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Search.v1;
 
+/// <summary>
+/// Handles paginated search queries for Suppliers using filtering and ordering.
+/// </summary>
 public sealed class SearchSuppliersHandler(
     [FromKeyedServices("store:suppliers")] IReadRepository<Supplier> repository)
     : IRequestHandler<SearchSuppliersCommand, PagedList<SupplierResponse>>

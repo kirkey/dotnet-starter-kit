@@ -7,25 +7,17 @@ public static class SearchSuppliersEndpoint
 {
     internal static RouteHandlerBuilder MapSearchSuppliersEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/", async (HttpRequest req, ISender sender) =>
-        {
-            var cmd = new SearchSuppliersCommand
+        return endpoints
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchSuppliersCommand command) =>
             {
-                PageNumber = int.TryParse(req.Query["pageNumber"], out var pn) ? pn : 1,
-                PageSize = int.TryParse(req.Query["pageSize"], out var ps) ? ps : 10,
-                Name = req.Query["name"],
-                Code = req.Query["code"],
-                City = req.Query["city"],
-                Country = req.Query["country"]
-            };
-
-            var result = await sender.Send(cmd).ConfigureAwait(false);
-            return Results.Ok(result);
-        })
-        .WithName("SearchSuppliers")
-        .WithSummary("Search suppliers")
-        .WithDescription("Searches suppliers with pagination and filters")
-        .Produces<PagedList<SupplierResponse>>()
-        .MapToApiVersion(1);
+                var response = await mediator.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(SearchSuppliersEndpoint))
+            .WithSummary("Search Suppliers")
+            .WithDescription("Searches Suppliers with pagination and filters")
+            .Produces<PagedList<SupplierResponse>>()
+            .RequirePermission("Permissions.Store.View")
+            .MapToApiVersion(1);
     }
 }

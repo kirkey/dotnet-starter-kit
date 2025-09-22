@@ -2,6 +2,9 @@ using Store.Domain.Exceptions.Supplier;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Delete.v1;
 
+/// <summary>
+/// Handles deletion of Supplier aggregates after validation.
+/// </summary>
 public sealed class DeleteSupplierHandler(
     ILogger<DeleteSupplierHandler> logger,
     [FromKeyedServices("store:suppliers")] IRepository<Supplier> repository)
@@ -16,4 +19,3 @@ public sealed class DeleteSupplierHandler(
         logger.LogInformation("Deleted supplier {SupplierId}", supplier.Id);
     }
 }
-
