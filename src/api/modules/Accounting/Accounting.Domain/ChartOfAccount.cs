@@ -1,5 +1,4 @@
 using Accounting.Domain.Events.ChartOfAccount;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Accounting.Domain;
 
@@ -144,7 +143,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
         if (at.Length > MaxAccountTypeLength)
             throw new ChartOfAccountInvalidException($"Account type cannot exceed {MaxAccountTypeLength} characters.");
 
-        var uc = (usoaCategory ?? string.Empty).Trim();
+        var uc = NormalizeUsoaCategory((usoaCategory ?? string.Empty).Trim());
         if (!IsValidUsoaCategory(uc))
             throw new ChartOfAccountInvalidException($"Invalid USOA category: {usoaCategory}");
         if (uc.Length > MaxUsoaCategoryLength)
@@ -232,7 +231,7 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(usoaCategory) && UsoaCategory != usoaCategory.Trim())
         {
-            var uc = usoaCategory.Trim();
+            var uc = NormalizeUsoaCategory(usoaCategory.Trim());
             if (!IsValidUsoaCategory(uc))
                 throw new ChartOfAccountInvalidException($"Invalid USOA category: {usoaCategory}");
             if (uc.Length > MaxUsoaCategoryLength)
@@ -361,16 +360,50 @@ public class ChartOfAccount : AuditableEntity, IAggregateRoot
 
     private static bool IsValidUsoaCategory(string usoaCategory)
     {
-        var validCategories = new[] { "Production", "Transmission", "Distribution", "Customer Accounts", 
-            "Customer Service", "Sales", "Administrative", "General", "Maintenance", "Operation" };
+        var validCategories = new[] { "Production", "Transmission", "Distribution", "Customer Accounts",
+            "Customer Service", "Sales", "Administrative", "General", "Maintenance", "Operation", "Operations",
+            // Common synonyms / abbreviations used in seed data
+            "COGS", "Inventory" };
         return validCategories.Contains(usoaCategory.Trim(), StringComparer.OrdinalIgnoreCase);
     }
 
-    private static int CalculateAccountLevel(string? parentCode)
+    /// <summary>
+    /// Normalize common USOA category synonyms to canonical short values that fit storage constraints.
+    /// Examples: "Cost of Goods Sold" -> "COGS".
+    /// </summary>
+    private static string NormalizeUsoaCategory(string usoaCategory)
     {
-        if (string.IsNullOrWhiteSpace(parentCode))
-            return 1;
-        
-        return parentCode.Split('.').Length + 1;
+        if (string.IsNullOrWhiteSpace(usoaCategory))
+            return string.Empty;
+
+        var x = usoaCategory.Trim();
+        // Map common verbose forms to short canonical labels
+        return x.ToUpperInvariant() switch
+        {
+            "COST OF GOODS SOLD" => "COGS",
+            "COST-OF-GOODS-SOLD" => "COGS",
+            "COSTS OF GOODS SOLD" => "COGS",
+            "COGS" => "COGS",
+            "INVENTORY" => "Inventory",
+            "OPERATIONS" => "Operations",
+            _ => x // leave as-is for other valid categories
+        };
     }
+
+     private static int CalculateAccountLevel(string? parentCode)
+     {
+         if (string.IsNullOrWhiteSpace(parentCode))
+             return 1;
+
+         // Count the number of segments in the dotted parent code and add 1 for the current level
+         try
+         {
+             return parentCode.Split('.').Length + 1;
+         }
+         catch
+         {
+             // Fallback to 1 if split fails for any reason
+             return 1;
+         }
+     }
 }

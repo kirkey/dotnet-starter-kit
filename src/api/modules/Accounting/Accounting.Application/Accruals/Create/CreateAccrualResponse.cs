@@ -1,8 +1,10 @@
 namespace Accounting.Application.Accruals.Create;
 
-/// <summary>
-/// Response returned after creating an accrual, containing the new Accrual Id.
-/// </summary>
-/// <param name="Id">Identifier of the created Accrual.</param>
-public sealed record CreateAccrualResponse(DefaultIdType Id);
+public sealed class CreateAccrualResponse(
+    DefaultIdType id,
+    string accrualNumber)
+{
+    public DefaultIdType Id { get; init; } = id;
+    public string AccrualNumber { get; init; } = accrualNumber;
+}
 

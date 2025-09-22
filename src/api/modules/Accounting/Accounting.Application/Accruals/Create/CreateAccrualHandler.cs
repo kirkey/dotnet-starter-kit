@@ -1,26 +1,22 @@
 namespace Accounting.Application.Accruals.Create;
 
-using Exceptions;
-using Queries;
-
 public sealed class CreateAccrualHandler(
-    [FromKeyedServices("accounting:accruals")] IRepository<Accrual> repository)
+    IRepository<Accrual> repository,
+    IReadRepository<Accrual> readRepository)
     : IRequestHandler<CreateAccrualCommand, CreateAccrualResponse>
 {
-    public async Task<CreateAccrualResponse> Handle(CreateAccrualCommand request, CancellationToken cancellationToken)
+    public async Task<CreateAccrualResponse> Handle(CreateAccrualCommand request, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var accrualNumber = request.AccrualNumber?.Trim() ?? string.Empty;
+        // Unique check for AccrualNumber
+        var exists = await readRepository.AnyAsync(new Specs.AccrualByNumberSpec(request.AccrualNumber), ct);
+        if (exists)
+            throw new ConflictException($"accrual number {request.AccrualNumber} already exists");
 
-        // Duplicate accrual number
-        var existing = await repository.FirstOrDefaultAsync(new AccrualByNumberSpec(accrualNumber), cancellationToken);
-        if (existing != null)
-            throw new AccrualAlreadyExistsException(accrualNumber);
-
-        var accrual = Accrual.Create(accrualNumber, request.AccrualDate, request.Amount, request.Description ?? string.Empty);
-        await repository.AddAsync(accrual, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
-        return new CreateAccrualResponse(accrual.Id);
+        var entity = Accrual.Create(request.AccrualNumber, request.AccrualDate, request.Amount, request.Description ?? string.Empty);
+        await repository.AddAsync(entity, ct);
+        return new CreateAccrualResponse(entity.Id, entity.AccrualNumber);
     }
 }
+

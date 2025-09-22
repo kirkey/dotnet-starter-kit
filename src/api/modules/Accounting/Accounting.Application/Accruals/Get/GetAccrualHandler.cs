@@ -1,3 +1,4 @@
+#if false
 namespace Accounting.Application.Accruals.Get;
 
 using Responses;
@@ -22,3 +23,4 @@ public class GetAccrualHandler(IReadRepository<Accrual> repository)
         };
     }
 }
+#endif

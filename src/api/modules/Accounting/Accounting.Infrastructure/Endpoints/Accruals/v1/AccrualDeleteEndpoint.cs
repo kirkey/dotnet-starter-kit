@@ -1,4 +1,29 @@
 // Endpoint for deleting an accrual
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
-public static class AccrualDeleteEndpoint;
 
+using Accounting.Application.Accruals.Delete;
+
+/// <summary>
+/// Endpoints for deleting Accruals.
+/// </summary>
+public static class AccrualDeleteEndpoint
+{
+    /// <summary>
+    /// Maps DELETE /{id:guid} for Accruals.
+    /// </summary>
+    internal static RouteHandlerBuilder MapAccrualDeleteEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                await mediator.Send(new DeleteAccrualCommand(id)).ConfigureAwait(false);
+                return Results.NoContent();
+            })
+            .WithName(nameof(AccrualDeleteEndpoint))
+            .WithSummary("Delete accrual by id")
+            .WithDescription("Deletes an accrual entry by its identifier")
+            .Produces(StatusCodes.Status204NoContent)
+            .RequirePermission("Permissions.Accounting.Delete")
+            .MapToApiVersion(1);
+    }
+}

@@ -82,7 +82,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     PeriodId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PeriodName = table.Column<string>(type: "text", nullable: false),
+                    PeriodName = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     FiscalYear = table.Column<int>(type: "integer", nullable: false),
                     BudgetType = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     Status = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
@@ -844,8 +844,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     AccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     BudgetedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     ActualAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 500, nullable: true),
                     Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
@@ -1111,6 +1111,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting",
                 table: "BudgetDetails",
                 column: "BudgetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BudgetDetails_BudgetId_AccountId",
+                schema: "accounting",
+                table: "BudgetDetails",
+                columns: new[] { "BudgetId", "AccountId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Budgets_Name_PeriodId",

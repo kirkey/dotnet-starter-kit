@@ -242,7 +242,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("PeriodName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -305,7 +306,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -329,6 +330,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasKey("Id");
 
                     b.HasIndex("BudgetId");
+
+                    b.HasIndex("BudgetId", "AccountId")
+                        .IsUnique();
 
                     b.ToTable("BudgetDetails", "accounting");
                 });

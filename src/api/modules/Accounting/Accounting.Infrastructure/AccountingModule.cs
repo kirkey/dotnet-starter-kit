@@ -15,6 +15,7 @@ using Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 using Accounting.Infrastructure.Endpoints.Payments.v1;
 using Accounting.Infrastructure.Endpoints.Projects.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
+using Accounting.Infrastructure.Endpoints.Accruals.v1;
 using Accounting.Infrastructure.Persistence;
 using Carter;
 using FSH.Framework.Infrastructure.Persistence;
@@ -121,6 +122,15 @@ public static class AccountingModule
 
             var journals = app.MapGroup("journals").WithTags("journals");
             journals.MapJournalEntrySearchEndpoint();
+
+            // Accruals endpoints group
+            var accruals = app.MapGroup("accruals").WithTags("accruals");
+            accruals.MapAccrualCreateEndpoint();
+            accruals.MapAccrualGetEndpoint();
+            accruals.MapAccrualSearchEndpoint();
+            accruals.MapAccrualEditEndpoint();
+            accruals.MapAccrualUpdateEndpoint();
+            accruals.MapAccrualDeleteEndpoint();
         }
     }
 

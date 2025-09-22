@@ -1,3 +1,4 @@
+#if false
 namespace Accounting.Application.Accruals.Delete;
 
 public class DeleteAccrualRequestValidator : AbstractValidator<DeleteAccrualCommand>
@@ -7,3 +8,4 @@ public class DeleteAccrualRequestValidator : AbstractValidator<DeleteAccrualComm
         RuleFor(x => x.Id).NotEmpty();
     }
 }
+#endif
