@@ -61,3 +61,8 @@ public record InventoryTransferItemReceived : DomainEvent
 {
     public InventoryTransferItem InventoryTransferItem { get; init; } = default!;
 }
+
+public record InventoryTransferShipped : DomainEvent
+{
+    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+}

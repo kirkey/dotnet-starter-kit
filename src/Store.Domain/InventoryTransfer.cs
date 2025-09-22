@@ -249,15 +249,32 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 
     public InventoryTransfer AddItem(DefaultIdType groceryItemId, int quantity, decimal unitPrice)
     {
+        if (groceryItemId == default) throw new ArgumentException("GroceryItemId is required", nameof(groceryItemId));
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
+
+        // Only allow adding items when transfer is in Pending state.
+        if (!string.Equals(Status, "Pending", StringComparison.OrdinalIgnoreCase))
+            throw new Store.Domain.Exceptions.InventoryTransfer.InventoryTransferCannotBeModifiedException(Id);
+
+        // Prevent duplicate grocery items in the same transfer.
+        if (Items.Any(i => i.GroceryItemId == groceryItemId))
+            throw new Store.Domain.Exceptions.InventoryTransferItem.DuplicateInventoryTransferItemException(Id, groceryItemId);
+
         var item = InventoryTransferItem.Create(Id, groceryItemId, quantity, unitPrice);
         Items.Add(item);
         RecalculateTotal();
+
+        // Raise a specific domain event for item addition
+        QueueDomainEvent(new InventoryTransferItemAdded { InventoryTransfer = this, GroceryItemId = groceryItemId });
         return this;
     }
 
     public InventoryTransfer RemoveItem(DefaultIdType itemId)
     {
+        // Only allow removing items when transfer is in Pending state.
+        if (!string.Equals(Status, "Pending", StringComparison.OrdinalIgnoreCase))
+            throw new Store.Domain.Exceptions.InventoryTransfer.InventoryTransferCannotBeModifiedException(Id);
+
         var item = Items.FirstOrDefault(i => i.Id == itemId);
         if (item != null)
         {
@@ -274,7 +291,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 
     public InventoryTransfer Approve(string approvedBy)
     {
-        if (Status != "Pending") return this;
+        if (!string.Equals(Status, "Pending", StringComparison.OrdinalIgnoreCase)) return this;
         Status = "Approved";
         ApprovedBy = approvedBy;
         ApprovalDate = DateTime.UtcNow;
@@ -284,7 +301,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 
     public InventoryTransfer MarkInTransit()
     {
-        if (Status == "Approved")
+        if (string.Equals(Status, "Approved", StringComparison.OrdinalIgnoreCase))
         {
             Status = "InTransit";
             QueueDomainEvent(new InventoryTransferInTransit { InventoryTransfer = this });
@@ -294,7 +311,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 
     public InventoryTransfer Complete(DateTime actualArrival)
     {
-        if (Status == "InTransit")
+        if (string.Equals(Status, "InTransit", StringComparison.OrdinalIgnoreCase))
         {
             Status = "Completed";
             ActualArrivalDate = actualArrival;
@@ -305,17 +322,30 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 
     public InventoryTransfer Cancel()
     {
-        if (Status != "Completed")
-        {
-            Status = "Cancelled";
-            QueueDomainEvent(new InventoryTransferCancelled { InventoryTransfer = this });
-        }
+        return Cancel(null);
+    }
+
+    /// <summary>
+    /// Cancels the transfer recording an optional reason. Cancellation is allowed unless the transfer is already completed.
+    /// </summary>
+    public InventoryTransfer Cancel(string? reason)
+    {
+        if (string.Equals(Status, "Completed", StringComparison.OrdinalIgnoreCase))
+            throw new Store.Domain.Exceptions.InventoryTransfer.InvalidInventoryTransferStatusException("Cancel", Status);
+
+        Status = "Cancelled";
+        if (!string.IsNullOrWhiteSpace(reason)) Reason = reason;
+        QueueDomainEvent(new InventoryTransferCancelled { InventoryTransfer = this, Reason = reason ?? string.Empty });
         return this;
     }
 
     // New helper to set tracking number (used when shipment/tracking info is available)
     public InventoryTransfer SetTrackingNumber(string? trackingNumber)
     {
+        // Only allow setting tracking when transfer is already Approved or InTransit
+        if (!string.Equals(Status, "Approved", StringComparison.OrdinalIgnoreCase) && !string.Equals(Status, "InTransit", StringComparison.OrdinalIgnoreCase))
+            throw new Store.Domain.Exceptions.InventoryTransfer.InvalidInventoryTransferStatusException("SetTrackingNumber", Status);
+
         if (!string.Equals(TrackingNumber, trackingNumber, StringComparison.OrdinalIgnoreCase))
         {
             TrackingNumber = trackingNumber;
@@ -336,6 +366,10 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         string? notes,
         string? reason)
     {
+        // Only allow updates while Pending (business rule: no unrestricted edits after approval)
+        if (!string.Equals(Status, "Pending", StringComparison.OrdinalIgnoreCase))
+            throw new Store.Domain.Exceptions.InventoryTransfer.InventoryTransferCannotBeModifiedException(Id);
+
         var changed = false;
 
         if (Name != name)
@@ -388,7 +422,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 
         if (Reason != reason)
         {
-            Reason = reason;
+            Reason = reason; // inherited
             changed = true;
         }
 
@@ -397,6 +431,34 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
             QueueDomainEvent(new InventoryTransferUpdated { InventoryTransfer = this });
         }
 
+        return this;
+    }
+
+    /// <summary>
+    /// Updates a specific <see cref="InventoryTransferItem"/> attached to this transfer.
+    /// This enforces the business rule that items can only be updated while the transfer is in the <c>Pending</c> state.
+    /// After updating the line item the transfer total is recalculated and an <see cref="Store.Domain.Events.InventoryTransferUpdated"/> event is queued.
+    /// </summary>
+    /// <param name="itemId">The identifier of the transfer item to update.</param>
+    /// <param name="quantity">New quantity for the item; must be greater than zero.</param>
+    /// <param name="unitPrice">New unit price for the item; must be non-negative.</param>
+    /// <returns>The current <see cref="InventoryTransfer"/> instance with updated totals.</returns>
+    public InventoryTransfer UpdateItem(DefaultIdType itemId, int quantity, decimal unitPrice)
+    {
+        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
+
+        // Only allow updating items when transfer is in Pending state.
+        if (!string.Equals(Status, "Pending", StringComparison.OrdinalIgnoreCase))
+            throw new Store.Domain.Exceptions.InventoryTransfer.InventoryTransferCannotBeModifiedException(Id);
+
+        var item = Items.FirstOrDefault(i => i.Id == itemId);
+        if (item is null) throw new Store.Domain.Exceptions.InventoryTransfer.InventoryTransferItemNotFoundException(itemId);
+
+        item.Update(quantity, unitPrice);
+        RecalculateTotal();
+
+        // Emit a transfer-level updated event as overall totals changed
+        QueueDomainEvent(new InventoryTransferUpdated { InventoryTransfer = this });
         return this;
     }
 }

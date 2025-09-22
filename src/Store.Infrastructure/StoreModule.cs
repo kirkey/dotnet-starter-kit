@@ -39,6 +39,12 @@ public static class StoreModule
             inventoryGroup.MapSearchInventoryTransfersEndpoint();
             inventoryGroup.MapAddInventoryTransferItemEndpoint();
             inventoryGroup.MapRemoveInventoryTransferItemEndpoint();
+            inventoryGroup.MapUpdateInventoryTransferItemEndpoint();
+            // lifecycle endpoints
+            inventoryGroup.MapApproveInventoryTransferEndpoint();
+            inventoryGroup.MapMarkInTransitInventoryTransferEndpoint();
+            inventoryGroup.MapCompleteInventoryTransferEndpoint();
+            inventoryGroup.MapCancelInventoryTransferEndpoint();
 
             var stockGroup = app.MapGroup("stock-adjustments").WithTags("Stock Adjustments");
             stockGroup.MapCreateStockAdjustmentEndpoint();
