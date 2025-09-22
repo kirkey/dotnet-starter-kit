@@ -76,7 +76,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     LastOrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LifetimeValue = table.Column<decimal>(type: "numeric(18,2)", precision: 16, scale: 2, nullable: false),
                     Name = table.Column<string>(type: "VARCHAR(1024)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 1000, nullable: true),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2000, nullable: true),
                     Notes = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2000, nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
@@ -186,6 +186,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     CapacityUnit = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     IsMainWarehouse = table.Column<bool>(type: "boolean", nullable: false),
+                    WarehouseType = table.Column<string>(type: "text", nullable: false),
                     LastInventoryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Name = table.Column<string>(type: "VARCHAR(1024)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 1000, nullable: true),
@@ -1020,6 +1021,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 schema: "store",
                 table: "Customers",
                 column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_Email",
+                schema: "store",
+                table: "Customers",
+                column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(

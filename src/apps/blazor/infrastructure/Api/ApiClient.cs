@@ -3702,7 +3702,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3714,7 +3714,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update warehouse
@@ -20534,7 +20534,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id)
         {
             return GetWarehouseAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -20549,7 +20549,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetWarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -20599,7 +20599,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<WarehouseResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -24516,7 +24516,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetWarehouseResponse
+    public partial class WarehouseResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -24563,6 +24563,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
         public string? CapacityUnit { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseType")]
+        public string WarehouseType { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("isActive")]
         public bool IsActive { get; set; } = default!;
@@ -27734,60 +27737,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WarehouseResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string? Code { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string? PostalCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerName")]
-        public string? ManagerName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerEmail")]
-        public string? ManagerEmail { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("managerPhone")]
-        public string? ManagerPhone { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCapacity")]
-        public double TotalCapacity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("capacityUnit")]
-        public string? CapacityUnit { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isMainWarehouse")]
-        public bool IsMainWarehouse { get; set; } = default!;
 
     }
 

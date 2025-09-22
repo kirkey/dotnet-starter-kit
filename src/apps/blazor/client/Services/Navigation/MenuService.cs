@@ -113,6 +113,7 @@ public class MenuService : IMenuService
                     MenuItems =
                     [
                         new MenuSectionSubItemModel { Title = "Warehouse", Icon = Icons.Material.Filled.Category, Href = "/warehouse/warehouses", Action = FshActions.View, Resource = FshResources.Warehouse },
+                        new MenuSectionSubItemModel { Title = "Locations", Icon = Icons.Material.Filled.Category, Href = "/warehouse/locations", Action = FshActions.View, Resource = FshResources.Warehouse },
                     ]
                 },
 

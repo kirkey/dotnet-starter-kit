@@ -12,7 +12,7 @@ using Store.Infrastructure.Persistence;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20250922081501_Initial")]
+    [Migration("20250922100551_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -166,7 +166,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(1000)
+                        .HasMaxLength(2000)
                         .HasColumnType("VARCHAR(2048)");
 
                     b.Property<decimal>("DiscountPercentage")
@@ -232,6 +232,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Customers", "store");
@@ -1831,6 +1834,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasPrecision(16, 2)
                         .HasColumnType("decimal(18,3)")
                         .HasDefaultValue(0m);
+
+                    b.Property<string>("WarehouseType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

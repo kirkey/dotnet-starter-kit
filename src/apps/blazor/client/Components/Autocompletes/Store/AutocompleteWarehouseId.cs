@@ -1,34 +1,33 @@
-﻿namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
+namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 
 /// <summary>
-/// Autocomplete component for selecting a Category by its identifier.
-/// - Fetches a single Category by id when needed.
+/// Autocomplete component for selecting a Warehouse by its identifier.
+/// - Fetches a single Warehouse by id when needed.
 /// - Searches Categories by code/name/description/notes and caches results in-memory.
 /// </summary>
-public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient, DefaultIdType?>
+public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClient, DefaultIdType>
 {
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
-    private Dictionary<DefaultIdType, CategoryResponse> _cache = [];
+    private Dictionary<Guid, WarehouseResponse> _cache = [];
 
     [Inject] protected NavigationManager Navigation { get; set; } = default!;
 
     /// <summary>
-    /// Gets a single Category item by identifier.
+    /// Gets a single Warehouse item by identifier.
     /// </summary>
     /// <param name="id">The category identifier.</param>
     /// <returns>The category response, or null if not found.</returns>
-    protected override async Task<CategoryResponse?> GetItem(DefaultIdType? id)
+    protected override async Task<WarehouseResponse?> GetItem(DefaultIdType id)
     {
-        if (!id.HasValue) return null;
-        if (_cache.TryGetValue(id.Value, out var cached)) return cached;
+        if (_cache.TryGetValue(id, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.GetCategoryEndpointAsync("1", id.Value),
+                () => Client.GetWarehouseAsync("1", id),
                 Snackbar,
                 Navigation)
             .ConfigureAwait(false);
 
-        if (dto is not null) _cache[id.Value] = dto;
+        if (dto is not null) _cache[id] = dto;
 
         return dto;
     }
@@ -39,20 +38,20 @@ public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient
     /// <param name="value">The search text.</param>
     /// <param name="token">Cancellation token.</param>
     /// <returns>Enumerable of category ids matching the search.</returns>
-    protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
+    protected override async Task<IEnumerable<DefaultIdType>> SearchText(string? value, CancellationToken token)
     {
-        var request = new SearchCategoriesCommand
+        var request = new SearchWarehousesCommand()
         {
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "code", "name", "description", "notes" },
+                Fields = new[] { "name", "description", "notes" },
                 Keyword = value
             }
         };
 
         var response = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.SearchCategoriesEndpointAsync("1", request, token),
+                () => Client.SearchWarehousesAsync("1", request, token),
                 Snackbar,
                 Navigation)
             .ConfigureAwait(false);
@@ -66,12 +65,11 @@ public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient
                 .ToDictionary(x => x.Id);
         }
 
-        return _cache.Keys.Cast<DefaultIdType?>();
+        return _cache.Keys.Cast<DefaultIdType>();
     }
 
-    protected override string GetTextValue(DefaultIdType? id)
+    protected override string GetTextValue(DefaultIdType id)
     {
-        if (!id.HasValue) return string.Empty;
-        return _cache.TryGetValue(id.Value, out var dto) ? dto.Name ?? string.Empty : string.Empty;
+        return _cache.TryGetValue(id, out var dto) ? dto.Name ?? string.Empty : string.Empty;
     }
 }

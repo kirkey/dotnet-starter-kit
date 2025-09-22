@@ -146,6 +146,7 @@ internal sealed class StoreDbInitializer(
                     managerPhone: $"+200000000{i:00}",
                     totalCapacity: 10000m + i * 1000m,
                     capacityUnit: "sqft",
+                    warehouseType: "Standard",
                     isActive: true,
                     isMainWarehouse: i == 1));
             }

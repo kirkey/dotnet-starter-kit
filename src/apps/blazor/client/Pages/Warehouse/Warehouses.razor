@@ -1,0 +1,202 @@
+@page "/warehouse/warehouses"
+
+<PageHeader Title="Warehouses" Header="Warehouses" SubHeader="Manage warehouse facilities and storage locations." />
+
+<EntityTable @ref="_table" TEntity="WarehouseResponse" TId="DefaultIdType" TRequest="WarehouseViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Warehouse Code"
+                          Placeholder="e.g., WH-MAIN, WH-NYC-01"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Warehouse Name"
+                          Placeholder="e.g., Main Warehouse"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Placeholder="Warehouse description and notes"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudDivider />
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Address Information</MudText>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Address"
+                          For="@(() => context.Address)"
+                          Label="Street Address"
+                          Placeholder="e.g., 1234 Industrial Blvd"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.City"
+                          For="@(() => context.City)"
+                          Label="City"
+                          Placeholder="e.g., Seattle"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.State"
+                          For="@(() => context.State)"
+                          Label="State/Province"
+                          Placeholder="e.g., WA"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.Country"
+                          For="@(() => context.Country)"
+                          Label="Country"
+                          Placeholder="e.g., US"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.PostalCode"
+                          For="@(() => context.PostalCode)"
+                          Label="Postal Code"
+                          Placeholder="e.g., 98101"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudDivider />
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Manager Information</MudText>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.ManagerName"
+                          For="@(() => context.ManagerName)"
+                          Label="Manager Name"
+                          Placeholder="e.g., John Smith"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.ManagerEmail"
+                          For="@(() => context.ManagerEmail)"
+                          Label="Manager Email"
+                          Placeholder="e.g., manager@company.com"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudTextField @bind-Value="context.ManagerPhone"
+                          For="@(() => context.ManagerPhone)"
+                          Label="Manager Phone"
+                          Placeholder="e.g., +1-555-0123"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudDivider />
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity & Configuration</MudText>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.TotalCapacity"
+                             For="@(() => context.TotalCapacity)"
+                             Label="Total Capacity"
+                             Min="0"
+                             Format="N2"
+                             Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudSelect T="string"
+                       @bind-Value="context.CapacityUnit"
+                       For="@(() => context.CapacityUnit!)"
+                       Label="Capacity Unit"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("sqft")">Square Feet</MudSelectItem>
+                <MudSelectItem Value="@("sqm")">Square Meters</MudSelectItem>
+                <MudSelectItem Value="@("pallets")">Pallets</MudSelectItem>
+                <MudSelectItem Value="@("cubic_meters")">Cubic Meters</MudSelectItem>
+                <MudSelectItem Value="@("cubic_feet")">Cubic Feet</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudSelect T="string"
+                       @bind-Value="context.WarehouseType"
+                       For="@(() => context.WarehouseType!)"
+                       Label="Warehouse Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                <MudSelectItem Value="@("Cold Storage")">Cold Storage</MudSelectItem>
+                <MudSelectItem Value="@("Frozen")">Frozen</MudSelectItem>
+                <MudSelectItem Value="@("Hazmat")">Hazmat</MudSelectItem>
+                <MudSelectItem Value="@("Climate Controlled")">Climate Controlled</MudSelectItem>
+                <MudSelectItem Value="@("Pharmaceutical")">Pharmaceutical</MudSelectItem>
+                <MudSelectItem Value="@("Food Grade")">Food Grade</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudDivider />
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Status & Settings</MudText>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudSwitch @bind-Checked="context.IsActive"
+                       For="@(() => context.IsActive)"
+                       Label="Active"
+                       Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" lg="4">
+            <MudSwitch @bind-Checked="context.IsMainWarehouse"
+                       For="@(() => context.IsMainWarehouse)"
+                       Label="Main Warehouse"
+                       Color="Color.Primary" />
+        </MudItem>
+
+        @* Read-only capacity utilization info: only visible when editing an existing warehouse *@
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudDivider />
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>
+
+            <MudItem xs="12" md="6" lg="4">
+                <MudNumericField Format="N2" 
+                                 Label="Used Capacity" 
+                                 ReadOnly 
+                                 T="decimal" 
+                                 Value="context.UsedCapacity" 
+                                 Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" md="6" lg="4">
+                <MudNumericField Format="P1" 
+                                 Label="Utilization %" 
+                                 ReadOnly 
+                                 T="decimal" 
+                                 Value="@(context.TotalCapacity > 0 ? context.UsedCapacity / context.TotalCapacity : 0)" 
+                                 Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" md="6" lg="4">
+                <MudNumericField Format="N2" 
+                                 Label="Available Capacity" 
+                                 ReadOnly 
+                                 T="decimal" 
+                                 Value="@(context.TotalCapacity - context.UsedCapacity)" 
+                                 Variant="Variant.Outlined" />
+            </MudItem>
+        }
+    </EditFormContent>
+</EntityTable>

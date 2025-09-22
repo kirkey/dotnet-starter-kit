@@ -15,5 +15,6 @@ public sealed record WarehouseResponse(
     string ManagerPhone,
     decimal TotalCapacity,
     string CapacityUnit,
+    string WarehouseType,
     bool IsActive,
     bool IsMainWarehouse);
