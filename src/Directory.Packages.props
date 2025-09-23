@@ -61,7 +61,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.6.0.109712" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="MediatR" Version="12.5.0" />
