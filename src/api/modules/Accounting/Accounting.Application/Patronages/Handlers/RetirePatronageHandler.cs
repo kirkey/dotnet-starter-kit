@@ -34,7 +34,7 @@ public sealed class RetirePatronageHandler(
             // Credit Cash
             je.AddLine(cashAccount.Id, 0m, request.Amount, $"Pay patronage {patronage.Id}");
 
-            var batchNumber = $"RET-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0,6)}";
+            var batchNumber = $"RET-{DateTime.UtcNow:yyyyMMddHHmmss}-{DefaultIdType.NewGuid().ToString().Substring(0,6)}";
             var batch = PostingBatch.Create(batchNumber, DateTime.UtcNow, description: $"Patronage retirement {patronage.Id}", periodId: null);
             batch.AddJournalEntry(je);
 

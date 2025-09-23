@@ -1,4 +1,4 @@
-using Accounting.Application.Projects.Create;
+using Accounting.Application.Projects.Create.v1;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 

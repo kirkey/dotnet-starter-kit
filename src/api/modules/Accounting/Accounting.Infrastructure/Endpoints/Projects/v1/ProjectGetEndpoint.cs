@@ -1,4 +1,4 @@
-using Accounting.Application.Projects.Get;
+using Accounting.Application.Projects.Get.v1;
 using Accounting.Application.Projects.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;

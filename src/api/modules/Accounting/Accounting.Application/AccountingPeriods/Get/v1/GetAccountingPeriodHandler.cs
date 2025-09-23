@@ -29,17 +29,7 @@ public sealed class GetAccountingPeriodHandler(
             {
                 var period = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
                 if (period == null) throw new AccountingPeriodNotFoundException(request.Id);
-                return new AccountingPeriodResponse(
-                    period.Id,
-                    period.Name!,
-                    period.StartDate,
-                    period.EndDate,
-                    period.IsClosed,
-                    period.IsAdjustmentPeriod,
-                    period.FiscalYear,
-                    period.PeriodType,
-                    period.Description,
-                    period.Notes);
+                return period.Adapt<AccountingPeriodResponse>();
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

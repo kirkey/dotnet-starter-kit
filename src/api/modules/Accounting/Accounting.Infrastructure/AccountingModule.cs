@@ -15,6 +15,7 @@ using Accounting.Infrastructure.Endpoints.Payments.v1;
 using Accounting.Infrastructure.Endpoints.Projects.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
 using Accounting.Infrastructure.Endpoints.Accruals.v1;
+using Accounting.Infrastructure.Endpoints.ProjectCosting;
 using Accounting.Infrastructure.Persistence;
 using Carter;
 using FSH.Framework.Infrastructure.Persistence;

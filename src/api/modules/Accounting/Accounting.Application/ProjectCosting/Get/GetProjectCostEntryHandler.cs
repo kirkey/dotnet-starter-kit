@@ -18,22 +18,6 @@ public sealed class GetProjectCostEntryHandler(
         var entry = project.CostingEntries.FirstOrDefault(e => e.Id == request.EntryId)
                    ?? throw new JobCostingEntryNotFoundException(request.EntryId);
 
-        var response = new ProjectCostResponse(
-            entry.Id,
-            project.Id,
-            entry.EntryDate,
-            entry.Description ?? string.Empty,
-            entry.Amount,
-            entry.AccountId,
-            entry.JournalEntryId,
-            entry.Category,
-            entry.CostCenter,
-            entry.WorkOrderNumber,
-            entry.IsBillable,
-            entry.IsApproved,
-            entry.Vendor,
-            entry.InvoiceNumber);
-
-        return response;
+        return entry.Adapt<ProjectCostResponse>();
     }
 }

@@ -15,24 +15,6 @@ public sealed class GetPurchaseOrderHandler(
         var po = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
         _ = po ?? throw new PurchaseOrderNotFoundException(request.Id);
 
-        return new GetPurchaseOrderResponse(
-            po.Id,
-            po.OrderNumber,
-            po.SupplierId,
-            po.OrderDate,
-            po.ExpectedDeliveryDate,
-            po.ActualDeliveryDate,
-            po.Status,
-            po.TotalAmount,
-            po.TaxAmount,
-            po.DiscountAmount,
-            po.NetAmount,
-            po.DeliveryAddress,
-            po.ContactPerson,
-            po.ContactPhone,
-            po.IsUrgent,
-            po.CreatedOn,
-            po.LastModifiedOn);
+        return po.Adapt<GetPurchaseOrderResponse>();
     }
 }
-

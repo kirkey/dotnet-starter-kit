@@ -15,27 +15,6 @@ public sealed class GetSalesOrderHandler(
         var so = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
         _ = so ?? throw new SalesOrderNotFoundException(request.Id);
 
-        return new GetSalesOrderResponse(
-            so.Id,
-            so.OrderNumber,
-            so.CustomerId,
-            so.OrderDate,
-            so.DeliveryDate,
-            so.Status,
-            so.OrderType,
-            so.SubTotal,
-            so.TaxAmount,
-            so.DiscountAmount,
-            so.ShippingAmount,
-            so.TotalAmount,
-            so.PaymentStatus,
-            so.PaymentMethod,
-            so.DeliveryAddress,
-            so.IsUrgent,
-            so.SalesPersonId,
-            so.WarehouseId,
-            so.CreatedOn,
-            so.LastModifiedOn);
+        return so.Adapt<GetSalesOrderResponse>();
     }
 }
-

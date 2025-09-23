@@ -1,6 +1,6 @@
 using Accounting.Application.ProjectCosting.Create;
 
-namespace Accounting.Infrastructure.Endpoints.Projects.v1;
+namespace Accounting.Infrastructure.Endpoints.ProjectCosting;
 
 public static class ProjectCostEntryCreateEndpoint
 {

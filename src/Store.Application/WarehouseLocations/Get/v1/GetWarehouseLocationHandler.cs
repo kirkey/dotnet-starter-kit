@@ -17,27 +17,6 @@ public sealed class GetWarehouseLocationHandler(
         
         logger.LogInformation("Retrieved warehouse location {WarehouseLocationId}", warehouseLocation.Id);
         
-        return new GetWarehouseLocationResponse(
-            warehouseLocation.Id,
-            warehouseLocation.Name!,
-            warehouseLocation.Description,
-            warehouseLocation.Code,
-            warehouseLocation.Aisle,
-            warehouseLocation.Section,
-            warehouseLocation.Shelf,
-            warehouseLocation.Bin,
-            warehouseLocation.WarehouseId,
-            warehouseLocation.Warehouse.Name!,
-            warehouseLocation.LocationType,
-            warehouseLocation.Capacity,
-            warehouseLocation.UsedCapacity,
-            warehouseLocation.CapacityUnit,
-            warehouseLocation.IsActive,
-            warehouseLocation.RequiresTemperatureControl,
-            warehouseLocation.MinTemperature,
-            warehouseLocation.MaxTemperature,
-            warehouseLocation.TemperatureUnit,
-            warehouseLocation.CreatedOn.LocalDateTime,
-            warehouseLocation.LastModifiedOn.LocalDateTime);
+        return warehouseLocation.Adapt<GetWarehouseLocationResponse>();
     }
 }

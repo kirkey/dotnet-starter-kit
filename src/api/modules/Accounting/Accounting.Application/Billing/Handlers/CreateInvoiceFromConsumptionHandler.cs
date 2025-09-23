@@ -39,7 +39,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
         var draft = billingService.CalculateInvoiceDraft(consumption, rateSchedule);
 
         // Compose invoice
-        var invoiceNumber = $"INV-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0,6)}";
+        var invoiceNumber = $"INV-{DateTime.UtcNow:yyyyMMddHHmmss}-{DefaultIdType.NewGuid().ToString().Substring(0,6)}";
         var dueDate = request.InvoiceDate.AddDays(request.DueDays);
 
         var invoice = Invoice.Create(invoiceNumber,
@@ -85,7 +85,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
             // Credit Revenue
             je.AddLine(revenueAccount.Id, 0m, invoice.TotalAmount, $"Revenue for {invoice.InvoiceNumber}");
 
-            var batchNumber = $"BATCH-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0,6)}";
+            var batchNumber = $"BATCH-{DateTime.UtcNow:yyyyMMddHHmmss}-{DefaultIdType.NewGuid().ToString().Substring(0,6)}";
             var batch = PostingBatch.Create(batchNumber, DateTime.UtcNow, description: $"Invoice posting for {invoice.InvoiceNumber}", periodId: null);
             batch.AddJournalEntry(je);
 

@@ -21,21 +21,7 @@ public sealed class GetProjectCostEntriesHandler(
         var responses = project.CostingEntries
             .Where(e => e.Amount > 0)
             .OrderByDescending(e => e.EntryDate)
-            .Select(e => new ProjectCostResponse(
-                e.Id,
-                project.Id,
-                e.EntryDate,
-                e.Description,
-                e.Amount,
-                e.AccountId,
-                e.JournalEntryId,
-                e.Category,
-                e.CostCenter,
-                e.WorkOrderNumber,
-                e.IsBillable,
-                e.IsApproved,
-                e.Vendor,
-                e.InvoiceNumber))
+            .Select(e => e.Adapt<ProjectCostResponse>())
             .ToList();
 
         return responses;

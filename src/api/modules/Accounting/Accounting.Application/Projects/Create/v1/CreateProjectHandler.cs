@@ -15,7 +15,7 @@ public sealed class CreateProjectHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         // Check for duplicate project name
-        var existingProject = await repository.SingleOrDefaultAsync(
+        var existingProject = await repository.FirstOrDefaultAsync(
             new ProjectByNameSpec(request.Name), cancellationToken).ConfigureAwait(false);
         
         if (existingProject is not null)

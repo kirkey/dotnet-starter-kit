@@ -14,7 +14,7 @@ public sealed class GetChartOfAccountHandler(
             $"account:{request.Id}",
             async () =>
             {
-                var account = await repository.SingleOrDefaultAsync(
+                var account = await repository.FirstOrDefaultAsync(
                     new ChartOfAccountByIdSpec(request.Id), cancellationToken).ConfigureAwait(false);
                 return account ?? throw new ChartOfAccountNotFoundException(request.Id);
             },

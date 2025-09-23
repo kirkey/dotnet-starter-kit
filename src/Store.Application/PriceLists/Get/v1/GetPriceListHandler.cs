@@ -15,20 +15,6 @@ public sealed class GetPriceListHandler(
         var priceList = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
         _ = priceList ?? throw new PriceListNotFoundException(request.Id);
 
-        return new GetPriceListResponse(
-            priceList.Id,
-            priceList.Name,
-            priceList.Description,
-            priceList.PriceListName,
-            priceList.PriceListType,
-            priceList.EffectiveDate,
-            priceList.ExpiryDate,
-            priceList.IsActive,
-            priceList.Currency,
-            priceList.MinimumOrderValue,
-            priceList.CustomerType,
-            priceList.Notes,
-            priceList.CreatedOn,
-            priceList.LastModifiedOn);
+        return priceList.Adapt<GetPriceListResponse>();
     }
 }

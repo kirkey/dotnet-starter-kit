@@ -1,4 +1,4 @@
-using Accounting.Application.Projects.Delete;
+using Accounting.Application.Projects.Delete.v1;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 
@@ -9,16 +9,14 @@ public static class ProjectDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new DeleteProjectRequest(id)).ConfigureAwait(false);
-                return Results.NoContent();
+                var response = await mediator.Send(new DeleteProjectCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
             })
             .WithName(nameof(ProjectDeleteEndpoint))
-            .WithSummary("delete project by id")
-            .WithDescription("delete project by id")
-            .Produces(StatusCodes.Status204NoContent)
+            .WithSummary("Delete a project by id")
+            .WithDescription("Deletes a project by its unique identifier and returns the result.")
+            .Produces<DeleteProjectResponse>()
             .RequirePermission("Permissions.Accounting.Delete")
             .MapToApiVersion(1);
     }
 }
-
-

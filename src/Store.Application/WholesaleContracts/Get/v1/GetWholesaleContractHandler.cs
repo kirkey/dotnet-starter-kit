@@ -15,23 +15,6 @@ public sealed class GetWholesaleContractHandler(
         var wc = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
         _ = wc ?? throw new WholesaleContractNotFoundException(request.Id);
 
-        return new GetWholesaleContractResponse(
-            wc.Id,
-            wc.ContractNumber,
-            wc.CustomerId,
-            wc.StartDate,
-            wc.EndDate,
-            wc.Status,
-            wc.MinimumOrderValue,
-            wc.VolumeDiscountPercentage,
-            wc.PaymentTermsDays,
-            wc.CreditLimit,
-            wc.DeliveryTerms,
-            wc.ContractTerms,
-            wc.AutoRenewal,
-            wc.Notes,
-            wc.CreatedOn,
-            wc.LastModifiedOn);
+        return wc.Adapt<GetWholesaleContractResponse>();
     }
 }
-

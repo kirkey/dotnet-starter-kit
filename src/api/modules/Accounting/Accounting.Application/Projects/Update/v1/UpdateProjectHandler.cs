@@ -21,7 +21,7 @@ public sealed class UpdateProjectHandler(
         // Check for duplicate name if name is being changed
         if (!string.IsNullOrWhiteSpace(request.Name) && project.Name != request.Name)
         {
-            var existingProject = await repository.SingleOrDefaultAsync(
+            var existingProject = await repository.FirstOrDefaultAsync(
                 new ProjectByNameSpec(request.Name), cancellationToken).ConfigureAwait(false);
             
             if (existingProject is not null)

@@ -17,8 +17,8 @@ namespace Accounting.Application.ProjectCosting.Get.v1;
 /// <param name="IsApproved">Whether this cost entry has been approved</param>
 /// <param name="Vendor">Optional vendor or supplier reference</param>
 /// <param name="InvoiceNumber">Optional invoice or receipt number</param>
-/// <param name="CreatedOn">When the cost entry was created</param>
-/// <param name="LastModifiedOn">When the cost entry was last modified</param>
+/// <param name="CreatedOn">When the cost entry was created (UTC)</param>
+/// <param name="LastModifiedOn">When the cost entry was last modified (UTC)</param>
 public sealed record GetProjectCostResponse(
     DefaultIdType ProjectCostId,
     DefaultIdType ProjectId,
@@ -34,5 +34,5 @@ public sealed record GetProjectCostResponse(
     bool IsApproved,
     string? Vendor,
     string? InvoiceNumber,
-    DateTime CreatedOn,
-    DateTime? LastModifiedOn);
+    DateTimeOffset CreatedOn,
+    DateTimeOffset? LastModifiedOn);

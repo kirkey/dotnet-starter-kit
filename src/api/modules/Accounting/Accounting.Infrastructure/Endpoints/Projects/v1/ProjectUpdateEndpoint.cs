@@ -1,4 +1,4 @@
-using Accounting.Application.Projects.Update;
+using Accounting.Application.Projects.Update.v1;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 

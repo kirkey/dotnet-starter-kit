@@ -15,20 +15,6 @@ public sealed class GetWholesalePricingHandler(
         var wp = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
         _ = wp ?? throw new WholesalePricingNotFoundException(request.Id);
 
-        return new GetWholesalePricingResponse(
-            wp.Id,
-            wp.WholesaleContractId,
-            wp.GroceryItemId,
-            wp.MinimumQuantity,
-            wp.MaximumQuantity,
-            wp.TierPrice,
-            wp.DiscountPercentage,
-            wp.EffectiveDate,
-            wp.ExpiryDate,
-            wp.IsActive,
-            wp.Notes,
-            wp.CreatedOn,
-            wp.LastModifiedOn);
+        return wp.Adapt<GetWholesalePricingResponse>();
     }
 }
-

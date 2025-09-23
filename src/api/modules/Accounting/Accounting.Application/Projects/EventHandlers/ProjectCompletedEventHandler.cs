@@ -17,8 +17,8 @@ public sealed class ProjectCompletedEventHandler(ILogger<ProjectCompletedEventHa
             "Project completed: {ProjectId} on {CompletionDate} - ActualCost: {ActualCost} - ActualRevenue: {ActualRevenue}",
             notification.ProjectId,
             notification.CompletionDate,
-            notification.ActualCost,
-            notification.ActualRevenue);
+            notification.FinalActualCost,
+            notification.FinalActualRevenue);
         return Task.CompletedTask;
     }
 }

@@ -7,9 +7,11 @@ global using FSH.Framework.Core.Persistence;
 global using FSH.Framework.Core.Specifications;
 global using FSH.Starter.WebApi.Store.Application.GroceryItems.Get.v1;
 global using FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
+global using Mapster;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using Store.Domain;
 global using Store.Domain.Exceptions.Warehouse;
 global using Store.Domain.Exceptions.WarehouseLocation;
+

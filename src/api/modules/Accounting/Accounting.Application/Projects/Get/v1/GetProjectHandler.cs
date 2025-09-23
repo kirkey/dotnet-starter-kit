@@ -14,7 +14,7 @@ public sealed class GetProjectHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var project = await repository.GetBySpecAsync(
+        var project = await repository.FirstOrDefaultAsync(
             new ProjectWithCostEntriesSpec(request.Id), cancellationToken).ConfigureAwait(false)
             ?? throw new ProjectNotFoundException(request.Id);
 

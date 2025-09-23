@@ -17,22 +17,6 @@ public sealed class GetProjectCostHandler(
 
         logger.LogInformation("project cost retrieved {ProjectCostId}", cost.Id);
 
-        return new GetProjectCostResponse(
-            ProjectCostId: cost.Id,
-            ProjectId: cost.ProjectId,
-            EntryDate: cost.EntryDate,
-            Amount: cost.Amount,
-            Description: cost.Description ?? string.Empty,
-            Category: cost.Category,
-            AccountId: cost.AccountId,
-            JournalEntryId: cost.JournalEntryId,
-            CostCenter: cost.CostCenter,
-            WorkOrderNumber: cost.WorkOrderNumber,
-            IsBillable: cost.IsBillable,
-            IsApproved: cost.IsApproved,
-            Vendor: cost.Vendor,
-            InvoiceNumber: cost.InvoiceNumber,
-            CreatedOn: cost.CreatedOn,
-            LastModifiedOn: cost.LastModifiedOn);
+        return cost.Adapt<GetProjectCostResponse>();
     }
 }
