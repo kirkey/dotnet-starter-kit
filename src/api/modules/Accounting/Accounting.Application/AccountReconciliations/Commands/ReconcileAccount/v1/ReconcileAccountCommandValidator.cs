@@ -1,5 +1,8 @@
 namespace Accounting.Application.AccountReconciliations.Commands.ReconcileAccount.v1;
 
+/// <summary>
+/// Validator for the ReconcileAccountCommand, enforcing strict business rules.
+/// </summary>
 public class ReconcileAccountCommandValidator : AbstractValidator<ReconcileAccountCommand>
 {
     public ReconcileAccountCommandValidator()
@@ -27,6 +30,9 @@ public class ReconcileAccountCommandValidator : AbstractValidator<ReconcileAccou
     }
 }
 
+/// <summary>
+/// Validator for ReconciliationLineDto, ensuring each line item is valid.
+/// </summary>
 public class ReconciliationLineDtoValidator : AbstractValidator<ReconciliationLineDto>
 {
     public ReconciliationLineDtoValidator()

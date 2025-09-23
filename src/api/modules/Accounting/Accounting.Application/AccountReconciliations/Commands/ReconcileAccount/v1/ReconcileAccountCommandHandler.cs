@@ -2,12 +2,21 @@ using Accounting.Application.GeneralLedgers.Specifications;
 
 namespace Accounting.Application.AccountReconciliations.Commands.ReconcileAccount.v1;
 
+/// <summary>
+/// Handles the reconciliation of a chart of account by comparing book and statement balances.
+/// </summary>
 public sealed class ReconcileAccountCommandHandler(
     ILogger<ReconcileAccountCommandHandler> logger,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository,
     [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository)
     : IRequestHandler<ReconcileAccountCommand, DefaultIdType>
 {
+    /// <summary>
+    /// Processes the reconciliation request, validates account, calculates balances, and logs results.
+    /// </summary>
+    /// <param name="request">The reconciliation command request.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>New reconciliation record identifier.</returns>
     public async Task<DefaultIdType> Handle(ReconcileAccountCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
