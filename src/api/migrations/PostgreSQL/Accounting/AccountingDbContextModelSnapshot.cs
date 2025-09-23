@@ -18,7 +18,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("accounting")
-                .HasAnnotation("ProductVersion", "9.0.8")
+                .HasAnnotation("ProductVersion", "9.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -542,118 +542,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .IsUnique();
 
                     b.ToTable("Consumption", "accounting");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.Customer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("BillingAddress")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("ContactPerson")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CreatedByUserName")
-                        .HasColumnType("VARCHAR(64)");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("CreditLimit")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<decimal>("CurrentBalance")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<string>("CustomerCode")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("DeletedByUserName")
-                        .HasColumnType("VARCHAR(64)");
-
-                    b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid?>("LastModifiedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("LastModifiedByUserName")
-                        .HasColumnType("VARCHAR(64)");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("VARCHAR(1024)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("RevenueAccountCode")
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
-
-                    b.Property<string>("RevenueAccountName")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<string>("Terms")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Tin")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerCode")
-                        .IsUnique();
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Customers", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.DeferredRevenue", b =>
@@ -2062,6 +1950,44 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Projects", "accounting");
                 });
 
+            modelBuilder.Entity("Accounting.Domain.ProjectCostEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<Guid?>("JournalEntryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectCostEntries", "accounting");
+                });
+
             modelBuilder.Entity("Accounting.Domain.RateSchedule", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2584,48 +2510,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Project", b =>
+            modelBuilder.Entity("Accounting.Domain.ProjectCostEntry", b =>
                 {
-                    b.OwnsMany("Accounting.Domain.JobCostingEntry", "CostingEntries", b1 =>
-                        {
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("AccountId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<decimal>("Amount")
-                                .HasPrecision(18, 2)
-                                .HasColumnType("numeric(18,2)");
-
-                            b1.Property<string>("Category")
-                                .HasColumnType("text");
-
-                            b1.Property<DateTime>("Date")
-                                .HasColumnType("timestamp with time zone");
-
-                            b1.Property<string>("Description")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<Guid?>("JournalEntryId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("ProjectId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("ProjectId");
-
-                            b1.ToTable("JobCostingEntries", "accounting");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProjectId");
-                        });
-
-                    b.Navigation("CostingEntries");
+                    b.HasOne("Accounting.Domain.Project", null)
+                        .WithMany("CostingEntries")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Accounting.Domain.RateTier", b =>
@@ -2665,6 +2556,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
             modelBuilder.Entity("Accounting.Domain.PostingBatch", b =>
                 {
                     b.Navigation("JournalEntries");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Project", b =>
+                {
+                    b.Navigation("CostingEntries");
                 });
 
             modelBuilder.Entity("Accounting.Domain.RateSchedule", b =>

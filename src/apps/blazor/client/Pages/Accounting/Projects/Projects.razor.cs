@@ -1,0 +1,59 @@
+namespace FSH.Starter.Blazor.Client.Pages.Accounting.Projects;
+
+/// <summary>
+/// Projects page provides CRUD operations for Accounting Projects using the shared EntityTable pattern.
+/// Mirrors the structure used in Budgets for consistency.
+/// </summary>
+public partial class Projects
+{
+    [Inject] protected IClient ApiClient { get; set; } = default!;
+
+    protected EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel> Context { get; set; } = default!;
+
+    private EntityTable<ProjectResponse, DefaultIdType, ProjectViewModel> _table = default!;
+
+    /// <summary>
+    /// Configure the EntityTable context: fields, search, create, update and delete functions.
+    /// </summary>
+    protected override Task OnInitializedAsync()
+    {
+        Context = new EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel>(
+            entityName: "Project",
+            entityNamePlural: "Projects",
+            entityResource: FshResources.Accounting,
+            fields:
+            [
+                new EntityField<ProjectResponse>(r => r.Name, "Name", "Name"),
+                new EntityField<ProjectResponse>(r => r.StartDate, "Start Date", "StartDate", typeof(DateTime)),
+                new EntityField<ProjectResponse>(r => r.EndDate, "End Date", "EndDate", typeof(DateTime)),
+                new EntityField<ProjectResponse>(r => r.BudgetedAmount, "Budgeted Amount", "BudgetedAmount", typeof(decimal)),
+                new EntityField<ProjectResponse>(r => r.ClientName, "Client", "ClientName"),
+                new EntityField<ProjectResponse>(r => r.ProjectManager, "Manager", "ProjectManager"),
+                new EntityField<ProjectResponse>(r => r.Department, "Department", "Department"),
+                new EntityField<ProjectResponse>(r => r.Status, "Status", "Status"),
+                new EntityField<ProjectResponse>(r => r.ActualCost, "Actual Cost", "ActualCost", typeof(decimal)),
+                new EntityField<ProjectResponse>(r => r.ActualRevenue, "Actual Revenue", "ActualRevenue", typeof(decimal)),
+                new EntityField<ProjectResponse>(r => r.Description, "Description", "Description"),
+                new EntityField<ProjectResponse>(r => r.Notes, "Notes", "Notes"),
+            ],
+            enableAdvancedSearch: true,
+            idFunc: response => response.Id,
+            searchFunc: async filter =>
+            {
+                var request = filter.Adapt<SearchProjectsRequest>();
+                var result = await ApiClient.ProjectSearchEndpointAsync("1", request);
+                return result.Adapt<PaginationResponse<ProjectResponse>>();
+            },
+            createFunc: async vm =>
+            {
+                await ApiClient.ProjectCreateEndpointAsync("1", vm.Adapt<CreateProjectCommand>());
+            },
+            updateFunc: async (id, vm) =>
+            {
+                await ApiClient.ProjectUpdateEndpointAsync("1", id, vm.Adapt<UpdateProjectCommand>());
+            },
+            deleteFunc: async id => await ApiClient.ProjectDeleteEndpointAsync("1", id));
+
+        return Task.CompletedTask;
+    }
+}

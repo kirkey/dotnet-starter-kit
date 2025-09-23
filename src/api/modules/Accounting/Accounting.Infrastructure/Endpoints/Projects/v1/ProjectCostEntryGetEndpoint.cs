@@ -1,4 +1,4 @@
-using Accounting.Application.Projects.Costs.Get;
+using Accounting.Application.ProjectCosting.Get;
 using Accounting.Application.Projects.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
@@ -16,7 +16,7 @@ public static class ProjectCostEntryGetEndpoint
             .WithName(nameof(ProjectCostEntryGetEndpoint))
             .WithSummary("get a project cost entry")
             .WithDescription("get a project cost entry by id for a project")
-            .Produces<ProjectCostEntryResponse>()
+            .Produces<ProjectCostResponse>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

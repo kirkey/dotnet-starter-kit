@@ -80,56 +80,56 @@ public class WarehouseViewModel
 
     /// <summary>
     /// Unique warehouse code for identification and referencing.
-    /// Required field with maximum length of 50 characters.
+    /// Required field with a maximum length of 50 characters.
     /// Examples: "WH-MAIN", "WH-NYC-01", "WH-SEA"
     /// </summary>
     public string Code { get; set; } = default!;
 
     /// <summary>
     /// Street address of the warehouse facility.
-    /// Required field with maximum length of 500 characters.
+    /// Required field with a maximum length of 500 characters.
     /// </summary>
     public string Address { get; set; } = default!;
 
     /// <summary>
     /// City where the warehouse is located.
-    /// Required field with maximum length of 100 characters.
+    /// Required field with a maximum length of 100 characters.
     /// </summary>
     public string City { get; set; } = default!;
 
     /// <summary>
     /// State or province where the warehouse is located.
-    /// Optional field with maximum length of 100 characters.
+    /// Optional field with a maximum length of 100 characters.
     /// </summary>
     public string? State { get; set; }
 
     /// <summary>
     /// Country where the warehouse is located.
-    /// Required field with maximum length of 100 characters.
+    /// Required field with a maximum length of 100 characters.
     /// </summary>
     public string Country { get; set; } = default!;
 
     /// <summary>
     /// Postal code for the warehouse address.
-    /// Optional field with maximum length of 20 characters.
+    /// Optional field with a maximum length of 20 characters.
     /// </summary>
     public string? PostalCode { get; set; }
 
     /// <summary>
     /// Name of the warehouse manager responsible for operations.
-    /// Required field with maximum length of 100 characters.
+    /// Required field with a maximum length of 100 characters.
     /// </summary>
     public string ManagerName { get; set; } = default!;
 
     /// <summary>
     /// Email address of the warehouse manager.
-    /// Required field with maximum length of 255 characters and valid email format.
+    /// Required field with a maximum length of 255 characters and valid email format.
     /// </summary>
     public string ManagerEmail { get; set; } = default!;
 
     /// <summary>
     /// Phone number of the warehouse manager.
-    /// Required field with maximum length of 50 characters.
+    /// Required field with a maximum length of 50 characters.
     /// </summary>
     public string ManagerPhone { get; set; } = default!;
 
@@ -147,7 +147,7 @@ public class WarehouseViewModel
 
     /// <summary>
     /// Unit of measurement for capacity (e.g., sqft, pallets, cubic_meters).
-    /// Required field with maximum length of 20 characters.
+    /// Required field with a maximum length of 20 characters.
     /// </summary>
     public string CapacityUnit { get; set; } = "sqft";
 
@@ -159,14 +159,14 @@ public class WarehouseViewModel
 
     /// <summary>
     /// Indicates whether this is the main/primary warehouse.
-    /// Default value is false. Only one warehouse should be marked as main.
+    /// The default value is false. Only one warehouse should be marked as main.
     /// </summary>
     public bool IsMainWarehouse { get; set; }
 
     /// <summary>
     /// Type of warehouse indicating storage capabilities and restrictions.
-    /// Required field with maximum length of 50 characters.
-    /// Default value is "Standard".
+    /// Required field with a maximum length of 50 characters.
+    /// The default value is "Standard".
     /// </summary>
     public string WarehouseType { get; set; } = "Standard";
 }

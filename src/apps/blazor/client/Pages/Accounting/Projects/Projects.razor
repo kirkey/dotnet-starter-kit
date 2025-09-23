@@ -1,0 +1,96 @@
+@page "/accounting-projects"
+
+<PageHeader Title="Projects" Header="Projects" SubHeader="Manage Projects." />
+
+<EntityTable @ref="_table" TEntity="ProjectResponse" TId="DefaultIdType" TRequest="ProjectViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.StartDate"
+                           For="@(() => context.StartDate)"
+                           DateFormat="MMMM dd, yyyy"
+                           Label="Start Date" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.EndDate"
+                           DateFormat="MMMM dd, yyyy"
+                           For="@(() => context.EndDate)"
+                           Label="End Date" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" Format="N2"
+                             @bind-Value="context.BudgetedAmount"
+                             For="@(() => context.BudgetedAmount)"
+                             Label="Budgeted Amount"
+                             Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.ClientName"
+                          For="@(() => context.ClientName)"
+                          Label="Client Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.ProjectManager"
+                          For="@(() => context.ProjectManager)"
+                          Label="Project Manager"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.Department"
+                          For="@(() => context.Department)"
+                          Label="Department"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.Status"
+                          For="@(() => context.Status)"
+                          Label="Status"
+                          ReadOnly="true" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField T="decimal" Format="N2" Label="Actual Cost" ReadOnly Value="context.ActualCost" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField T="decimal" Format="N2" Label="Actual Revenue" ReadOnly Value="context.ActualRevenue" Variant="Variant.Outlined" />
+            </MudItem>
+        }
+    </EditFormContent>
+</EntityTable>

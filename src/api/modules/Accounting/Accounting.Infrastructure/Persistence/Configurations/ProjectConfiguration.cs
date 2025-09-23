@@ -40,7 +40,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 
         // One-to-many relationship to ProjectCost entries
         builder
-            .HasMany<ProjectCostEntry>(p => p.CostingEntries)
+            .HasMany(p => p.CostingEntries)
             .WithOne()
             .HasForeignKey(pc => pc.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);

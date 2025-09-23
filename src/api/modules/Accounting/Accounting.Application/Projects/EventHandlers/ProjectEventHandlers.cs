@@ -7,8 +7,11 @@ public sealed class ProjectCreatedEventHandler(ILogger<ProjectCreatedEventHandle
 {
     public Task Handle(ProjectCreated notification, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Project created: {Id} - {ProjectName} - Budget: {BudgetedAmount}", 
-            notification.Id, notification.ProjectName, notification.BudgetedAmount);
+        logger.LogInformation(
+            "Project created: {ProjectId} - {Name} - Budget: {BudgetedAmount}",
+            notification.ProjectId,
+            notification.Name,
+            notification.BudgetedAmount);
         return Task.CompletedTask;
     }
 }

@@ -2,27 +2,136 @@
 
 namespace Accounting.Domain.Exceptions;
 
-public sealed class ProjectNotFoundException(DefaultIdType id) : NotFoundException($"project with id {id} not found");
-public sealed class ProjectAlreadyCompletedException(DefaultIdType id) : ForbiddenException($"project with id {id} is already completed");
-public sealed class ProjectAlreadyCancelledException(DefaultIdType id) : ForbiddenException($"project with id {id} is already cancelled");
-public sealed class ProjectCannotBeModifiedException(DefaultIdType id) : ForbiddenException($"project with id {id} cannot be modified after completion or cancellation");
-public sealed class InvalidProjectBudgetException() : ForbiddenException("project budget amount cannot be negative");
-public sealed class InvalidProjectCostEntryException() : ForbiddenException("project cost entry amount must be positive");
-public sealed class InvalidProjectRevenueEntryException() : ForbiddenException("project revenue entry amount must be positive");
-public sealed class JobCostingEntryNotFoundException(DefaultIdType id) : NotFoundException($"job costing entry with id {id} not found");
+/// <summary>
+/// Exception thrown when an invalid project budget amount is provided.
+/// </summary>
+public class InvalidProjectBudgetException() : BadRequestException("Project budget amount must be non-negative.");
 
 /// <summary>
-/// Exception thrown when a provided project end date is before the project start date.
+/// Exception thrown when attempting to modify a project that cannot be modified (completed or cancelled).
 /// </summary>
-public sealed class InvalidProjectEndDateException() : ForbiddenException("project end date cannot be before start date");
+public class ProjectCannotBeModifiedException(DefaultIdType projectId)
+    : ForbiddenException($"Project {projectId} cannot be modified because it is completed or cancelled.");
 
 /// <summary>
-/// Exception thrown when attempting to mark a project as Completed without an end date.
+/// Exception thrown when an invalid project cost entry amount is provided.
 /// </summary>
-public sealed class ProjectCompletionRequiresEndDateException() : ForbiddenException("marking a project as Completed requires an end date to be set");
+public class InvalidProjectCostEntryException() : BadRequestException("Project cost entry amount must be positive.");
 
 /// <summary>
-/// Exception thrown when adding a cost would push actual cost beyond the approved budget.
+/// Exception thrown when an invalid project revenue entry amount is provided.
 /// </summary>
-public sealed class ProjectBudgetExceededException(decimal attemptedAmount, decimal budgetedAmount, decimal currentActualCost)
-    : ForbiddenException($"adding amount {attemptedAmount:C} would exceed project budget {budgetedAmount:C} (current actual cost {currentActualCost:C})");
+public class InvalidProjectRevenueEntryException()
+    : BadRequestException("Project revenue entry amount must be positive.");
+
+/// <summary>
+/// Exception thrown when a project name is required but not provided.
+/// </summary>
+public class ProjectNameRequiredException() : BadRequestException("Project name is required and cannot be empty.");
+
+/// <summary>
+/// Exception thrown when project start date is invalid (in the future).
+/// </summary>
+public class InvalidProjectStartDateException() : BadRequestException("Project start date cannot be in the future.");
+
+/// <summary>
+/// Exception thrown when project end date is invalid (before start date).
+/// </summary>
+public class InvalidProjectEndDateException() : BadRequestException("Project end date must be after start date.");
+
+/// <summary>
+/// Exception thrown when attempting to complete a project without setting end date.
+/// </summary>
+public class ProjectCompletionDateRequiredException()
+    : BadRequestException("Project completion date is required when marking project as completed.");
+
+/// <summary>
+/// Exception thrown when a project with duplicate name/code already exists.
+/// </summary>
+public class DuplicateProjectException(string projectName)
+    : ConflictException($"A project with name '{projectName}' already exists.");
+
+/// <summary>
+/// Exception thrown when a project is not found.
+/// </summary>
+public class ProjectNotFoundException(DefaultIdType projectId)
+    : NotFoundException($"Project with ID {projectId} was not found.");
+
+/// <summary>
+/// Exception thrown when project cost amount exceeds budget without authorization.
+/// </summary>
+public class ProjectCostExceedsBudgetException(decimal budgetAmount, decimal totalCost) : BadRequestException(
+    $"Project total cost ({totalCost:C}) exceeds approved budget ({budgetAmount:C}) without authorization.");
+
+/// <summary>
+/// Exception thrown when attempting to complete a project that is already completed.
+/// </summary>
+public class ProjectAlreadyCompletedException(DefaultIdType projectId)
+    : ConflictException($"Project {projectId} is already completed.");
+
+/// <summary>
+/// Exception thrown when attempting to cancel a project that is already cancelled or completed.
+/// </summary>
+public class ProjectAlreadyCancelledException(DefaultIdType projectId)
+    : ConflictException($"Project {projectId} is already cancelled or completed.");
+
+// ProjectCost specific exceptions
+
+/// <summary>
+/// Exception thrown when an invalid project cost amount is provided.
+/// </summary>
+public class InvalidProjectCostAmountException() : BadRequestException("Project cost amount must be positive.");
+
+/// <summary>
+/// Exception thrown when project cost description is required but not provided.
+/// </summary>
+public class ProjectCostDescriptionRequiredException()
+    : BadRequestException("Project cost description is required and cannot be empty.");
+
+/// <summary>
+/// Exception thrown when project cost entry date is invalid (in the future).
+/// </summary>
+public class InvalidProjectCostDateException() : BadRequestException("Project cost entry date cannot be in the future.");
+
+/// <summary>
+/// Exception thrown when attempting to modify an approved project cost entry.
+/// </summary>
+public class ApprovedProjectCostCannotBeModifiedException(DefaultIdType projectCostId)
+    : ConflictException($"Project cost entry {projectCostId} cannot be modified because it has been approved.");
+
+/// <summary>
+/// Exception thrown when a project cost entry is not found.
+/// </summary>
+public class ProjectCostNotFoundException(DefaultIdType projectCostId)
+    : NotFoundException($"Project cost entry with ID {projectCostId} was not found.");
+
+/// <summary>
+/// Exception thrown when an invalid cost category is provided.
+/// </summary>
+public class InvalidProjectCostCategoryException(string category)
+    : BadRequestException($"Invalid project cost category: '{category}'.");
+
+/// <summary>
+/// Exception thrown when an invalid cost center is provided.
+/// </summary>
+public class InvalidCostCenterException(string costCenter)
+    : BadRequestException($"Invalid cost center: '{costCenter}'.");
+
+/// <summary>
+/// Exception thrown when attempting to add costs to a project that doesn't allow it (wrong status).
+/// </summary>
+public class ProjectCostEntryNotAllowedException(DefaultIdType projectId)
+    : ForbiddenException($"Cost entries are not allowed for project {projectId} in its current status.");
+
+/// <summary>
+/// Exception thrown when a job costing entry is not found.
+/// </summary>
+public class JobCostingEntryNotFoundException(DefaultIdType entryId)
+    : NotFoundException($"Job costing entry with ID {entryId} was not found.");
+
+/// <summary>
+/// Exception thrown when adding a cost would exceed the project's approved budget without authorization.
+/// </summary>
+public class ProjectBudgetExceededException(decimal addedAmount, decimal budgetAmount, decimal currentCost)
+    : BadRequestException(
+        $"Adding amount {addedAmount:C} would exceed project budget {budgetAmount:C}. Current cost is {currentCost:C}.");

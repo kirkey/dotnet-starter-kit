@@ -43,7 +43,7 @@ namespace Accounting.Domain;
 /// <seealso cref="Accounting.Domain.Events.Project.ProjectCompleted"/>
 /// <seealso cref="Accounting.Domain.Events.Project.ProjectCancelled"/>
 /// <seealso cref="Accounting.Domain.Events.Project.ProjectBudgetAdjusted"/>
-/// <seealso cref="Accounting.Domain.Events.Project.ProjectCostPosted"/>
+/// <seealso cref="Accounting.Domain.Events.Project.ProjectCostAdded"/>
 /// <seealso cref="Accounting.Domain.Events.Project.ProjectRevenueRecognized"/>
 public class Project : AuditableEntity, IAggregateRoot
 {
@@ -92,11 +92,6 @@ public class Project : AuditableEntity, IAggregateRoot
     /// </summary>
     public decimal ActualRevenue { get; private set; }
     
-    private Project()
-    {
-        // EF Core requires a parameterless constructor for entity instantiation
-    }
-
     private readonly List<ProjectCostEntry> _costingEntries = new();
     /// <summary>
     /// Cost and revenue entries associated with this project.
@@ -122,6 +117,20 @@ public class Project : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new ProjectCreated(Id, Name, StartDate, BudgetedAmount, Description, Notes));
     }
 
+    // EF parameterless constructor grouped with other constructors; suppressed unused warning because EF instantiates via reflection
+#pragma warning disable IDE0051 // Remove unused private members
+    protected Project()
+    {
+        // EF Core requires a parameterless constructor for entity instantiation
+        // Initialize non-nullable fields to safe defaults to satisfy analyzers and EF
+        Status = "Active";
+        StartDate = DateTime.UtcNow.Date;
+        BudgetedAmount = 0m;
+        ActualCost = 0m;
+        ActualRevenue = 0m;
+    }
+#pragma warning restore IDE0051
+
     /// <summary>
     /// Create a project; budget must be non-negative.
     /// </summary>
@@ -129,6 +138,12 @@ public class Project : AuditableEntity, IAggregateRoot
         string? clientName = null, string? projectManager = null, string? department = null,
         string? description = null, string? notes = null)
     {
+        if (string.IsNullOrWhiteSpace(projectName))
+            throw new ProjectNameRequiredException();
+
+        if (startDate > DateTime.UtcNow.Date)
+            throw new InvalidProjectStartDateException();
+
         if (budgetedAmount < 0)
             throw new InvalidProjectBudgetException();
 
@@ -152,12 +167,18 @@ public class Project : AuditableEntity, IAggregateRoot
 
         if (startDate.HasValue && StartDate != startDate.Value)
         {
+            if (startDate.Value > DateTime.UtcNow.Date)
+                throw new InvalidProjectStartDateException();
             StartDate = startDate.Value;
             isUpdated = true;
         }
 
         if (endDate != EndDate)
         {
+            // Validate end date not before start date
+            if (endDate.HasValue && endDate.Value < StartDate)
+                throw new InvalidProjectEndDateException();
+
             EndDate = endDate;
             isUpdated = true;
         }
@@ -172,6 +193,10 @@ public class Project : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(status) && Status != status)
         {
+            // If changing to Completed ensure an EndDate is provided or already set
+            if (status.Trim().Equals("Completed", StringComparison.OrdinalIgnoreCase) && endDate == null && EndDate == null)
+                throw new ProjectCompletionDateRequiredException();
+
             Status = status.Trim();
             isUpdated = true;
         }
@@ -208,49 +233,9 @@ public class Project : AuditableEntity, IAggregateRoot
 
         if (isUpdated)
         {
-            QueueDomainEvent(new ProjectUpdated(this));
+            QueueDomainEvent(new ProjectUpdated(Id));
         }
 
-        return this;
-    }
-
-    /// <summary>
-    /// Add a cost entry; amount must be positive. Not allowed when project is Completed or Cancelled.
-    /// </summary>
-    public Project AddCostEntry(DateTime date, string description, decimal amount, DefaultIdType expenseAccountId,
-        DefaultIdType? journalEntryId = null, string? category = null)
-    {
-        if (Status == "Completed" || Status == "Cancelled")
-            throw new ProjectCannotBeModifiedException(Id);
-
-        if (amount <= 0)
-            throw new InvalidProjectCostEntryException();
-
-        var entry = ProjectCostEntry.Create(Id, date, description, amount, expenseAccountId, journalEntryId, category);
-        _costingEntries.Add(entry);
-
-        ActualCost += amount;
-        QueueDomainEvent(new ProjectCostAdded(Id, amount, ActualCost));
-        return this;
-    }
-
-    /// <summary>
-    /// Add a revenue entry; amount must be positive. Not allowed when project is Completed or Cancelled.
-    /// </summary>
-    public Project AddRevenueEntry(DateTime date, string description, decimal amount, DefaultIdType revenueAccountId,
-        DefaultIdType? journalEntryId = null)
-    {
-        if (Status == "Completed" || Status == "Cancelled")
-            throw new ProjectCannotBeModifiedException(Id);
-
-        if (amount <= 0)
-            throw new InvalidProjectRevenueEntryException();
-
-        var entry = ProjectCostEntry.Create(Id, date, description, -amount, revenueAccountId, journalEntryId, "Revenue");
-        _costingEntries.Add(entry);
-
-        ActualRevenue += amount;
-        QueueDomainEvent(new ProjectRevenueAdded(Id, amount, ActualRevenue));
         return this;
     }
 
@@ -264,7 +249,7 @@ public class Project : AuditableEntity, IAggregateRoot
 
         Status = "Completed";
         EndDate = completionDate;
-        QueueDomainEvent(new ProjectCompleted(Id, completionDate, ActualCost, ActualRevenue));
+        QueueDomainEvent(new ProjectCompleted(Id, completionDate, ActualCost, ActualRevenue, BudgetVariance));
         return this;
     }
 
@@ -278,32 +263,81 @@ public class Project : AuditableEntity, IAggregateRoot
 
         Status = "Cancelled";
         EndDate = cancellationDate;
-        QueueDomainEvent(new ProjectCancelled(Id, cancellationDate, reason));
+        QueueDomainEvent(new ProjectCancelled(Id, cancellationDate, reason, ActualCost));
         return this;
     }
 
     /// <summary>
     /// Difference between budget and actual cost (positive = under budget).
     /// </summary>
-    public decimal GetBudgetVariance()
-    {
-        return BudgetedAmount - ActualCost;
-    }
+    public decimal BudgetVariance => BudgetedAmount - ActualCost;
 
     /// <summary>
     /// Profit/Loss calculated as ActualRevenue - ActualCost.
     /// </summary>
-    public decimal GetProfitLoss()
-    {
-        return ActualRevenue - ActualCost;
-    }
+    public decimal ProfitLoss => ActualRevenue - ActualCost;
 
     /// <summary>
     /// Percentage of budget consumed by actual costs.
     /// </summary>
-    public decimal GetBudgetUtilizationPercentage()
+    public decimal BudgetUtilizationPercentage => BudgetedAmount > 0 ? (ActualCost / BudgetedAmount) * 100 : 0;
+
+    /// <summary>
+    /// Add a new positive-amount cost entry to this project, updating ActualCost and enforcing business rules.
+    /// </summary>
+    /// <param name="date">The date when the cost was incurred.</param>
+    /// <param name="description">Description of the cost; required.</param>
+    /// <param name="amount">Cost amount; must be positive.</param>
+    /// <param name="accountId">Chart of accounts reference for this cost.</param>
+    /// <param name="journalEntryId">Optional journal entry reference.</param>
+    /// <param name="category">Optional cost category.</param>
+    /// <param name="costCenter">Optional cost center.</param>
+    /// <param name="workOrderNumber">Optional work order number.</param>
+    /// <param name="isBillable">Whether this cost is billable.</param>
+    /// <param name="vendor">Optional vendor or supplier.</param>
+    /// <param name="invoiceNumber">Optional invoice/receipt number.</param>
+    /// <returns>The created <see cref="ProjectCostEntry"/> entry.</returns>
+    public ProjectCostEntry AddCostEntry(
+        DateTime date,
+        string description,
+        decimal amount,
+        DefaultIdType accountId,
+        DefaultIdType? journalEntryId = null,
+        string? category = null,
+        string? costCenter = null,
+        string? workOrderNumber = null,
+        bool isBillable = false,
+        string? vendor = null,
+        string? invoiceNumber = null)
     {
-        return BudgetedAmount > 0 ? (ActualCost / BudgetedAmount) * 100 : 0;
+        if (Status == "Completed" || Status == "Cancelled")
+            throw new ProjectCannotBeModifiedException(Id);
+
+        // Enforce budget limit here to keep business rule in the aggregate (DRY)
+        if (BudgetedAmount > 0 && ActualCost + amount > BudgetedAmount)
+            throw new ProjectBudgetExceededException(amount, BudgetedAmount, ActualCost);
+
+        var entry = ProjectCostEntry.Create(
+            Id,
+            date,
+            amount,
+            description,
+            accountId,
+            category,
+            journalEntryId,
+            costCenter,
+            workOrderNumber,
+            isBillable,
+            vendor,
+            invoiceNumber);
+
+        _costingEntries.Add(entry);
+        ActualCost += entry.Amount;
+
+        // Emit aggregate-level event with totals for reporting/notifications
+        QueueDomainEvent(new ProjectCostAdded(Id, entry.Amount, ActualCost));
+
+        return entry;
     }
 
     /// <summary>
@@ -335,7 +369,15 @@ public class Project : AuditableEntity, IAggregateRoot
         if (oldAmount <= 0)
             throw new InvalidProjectCostEntryException();
 
-        entry.Update(date, description, amount, category);
+        // Budget enforcement when amount changes for cost entries
+        if (amount.HasValue && amount.Value != oldAmount && BudgetedAmount > 0)
+        {
+            var projectedActualCost = ActualCost - oldAmount + amount.Value;
+            if (projectedActualCost > BudgetedAmount)
+                throw new ProjectBudgetExceededException(amount.Value, BudgetedAmount, ActualCost);
+        }
+
+        entry.Update(date, amount, description, category);
 
         if (amount.HasValue && amount.Value != oldAmount)
         {

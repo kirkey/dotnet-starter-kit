@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
 
 public sealed record WarehouseResponse(
-    DefaultIdType? Id, 
+    DefaultIdType Id, 
     string Name, 
     string? Description,
     string Code,

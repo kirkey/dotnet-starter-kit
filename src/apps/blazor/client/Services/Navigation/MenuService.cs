@@ -87,6 +87,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Periods", Icon = Icons.Material.Filled.List, Href = "/accounting-periods" },
                         new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.List, Href = "/accounting-accruals" },
                         new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.List, Href = "/accounting-budgets" },
+                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.List, Href = "/accounting-projects" },
                         new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/payees" }
                     ]
                 },

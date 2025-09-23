@@ -2328,6 +2328,121 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// create a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// create a project cost entry for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> ProjectCostEntryCreateEndpointAsync(string version, System.Guid projectId, CreateProjectCostEntryCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// create a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// create a project cost entry for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> ProjectCostEntryCreateEndpointAsync(string version, System.Guid projectId, CreateProjectCostEntryCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// list project cost entries
+        /// </summary>
+        /// <remarks>
+        /// list all project cost entries for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProjectCostResponse>> MapProjectCostEntriesEndpointAsync(string version, System.Guid projectId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// list project cost entries
+        /// </summary>
+        /// <remarks>
+        /// list all project cost entries for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProjectCostResponse>> MapProjectCostEntriesEndpointAsync(string version, System.Guid projectId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// get a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// get a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ProjectCostResponse> ProjectCostEntryGetEndpointAsync(string version, System.Guid projectId, System.Guid entryId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// get a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// get a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ProjectCostResponse> ProjectCostEntryGetEndpointAsync(string version, System.Guid projectId, System.Guid entryId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// update a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// update a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> ProjectCostEntryUpdateEndpointAsync(string version, System.Guid projectId, System.Guid entryId, UpdateProjectCostEntryCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// update a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Guid> ProjectCostEntryUpdateEndpointAsync(string version, System.Guid projectId, System.Guid entryId, UpdateProjectCostEntryCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// delete a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// delete a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ProjectCostEntryDeleteEndpointAsync(string version, System.Guid projectId, System.Guid entryId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// delete a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// delete a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ProjectCostEntryDeleteEndpointAsync(string version, System.Guid projectId, System.Guid entryId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Create a new purchase order
         /// </summary>
         /// <remarks>
@@ -14572,6 +14687,536 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// create a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// create a project cost entry for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Guid> ProjectCostEntryCreateEndpointAsync(string version, System.Guid projectId, CreateProjectCostEntryCommand body)
+        {
+            return ProjectCostEntryCreateEndpointAsync(version, projectId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// create a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// create a project cost entry for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Guid> ProjectCostEntryCreateEndpointAsync(string version, System.Guid projectId, CreateProjectCostEntryCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (projectId == null)
+                throw new System.ArgumentNullException("projectId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/projects/{projectId}/costs"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(projectId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/costs");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// list project cost entries
+        /// </summary>
+        /// <remarks>
+        /// list all project cost entries for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProjectCostResponse>> MapProjectCostEntriesEndpointAsync(string version, System.Guid projectId)
+        {
+            return MapProjectCostEntriesEndpointAsync(version, projectId, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// list project cost entries
+        /// </summary>
+        /// <remarks>
+        /// list all project cost entries for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProjectCostResponse>> MapProjectCostEntriesEndpointAsync(string version, System.Guid projectId, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (projectId == null)
+                throw new System.ArgumentNullException("projectId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/projects/{projectId}/costs"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(projectId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/costs");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ProjectCostResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// get a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// get a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<ProjectCostResponse> ProjectCostEntryGetEndpointAsync(string version, System.Guid projectId, System.Guid entryId)
+        {
+            return ProjectCostEntryGetEndpointAsync(version, projectId, entryId, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// get a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// get a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<ProjectCostResponse> ProjectCostEntryGetEndpointAsync(string version, System.Guid projectId, System.Guid entryId, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (projectId == null)
+                throw new System.ArgumentNullException("projectId");
+
+            if (entryId == null)
+                throw new System.ArgumentNullException("entryId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/projects/{projectId}/costs/{entryId}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(projectId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/costs/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(entryId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProjectCostResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// update a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// update a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Guid> ProjectCostEntryUpdateEndpointAsync(string version, System.Guid projectId, System.Guid entryId, UpdateProjectCostEntryCommand body)
+        {
+            return ProjectCostEntryUpdateEndpointAsync(version, projectId, entryId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// update a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Guid> ProjectCostEntryUpdateEndpointAsync(string version, System.Guid projectId, System.Guid entryId, UpdateProjectCostEntryCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (projectId == null)
+                throw new System.ArgumentNullException("projectId");
+
+            if (entryId == null)
+                throw new System.ArgumentNullException("entryId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/projects/{projectId}/costs/{entryId}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(projectId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/costs/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(entryId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// delete a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// delete a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task ProjectCostEntryDeleteEndpointAsync(string version, System.Guid projectId, System.Guid entryId)
+        {
+            return ProjectCostEntryDeleteEndpointAsync(version, projectId, entryId, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// delete a project cost entry
+        /// </summary>
+        /// <remarks>
+        /// delete a project cost entry by id for a project
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task ProjectCostEntryDeleteEndpointAsync(string version, System.Guid projectId, System.Guid entryId, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (projectId == null)
+                throw new System.ArgumentNullException("projectId");
+
+            if (entryId == null)
+                throw new System.ArgumentNullException("entryId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/projects/{projectId}/costs/{entryId}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(projectId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/costs/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(entryId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Create a new purchase order
         /// </summary>
         /// <remarks>
@@ -23999,6 +24644,33 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateProjectCostEntryCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectId")]
+        public System.Guid ProjectId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("date")]
+        public System.DateTime Date { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountId")]
+        public System.Guid AccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("journalEntryId")]
+        public System.Guid? JournalEntryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("category")]
+        public string? Category { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreatePurchaseOrderCommand
     {
 
@@ -25825,6 +26497,69 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
         public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ProjectCostResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
+        public string? FilePath { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public System.Guid CreatedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
+        public string? CreatedByUserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime LastModifiedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
+        public System.Guid? LastModifiedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
+        public string? LastModifiedByUserName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectId")]
+        public System.Guid ProjectId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("date")]
+        public System.DateTime Date { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountId")]
+        public System.Guid AccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("journalEntryId")]
+        public System.Guid? JournalEntryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("category")]
+        public string? Category { get; set; } = default!;
 
     }
 
@@ -27767,6 +28502,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateProjectCostEntryCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectId")]
+        public System.Guid ProjectId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("entryId")]
+        public System.Guid EntryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("date")]
+        public System.DateTime? Date { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double? Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("category")]
+        public string? Category { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdatePurchaseOrderCommand
     {
 
@@ -28464,7 +29223,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
+        public System.Guid Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
