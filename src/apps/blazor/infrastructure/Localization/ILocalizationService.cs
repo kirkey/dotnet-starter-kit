@@ -1,4 +1,3 @@
-using Blazored.LocalStorage;
 namespace FSH.Starter.Blazor.Infrastructure.Localization;
 public interface ILocalizationService
 {

@@ -1,8 +1,4 @@
-﻿using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
-
-namespace FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
+﻿namespace FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
 public class JwtAuthenticationHeaderHandler(IAccessTokenProviderAccessor tokenProviderAccessor, NavigationManager navigation) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)

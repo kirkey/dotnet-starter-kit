@@ -1,8 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Shared.Authorization;
-
-namespace FSH.Starter.Blazor.Infrastructure.Auth;
+﻿namespace FSH.Starter.Blazor.Infrastructure.Auth;
 
 public static class AuthorizationServiceExtensions
 {

@@ -1,6 +1,4 @@
-﻿using MudBlazor;
-
-namespace FSH.Starter.Blazor.Infrastructure.Preferences;
+﻿namespace FSH.Starter.Blazor.Infrastructure.Preferences;
 
 public interface IClientPreferenceManager : IPreferenceManager
 {

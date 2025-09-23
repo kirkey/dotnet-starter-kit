@@ -1,6 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Themes;
-
-namespace FSH.Starter.Blazor.Infrastructure.Preferences;
+﻿namespace FSH.Starter.Blazor.Infrastructure.Preferences;
 
 public class ClientPreference : IPreference
 {

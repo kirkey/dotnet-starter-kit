@@ -1,7 +1,3 @@
-using FSH.Starter.Blazor.Shared.Notifications;
-using MediatR;
-using Microsoft.Extensions.Logging;
-
 namespace FSH.Starter.Blazor.Infrastructure.Notifications;
 
 public class NotificationPublisher(ILogger<NotificationPublisher> logger, IPublisher mediator) : INotificationPublisher

@@ -4,6 +4,7 @@ public interface IClientCryptoService
     string Encrypt(string plain);
     string Decrypt(string cipher);
 }
+
 public class ClientCryptoService : IClientCryptoService
 {
     // Simple reversible placeholder (NOT secure). Replace with WebCrypto integration in production.
@@ -14,6 +15,7 @@ public class ClientCryptoService : IClientCryptoService
         Array.Reverse(bytes);
         return Convert.ToBase64String(bytes);
     }
+    
     public string Decrypt(string cipher)
     {
         if (string.IsNullOrEmpty(cipher)) return cipher;

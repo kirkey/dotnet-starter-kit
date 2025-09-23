@@ -1,5 +1,3 @@
-using Microsoft.JSInterop;
-
 namespace FSH.Starter.Blazor.Infrastructure.Connectivity;
 
 public class NetworkStatusService(IJSRuntime js) : INetworkStatusService, IAsyncDisposable

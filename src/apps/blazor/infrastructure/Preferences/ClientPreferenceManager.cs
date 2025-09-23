@@ -1,9 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Blazored.LocalStorage;
-using FSH.Starter.Blazor.Infrastructure.Themes;
-using MudBlazor;
-
-namespace FSH.Starter.Blazor.Infrastructure.Preferences;
+﻿namespace FSH.Starter.Blazor.Infrastructure.Preferences;
 
 public class ClientPreferenceManager(
     ILocalStorageService localStorageService) : IClientPreferenceManager

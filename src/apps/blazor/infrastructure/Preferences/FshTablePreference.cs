@@ -1,5 +1,3 @@
-using FSH.Starter.Blazor.Shared.Notifications;
-
 namespace FSH.Starter.Blazor.Infrastructure.Preferences;
 
 public class FshTablePreference : INotificationMessage

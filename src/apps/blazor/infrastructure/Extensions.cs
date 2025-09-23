@@ -1,31 +1,4 @@
-﻿using System.Globalization;
-using Blazored.LocalStorage;
-using FSH.Starter.Blazor.Infrastructure.Api;
-using FSH.Starter.Blazor.Infrastructure.Auth;
-using FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
-using FSH.Starter.Blazor.Infrastructure.Caching;
-using FSH.Starter.Blazor.Infrastructure.Connectivity;
-using FSH.Starter.Blazor.Infrastructure.Exporting;
-using FSH.Starter.Blazor.Infrastructure.Features;
-using FSH.Starter.Blazor.Infrastructure.Impersonation;
-using FSH.Starter.Blazor.Infrastructure.Localization;
-using FSH.Starter.Blazor.Infrastructure.Metering;
-using FSH.Starter.Blazor.Infrastructure.Notifications;
-using FSH.Starter.Blazor.Infrastructure.Notifs;
-using FSH.Starter.Blazor.Infrastructure.Offline;
-using FSH.Starter.Blazor.Infrastructure.Palette;
-using FSH.Starter.Blazor.Infrastructure.Preferences;
-using FSH.Starter.Blazor.Infrastructure.Resilience;
-using FSH.Starter.Blazor.Infrastructure.Security;
-using FSH.Starter.Blazor.Infrastructure.Session;
-using FSH.Starter.Blazor.Infrastructure.Sync;
-using FSH.Starter.Blazor.Infrastructure.Telemetry;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using MudBlazor;
-using MudBlazor.Services;
-
-namespace FSH.Starter.Blazor.Infrastructure;
+﻿namespace FSH.Starter.Blazor.Infrastructure;
 public static class Extensions
 {
     private const string ClientName = "FullStackHero.API";
@@ -44,11 +17,6 @@ public static class Extensions
         services.AddMemoryCache();
         services.AddScoped<IApiCacheService, ApiCacheService>();
         services.AddScoped<INetworkStatusService, NetworkStatusService>();
-        services.AddScoped<IOfflineRequestQueue, OfflineRequestQueue>();
-        services.AddScoped<IOfflineRetryService, OfflineRetryService>();
-        services.AddScoped<IFeatureFlagService, FeatureFlagService>();
-        services.AddSingleton<IShortcutService, ShortcutService>();
-        services.AddScoped<IIdleTimerService, IdleTimerService>();
         services.AddTransient<ApiRetryHandler>();
         services.AddTransient<ApiCachingHandler>();
         services.AddTransient<IClient, Client>();
@@ -66,14 +34,9 @@ public static class Extensions
         services.AddTransient<IClientPreferenceManager, ClientPreferenceManager>();
         services.AddTransient<IPreference, ClientPreference>();
         services.AddNotifications();
-        services.AddSingleton<ITelemetryService, TelemetryService>();
         services.AddSingleton<ICommandPaletteService, CommandPaletteService>();
-        services.AddSingleton<IBroadcastSyncService, BroadcastSyncService>();
         services.AddScoped<IExportService, ExportService>();
-        services.AddSingleton<IPushNotificationService, PushNotificationService>();
-        services.AddSingleton<IUsageMeterService, UsageMeterService>();
         services.AddSingleton<IClientCryptoService, ClientCryptoService>();
-        services.AddScoped<IImpersonationService, ImpersonationService>();
         services.AddScoped<ILocalizationService, LocalizationService>();
         return services;
 

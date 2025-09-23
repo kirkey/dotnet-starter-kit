@@ -1,6 +1,4 @@
-﻿using MudBlazor;
-
-namespace FSH.Starter.Blazor.Infrastructure.Themes;
+﻿namespace FSH.Starter.Blazor.Infrastructure.Themes;
 
 public class FshTheme : MudTheme
 {

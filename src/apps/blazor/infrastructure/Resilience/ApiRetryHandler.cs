@@ -1,6 +1,3 @@
-using System.Net;
-using Microsoft.Extensions.Logging;
-
 namespace FSH.Starter.Blazor.Infrastructure.Resilience;
 
 public class ApiRetryHandler(ILogger<ApiRetryHandler> logger) : DelegatingHandler

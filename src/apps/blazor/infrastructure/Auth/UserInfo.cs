@@ -1,5 +1,3 @@
-using System.Security.Claims;
-
 namespace FSH.Starter.Blazor.Infrastructure.Auth;
 
 // Add properties to this class and update the server and client AuthenticationStateProviders

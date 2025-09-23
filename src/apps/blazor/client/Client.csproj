@@ -33,4 +33,8 @@
 	     <Folder Include="Components\Autocompletes\App\" />
 	     <Folder Include="Shared\" />
 	   </ItemGroup>
+	 
+	   <ItemGroup>
+	     <_ContentIncludedByDefault Remove="Pages\App\Settings.razor" />
+	   </ItemGroup>
 	 </Project>
