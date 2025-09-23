@@ -1,7 +1,7 @@
 using Accounting.Application.Accruals.Responses;
 
 namespace Accounting.Application.Accruals.Specs;
-using Accounting.Application.Accruals.Search;
+using Search;
 
 /// <summary>
 /// Specification for filtering accruals based on search query parameters.

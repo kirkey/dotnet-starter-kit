@@ -6,7 +6,7 @@ namespace Accounting.Domain;
 /// Represents a customer/member invoice including usage-based and fixed charges, taxes, fees, and line items.
 /// </summary>
 /// <remarks>
-/// Tracks billing period, kWh usage, status lifecycle (Draft, Sent, Paid, Overdue, Cancelled), payments applied, and totals.
+/// Tracks billing period, kWh usage, status lifecycle (Draft, Sent, Paid, Overdue, Canceled), payments applied, and totals.
 /// Defaults: <see cref="Status"/> "Draft"; <see cref="PaidAmount"/> 0; string properties trimmed.
 /// </remarks>
 public class Invoice : AuditableEntity, IAggregateRoot
@@ -441,7 +441,7 @@ public class InvoiceLineItem : BaseEntity
     /// </summary>
     public string? AccountCode { get; private set; }
 
-    private InvoiceLineItem(DefaultIdType invoiceId, string description, 
+    private InvoiceLineItem(DefaultIdType invoiceId, string description,
         decimal quantity, decimal unitPrice, string? accountCode = null)
     {
         InvoiceId = invoiceId;

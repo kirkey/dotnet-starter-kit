@@ -56,6 +56,13 @@ public static class AccountingModule
             projects.MapProjectSearchEndpoint();
             projects.MapProjectUpdateEndpoint();
             projects.MapProjectDeleteEndpoint();
+            // Job cost entries endpoints
+            projects.MapProjectCostEntryCreateEndpoint();
+            projects.MapProjectCostEntryGetEndpoint();
+            // Use the consolidated list endpoint implementation
+            projects.MapProjectCostEntriesEndpoint();
+            projects.MapProjectCostEntryUpdateEndpoint();
+            projects.MapProjectCostEntryDeleteEndpoint();
 
             var periods = app.MapGroup("periods").WithTags("periods");
             periods.MapAccountingPeriodSearchEndpoint();
@@ -216,12 +223,7 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
-        // Added missing repository registrations for PostingBatch, DeferredRevenue, and Accrual
-        builder.Services.AddKeyedScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
-        // New keyed registrations for added domain types
-        builder.Services.AddKeyedScoped<IRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting");
+        // Removed keyed registrations for ProjectCostEntry
         // Also register a dedicated key for rate schedules used by billing handlers
         builder.Services.AddKeyedScoped<IRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");
         builder.Services.AddKeyedScoped<IReadRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");

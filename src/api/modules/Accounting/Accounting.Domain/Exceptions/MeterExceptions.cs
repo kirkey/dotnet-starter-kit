@@ -42,3 +42,28 @@ public sealed class InvalidMeterInstallationDateException() : ForbiddenException
 /// Exception thrown when trying to remove a meter that has recent readings.
 /// </summary>
 public sealed class CannotRemoveMeterWithReadingsException(DefaultIdType id) : ForbiddenException($"cannot remove meter with id {id} that has recent readings");
+
+/// <summary>
+/// Exception thrown when an invalid meter type is provided.
+/// </summary>
+public sealed class InvalidMeterTypeException(string meterType) : ForbiddenException($"invalid meter type: {meterType}");
+
+/// <summary>
+/// Exception thrown when an invalid meter status is provided.
+/// </summary>
+public sealed class InvalidMeterStatusException(string status) : ForbiddenException($"invalid meter status: {status}");
+
+/// <summary>
+/// Exception thrown when the multiplier provided for a meter is invalid (non-positive).
+/// </summary>
+public sealed class InvalidMeterMultiplierException() : ForbiddenException("meter multiplier must be positive");
+
+/// <summary>
+/// Exception thrown when a required property is missing or invalid on a meter.
+/// </summary>
+public sealed class InvalidMeterPropertyException(string propertyName) : ForbiddenException($"invalid or missing meter property: {propertyName}");
+
+/// <summary>
+/// Exception thrown when a smart meter is created without a communication protocol.
+/// </summary>
+public sealed class MissingCommunicationProtocolException() : ForbiddenException("communication protocol is required for smart meters");

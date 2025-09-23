@@ -38,19 +38,11 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasPrecision(18, 2)
             .IsRequired();
 
-        // Configure owned entity for JobCostingEntries
-        builder.OwnsMany(x => x.CostingEntries, ce =>
-        {
-            ce.ToTable("JobCostingEntries", schema: SchemaNames.Accounting);
-            ce.WithOwner().HasForeignKey("ProjectId");
-            ce.HasKey("Id");
-            
-            ce.Property(x => x.Date)
-                .IsRequired();
-                
-            ce.Property(x => x.Amount)
-                .HasPrecision(18, 2)
-                .IsRequired();
-        });
+        // One-to-many relationship to ProjectCost entries
+        builder
+            .HasMany<ProjectCostEntry>(p => p.CostingEntries)
+            .WithOne()
+            .HasForeignKey(pc => pc.ProjectId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

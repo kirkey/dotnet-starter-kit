@@ -28,6 +28,7 @@ public sealed class AccountingDbContext(
     public DbSet<Meter> Meters { get; set; } = null!;
     public DbSet<Payee> Payees { get; set; } = null!;
     public DbSet<Project> Projects { get; set; } = null!;
+    public DbSet<ProjectCostEntry> ProjectCostEntries { get; set; } = null!;
     public DbSet<Vendor> Vendors { get; set; } = null!;
     public DbSet<Accrual> Accruals { get; set; } = null!;
     public DbSet<DeferredRevenue> DeferredRevenues { get; set; } = null!;

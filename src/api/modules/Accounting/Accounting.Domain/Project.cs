@@ -15,7 +15,7 @@ namespace Accounting.Domain;
 /// - Track project profitability and performance metrics for future planning.
 /// - Enable project budget control with spend authorization and approval workflows.
 /// - Support grant-funded projects with specific cost tracking and reporting requirements.
-/// 
+///
 /// Default values:
 /// - StartDate: required project initiation date (example: 2025-09-01)
 /// - EndDate: null (set when project is completed or cancelled)
@@ -27,7 +27,7 @@ namespace Accounting.Domain;
 /// - ProjectManager: optional manager assignment (example: "John Smith")
 /// - Name: inherited project name (example: "Substation Alpha Upgrade")
 /// - Description: inherited project description (example: "Replace aging substation equipment")
-/// 
+///
 /// Business rules:
 /// - BudgetedAmount must be non-negative
 /// - EndDate must be after StartDate when specified
@@ -97,11 +97,11 @@ public class Project : AuditableEntity, IAggregateRoot
         // EF Core requires a parameterless constructor for entity instantiation
     }
 
-    private readonly List<JobCostingEntry> _costingEntries = new();
+    private readonly List<ProjectCostEntry> _costingEntries = new();
     /// <summary>
     /// Cost and revenue entries associated with this project.
     /// </summary>
-    public IReadOnlyCollection<JobCostingEntry> CostingEntries => _costingEntries.AsReadOnly();
+    public IReadOnlyCollection<ProjectCostEntry> CostingEntries => _costingEntries.AsReadOnly();
 
     private Project(string projectName, DateTime startDate, decimal budgetedAmount,
         string? clientName = null, string? projectManager = null, string? department = null,
@@ -226,7 +226,7 @@ public class Project : AuditableEntity, IAggregateRoot
         if (amount <= 0)
             throw new InvalidProjectCostEntryException();
 
-        var entry = JobCostingEntry.Create(Id, date, description, amount, expenseAccountId, journalEntryId, category);
+        var entry = ProjectCostEntry.Create(Id, date, description, amount, expenseAccountId, journalEntryId, category);
         _costingEntries.Add(entry);
 
         ActualCost += amount;
@@ -246,7 +246,7 @@ public class Project : AuditableEntity, IAggregateRoot
         if (amount <= 0)
             throw new InvalidProjectRevenueEntryException();
 
-        var entry = JobCostingEntry.Create(Id, date, description, -amount, revenueAccountId, journalEntryId, "Revenue");
+        var entry = ProjectCostEntry.Create(Id, date, description, -amount, revenueAccountId, journalEntryId, "Revenue");
         _costingEntries.Add(entry);
 
         ActualRevenue += amount;
@@ -305,94 +305,68 @@ public class Project : AuditableEntity, IAggregateRoot
     {
         return BudgetedAmount > 0 ? (ActualCost / BudgetedAmount) * 100 : 0;
     }
-}
-
-/// <summary>
-/// Represents a single job costing entry for a project, either cost (positive) or revenue (negative).
-/// </summary>
-public class JobCostingEntry : BaseEntity
-{
-    /// <summary>
-    /// Parent project identifier.
-    /// </summary>
-    public DefaultIdType ProjectId { get; private set; }
 
     /// <summary>
-    /// Date of the cost/revenue entry.
+    /// Update an existing cost entry and adjust <see cref="ActualCost"/> by the delta.
+    /// Only positive-amount cost entries are supported by this operation.
     /// </summary>
-    public DateTime Date { get; private set; }
-
-    /// <summary>
-    /// Description of the entry.
-    /// </summary>
-    public string Description { get; private set; }
-
-    /// <summary>
-    /// Amount (positive for cost, negative for revenue).
-    /// </summary>
-    public decimal Amount { get; private set; }
-
-    /// <summary>
-    /// Related GL account identifier.
-    /// </summary>
-    public DefaultIdType AccountId { get; private set; }
-
-    /// <summary>
-    /// Optional link to the journal entry that recorded this transaction.
-    /// </summary>
-    public DefaultIdType? JournalEntryId { get; private set; }
-
-    /// <summary>
-    /// Optional category text (e.g., Revenue when created via AddRevenueEntry).
-    /// </summary>
-    public string? Category { get; private set; }
-
-    private JobCostingEntry(DefaultIdType projectId, DateTime date, string description,
-        decimal amount, DefaultIdType accountId, DefaultIdType? journalEntryId = null, string? category = null)
+    /// <param name="entryId">The identifier of the job costing entry to update.</param>
+    /// <param name="date">Optional new date.</param>
+    /// <param name="description">Optional new description.</param>
+    /// <param name="amount">Optional new amount (must be &gt; 0 when provided).</param>
+    /// <param name="category">Optional new category.</param>
+    /// <exception cref="ProjectCannotBeModifiedException">Thrown when project is Completed or Cancelled.</exception>
+    /// <exception cref="JobCostingEntryNotFoundException">Thrown when the entry is not found.</exception>
+    /// <exception cref="InvalidProjectCostEntryException">Thrown when provided amount is invalid.</exception>
+    public Project UpdateCostEntry(DefaultIdType entryId, DateTime? date, string? description, decimal? amount, string? category)
     {
-        ProjectId = projectId;
-        Date = date;
-        Description = description.Trim();
-        Amount = amount;
-        AccountId = accountId;
-        JournalEntryId = journalEntryId;
-        Category = category?.Trim();
+        if (Status == "Completed" || Status == "Cancelled")
+            throw new ProjectCannotBeModifiedException(Id);
+
+        var entry = _costingEntries.FirstOrDefault(e => e.Id == entryId)
+                    ?? throw new JobCostingEntryNotFoundException(entryId);
+
+        var oldAmount = entry.Amount;
+
+        if (amount.HasValue && amount.Value <= 0)
+            throw new InvalidProjectCostEntryException();
+
+        // Only allow update through this method for cost entries (positive amounts)
+        if (oldAmount <= 0)
+            throw new InvalidProjectCostEntryException();
+
+        entry.Update(date, description, amount, category);
+
+        if (amount.HasValue && amount.Value != oldAmount)
+        {
+            var delta = amount.Value - oldAmount;
+            ActualCost += delta;
+        }
+
+        return this;
     }
 
     /// <summary>
-    /// Create a job costing entry.
+    /// Remove an existing cost entry and decrease <see cref="ActualCost"/> accordingly.
+    /// This operation supports only positive-amount cost entries.
     /// </summary>
-    public static JobCostingEntry Create(DefaultIdType projectId, DateTime date, string description,
-        decimal amount, DefaultIdType accountId, DefaultIdType? journalEntryId = null, string? category = null)
+    /// <param name="entryId">The identifier of the job costing entry to remove.</param>
+    /// <exception cref="ProjectCannotBeModifiedException">Thrown when project is Completed or Cancelled.</exception>
+    /// <exception cref="JobCostingEntryNotFoundException">Thrown when the entry is not found.</exception>
+    public Project RemoveCostEntry(DefaultIdType entryId)
     {
-        return new JobCostingEntry(projectId, date, description, amount, accountId, journalEntryId, category);
-    }
+        if (Status == "Completed" || Status == "Cancelled")
+            throw new ProjectCannotBeModifiedException(Id);
 
-    /// <summary>
-    /// Update fields of the costing entry.
-    /// </summary>
-    public JobCostingEntry Update(DateTime? date, string? description, decimal? amount, string? category)
-    {
-        if (date.HasValue && Date != date.Value)
-        {
-            Date = date.Value;
-        }
+        var entry = _costingEntries.FirstOrDefault(e => e.Id == entryId)
+                    ?? throw new JobCostingEntryNotFoundException(entryId);
 
-        if (!string.IsNullOrWhiteSpace(description) && Description != description)
-        {
-            Description = description.Trim();
-        }
+        // Only allow removal through this method for cost entries (positive amounts)
+        if (entry.Amount <= 0)
+            throw new InvalidProjectCostEntryException();
 
-        if (amount.HasValue && Amount != amount.Value)
-        {
-            Amount = amount.Value;
-        }
-
-        if (category != Category)
-        {
-            Category = category?.Trim();
-        }
-
+        ActualCost -= entry.Amount;
+        _costingEntries.Remove(entry);
         return this;
     }
 }

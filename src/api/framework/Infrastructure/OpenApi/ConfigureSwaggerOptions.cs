@@ -25,12 +25,12 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) : 
 
     private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
     {
-        var text = new StringBuilder(".NET 8 Starter Kit with Vertical Slice Architecture!");
+        var text = new StringBuilder(".NET 9 Starter Kit with Vertical Slice Architecture!");
         var info = new OpenApiInfo
         {
             Title = "FSH.Starter.WebApi",
             Version = description.ApiVersion.ToString(),
-            Contact = new OpenApiContact { Name = "Lowell Carl Sumile", Email = "hello@codewithmukesh.com" }
+            Contact = new OpenApiContact { Name = "Lowell Carl Sumile", Email = "kirkey@outlook.ph" }
         };
 
         if (description.IsDeprecated)
