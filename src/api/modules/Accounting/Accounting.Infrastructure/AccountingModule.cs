@@ -1,8 +1,9 @@
 using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 using Accounting.Infrastructure.Endpoints.AccountReconciliation.v1;
+using Accounting.Infrastructure.Endpoints.Accruals.v1;
 using Accounting.Infrastructure.Endpoints.Billing.v1;
-using Accounting.Infrastructure.Endpoints.Budgets.v1;
 using Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
+using Accounting.Infrastructure.Endpoints.Budgets.v1;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 using Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
 using Accounting.Infrastructure.Endpoints.FixedAssets.v1;
@@ -12,10 +13,9 @@ using Accounting.Infrastructure.Endpoints.Patronage.v1;
 using Accounting.Infrastructure.Endpoints.Payees.v1;
 using Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 using Accounting.Infrastructure.Endpoints.Payments.v1;
+using Accounting.Infrastructure.Endpoints.ProjectCosting;
 using Accounting.Infrastructure.Endpoints.Projects.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
-using Accounting.Infrastructure.Endpoints.Accruals.v1;
-using Accounting.Infrastructure.Endpoints.ProjectCosting;
 using Accounting.Infrastructure.Persistence;
 using Carter;
 using FSH.Framework.Infrastructure.Persistence;
@@ -169,6 +169,9 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<Payee>, AccountingRepository<Payee>>();
         builder.Services.AddScoped<IRepository<Project>, AccountingRepository<Project>>();
         builder.Services.AddScoped<IReadRepository<Project>, AccountingRepository<Project>>();
+        // Register repository for project cost entries (non-keyed) so handlers without keyed services can resolve it
+        builder.Services.AddScoped<IRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>();
+        builder.Services.AddScoped<IReadRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>();
         builder.Services.AddScoped<IRepository<Vendor>, AccountingRepository<Vendor>>();
         builder.Services.AddScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>();
         // Ensure DeferredRevenue and Accrual repositories are registered for non-keyed resolution
@@ -269,6 +272,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Payee>, AccountingRepository<Payee>>("accounting:payees");
         builder.Services.AddKeyedScoped<IRepository<Project>, AccountingRepository<Project>>("accounting:projects");
         builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting:projects");
+        builder.Services.AddKeyedScoped<IRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:projectcosts");
+        builder.Services.AddKeyedScoped<IReadRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:projectcosts");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting:paymentallocations");

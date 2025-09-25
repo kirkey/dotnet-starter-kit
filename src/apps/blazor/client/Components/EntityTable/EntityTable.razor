@@ -2,7 +2,7 @@
 @typeparam TId
 @typeparam TRequest
 
-@inject IJSRuntime JS
+@inject IJSRuntime Js
 
 <style>
     .mud-table-container {
@@ -60,8 +60,28 @@
                                    OnClick="@(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add"
                             IconColor="Color.Surface" Class="mr-4">Create</MudButton>
                     }
-                    <MudButton Variant="Variant.Filled" OnClick="ReloadDataAsync" DropShadow="false"
+                    <MudButton Variant="Variant.Filled" OnClick="@(() => ReloadDataAsync())" DropShadow="false"
                                StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+                    
+                    @if (_canExport)
+                    {
+                        <MudButton Color="Color.Tertiary"
+                                   Disabled="Exporting"
+                                   OnClick="@(() => ExportAsync())"
+                                   StartIcon="@Icons.Material.Filled.FileDownload"
+                                   Size="Size.Medium"
+                                   Variant="Variant.Filled">
+                            @if (Exporting)
+                            {
+                                <MudProgressCircular Class="mr-2" Color="Color.Inherit" Indeterminate Size="Size.Small"/>
+                                <span>Exporting...</span>
+                            }
+                            else
+                            {
+                                <span>Export</span>
+                            }
+                        </MudButton>
+                    }
                 </div>
                 <MudSpacer />
                 @if (_canSearch && !_advancedSearchExpanded)
@@ -195,6 +215,38 @@
                                     Audit Logs
                                 </MudMenuItem>
                             }*@
+                            @if (_canImport)
+                            {
+                                <MudMenuItem Disabled="Exporting"
+                                             OnClick="@(() => ExportAsync())"
+                                             Icon="@Icons.Material.Filled.UploadFile">
+                                    @if (Exporting)
+                                    {
+                                        <MudProgressCircular Class="mr-2" Color="Color.Inherit" Indeterminate Size="Size.Small"/>
+                                        <span>Importing...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Import</span>
+                                    }
+                                </MudMenuItem>
+                            }
+                            @if (_canExport)
+                            {
+                                <MudMenuItem Disabled="Exporting"
+                                             OnClick="@(() => ExportAsync())"
+                                             Icon="@Icons.Material.Filled.FileDownload">
+                                    @if (Exporting)
+                                    {
+                                        <MudProgressCircular Class="mr-2" Color="Color.Inherit" Indeterminate Size="Size.Small"/>
+                                        <span>Exporting...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Export</span>
+                                    }
+                                </MudMenuItem>
+                            }
                             @if (ExtraActions is not null)
                             {
                                 <MudDivider/>

@@ -100,4 +100,7 @@
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.12.0" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="ClosedXML" Version="0.103.0" />
+  </ItemGroup>
 </Project>

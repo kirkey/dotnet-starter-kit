@@ -34,6 +34,7 @@ public static class FshPermissions
         new("Create Products", FshActions.Create, FshResources.Products),
         new("Update Products", FshActions.Update, FshResources.Products),
         new("Delete Products", FshActions.Delete, FshResources.Products),
+        new("Import Products", FshActions.Import, FshResources.Products),
         new("Export Products", FshActions.Export, FshResources.Products),
 
         //brands
@@ -42,6 +43,7 @@ public static class FshPermissions
         new("Create Brands", FshActions.Create, FshResources.Brands),
         new("Update Brands", FshActions.Update, FshResources.Brands),
         new("Delete Brands", FshActions.Delete, FshResources.Brands),
+        new("Import Brands", FshActions.Import, FshResources.Brands),
         new("Export Brands", FshActions.Export, FshResources.Brands),
 
         //todos
@@ -64,6 +66,7 @@ public static class FshPermissions
         new("Create Accounting", FshActions.Create, FshResources.Accounting),
         new("Update Accounting", FshActions.Update, FshResources.Accounting),
         new("Delete Accounting", FshActions.Delete, FshResources.Accounting),
+        new("Import Accounting", FshActions.Import, FshResources.Accounting),
         new("Export Accounting", FshActions.Export, FshResources.Accounting),
 
         //Store
@@ -72,6 +75,7 @@ public static class FshPermissions
         new("Create Store", FshActions.Create, FshResources.Store),
         new("Update Store", FshActions.Update, FshResources.Store),
         new("Delete Store", FshActions.Delete, FshResources.Store),
+        new("Import Store", FshActions.Import, FshResources.Store),
         new("Export Store", FshActions.Export, FshResources.Store),
         
         //Warehouse
@@ -80,6 +84,7 @@ public static class FshPermissions
         new("Create Warehouse", FshActions.Create, FshResources.Warehouse),
         new("Update Warehouse", FshActions.Update, FshResources.Warehouse),
         new("Delete Warehouse", FshActions.Delete, FshResources.Warehouse),
+        new("Import Warehouse", FshActions.Import, FshResources.Warehouse),
         new("Export Warehouse", FshActions.Export, FshResources.Warehouse),
     ];
 

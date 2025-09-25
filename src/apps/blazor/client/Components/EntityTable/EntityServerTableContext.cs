@@ -4,9 +4,13 @@
 /// Initialization Context for the EntityTable Component.
 /// Use this one if you want to use Server Paging, Sorting and Filtering.
 /// </summary>
+/// <typeparam name="TEntity">The type of the entity displayed in the table.</typeparam>
+/// <typeparam name="TId">The type of the entity identifier.</typeparam>
+/// <typeparam name="TRequest">The request model type used by the Add/Edit form.</typeparam>
 public class EntityServerTableContext<TEntity, TId, TRequest>(
     List<EntityField<TEntity>> fields,
     Func<PaginationFilter, Task<PaginationResponse<TEntity>>> searchFunc,
+    Func<PaginationFilter, Task<FileResponse>>? exportFunc = null,
     bool enableAdvancedSearch = false,
     Func<TEntity, TId>? idFunc = null,
     Func<Task<TRequest>>? getDefaultsFunc = null,
@@ -22,6 +26,7 @@ public class EntityServerTableContext<TEntity, TId, TRequest>(
     string? createAction = null,
     string? updateAction = null,
     string? deleteAction = null,
+    string? importAction = null,
     string? exportAction = null,
     Func<Task>? editFormInitializedFunc = null,
     Func<bool>? hasExtraActionsFunc = null,
@@ -43,6 +48,7 @@ public class EntityServerTableContext<TEntity, TId, TRequest>(
         createAction,
         updateAction,
         deleteAction,
+        importAction,
         exportAction,
         editFormInitializedFunc,
         hasExtraActionsFunc,
@@ -51,9 +57,32 @@ public class EntityServerTableContext<TEntity, TId, TRequest>(
 {
     /// <summary>
     /// A function that loads the specified page from the api with the specified search criteria
-    /// and returns a PaginatedResult of TEntity.
+    /// and returns a <see cref="PaginationResponse{TEntity}"/>.
     /// </summary>
-    public Func<PaginationFilter, Task<PaginationResponse<TEntity>>> SearchFunc { get; } = searchFunc;
+    public Func<PaginationFilter, Task<PaginationResponse<TEntity>>> SearchFunc { get; } =
+        (ValidateFields(fields), searchFunc) switch
+        {
+            (true, not null) => searchFunc,
+            _ => throw new ArgumentNullException(nameof(searchFunc))
+        };
 
+    /// <summary>
+    /// Enables the advanced search UI which lets users pick specific columns to search on.
+    /// </summary>
     public bool EnableAdvancedSearch { get; } = enableAdvancedSearch;
+
+    /// <summary>
+    ///     A function that exports the specified data from the API and returns a file content stream.
+    /// </summary>
+    public Func<PaginationFilter, Task<FileResponse>>? ExportFunc { get; } = exportFunc;
+    
+    private static bool ValidateFields(List<EntityField<TEntity>> value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+        if (value.Count == 0)
+            throw new ArgumentException("Fields must contain at least one column.", nameof(value));
+        if (value.Any(f => f is null))
+            throw new ArgumentException("Fields cannot contain null entries.", nameof(value));
+        return true;
+    }
 }

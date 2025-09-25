@@ -18,7 +18,6 @@ public static class Extensions
         services.AddScoped<IApiCacheService, ApiCacheService>();
         services.AddScoped<INetworkStatusService, NetworkStatusService>();
         services.AddTransient<ApiRetryHandler>();
-        services.AddTransient<ApiCachingHandler>();
         services.AddTransient<IClient, Client>();
         services.AddHttpClient(ClientName, client =>
         {
@@ -28,7 +27,6 @@ public static class Extensions
         })
            .AddHttpMessageHandler<JwtAuthenticationHeaderHandler>()
            .AddHttpMessageHandler<ApiRetryHandler>()
-           .AddHttpMessageHandler<ApiCachingHandler>()
            .Services
            .AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(ClientName));
         services.AddTransient<IClientPreferenceManager, ClientPreferenceManager>();

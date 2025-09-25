@@ -1,3 +1,7 @@
+using System.ComponentModel;
+using System.Data;
+using ClosedXML.Excel;
+
 namespace FSH.Starter.Blazor.Client.Components.EntityTable;
 
 public partial class EntityTable<TEntity, TId, TRequest>
@@ -7,6 +11,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
     [EditorRequired]
     public EntityTableContext<TEntity, TId, TRequest> Context { get; set; } = default!;
 
+    [Parameter] public bool Exporting { get; set; }
     [Parameter] public bool Loading { get; set; }
     [Parameter] public string? SearchString { get; set; }
     [Parameter] public EventCallback<string> SearchStringChanged { get; set; }
@@ -23,6 +28,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
     private bool _canCreate;
     private bool _canUpdate;
     private bool _canDelete;
+    private bool _canImport;
     private bool _canExport;
 
     private bool _advancedSearchExpanded;
@@ -45,6 +51,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         _canCreate = await CanDoActionAsync(Context.CreateAction, state);
         _canUpdate = await CanDoActionAsync(Context.UpdateAction, state);
         _canDelete = await CanDoActionAsync(Context.DeleteAction, state);
+        _canImport = await CanDoActionAsync(Context.ImportAction, state);
         _canExport = await CanDoActionAsync(Context.ExportAction, state);
 
         await LocalLoadDataAsync();
@@ -55,10 +62,28 @@ public partial class EntityTable<TEntity, TId, TRequest>
             ? LocalLoadDataAsync()
             : ServerLoadDataAsync();
 
-    private async Task<bool> CanDoActionAsync(string? action, AuthenticationState state) =>
-        !string.IsNullOrWhiteSpace(action) &&
-            (bool.TryParse(action, out bool isTrue) && isTrue || // check if action equals "True", then it's allowed
-            Context.EntityResource is { } resource && await AuthService.HasPermissionAsync(state.User, action, resource));
+    /// <summary>
+            /// Checks if the current user can perform the specified action.
+            /// </summary>
+            /// <param name="action">The action to check permission for.</param>
+            /// <param name="state">The current authentication state.</param>
+            /// <returns>True if the action is allowed; otherwise, false.</returns>
+            private async Task<bool> CanDoActionAsync(string? action, AuthenticationState state)
+            {
+                try
+                {
+                    return !string.IsNullOrWhiteSpace(action) &&
+                           ((bool.TryParse(action, out bool isTrue) &&
+                             isTrue) || // check if action equals "True", then it's allowed
+                            (Context.EntityResource is { } resource &&
+                             await AuthService.HasPermissionAsync(state.User, action, resource).ConfigureAwait(false)));
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception or handle as needed
+                    return false; // If any error occurs, deny the action
+                }
+            }
 
     private bool HasActions => _canUpdate || _canDelete || Context.HasExtraActionsFunc is not null && Context.HasExtraActionsFunc();
     private bool CanUpdateEntity(TEntity entity) => _canUpdate && (Context.CanUpdateEntityFunc is null || Context.CanUpdateEntityFunc(entity));
@@ -305,5 +330,82 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
             await ReloadDataAsync();
         }
+    }
+    
+    private async Task ExportAsync()
+    {
+        await Task.Yield();
+
+        if (!Exporting)
+        {
+            if (Context.ServerContext?.ExportFunc != null)
+            {
+                Exporting = true;
+                var filter = GetBaseFilter();
+                if (await ApiHelper.ExecuteCallGuardedAsync(
+                        () => Context.ServerContext.ExportFunc(filter), Toast, Navigation).ConfigureAwait(false)
+                    is { } result)
+                {
+                    using var streamRef = new DotNetStreamReference(result.Stream);
+                    await Js.InvokeVoidAsync("downloadFileFromStream", $"{Context.EntityNamePlural}.xlsx", streamRef)
+                        .ConfigureAwait(false);
+                }
+                Exporting = false;
+            }
+            else if (Context.ClientContext is not null)
+            {
+                Exporting = true;
+                if (_entityList != null)
+                {
+                    var properties = TypeDescriptor.GetProperties(typeof(TEntity));
+                    var table = new DataTable("table", "table");
+                    foreach (PropertyDescriptor prop in properties)
+                        table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                    foreach (var item in _entityList)
+                    {
+                        var row = table.NewRow();
+                        foreach (PropertyDescriptor prop in properties)
+                            row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                        table.Rows.Add(row);
+                    }
+
+                    using var wb = new XLWorkbook();
+                    var worksheet = wb.Worksheets.Add(table);
+                    worksheet.Columns().AdjustToContents();
+
+                    Stream stream = new MemoryStream();
+                    wb.SaveAs(stream);
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    string fileName = $"{Context.EntityNamePlural}.xlsx";
+
+                    // Return or use the fileResponse as needed
+                    await Js.InvokeVoidAsync("downloadFileFromStream", fileName, new DotNetStreamReference(stream))
+                        .ConfigureAwait(false);
+                }
+
+                Exporting = false;
+            }
+        }
+    }
+    
+    private PaginationFilter GetBaseFilter()
+    {
+        var filter = new PaginationFilter
+        {
+            Keyword = SearchString
+        };
+
+        if (!Context.AllColumnsChecked)
+        {
+            filter.AdvancedSearch = new Search
+            {
+                Fields = Context.SearchFields,
+                Keyword = filter.Keyword
+            };
+            filter.Keyword = null;
+        }
+
+        return filter;
     }
 }

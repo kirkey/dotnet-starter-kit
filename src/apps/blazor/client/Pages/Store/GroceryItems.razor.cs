@@ -33,6 +33,11 @@ public partial class GroceryItems
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id ?? DefaultIdType.Empty,
+            getDetailsFunc: async id =>
+            {
+                var dto = await ApiClient.GetGroceryItemEndpointAsync("1", id).ConfigureAwait(false);
+                return dto.Adapt<GroceryItemViewModel>();
+            },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
@@ -49,11 +54,8 @@ public partial class GroceryItems
                 await ApiClient.UpdateGroceryItemEndpointAsync("1", id, viewModel.Adapt<UpdateGroceryItemCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await ApiClient.DeleteGroceryItemEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await ApiClient.GetGroceryItemEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<GroceryItemViewModel>();
-            });
+            importAction: FshActions.Import,
+            exportAction: FshActions.Export);
     }
 }
 

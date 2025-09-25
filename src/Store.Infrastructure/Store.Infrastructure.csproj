@@ -16,4 +16,8 @@
       <ProjectReference Include="..\api\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ClosedXML" />
+    </ItemGroup>
+
 </Project>

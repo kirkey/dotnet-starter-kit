@@ -2,32 +2,13 @@
 
 namespace FSH.Starter.Blazor.Client.Layout;
 
-public partial class BaseLayout : IDisposable
+public partial class BaseLayout
 {
     private ClientPreference? _themePreference;
     private readonly MudTheme _currentTheme = new FshTheme();
     private bool _themeDrawerOpen;
+    private bool _rightToLeft;
     private bool _isDarkMode;
-    private string? _idleWarning;
-    private bool _showIdleWarning;
-
-    [Inject] private INetworkStatusService Network { get; set; } = default!;
-    [Inject] private IOfflineRequestQueue OfflineQueue { get; set; } = default!;
-    [Inject] private IOfflineRetryService OfflineRetry { get; set; } = default!;
-    [Inject] private HttpClient Http { get; set; } = default!;
-    [Inject] private IShortcutService Shortcuts { get; set; } = default!;
-    [Inject] private IIdleTimerService Idle { get; set; } = default!;
-    [Inject] private IAuthenticationService Auth { get; set; } = default!;
-    [Inject] private IJSRuntime JS { get; set; } = default!;
-    [Inject] private ICommandPaletteService Palette { get; set; } = default!;
-    [Inject] private ILocalizationService L10n { get; set; } = default!;
-    [Inject] private IBroadcastSyncService Broadcaster { get; set; } = default!;
-
-    private ShortcutHelp? _shortcutHelp;
-    private CommandPalette? _commandPalette;
-
-    private bool _online;
-    private int _pending;
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,94 +16,18 @@ public partial class BaseLayout : IDisposable
         if (_themePreference == null) _themePreference = new ClientPreference();
         SetCurrentTheme(_themePreference);
 
-        await Network.InitializeAsync();
-        _ = Network.IsOnline;
-        _online = Network.IsOnline;
-        _pending = OfflineQueue.PendingCount;
-
-        OfflineQueue.QueueChanged += OnQueueChanged;
-
-        // Start the offline retry service for automatic background processing
-        await OfflineRetry.StartAsync();
-        // Initialize shortcuts
-        Shortcuts.Register("Ctrl+/", "show-help", "Show shortcut help");
-        Shortcuts.Register("Ctrl+K", "command-palette", "Open command palette (placeholder)");
-        await Shortcuts.InitializeAsync(JS);
-        Shortcuts.Triggered += OnShortcut;
-
-        // Start idle timer (15 min for demo, warn at 60s)
-        await Idle.StartAsync(timeoutSeconds: 900, warningSeconds: 60);
-        Idle.Warning += OnIdleWarning;
-        Idle.TimedOut += OnIdleTimeout;
-
-        await L10n.InitializeAsync();
-        Broadcaster.Initialize();
-        Palette.RegisterCommand(new("open-settings","Open Settings","Navigation", () => Navigation.NavigateTo("/app/settings")));
-        Palette.RegisterCommand(new("logout","Logout","Account", () =>
-        {
-            try { Auth.LogoutAsync().GetAwaiter().GetResult(); Navigation.NavigateTo("/login", forceLoad:true); }
-            catch { /* handle/log error */ }
-        }));
-        Palette.RegisterCommand(new("toggle-theme","Toggle Theme","UI", () =>
-        {
-            try { ToggleDarkLightMode(!_isDarkMode).GetAwaiter().GetResult(); }
-            catch { /* handle/log error */ }
-        }));
-
-        const string GitHubUrl = "https://github.com/fullstackhero/dotnet-starter-kit";
         Toast.Add("Like this project? ", Severity.Info, config =>
         {
             config.BackgroundBlurred = true;
             config.Icon = Icons.Custom.Brands.GitHub;
             config.Action = "Star us on Github!";
             config.ActionColor = Color.Info;
-            config.OnClick = _ =>
+            config.OnClick = snackbar =>
             {
-                Navigation.NavigateTo(GitHubUrl);
+                Navigation.NavigateTo("https://github.com/fullstackhero/dotnet-starter-kit");
                 return Task.CompletedTask;
             };
         });
-    }
-
-    private void OnShortcut(string commandId)
-    {
-        switch (commandId)
-        {
-            case "show-help":
-                _shortcutHelp?.Open();
-                break;
-            case "command-palette":
-                _commandPalette?.Open();
-                break;
-        }
-    }
-
-    private void OnIdleWarning(TimeSpan remaining)
-    {
-        _idleWarning = $"Session will timeout in {remaining.Seconds} seconds";
-        if (!_showIdleWarning)
-        {
-            _showIdleWarning = true;
-            Toast.Add(_idleWarning, Severity.Warning, cfg => cfg.RequireInteraction = true);
-        }
-    }
-
-    private async void OnIdleTimeout()
-    {
-        Toast.Add("Session timed out. Logging out...", Severity.Error);
-        await Auth.LogoutAsync();
-        Navigation.NavigateTo("/login", forceLoad:true);
-    }
-
-    private void OnNetworkStatusChanged(bool isOnline)
-    {
-        _online = isOnline;
-        if (isOnline) StateHasChanged();
-    }
-
-    private void OnQueueChanged()
-    {
-        _pending = OfflineQueue.PendingCount;
     }
 
     private async Task ToggleDarkLightMode(bool isDarkMode)
@@ -149,24 +54,6 @@ public partial class BaseLayout : IDisposable
         _currentTheme.PaletteDark.Secondary = themePreference.SecondaryColor;
         _currentTheme.LayoutProperties.DefaultBorderRadius = $"{themePreference.BorderRadius}px";
         _currentTheme.LayoutProperties.DefaultBorderRadius = $"{themePreference.BorderRadius}px";
-    }
-
-    public void Dispose()
-    {
-        Network.StatusChanged -= OnNetworkStatusChanged;
-        Shortcuts.Triggered -= OnShortcut;
-        OfflineQueue.QueueChanged -= OnQueueChanged;
-        Idle.Warning -= OnIdleWarning;
-        Idle.TimedOut -= OnIdleTimeout;
-        Broadcaster.DisposeAsync().AsTask().ConfigureAwait(false);
-        
-        // Stop the offline retry service
-        try
-        {
-            OfflineRetry.StopAsync().GetAwaiter().GetResult();
-        }
-        catch { /* ignore disposal errors */ }
-        
-        GC.SuppressFinalize(this);
+        _rightToLeft = themePreference.IsRtl;
     }
 }

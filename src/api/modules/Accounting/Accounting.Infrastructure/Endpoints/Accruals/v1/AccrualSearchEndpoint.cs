@@ -1,5 +1,5 @@
-using Accounting.Application.Accruals.Search;
 using Accounting.Application.Accruals.Responses;
+using Accounting.Application.Accruals.Search;
 
 // Endpoint for searching accruals
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;

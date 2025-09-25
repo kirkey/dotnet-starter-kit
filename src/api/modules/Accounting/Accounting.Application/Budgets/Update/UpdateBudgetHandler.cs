@@ -1,8 +1,8 @@
 namespace Accounting.Application.Budgets.Update;
 
 using Exceptions;
-using Queries;
 using Microsoft.EntityFrameworkCore;
+using Queries;
 
 public sealed class UpdateBudgetHandler(
     [FromKeyedServices("accounting:periods")] IReadRepository<AccountingPeriod> accountingPeriodRepository,

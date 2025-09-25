@@ -22,6 +22,7 @@ public abstract class EntityTableContext<TEntity, TId, TRequest>(
     string? createAction,
     string? updateAction,
     string? deleteAction,
+    string? importAction,
     string? exportAction,
     Func<Task>? editFormInitializedFunc,
     Func<bool>? hasExtraActionsFunc,
@@ -123,6 +124,11 @@ public abstract class EntityTableContext<TEntity, TId, TRequest>(
     /// </summary>
     public string DeleteAction { get; } = deleteAction ?? FshActions.Delete;
 
+    /// <summary>
+    /// The permission name of the import permission. This is FSHAction.Import by default.
+    /// </summary>
+    public string ImportAction { get; } = importAction ?? FshActions.Import;
+    
     /// <summary>
     /// The permission name of the export permission. This is FSHAction.Export by default.
     /// </summary>

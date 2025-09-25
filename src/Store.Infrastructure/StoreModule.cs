@@ -28,6 +28,7 @@ public static class StoreModule
             groceryGroup.MapUpdateGroceryItemEndpoint();
             groceryGroup.MapDeleteGroceryItemEndpoint();
             groceryGroup.MapSearchGroceryItemsEndpoint();
+            groceryGroup.MapImportGroceryItemsEndpoint();
 
             var inventoryGroup = app.MapGroup("inventory-transfers").WithTags("Inventory Transfers");
             inventoryGroup.MapCreateInventoryTransferEndpoint();
@@ -193,6 +194,10 @@ public static class StoreModule
         // New: inventory transactions repository for guards and reporting
         builder.Services.AddKeyedScoped<IRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventory-transactions");
         builder.Services.AddKeyedScoped<IReadRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventory-transactions");
+
+        // Import: register parser implementation
+        builder.Services.AddScoped<FSH.Starter.WebApi.Store.Application.GroceryItems.Import.IGroceryItemImportParser,
+            Store.Infrastructure.Import.GroceryItems.ClosedXmlGroceryItemImportParser>();
 
         return builder;
     }

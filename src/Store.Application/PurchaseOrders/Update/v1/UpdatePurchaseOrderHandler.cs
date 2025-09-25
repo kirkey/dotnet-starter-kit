@@ -1,6 +1,6 @@
+using FSH.Framework.Core.Exceptions;
 using Store.Domain.Exceptions.PurchaseOrder;
 using Store.Domain.Exceptions.Supplier;
-using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Update.v1;
 

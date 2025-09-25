@@ -1334,6 +1334,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Import grocery items from Excel
+        /// </summary>
+        /// <remarks>
+        /// Accepts a FileUploadCommand payload inside ImportGroceryItemsCommand and returns the imported count.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<int> ImportGroceryItemsEndpointAsync(string version, ImportGroceryItemsCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Import grocery items from Excel
+        /// </summary>
+        /// <remarks>
+        /// Accepts a FileUploadCommand payload inside ImportGroceryItemsCommand and returns the imported count.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<int> ImportGroceryItemsEndpointAsync(string version, ImportGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Create inventory item
         /// </summary>
         /// <remarks>
@@ -2282,27 +2305,27 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<System.Guid> ProjectUpdateEndpointAsync(string version, System.Guid id, UpdateProjectCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// delete project by id
+        /// Delete a project by id
         /// </summary>
         /// <remarks>
-        /// delete project by id
+        /// Deletes a project by its unique identifier and returns the result.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ProjectDeleteEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<DeleteProjectResponse> ProjectDeleteEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// delete project by id
+        /// Delete a project by id
         /// </summary>
         /// <remarks>
-        /// delete project by id
+        /// Deletes a project by its unique identifier and returns the result.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ProjectDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<DeleteProjectResponse> ProjectDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets a list of projects
@@ -2313,7 +2336,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body);
+        System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2325,7 +2348,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// create a project cost entry
@@ -10165,6 +10188,110 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Import grocery items from Excel
+        /// </summary>
+        /// <remarks>
+        /// Accepts a FileUploadCommand payload inside ImportGroceryItemsCommand and returns the imported count.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<int> ImportGroceryItemsEndpointAsync(string version, ImportGroceryItemsCommand body)
+        {
+            return ImportGroceryItemsEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Import grocery items from Excel
+        /// </summary>
+        /// <remarks>
+        /// Accepts a FileUploadCommand payload inside ImportGroceryItemsCommand and returns the imported count.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<int> ImportGroceryItemsEndpointAsync(string version, ImportGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/grocery-items/import"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/grocery-items/import");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Create inventory item
         /// </summary>
         /// <remarks>
@@ -14488,30 +14615,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// delete project by id
+        /// Delete a project by id
         /// </summary>
         /// <remarks>
-        /// delete project by id
+        /// Deletes a project by its unique identifier and returns the result.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ProjectDeleteEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<DeleteProjectResponse> ProjectDeleteEndpointAsync(string version, System.Guid id)
         {
             return ProjectDeleteEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// delete project by id
+        /// Delete a project by id
         /// </summary>
         /// <remarks>
-        /// delete project by id
+        /// Deletes a project by its unique identifier and returns the result.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ProjectDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<DeleteProjectResponse> ProjectDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14526,6 +14653,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -14558,9 +14686,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
+                        if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<DeleteProjectResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -14591,7 +14724,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body)
+        public virtual System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsCommand body)
         {
             return ProjectSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -14606,7 +14739,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ProjectResponsePagedList> ProjectSearchEndpointAsync(string version, SearchProjectsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -24618,28 +24751,28 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        public string? Name { get; set; } = "Infrastructure Upgrade Project";
 
         [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime StartDate { get; set; } = default!;
+        public System.DateTime StartDate { get; set; } = System.DateTime.Parse("2025-09-23");
 
         [System.Text.Json.Serialization.JsonPropertyName("budgetedAmount")]
-        public double BudgetedAmount { get; set; } = default!;
+        public double BudgetedAmount { get; set; } = 100000D;
 
         [System.Text.Json.Serialization.JsonPropertyName("clientName")]
-        public string? ClientName { get; set; } = default!;
+        public string? ClientName { get; set; } = "Engineering Department";
 
         [System.Text.Json.Serialization.JsonPropertyName("projectManager")]
-        public string? ProjectManager { get; set; } = default!;
+        public string? ProjectManager { get; set; } = "John Smith";
 
         [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
+        public string? Department { get; set; } = "Operations";
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        public string? Description { get; set; } = "Major infrastructure upgrade for facility improvements";
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
+        public string? Notes { get; set; } = "High priority project with strict timeline";
 
     }
 
@@ -25174,6 +25307,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DeleteProjectResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectId")]
+        public System.Guid ProjectId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isDeleted")]
+        public bool IsDeleted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("message")]
+        public string? Message { get; set; } = default!;
 
     }
 
@@ -26123,6 +26271,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ImportGroceryItemsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("file")]
+        public FileUploadCommand File { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class JournalEntryResponse
     {
 
@@ -26507,44 +26664,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
-        public string? FilePath { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
-        public System.Guid CreatedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
-        public string? CreatedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
-        public System.Guid? LastModifiedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
-        public string? LastModifiedByUserName { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("projectId")]
         public System.Guid ProjectId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public System.DateTime Date { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("entryDate")]
+        public System.DateTime EntryDate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
@@ -26561,6 +26685,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("category")]
         public string? Category { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("costCenter")]
+        public string? CostCenter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("workOrderNumber")]
+        public string? WorkOrderNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isBillable")]
+        public bool IsBillable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
+        public bool IsApproved { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("vendor")]
+        public string? Vendor { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("invoiceNumber")]
+        public string? InvoiceNumber { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -26572,39 +26714,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
-        public string? Remarks { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("filePath")]
-        public string? FilePath { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
-        public System.DateTime CreatedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
-        public System.Guid CreatedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdByUserName")]
-        public string? CreatedByUserName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
-        public System.DateTime LastModifiedOn { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
-        public System.Guid? LastModifiedBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedByUserName")]
-        public string? LastModifiedByUserName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("startDate")]
         public System.DateTime StartDate { get; set; } = default!;
@@ -26629,6 +26738,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("actualRevenue")]
         public double ActualRevenue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
@@ -27350,7 +27465,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchProjectsRequest
+    public partial class SearchProjectsCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -27374,11 +27489,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("clientName")]
-        public string? ClientName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("department")]
         public string? Department { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectManager")]
+        public string? ProjectManager { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDateFrom")]
+        public System.DateTime? StartDateFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDateTo")]
+        public System.DateTime? StartDateTo { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetAmountFrom")]
+        public double? BudgetAmountFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetAmountTo")]
+        public double? BudgetAmountTo { get; set; } = default!;
 
     }
 
@@ -28470,34 +28600,34 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public System.Guid Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        public string? Name { get; set; } = "Updated Infrastructure Project";
 
         [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public System.DateTime? StartDate { get; set; } = default!;
+        public System.DateTime? StartDate { get; set; } = System.DateTime.Parse("2025-09-23");
 
         [System.Text.Json.Serialization.JsonPropertyName("endDate")]
         public System.DateTime? EndDate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("budgetedAmount")]
-        public double? BudgetedAmount { get; set; } = default!;
+        public double? BudgetedAmount { get; set; } = 150000D;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
+        public string? Status { get; set; } = "Active";
 
         [System.Text.Json.Serialization.JsonPropertyName("clientName")]
-        public string? ClientName { get; set; } = default!;
+        public string? ClientName { get; set; } = "Updated Client Name";
 
         [System.Text.Json.Serialization.JsonPropertyName("projectManager")]
-        public string? ProjectManager { get; set; } = default!;
+        public string? ProjectManager { get; set; } = "Jane Doe";
 
         [System.Text.Json.Serialization.JsonPropertyName("department")]
-        public string? Department { get; set; } = default!;
+        public string? Department { get; set; } = "Engineering";
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        public string? Description { get; set; } = "Updated project description";
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
+        public string? Notes { get; set; } = "Updated project notes";
 
     }
 

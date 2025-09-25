@@ -30,7 +30,6 @@ public partial class Projects
                 new EntityField<ProjectResponse>(r => r.ClientName, "Client", "ClientName"),
                 new EntityField<ProjectResponse>(r => r.ProjectManager, "Manager", "ProjectManager"),
                 new EntityField<ProjectResponse>(r => r.Department, "Department", "Department"),
-                new EntityField<ProjectResponse>(r => r.Status, "Status", "Status"),
                 new EntityField<ProjectResponse>(r => r.ActualCost, "Actual Cost", "ActualCost", typeof(decimal)),
                 new EntityField<ProjectResponse>(r => r.ActualRevenue, "Actual Revenue", "ActualRevenue", typeof(decimal)),
                 new EntityField<ProjectResponse>(r => r.Description, "Description", "Description"),
@@ -40,7 +39,7 @@ public partial class Projects
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var request = filter.Adapt<SearchProjectsRequest>();
+                var request = filter.Adapt<SearchProjectsCommand>();
                 var result = await ApiClient.ProjectSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<ProjectResponse>>();
             },
