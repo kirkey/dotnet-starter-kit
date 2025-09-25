@@ -1,4 +1,4 @@
-namespace Accounting.Domain.Events.Consumption;
+namespace Accounting.Domain.Events.Consumptions;
 
 public record ConsumptionCreated(DefaultIdType ConsumptionId, DefaultIdType MeterId, DateTime ReadingDate, decimal KWhUsed, string BillingPeriod, string? Description, string? Notes) : DomainEvent;
 

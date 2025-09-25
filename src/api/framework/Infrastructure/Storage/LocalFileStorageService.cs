@@ -7,7 +7,7 @@ using FSH.Framework.Core.Storage.File.Features;
 using FSH.Framework.Infrastructure.Common.Extensions;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Infrastructure.Storage.Files;
+namespace FSH.Framework.Infrastructure.Storage;
 
 /// <summary>
 /// Local file storage service that uploads files to the server's local filesystem.

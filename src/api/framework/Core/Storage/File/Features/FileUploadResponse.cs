@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Core.Storage.File;
+﻿namespace FSH.Framework.Core.Storage.File.Features;
 
 /// <summary>
 /// Response model for file upload operations.

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Infrastructure.Storage.Files;
+namespace FSH.Framework.Infrastructure.Storage;
 
 internal static class Extension
 {
@@ -19,6 +19,8 @@ internal static class Extension
             .ValidateDataAnnotations();
 
         services.AddTransient<IStorageService, LocalFileStorageService>();
+        services.AddTransient<IDataExport, DataExport>();
+        services.AddTransient<IDataImport, DataImport>();
 
         return services;
     }

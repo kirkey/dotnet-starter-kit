@@ -1,4 +1,4 @@
-using Accounting.Domain.Events.Consumption;
+using Accounting.Domain.Events.Consumptions;
 
 namespace Accounting.Domain;
 
@@ -38,9 +38,9 @@ namespace Accounting.Domain;
 /// - Billing period format should be consistent for reporting
 /// - Reading sources enable data quality tracking
 /// </remarks>
-/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionCreated"/>
-/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionUpdated"/>
-/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionMarkedAsEstimated"/>
+/// <seealso cref="ConsumptionCreated"/>
+/// <seealso cref="ConsumptionUpdated"/>
+/// <seealso cref="ConsumptionMarkedAsEstimated"/>
 /// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionValidated"/>
 public class Consumption : AuditableEntity, IAggregateRoot
 {

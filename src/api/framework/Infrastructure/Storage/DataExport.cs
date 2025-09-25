@@ -1,11 +1,11 @@
-using ClosedXML.Excel;
-using ClosedXML.Report;
 using System.ComponentModel;
 using System.Data;
 using System.Reflection;
+using ClosedXML.Excel;
+using ClosedXML.Report;
 using FSH.Framework.Core.Storage;
 
-namespace FSH.Framework.Infrastructure.Storage.Files;
+namespace FSH.Framework.Infrastructure.Storage;
 
 /// <summary>
 /// Provides helper methods for exporting arbitrary object collections to Excel (XLSX) either
