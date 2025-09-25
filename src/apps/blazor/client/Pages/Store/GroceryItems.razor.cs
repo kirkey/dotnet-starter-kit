@@ -56,6 +56,16 @@ public partial class GroceryItems
             deleteFunc: async id => await ApiClient.DeleteGroceryItemEndpointAsync("1", id).ConfigureAwait(false),
             importAction: FshActions.Import,
             exportAction: FshActions.Export);
+            // exportFunc: filter =>
+            // {
+                // var request = filter.Adapt<AttendanceExportRequest>();
+                // request.EmployeeId = _searchEmployeeId;
+                // request.StartDate = (DateTime)DateRange.Start!;
+                // request.EndDate = (DateTime)DateRange.End!;
+                // request.Department = _department;
+                // request.HasAppointment = !string.IsNullOrEmpty(SelectedOption) && SelectedOption.Equals("Appointment"); // HasActivity;
+                // return Client.ExportAsync(request);
+            // });
     }
 }
 

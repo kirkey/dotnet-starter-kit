@@ -65,7 +65,8 @@
                     
                     @if (_canExport)
                     {
-                        <MudButton Color="Color.Tertiary"
+                        <MudButton Class="ml-4" 
+                                   Color="Color.Tertiary"
                                    Disabled="Exporting"
                                    OnClick="@(() => ExportAsync())"
                                    StartIcon="@Icons.Material.Filled.FileDownload"

@@ -9,7 +9,7 @@
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="ClosedXML" Version="0.104.0" />
+    <PackageVersion Include="ClosedXML" Version="0.105.0" />
     <PackageVersion Include="Mapster" Version="7.4.0" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
     <PackageVersion Include="MediatR" Version="12.5.0" />
