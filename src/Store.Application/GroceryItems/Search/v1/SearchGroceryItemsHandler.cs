@@ -4,9 +4,9 @@ namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Search.v1;
 
 public sealed class SearchGroceryItemsHandler(
     [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> repository)
-    : IRequestHandler<SearchGroceryItemsCommand, PagedList<GroceryItemResponse>>
+    : IRequestHandler<SearchGroceryItemsQuery, PagedList<GroceryItemResponse>>
 {
-    public async Task<PagedList<GroceryItemResponse>> Handle(SearchGroceryItemsCommand request, CancellationToken cancellationToken)
+    public async Task<PagedList<GroceryItemResponse>> Handle(SearchGroceryItemsQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

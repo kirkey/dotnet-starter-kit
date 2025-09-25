@@ -1,6 +1,8 @@
+using FSH.Starter.WebApi.Store.Application.GroceryItems.Import;
 using Store.Infrastructure.Endpoints.Categories.v1;
 using Store.Infrastructure.Endpoints.Customers.v1;
 using Store.Infrastructure.Endpoints.CycleCounts.v1;
+using Store.Infrastructure.Endpoints.GroceryItems;
 using Store.Infrastructure.Endpoints.GroceryItems.v1;
 using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 using Store.Infrastructure.Endpoints.PriceLists.v1;
@@ -10,6 +12,7 @@ using Store.Infrastructure.Endpoints.StockAdjustments.v1;
 using Store.Infrastructure.Endpoints.Suppliers.v1;
 using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
 using Store.Infrastructure.Endpoints.Warehouses.v1;
+using Store.Infrastructure.Import;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
@@ -29,6 +32,7 @@ public static class StoreModule
             groceryGroup.MapDeleteGroceryItemEndpoint();
             groceryGroup.MapSearchGroceryItemsEndpoint();
             groceryGroup.MapImportGroceryItemsEndpoint();
+            groceryGroup.MapExportGroceryItemsEndpoint();
 
             var inventoryGroup = app.MapGroup("inventory-transfers").WithTags("Inventory Transfers");
             inventoryGroup.MapCreateInventoryTransferEndpoint();
@@ -195,9 +199,8 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventory-transactions");
         builder.Services.AddKeyedScoped<IReadRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventory-transactions");
 
-        // Import: register parser implementation
-        builder.Services.AddScoped<FSH.Starter.WebApi.Store.Application.GroceryItems.Import.IGroceryItemImportParser,
-            Store.Infrastructure.Import.GroceryItems.ClosedXmlGroceryItemImportParser>();
+        // Import/Export: register grocery items import parser implementation
+        builder.Services.AddScoped<IGroceryItemImportParser, GroceryItemImportParser>();
 
         return builder;
     }

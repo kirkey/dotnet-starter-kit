@@ -16,7 +16,7 @@ public static class SearchGroceryItemsEndpoint
     internal static RouteHandlerBuilder MapSearchGroceryItemsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] SearchGroceryItemsCommand command) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchGroceryItemsQuery command) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

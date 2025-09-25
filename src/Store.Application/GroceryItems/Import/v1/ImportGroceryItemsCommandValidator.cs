@@ -1,7 +1,5 @@
 namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Import.v1;
 
-using FSH.Framework.Core.Storage.File.Features;
-
 /// <summary>
 /// Validator for ImportGroceryItemsCommand with strict checks on file and type.
 /// </summary>

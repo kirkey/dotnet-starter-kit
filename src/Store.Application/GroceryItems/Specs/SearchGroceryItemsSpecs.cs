@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Specs;
 
 public class SearchGroceryItemsSpecs : EntitiesByPaginationFilterSpec<GroceryItem, GroceryItemResponse>
 {
-    public SearchGroceryItemsSpecs(SearchGroceryItemsCommand command)
+    public SearchGroceryItemsSpecs(SearchGroceryItemsQuery command)
         : base(command) =>
         Query
             .OrderBy(g => g.Name, !command.HasOrderBy())

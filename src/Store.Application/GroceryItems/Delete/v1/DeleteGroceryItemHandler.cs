@@ -1,6 +1,3 @@
-
-
-
 using Store.Domain.Exceptions.GroceryItem;
 
 namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Delete.v1;

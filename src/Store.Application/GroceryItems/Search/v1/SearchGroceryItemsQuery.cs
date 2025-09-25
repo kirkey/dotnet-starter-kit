@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Search.v1;
 
-public class SearchGroceryItemsCommand : PaginationFilter, IRequest<PagedList<GroceryItemResponse>>
+public class SearchGroceryItemsQuery : PaginationFilter, IRequest<PagedList<GroceryItemResponse>>
 {
     public string? Name { get; set; }
     public string? Sku { get; set; }
