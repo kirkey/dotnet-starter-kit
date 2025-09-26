@@ -41,7 +41,7 @@ public partial class GroceryItems
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = paginationFilter.Adapt<SearchGroceryItemsCommand>();
+                var command = paginationFilter.Adapt<SearchGroceryItemsQuery>();
                 var result = await ApiClient.SearchGroceryItemsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<GroceryItemResponse>>();
             },
@@ -55,17 +55,18 @@ public partial class GroceryItems
             },
             deleteFunc: async id => await ApiClient.DeleteGroceryItemEndpointAsync("1", id).ConfigureAwait(false),
             importAction: FshActions.Import,
-            exportAction: FshActions.Export);
-            // exportFunc: filter =>
-            // {
-                // var request = filter.Adapt<AttendanceExportRequest>();
-                // request.EmployeeId = _searchEmployeeId;
-                // request.StartDate = (DateTime)DateRange.Start!;
-                // request.EndDate = (DateTime)DateRange.End!;
-                // request.Department = _department;
-                // request.HasAppointment = !string.IsNullOrEmpty(SelectedOption) && SelectedOption.Equals("Appointment"); // HasActivity;
-                // return Client.ExportAsync(request);
-            // });
+            exportAction: FshActions.Export,
+            importFunc: async fileUpload =>
+            {
+                var command = new ImportGroceryItemsCommand { File = fileUpload };
+                return await ApiClient.ImportGroceryItemsEndpointAsync("1", command);
+            },
+            exportFunc: async filter =>
+            {
+                var request = filter.Adapt<ExportGroceryItemsQuery>();
+                var apiResponse = await ApiClient.ExportGroceryItemsEndpointAsync("1", request);
+                return new Components.EntityTable.FileResponse(apiResponse.Stream);
+            });
     }
 }
 

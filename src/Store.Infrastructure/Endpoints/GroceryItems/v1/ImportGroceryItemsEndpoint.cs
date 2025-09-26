@@ -19,7 +19,7 @@ public static class ImportGroceryItemsEndpoint
             .WithSummary("Import grocery items from Excel")
             .WithDescription("Accepts a FileUploadCommand payload inside ImportGroceryItemsCommand and returns the imported count.")
             .Produces<int>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission("Permissions.Store.Import")
             .MapToApiVersion(1);
     }
 }

@@ -45,6 +45,6 @@ public sealed class ExportGroceryItemsQueryValidator : AbstractValidator<ExportG
     /// <returns>True if GUID is valid (not empty), false otherwise</returns>
     private static bool BeValidGuid(DefaultIdType? guid)
     {
-        return !guid.HasValue || guid.Value != Guid.Empty;
+        return !guid.HasValue || guid.Value != DefaultIdType.Empty;
     }
 }

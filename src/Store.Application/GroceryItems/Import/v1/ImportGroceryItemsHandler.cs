@@ -116,13 +116,13 @@ public sealed class ImportGroceryItemsHandler(
                 }
 
                 // Require Category and Supplier per domain defaults
-                if (!row.CategoryId.HasValue || row.CategoryId.Value == Guid.Empty)
+                if (!row.CategoryId.HasValue || row.CategoryId.Value == DefaultIdType.Empty)
                 {
                     errors.Add($"Row {rowIndex}: CategoryId is required");
                     rowIndex++;
                     continue;
                 }
-                if (!row.SupplierId.HasValue || row.SupplierId.Value == Guid.Empty)
+                if (!row.SupplierId.HasValue || row.SupplierId.Value == DefaultIdType.Empty)
                 {
                     errors.Add($"Row {rowIndex}: SupplierId is required");
                     rowIndex++;

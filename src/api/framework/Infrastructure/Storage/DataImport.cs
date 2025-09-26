@@ -11,11 +11,46 @@ public class DataImport : IDataImport
 {
    public async Task<IList<T>> ToListAsync<T>(FileUploadCommand request, FileType supportedFileType, string sheetName = "Sheet1")
     {
-        // string base64Data = Regex.Match(request.Data, string.Format("data:{0}/(?<type>.+?),(?<data>.+)", supportedFileType.ToString().ToLower())).Groups["data"].Value
-        string base64Data = Regex.Match(request.Data,
-            $"data:{supportedFileType.ToString().ToLower()}/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+        // Handle both data URI format and raw base64 data
+        string base64Data;
         
-        var streamData = new MemoryStream(Convert.FromBase64String(base64Data));
+        // Check if the data is in data URI format (data:document/xlsx,base64data)
+        var match = Regex.Match(request.Data,
+            $"data:{supportedFileType.ToString().ToLower()}/(?<type>.+?),(?<data>.+)");
+        
+        if (match.Success)
+        {
+            // Extract base64 data from data URI format
+            base64Data = match.Groups["data"].Value;
+        }
+        else
+        {
+            // Assume it's raw base64 data
+            base64Data = request.Data;
+        }
+        
+        // Validate that we have base64 data
+        if (string.IsNullOrWhiteSpace(base64Data))
+        {
+            throw new InvalidOperationException("File data is empty or invalid.");
+        }
+        
+        byte[] fileBytes;
+        try
+        {
+            fileBytes = Convert.FromBase64String(base64Data);
+        }
+        catch (FormatException ex)
+        {
+            throw new InvalidOperationException($"File data is not valid base64: {ex.Message}", ex);
+        }
+        
+        if (fileBytes.Length == 0)
+        {
+            throw new InvalidOperationException("File data cannot be empty.");
+        }
+        
+        var streamData = new MemoryStream(fileBytes);
 
         List<T> list = [];
         Type typeOfObject = typeof(T);

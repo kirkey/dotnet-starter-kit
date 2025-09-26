@@ -1319,7 +1319,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body);
+        System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1331,7 +1331,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Import grocery items from Excel
@@ -1355,6 +1355,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<int> ImportGroceryItemsEndpointAsync(string version, ImportGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Export grocery items to Excel
+        /// </summary>
+        /// <remarks>
+        /// Export grocery items to Excel file with optional filtering by category, supplier, search term, stock status, and other criteria.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<FileResponse> ExportGroceryItemsEndpointAsync(string version, ExportGroceryItemsQuery body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Export grocery items to Excel
+        /// </summary>
+        /// <remarks>
+        /// Export grocery items to Excel file with optional filtering by category, supplier, search term, stock status, and other criteria.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<FileResponse> ExportGroceryItemsEndpointAsync(string version, ExportGroceryItemsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create inventory item
@@ -10092,7 +10115,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body)
+        public virtual System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsQuery body)
         {
             return SearchGroceryItemsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -10107,7 +10130,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GroceryItemResponsePagedList> SearchGroceryItemsEndpointAsync(string version, SearchGroceryItemsQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -10270,6 +10293,108 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Export grocery items to Excel
+        /// </summary>
+        /// <remarks>
+        /// Export grocery items to Excel file with optional filtering by category, supplier, search term, stock status, and other criteria.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<FileResponse> ExportGroceryItemsEndpointAsync(string version, ExportGroceryItemsQuery body)
+        {
+            return ExportGroceryItemsEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Export grocery items to Excel
+        /// </summary>
+        /// <remarks>
+        /// Export grocery items to Excel file with optional filtering by category, supplier, search term, stock status, and other criteria.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<FileResponse> ExportGroceryItemsEndpointAsync(string version, ExportGroceryItemsQuery body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/store/grocery-items/export"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/store/grocery-items/export");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200 || status_ == 206)
+                        {
+                            var responseStream_ = response_.Content == null ? System.IO.Stream.Null : await ReadAsStreamAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            var fileResponse_ = new FileResponse(status_, headers_, responseStream_, null, response_);
+                            disposeClient_ = false; disposeResponse_ = false; // response and client are disposed by FileResponse
+                            return fileResponse_;
                         }
                         else
                         {
@@ -25335,6 +25460,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ExportGroceryItemsQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
+        public System.Guid? CategoryId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
+        public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("searchTerm")]
+        public string? SearchTerm { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("includeInactive")]
+        public bool IncludeInactive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("onlyLowStock")]
+        public bool OnlyLowStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("onlyPerishable")]
+        public bool OnlyPerishable { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class FileUploadCommand
     {
 
@@ -27267,7 +27416,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchGroceryItemsCommand
+    public partial class SearchGroceryItemsQuery
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -29432,6 +29581,41 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FileResponse : System.IDisposable
+    {
+        private System.IDisposable? _client;
+        private System.IDisposable? _response;
+
+        public int StatusCode { get; private set; }
+
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
+
+        public System.IO.Stream Stream { get; private set; }
+
+        public bool IsPartial
+        {
+            get { return StatusCode == 206; }
+        }
+
+        public FileResponse(int statusCode, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.IO.Stream stream, System.IDisposable? client, System.IDisposable? response)
+        {
+            StatusCode = statusCode;
+            Headers = headers;
+            Stream = stream;
+            _client = client;
+            _response = response;
+        }
+
+        public void Dispose()
+        {
+            Stream.Dispose();
+            if (_response != null)
+                _response.Dispose();
+            if (_client != null)
+                _client.Dispose();
+        }
+    }
 
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.6.0.0 (NJsonSchema v11.5.0.0 (Newtonsoft.Json v13.0.0.0))")]

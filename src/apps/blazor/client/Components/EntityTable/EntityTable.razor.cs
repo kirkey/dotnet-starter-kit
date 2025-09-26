@@ -12,6 +12,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
     public EntityTableContext<TEntity, TId, TRequest> Context { get; set; } = default!;
 
     [Parameter] public bool Exporting { get; set; }
+    [Parameter] public bool Importing { get; set; }
     [Parameter] public bool Loading { get; set; }
     [Parameter] public string? SearchString { get; set; }
     [Parameter] public EventCallback<string> SearchStringChanged { get; set; }
@@ -38,7 +39,8 @@ public partial class EntityTable<TEntity, TId, TRequest>
     private int _totalItems;
 
     private ClientPreference? _clientPreference;
-    
+    private InputFile? fileUploadInput;
+
     protected override async Task OnInitializedAsync()
     {
         if (await ClientPreferences.GetPreference() is not ClientPreference clientPreference)
@@ -105,7 +107,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         Loading = true;
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.ClientContext.LoadDataFunc(), Toast, Navigation)
+                () => Context.ClientContext.LoadDataFunc(), Snackbar, Navigation)
             is { } result)
         {
             _entityList = result;
@@ -155,7 +157,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         var filter = GetPaginationFilter(state);
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.ServerContext.SearchFunc(filter), Toast, Navigation)
+                () => Context.ServerContext.SearchFunc(filter), Snackbar, Navigation)
             is { } result)
         {
             _totalItems = result.TotalCount;
@@ -219,7 +221,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         TRequest requestModel = isCreate || entityToDuplicate is not null
             ? await GetRequestModel(entityToDuplicate).ConfigureAwait(false)
             : Context.GetDetailsFunc is not null &&
-              await ApiHelper.ExecuteCallGuardedAsync(() => Context.GetDetailsFunc(Context.IdFunc!(entity!)), Toast, Navigation)
+              await ApiHelper.ExecuteCallGuardedAsync(() => Context.GetDetailsFunc(Context.IdFunc!(entity!)), Snackbar, Navigation)
                   is { } detailsResult
                 ? detailsResult
                 : entity!.Adapt<TRequest>();
@@ -318,7 +320,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
             { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, Context.EntityName, id) }
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = false };
-        var dialog = DialogService.Show<DeleteConfirmation>("Delete", parameters, options);
+        var dialog = await DialogService.ShowAsync<DeleteConfirmation>("Delete", parameters, options);
         var result = await dialog.Result;
         if (!result!.Canceled)
         {
@@ -332,6 +334,77 @@ public partial class EntityTable<TEntity, TId, TRequest>
         }
     }
     
+    private async Task ImportAsync(IBrowserFile? file)
+    {
+        if (file == null)
+            return;
+
+        // Validate file extension
+        var extension = Path.GetExtension(file.Name).ToLowerInvariant();
+        if (extension != ".xlsx" && extension != ".xls")
+        {
+            Snackbar.Add("Please select an Excel file (.xlsx or .xls)", Severity.Warning);
+            return;
+        }
+
+        try
+        {
+            Importing = true;
+
+            await using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024); // 10 MB limit
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var fileBytes = memoryStream.ToArray();
+
+            // Validate file is not empty
+            if (fileBytes.Length == 0)
+            {
+                Snackbar.Add("The selected file is empty. Please select a valid Excel file.", Severity.Warning);
+                return;
+            }
+
+            // Determine MIME type based on extension
+            var base64Data = Convert.ToBase64String(fileBytes);
+            
+            // Create FileUploadCommand with base64 data expected by DataImport service
+            var fileUpload = new FileUploadCommand
+            {
+                Name = file.Name,
+                Data = base64Data, // Send raw base64 string, not data URI format
+                Extension = Path.GetExtension(file.Name),
+                Size = file.Size
+            };
+
+            if (Context.ServerContext?.ImportFunc != null)
+            {
+                var importedCount = await ApiHelper.ExecuteCallGuardedAsync(
+                    () => Context.ServerContext.ImportFunc(fileUpload), Snackbar, Navigation);
+
+                if (importedCount > 0)
+                {
+                    Snackbar.Add($"Successfully imported {importedCount} {Context.EntityNamePlural}.", Severity.Success);
+                    await ReloadDataAsync(); // Refresh the table data
+                }
+                else
+                {
+                    Snackbar.Add("No records were imported from the file.", Severity.Warning);
+                }
+            }
+            else
+            {
+                Snackbar.Add("Import function is not available for this entity.", Severity.Warning);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error importing file: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            Importing = false;
+        }
+    }
+    
     private async Task ExportAsync()
     {
         await Task.Yield();
@@ -340,17 +413,32 @@ public partial class EntityTable<TEntity, TId, TRequest>
         {
             if (Context.ServerContext?.ExportFunc != null)
             {
-                Exporting = true;
-                var filter = GetBaseFilter();
-                if (await ApiHelper.ExecuteCallGuardedAsync(
-                        () => Context.ServerContext.ExportFunc(filter), Toast, Navigation).ConfigureAwait(false)
-                    is { } result)
+                const string action = "Export";
+                const string content = "You're sure you want to export '{0}'?";
+                var parameters = new DialogParameters
                 {
-                    using var streamRef = new DotNetStreamReference(result.Stream);
-                    await Js.InvokeVoidAsync("downloadFileFromStream", $"{Context.EntityNamePlural}.xlsx", streamRef)
-                        .ConfigureAwait(false);
+                    { nameof(TransactionConfirmation.ContentText), string.Format(content, Context.EntityNamePlural) },
+                    { nameof(TransactionConfirmation.ConfirmText), action }
+                };
+                var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = false };
+                var dialog = await DialogService.ShowAsync<TransactionConfirmation>($"{action} {Context.EntityNamePlural}", parameters, options);
+                var result = await dialog.Result;
+                if (!result!.Canceled)
+                {
+                    Exporting = true;
+                    var filter = GetBaseFilter();
+                    if (await ApiHelper.ExecuteCallGuardedAsync(
+                            () => Context.ServerContext.ExportFunc(filter), Toast, Navigation).ConfigureAwait(false)
+                        is { } response)
+                    {
+                        using var streamRef = new DotNetStreamReference(response.Stream);
+                        await Js.InvokeVoidAsync("downloadFileFromStream", $"{Context.EntityNamePlural}.xlsx",
+                                streamRef)
+                            .ConfigureAwait(false);
+                    }
+
+                    Exporting = false;
                 }
-                Exporting = false;
             }
             else if (Context.ClientContext is not null)
             {
@@ -407,5 +495,29 @@ public partial class EntityTable<TEntity, TId, TRequest>
         }
 
         return filter;
+    }
+
+    /// <summary>
+    /// Triggers the hidden file input to open the file selection dialog.
+    /// </summary>
+    private async Task TriggerFileUpload()
+    {
+        if (fileUploadInput?.Element is not null)
+        {
+            await Js.InvokeVoidAsync("triggerClick", fileUploadInput.Element);
+        }
+    }
+
+    /// <summary>
+    /// Handles the file selection event from the hidden InputFile component.
+    /// </summary>
+    /// <param name="e">The file selection event arguments.</param>
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.GetMultipleFiles().FirstOrDefault();
+        if (file is not null)
+        {
+            await ImportAsync(file);
+        }
     }
 }

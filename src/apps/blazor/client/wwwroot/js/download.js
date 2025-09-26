@@ -30,3 +30,7 @@ function triggerFileDownload(fileName, url) {
     anchorElement.click();
     anchorElement.remove();
 }
+
+function triggerClick(element) {
+    element.click();
+}

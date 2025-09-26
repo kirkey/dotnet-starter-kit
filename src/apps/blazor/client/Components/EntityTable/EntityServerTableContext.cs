@@ -10,6 +10,7 @@
 public class EntityServerTableContext<TEntity, TId, TRequest>(
     List<EntityField<TEntity>> fields,
     Func<PaginationFilter, Task<PaginationResponse<TEntity>>> searchFunc,
+    Func<FileUploadCommand, Task<int>>? importFunc = null,
     Func<PaginationFilter, Task<FileResponse>>? exportFunc = null,
     bool enableAdvancedSearch = false,
     Func<TEntity, TId>? idFunc = null,
@@ -72,10 +73,15 @@ public class EntityServerTableContext<TEntity, TId, TRequest>(
     public bool EnableAdvancedSearch { get; } = enableAdvancedSearch;
 
     /// <summary>
+    ///     A function that imports data from a file upload and returns the number of records imported.
+    /// </summary>
+    public Func<FileUploadCommand, Task<int>>? ImportFunc { get; } = importFunc;
+    
+    /// <summary>
     ///     A function that exports the specified data from the API and returns a file content stream.
     /// </summary>
     public Func<PaginationFilter, Task<FileResponse>>? ExportFunc { get; } = exportFunc;
-    
+
     private static bool ValidateFields(List<EntityField<TEntity>> value)
     {
         ArgumentNullException.ThrowIfNull(value);

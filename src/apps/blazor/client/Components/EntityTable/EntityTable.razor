@@ -3,6 +3,10 @@
 @typeparam TRequest
 
 @inject IJSRuntime Js
+@inject ISnackbar Snackbar
+@inject NavigationManager Navigation
+@inject IDialogService DialogService
+@inject IClientPreferenceManager ClientPreferences
 
 <style>
     .mud-table-container {
@@ -28,13 +32,13 @@
                     <MudPaper Elevation=0 Class="d-flex flex-wrap align-content-start" style="margin-top:10px!important">
                         <MudCheckBox Class="mr-4" Label="All Columns" T="bool" Value="Context.AllColumnsChecked" ValueChanged="Context.AllColumnsCheckChanged"></MudCheckBox>
                         @foreach (var field in Context.Fields
-                                          .Where(field => field.Type != typeof(bool)
-                                                          && field.Type != typeof(double)
-                                                          && field.Type != typeof(decimal)
-                                                          && field.Type != typeof(DateOnly)
-                                                          && field.Type != typeof(TimeOnly)
-                                                          && field.Type != typeof(DateTime)
-                                                          && field.Type != typeof(byte)))
+                                      .Where(field => field.Type != typeof(bool)
+                                                      && field.Type != typeof(double)
+                                                      && field.Type != typeof(decimal)
+                                                      && field.Type != typeof(DateOnly)
+                                                      && field.Type != typeof(TimeOnly)
+                                                      && field.Type != typeof(DateTime)
+                                                      && field.Type != typeof(byte)))
                         {
                             <MudSwitch Class="mt-1" @bind-Value="@field.CheckedForSearch" Label="@(field.DisplayName)" Color="Color.Primary"></MudSwitch>
                         }
@@ -53,19 +57,47 @@
                   @ref="_table" 
                   ServerData="@ServerReloadFunc">
             <ToolBarContent>
-                <div class="justify-center mud-text-align-center">
+                <div class="d-flex flex-row flex-wrap justify-center mud-text-align-center" style="gap: 1rem;">
                     @if (_canCreate)
                     {
                         <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false"
                                    OnClick="@(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add"
-                            IconColor="Color.Surface" Class="mr-4">Create</MudButton>
+                                   IconColor="Color.Surface" Class="mr-0">Create</MudButton>
                     }
                     <MudButton Variant="Variant.Filled" OnClick="@(() => ReloadDataAsync())" DropShadow="false"
                                StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
                     
+                    @*if (_canImport)
+                    {
+                        <MudFileUpload T="IBrowserFile" 
+                                       Accept=".xlsx,.xls"
+                                       FilesChanged="ImportAsync"
+                                       MaximumFileCount="1"
+                                       Class="ml-0">
+                            <ActivatorContent>
+                                <MudButton HtmlTag="label"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Tertiary" 
+                                           StartIcon="@Icons.Material.Filled.UploadFile"
+                                           Size="Size.Medium"
+                                           Disabled="@Importing">
+                                    @if (Importing)
+                                    {
+                                        <MudProgressCircular Class="mr-2" Color="Color.Inherit" Indeterminate Size="Size.Small"/>
+                                        <span>Importing...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Import Excel</span>
+                                    }
+                                </MudButton>
+                            </ActivatorContent>
+                        </MudFileUpload>
+                    }
+                    
                     @if (_canExport)
                     {
-                        <MudButton Class="ml-4" 
+                        <MudButton Class="ml-0" 
                                    Color="Color.Tertiary"
                                    Disabled="Exporting"
                                    OnClick="@(() => ExportAsync())"
@@ -82,15 +114,16 @@
                                 <span>Export</span>
                             }
                         </MudButton>
-                    }
+                    }*@
                 </div>
+                
                 <MudSpacer />
                 @if (_canSearch && !_advancedSearchExpanded)
                 {
                     <MudTextField @bind-Value="SearchString" Immediate="true" FullWidth="false"
-                        Placeholder="@($"Search for {Context.EntityNamePlural}")" Adornment="Adornment.End"
-                        AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"
-                        TextChanged="OnSearchStringChanged">
+                                  Placeholder="@($"Search for {Context.EntityNamePlural}")" Adornment="Adornment.End"
+                                  AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"
+                                  TextChanged="OnSearchStringChanged">
                     </MudTextField>
                 }
             </ToolBarContent>
@@ -218,17 +251,20 @@
                             }*@
                             @if (_canImport)
                             {
-                                <MudMenuItem Disabled="Exporting"
-                                             OnClick="@(() => ExportAsync())"
-                                             Icon="@Icons.Material.Filled.UploadFile">
-                                    @if (Exporting)
+                                <MudMenuItem Icon="@Icons.Material.Filled.UploadFile"
+                                             Disabled="@Importing"
+                                             OnClick="@(() => TriggerFileUpload())">
+                                    @if (Importing)
                                     {
-                                        <MudProgressCircular Class="mr-2" Color="Color.Inherit" Indeterminate Size="Size.Small"/>
+                                        <MudProgressCircular Class="mr-2"
+                                                             Color="Color.Inherit"
+                                                             Indeterminate
+                                                             Size="Size.Small" />
                                         <span>Importing...</span>
                                     }
                                     else
                                     {
-                                        <span>Import</span>
+                                        <span>Import Excel</span>
                                     }
                                 </MudMenuItem>
                             }
@@ -258,8 +294,8 @@
                     else
                     {
                         <MudButton Variant="Variant.Filled" DropShadow="false" 
-                            StartIcon="@Icons.Material.Filled.DoNotTouch" IconColor="Color.Secondary" Size="Size.Small"
-                        Color="Color.Surface">
+                                   StartIcon="@Icons.Material.Filled.DoNotTouch" IconColor="Color.Secondary" Size="Size.Small"
+                                   Color="Color.Surface">
                             No Allowed Actions
                         </MudButton>
                     }
@@ -275,3 +311,22 @@
         <FshCustomError />
     </ErrorContent>
 </ErrorBoundary>
+
+@* Hidden file input for import functionality *@
+@if (_canImport)
+{
+    <InputFile id="file-upload" 
+               @ref="fileUploadInput"
+               OnChange="@OnFileSelected" 
+               accept=".xlsx,.xls" 
+               style="display: none;" />
+}
+
+<style>
+    @@media (max-width: 600px) {
+        .d-flex.flex-row.flex-wrap.justify-center.mud-text-align-center {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+    }
+</style>
