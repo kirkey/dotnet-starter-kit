@@ -93,7 +93,7 @@
                                 </MudButton>
                             </ActivatorContent>
                         </MudFileUpload>
-                    }
+                    }*@
                     
                     @if (_canExport)
                     {
@@ -114,7 +114,7 @@
                                 <span>Export</span>
                             }
                         </MudButton>
-                    }*@
+                    }
                 </div>
                 
                 <MudSpacer />
@@ -264,7 +264,7 @@
                                     }
                                     else
                                     {
-                                        <span>Import Excel</span>
+                                        <span>Import</span>
                                     }
                                 </MudMenuItem>
                             }
@@ -302,8 +302,15 @@
                 </MudTd>
             </RowTemplate>
 
-            <PagerContent>
+            @*<PagerContent>
                 <TablePager />
+            </PagerContent>*@
+            <PagerContent>
+                <div>
+                    <div class="d-flex justify-end mt-2">
+                        <MudTablePager PageSizeOptions="@PageSizes"/>
+                    </div>
+                </div>
             </PagerContent>
         </FshTable>
     </ChildContent>

@@ -109,9 +109,9 @@ public class DataImport : IDataImport
             val = Convert.ToInt32(cellValue.GetNumber());
             return Enum.ToObject(propertyType, val);
         }
-        else if (propertyType == typeof(Guid) || propertyType == typeof(Guid?))
+        else if (propertyType == typeof(DefaultIdType) || propertyType == typeof(DefaultIdType?))
         {
-            val = Guid.Parse(cellValue.ToString());
+            val = DefaultIdType.Parse(cellValue.ToString());
         }
         else if (propertyType == typeof(int) || propertyType == typeof(int?))
         {

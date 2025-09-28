@@ -23,13 +23,14 @@ public partial class GroceryItems
             fields:
             [
                 new EntityField<GroceryItemResponse>(x => x.Sku, "SKU", "SKU"),
-                new EntityField<GroceryItemResponse>(x => x.Name, "Name", "Name"),
                 new EntityField<GroceryItemResponse>(x => x.Barcode, "Barcode", "Barcode"),
+                new EntityField<GroceryItemResponse>(x => x.Name, "Name", "Name"),
+                new EntityField<GroceryItemResponse>(x => x.WeightUnit, "Weight Unit", "WeightUnit"),
                 new EntityField<GroceryItemResponse>(x => x.Price, "Price", "Price", typeof(decimal)),
                 new EntityField<GroceryItemResponse>(x => x.Cost, "Cost", "Cost", typeof(decimal)),
+                new EntityField<GroceryItemResponse>(x => x.IsPerishable, "Perishable", "IsPerishable", typeof(bool)),
                 new EntityField<GroceryItemResponse>(x => x.CurrentStock, "Current", "CurrentStock", typeof(int)),
                 new EntityField<GroceryItemResponse>(x => x.ReorderPoint, "Reorder", "ReorderPoint", typeof(int)),
-                new EntityField<GroceryItemResponse>(x => x.IsPerishable, "Perishable", "IsPerishable", typeof(bool)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id ?? DefaultIdType.Empty,

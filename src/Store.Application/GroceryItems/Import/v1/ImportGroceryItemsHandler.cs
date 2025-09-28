@@ -1,4 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.GroceryItems.Specs;
+using FSH.Starter.WebApi.Store.Application.Categories.Specs;
+using FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Import.v1;
 
@@ -9,7 +11,10 @@ public sealed class ImportGroceryItemsHandler(
     ILogger<ImportGroceryItemsHandler> logger,
     IGroceryItemImportParser parser,
     [FromKeyedServices("store:grocery-items")] IRepository<GroceryItem> repository,
-    [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> readRepository)
+    [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> readRepository,
+    // Newly injected: lookup defaults for Category and Supplier when not provided by import
+    [FromKeyedServices("store:categories")] IReadRepository<Category> categoryReadRepository,
+    [FromKeyedServices("store:suppliers")] IReadRepository<Supplier> supplierReadRepository)
     : IRequestHandler<ImportGroceryItemsCommand, ImportGroceryItemsResponse>
 {
     public async Task<ImportGroceryItemsResponse> Handle(ImportGroceryItemsCommand request, CancellationToken cancellationToken)
@@ -20,136 +25,146 @@ public sealed class ImportGroceryItemsHandler(
         var rows = await parser.ParseAsync(request.File, cancellationToken).ConfigureAwait(false);
         if (rows.Count == 0)
         {
-            logger.LogInformation("grocery import: file had no rows");
+            var noRowsMsg = "grocery import: file had no rows";
+            logger.LogInformation(noRowsMsg);
+            Console.WriteLine(noRowsMsg);
             return ImportGroceryItemsResponse.Create(0, 0);
+        }
+
+        // Preload default Category and Supplier to satisfy domain requirements when missing
+        var defaultCategory = await categoryReadRepository.FirstOrDefaultAsync(new CategoryByCodeSpec("UNCAT"), cancellationToken).ConfigureAwait(false)
+            ?? await categoryReadRepository.FirstOrDefaultAsync(new CategoryByNameSpec("Uncategorized"), cancellationToken).ConfigureAwait(false);
+        var defaultSupplier = await supplierReadRepository.FirstOrDefaultAsync(new SupplierByCodeSpec("SUP001"), cancellationToken).ConfigureAwait(false);
+
+        if (defaultCategory is null)
+        {
+            logger.LogWarning("grocery import: default category not found (UNCAT). Items without CategoryId will fail domain rules");
+        }
+        if (defaultSupplier is null)
+        {
+            logger.LogWarning("grocery import: default supplier not found (SUP001). Items without SupplierId will fail domain rules");
         }
 
         int imported = 0;
         var errors = new List<string>();
-        int rowIndex = 1;
 
-        foreach (var row in rows)
+        for (int i = 0; i < rows.Count; i++)
         {
+            var rowIndex = i + 1; // human-friendly
+            var row = rows[i];
+
             try
             {
-                // Strict validations mirroring domain rules preemptively
+                // Minimal strict validations: Name and Sku are required per request context
                 if (string.IsNullOrWhiteSpace(row.Name))
                 {
                     errors.Add($"Row {rowIndex}: Name is required");
-                    rowIndex++;
                     continue;
                 }
                 if (string.IsNullOrWhiteSpace(row.Sku))
                 {
                     errors.Add($"Row {rowIndex}: SKU is required");
-                    rowIndex++;
-                    continue;
-                }
-                if (string.IsNullOrWhiteSpace(row.Barcode))
-                {
-                    errors.Add($"Row {rowIndex}: Barcode is required");
-                    rowIndex++;
                     continue;
                 }
 
-                var price = row.Price ?? 0m;
-                var cost = row.Cost ?? 0m;
-                if (price < 0m || cost < 0m || price < cost)
-                {
-                    errors.Add($"Row {rowIndex}: Invalid pricing - Price must be >= Cost and both must be >= 0");
-                    rowIndex++;
-                    continue;
-                }
+                // Normalize and clamp to EF constraints
+                var name = row.Name.Trim();
+                if (name.Length > 200) name = name[..200];
 
-                var min = row.MinimumStock ?? 0;
-                var max = row.MaximumStock ?? 0;
-                var curr = row.CurrentStock ?? 0;
-                var reorder = row.ReorderPoint ?? 0;
-                if (min < 0 || max <= 0 || min > max)
-                {
-                    errors.Add($"Row {rowIndex}: Invalid stock levels - MinimumStock must be >= 0, MaximumStock must be > 0, and MinimumStock <= MaximumStock");
-                    rowIndex++;
-                    continue;
-                }
-                if (curr < 0 || curr > max)
-                {
-                    errors.Add($"Row {rowIndex}: CurrentStock must be between 0 and MaximumStock");
-                    rowIndex++;
-                    continue;
-                }
-                if (reorder < 0 || reorder > max)
-                {
-                    errors.Add($"Row {rowIndex}: ReorderPoint must be between 0 and MaximumStock");
-                    rowIndex++;
-                    continue;
-                }
+                var sku = row.Sku.Trim();
+                if (sku.Length > 50) sku = sku[..50]; // EF max 50
 
-                var weight = row.Weight ?? 0m;
-                if (weight < 0m)
-                {
-                    errors.Add($"Row {rowIndex}: Invalid weight - Weight must be >= 0");
-                    rowIndex++;
-                    continue;
-                }
-                if (weight > 0 && string.IsNullOrWhiteSpace(row.WeightUnit))
-                {
-                    errors.Add($"Row {rowIndex}: WeightUnit is required when Weight is specified");
-                    rowIndex++;
-                    continue;
-                }
+                string? brand = string.IsNullOrWhiteSpace(row.Brand) ? null : row.Brand!.Trim();
+                if (brand is { Length: > 100 }) brand = brand[..100]; // EF max 100
 
-                var isPerishable = row.IsPerishable ?? false;
-                if (isPerishable)
-                {
-                    if (!row.ExpiryDate.HasValue)
-                    {
-                        errors.Add($"Row {rowIndex}: ExpiryDate is required for perishable items");
-                        rowIndex++;
-                        continue;
-                    }
-                    if (row.ExpiryDate.Value <= DateTime.UtcNow.Date)
-                    {
-                        errors.Add($"Row {rowIndex}: ExpiryDate must be in the future for perishable items");
-                        rowIndex++;
-                        continue;
-                    }
-                }
+                string? manufacturer = string.IsNullOrWhiteSpace(row.Manufacturer) ? null : row.Manufacturer!.Trim();
+                if (manufacturer is { Length: > 100 }) manufacturer = manufacturer[..100]; // EF max 100
 
-                // Require Category and Supplier per domain defaults
-                if (!row.CategoryId.HasValue || row.CategoryId.Value == DefaultIdType.Empty)
-                {
-                    errors.Add($"Row {rowIndex}: CategoryId is required");
-                    rowIndex++;
-                    continue;
-                }
-                if (!row.SupplierId.HasValue || row.SupplierId.Value == DefaultIdType.Empty)
-                {
-                    errors.Add($"Row {rowIndex}: SupplierId is required");
-                    rowIndex++;
-                    continue;
-                }
+                string? weightUnit = string.IsNullOrWhiteSpace(row.WeightUnit) ? null : row.WeightUnit!.Trim();
+                if (weightUnit is { Length: > 20 }) weightUnit = weightUnit[..20];
 
-                // Duplicate checks
-                var existingSku = await readRepository.FirstOrDefaultAsync(new GroceryItemBySkuSpec(row.Sku!), cancellationToken).ConfigureAwait(false);
+                // Ensure unique SKU (keep existing behavior to avoid conflicts)
+                var existingSku = await readRepository.FirstOrDefaultAsync(new GroceryItemBySkuSpec(sku), cancellationToken).ConfigureAwait(false);
                 if (existingSku is not null)
                 {
-                    errors.Add($"Row {rowIndex}: SKU already exists");
-                    rowIndex++;
+                    errors.Add($"Row {rowIndex}: SKU '{sku}' already exists");
                     continue;
                 }
-                var existingBarcode = await readRepository.FirstOrDefaultAsync(new GroceryItemByBarcodeSpec(row.Barcode!), cancellationToken).ConfigureAwait(false);
-                if (existingBarcode is not null)
+
+                // Barcode: use provided or auto-generate unique
+                string barcode;
+                if (!string.IsNullOrWhiteSpace(row.Barcode))
                 {
-                    errors.Add($"Row {rowIndex}: Barcode already exists");
-                    rowIndex++;
+                    barcode = row.Barcode!.Trim();
+                    if (barcode.Length > 100) barcode = barcode[..100];
+
+                    // if barcode exists, generate a unique one instead of failing
+                    var existingBarcode = await readRepository.FirstOrDefaultAsync(new GroceryItemByBarcodeSpec(barcode), cancellationToken).ConfigureAwait(false);
+                    if (existingBarcode is not null)
+                    {
+                        barcode = await GenerateUniqueBarcodeAsync(sku, readRepository, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    barcode = await GenerateUniqueBarcodeAsync(sku, readRepository, cancellationToken).ConfigureAwait(false);
+                }
+
+                // Defaults for required numeric fields
+                var price = row.Price is >= 0m ? row.Price.Value : 0m;
+                var cost = row.Cost is >= 0m ? row.Cost.Value : 0m;
+                if (price < cost)
+                {
+                    // adjust to satisfy domain (price >= cost)
+                    price = cost;
+                }
+
+                // Stock defaults satisfying domain rules
+                var min = row.MinimumStock is >= 0 ? row.MinimumStock!.Value : 0;
+                var max = row.MaximumStock is > 0 ? row.MaximumStock!.Value : 100;
+                if (min > max) min = 0; // fallback
+
+                var curr = row.CurrentStock is >= 0 ? Math.Min(row.CurrentStock!.Value, max) : 0;
+                var reorder = row.ReorderPoint is >= 0 ? Math.Min(row.ReorderPoint!.Value, max) : 0;
+
+                // Perishability: if invalid, disable perishability to pass domain validation
+                var isPerishable = row.IsPerishable ?? false;
+                DateTime? expiry = row.ExpiryDate;
+                if (isPerishable && (!expiry.HasValue || expiry.Value <= DateTime.UtcNow.Date))
+                {
+                    isPerishable = false;
+                    expiry = null;
+                }
+
+                // Weight: default to 0 if missing/invalid
+                var weight = row.Weight is >= 0m ? row.Weight.Value : 0m;
+                // Domain requires WeightUnit only when Weight > 0. If Weight = 0, keep whatever provided.
+
+                // Category and Supplier fallbacks if not provided
+                var categoryId = row.CategoryId.HasValue && row.CategoryId.Value != DefaultIdType.Empty
+                    ? row.CategoryId
+                    : defaultCategory?.Id;
+
+                var supplierId = row.SupplierId.HasValue && row.SupplierId.Value != DefaultIdType.Empty
+                    ? row.SupplierId
+                    : defaultSupplier?.Id;
+
+                if (categoryId is null)
+                {
+                    errors.Add($"Row {rowIndex}: No CategoryId provided and default category not found");
+                    continue;
+                }
+                if (supplierId is null)
+                {
+                    errors.Add($"Row {rowIndex}: No SupplierId provided and default supplier not found");
                     continue;
                 }
 
                 var entity = GroceryItem.Create(
-                    row.Name!,
+                    name,
                     row.Description,
-                    row.Sku!,
-                    row.Barcode!,
+                    sku,
+                    barcode,
                     price,
                     cost,
                     min,
@@ -157,13 +172,13 @@ public sealed class ImportGroceryItemsHandler(
                     curr,
                     reorder,
                     isPerishable,
-                    row.ExpiryDate,
-                    row.Brand,
-                    row.Manufacturer,
+                    expiry,
+                    brand,
+                    manufacturer,
                     weight,
-                    row.WeightUnit,
-                    row.CategoryId,
-                    row.SupplierId,
+                    weightUnit,
+                    categoryId,
+                    supplierId,
                     row.WarehouseLocationId);
 
                 await repository.AddAsync(entity, cancellationToken).ConfigureAwait(false);
@@ -171,12 +186,57 @@ public sealed class ImportGroceryItemsHandler(
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex, "grocery import: skipped row due to error");
-                rowIndex++;
+                logger.LogWarning(ex, "grocery import: skipped row {RowIndex} due to error", rowIndex);
+                errors.Add($"Row {rowIndex}: {ex.Message}");
             }
         }
 
-        logger.LogInformation("grocery import: imported {Count} items with {ErrorCount} errors", imported, errors.Count);
+        // after processing all rows, print all collected errors to the console
+        if (errors.Count > 0)
+        {
+            foreach (var err in errors)
+            {
+                await Console.Error.WriteLineAsync(err);
+            }
+        }
+
+        logger.LogInformation("grocery import: imported {Imported} items with {ErrorCount} errors", imported, errors.Count);
+        var summaryMsg = $"grocery import: imported {imported} items with {errors.Count} errors";
+        Console.WriteLine(summaryMsg);
         return ImportGroceryItemsResponse.Create(rows.Count, imported, errors);
+    }
+
+    /// <summary>
+    /// Generates a unique barcode based on SKU and a short suffix. Ensures uniqueness in the repository.
+    /// </summary>
+    private static async Task<string> GenerateUniqueBarcodeAsync(
+        string sku,
+        IReadRepository<GroceryItem> readRepository,
+        CancellationToken cancellationToken)
+    {
+        // Start with a sanitized candidate based on SKU
+        string baseCandidate = ($"BAR-" + sku.Trim())
+            .Replace(" ", "-", StringComparison.Ordinal)
+            .ToUpperInvariant();
+        if (baseCandidate.Length > 95) baseCandidate = baseCandidate[..95]; // leave room for suffix
+
+        // Try candidate then add short suffixes until unique
+        for (int attempt = 0; attempt < 5; attempt++)
+        {
+            string candidate = attempt == 0 ? baseCandidate : $"{baseCandidate}-{attempt}";
+            if (candidate.Length > 100) candidate = candidate[..100];
+
+            var exists = await readRepository.FirstOrDefaultAsync(new GroceryItemByBarcodeSpec(candidate), cancellationToken).ConfigureAwait(false);
+            if (exists is null)
+            {
+                return candidate;
+            }
+        }
+
+        // Fallback to GUID-based
+        var guid = DefaultIdType.NewGuid().ToString("N").ToUpperInvariant();
+        var finalCandidate = (baseCandidate + "-" + guid[..8]);
+        if (finalCandidate.Length > 100) finalCandidate = finalCandidate[..100];
+        return finalCandidate;
     }
 }

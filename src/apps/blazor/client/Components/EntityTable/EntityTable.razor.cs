@@ -15,6 +15,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
     [Parameter] public bool Importing { get; set; }
     [Parameter] public bool Loading { get; set; }
     [Parameter] public string? SearchString { get; set; }
+    [Parameter] public int[] PageSizes { get; set; } = [10, 20, 50, 100, 500, 999];
     [Parameter] public EventCallback<string> SearchStringChanged { get; set; }
     [Parameter] public RenderFragment? AdvancedSearchContent { get; set; }
     [Parameter] public RenderFragment<TEntity>? ActionsContent { get; set; }
