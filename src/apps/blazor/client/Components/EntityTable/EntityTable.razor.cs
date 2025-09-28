@@ -107,7 +107,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         Loading = true;
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.ClientContext.LoadDataFunc(), Snackbar, Navigation)
+                () => Context.ClientContext.LoadDataFunc(), Toast, Navigation)
             is { } result)
         {
             _entityList = result;
@@ -157,7 +157,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         var filter = GetPaginationFilter(state);
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.ServerContext.SearchFunc(filter), Snackbar, Navigation)
+                () => Context.ServerContext.SearchFunc(filter), Toast, Navigation)
             is { } result)
         {
             _totalItems = result.TotalCount;
@@ -221,7 +221,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         TRequest requestModel = isCreate || entityToDuplicate is not null
             ? await GetRequestModel(entityToDuplicate).ConfigureAwait(false)
             : Context.GetDetailsFunc is not null &&
-              await ApiHelper.ExecuteCallGuardedAsync(() => Context.GetDetailsFunc(Context.IdFunc!(entity!)), Snackbar, Navigation)
+              await ApiHelper.ExecuteCallGuardedAsync(() => Context.GetDetailsFunc(Context.IdFunc!(entity!)), Toast, Navigation)
                   is { } detailsResult
                 ? detailsResult
                 : entity!.Adapt<TRequest>();
