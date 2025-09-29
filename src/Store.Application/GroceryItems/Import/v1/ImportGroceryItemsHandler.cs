@@ -5,19 +5,24 @@ using FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 namespace FSH.Starter.WebApi.Store.Application.GroceryItems.Import.v1;
 
 /// <summary>
-/// Imports grocery items from an Excel file and returns detailed results including success/failure counts.
+/// Imports grocery items from an Excel file and returns the total number of successfully imported items.
 /// </summary>
 public sealed class ImportGroceryItemsHandler(
     ILogger<ImportGroceryItemsHandler> logger,
     IGroceryItemImportParser parser,
     [FromKeyedServices("store:grocery-items")] IRepository<GroceryItem> repository,
     [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> readRepository,
-    // Newly injected: lookup defaults for Category and Supplier when not provided by import
     [FromKeyedServices("store:categories")] IReadRepository<Category> categoryReadRepository,
     [FromKeyedServices("store:suppliers")] IReadRepository<Supplier> supplierReadRepository)
-    : IRequestHandler<ImportGroceryItemsCommand, ImportGroceryItemsResponse>
+    : IRequestHandler<ImportGroceryItemsCommand, int>
 {
-    public async Task<ImportGroceryItemsResponse> Handle(ImportGroceryItemsCommand request, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the import command and returns the count of imported items.
+    /// </summary>
+    /// <param name="request">The import command containing the file to process.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The number of items successfully imported.</returns>
+    public async Task<int> Handle(ImportGroceryItemsCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.File);
@@ -28,7 +33,7 @@ public sealed class ImportGroceryItemsHandler(
             var noRowsMsg = "grocery import: file had no rows";
             logger.LogInformation(noRowsMsg);
             Console.WriteLine(noRowsMsg);
-            return ImportGroceryItemsResponse.Create(0, 0);
+            return 0;
         }
 
         // Preload default Category and Supplier to satisfy domain requirements when missing
@@ -203,7 +208,7 @@ public sealed class ImportGroceryItemsHandler(
         logger.LogInformation("grocery import: imported {Imported} items with {ErrorCount} errors", imported, errors.Count);
         var summaryMsg = $"grocery import: imported {imported} items with {errors.Count} errors";
         Console.WriteLine(summaryMsg);
-        return ImportGroceryItemsResponse.Create(rows.Count, imported, errors);
+        return imported;
     }
 
     /// <summary>

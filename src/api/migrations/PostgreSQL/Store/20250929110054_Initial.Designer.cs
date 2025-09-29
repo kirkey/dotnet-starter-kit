@@ -12,7 +12,7 @@ using Store.Infrastructure.Persistence;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20250922100551_Initial")]
+    [Migration("20250929110054_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

@@ -8,7 +8,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
 // This only provides a user name and email for display purposes. It does not actually include any tokens
 // that authenticate to the server when making subsequent requests. That works separately using a
 // cookie that will be included on HttpClient requests to the server.
-public sealed class JwtAuthenticationService(PersistentComponentState state, ILocalStorageService localStorage, IClient client, NavigationManager navigation) : AuthenticationStateProvider, IAuthenticationService, IAccessTokenProvider
+public sealed class JwtAuthenticationService(
+    PersistentComponentState state, 
+    ILocalStorageService localStorage, 
+    IClient client, 
+    NavigationManager navigation) : AuthenticationStateProvider, IAuthenticationService, IAccessTokenProvider
 {
     private readonly SemaphoreSlim _semaphore = new(1, 1);
 

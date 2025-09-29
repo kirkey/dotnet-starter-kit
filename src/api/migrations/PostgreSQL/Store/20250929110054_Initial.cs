@@ -1,4 +1,7 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 {
