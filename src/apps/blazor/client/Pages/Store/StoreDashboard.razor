@@ -1,0 +1,233 @@
+@page "/store/dashboard"
+@page "/StoreDashboard"
+@using MudBlazor
+
+<PageHeader Title="Store Dashboard" Header="Good Morning !" SubHeader="Here's what's happening with your store today." />
+
+<MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
+    <!-- Top KPI Row -->
+    <MudGrid GutterSize="3" Class="mb-4">
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Class="pa-4" Style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mb-1" Style="color: rgba(255,255,255,0.9);">Total Orders</MudText>
+                        <MudText Typo="Typo.h4" Style="font-weight: 600; color: white;">@_metrics.TotalItems</MudText>
+                        <MudText Typo="Typo.caption" Class="mt-1" Style="color: rgba(255,255,255,0.8);">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small" Class="mr-1" Style="color: rgba(255,255,255,0.8);" />
+                            +2.68% vs last month
+                        </MudText>
+                    </div>
+                    <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Medium" Style="color: white;" />
+                    </MudAvatar>
+                </div>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Class="pa-4" Style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mb-1" Style="color: rgba(255,255,255,0.9);">Orders Completed</MudText>
+                        <MudText Typo="Typo.h4" Style="font-weight: 600; color: white;">@_metrics.PurchaseOrdersCompleted,000</MudText>
+                        <MudText Typo="Typo.caption" Class="mt-1" Style="color: rgba(255,255,255,0.8);">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingDown" Size="Size.Small" Class="mr-1" Style="color: rgba(255,255,255,0.8);" />
+                            -11.05% vs last month
+                        </MudText>
+                    </div>
+                    <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Medium" Style="color: white;" />
+                    </MudAvatar>
+                </div>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Class="pa-4" Style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mb-1" Style="color: rgba(255,255,255,0.9);">Orders Cancelled</MudText>
+                        <MudText Typo="Typo.h4" Style="font-weight: 600; color: white;">@_metrics.LowStockItems,000</MudText>
+                        <MudText Typo="Typo.caption" Class="mt-1" Style="color: rgba(255,255,255,0.8);">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingDown" Size="Size.Small" Class="mr-1" Style="color: rgba(255,255,255,0.8);" />
+                            -5.00% vs last month
+                        </MudText>
+                    </div>
+                    <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudIcon Icon="@Icons.Material.Filled.Cancel" Size="Size.Medium" Style="color: white;" />
+                    </MudAvatar>
+                </div>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" lg="3">
+            <MudCard Class="pa-4" Style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white;">
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mb-1" Style="color: rgba(255,255,255,0.9);">Orders Pending</MudText>
+                        <MudText Typo="Typo.h4" Style="font-weight: 600; color: white;">@_metrics.PurchaseOrdersPending,500</MudText>
+                        <MudText Typo="Typo.caption" Class="mt-1" Style="color: rgba(255,255,255,0.8);">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small" Class="mr-1" Style="color: rgba(255,255,255,0.8);" />
+                            +5% this month
+                        </MudText>
+                    </div>
+                    <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudIcon Icon="@Icons.Material.Filled.HourglassEmpty" Size="Size.Medium" Style="color: white;" />
+                    </MudAvatar>
+                </div>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Main Content Row -->
+    <MudGrid GutterSize="3">
+        <!-- Order Sources Overview (Pie Chart) -->
+        <MudItem xs="12" md="4">
+            <MudCard Class="pa-4" Style="height: 400px;">
+                <div class="d-flex justify-space-between align-center mb-3">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Order Sources Overview</MudText>
+                    <MudSelect T="string" Value="@("Monthly")" Variant="Variant.Outlined" Dense="true" Style="width: 100px;">
+                        <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                        <MudSelectItem Value="@("Weekly")">Weekly</MudSelectItem>
+                    </MudSelect>
+                </div>
+                <div style="height: 200px;" class="d-flex justify-center align-center">
+                    <MudChart ChartType="ChartType.Donut" Labels="@_charts.OrderSourceLabels" Datasets="@_charts.OrderSourceDatasets" />
+                </div>
+                <div class="mt-3">
+                    <MudText Typo="Typo.h4" Align="Align.Center" Style="font-weight: 600;" Color="Color.Default">@_metrics.ExpiringThisWeek,350</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center" Color="Color.Secondary">Total Orders</MudText>
+                </div>
+                <div class="mt-3">
+                    <div class="d-flex justify-space-between align-center mb-1">
+                        <div class="d-flex align-center">
+                            <div style="width: 12px; height: 12px; background: #4285f4; border-radius: 50%; margin-right: 8px;"></div>
+                            <MudText Typo="Typo.body2" Color="Color.Default">Website Orders (40%)</MudText>
+                        </div>
+                        <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">500,000</MudText>
+                    </div>
+                    <div class="d-flex justify-space-between align-center mb-1">
+                        <div class="d-flex align-center">
+                            <div style="width: 12px; height: 12px; background: #34a853; border-radius: 50%; margin-right: 8px;"></div>
+                            <MudText Typo="Typo.body2" Color="Color.Default">Mobile App Orders (35%)</MudText>
+                        </div>
+                        <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">1,000,000</MudText>
+                    </div>
+                    <div class="d-flex justify-space-between align-center">
+                        <div class="d-flex align-center">
+                            <div style="width: 12px; height: 12px; background: #ea4335; border-radius: 50%; margin-right: 8px;"></div>
+                            <MudText Typo="Typo.body2" Color="Color.Default">In-Store Orders (25%)</MudText>
+                        </div>
+                        <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">345,000</MudText>
+                    </div>
+                </div>
+            </MudCard>
+        </MudItem>
+
+        <!-- Stock Level Status -->
+        <MudItem xs="12" md="8">
+            <MudCard Class="pa-4" Style="height: 400px;">
+                <div class="d-flex justify-space-between align-center mb-3">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Stock Level Status</MudText>
+                    <MudDateRangePicker Label="01 July - 31 July, 2024" Variant="Variant.Outlined" Dense="true" ReadOnly="true" />
+                </div>
+                
+                <!-- Stock Summary Cards -->
+                <MudGrid GutterSize="2" Class="mb-3">
+                    <MudItem xs="4">
+                        <MudPaper Class="text-center pa-2" Style="background: var(--mud-palette-action-default-hover); border-radius: 8px;">
+                            <MudIcon Icon="@Icons.Material.Filled.Inventory" Size="Size.Large" Style="color: #4285f4;" />
+                            <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">@_metrics.ExpiringToday,000 Units</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">Current Stock</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudPaper Class="text-center pa-2" Style="background: var(--mud-palette-action-default-hover); border-radius: 8px;">
+                            <MudIcon Icon="@Icons.Material.Filled.Refresh" Size="Size.Large" Style="color: #ea4335;" />
+                            <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">1,500 Units</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">Stock Replenished</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudPaper Class="text-center pa-2" Style="background: var(--mud-palette-action-default-hover); border-radius: 8px;">
+                            <MudIcon Icon="@Icons.Material.Filled.ShoppingBag" Size="Size.Large" Style="color: #34a853;" />
+                            <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">@_metrics.PurchaseOrdersStaged,000 Units</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">Stock Sold</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- Stock Chart -->
+                <div style="height: 200px;">
+                    <MudChart ChartType="ChartType.Bar" Labels="@_charts.StockLabels" Datasets="@_charts.StockDatasets" />
+                </div>
+            </MudCard>
+        </MudItem>
+
+        <!-- Live Tracking & Current Stock Overview -->
+        <MudItem xs="12" md="6">
+            <MudCard Class="pa-4" Style="height: 300px;">
+                <MudText Typo="Typo.h6" Style="font-weight: 600;" Class="mb-3" Color="Color.Default">Live Tracking Delivery</MudText>
+                <MudPaper Class="d-flex align-center justify-center" Style="height: 150px; border-radius: 8px; position: relative;">
+                    <MudText Typo="Typo.body1" Color="Color.Secondary">Map View Placeholder</MudText>
+                    <MudPaper Class="pa-2" Style="position: absolute; bottom: 10px; right: 10px; border-radius: 4px;" Elevation="2">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Tracking ID: #5172-72796</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Default">On the way</MudText>
+                    </MudPaper>
+                </MudPaper>
+                <div class="mt-3">
+                    <div class="d-flex justify-space-between mb-2">
+                        <MudText Typo="Typo.body2" Color="Color.Default">Departure: California</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Default">Shipping Date: 08/07/2024 - 10:30AM</MudText>
+                    </div>
+                    <div class="d-flex justify-space-between">
+                        <MudText Typo="Typo.body2" Color="Color.Default">Destination: New York</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Default">Estimated Time Arrival: 12/07/2024 - 08:30AM</MudText>
+                    </div>
+                </div>
+            </MudCard>
+        </MudItem>
+
+        <!-- Current Stock Overview Table -->
+        <MudItem xs="12" md="6">
+            <MudCard Class="pa-4" Style="height: 300px;">
+                <div class="d-flex justify-space-between align-center mb-3">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Current Stock Overview</MudText>
+                    <div class="d-flex gap-2">
+                        <MudTextField T="string" Placeholder="Search..." Variant="Variant.Outlined" Dense="true"
+                                    Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.FilterList">Filters</MudButton>
+                    </div>
+                </div>
+                
+                <MudTable Items="@_stockItems" Dense="true" Hover="true" Class="mt-2">
+                    <HeaderContent>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">#</MudText></MudTh>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Product</MudText></MudTh>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Current Stock</MudText></MudTh>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Threshold</MudText></MudTh>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Reorder Quantity</MudText></MudTh>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Status</MudText></MudTh>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Supplier</MudText></MudTh>
+                        <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Lead Time</MudText></MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd><MudText Color="Color.Default">@context.Id</MudText></MudTd>
+                        <MudTd><MudText Color="Color.Default">@context.Product</MudText></MudTd>
+                        <MudTd><MudText Color="Color.Default">@context.CurrentStock</MudText></MudTd>
+                        <MudTd><MudText Color="Color.Default">@context.Threshold</MudText></MudTd>
+                        <MudTd><MudText Color="Color.Default">@context.ReorderQuantity</MudText></MudTd>
+                        <MudTd>
+                            <MudChip T="string" Size="Size.Small" 
+                                   Color="@(context.Status == "Needs Reordering" ? Color.Success : Color.Default)"
+                                   Text="@context.Status" />
+                        </MudTd>
+                        <MudTd><MudText Color="Color.Default">@context.Supplier</MudText></MudTd>
+                        <MudTd><MudText Color="Color.Default">@context.LeadTime</MudText></MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>

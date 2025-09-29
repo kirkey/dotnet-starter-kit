@@ -1,5 +1,3 @@
-using Ardalis.Specification;
-
 namespace Accounting.Application.Projects.Specifications;
 
 /// <summary>

@@ -2,7 +2,6 @@ using FSH.Starter.WebApi.Store.Application.GroceryItems.Import;
 using Store.Infrastructure.Endpoints.Categories.v1;
 using Store.Infrastructure.Endpoints.Customers.v1;
 using Store.Infrastructure.Endpoints.CycleCounts.v1;
-using Store.Infrastructure.Endpoints.GroceryItems;
 using Store.Infrastructure.Endpoints.GroceryItems.v1;
 using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 using Store.Infrastructure.Endpoints.PriceLists.v1;
