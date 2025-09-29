@@ -1,5 +1,3 @@
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
