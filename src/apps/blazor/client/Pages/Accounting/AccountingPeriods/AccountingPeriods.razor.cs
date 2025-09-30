@@ -17,8 +17,8 @@ public partial class AccountingPeriods
             fields:
             [
                 new EntityField<AccountingPeriodResponse>(response => response.Name, "Name", "Name"),
-                new EntityField<AccountingPeriodResponse>(response => response.StartDate, "Start Date", "StartDate", typeof(DateTime)),
-                new EntityField<AccountingPeriodResponse>(response => response.EndDate, "End Date", "EndDate", typeof(DateTime)),
+                new EntityField<AccountingPeriodResponse>(response => response.StartDate, "Start Date", "StartDate", typeof(DateOnly)),
+                new EntityField<AccountingPeriodResponse>(response => response.EndDate, "End Date", "EndDate", typeof(DateOnly)),
                 new EntityField<AccountingPeriodResponse>(response => response.IsAdjustmentPeriod, "Adjustment Period", "IsAdjustmentPeriod", typeof(bool)),
                 new EntityField<AccountingPeriodResponse>(response => response.FiscalYear, "Fiscal Year", "FiscalYear"),
                 new EntityField<AccountingPeriodResponse>(response => response.PeriodType, "Period Type", "PeriodType"),

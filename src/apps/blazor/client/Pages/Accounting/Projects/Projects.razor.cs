@@ -24,8 +24,8 @@ public partial class Projects
             fields:
             [
                 new EntityField<ProjectResponse>(r => r.Name, "Name", "Name"),
-                new EntityField<ProjectResponse>(r => r.StartDate, "Start Date", "StartDate", typeof(DateTime)),
-                new EntityField<ProjectResponse>(r => r.EndDate, "End Date", "EndDate", typeof(DateTime)),
+                new EntityField<ProjectResponse>(r => r.StartDate, "Start Date", "StartDate", typeof(DateOnly)),
+                new EntityField<ProjectResponse>(r => r.EndDate, "End Date", "EndDate", typeof(DateOnly)),
                 new EntityField<ProjectResponse>(r => r.BudgetedAmount, "Budgeted Amount", "BudgetedAmount", typeof(decimal)),
                 new EntityField<ProjectResponse>(r => r.ClientName, "Client", "ClientName"),
                 new EntityField<ProjectResponse>(r => r.ProjectManager, "Manager", "ProjectManager"),
