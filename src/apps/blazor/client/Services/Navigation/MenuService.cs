@@ -2,6 +2,10 @@ using FSH.Starter.Blazor.Client.Models.NavigationMenu;
 
 namespace FSH.Starter.Blazor.Client.Services.Navigation;
 
+/// <summary>
+/// Service that provides navigation menu structure and configuration.
+/// Defines the complete menu hierarchy with sections, items, and their properties.
+/// </summary>
 public class MenuService : IMenuService
 {
     private readonly List<MenuSectionModel> _features =
@@ -83,12 +87,12 @@ public class MenuService : IMenuService
                     IsParent = true,
                     MenuItems =
                     [
-                        new MenuSectionSubItemModel { Title = "Chart Of Accounts", Icon = Icons.Material.Filled.List, Href = "/chart-of-accounts" },
-                        new MenuSectionSubItemModel { Title = "Periods", Icon = Icons.Material.Filled.List, Href = "/accounting-periods" },
-                        new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.List, Href = "/accounting-accruals" },
-                        new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.List, Href = "/accounting-budgets" },
-                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.List, Href = "/accounting-projects" },
-                        new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/accounting/payees" }
+                        new MenuSectionSubItemModel { Title = "Chart Of Accounts", Icon = Icons.Material.Filled.List, Href = "/chart-of-accounts", PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Periods", Icon = Icons.Material.Filled.List, Href = "/accounting-periods", PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.List, Href = "/accounting-accruals", PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.List, Href = "/accounting-budgets", PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.List, Href = "/accounting-projects", PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/accounting/payees", PageStatus = PageStatus.InProgress }
                     ]
                 },
                 
@@ -102,8 +106,11 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Dashboard", Icon = Icons.Material.Filled.Dashboard, Href = "/store/dashboard", Action = FshActions.View, Resource = FshResources.Store },
                         new MenuSectionSubItemModel { Title = "Categories", Icon = Icons.Material.Filled.Category, Href = "/store/categories", Action = FshActions.View, Resource = FshResources.Store },
                         new MenuSectionSubItemModel { Title = "Suppliers", Icon = Icons.Material.Filled.Groups, Href = "/store/suppliers", Action = FshActions.View, Resource = FshResources.Store },
-                        new MenuSectionSubItemModel { Title = "Customers", Icon = Icons.Material.Filled.Groups, Href = "/store/customers", Action = FshActions.View, Resource = FshResources.Store },
+                        new MenuSectionSubItemModel { Title = "Customers", Icon = Icons.Material.Filled.Groups, Href = "/store/customers", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Grocery Items", Icon = Icons.Material.Filled.Category, Href = "/store/grocery-items", Action = FshActions.View, Resource = FshResources.Store },
+                        new MenuSectionSubItemModel { Title = "Inventory", Icon = Icons.Material.Filled.Inventory, Href = "/store/inventory", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Sales Reports", Icon = Icons.Material.Filled.Analytics, Href = "/store/sales-reports", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Point of Sale", Icon = Icons.Material.Filled.PointOfSale, Href = "/store/pos", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress }
                     ]
                 },
                 
@@ -116,6 +123,7 @@ public class MenuService : IMenuService
                     [
                         new MenuSectionSubItemModel { Title = "Warehouse", Icon = Icons.Material.Filled.Category, Href = "/warehouse/warehouses", Action = FshActions.View, Resource = FshResources.Warehouse },
                         new MenuSectionSubItemModel { Title = "Locations", Icon = Icons.Material.Filled.Category, Href = "/warehouse/locations", Action = FshActions.View, Resource = FshResources.Warehouse },
+                        new MenuSectionSubItemModel { Title = "Stock Movements", Icon = Icons.Material.Filled.MoveUp, Href = "/warehouse/stock-movements", Action = FshActions.View, Resource = FshResources.Warehouse, PageStatus = PageStatus.InProgress }
                     ]
                 },
 
@@ -126,6 +134,22 @@ public class MenuService : IMenuService
                     Href = "/todos",
                     Action = FshActions.View,
                     Resource = FshResources.Todos
+                },
+                
+                new MenuSectionItemModel
+                {
+                    Title = "Analytics",
+                    Icon = Icons.Material.Filled.Analytics,
+                    Href = "/analytics",
+                    PageStatus = PageStatus.ComingSoon
+                },
+                
+                new MenuSectionItemModel
+                {
+                    Title = "Reports",
+                    Icon = Icons.Material.Filled.Assessment,
+                    Href = "/reports",
+                    PageStatus = PageStatus.InProgress
                 }
             ]
         },
@@ -174,5 +198,8 @@ public class MenuService : IMenuService
         }
     ];
 
+    /// <summary>
+    /// Gets the complete navigation menu structure with all sections and items.
+    /// </summary>
     public IEnumerable<MenuSectionModel> Features => _features;
 }

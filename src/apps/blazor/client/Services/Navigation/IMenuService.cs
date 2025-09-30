@@ -6,4 +6,3 @@ public interface IMenuService
 {
     IEnumerable<MenuSectionModel> Features { get; }
 }
-

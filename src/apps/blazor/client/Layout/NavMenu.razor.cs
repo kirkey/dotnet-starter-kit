@@ -3,6 +3,10 @@
 using Models.NavigationMenu;
 using Services.Navigation;
 
+/// <summary>
+/// Navigation menu component that renders the application's main navigation structure.
+/// Handles menu filtering based on user roles and permissions, and provides special handling for ComingSoon items.
+/// </summary>
 public partial class NavMenu
 {
     [CascadingParameter]
@@ -14,6 +18,9 @@ public partial class NavMenu
 
     private List<MenuSectionModel> _sections = new();
 
+    /// <summary>
+    /// Initializes the navigation menu by filtering sections and items based on user roles and permissions.
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         var user = (await AuthState).User;
@@ -39,7 +46,7 @@ public partial class NavMenu
             {
                 if (!HasAnyRole(item.Roles)) continue;
 
-                if (item.IsParent && item.MenuItems is not null)
+                if (item is { IsParent: true, MenuItems: not null })
                 {
                     var filteredSubs = new List<MenuSectionSubItemModel>();
                     foreach (var sub in item.MenuItems)
@@ -56,7 +63,8 @@ public partial class NavMenu
                             Title = item.Title,
                             Icon = item.Icon,
                             IsParent = true,
-                            MenuItems = filteredSubs
+                            MenuItems = filteredSubs,
+                            PageStatus = item.PageStatus
                         });
                     }
                 }
@@ -74,5 +82,27 @@ public partial class NavMenu
         }
 
         _sections = result;
+    }
+
+    /// <summary>
+    /// Determines if a menu item should be disabled based on its PageStatus.
+    /// InProgress items remain accessible to allow users to test new features.
+    /// </summary>
+    /// <param name="item">The menu item to check.</param>
+    /// <returns>True if the item should be disabled, false otherwise.</returns>
+    private bool IsItemDisabled(MenuSectionItemModel item)
+    {
+        return item.PageStatus == PageStatus.ComingSoon;
+    }
+
+    /// <summary>
+    /// Determines if a sub-menu item should be disabled based on its PageStatus.
+    /// InProgress items remain accessible to allow users to test new features.
+    /// </summary>
+    /// <param name="subItem">The sub-menu item to check.</param>
+    /// <returns>True if the sub-item should be disabled, false otherwise.</returns>
+    private bool IsSubItemDisabled(MenuSectionSubItemModel subItem)
+    {
+        return subItem.PageStatus == PageStatus.ComingSoon;
     }
 }

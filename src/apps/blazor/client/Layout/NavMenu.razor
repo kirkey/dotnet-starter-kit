@@ -1,4 +1,5 @@
-﻿<PersonCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text); margin-bottom:0px!important" />
+﻿@using FSH.Starter.Blazor.Client.Models.NavigationMenu
+<PersonCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text); margin-bottom:0px!important" />
 <MudNavMenu>
     @foreach (var sec in _sections)
     {
@@ -9,19 +10,151 @@
 
         @foreach (var item in sec.SectionItems)
         {
-            if (item.IsParent && item.MenuItems is not null && item.MenuItems.Any())
+            if (item is { IsParent: true, MenuItems: not null } && item.MenuItems.Any())
             {
-                <MudNavGroup Title="@item.Title" Icon="@item.Icon">
+                <MudNavGroup Title="@item.Title" Icon="@item.Icon" Disabled="@IsItemDisabled(item)">
                     @foreach (var sub in item.MenuItems)
                     {
-                        <MudNavLink Href="@sub.Href" Icon="@sub.Icon" Class="fsh-nav-child" Disabled="@sub.Disabled" Target="@sub.Target">@sub.Title</MudNavLink>
+                        <MudNavLink Href="@sub.Href" Icon="@sub.Icon" Class="fsh-nav-child" Disabled="@(sub.Disabled || IsSubItemDisabled(sub))" Target="@sub.Target">
+                            <MudStack>
+                                <MudStack Row="true">
+                                    @sub.Title
+                                    @*if (sub.PageStatus == PageStatus.InProgress)
+                                    {
+                                        <MudIcon Class="in-progress-badge" Icon="@Icons.Material.Filled.Science" Size="Size.Small"  />
+                                    }*@
+                                </MudStack>
+                                @if (sub.PageStatus == PageStatus.ComingSoon)
+                                {
+                                    <div class="coming-soon-caption sub-item-caption">
+                                        <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Small" Class="coming-soon-icon" />
+                                        <span class="coming-soon-text">Coming Soon</span>
+                                    </div>
+                                }
+                                @if (sub.PageStatus == PageStatus.InProgress)
+                                {
+                                    <div class="in-progress-caption sub-item-caption">
+                                        <MudIcon Icon="@Icons.Material.Filled.BugReport" Size="Size.Small" Class="in-progress-icon" Title="Feature in development - may contain bugs" />
+                                        <span class="in-progress-text">In Development</span>
+                                    </div>
+                                }
+                            </MudStack>
+                        </MudNavLink>
                     }
                 </MudNavGroup>
             }
             else if (!item.IsParent && !string.IsNullOrWhiteSpace(item.Href))
             {
-                <MudNavLink Href="@item.Href" Icon="@item.Icon" Disabled="@item.Disabled" Target="@item.Target">@item.Title</MudNavLink>
+                <div class="nav-item-container">
+                    <MudNavLink Href="@item.Href" Icon="@item.Icon" Disabled="@(item.Disabled || IsItemDisabled(item))" Target="@item.Target">
+                        <MudStack>
+                            <MudStack Row="true">
+                                @item.Title
+                                @*if (item.PageStatus == PageStatus.InProgress)
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.Science" Size="Size.Small" Class="in-progress-badge" />
+                                }*@
+                            </MudStack>
+                            @if (item.PageStatus == PageStatus.ComingSoon)
+                            {
+                                <div class="coming-soon-caption sub-item-caption">
+                                    <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Small" Class="coming-soon-icon" />
+                                    <span class="coming-soon-text">Coming Soon</span>
+                                </div>
+                            }
+                            @if (item.PageStatus == PageStatus.InProgress)
+                            {
+                                <div class="in-progress-caption sub-item-caption">
+                                    <MudIcon Icon="@Icons.Material.Filled.BugReport" Size="Size.Small" Class="in-progress-icon" Title="Feature in development - may contain bugs" />
+                                    <span class="in-progress-text">In Development</span>
+                                </div>
+                            }
+                        </MudStack>
+                    </MudNavLink>
+                </div>
             }
         }
     }
 </MudNavMenu>
+
+<style>
+    .nav-item-container {
+        position: relative;
+    }
+
+    .coming-soon-caption {
+        display: flex;
+        align-items: center;
+        margin-top: -4px;
+        margin-bottom: 8px;
+        font-size: 0.75rem;
+        color: var(--mud-palette-text-secondary);
+        opacity: 0.7;
+    }
+
+    .coming-soon-caption.sub-item-caption {
+        margin-top: -16px;
+        margin-left: 0;
+    }
+
+    .coming-soon-icon {
+        margin-right: 4px;
+        font-size: 0.875rem !important;
+    }
+
+    .coming-soon-text {
+        font-style: italic;
+        font-weight: 400;
+    }
+
+    .in-progress-caption {
+        display: flex;
+        align-items: center;
+        margin-top: -8px;
+        margin-bottom: 8px;
+        font-size: 0.75rem;
+        color: #ff9800;
+        opacity: 0.8;
+    }
+
+    .in-progress-caption.sub-item-caption {
+        margin-top: -16px;
+        margin-left: 0;
+    }
+
+    .in-progress-icon {
+        margin-right: 2px;
+        font-size: 0.875rem !important;
+        color: #ff9800;
+    }
+
+    .in-progress-text {
+        font-style: italic;
+        font-weight: 400;
+        color: #ff9800;
+    }
+
+    .in-progress-badge {
+        margin-left: 8px;
+        color: #ff9800 !important;
+        font-size: 0.875rem !important;
+    }
+
+    /*.fsh-nav-child .coming-soon-caption {*/
+    /*    margin-left: 72px;*/
+    /*}*/
+    
+    /*.fsh-nav-child .in-progress-caption {*/
+    /*    margin-left: 72px;*/
+    /*}*/
+
+    .mud-nav-link.mud-disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .mud-nav-group.mud-disabled > .mud-nav-group-header {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+</style>
