@@ -22,9 +22,9 @@ public sealed class ImportGroceryItemsCommandValidator : AbstractValidator<Impor
             .NotEmpty().WithMessage("File data (base64) is required.")
             .Must(IsBase64).WithMessage("File data must be a valid base64 string.");
 
-        RuleFor(x => x.File.Size)
+        RuleFor(x => x.File.Length)
             .LessThanOrEqualTo(10 * 1024 * 1024) // 10 MB safety limit
-            .When(x => x.File.Size.HasValue)
+            .When(x => x.File.Length.HasValue)
             .WithMessage("File size exceeds maximum allowed (10 MB).");
     }
 

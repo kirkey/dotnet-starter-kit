@@ -6,4 +6,8 @@ public record PayeeCreated(
 
 public record PayeeUpdated(DefaultIdType Id, Accounting.Domain.Payee Payee) : DomainEvent;
 
+public record PayeeActivated(DefaultIdType Id, Accounting.Domain.Payee Payee) : DomainEvent;
+
+public record PayeeDeactivated(DefaultIdType Id, Accounting.Domain.Payee Payee) : DomainEvent;
+
 public record PayeeDeleted(DefaultIdType Id) : DomainEvent;

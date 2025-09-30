@@ -17,6 +17,9 @@ using Accounting.Infrastructure.Endpoints.ProjectCosting;
 using Accounting.Infrastructure.Endpoints.Projects.v1;
 using Accounting.Infrastructure.Endpoints.Vendors.v1;
 using Accounting.Infrastructure.Persistence;
+using Accounting.Infrastructure.Import;
+using Accounting.Application.ChartOfAccounts.Import;
+using Accounting.Application.Payees.Import;
 using Carter;
 using FSH.Framework.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +39,8 @@ public static class AccountingModule
             account.MapChartOfAccountSearchEndpoint();
             account.MapChartOfAccountUpdateEndpoint();
             account.MapChartOfAccountDeleteEndpoint();
+            account.MapChartOfAccountImportEndpoint();
+            account.MapChartOfAccountExportEndpoint();
             
             var payee = app.MapGroup("payees").WithTags("payees");
             payee.MapPayeeCreateEndpoint();
@@ -43,6 +48,8 @@ public static class AccountingModule
             payee.MapPayeeSearchEndpoint();
             payee.MapPayeeUpdateEndpoint();
             payee.MapPayeeDeleteEndpoint();
+            payee.MapPayeeImportEndpoint();
+            payee.MapPayeeExportEndpoint();
             
             var vendor = app.MapGroup("vendors").WithTags("vendors");
             vendor.MapVendorCreateEndpoint();
@@ -196,6 +203,10 @@ public static class AccountingModule
         // Billing service
         builder.Services.AddScoped<Application.Billing.IBillingService, Application.Billing.BillingService>();
 
+        // Register import parsers for Chart of Accounts and Payees
+        builder.Services.AddScoped<IChartOfAccountImportParser, ChartOfAccountImportParser>();
+        builder.Services.AddScoped<IPayeeImportParser, PayeeImportParser>();
+
         // Register with the "accounting" key (for handlers that use [FromKeyedServices("accounting")])
         builder.Services.AddKeyedScoped<IRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting");
@@ -252,6 +263,9 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<BudgetDetail>, AccountingRepository<BudgetDetail>>("accounting:budgetdetails");
         builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
         builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
+        // Add missing registration for the key expected by import/export handlers
+        builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:chartofaccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:chartofaccounts");
         builder.Services.AddKeyedScoped<IRepository<Consumption>, AccountingRepository<Consumption>>("accounting:Consumption");
         builder.Services.AddKeyedScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>("accounting:Consumption");
         builder.Services.AddKeyedScoped<IRepository<DepreciationMethod>, AccountingRepository<DepreciationMethod>>("accounting:depreciationmethods");

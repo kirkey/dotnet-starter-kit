@@ -1,4 +1,7 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
@@ -525,6 +528,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     ExpenseAccountCode = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
                     ExpenseAccountName = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
                     Tin = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     Name = table.Column<string>(type: "VARCHAR(1024)", maxLength: 1024, nullable: false),
                     Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
                     Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
@@ -985,12 +989,30 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
+                    EntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Category = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     AccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     JournalEntryId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Category = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
+                    CostCenter = table.Column<string>(type: "text", nullable: true),
+                    WorkOrderNumber = table.Column<string>(type: "text", nullable: true),
+                    IsBillable = table.Column<bool>(type: "boolean", nullable: false),
+                    IsApproved = table.Column<bool>(type: "boolean", nullable: false),
+                    Vendor = table.Column<string>(type: "text", nullable: true),
+                    InvoiceNumber = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 512, nullable: false),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
                 },
                 constraints: table =>
                 {

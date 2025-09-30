@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20250923034317_Initial")]
+    [Migration("20250930081244_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1618,6 +1618,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
 
@@ -1970,19 +1973,74 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<string>("CostCenter")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("InvoiceNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsBillable")
+                        .HasColumnType("boolean");
 
                     b.Property<Guid?>("JournalEntryId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("VARCHAR(2048)");
+
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Vendor")
+                        .HasColumnType("text");
+
+                    b.Property<string>("WorkOrderNumber")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

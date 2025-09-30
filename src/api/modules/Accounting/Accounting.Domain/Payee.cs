@@ -45,7 +45,7 @@ public class Payee : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Unique code identifying the payee.
     /// </summary>
-    public string PayeeCode { get; private set; }
+    public string PayeeCode { get; private set; } = string.Empty;
 
     /// <summary>
     /// Mailing or physical address.
@@ -66,6 +66,12 @@ public class Payee : AuditableEntity, IAggregateRoot
     /// Taxpayer identification number.
     /// </summary>
     public string? Tin { get; private set; }
+
+    /// <summary>
+    /// Whether the payee is active and can be used for payments. Default: true.
+    /// Used to retire payees without deleting historical data.
+    /// </summary>
+    public bool IsActive { get; private set; } = true;
 
     private Payee()
     {
@@ -146,6 +152,41 @@ public class Payee : AuditableEntity, IAggregateRoot
             QueueDomainEvent(new PayeeUpdated(Id, this));
         }
 
+        return this;
+    }
+
+    /// <summary>
+    /// Activates the payee, allowing it to be used for payments.
+    /// Raises a PayeeActivated domain event if the payee was previously inactive.
+    /// </summary>
+    /// <returns>The updated payee instance</returns>
+    public Payee Activate()
+    {
+        if (!IsActive)
+        {
+            IsActive = true;
+            QueueDomainEvent(new PayeeActivated(Id, this));
+        }
+        return this;
+    }
+
+    /// <summary>
+    /// Deactivates the payee, preventing it from being used for new payments.
+    /// Historical data and existing references remain intact.
+    /// Raises a PayeeDeactivated domain event if the payee was previously active.
+    /// </summary>
+    /// <returns>The updated payee instance</returns>
+    /// <remarks>
+    /// Business rule: Cannot deactivate payees with pending payments or recent transaction history.
+    /// This validation should be implemented at the application layer.
+    /// </remarks>
+    public Payee Deactivate()
+    {
+        if (IsActive)
+        {
+            IsActive = false;
+            QueueDomainEvent(new PayeeDeactivated(Id, this));
+        }
         return this;
     }
 }
