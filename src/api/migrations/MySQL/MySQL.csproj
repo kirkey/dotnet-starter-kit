@@ -12,8 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Store.Application\Store.Application.csproj" />
-      <ProjectReference Include="..\..\..\Store.Domain\Store.Domain.csproj" />
+      <ProjectReference Include="..\..\modules\Store\Store.Application\Store.Application.csproj" />
+      <ProjectReference Include="..\..\modules\Store\Store.Domain\Store.Domain.csproj" />
       <ProjectReference Include="..\..\framework\Core\Core.csproj" />
       <ProjectReference Include="..\..\framework\Infrastructure\Infrastructure.csproj" />
       <ProjectReference Include="..\..\modules\Accounting\Accounting.Application\Accounting.Application.csproj" />

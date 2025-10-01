@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\api\framework\Core\Core.csproj" />
-      <ProjectReference Include="..\api\framework\Infrastructure\Infrastructure.csproj" />
-      <ProjectReference Include="..\Shared\Shared.csproj" />
+      <ProjectReference Include="..\..\..\framework\Core\Core.csproj" />
+      <ProjectReference Include="..\..\..\framework\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\..\Shared\Shared.csproj" />
       <ProjectReference Include="..\Store.Application\Store.Application.csproj" />
       <ProjectReference Include="..\Store.Domain\Store.Domain.csproj" />
       <!-- Reference Catalog.Infrastructure so we can register catalog repositories/services -->
-      <ProjectReference Include="..\api\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

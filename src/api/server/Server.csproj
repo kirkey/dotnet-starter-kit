@@ -16,9 +16,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Store.Application\Store.Application.csproj" />
-    <ProjectReference Include="..\..\Store.Domain\Store.Domain.csproj" />
-    <ProjectReference Include="..\..\Store.Infrastructure\Store.Infrastructure.csproj" />
+    <ProjectReference Include="..\modules\Store\Store.Application\Store.Application.csproj" />
+    <ProjectReference Include="..\modules\Store\Store.Domain\Store.Domain.csproj" />
+    <ProjectReference Include="..\modules\Store\Store.Infrastructure\Store.Infrastructure.csproj" />
     <ProjectReference Include="..\framework\Core\Core.csproj" />
     <ProjectReference Include="..\framework\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\migrations\MSSQL\MSSQL.csproj" />
