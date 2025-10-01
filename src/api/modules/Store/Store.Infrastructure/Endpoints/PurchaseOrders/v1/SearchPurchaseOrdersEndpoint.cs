@@ -23,7 +23,7 @@ public static class SearchPurchaseOrdersEndpoint
         .WithName(nameof(SearchPurchaseOrdersEndpoint))
         .WithSummary("Search purchase orders")
         .WithDescription("Search and filter purchase orders with pagination support")
-        .Produces<PagedList<GetPurchaseOrderResponse>>()
+        .Produces<PagedList<PurchaseOrderResponse>>()
         .RequirePermission("Permissions.Store.View")
         .MapToApiVersion(1);
     }

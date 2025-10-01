@@ -1,0 +1,162 @@
+@page "/store/purchase-orders"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Purchase Orders" Header="Purchase Orders" SubHeader="Manage purchase orders and supplier procurement." />
+
+<EntityTable @ref="_table" TEntity="PurchaseOrderResponse" TId="DefaultIdType" TRequest="PurchaseOrderViewModel" Context="@Context">
+    
+    <AdvancedSearchContent>
+        <MudSelect T="DefaultIdType?" Label="Supplier" @bind-Value="SearchSupplierId">
+            <MudSelectItem T="DefaultIdType?" Value="null">All Suppliers</MudSelectItem>
+            @foreach (var supplier in _suppliers)
+            {
+                <MudSelectItem T="DefaultIdType?" Value="supplier.Id">@supplier.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Draft")">Draft</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Submitted")">Submitted</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Approved")">Approved</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Sent")">Sent</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Received")">Received</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="From Date" @bind-Date="SearchFromDate" />
+        <MudDatePicker Label="To Date" @bind-Date="SearchToDate" />
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ViewOrderDetails(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
+            </div>
+        </MudMenuItem>
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => SubmitOrder(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-2" />
+                    <span>Submit for Approval</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Submitted")
+        {
+            <MudMenuItem OnClick="@(() => ApproveOrder(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
+                    <span>Approve Order</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Approved")
+        {
+            <MudMenuItem OnClick="@(() => SendOrder(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.LocalShipping" Class="mr-2" />
+                    <span>Send to Supplier</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Sent")
+        {
+            <MudMenuItem OnClick="@(() => ReceiveOrder(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Inbox" Class="mr-2" />
+                    <span>Mark as Received</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Draft" || context.Status == "Submitted" || context.Status == "Approved")
+        {
+            <MudMenuItem OnClick="@(() => CancelOrder(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+                    <span>Cancel Order</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+    
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Order Id" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Order Number" For="@(() => context.OrderNumber)" @bind-Value="context.OrderNumber" Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" md="6">
+            <AutocompleteSupplier @bind-Value="context.SupplierId"
+                                 For="@(() => context.SupplierId)"
+                                 Label="Supplier"
+                                 Variant="Variant.Filled"
+                                 Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudDatePicker Label="Order Date" @bind-Date="context.OrderDate" Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" md="6">
+            <MudDatePicker Label="Expected Delivery Date" @bind-Date="context.ExpectedDeliveryDate" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudDatePicker Label="Actual Delivery Date" @bind-Date="context.ActualDeliveryDate" ReadOnly />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudNumericField T="decimal" @bind-Value="context.TotalAmount" Label="Total Amount" ReadOnly Immediate="true" Format="N2" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudNumericField T="decimal" @bind-Value="context.TaxAmount" Label="Tax Amount" ReadOnly Immediate="true" Format="N2" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudNumericField T="decimal" @bind-Value="context.DiscountAmount" Label="Discount Amount" ReadOnly Immediate="true" Format="N2" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudNumericField T="decimal" @bind-Value="context.NetAmount" Label="Net Amount" ReadOnly Immediate="true" Format="N2" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="12">
+            <MudTextField Label="Delivery Address" For="@(() => context.DeliveryAddress)" @bind-Value="context.DeliveryAddress" Lines="2" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Contact Person" For="@(() => context.ContactPerson)" @bind-Value="context.ContactPerson" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Contact Phone" For="@(() => context.ContactPhone)" @bind-Value="context.ContactPhone" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudSwitch T="bool" @bind-Checked="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" md="12">
+            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate && context.Id != default)
+        {
+            <MudItem xs="12">
+                <MudDivider Class="my-4" />
+                <MudText Typo="Typo.h6" Class="mb-3">Order Items</MudText>
+                <PurchaseOrderItems PurchaseOrderId="@context.Id" />
+            </MudItem>
+        }
+    </EditFormContent>
+
+</EntityTable>

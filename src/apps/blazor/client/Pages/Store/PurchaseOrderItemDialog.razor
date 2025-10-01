@@ -1,0 +1,133 @@
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <AutocompleteGroceryItem @bind-Value="_model.GroceryItemId"
+                                        Label="Grocery Item"
+                                        Variant="Variant.Filled"
+                                        Required="true"
+                                        Disabled="@IsEdit" />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="_model.Quantity"
+                                Label="Quantity"
+                                Min="1"
+                                Required="true"
+                                Immediate="true" />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="_model.UnitPrice"
+                                Label="Unit Price"
+                                Min="0"
+                                Format="N2"
+                                Required="true"
+                                Immediate="true" />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="_model.DiscountPercentage"
+                                Label="Discount %"
+                                Min="0"
+                                Max="100"
+                                Format="N2"
+                                Immediate="true" />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudTextField Value="@CalculatedTotal"
+                            Label="Total Price"
+                            ReadOnly="true"
+                            Variant="Variant.Filled" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">@(IsEdit ? "Update" : "Add")</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Inject] private IClient ApiClient { get; set; } = default!;
+
+    [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
+    [Parameter] public PurchaseOrderItemModel? Item { get; set; }
+    [Parameter] public bool IsEdit { get; set; }
+
+    private PurchaseOrderItemModel _model = new();
+
+    private string CalculatedTotal => _model.Total.ToString("C2");
+
+    protected override void OnInitialized()
+    {
+        if (IsEdit && Item != null)
+        {
+            // Copy properties from item to model
+            _model.Id = Item.Id;
+            _model.GroceryItemId = Item.GroceryItemId;
+            _model.GroceryItemName = Item.GroceryItemName;
+            _model.GroceryItemSku = Item.GroceryItemSku;
+            _model.Quantity = Item.Quantity;
+            _model.Unit = Item.Unit;
+            _model.UnitPrice = Item.UnitPrice;
+            _model.DiscountPercentage = Item.DiscountPercentage;
+        }
+        else
+        {
+            _model = new PurchaseOrderItemModel();
+        }
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        if (_model.GroceryItemId == default)
+        {
+            Toast.Add("Please select a grocery item", Severity.Warning);
+            return;
+        }
+
+        if (_model.Quantity <= 0)
+        {
+            Toast.Add("Quantity must be greater than 0", Severity.Warning);
+            return;
+        }
+
+        if (_model.UnitPrice < 0)
+        {
+            Toast.Add("Unit price cannot be negative", Severity.Warning);
+            return;
+        }
+
+        // TODO: Uncomment when API client is regenerated
+        // if (IsEdit)
+        // {
+        //     var command = new UpdatePurchaseOrderItemQuantityCommand(_model.Id, (int)_model.Quantity);
+        //     await ApiClient.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, _model.Id, command).ConfigureAwait(false);
+        //     Toast.Add("Order item updated successfully", Severity.Success);
+        // }
+        // else
+        // {
+        //     var command = new AddPurchaseOrderItemCommand(
+        //         PurchaseOrderId,
+        //         _model.GroceryItemId,
+        //         (int)_model.Quantity,
+        //         _model.UnitPrice,
+        //         _model.DiscountPercentage / 100);
+        //     await ApiClient.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
+        //     Toast.Add("Order item added successfully", Severity.Success);
+        // }
+
+        Toast.Add(IsEdit ? "Order item updated (TODO: implement API call)" : "Order item added (TODO: implement API call)", Severity.Success);
+        MudDialog.Close(DialogResult.Ok(_model));
+    }
+}

@@ -1,0 +1,126 @@
+@page "/store/purchase-orders/items/{PurchaseOrderId:guid}"
+
+<MudTable Items="@_items" Hover="true" Dense="true" Bordered="true" Striped="true" Loading="@_loading">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Order Items</MudText>
+        <MudSpacer />
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" OnClick="@OpenAddItemDialog">
+            Add Item
+        </MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Grocery Item</MudTh>
+        <MudTh>Quantity</MudTh>
+        <MudTh>Unit Price</MudTh>
+        <MudTh>Discount</MudTh>
+        <MudTh>Total Price</MudTh>
+        <MudTh>Received Qty</MudTh>
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Grocery Item">@context.GroceryItemName (@context.GroceryItemSku)</MudTd>
+        <MudTd DataLabel="Quantity">@context.Quantity @context.Unit</MudTd>
+        <MudTd DataLabel="Unit Price">@context.UnitPrice.ToString("C2")</MudTd>
+        <MudTd DataLabel="Discount">@context.DiscountPercentage%</MudTd>
+        <MudTd DataLabel="Total Price">@context.Total.ToString("C2")</MudTd>
+        <MudTd DataLabel="Received Qty">N/A</MudTd>
+        <MudTd DataLabel="Actions">
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => OpenEditItemDialog(context))" />
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => RemoveItem(context.Id))" />
+        </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No items added yet. Click "Add Item" to start.</MudText>
+    </NoRecordsContent>
+</MudTable>
+
+@code {
+    [Inject] private IClient ApiClient { get; set; } = default!;
+
+    [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
+
+    private bool _loading;
+    private List<PurchaseOrderItemModel> _items = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (PurchaseOrderId != default)
+        {
+            await LoadItemsAsync();
+        }
+    }
+
+    private async Task LoadItemsAsync()
+    {
+        _loading = true;
+        try
+        {
+            var response = await ApiClient.GetPurchaseOrderEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
+            // Note: This assumes your API returns items with the purchase order
+            // You may need to adjust based on your actual API structure
+            _items = new List<PurchaseOrderItemModel>();
+            // TODO: Map items from response
+        }
+        catch (Exception ex)
+        {
+            Toast.Add($"Failed to load order items: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task OpenAddItemDialog()
+    {
+        var parameters = new DialogParameters
+        {
+            { "PurchaseOrderId", PurchaseOrderId },
+            { "IsEdit", false }
+        };
+
+        var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Add Order Item", parameters);
+        if (dialog == null) return;
+        var result = await dialog.Result;
+
+        if (result != null && !result.Canceled)
+        {
+            await LoadItemsAsync();
+        }
+    }
+
+    private async Task OpenEditItemDialog(PurchaseOrderItemModel item)
+    {
+        var parameters = new DialogParameters
+        {
+            { "PurchaseOrderId", PurchaseOrderId },
+            { "Item", item },
+            { "IsEdit", true }
+        };
+
+        var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Edit Order Item", parameters);
+        if (dialog == null) return;
+        var result = await dialog.Result;
+
+        if (result != null && !result.Canceled)
+        {
+            await LoadItemsAsync();
+        }
+    }
+
+    private async Task RemoveItem(DefaultIdType itemId)
+    {
+        var confirmed = await DialogService.ShowMessageBox(
+            "Remove Item",
+            "Are you sure you want to remove this item from the order?",
+            yesText: "Remove", cancelText: "Cancel");
+
+        if (confirmed == true)
+        {
+            _items.RemoveAll(x => x.Id == itemId);
+            Toast.Add("Item removed from the order", Severity.Success);
+            // TODO: Call API to remove item when backend is ready
+            // await ApiClient.RemovePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, itemId).ConfigureAwait(false);
+        }
+    }
+}

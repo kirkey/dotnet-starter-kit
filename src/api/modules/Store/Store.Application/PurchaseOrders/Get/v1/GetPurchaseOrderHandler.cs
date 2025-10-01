@@ -5,9 +5,9 @@ namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Get.v1;
 public sealed class GetPurchaseOrderHandler(
     ILogger<GetPurchaseOrderHandler> logger,
     [FromKeyedServices("store:purchase-orders")] IRepository<PurchaseOrder> repository)
-    : IRequestHandler<GetPurchaseOrderQuery, GetPurchaseOrderResponse>
+    : IRequestHandler<GetPurchaseOrderQuery, PurchaseOrderResponse>
 {
-    public async Task<GetPurchaseOrderResponse> Handle(GetPurchaseOrderQuery request, CancellationToken cancellationToken)
+    public async Task<PurchaseOrderResponse> Handle(GetPurchaseOrderQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -15,6 +15,6 @@ public sealed class GetPurchaseOrderHandler(
         var po = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
         _ = po ?? throw new PurchaseOrderNotFoundException(request.Id);
 
-        return po.Adapt<GetPurchaseOrderResponse>();
+        return po.Adapt<PurchaseOrderResponse>();
     }
 }

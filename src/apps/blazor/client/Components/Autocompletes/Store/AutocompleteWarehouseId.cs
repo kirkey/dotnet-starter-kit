@@ -8,7 +8,7 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClient, DefaultIdType>
 {
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
-    private Dictionary<Guid, WarehouseResponse> _cache = [];
+    private Dictionary<DefaultIdType, WarehouseResponse> _cache = [];
 
     [Inject] protected NavigationManager Navigation { get; set; } = default!;
 

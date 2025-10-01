@@ -10,13 +10,13 @@ namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders;
 public static class PurchaseOrderAdaptExtensions
 {
     /// <summary>
-    /// Adapts a PurchaseOrder domain entity to GetPurchaseOrderResponse DTO.
+    /// Adapts a PurchaseOrder domain entity to PurchaseOrderResponse DTO.
     /// </summary>
     /// <param name="purchaseOrder">The purchase order domain entity</param>
-    /// <returns>Mapped GetPurchaseOrderResponse DTO</returns>
-    public static GetPurchaseOrderResponse Adapt(this PurchaseOrder purchaseOrder)
+    /// <returns>Mapped PurchaseOrderResponse DTO</returns>
+    public static PurchaseOrderResponse Adapt(this PurchaseOrder purchaseOrder)
     {
-        return new GetPurchaseOrderResponse(
+        return new PurchaseOrderResponse(
             purchaseOrder.Id,
             purchaseOrder.OrderNumber,
             purchaseOrder.SupplierId,
