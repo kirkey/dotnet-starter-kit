@@ -3,6 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 public class PurchaseOrderItemModel
 {
     public DefaultIdType Id { get; set; } = DefaultIdType.NewGuid();
+    public DefaultIdType PurchaseOrderId { get; set; }
     public DefaultIdType GroceryItemId { get; set; }
     public string GroceryItemName { get; set; } = string.Empty;
     public string GroceryItemSku { get; set; } = string.Empty;

@@ -36,11 +36,20 @@
 
 @code {
     [Inject] private IClient ApiClient { get; set; } = default!;
+    [Inject] private HttpClient HttpClient { get; set; } = default!;
 
     [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
 
     private bool _loading;
     private List<PurchaseOrderItemModel> _items = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (PurchaseOrderId != default)
+        {
+            await LoadItemsAsync();
+        }
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -55,26 +64,62 @@
         _loading = true;
         try
         {
-            var response = await ApiClient.GetPurchaseOrderEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
-            // Note: The current API response doesn't include items
-            // For now, we'll maintain a local list that gets updated through dialog operations
-            // TODO: Update backend API to include items in the response or create a separate endpoint
-            // _items will be populated when items are added/edited through the dialog
+            // TODO: Replace with ApiClient.GetPurchaseOrderItemsEndpointAsync once the API client is regenerated
+            // For now, making a direct HTTP call to the new endpoint
+            var response = await HttpClient.GetAsync($"api/v1/purchase-orders/{PurchaseOrderId}/items").ConfigureAwait(false);
             
-            // Clear the items list if this is a fresh load
-            if (_items.Count == 0)
+            if (response.IsSuccessStatusCode)
             {
-                Toast.Add("Order loaded. Add items using the 'Add Item' button.", Severity.Info);
+                var items = await response.Content.ReadFromJsonAsync<List<PurchaseOrderItemResponse>>().ConfigureAwait(false);
+                
+                if (items != null)
+                {
+                    // Map the response to PurchaseOrderItemModel
+                    _items = items.Select(item => new PurchaseOrderItemModel
+                    {
+                        Id = item.Id,
+                        PurchaseOrderId = item.PurchaseOrderId,
+                        GroceryItemId = item.GroceryItemId,
+                        GroceryItemName = item.GroceryItemName,
+                        GroceryItemSku = item.GroceryItemSku,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPrice,
+                        DiscountPercentage = (item.UnitPrice > 0 && item.Quantity > 0) 
+                            ? (item.DiscountAmount / (item.Quantity * item.UnitPrice)) * 100 
+                            : 0,
+                        Unit = "" // Not available in the response yet
+                    }).ToList();
+                }
+            }
+            else
+            {
+                Toast.Add($"Failed to load order items: {response.ReasonPhrase}", Severity.Error);
             }
         }
         catch (Exception ex)
         {
-            Toast.Add($"Failed to load order: {ex.Message}", Severity.Error);
+            Toast.Add($"Failed to load order items: {ex.Message}", Severity.Error);
         }
         finally
         {
             _loading = false;
         }
+    }
+
+    // Helper class for deserializing the API response
+    private class PurchaseOrderItemResponse
+    {
+        public DefaultIdType Id { get; set; }
+        public DefaultIdType PurchaseOrderId { get; set; }
+        public DefaultIdType GroceryItemId { get; set; }
+        public string GroceryItemName { get; set; } = string.Empty;
+        public string GroceryItemSku { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int ReceivedQuantity { get; set; }
+        public string? Notes { get; set; }
     }
 
     private async Task OpenAddItemDialog()
@@ -89,11 +134,11 @@
         if (dialog == null) return;
         var result = await dialog.Result;
 
-        if (result is { Canceled: false, Data: PurchaseOrderItemModel model })
+        if (result is { Canceled: false })
         {
-            // Add the new item to the local list
-            _items.Add(model);
-            StateHasChanged();
+            // Reload the items list from the server
+            await LoadItemsAsync();
+            Toast.Add("Item added successfully", Severity.Success);
         }
     }
 
@@ -110,17 +155,11 @@
         if (dialog == null) return;
         var result = await dialog.Result;
 
-        if (result is { Canceled: false, Data: PurchaseOrderItemModel model })
+        if (result is { Canceled: false })
         {
-            // Update the item in the local list
-            var existingItem = _items.FirstOrDefault(x => x.Id == item.Id);
-            if (existingItem != null)
-            {
-                existingItem.Quantity = model.Quantity;
-                existingItem.UnitPrice = model.UnitPrice;
-                existingItem.DiscountPercentage = model.DiscountPercentage;
-                StateHasChanged();
-            }
+            // Reload the items list from the server
+            await LoadItemsAsync();
+            Toast.Add("Item updated successfully", Severity.Success);
         }
     }
 
@@ -139,8 +178,9 @@
                 if (item != null)
                 {
                     await ApiClient.RemovePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, item.GroceryItemId).ConfigureAwait(false);
-                    _items.RemoveAll(x => x.Id == itemId);
-                    Toast.Add("Item removed from the order", Severity.Success);
+                    // Reload the items list from the server
+                    await LoadItemsAsync();
+                    Toast.Add("Item removed successfully", Severity.Success);
                 }
             }
             catch (Exception ex)

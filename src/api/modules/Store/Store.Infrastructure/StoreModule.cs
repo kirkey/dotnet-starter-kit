@@ -84,8 +84,16 @@ public static class StoreModule
             purchaseOrders.MapUpdatePurchaseOrderEndpoint();
             purchaseOrders.MapDeletePurchaseOrderEndpoint();
             purchaseOrders.MapSearchPurchaseOrdersEndpoint();
+            
+            // Purchase Order Workflow endpoints
+            purchaseOrders.MapSubmitPurchaseOrderEndpoint();
+            purchaseOrders.MapApprovePurchaseOrderEndpoint();
+            purchaseOrders.MapSendPurchaseOrderEndpoint();
+            purchaseOrders.MapReceivePurchaseOrderEndpoint();
+            purchaseOrders.MapCancelPurchaseOrderEndpoint();
 
             // Purchase Order Items endpoints
+            purchaseOrders.MapGetPurchaseOrderItemsEndpoint();
             purchaseOrders.MapAddPurchaseOrderItemEndpoint();
             purchaseOrders.MapUpdatePurchaseOrderItemQuantityEndpoint();
             purchaseOrders.MapUpdatePurchaseOrderItemPriceEndpoint();
