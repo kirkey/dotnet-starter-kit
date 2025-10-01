@@ -81,7 +81,7 @@
     </ExtraActions>
     
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != default)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Order Id" />
@@ -104,17 +104,17 @@
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <MudDatePicker Label="Order Date" @bind-Date="context.OrderDate" Required="true" />
+            <MudDatePicker @bind-Date="context.OrderDate" DateFormat="MMMM dd, yyyy" Label="Order Date" Required="true" />
         </MudItem>
         
         <MudItem xs="12" md="6">
-            <MudDatePicker Label="Expected Delivery Date" @bind-Date="context.ExpectedDeliveryDate" />
+            <MudDatePicker @bind-Date="context.ExpectedDeliveryDate" DateFormat="MMMM dd, yyyy" Label="Expected Delivery Date" />
         </MudItem>
 
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != default)
         {
             <MudItem xs="12" md="6">
-                <MudDatePicker Label="Actual Delivery Date" @bind-Date="context.ActualDeliveryDate" ReadOnly />
+                <MudDatePicker @bind-Date="context.ActualDeliveryDate" DateFormat="MMMM dd, yyyy" Label="Actual Delivery Date" ReadOnly />
             </MudItem>
 
             <MudItem xs="12" sm="6" md="3">
@@ -142,14 +142,14 @@
             <MudTextField Label="Contact Phone" For="@(() => context.ContactPhone)" @bind-Value="context.ContactPhone" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudSwitch T="bool" @bind-Checked="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
+            <MudSwitch T="bool" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
         </MudItem>
 
         <MudItem xs="12" md="12">
             <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
         </MudItem>
 
-        @if (!Context.AddEditModal.IsCreate && context.Id != default)
+        @if (context.Id != default)
         {
             <MudItem xs="12">
                 <MudDivider Class="my-4" />
