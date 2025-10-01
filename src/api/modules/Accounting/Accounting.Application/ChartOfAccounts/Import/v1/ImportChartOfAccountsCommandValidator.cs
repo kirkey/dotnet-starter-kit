@@ -22,7 +22,7 @@ public sealed class ImportChartOfAccountsCommandValidator : AbstractValidator<Im
             .Must(fileName => fileName.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
             .WithMessage("Only Excel files (.xlsx) are supported for Chart of Accounts import");
 
-        RuleFor(x => x.File.Length)
+        RuleFor(x => x.File.Size)
             .GreaterThan(0)
             .WithMessage("File cannot be empty")
             .LessThanOrEqualTo(10 * 1024 * 1024) // 10MB limit
