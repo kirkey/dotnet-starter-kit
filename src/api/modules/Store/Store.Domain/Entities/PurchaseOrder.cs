@@ -437,6 +437,22 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         NetAmount = TotalAmount + TaxAmount - DiscountAmount;
     }
 
+    /// <summary>
+    /// Update the aggregate totals after items have changed. Intended to be called by application handlers
+    /// managing <see cref="PurchaseOrderItem"/> entities independently.
+    /// </summary>
+    /// <param name="totalAmount">New total of all TotalPrice values for items belonging to this purchase order.</param>
+    public PurchaseOrder UpdateTotals(decimal totalAmount)
+    {
+        if (totalAmount < 0)
+            throw new ArgumentException("Total amount cannot be negative", nameof(totalAmount));
+
+        TotalAmount = totalAmount;
+        NetAmount = TotalAmount + TaxAmount - DiscountAmount;
+        QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
+        return this;
+    }
+
     public bool IsOverdue() => 
         ExpectedDeliveryDate is { } ed &&
         ed < DateTime.UtcNow &&

@@ -88,7 +88,7 @@
         MudDialog.Cancel();
     }
 
-    private void Submit()
+    private async Task Submit()
     {
         if (_model.GroceryItemId == default)
         {
@@ -108,26 +108,49 @@
             return;
         }
 
-        // TODO: Uncomment when API client is regenerated
-        // if (IsEdit)
-        // {
-        //     var command = new UpdatePurchaseOrderItemQuantityCommand(_model.Id, (int)_model.Quantity);
-        //     await ApiClient.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, _model.Id, command).ConfigureAwait(false);
-        //     Toast.Add("Order item updated successfully", Severity.Success);
-        // }
-        // else
-        // {
-        //     var command = new AddPurchaseOrderItemCommand(
-        //         PurchaseOrderId,
-        //         _model.GroceryItemId,
-        //         (int)_model.Quantity,
-        //         _model.UnitPrice,
-        //         _model.DiscountPercentage / 100);
-        //     await ApiClient.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
-        //     Toast.Add("Order item added successfully", Severity.Success);
-        // }
+        try
+        {
+            if (IsEdit)
+            {
+                // For edit, we'll update quantity and price separately
+                var quantityCommand = new UpdatePurchaseOrderItemQuantityCommand
+                {
+                    PurchaseOrderItemId = _model.Id,
+                    Quantity = (int)_model.Quantity
+                };
+                await ApiClient.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, _model.Id, quantityCommand).ConfigureAwait(false);
+                
+                var discountAmount = (_model.DiscountPercentage / 100) * _model.UnitPrice * _model.Quantity;
+                var priceCommand = new UpdatePurchaseOrderItemPriceCommand
+                {
+                    PurchaseOrderItemId = _model.Id,
+                    UnitPrice = (double)_model.UnitPrice,
+                    DiscountAmount = (double)discountAmount
+                };
+                await ApiClient.UpdatePurchaseOrderItemPriceEndpointAsync("1", PurchaseOrderId, _model.Id, priceCommand).ConfigureAwait(false);
+                
+                Toast.Add("Order item updated successfully", Severity.Success);
+            }
+            else
+            {
+                var discountAmount = (_model.DiscountPercentage / 100) * _model.UnitPrice * _model.Quantity;
+                var command = new AddPurchaseOrderItemCommand
+                {
+                    PurchaseOrderId = PurchaseOrderId,
+                    GroceryItemId = _model.GroceryItemId,
+                    Quantity = (int)_model.Quantity,
+                    UnitPrice = (double)_model.UnitPrice,
+                    Discount = (double)discountAmount
+                };
+                await ApiClient.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
+                Toast.Add("Order item added successfully", Severity.Success);
+            }
 
-        Toast.Add(IsEdit ? "Order item updated (TODO: implement API call)" : "Order item added (TODO: implement API call)", Severity.Success);
-        MudDialog.Close(DialogResult.Ok(_model));
+            MudDialog.Close(DialogResult.Ok(_model));
+        }
+        catch (Exception ex)
+        {
+            Toast.Add($"Failed to {(IsEdit ? "update" : "add")} order item: {ex.Message}", Severity.Error);
+        }
     }
 }

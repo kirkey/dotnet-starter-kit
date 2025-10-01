@@ -179,6 +179,8 @@ public static class StoreModule
         // Additional common entity registrations (purchase orders, sales orders, price lists)
         builder.Services.AddKeyedScoped<IRepository<PurchaseOrder>, StoreRepository<PurchaseOrder>>("store:purchase-orders");
         builder.Services.AddKeyedScoped<IReadRepository<PurchaseOrder>, StoreRepository<PurchaseOrder>>("store:purchase-orders");
+        builder.Services.AddKeyedScoped<IRepository<PurchaseOrderItem>, StoreRepository<PurchaseOrderItem>>("store:purchase-order-items");
+        builder.Services.AddKeyedScoped<IReadRepository<PurchaseOrderItem>, StoreRepository<PurchaseOrderItem>>("store:purchase-order-items");
 
         builder.Services.AddKeyedScoped<IRepository<SalesOrder>, StoreRepository<SalesOrder>>("store:sales-orders");
         builder.Services.AddKeyedScoped<IReadRepository<SalesOrder>, StoreRepository<SalesOrder>>("store:sales-orders");

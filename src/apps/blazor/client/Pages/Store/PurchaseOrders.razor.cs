@@ -117,7 +117,7 @@ public partial class PurchaseOrders
     {
         try
         {
-            var paginationFilter = new PaginationFilter { PageNumber = 1, PageSize = 1000 };
+            var paginationFilter = new PaginationFilter { PageNumber = 1, PageSize = 500 };
             var command = paginationFilter.Adapt<SearchSuppliersCommand>();
             var response = await ApiClient.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
             var pagedResponse = response.Adapt<PaginationResponse<SupplierResponse>>();
