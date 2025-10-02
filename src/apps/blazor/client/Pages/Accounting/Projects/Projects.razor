@@ -92,5 +92,14 @@
                 <MudNumericField T="decimal" Format="N2" Label="Actual Revenue" ReadOnly Value="context.ActualRevenue" Variant="Variant.Outlined" />
             </MudItem>
         }
+
+        @if (!Context.AddEditModal.IsCreate && context.Id != default)
+        {
+            <MudItem xs="12">
+                <MudDivider Class="my-4" />
+                <MudText Typo="Typo.h6" Class="mb-3">Project Costing Entries</MudText>
+                <ProjectCostingEntries ProjectId="@context.Id" />
+            </MudItem>
+        }
     </EditFormContent>
 </EntityTable>

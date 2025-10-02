@@ -1,0 +1,162 @@
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" Model="@_model">
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudDatePicker @bind-Date="_model.EntryDate" Label="Entry Date" Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudNumericField T="decimal" @bind-Value="_model.Amount" Label="Amount" Required="true" Format="N2" Min="0.01m" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_model.Description" Label="Description" Required="true" Lines="2" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.Category" Label="Category" Placeholder="e.g., Labor, Materials, Equipment" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <AutocompleteChartOfAccount @bind-Value="_model.AccountId"
+                                               Label="Account"
+                                               Variant="Variant.Filled"
+                                               Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.CostCenter" Label="Cost Center" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.WorkOrderNumber" Label="Work Order Number" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.Vendor" Label="Vendor" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.InvoiceNumber" Label="Invoice Number" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudSwitch @bind-Value="_model.IsBillable" Color="Color.Primary" Label="Billable to Client" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">@(IsEdit ? "Update" : "Add")</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
+    [Inject] private HttpClient HttpClient { get; set; } = default!;
+    [Inject] private ISnackbar Toast { get; set; } = default!;
+
+    [Parameter] public DefaultIdType ProjectId { get; set; }
+    [Parameter] public ProjectCostingViewModel? Entry { get; set; }
+    [Parameter] public bool IsEdit { get; set; }
+
+    private MudForm _form = default!;
+    private ProjectCostingViewModel _model = new();
+
+    protected override void OnInitialized()
+    {
+        if (IsEdit && Entry != null)
+        {
+            _model = new ProjectCostingViewModel
+            {
+                Id = Entry.Id,
+                ProjectId = Entry.ProjectId,
+                EntryDate = Entry.EntryDate,
+                Amount = Entry.Amount,
+                Description = Entry.Description,
+                Category = Entry.Category,
+                AccountId = Entry.AccountId,
+                JournalEntryId = Entry.JournalEntryId,
+                CostCenter = Entry.CostCenter,
+                WorkOrderNumber = Entry.WorkOrderNumber,
+                IsBillable = Entry.IsBillable,
+                Vendor = Entry.Vendor,
+                InvoiceNumber = Entry.InvoiceNumber
+            };
+        }
+        else
+        {
+            _model.ProjectId = ProjectId;
+        }
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task Submit()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        try
+        {
+            HttpResponseMessage response;
+
+            if (IsEdit)
+            {
+                // Update entry
+                response = await HttpClient.PutAsJsonAsync($"api/v1/projectcosting/{_model.Id}", new
+                {
+                    Id = _model.Id,
+                    EntryDate = _model.EntryDate,
+                    Amount = _model.Amount,
+                    Description = _model.Description,
+                    Category = _model.Category,
+                    CostCenter = _model.CostCenter,
+                    WorkOrderNumber = _model.WorkOrderNumber,
+                    IsBillable = _model.IsBillable,
+                    Vendor = _model.Vendor,
+                    InvoiceNumber = _model.InvoiceNumber
+                }).ConfigureAwait(false);
+            }
+            else
+            {
+                // Create entry
+                response = await HttpClient.PostAsJsonAsync("api/v1/projectcosting", new
+                {
+                    ProjectId = _model.ProjectId,
+                    EntryDate = _model.EntryDate,
+                    Amount = _model.Amount,
+                    Description = _model.Description,
+                    AccountId = _model.AccountId,
+                    Category = _model.Category,
+                    JournalEntryId = _model.JournalEntryId,
+                    CostCenter = _model.CostCenter,
+                    WorkOrderNumber = _model.WorkOrderNumber,
+                    IsBillable = _model.IsBillable,
+                    Vendor = _model.Vendor
+                }).ConfigureAwait(false);
+            }
+
+            if (response.IsSuccessStatusCode)
+            {
+                MudDialog.Close(DialogResult.Ok(true));
+            }
+            else
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                Toast.Add($"Failed to {(IsEdit ? "update" : "add")} entry: {errorMessage}", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Toast.Add($"Failed to {(IsEdit ? "update" : "add")} entry: {ex.Message}", Severity.Error);
+        }
+    }
+}

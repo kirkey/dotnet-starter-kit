@@ -64,13 +64,9 @@ public static class AccountingModule
             projects.MapProjectSearchEndpoint();
             projects.MapProjectUpdateEndpoint();
             projects.MapProjectDeleteEndpoint();
-            // Job cost entries endpoints
-            projects.MapProjectCostEntryCreateEndpoint();
-            projects.MapProjectCostEntryGetEndpoint();
-            // Use the consolidated list endpoint implementation
-            projects.MapProjectCostEntriesEndpoint();
-            projects.MapProjectCostEntryUpdateEndpoint();
-            projects.MapProjectCostEntryDeleteEndpoint();
+            
+            // Project Costing endpoints (new v1 structure)
+            app.MapProjectCostingEndpoints();
 
             var periods = app.MapGroup("periods").WithTags("periods");
             periods.MapAccountingPeriodSearchEndpoint();
@@ -288,6 +284,9 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting:projects");
         builder.Services.AddKeyedScoped<IRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:projectcosts");
         builder.Services.AddKeyedScoped<IReadRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:projectcosts");
+        // Also register with the key expected by new ProjectCosting handlers
+        builder.Services.AddKeyedScoped<IRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:projectcosting");
+        builder.Services.AddKeyedScoped<IReadRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:projectcosting");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IRepository<PaymentAllocation>, AccountingRepository<PaymentAllocation>>("accounting:paymentallocations");

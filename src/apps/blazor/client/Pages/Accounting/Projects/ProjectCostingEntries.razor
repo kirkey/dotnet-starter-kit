@@ -1,0 +1,231 @@
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
+@using FSH.Starter.Blazor.Client.Shared
+
+@if (ProjectId != default)
+{
+    <MudTable Items="@_items" Hover="true" Dense="true" Bordered="true" Striped="true" Loading="@_loading">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Project Costing Entries</MudText>
+            <MudSpacer />
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" OnClick="@OpenAddDialog">
+                Add Entry
+            </MudButton>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Entry Date</MudTh>
+            <MudTh>Description</MudTh>
+            <MudTh>Category</MudTh>
+            <MudTh>Amount</MudTh>
+            <MudTh>Vendor</MudTh>
+            <MudTh>Billable</MudTh>
+            <MudTh>Approved</MudTh>
+            <MudTh>Actions</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Entry Date">@context.EntryDate?.ToString("MM/dd/yyyy")</MudTd>
+            <MudTd DataLabel="Description">@context.Description</MudTd>
+            <MudTd DataLabel="Category">@context.Category</MudTd>
+            <MudTd DataLabel="Amount">@context.Amount.ToString("C2")</MudTd>
+            <MudTd DataLabel="Vendor">@context.Vendor</MudTd>
+            <MudTd DataLabel="Billable">
+                @if (context.IsBillable)
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Default" Size="Size.Small" />
+                }
+            </MudTd>
+            <MudTd DataLabel="Approved">
+                @if (context.IsApproved)
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Warning" Size="Size.Small" />
+                }
+            </MudTd>
+            <MudTd DataLabel="Actions">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => OpenEditDialog(context))" Disabled="@context.IsApproved" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteEntry(context.Id))" Disabled="@context.IsApproved" />
+            </MudTd>
+        </RowTemplate>
+        <NoRecordsContent>
+            <MudText>No costing entries added yet. Click "Add Entry" to start.</MudText>
+        </NoRecordsContent>
+    </MudTable>
+}
+
+@code {
+    [Inject] private IClient ApiClient { get; set; } = default!;
+    [Inject] private HttpClient HttpClient { get; set; } = default!;
+    [Inject] private IDialogService DialogService { get; set; } = default!;
+    [Inject] private ISnackbar Toast { get; set; } = default!;
+
+    [Parameter] public DefaultIdType ProjectId { get; set; }
+
+    private bool _loading;
+    private List<ProjectCostingViewModel> _items = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ProjectId != default)
+        {
+            await LoadEntriesAsync();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ProjectId != default)
+        {
+            await LoadEntriesAsync();
+        }
+    }
+
+    private async Task LoadEntriesAsync()
+    {
+        _loading = true;
+        try
+        {
+            // Call the search endpoint with ProjectId filter
+            var response = await HttpClient.PostAsJsonAsync($"api/v1/projectcosting/search", new
+            {
+                ProjectId = ProjectId,
+                PageNumber = 1,
+                PageSize = 100
+            }).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<PagedResponse>().ConfigureAwait(false);
+                if (result?.Data != null)
+                {
+                    _items = result.Data.Select(item => new ProjectCostingViewModel
+                    {
+                        Id = item.Id,
+                        ProjectId = item.ProjectId,
+                        EntryDate = item.EntryDate,
+                        Amount = item.Amount,
+                        Description = item.Description,
+                        Category = item.Category,
+                        AccountId = item.AccountId,
+                        JournalEntryId = item.JournalEntryId,
+                        CostCenter = item.CostCenter,
+                        WorkOrderNumber = item.WorkOrderNumber,
+                        IsBillable = item.IsBillable,
+                        IsApproved = item.IsApproved,
+                        Vendor = item.Vendor,
+                        InvoiceNumber = item.InvoiceNumber
+                    }).ToList();
+                }
+            }
+            else
+            {
+                Toast.Add($"Failed to load project costing entries: {response.ReasonPhrase}", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Toast.Add($"Failed to load project costing entries: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private class PagedResponse
+    {
+        public List<ProjectCostingResponse> Data { get; set; } = new();
+        public int TotalCount { get; set; }
+    }
+
+    private class ProjectCostingResponse
+    {
+        public DefaultIdType Id { get; set; }
+        public DefaultIdType ProjectId { get; set; }
+        public DateTime EntryDate { get; set; }
+        public decimal Amount { get; set; }
+        public string? Description { get; set; }
+        public string? Category { get; set; }
+        public DefaultIdType AccountId { get; set; }
+        public DefaultIdType? JournalEntryId { get; set; }
+        public string? CostCenter { get; set; }
+        public string? WorkOrderNumber { get; set; }
+        public bool IsBillable { get; set; }
+        public bool IsApproved { get; set; }
+        public string? Vendor { get; set; }
+        public string? InvoiceNumber { get; set; }
+    }
+
+    private async Task OpenAddDialog()
+    {
+        var parameters = new DialogParameters
+        {
+            { "ProjectId", ProjectId },
+            { "IsEdit", false }
+        };
+
+        var dialog = await DialogService.ShowAsync<ProjectCostingDialog>("Add Costing Entry", parameters);
+        if (dialog == null) return;
+        var result = await dialog.Result;
+
+        if (result is { Canceled: false })
+        {
+            await LoadEntriesAsync();
+            Toast.Add("Entry added successfully", Severity.Success);
+        }
+    }
+
+    private async Task OpenEditDialog(ProjectCostingViewModel entry)
+    {
+        var parameters = new DialogParameters
+        {
+            { "ProjectId", ProjectId },
+            { "Entry", entry },
+            { "IsEdit", true }
+        };
+
+        var dialog = await DialogService.ShowAsync<ProjectCostingDialog>("Edit Costing Entry", parameters);
+        if (dialog == null) return;
+        var result = await dialog.Result;
+
+        if (result is { Canceled: false })
+        {
+            await LoadEntriesAsync();
+            Toast.Add("Entry updated successfully", Severity.Success);
+        }
+    }
+
+    private async Task DeleteEntry(DefaultIdType entryId)
+    {
+        var confirmed = await DialogService.ShowMessageBox(
+            "Delete Entry",
+            "Are you sure you want to delete this costing entry?",
+            yesText: "Delete", cancelText: "Cancel");
+
+        if (confirmed == true)
+        {
+            try
+            {
+                var response = await HttpClient.DeleteAsync($"api/v1/projectcosting/{entryId}").ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    await LoadEntriesAsync();
+                    Toast.Add("Entry deleted successfully", Severity.Success);
+                }
+                else
+                {
+                    Toast.Add($"Failed to delete entry: {response.ReasonPhrase}", Severity.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Add($"Failed to delete entry: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+}
