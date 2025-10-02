@@ -24,10 +24,10 @@ public partial class Payees : ComponentBase
             fields:
             [
                 new EntityField<PayeeResponse>(response => response.PayeeCode, "Payee Code", "PayeeCode"),
-                new EntityField<PayeeResponse>(response => response.Name, "Name", "Name"),
-                new EntityField<PayeeResponse>(response => response.Address, "Address", "Address"),
                 new EntityField<PayeeResponse>(response => response.ExpenseAccountCode, "Account Code", "ExpenseAccountCode"),
                 new EntityField<PayeeResponse>(response => response.ExpenseAccountName, "Account Name", "ExpenseAccountName"),
+                new EntityField<PayeeResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<PayeeResponse>(response => response.Address, "Address", "Address"),
                 new EntityField<PayeeResponse>(response => response.Tin, "TIN", "Tin"),
                 new EntityField<PayeeResponse>(response => response.Description, "Description", "Description"),
                 new EntityField<PayeeResponse>(response => response.Notes, "Notes", "Notes"),

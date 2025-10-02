@@ -2,12 +2,9 @@
 
 public partial class Roles : ComponentBase
 {
-    [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
-    [Inject]
-    protected IAuthorizationService AuthService { get; set; } = default!;
-    [Inject]
-    private IClient RolesClient { get; set; } = default!;
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [Inject] protected IAuthorizationService AuthService { get; set; } = default!;
+    [Inject] private IClient RolesClient { get; set; } = default!;
 
     protected EntityClientTableContext<RoleDto, string?, CreateOrUpdateRoleCommand> Context { get; set; } = default!;
 

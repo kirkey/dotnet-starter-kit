@@ -90,8 +90,8 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Chart Of Accounts", Icon = Icons.Material.Filled.List, Href = "/chart-of-accounts", PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Periods", Icon = Icons.Material.Filled.List, Href = "/accounting-periods", PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.List, Href = "/accounting-accruals", PageStatus = PageStatus.ComingSoon },
-                        new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.List, Href = "/accounting-budgets", PageStatus = PageStatus.ComingSoon },
-                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.List, Href = "/accounting-projects", PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.List, Href = "/accounting-budgets", PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.List, Href = "/accounting-projects", PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/accounting/payees", PageStatus = PageStatus.InProgress }
                     ]
                 },
