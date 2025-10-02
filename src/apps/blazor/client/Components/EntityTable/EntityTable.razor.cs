@@ -204,15 +204,16 @@ public partial class EntityTable<TEntity, TId, TRequest>
         return filter;
     }
 
-    private async Task InvokeModal(TEntity? entity = default, TEntity? entityToDuplicate = default)
+    private async Task InvokeModal(TEntity? entity = default, TEntity? entityToDuplicate = default, bool isViewMode = false)
     {
-        bool isCreate = entity is null;
+        bool isCreate = entity is null && !isViewMode;
     
         var parameters = new DialogParameters
         {
             { nameof(AddEditModal<TRequest>.ChildContent), EditFormContent },
             { nameof(AddEditModal<TRequest>.OnInitializedFunc), Context.EditFormInitializedFunc },
-            { nameof(AddEditModal<TRequest>.IsCreate), isCreate }
+            { nameof(AddEditModal<TRequest>.IsCreate), isCreate },
+            { nameof(AddEditModal<TRequest>.IsViewMode), isViewMode }
         };
     
         Func<TRequest, Task> saveFunc = isCreate
@@ -227,7 +228,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
                 ? detailsResult
                 : entity!.Adapt<TRequest>();
     
-        string title = isCreate ? $"Create {Context.EntityName}" : $"Edit {Context.EntityName}";
+        string title = isViewMode ? $"View {Context.EntityName}" : isCreate ? $"Create {Context.EntityName}" : $"Edit {Context.EntityName}";
         string successMessage = isCreate ? $"{Context.EntityName} Created" : $"{Context.EntityName} Updated";
     
         parameters.Add(nameof(AddEditModal<TRequest>.SaveFunc), saveFunc);

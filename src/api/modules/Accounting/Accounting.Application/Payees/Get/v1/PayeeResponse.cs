@@ -8,4 +8,5 @@ public sealed record PayeeResponse(
     string? ExpenseAccountName,
     string? Tin,
     string? Description,
-    string? Notes);
+    string? Notes,
+    string? ImageUrl);

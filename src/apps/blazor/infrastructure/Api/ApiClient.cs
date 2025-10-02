@@ -28069,9 +28069,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("expenseAccountCode")]
         public string? ExpenseAccountCode { get; set; } = "5100";
 
-        [System.Text.Json.Serialization.JsonPropertyName("expenseAccountName")]
-        public string? ExpenseAccountName { get; set; } = "Office Supplies Expense";
-
         [System.Text.Json.Serialization.JsonPropertyName("tin")]
         public string? Tin { get; set; } = "12-3456789";
 
@@ -28080,6 +28077,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = "Preferred vendor for office supplies";
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
 
     }
 
@@ -28122,6 +28125,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
 
     }
 
@@ -28207,9 +28213,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("expenseAccountCode")]
         public string? ExpenseAccountCode { get; set; } = "5100";
 
-        [System.Text.Json.Serialization.JsonPropertyName("expenseAccountName")]
-        public string? ExpenseAccountName { get; set; } = "Office Supplies Expense";
-
         [System.Text.Json.Serialization.JsonPropertyName("tin")]
         public string? Tin { get; set; } = "12-3456789";
 
@@ -28218,6 +28221,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = "Preferred vendor for office supplies";
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
 
     }
 

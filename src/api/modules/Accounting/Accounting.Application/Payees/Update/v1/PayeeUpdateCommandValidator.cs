@@ -78,5 +78,24 @@ public class PayeeUpdateCommandValidator : AbstractValidator<PayeeUpdateCommand>
             .MaximumLength(2000)
             .WithMessage("Notes cannot exceed 2000 characters.")
             .When(p => !string.IsNullOrEmpty(p.Notes));
+
+        RuleFor(p => p.ImageUrl)
+            .MaximumLength(500)
+            .When(p => !string.IsNullOrEmpty(p.ImageUrl));
+
+        // Light validation for optional image payload: name and extension must be present when provided.
+        RuleFor(x => x.Image!.Name)
+            .NotEmpty()
+            .When(x => x.Image is not null);
+
+        RuleFor(x => x.Image!.Extension)
+            .NotEmpty()
+            .Must(ext => ext.StartsWith('.'))
+            .WithMessage("Image extension must start with '.' (example: .png, .jpg)")
+            .When(x => x.Image is not null);
+
+        RuleFor(x => x.Image!.Data)
+            .NotEmpty()
+            .When(x => x.Image is not null);
     }
 }

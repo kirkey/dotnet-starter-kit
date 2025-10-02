@@ -211,6 +211,10 @@
                     {
                         <MudMenu Label="Actions" Variant="Variant.Filled"
                                  EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
+                            <MudMenuItem Icon="@Icons.Material.Filled.Visibility"
+                                         OnClick="@(() => InvokeModal(context, isViewMode: true))">
+                                View
+                            </MudMenuItem>
                             @if (CanUpdateEntity(context))
                             {
                                 <MudMenuItem Icon="@Icons.Material.Filled.EditNote"

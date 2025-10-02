@@ -19,6 +19,8 @@ public partial class AddEditModal<TRequest> : IAddEditModal<TRequest>
     [Parameter]
     public bool IsCreate { get; set; }
     [Parameter]
+    public bool IsViewMode { get; set; }
+    [Parameter]
     public string? SuccessMessage { get; set; }
 
     [CascadingParameter]

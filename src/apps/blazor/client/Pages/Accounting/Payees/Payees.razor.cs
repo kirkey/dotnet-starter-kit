@@ -1,13 +1,16 @@
+using FSH.Starter.Blazor.Client.Services;
+
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 
 /// <summary>
 /// Payees page logic. Provides CRUD and search over Payee entities using the generated API client.
 /// Mirrors patterns used by other Accounting pages (Accruals, Budgets, ChartOfAccounts).
 /// </summary>
-public partial class Payees : ComponentBase
+public partial class Payees
 {
     [Inject]
     protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
@@ -23,6 +26,7 @@ public partial class Payees : ComponentBase
             entityResource: FshResources.Accounting,
             fields:
             [
+                new EntityField<PayeeResponse>(response => response.ImageUrl, "Picture", "ImageUrl", Template: TemplateImage),
                 new EntityField<PayeeResponse>(response => response.PayeeCode, "Payee Code", "PayeeCode"),
                 new EntityField<PayeeResponse>(response => response.ExpenseAccountCode, "Account Code", "ExpenseAccountCode"),
                 new EntityField<PayeeResponse>(response => response.ExpenseAccountName, "Account Name", "ExpenseAccountName"),
@@ -42,10 +46,24 @@ public partial class Payees : ComponentBase
             },
             createFunc: async viewModel =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await ApiClient.PayeeCreateEndpointAsync("1", viewModel.Adapt<PayeeCreateCommand>());
             },
             updateFunc: async (id, viewModel) =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await ApiClient.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<PayeeUpdateCommand>());
             },
             deleteFunc: async id => await ApiClient.PayeeDeleteEndpointAsync("1", id));

@@ -98,6 +98,10 @@ public class LocalFileStorageService(IOptions<OriginOptions> originSettings) : I
         string baseName = Path.GetFileNameWithoutExtension(rawName);
         baseName = RemoveSpecialCharacters(baseName).ReplaceWhitespace("-");
 
+        // Prevent trailing/leading or consecutive dots which can cause "..ext" results when we append the normalized extension
+        baseName = baseName.Trim('.');
+        baseName = Regex.Replace(baseName, "[.]{2,}", ".");
+
         if (string.IsNullOrWhiteSpace(baseName))
             throw new InvalidOperationException("A valid file name is required.");
 

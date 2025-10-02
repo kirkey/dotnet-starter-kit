@@ -39,7 +39,6 @@ namespace Accounting.Domain;
 /// <seealso cref="Accounting.Domain.Events.Payee.PayeeUpdated"/>
 /// <seealso cref="Accounting.Domain.Events.Payee.PayeeActivated"/>
 /// <seealso cref="Accounting.Domain.Events.Payee.PayeeDeactivated"/>
-/// <seealso cref="Accounting.Domain.Events.Payee.PayeeAccountMappingChanged"/>
 public class Payee : AuditableEntity, IAggregateRoot
 {
     /// <summary>
@@ -78,7 +77,7 @@ public class Payee : AuditableEntity, IAggregateRoot
         // EF Core requires a parameterless constructor for entity instantiation
     }
     
-    private Payee(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
+    private Payee(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes, string? imageUrl)
     {
         PayeeCode = payeeCode.Trim();
         Name = name.Trim();
@@ -88,20 +87,21 @@ public class Payee : AuditableEntity, IAggregateRoot
         Tin = tin?.Trim();
         Description = description?.Trim();
         Notes = notes?.Trim();
+        ImageUrl = imageUrl;
     }
 
     /// <summary>
     /// Create a payee with default expense account mapping and metadata.
     /// </summary>
-    public static Payee Create(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
+    public static Payee Create(string payeeCode, string name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes, string? imageUrl = null)
     {
-        return new Payee(payeeCode, name, address, expenseAccountCode, expenseAccountName, tin, description, notes);
+        return new Payee(payeeCode, name, address, expenseAccountCode, expenseAccountName, tin, description, notes, imageUrl);
     }
 
     /// <summary>
     /// Update the payee metadata; trims inputs.
     /// </summary>
-    public Payee Update(string? payeeCode, string? name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes)
+    public Payee Update(string? payeeCode, string? name, string? address, string? expenseAccountCode, string? expenseAccountName, string? tin, string? description, string? notes, string? imageUrl)
     {
         bool isUpdated = false;
 
@@ -143,6 +143,11 @@ public class Payee : AuditableEntity, IAggregateRoot
         if (!string.IsNullOrWhiteSpace(notes) && !string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
         {
             Notes = notes.Trim();
+            isUpdated = true;
+        }
+        if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
+        {
+            ImageUrl = imageUrl;
             isUpdated = true;
         }
 

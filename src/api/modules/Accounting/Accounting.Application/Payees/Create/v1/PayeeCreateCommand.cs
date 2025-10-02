@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using FSH.Framework.Core.Storage.File.Features;
 
 namespace Accounting.Application.Payees.Create.v1;
 
@@ -13,6 +14,7 @@ namespace Accounting.Application.Payees.Create.v1;
 /// <param name="Tin">Optional tax identification number for 1099 reporting and compliance.</param>
 /// <param name="Description">Optional detailed description of the payee's business or services.</param>
 /// <param name="Notes">Optional additional notes or comments about the payee.</param>
+/// <param name="ImageUrl">Optional image URL for the payee logo or profile picture.</param>
 public sealed record PayeeCreateCommand(
     [property: DefaultValue("VEND001")] string PayeeCode,
     [property: DefaultValue("ABC Company")] string Name,
@@ -20,4 +22,11 @@ public sealed record PayeeCreateCommand(
     [property: DefaultValue("5100")] string? ExpenseAccountCode = null,
     [property: DefaultValue("12-3456789")] string? Tin = null,
     [property: DefaultValue("Primary office supply vendor")] string? Description = null,
-    [property: DefaultValue("Preferred vendor for office supplies")] string? Notes = null) : IRequest<PayeeCreateResponse>;
+    [property: DefaultValue("Preferred vendor for office supplies")] string? Notes = null,
+    [property: DefaultValue(null)] string? ImageUrl = null) : IRequest<PayeeCreateResponse>
+{
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image is uploaded to storage and ImageUrl is set from the saved file name.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
+}

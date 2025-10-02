@@ -1,5 +1,6 @@
 @page "/accounting/payees"
 @using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
+@using FSH.Starter.Blazor.Client.Services
 
 <PageHeader Title="Payees" Header="Payees" SubHeader="Manage Payees." />
 
@@ -54,5 +55,27 @@
                           Label="Notes"
                           Variant="Variant.Filled" />
         </MudItem>
+
+        <!-- Image Management -->
+        <MudItem xs="12">
+            <ImageUploader CurrentImageUrl="@(string.IsNullOrEmpty(context.ImageUrl) ? string.Empty : ImageUrlService.GetAbsoluteUrl(context.ImageUrl))"
+                           CurrentImageUrlChanged="@(url => context.ImageUrl = url)"
+                           UploadedImage="@context.Image"
+                           UploadedImageChanged="@(img => context.Image = img)"
+                           AltText="Payee Picture"
+                           UploadLabel="Upload Payee Picture" />
+        </MudItem>
     </EditFormContent>
 </EntityTable>
+
+@code {
+    private RenderFragment<PayeeResponse> TemplateImage => dto => __builder =>
+    {
+        <MudItem Class="d-flex justify-center align-center">
+            @if (dto.ImageUrl is not null)
+            {
+                <MudImage Src="@(string.IsNullOrEmpty(dto.ImageUrl) ? string.Empty : ImageUrlService.GetAbsoluteUrl(dto.ImageUrl))" Height="100"/>
+            }
+        </MudItem>
+    };
+}

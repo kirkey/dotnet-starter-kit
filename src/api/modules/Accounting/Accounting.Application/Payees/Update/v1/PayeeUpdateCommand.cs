@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using FSH.Framework.Core.Storage.File.Features;
 
 namespace Accounting.Application.Payees.Update.v1;
 
@@ -14,6 +15,7 @@ namespace Accounting.Application.Payees.Update.v1;
 /// <param name="Tin">Updated tax identification number.</param>
 /// <param name="Description">Updated detailed description of the payee.</param>
 /// <param name="Notes">Updated additional notes or comments.</param>
+/// <param name="ImageUrl">Updated image URL for the payee logo or profile picture.</param>
 public sealed record PayeeUpdateCommand(
     DefaultIdType Id,
     [property: DefaultValue("VEND001")] string PayeeCode,
@@ -22,4 +24,11 @@ public sealed record PayeeUpdateCommand(
     [property: DefaultValue("5100")] string? ExpenseAccountCode = null,
     [property: DefaultValue("12-3456789")] string? Tin = null,
     [property: DefaultValue("Primary office supply vendor")] string? Description = null,
-    [property: DefaultValue("Preferred vendor for office supplies")] string? Notes = null) : IRequest<PayeeUpdateResponse>;
+    [property: DefaultValue("Preferred vendor for office supplies")] string? Notes = null,
+    [property: DefaultValue(null)] string? ImageUrl = null) : IRequest<PayeeUpdateResponse>
+{
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image will be saved to storage and ImageUrl will be set to the saved file URL.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
+}

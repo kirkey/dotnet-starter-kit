@@ -50,4 +50,6 @@ public class PayeeViewModel
     /// Additional notes or comments about the payee.
     /// </summary>
     public string? Notes { get; set; }
+    public string? ImageUrl { get; set; }
+    public FileUploadCommand? Image { get; set; }
 }
