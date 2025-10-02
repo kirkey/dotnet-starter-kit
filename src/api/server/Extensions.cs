@@ -33,7 +33,6 @@ public static class Extensions
         {
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
-            config.WithModule<AccountingModule.Endpoints>();
             config.WithModule<StoreModule.Endpoints>();
         });
 
@@ -60,7 +59,10 @@ public static class Extensions
         //map versioned endpoint
         var endpoints = app.MapGroup("api/v{version:apiVersion}").WithApiVersionSet(versions);
 
-        //use carter
+        //map accounting endpoints directly (not using Carter)
+        endpoints.MapAccountingEndpoints();
+
+        //use carter for other modules
         endpoints.MapCarter();
 
         return app;

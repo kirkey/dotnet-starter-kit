@@ -1,4 +1,4 @@
-using Accounting.Application.BudgetDetails.Update;
+using Accounting.Application.Budgets.Details.Update;
 
 namespace Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 

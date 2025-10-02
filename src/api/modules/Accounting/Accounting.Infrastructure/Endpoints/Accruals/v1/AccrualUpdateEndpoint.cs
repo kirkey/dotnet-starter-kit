@@ -10,7 +10,7 @@ public static class AccrualUpdateEndpoint
     /// <summary>
     /// Maps PUT /{id:guid} to update mutable fields of an accrual.
     /// </summary>
-    internal static RouteHandlerBuilder MapAccrualEditEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapAccrualUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPut("/{id:guid}", async (DefaultIdType id, UpdateAccrualCommand request, ISender mediator) =>

@@ -1,141 +1,85 @@
-using Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
-using Accounting.Infrastructure.Endpoints.AccountReconciliation.v1;
-using Accounting.Infrastructure.Endpoints.Accruals.v1;
-using Accounting.Infrastructure.Endpoints.Billing.v1;
-using Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
-using Accounting.Infrastructure.Endpoints.Budgets.v1;
-using Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
-using Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
-using Accounting.Infrastructure.Endpoints.FixedAssets.v1;
-using Accounting.Infrastructure.Endpoints.Inventory.v1;
-using Accounting.Infrastructure.Endpoints.JournalEntries.v1;
-using Accounting.Infrastructure.Endpoints.Patronage.v1;
-using Accounting.Infrastructure.Endpoints.Payees.v1;
-using Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
-using Accounting.Infrastructure.Endpoints.Payments.v1;
-using Accounting.Infrastructure.Endpoints.ProjectCosting;
-using Accounting.Infrastructure.Endpoints.Projects.v1;
-using Accounting.Infrastructure.Endpoints.Vendors.v1;
+using Accounting.Infrastructure.Endpoints.AccountingPeriods;
+using Accounting.Infrastructure.Endpoints.Accruals;
+using Accounting.Infrastructure.Endpoints.Billing;
+using Accounting.Infrastructure.Endpoints.BudgetDetails;
+using Accounting.Infrastructure.Endpoints.Budgets;
+using Accounting.Infrastructure.Endpoints.ChartOfAccounts;
+using Accounting.Infrastructure.Endpoints.Consumptions;
+using Accounting.Infrastructure.Endpoints.DeferredRevenue;
+using Accounting.Infrastructure.Endpoints.DepreciationMethods;
+using Accounting.Infrastructure.Endpoints.FinancialStatements;
+using Accounting.Infrastructure.Endpoints.GeneralLedger;
+using Accounting.Infrastructure.Endpoints.Inventory;
+using Accounting.Infrastructure.Endpoints.Invoice;
+using Accounting.Infrastructure.Endpoints.Member;
+using Accounting.Infrastructure.Endpoints.Meter;
+using Accounting.Infrastructure.Endpoints.Patronage;
+using Accounting.Infrastructure.Endpoints.Payees;
+using Accounting.Infrastructure.Endpoints.PaymentAllocations;
+using Accounting.Infrastructure.Endpoints.Payments;
+using Accounting.Infrastructure.Endpoints.PostingBatch;
+using Accounting.Infrastructure.Endpoints.Projects;
+using Accounting.Infrastructure.Endpoints.Projects.Costing;
+using Accounting.Infrastructure.Endpoints.TrialBalance;
 using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Import;
 using Accounting.Application.ChartOfAccounts.Import;
 using Accounting.Application.Payees.Import;
-using Carter;
 using FSH.Framework.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Accounting.Infrastructure;
 
+/// <summary>
+/// Main module configuration for the Accounting system.
+/// Registers all accounting endpoints and services.
+/// </summary>
 public static class AccountingModule
 {
-    // Restore proper CarterModule subclass pattern and constructor
-    public class Endpoints() : CarterModule("accounting")
+    /// <summary>
+    /// Registers all accounting endpoints with the application.
+    /// </summary>
+    /// <param name="app">The endpoint route builder to configure.</param>
+    /// <returns>The configured endpoint route builder.</returns>
+    public static IEndpointRouteBuilder MapAccountingEndpoints(this IEndpointRouteBuilder app)
     {
-        public override void AddRoutes(IEndpointRouteBuilder app)
-        {
-            var account = app.MapGroup("accounts").WithTags("accounts");
-            account.MapChartOfAccountCreateEndpoint();
-            account.MapChartOfAccountGetEndpoint();
-            account.MapChartOfAccountSearchEndpoint();
-            account.MapChartOfAccountUpdateEndpoint();
-            account.MapChartOfAccountDeleteEndpoint();
-            account.MapChartOfAccountImportEndpoint();
-            account.MapChartOfAccountExportEndpoint();
-            
-            var payee = app.MapGroup("payees").WithTags("payees");
-            payee.MapPayeeCreateEndpoint();
-            payee.MapPayeeGetEndpoint();
-            payee.MapPayeeSearchEndpoint();
-            payee.MapPayeeUpdateEndpoint();
-            payee.MapPayeeDeleteEndpoint();
-            payee.MapPayeeImportEndpoint();
-            payee.MapPayeeExportEndpoint();
-            
-            var vendor = app.MapGroup("vendors").WithTags("vendors");
-            vendor.MapVendorCreateEndpoint();
-            vendor.MapVendorGetEndpoint();
-            vendor.MapVendorSearchEndpoint();
-            vendor.MapVendorUpdateEndpoint();
-            vendor.MapVendorDeleteEndpoint();
+        var accountingGroup = app.MapGroup("/accounting")
+            .WithTags("Accounting")
+            .WithDescription("Comprehensive accounting module endpoints");
 
-            var projects = app.MapGroup("projects").WithTags("projects");
-            projects.MapProjectCreateEndpoint();
-            projects.MapProjectGetEndpoint();
-            projects.MapProjectSearchEndpoint();
-            projects.MapProjectUpdateEndpoint();
-            projects.MapProjectDeleteEndpoint();
-            
-            // Project Costing endpoints (new v1 structure)
-            app.MapProjectCostingEndpoints();
+        // Map all functional area endpoints
+        accountingGroup.MapAccountingPeriodsEndpoints();
+        accountingGroup.MapAccrualsEndpoints();
+        accountingGroup.MapBillingEndpoints();
+        accountingGroup.MapBudgetDetailsEndpoints();
+        accountingGroup.MapBudgetsEndpoints();
+        accountingGroup.MapChartOfAccountsEndpoints();
+        accountingGroup.MapConsumptionsEndpoints();
+        accountingGroup.MapDeferredRevenueEndpoints();
+        accountingGroup.MapDepreciationMethodsEndpoints();
+        accountingGroup.MapFinancialStatementsEndpoints();
+        accountingGroup.MapGeneralLedgerEndpoints();
+        accountingGroup.MapInventoryEndpoints();
+        accountingGroup.MapInvoiceEndpoints();
+        accountingGroup.MapMemberEndpoints();
+        accountingGroup.MapMeterEndpoints();
+        accountingGroup.MapPatronageEndpoints();
+        accountingGroup.MapPayeesEndpoints();
+        accountingGroup.MapPaymentAllocationsEndpoints();
+        accountingGroup.MapPaymentsEndpoints();
+        accountingGroup.MapPostingBatchEndpoints();
+        accountingGroup.MapProjectsEndpoints();
+        accountingGroup.MapProjectsCostingEndpoints();
+        accountingGroup.MapTrialBalanceEndpoints();
 
-            var periods = app.MapGroup("periods").WithTags("periods");
-            periods.MapAccountingPeriodSearchEndpoint();
-            periods.MapAccountingPeriodCreateEndpoint();
-            periods.MapAccountingPeriodUpdateEndpoint();
-            periods.MapAccountingPeriodDeleteEndpoint();
-            periods.MapAccountingPeriodGetEndpoint();
-
-            var budgets = app.MapGroup("budgets").WithTags("budgets");
-            budgets.MapBudgetSearchEndpoint();
-            budgets.MapBudgetCreateEndpoint();
-            budgets.MapBudgetGetEndpoint();
-            budgets.MapBudgetUpdateEndpoint();
-            budgets.MapBudgetDeleteEndpoint();
-
-            // New budget details endpoints group
-            var details = app.MapGroup("budgetdetails").WithTags("budgetdetails");
-            details.MapBudgetDetailSearchEndpoint();
-            details.MapBudgetDetailCreateEndpoint();
-            details.MapBudgetDetailGetEndpoint();
-            details.MapBudgetDetailUpdateEndpoint();
-            details.MapBudgetDetailDeleteEndpoint();
-
-            var fixedAssets = app.MapGroup("fixedassets").WithTags("fixedassets");
-            fixedAssets.MapFixedAssetSearchEndpoint();
-            fixedAssets.MapFixedAssetGetEndpoint();
-            fixedAssets.MapFixedAssetCreateEndpoint();
-            fixedAssets.MapFixedAssetUpdateEndpoint();
-            fixedAssets.MapFixedAssetDeleteEndpoint();
-
-            // New route groups for domains previously missing endpoints
-            var reconciliations = app.MapGroup("reconciliations").WithTags("reconciliations");
-            reconciliations.MapReconcileAccountEndpoint();
-
-            var billing = app.MapGroup("billing").WithTags("billing");
-            billing.MapCreateInvoiceFromConsumptionEndpoint();
-
-            var financial = app.MapGroup("financialstatements").WithTags("financialstatements");
-            financial.MapGenerateBalanceSheetEndpoint();
-            financial.MapGenerateIncomeStatementEndpoint();
-            financial.MapGenerateCashFlowStatementEndpoint();
-
-            var inventory = app.MapGroup("inventory").WithTags("inventory");
-            inventory.MapCreateInventoryItemEndpoint();
-
-            var patronage = app.MapGroup("patronage").WithTags("patronage");
-            patronage.MapRetirePatronageEndpoint();
-
-            var payments = app.MapGroup("payments").WithTags("payments");
-            payments.MapAllocatePaymentEndpoint();
-
-            var paymentAllocations = app.MapGroup("payment-allocations").WithTags("payment-allocations");
-            paymentAllocations.MapPaymentAllocationSearchEndpoint();
-            paymentAllocations.MapPaymentAllocationGetEndpoint();
-            paymentAllocations.MapPaymentAllocationDeleteEndpoint();
-
-            var journals = app.MapGroup("journals").WithTags("journals");
-            journals.MapJournalEntrySearchEndpoint();
-
-            // Accruals endpoints group
-            var accruals = app.MapGroup("accruals").WithTags("accruals");
-            accruals.MapAccrualCreateEndpoint();
-            accruals.MapAccrualGetEndpoint();
-            accruals.MapAccrualSearchEndpoint();
-            accruals.MapAccrualEditEndpoint();
-            accruals.MapAccrualUpdateEndpoint();
-            accruals.MapAccrualDeleteEndpoint();
-        }
+        return app;
     }
+
+    /// <summary>
+    /// Registers accounting services with dependency injection container.
+    /// </summary>
+    /// <param name="builder">The web application builder.</param>
+    /// <returns>The configured web application builder.</returns>
 
     public static WebApplicationBuilder RegisterAccountingServices(this WebApplicationBuilder builder)
     {

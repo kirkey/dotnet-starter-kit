@@ -1,4 +1,4 @@
-using Accounting.Application.BudgetDetails.Delete;
+using Accounting.Application.Budgets.Details.Delete;
 
 namespace Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 

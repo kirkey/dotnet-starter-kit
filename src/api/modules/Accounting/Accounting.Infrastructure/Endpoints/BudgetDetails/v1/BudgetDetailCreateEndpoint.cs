@@ -1,4 +1,4 @@
-using Accounting.Application.BudgetDetails.Create;
+using Accounting.Application.Budgets.Details.Create;
 
 namespace Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 

@@ -1,5 +1,5 @@
-using Accounting.Application.BudgetDetails.Responses;
-using Accounting.Application.BudgetDetails.Search;
+using Accounting.Application.Budgets.Details.Responses;
+using Accounting.Application.Budgets.Details.Search;
 
 namespace Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 

@@ -45,20 +45,5 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
         RuleFor(x => x.SortOrder)
             .GreaterThanOrEqualTo(0)
             .When(x => x.SortOrder.HasValue);
-
-        // Light validation for optional image payload: name and extension must be present when provided.
-        RuleFor(x => x.Image!.Name)
-            .NotEmpty()
-            .When(x => x.Image is not null);
-
-        RuleFor(x => x.Image!.Extension)
-            .NotEmpty()
-            .Must(ext => ext.StartsWith('.'))
-            .WithMessage("Image extension must start with '.' (example: .png, .jpg)")
-            .When(x => x.Image is not null);
-
-        RuleFor(x => x.Image!.Data)
-            .NotEmpty()
-            .When(x => x.Image is not null);
     }
 }

@@ -4,7 +4,7 @@ namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
 public static class AccrualReverseEndpoint
 {
-    internal static RouteHandlerBuilder MapAccrualUpdateEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapAccrualReverseEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPut("/{id:guid}/reverse", async (DefaultIdType id, ReverseAccrualCommand command, ISender mediator) =>
