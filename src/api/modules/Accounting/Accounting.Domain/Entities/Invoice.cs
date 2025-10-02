@@ -382,6 +382,20 @@ public class Invoice : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
+    /// Void an invoice (can be used for paid or unpaid invoices that need to be reversed).
+    /// Voids typically reverse the accounting impact while maintaining the audit trail.
+    /// </summary>
+    public Invoice Void(string? reason = null)
+    {
+        if (Status == "Voided" || Status == "Cancelled")
+            throw new ArgumentException($"Cannot void invoice with status {Status}");
+
+        Status = "Voided";
+        QueueDomainEvent(new InvoiceVoided(Id, InvoiceNumber, MemberId, DateTime.UtcNow, reason));
+        return this;
+    }
+
+    /// <summary>
     /// Append an additional line item to the invoice and update total.
     /// </summary>
     public Invoice AddLineItem(string description, decimal quantity, decimal unitPrice, string? accountCode = null)

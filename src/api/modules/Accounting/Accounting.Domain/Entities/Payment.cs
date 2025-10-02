@@ -130,7 +130,23 @@ public class Payment : AuditableEntity, IAggregateRoot
 
         // For simplicity mark as negative unapplied and queue event
         UnappliedAmount -= amount;
-        QueueDomainEvent(new PaymentReferenceUpdated(Id, PaymentNumber, refundReference));
+        QueueDomainEvent(new PaymentRefunded(Id, PaymentNumber, MemberId, amount, refundedDate, refundReference));
+        return this;
+    }
+
+    /// <summary>
+    /// Void a payment (reverses the entire payment transaction including all allocations).
+    /// </summary>
+    public Payment Void(string? voidReason = null)
+    {
+        // Reset allocations by deallocating all
+        foreach (var allocation in _allocations.ToList())
+        {
+            UnappliedAmount += allocation.Amount;
+        }
+        _allocations.Clear();
+
+        QueueDomainEvent(new PaymentVoided(Id, PaymentNumber, MemberId, DateTime.UtcNow, voidReason));
         return this;
     }
 

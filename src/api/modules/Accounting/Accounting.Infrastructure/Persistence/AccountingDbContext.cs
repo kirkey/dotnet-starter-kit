@@ -42,6 +42,16 @@ public sealed class AccountingDbContext(
     public DbSet<PatronageCapital> PatronageCapitals { get; set; } = null!;
     public DbSet<RateSchedule> RateSchedules { get; set; } = null!;
     public DbSet<SecurityDeposit> SecurityDeposits { get; set; } = null!;
+    public DbSet<DebitMemo> DebitMemos { get; set; } = null!;
+    public DbSet<CreditMemo> CreditMemos { get; set; } = null!;
+
+    // Advanced accounting entities
+    public DbSet<BankReconciliation> BankReconciliations { get; set; } = null!;
+    public DbSet<RecurringJournalEntry> RecurringJournalEntries { get; set; } = null!;
+    public DbSet<TaxCode> TaxCodes { get; set; } = null!;
+    public DbSet<CostCenter> CostCenters { get; set; } = null!;
+    public DbSet<PurchaseOrder> PurchaseOrders { get; set; } = null!;
+    public DbSet<WriteOff> WriteOffs { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

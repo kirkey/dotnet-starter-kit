@@ -126,6 +126,8 @@ public class Accrual : AuditableEntity, IAggregateRoot
 
         Description = desc;
         IsReversed = false;
+
+        QueueDomainEvent(new Events.Accrual.AccrualCreated(Id, AccrualNumber, AccrualDate, Amount, Description));
     }
 
     /// <summary>
@@ -196,7 +198,7 @@ public class Accrual : AuditableEntity, IAggregateRoot
 
         if (isUpdated)
         {
-            // Optionally queue domain event here
+            QueueDomainEvent(new Events.Accrual.AccrualUpdated(this));
         }
 
         return this;
@@ -213,5 +215,7 @@ public class Accrual : AuditableEntity, IAggregateRoot
             throw new InvalidOperationException("Accrual already reversed.");
         IsReversed = true;
         ReversalDate = reversalDate;
+
+        QueueDomainEvent(new Events.Accrual.AccrualReversed(Id, AccrualNumber, reversalDate, Amount));
     }
 }

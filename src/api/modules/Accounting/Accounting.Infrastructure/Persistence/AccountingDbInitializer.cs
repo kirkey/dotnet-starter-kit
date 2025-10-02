@@ -143,11 +143,11 @@ internal sealed class AccountingDbInitializer(
             logger.LogInformation("[{Tenant}] seeded DepreciationMethods", context.TenantInfo!.Identifier);
         }
 
-        // Seed Vendors (increase count)
+        // Seed Vendors (10 records)
         if (!await context.Vendors.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var vendors = new List<Vendor>();
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 var num = $"VEND-{1000 + i}";
                 vendors.Add(Vendor.Create(num, $"Vendor {i}", $"{i} Supplier Rd", null, $"Vendor Contact {i}", $"vendor{i}@example.com", "Net 30", "5010", "Salaries Expense", null, $"+15557{654321 + i}", $"Seeded vendor {i}"));
@@ -158,11 +158,11 @@ internal sealed class AccountingDbInitializer(
             logger.LogInformation("[{Tenant}] seeded {Count} Vendors", context.TenantInfo!.Identifier, vendors.Count);
         }
 
-        // Seed Payees (increase count)
+        // Seed Payees (10 records)
         if (!await context.Payees.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var payees = new List<Payee>();
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 payees.Add(Payee.Create($"PAY-{1000 + i}", $"Payee {i}", $"{i} Payee Ave", "5010", "Salaries Expense", null, $"Seeded payee {i}", null));
             }
@@ -172,11 +172,11 @@ internal sealed class AccountingDbInitializer(
             logger.LogInformation("[{Tenant}] seeded {Count} Payees", context.TenantInfo!.Identifier, payees.Count);
         }
 
-        // Seed Projects (increase count)
+        // Seed Projects (10 records)
         if (!await context.Projects.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var projects = new List<Project>();
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 projects.Add(Project.Create($"Project {i}", DateTime.UtcNow.Date, 50000m + i * 10000m, "ACME Corp", $"PM: Seed {i}", "Operations", $"Seeded project {i}"));
             }
@@ -225,7 +225,7 @@ internal sealed class AccountingDbInitializer(
              logger.LogInformation("[{Tenant}] seeded {Count} Members with meters, consumptions, invoices and payments", context.TenantInfo!.Identifier, members.Count);
         }
 
-        // Seed Fixed Assets (multiple)
+        // Seed Fixed Assets (10 records)
         if (!await context.FixedAssets.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var firstDepr = await context.DepreciationMethods.FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
@@ -237,7 +237,14 @@ internal sealed class AccountingDbInitializer(
                 {
                     FixedAsset.Create("Office Laptop A", DateTime.UtcNow.Date, 2000m, firstDepr.Id, 5, 200m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-LAP-001", "HQ", "IT", null, null, null, null, null, null, "AcmeCorp", "Model-LAP-1", true, "Office laptop"),
                     FixedAsset.Create("Office Laptop B", DateTime.UtcNow.Date, 2200m, firstDepr.Id, 5, 220m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-LAP-002", "HQ", "IT", null, null, null, null, null, null, "AcmeCorp", "Model-LAP-2", true, "Office laptop B"),
-                    FixedAsset.Create("Forklift", DateTime.UtcNow.Date, 15000m, firstDepr.Id, 7, 1500m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-FLK-001", "Warehouse", "Operations", null, null, null, null, null, null, "LiftCo", "FL-1", true, "Seeded forklift")
+                    FixedAsset.Create("Forklift", DateTime.UtcNow.Date, 15000m, firstDepr.Id, 7, 1500m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-FLK-001", "Warehouse", "Operations", null, null, null, null, null, null, "LiftCo", "FL-1", true, "Seeded forklift"),
+                    FixedAsset.Create("Server Rack", DateTime.UtcNow.Date, 8000m, firstDepr.Id, 5, 800m, cashAccount.Id, expenseAccount.Id, "IT Infrastructure", "SN-SRV-001", "Data Center", "IT", null, null, null, null, null, null, "ServerCo", "Rack-Pro", true, "Data center server rack"),
+                    FixedAsset.Create("Office Furniture Set", DateTime.UtcNow.Date, 5000m, firstDepr.Id, 10, 500m, cashAccount.Id, expenseAccount.Id, "Furniture", "SN-FURN-001", "HQ", "Admin", null, null, null, null, null, null, "FurniturePlus", "Desk-Set-A", true, "Office furniture"),
+                    FixedAsset.Create("Delivery Van", DateTime.UtcNow.Date, 35000m, firstDepr.Id, 8, 3500m, cashAccount.Id, expenseAccount.Id, "Vehicle", "SN-VAN-001", "Fleet", "Logistics", null, null, null, null, null, null, "AutoMakers", "Van-2024", true, "Delivery vehicle"),
+                    FixedAsset.Create("Industrial Printer", DateTime.UtcNow.Date, 12000m, firstDepr.Id, 6, 1200m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-PRT-001", "Production", "Manufacturing", null, null, null, null, null, null, "PrintTech", "IP-5000", true, "Industrial printer"),
+                    FixedAsset.Create("Conference Room System", DateTime.UtcNow.Date, 6000m, firstDepr.Id, 5, 600m, cashAccount.Id, expenseAccount.Id, "IT Equipment", "SN-CONF-001", "HQ", "IT", null, null, null, null, null, null, "TechSys", "ConferPro", true, "Conference AV system"),
+                    FixedAsset.Create("Warehouse Shelving", DateTime.UtcNow.Date, 10000m, firstDepr.Id, 15, 667m, cashAccount.Id, expenseAccount.Id, "Furniture", "SN-SHLV-001", "Warehouse", "Operations", null, null, null, null, null, null, "ShelvingCo", "Heavy-Duty", true, "Industrial shelving"),
+                    FixedAsset.Create("HVAC System", DateTime.UtcNow.Date, 25000m, firstDepr.Id, 12, 2083m, cashAccount.Id, expenseAccount.Id, "Building", "SN-HVAC-001", "HQ", "Facilities", null, null, null, null, null, null, "ClimateControl", "CC-Pro-2000", true, "HVAC system")
                 };
 
                 await context.FixedAssets.AddRangeAsync(assets, cancellationToken).ConfigureAwait(false);
@@ -275,21 +282,32 @@ internal sealed class AccountingDbInitializer(
             }
         }
 
-        // Seed simple accrual and deferred revenue (unchanged)
+        // Seed Accruals (10 records)
         if (!await context.Accruals.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
-            var accrual = Accrual.Create("ACCR-1000", DateTime.UtcNow.Date, 2500m, "Seeded accrual for utilities");
-            await context.Accruals.AddAsync(accrual, cancellationToken).ConfigureAwait(false);
+            var accruals = new List<Accrual>();
+            for (int i = 1; i <= 10; i++)
+            {
+                accruals.Add(Accrual.Create($"ACCR-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 5), 1500m + i * 250m, $"Seeded accrual for expense category {i}"));
+            }
+
+            await context.Accruals.AddRangeAsync(accruals, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            logger.LogInformation("[{Tenant}] seeded Accrual {Number}", context.TenantInfo!.Identifier, accrual.AccrualNumber);
+            logger.LogInformation("[{Tenant}] seeded {Count} Accruals", context.TenantInfo!.Identifier, accruals.Count);
         }
 
+        // Seed Deferred Revenues (10 records)
         if (!await context.DeferredRevenues.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
-            var defRev = DeferredRevenue.Create("DEF-1000", DateTime.UtcNow.Date.AddMonths(1), 1200m, "Seeded deferred revenue for subscription");
-            await context.DeferredRevenues.AddAsync(defRev, cancellationToken).ConfigureAwait(false);
+            var deferredRevenues = new List<DeferredRevenue>();
+            for (int i = 1; i <= 10; i++)
+            {
+                deferredRevenues.Add(DeferredRevenue.Create($"DEF-{1000 + i}", DateTime.UtcNow.Date.AddMonths(i), 1000m + i * 200m, $"Seeded deferred revenue for service {i}"));
+            }
+
+            await context.DeferredRevenues.AddRangeAsync(deferredRevenues, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            logger.LogInformation("[{Tenant}] seeded DeferredRevenue {Number}", context.TenantInfo!.Identifier, defRev.DeferredRevenueNumber);
+            logger.LogInformation("[{Tenant}] seeded {Count} DeferredRevenues", context.TenantInfo!.Identifier, deferredRevenues.Count);
         }
 
         // Seed a Regulatory Report (unchanged)
@@ -368,7 +386,7 @@ internal sealed class AccountingDbInitializer(
                 })
                 .ToList();
 
-            if (pcList.Any())
+            if (pcList.Count > 0)
             {
                 await context.PatronageCapitals.AddRangeAsync(pcList, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -388,7 +406,7 @@ internal sealed class AccountingDbInitializer(
                 })
                 .ToList();
 
-            if (sdList.Any())
+            if (sdList.Count > 0)
             {
                 await context.SecurityDeposits.AddRangeAsync(sdList, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -396,6 +414,207 @@ internal sealed class AccountingDbInitializer(
             }
         }
 
-        // ...existing code beyond seeding sections...
+        // Seed TaxCodes (10 records)
+        if (!await context.TaxCodes.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var revenueAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "4010", cancellationToken).ConfigureAwait(false);
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
+            if (revenueAccount != null && expenseAccount != null)
+            {
+                var taxCodes = new List<TaxCode>
+                {
+                    TaxCode.Create("VAT-STD", "Standard VAT", TaxType.VAT, 0.20m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX001", "Standard", "Standard VAT rate"),
+                    TaxCode.Create("VAT-RED", "Reduced VAT", TaxType.VAT, 0.10m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX002", "Reduced", "Reduced VAT rate"),
+                    TaxCode.Create("GST-STD", "Standard GST", TaxType.GST, 0.15m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Federal", null, expenseAccount.Id, "Federal Tax Authority", "TX003", "Standard", "Standard GST rate"),
+                    TaxCode.Create("USE-TAX", "Use Tax", TaxType.UseTax, 0.07m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "State", null, expenseAccount.Id, "State Tax Authority", "TX004", "UseTax", "Use tax"),
+                    TaxCode.Create("SALES-CA", "California Sales Tax", TaxType.SalesTax, 0.0725m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "California", null, expenseAccount.Id, "CA Tax Authority", "TX005", "State", "CA sales tax"),
+                    TaxCode.Create("WHT-STD", "Standard Withholding Tax", TaxType.Withholding, 0.05m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX006", "WHT", "Standard withholding tax"),
+                    TaxCode.Create("EXCISE-1", "Excise Tax Type 1", TaxType.Excise, 0.12m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Federal", null, expenseAccount.Id, "Federal Tax Authority", "TX007", "Excise", "Excise tax type 1"),
+                    TaxCode.Create("VAT-ZERO", "Zero-Rated VAT", TaxType.VAT, 0.0m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX008", "Zero", "Zero-rated VAT"),
+                    TaxCode.Create("PROP-TAX", "Property Tax", TaxType.Property, 0.015m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Municipal", null, expenseAccount.Id, "Municipal Tax Authority", "TX009", "Property", "Property tax"),
+                    TaxCode.Create("OTHER-TAX", "Other Tax", TaxType.Other, 0.08m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Local", null, expenseAccount.Id, "Local Tax Authority", "TX010", "Other", "Miscellaneous tax")
+                };
+
+                await context.TaxCodes.AddRangeAsync(taxCodes, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} TaxCodes", context.TenantInfo!.Identifier, taxCodes.Count);
+            }
+        }
+
+        // Seed CostCenters (10 records)
+        if (!await context.CostCenters.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var costCenters = new List<CostCenter>
+            {
+                CostCenter.Create("CC-001", "Sales Department", CostCenterType.Department, null, null, "John Manager", 150000m, "HQ Floor 1", DateTime.UtcNow.Date.AddYears(-1), null, "Sales cost center", "Handles all sales operations"),
+                CostCenter.Create("CC-002", "Marketing Department", CostCenterType.Department, null, null, "Jane Director", 120000m, "HQ Floor 2", DateTime.UtcNow.Date.AddYears(-1), null, "Marketing cost center", "Marketing and promotions"),
+                CostCenter.Create("CC-003", "IT Department", CostCenterType.Department, null, null, "Bob Tech", 200000m, "HQ Floor 3", DateTime.UtcNow.Date.AddYears(-1), null, "IT cost center", "IT infrastructure and support"),
+                CostCenter.Create("CC-004", "HR Department", CostCenterType.Department, null, null, "Alice HR", 80000m, "HQ Floor 1", DateTime.UtcNow.Date.AddYears(-1), null, "HR cost center", "Human resources"),
+                CostCenter.Create("CC-005", "Finance Department", CostCenterType.Department, null, null, "Charlie CFO", 100000m, "HQ Floor 2", DateTime.UtcNow.Date.AddYears(-1), null, "Finance cost center", "Financial operations"),
+                CostCenter.Create("CC-006", "Operations Division", CostCenterType.Division, null, null, "Dave Ops", 250000m, "Warehouse A", DateTime.UtcNow.Date.AddYears(-1), null, "Operations cost center", "Day-to-day operations"),
+                CostCenter.Create("CC-007", "Research Project Alpha", CostCenterType.Project, null, null, "Eve Research", 300000m, "Lab Building", DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(2), "R&D project cost center", "Research project tracking"),
+                CostCenter.Create("CC-008", "Customer Service Unit", CostCenterType.BusinessUnit, null, null, "Frank Support", 90000m, "Service Center", DateTime.UtcNow.Date.AddYears(-1), null, "Customer service cost center", "Customer support operations"),
+                CostCenter.Create("CC-009", "Production Location 1", CostCenterType.Location, null, null, "Grace Production", 400000m, "Factory Floor A", DateTime.UtcNow.Date.AddYears(-1), null, "Production cost center", "Manufacturing line 1"),
+                CostCenter.Create("CC-010", "Administrative Support", CostCenterType.Other, null, null, "Henry Admin", 70000m, "HQ Floor 1", DateTime.UtcNow.Date.AddYears(-1), null, "Admin cost center", "Administrative support services")
+            };
+
+            await context.CostCenters.AddRangeAsync(costCenters, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            logger.LogInformation("[{Tenant}] seeded {Count} CostCenters", context.TenantInfo!.Identifier, costCenters.Count);
+        }
+
+        // Seed WriteOffs (10 records)
+        if (!await context.WriteOffs.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var receivableAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1100", cancellationToken).ConfigureAwait(false);
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
+            var members = await context.Members.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            
+            if (receivableAccount != null && expenseAccount != null && members.Count > 0)
+            {
+                var writeOffs = new List<WriteOff>();
+                for (int i = 0; i < Math.Min(10, members.Count); i++)
+                {
+                    var member = members[i];
+                    writeOffs.Add(WriteOff.Create($"WO-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 10), WriteOffType.BadDebt, 500m + i * 100m, receivableAccount.Id, expenseAccount.Id, member.Id, member.Name, null, null, "Uncollectible debt", $"Seeded write-off {i + 1}", null));
+                }
+
+                await context.WriteOffs.AddRangeAsync(writeOffs, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} WriteOffs", context.TenantInfo!.Identifier, writeOffs.Count);
+            }
+        }
+
+        // Seed DebitMemos (10 records)
+        if (!await context.DebitMemos.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var members = await context.Members.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (members.Count > 0)
+            {
+                var debitMemos = new List<DebitMemo>();
+                for (int i = 0; i < Math.Min(10, members.Count); i++)
+                {
+                    var member = members[i];
+                    debitMemos.Add(DebitMemo.Create($"DM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 7), 250m + i * 50m, "Member", member.Id, null, "Additional charges", $"Seeded debit memo {i + 1}", null));
+                }
+
+                await context.DebitMemos.AddRangeAsync(debitMemos, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} DebitMemos", context.TenantInfo!.Identifier, debitMemos.Count);
+            }
+        }
+
+        // Seed CreditMemos (10 records)
+        if (!await context.CreditMemos.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var members = await context.Members.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (members.Count > 0)
+            {
+                var creditMemos = new List<CreditMemo>();
+                for (int i = 0; i < Math.Min(10, members.Count); i++)
+                {
+                    var member = members[i];
+                    creditMemos.Add(CreditMemo.Create($"CM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 6), 180m + i * 30m, "Member", member.Id, null, "Service credit", $"Seeded credit memo {i + 1}", null));
+                }
+
+                await context.CreditMemos.AddRangeAsync(creditMemos, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} CreditMemos", context.TenantInfo!.Identifier, creditMemos.Count);
+            }
+        }
+
+        // Seed BankReconciliations (10 records)
+        if (!await context.BankReconciliations.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var bankAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1020", cancellationToken).ConfigureAwait(false);
+            if (bankAccount != null)
+            {
+                var reconciliations = new List<BankReconciliation>();
+                for (int i = 1; i <= 10; i++)
+                {
+                    var statementBalance = 50000m + i * 5000m;
+                    var bookBalance = statementBalance - (i * 100m);
+                    reconciliations.Add(BankReconciliation.Create(bankAccount.Id, DateTime.UtcNow.Date.AddMonths(-i), statementBalance, bookBalance, $"STMT-{1000 + i}", $"Seeded bank reconciliation {i}", null));
+                }
+
+                await context.BankReconciliations.AddRangeAsync(reconciliations, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} BankReconciliations", context.TenantInfo!.Identifier, reconciliations.Count);
+            }
+        }
+
+        // Seed RecurringJournalEntries (10 records)
+        if (!await context.RecurringJournalEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var debitAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5020", cancellationToken).ConfigureAwait(false);
+            var creditAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1020", cancellationToken).ConfigureAwait(false);
+            
+            if (debitAccount != null && creditAccount != null)
+            {
+                var recurringEntries = new List<RecurringJournalEntry>
+                {
+                    RecurringJournalEntry.Create("RJE-001", "Monthly Rent Payment", RecurrenceFrequency.Monthly, 5000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Recurring rent", null),
+                    RecurringJournalEntry.Create("RJE-002", "Monthly Office Supplies", RecurrenceFrequency.Monthly, 500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddMonths(6), null, "Office supplies purchase", null),
+                    RecurringJournalEntry.Create("RJE-003", "Quarterly Insurance", RecurrenceFrequency.Quarterly, 3000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(2), null, "Insurance premium", null),
+                    RecurringJournalEntry.Create("RJE-004", "Annual License Fee", RecurrenceFrequency.Annually, 12000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(5), null, "Software license", null),
+                    RecurringJournalEntry.Create("RJE-005", "Quarterly Maintenance", RecurrenceFrequency.Quarterly, 8000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(3), null, "Equipment maintenance", null),
+                    RecurringJournalEntry.Create("RJE-006", "Monthly Utilities", RecurrenceFrequency.Monthly, 1500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Utility bills", null),
+                    RecurringJournalEntry.Create("RJE-007", "Monthly Payroll Processing", RecurrenceFrequency.Monthly, 45000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Payroll processing", null),
+                    RecurringJournalEntry.Create("RJE-008", "Annually Subscription Fees", RecurrenceFrequency.Annually, 25000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddMonths(3), null, "Annual subscription fees", null),
+                    RecurringJournalEntry.Create("RJE-009", "Custom Interval Payment", RecurrenceFrequency.Custom, 2000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), 45, "45-day interval payment", null),
+                    RecurringJournalEntry.Create("RJE-010", "Monthly Marketing Spend", RecurrenceFrequency.Monthly, 7500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Marketing campaign", null)
+                };
+
+                await context.RecurringJournalEntries.AddRangeAsync(recurringEntries, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} RecurringJournalEntries", context.TenantInfo!.Identifier, recurringEntries.Count);
+            }
+        }
+
+        // Seed PurchaseOrders (10 records)
+        if (!await context.PurchaseOrders.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var vendors = await context.Vendors.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var costCenters = await context.CostCenters.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var projects = await context.Projects.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            
+            if (vendors.Count > 0)
+            {
+                var purchaseOrders = new List<PurchaseOrder>();
+                for (int i = 0; i < Math.Min(10, vendors.Count); i++)
+                {
+                    var vendor = vendors[i];
+                    var costCenter = costCenters.Count > 0 ? costCenters[i % costCenters.Count].Id : (DefaultIdType?)null;
+                    var project = projects.Count > 0 ? projects[i % projects.Count].Id : (DefaultIdType?)null;
+                    
+                    purchaseOrders.Add(PurchaseOrder.Create($"PO-{2000 + i}", DateTime.UtcNow.Date.AddDays(-i * 5), vendor.Id, vendor.Name, null, $"Requester {i + 1}", costCenter, project, DateTime.UtcNow.Date.AddDays(30), $"Delivery Address {i + 1}", "Net 30", $"REF-{1000 + i}", $"Seeded purchase order {i + 1}", null));
+                }
+
+                await context.PurchaseOrders.AddRangeAsync(purchaseOrders, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} PurchaseOrders", context.TenantInfo!.Identifier, purchaseOrders.Count);
+            }
+        }
+
+        // Seed ProjectCostEntries (10 records)
+        if (!await context.ProjectCostEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var projects = await context.Projects.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
+            
+            if (projects.Count > 0 && expenseAccount != null)
+            {
+                var projectCostEntries = new List<ProjectCostEntry>();
+                for (int i = 0; i < Math.Min(10, projects.Count); i++)
+                {
+                    var project = projects[i];
+                    projectCostEntries.Add(ProjectCostEntry.Create(project.Id, DateTime.UtcNow.Date.AddDays(-i * 3), 1500m + i * 250m, $"Project cost entry {i + 1}", expenseAccount.Id, "Labor", null, "CC-001", $"WO-{1000 + i}", true, $"Vendor {i + 1}", $"INV-{2000 + i}"));
+                }
+
+                await context.ProjectCostEntries.AddRangeAsync(projectCostEntries, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} ProjectCostEntries", context.TenantInfo!.Identifier, projectCostEntries.Count);
+            }
+        }
     }
 }

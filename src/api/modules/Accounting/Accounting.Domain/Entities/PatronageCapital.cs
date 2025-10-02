@@ -1,3 +1,5 @@
+using Accounting.Domain.Events.PatronageCapital;
+
 namespace Accounting.Domain;
 
 /// <summary>
@@ -84,6 +86,8 @@ public class PatronageCapital : AuditableEntity, IAggregateRoot
         Status = "Allocated";
         Description = description?.Trim();
         Notes = notes?.Trim();
+
+        QueueDomainEvent(new PatronageCapitalAllocated(Id, memberId, fiscalYear, amountAllocated, DateTime.UtcNow));
     }
 
     /// <summary>
@@ -111,6 +115,18 @@ public class PatronageCapital : AuditableEntity, IAggregateRoot
 
         AmountRetired += amount;
         Status = AmountRetired == AmountAllocated ? "Retired" : "PartiallyRetired";
+
+        var retirementDate = DateTime.UtcNow;
+        if (Status == "Retired")
+        {
+            QueueDomainEvent(new PatronageCapitalRetired(Id, MemberId, FiscalYear, amount, retirementDate, null));
+        }
+        else
+        {
+            var remaining = AmountAllocated - AmountRetired;
+            QueueDomainEvent(new PatronageCapitalPartiallyRetired(Id, MemberId, FiscalYear, amount, remaining, retirementDate, null));
+        }
+
         return this;
     }
 

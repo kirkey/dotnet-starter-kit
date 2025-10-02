@@ -1,3 +1,5 @@
+using Accounting.Domain.Events.DeferredRevenue;
+
 namespace Accounting.Domain;
 
 /// <summary>
@@ -78,6 +80,8 @@ public class DeferredRevenue : AuditableEntity, IAggregateRoot
         Amount = amount;
         Description = description.Trim();
         IsRecognized = false;
+
+        QueueDomainEvent(new DeferredRevenueCreated(Id, deferredRevenueNumber, recognitionDate, amount, description));
     }
 
     /// <summary>
@@ -101,5 +105,7 @@ public class DeferredRevenue : AuditableEntity, IAggregateRoot
             throw new InvalidOperationException("Deferred revenue already recognized.");
         IsRecognized = true;
         RecognizedDate = recognizedDate;
+
+        QueueDomainEvent(new DeferredRevenueRecognized(Id, DeferredRevenueNumber, Amount, recognizedDate));
     }
 }

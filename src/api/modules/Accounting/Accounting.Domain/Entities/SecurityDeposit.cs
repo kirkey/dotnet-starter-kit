@@ -1,3 +1,5 @@
+using Accounting.Domain.Events.SecurityDeposit;
+
 namespace Accounting.Domain;
 
 /// <summary>
@@ -35,10 +37,9 @@ namespace Accounting.Domain;
 /// - Refund triggers liability reduction in general ledger
 /// - Deposit requirements based on customer credit score and payment history
 /// </remarks>
-/// <seealso cref="Accounting.Domain.Events.SecurityDeposit.SecurityDepositReceived"/>
+/// <seealso cref="Accounting.Domain.Events.SecurityDeposit.SecurityDepositCreated"/>
 /// <seealso cref="Accounting.Domain.Events.SecurityDeposit.SecurityDepositRefunded"/>
 /// <seealso cref="Accounting.Domain.Events.SecurityDeposit.SecurityDepositInterestAccrued"/>
-/// <seealso cref="Accounting.Domain.Events.SecurityDeposit.SecurityDepositForfeited"/>
 /// <seealso cref="Accounting.Domain.Events.SecurityDeposit.SecurityDepositTransferred"/>
 public class SecurityDeposit : AuditableEntity, IAggregateRoot
 {
@@ -88,6 +89,8 @@ public class SecurityDeposit : AuditableEntity, IAggregateRoot
         IsRefunded = false;
         Description = description?.Trim();
         Notes = notes?.Trim();
+
+        QueueDomainEvent(new SecurityDepositCreated(Id, memberId, depositAmount, depositDate, null));
     }
 
     /// <summary>
@@ -108,6 +111,8 @@ public class SecurityDeposit : AuditableEntity, IAggregateRoot
         IsRefunded = true;
         RefundedDate = refundedDate;
         RefundReference = refundReference?.Trim();
+
+        QueueDomainEvent(new SecurityDepositRefunded(Id, MemberId, DepositAmount, DepositAmount, refundedDate, refundReference));
         return this;
     }
 }
