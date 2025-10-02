@@ -1,4 +1,5 @@
 @page "/accounting/payees"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
 
 <PageHeader Title="Payees" Header="Payees" SubHeader="Manage Payees." />
 
@@ -16,7 +17,13 @@
                           Label="Payee Code"
                           Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="8" lg="9">
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.Tin"
+                          For="@(() => context.Tin)"
+                          Label="TIN"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Name"
                           For="@(() => context.Name)"
                           Label="Name"
@@ -28,23 +35,12 @@
                           Label="Address"
                           Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.ExpenseAccountCode"
-                          For="@(() => context.ExpenseAccountCode)"
-                          Label="Expense Account Code"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="8" lg="9">
-            <MudTextField @bind-Value="context.ExpenseAccountName"
-                          For="@(() => context.ExpenseAccountName)"
-                          Label="Expense Account Name"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.Tin"
-                          For="@(() => context.Tin)"
-                          Label="TIN"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12">
+            <AutocompleteChartOfAccountCode @bind-Value="context.ExpenseAccountCode"
+                                            For="@(() => context.ExpenseAccountCode)"
+                                            Label="Expense Account" 
+                                            TextFormat="CodeName"
+                                            Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Description"

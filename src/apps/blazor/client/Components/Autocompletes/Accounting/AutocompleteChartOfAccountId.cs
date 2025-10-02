@@ -1,9 +1,9 @@
 ﻿namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting;
 
 /// <summary>
-/// Autocomplete component for selecting an Accounting Period by its identifier.
+/// Autocomplete component for selecting a Chart Of Account by its identifier.
 /// - Fetches a single ChartOfAccount by id when needed.
-/// - Searches ChartOfAccounts by name/description/notes and caches results in-memory.
+/// - Searches ChartOfAccounts by accountCode/name/description/notes and caches results in-memory.
 /// - Returns Ids (DefaultIdType) as value while showing the human-friendly Name.
 /// </summary>
 public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountResponse, IClient, DefaultIdType>
@@ -33,7 +33,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
     }
 
     /// <summary>
-    /// Returns the first page of accounting periods matching the search text (by Id list).
+    /// Returns the first page of chart of accounts matching the search text (by Id list).
     /// </summary>
     protected override async Task<IEnumerable<DefaultIdType>> SearchText(string? value, CancellationToken token)
     {
@@ -43,7 +43,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "name", "description", "notes" },
+                Fields = new[] { "accountCode", "name", "description", "notes" },
                 Keyword = value
             }
         };

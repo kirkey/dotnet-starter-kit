@@ -3,7 +3,6 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes;
 public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TKey>
     where TDto : class, new()
     where TClient : class
-    where TKey : notnull
 {
     protected Dictionary<TKey, TDto> _dictionary = [];
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
@@ -28,7 +27,7 @@ public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TK
         }
     }
 
-    protected abstract Task<TDto?> GetItem(TKey id);
+    protected abstract Task<TDto?> GetItem(TKey code);
     protected abstract Task<IEnumerable<TKey>> SearchText(string? value, CancellationToken token);
-    protected abstract string GetTextValue(TKey? id);
+    protected abstract string GetTextValue(TKey? code);
 }
