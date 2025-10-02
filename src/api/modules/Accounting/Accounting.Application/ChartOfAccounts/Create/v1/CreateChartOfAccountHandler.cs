@@ -1,5 +1,4 @@
 using Accounting.Application.ChartOfAccounts.Exceptions;
-using Accounting.Application.ChartOfAccounts.Queries;
 using Accounting.Application.ChartOfAccounts.Specs;
 
 namespace Accounting.Application.ChartOfAccounts.Create.v1;

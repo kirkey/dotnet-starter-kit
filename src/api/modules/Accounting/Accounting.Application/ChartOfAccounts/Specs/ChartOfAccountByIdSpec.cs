@@ -1,6 +1,6 @@
 using Accounting.Application.ChartOfAccounts.Responses;
 
-namespace Accounting.Application.ChartOfAccounts.Queries;
+namespace Accounting.Application.ChartOfAccounts.Specs;
 
 public sealed class ChartOfAccountByIdSpec :
     Specification<ChartOfAccount, ChartOfAccountResponse>,

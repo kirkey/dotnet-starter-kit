@@ -1,4 +1,4 @@
-namespace Accounting.Application.ChartOfAccounts.Queries;
+namespace Accounting.Application.ChartOfAccounts.Specs;
 
 public sealed class ChartOfAccountByNameSpec : Specification<ChartOfAccount>, ISingleResultSpecification<ChartOfAccount>
 {

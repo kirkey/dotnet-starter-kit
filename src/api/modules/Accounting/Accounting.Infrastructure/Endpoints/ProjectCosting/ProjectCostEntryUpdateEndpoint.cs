@@ -1,4 +1,4 @@
-using Accounting.Application.ProjectCosting.Update;
+using Accounting.Application.Projects.Costing.Update;
 
 namespace Accounting.Infrastructure.Endpoints.ProjectCosting;
 

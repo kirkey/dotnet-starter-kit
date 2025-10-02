@@ -1,4 +1,4 @@
-using Accounting.Application.ProjectCosting.Delete;
+using Accounting.Application.Projects.Costing.Delete;
 
 namespace Accounting.Infrastructure.Endpoints.ProjectCosting;
 

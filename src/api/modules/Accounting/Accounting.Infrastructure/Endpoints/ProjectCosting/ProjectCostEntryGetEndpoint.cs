@@ -1,4 +1,4 @@
-using Accounting.Application.ProjectCosting.Get;
+using Accounting.Application.Projects.Costing.Get;
 
 namespace Accounting.Infrastructure.Endpoints.ProjectCosting;
 
