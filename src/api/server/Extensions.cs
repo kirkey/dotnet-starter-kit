@@ -33,7 +33,6 @@ public static class Extensions
         {
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
-            config.WithModule<StoreModule.Endpoints>();
         });
 
         return builder;
@@ -61,6 +60,9 @@ public static class Extensions
 
         //map accounting endpoints directly (not using Carter)
         endpoints.MapAccountingEndpoints();
+
+        //map store endpoints directly (not using Carter)
+        endpoints.MapStoreEndpoints();
 
         //use carter for other modules
         endpoints.MapCarter();
