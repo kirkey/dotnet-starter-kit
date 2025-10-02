@@ -11,8 +11,7 @@ public class UpdateConsumptionHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (entity == null)
-            throw new ConsumptionNotFoundException(request.Id);
+        _ = entity ?? throw new ConsumptionNotFoundException(request.Id);
 
         // Domain Update performs trimming, length enforcement and validation
         entity.Update(request.CurrentReading, request.PreviousReading, request.ReadingType, request.Multiplier, request.ReadingSource, request.Description, request.Notes);

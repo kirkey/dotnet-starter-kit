@@ -11,8 +11,7 @@ public class DeleteConsumptionHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (entity == null)
-            throw new ConsumptionNotFoundException(request.Id);
+        _ = entity ?? throw new ConsumptionNotFoundException(request.Id);
 
         await repository.DeleteAsync(entity, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

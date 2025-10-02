@@ -1,6 +1,8 @@
 // AccountingPeriodExceptions.cs
 // Per-domain exceptions for Accounting Periods
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class AccountingPeriodNotFoundException(DefaultIdType id) : NotFoundException($"accounting period with id {id} not found");

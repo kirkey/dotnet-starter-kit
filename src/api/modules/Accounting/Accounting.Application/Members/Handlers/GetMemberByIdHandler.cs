@@ -9,8 +9,7 @@ public class GetMemberByIdHandler(IReadRepository<Member> repository)
     public async Task<MemberResponse> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
     {
         var member = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (member == null)
-            throw new NotFoundException($"Member with Id {request.Id} not found");
+        if (member == null) throw new MemberNotFoundException(request.Id);
 
         return new MemberResponse
         {

@@ -1,5 +1,3 @@
-using Accounting.Application.JournalEntries.Exceptions;
-
 namespace Accounting.Application.JournalEntries.Approve;
 
 /// <summary>

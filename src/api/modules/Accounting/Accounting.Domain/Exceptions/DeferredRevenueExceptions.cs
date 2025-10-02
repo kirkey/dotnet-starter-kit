@@ -1,5 +1,7 @@
 // Deferred Revenue Exceptions
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 /// <summary>

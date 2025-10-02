@@ -1,6 +1,8 @@
 // DepreciationMethodExceptions.cs
 // Per-domain exceptions for Depreciation Methods
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class DepreciationMethodNotFoundException(DefaultIdType id) : NotFoundException($"depreciation method with id {id} not found");

@@ -1,5 +1,3 @@
-using Accounting.Domain.Exceptions;
-
 namespace Accounting.Application.DebitMemos.Void;
 
 /// <summary>

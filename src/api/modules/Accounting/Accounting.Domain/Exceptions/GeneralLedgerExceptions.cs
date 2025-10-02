@@ -1,6 +1,8 @@
 // GeneralLedgerExceptions.cs
 // Per-domain exceptions for the General Ledger
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class GeneralLedgerNotFoundException(DefaultIdType id) : NotFoundException($"general ledger entry with id {id} not found");

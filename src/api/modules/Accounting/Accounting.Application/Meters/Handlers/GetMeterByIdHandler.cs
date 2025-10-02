@@ -9,8 +9,7 @@ public class GetMeterByIdHandler(IReadRepository<Meter> repository)
     public async Task<MeterResponse> Handle(GetMeterByIdQuery request, CancellationToken cancellationToken)
     {
         var meter = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (meter == null)
-            throw new NotFoundException($"Meter with Id {request.Id} not found");
+        if (meter == null) throw new MeterByIdNotFoundException(request.Id);
 
         return meter.Adapt<MeterResponse>();
     }

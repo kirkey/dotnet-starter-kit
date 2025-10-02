@@ -1,5 +1,7 @@
 // InventoryItem Exceptions
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class InventoryItemNotFoundException(DefaultIdType id) : NotFoundException($"inventory item with id {id} not found");

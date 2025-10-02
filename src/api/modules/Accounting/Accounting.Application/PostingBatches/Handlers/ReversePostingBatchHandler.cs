@@ -8,8 +8,7 @@ public class ReversePostingBatchHandler(IRepository<PostingBatch> repository)
     public async Task Handle(ReversePostingBatchCommand request, CancellationToken cancellationToken)
     {
         var batch = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (batch == null)
-            throw new NotFoundException($"PostingBatch with Id {request.Id} not found");
+        _ = batch ?? throw new PostingBatchByIdNotFoundException(request.Id);
         batch.Reverse(request.Reason);
         await repository.UpdateAsync(batch, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

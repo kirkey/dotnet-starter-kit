@@ -8,8 +8,7 @@ public class RecognizeDeferredRevenueHandler(IRepository<DeferredRevenue> reposi
     public async Task Handle(RecognizeDeferredRevenueCommand request, CancellationToken cancellationToken)
     {
         var deferred = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (deferred == null)
-            throw new NotFoundException($"DeferredRevenue with Id {request.Id} not found");
+        _ = deferred ?? throw new DeferredRevenueByIdNotFoundException(request.Id);
         deferred.Recognize(request.RecognizedDate);
         await repository.UpdateAsync(deferred, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

@@ -9,8 +9,7 @@ public class GetPostingBatchByIdHandler(IReadRepository<PostingBatch> repository
     public async Task<PostingBatchResponse> Handle(GetPostingBatchByIdQuery request, CancellationToken cancellationToken)
     {
         var batch = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (batch == null)
-            throw new NotFoundException($"PostingBatch with Id {request.Id} not found");
+        if (batch == null) throw new PostingBatchByIdNotFoundException(request.Id);
         return new PostingBatchResponse
         {
             Id = batch.Id,

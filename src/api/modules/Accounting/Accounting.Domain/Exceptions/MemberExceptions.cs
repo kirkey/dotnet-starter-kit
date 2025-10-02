@@ -1,6 +1,8 @@
 // MemberExceptions.cs
 // Per-domain exceptions for Member aggregate
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class MemberNotFoundException(DefaultIdType id) : NotFoundException($"member with id {id} not found");

@@ -1,8 +1,6 @@
-using Accounting.Application.JournalEntries.Exceptions;
-using JournalEntryAlreadyPostedException = Accounting.Application.JournalEntries.Exceptions.JournalEntryAlreadyPostedException;
-using JournalEntryNotFoundException = Accounting.Application.JournalEntries.Exceptions.JournalEntryNotFoundException;
-
 namespace Accounting.Application.GeneralLedgers.Commands.PostJournalEntry.v1;
+
+using Domain.Exceptions;
 
 public sealed class PostJournalEntryCommandHandler(
     ILogger<PostJournalEntryCommandHandler> logger,
@@ -22,13 +20,13 @@ public sealed class PostJournalEntryCommandHandler(
         var journalEntry = await journalRepository.GetByIdAsync(request.JournalEntryId, cancellationToken);
         if (journalEntry == null)
         {
-            throw new JournalEntryNotFoundException($"Journal entry with ID {request.JournalEntryId} not found");
+            throw new JournalEntryNotFoundException(request.JournalEntryId);
         }
 
         // Validate that journal entry is not already posted
         if (journalEntry.IsPosted)
         {
-            throw new JournalEntryAlreadyPostedException($"Journal entry {journalEntry.ReferenceNumber} is already posted");
+            throw new JournalEntryAlreadyPostedException(journalEntry.Id);
         }
 
         // Validate balances if required

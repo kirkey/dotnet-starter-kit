@@ -13,13 +13,13 @@ public sealed class AllocatePaymentHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var payment = await paymentRepository.GetByIdAsync(request.PaymentId, cancellationToken);
-        if (payment == null) throw new KeyNotFoundException($"Payment {request.PaymentId} not found");
+        _ = payment ?? throw new PaymentByIdNotFoundException(request.PaymentId);
 
         decimal totalAllocated = 0m;
         foreach (var item in request.Allocations)
         {
             var invoice = await invoiceRepository.GetByIdAsync(item.InvoiceId, cancellationToken);
-            if (invoice == null) throw new KeyNotFoundException($"Invoice {item.InvoiceId} not found");
+            _ = invoice ?? throw new InvoiceByIdNotFoundException(item.InvoiceId);
 
             var outstanding = invoice.GetOutstandingAmount();
             if (item.Amount > outstanding) throw new InvalidOperationException($"Allocation amount {item.Amount} exceeds outstanding {outstanding} for invoice {item.InvoiceId}");

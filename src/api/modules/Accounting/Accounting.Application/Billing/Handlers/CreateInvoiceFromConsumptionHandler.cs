@@ -4,7 +4,7 @@ namespace Accounting.Application.Billing.Handlers;
 
 public sealed class CreateInvoiceFromConsumptionHandler(
     IBillingService billingService,
-    [FromKeyedServices("accounting:Consumption")] IReadRepository<Consumption> consumptionRepo,
+    [FromKeyedServices("accounting:consumption")] IReadRepository<Consumption> consumptionRepo,
     [FromKeyedServices("accounting:members")] IRepository<Member> memberRepo,
     [FromKeyedServices("accounting:rateschedules")] IReadRepository<RateSchedule> rateRepo,
     [FromKeyedServices("accounting:invoices")] IRepository<Invoice> invoiceRepo,
@@ -17,7 +17,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var consumption = await consumptionRepo.GetByIdAsync(request.ConsumptionId, cancellationToken);
-        if (consumption == null) throw new KeyNotFoundException($"Consumption data {request.ConsumptionId} not found");
+        _ = consumption ?? throw new ConsumptionNotFoundException(request.ConsumptionId);
 
         Member? member = null;
         // consumption.MeterId is DefaultIdType (non-nullable); find a member by matching MeterId

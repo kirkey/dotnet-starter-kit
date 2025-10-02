@@ -29,9 +29,9 @@ public class CreditMemoConfiguration : IEntityTypeConfiguration<CreditMemo>
             .HasPrecision(18, 2)
             .IsRequired();
 
-        builder.Property(x => x.UnappliedAmount)
-            .HasPrecision(18, 2)
-            .IsRequired();
+        // UnappliedAmount is a computed domain property (Amount - AppliedAmount - RefundedAmount)
+        // and should not be mapped to a database column.
+        builder.Ignore(x => x.UnappliedAmount);
 
         builder.Property(x => x.ReferenceType)
             .HasMaxLength(50)

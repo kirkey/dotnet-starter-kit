@@ -8,8 +8,7 @@ public class DeletePaymentAllocationHandler(IRepository<PaymentAllocation> repos
     public async Task<Unit> Handle(DeletePaymentAllocationCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (entity == null)
-            throw new NotFoundException($"PaymentAllocation with Id {request.Id} not found");
+        _ = entity ?? throw new PaymentAllocationByIdNotFoundException(request.Id);
 
         await repository.DeleteAsync(entity, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

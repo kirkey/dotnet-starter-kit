@@ -1,5 +1,3 @@
-using Accounting.Application.Projects.Exceptions;
-
 namespace Accounting.Application.Projects.Costing.Create;
 
 /// <summary>
@@ -28,7 +26,7 @@ public sealed class CreateProjectCostingHandler(
         // Validate project exists
         var project = await projectRepository.GetByIdAsync(request.ProjectId, cancellationToken);
         if (project is null)
-            throw new Accounting.Domain.Exceptions.ProjectNotFoundException(request.ProjectId);
+            throw new ProjectNotFoundException(request.ProjectId);
 
         // Validate account exists
         var account = await accountRepository.GetByIdAsync(request.AccountId, cancellationToken);

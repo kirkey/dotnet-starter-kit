@@ -8,10 +8,7 @@ public class UpdatePaymentAllocationHandler(IRepository<PaymentAllocation> repos
     public async Task<DefaultIdType> Handle(UpdatePaymentAllocationCommand request, CancellationToken cancellationToken)
     {
         var existingAllocation = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (existingAllocation == null)
-        {
-            throw new NotFoundException($"PaymentAllocation with Id {request.Id} not found");
-        }
+        _ = existingAllocation ?? throw new PaymentAllocationByIdNotFoundException(request.Id);
 
         // "Update" is a deleted and create operation to respect domain immutability
         await repository.DeleteAsync(existingAllocation, cancellationToken);

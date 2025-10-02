@@ -1,6 +1,8 @@
 // RegulatoryReportExceptions.cs
 // Per-domain exceptions for RegulatoryReport aggregate
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class RegulatoryReportNotFoundException(DefaultIdType id) : NotFoundException($"regulatory report with id {id} not found");

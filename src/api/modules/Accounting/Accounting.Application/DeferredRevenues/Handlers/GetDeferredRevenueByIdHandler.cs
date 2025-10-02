@@ -9,8 +9,7 @@ public class GetDeferredRevenueByIdHandler(IReadRepository<DeferredRevenue> repo
     public async Task<DeferredRevenueResponse> Handle(GetDeferredRevenueByIdQuery request, CancellationToken cancellationToken)
     {
         var deferred = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (deferred == null)
-            throw new NotFoundException($"DeferredRevenue with Id {request.Id} not found");
+        if (deferred == null) throw new DeferredRevenueByIdNotFoundException(request.Id);
         return new DeferredRevenueResponse
         {
             Id = deferred.Id,

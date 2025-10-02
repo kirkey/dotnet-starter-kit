@@ -1,6 +1,3 @@
-using JournalEntryAlreadyPostedException = Accounting.Application.JournalEntries.Exceptions.JournalEntryAlreadyPostedException;
-using JournalEntryNotFoundException = Accounting.Application.JournalEntries.Exceptions.JournalEntryNotFoundException;
-
 namespace Accounting.Application.JournalEntries.Update;
 
 public sealed class UpdateJournalEntryHandler(
@@ -12,10 +9,10 @@ public sealed class UpdateJournalEntryHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var entry = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (entry == null) throw new JournalEntryNotFoundException(request.Id.ToString());
+        if (entry == null) throw new JournalEntryNotFoundException(request.Id);
 
         // Check if already posted
-        if (entry.IsPosted) throw new JournalEntryAlreadyPostedException(request.Id.ToString());
+        if (entry.IsPosted) throw new JournalEntryAlreadyPostedException(request.Id);
 
         // Check for duplicate reference number (excluding current entry)
         if (!string.IsNullOrEmpty(request.ReferenceNumber) && request.ReferenceNumber != entry.ReferenceNumber)

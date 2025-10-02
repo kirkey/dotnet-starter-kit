@@ -1,5 +1,4 @@
 using Accounting.Application.DebitMemos.Responses;
-using Accounting.Domain.Exceptions;
 
 namespace Accounting.Application.DebitMemos.Get;
 

@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class CurrencyByIdNotFoundException(DefaultIdType id) : NotFoundException($"currency with id {id} not found");

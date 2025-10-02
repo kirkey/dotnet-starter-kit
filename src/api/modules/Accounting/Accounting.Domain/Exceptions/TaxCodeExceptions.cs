@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class TaxCodeNotFoundException(DefaultIdType id) 

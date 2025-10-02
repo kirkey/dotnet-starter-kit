@@ -1,5 +1,7 @@
 // Patronage Capital Exceptions
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 /// <summary>

@@ -1,5 +1,3 @@
-using Accounting.Application.Budgets.Exceptions;
-
 namespace Accounting.Application.Budgets.Close;
 
 /// <summary>

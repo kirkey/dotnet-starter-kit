@@ -1,5 +1,4 @@
 using Accounting.Application.CreditMemos.Responses;
-using Accounting.Domain.Exceptions;
 
 namespace Accounting.Application.CreditMemos.Get;
 

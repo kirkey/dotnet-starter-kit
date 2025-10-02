@@ -1,6 +1,8 @@
 // FixedAssetExceptions.cs
 // Per-domain exceptions for Fixed Assets and related validations
 
+using FSH.Framework.Core.Exceptions;
+
 namespace Accounting.Domain.Exceptions;
 
 public sealed class FixedAssetNotFoundException(DefaultIdType id) : NotFoundException($"fixed asset with id {id} not found");

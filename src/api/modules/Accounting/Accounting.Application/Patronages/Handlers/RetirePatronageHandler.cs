@@ -13,7 +13,7 @@ public sealed class RetirePatronageHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var patronage = await patronageRepo.GetByIdAsync(request.PatronageCapitalId, cancellationToken);
-        if (patronage == null) throw new KeyNotFoundException($"Patronage capital {request.PatronageCapitalId} not found");
+        _ = patronage ?? throw new PatronageCapitalByIdNotFoundException(request.PatronageCapitalId);
 
         if (request.Amount <= 0) throw new ArgumentException("Retirement amount must be positive");
 

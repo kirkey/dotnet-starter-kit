@@ -25,9 +25,7 @@ public class DebitMemoConfiguration : IEntityTypeConfiguration<DebitMemo>
             .HasPrecision(18, 2)
             .IsRequired();
 
-        builder.Property(x => x.UnappliedAmount)
-            .HasPrecision(18, 2)
-            .IsRequired();
+        builder.Ignore(x => x.UnappliedAmount);
 
         builder.Property(x => x.ReferenceType)
             .HasMaxLength(50)

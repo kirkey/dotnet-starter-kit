@@ -9,8 +9,7 @@ public class GetPaymentAllocationByIdHandler(IReadRepository<PaymentAllocation> 
     public async Task<PaymentAllocationResponse> Handle(GetPaymentAllocationByIdQuery request, CancellationToken cancellationToken)
     {
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (entity == null)
-            throw new NotFoundException($"PaymentAllocation with Id {request.Id} not found");
+        if (entity == null) throw new PaymentAllocationByIdNotFoundException(request.Id);
 
         return new PaymentAllocationResponse
         {
