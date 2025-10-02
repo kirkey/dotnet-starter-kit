@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Domain.Events.RecurringJournalEntry;
 
 public sealed record RecurringJournalEntryCreated(

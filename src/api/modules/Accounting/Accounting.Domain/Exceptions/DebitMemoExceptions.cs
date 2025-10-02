@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Domain.Exceptions;
 
 /// <summary>
@@ -49,3 +47,4 @@ public sealed class InvalidDebitMemoAmountException()
 /// </summary>
 public sealed class InvalidDebitMemoReferenceTypeException(string referenceType)
     : BadRequestException($"invalid debit memo reference type: {referenceType}. Must be 'Customer' or 'Vendor'");
+

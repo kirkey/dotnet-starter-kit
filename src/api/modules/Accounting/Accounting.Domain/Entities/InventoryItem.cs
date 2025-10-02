@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Inventory;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a stock-keeping unit (SKU) tracked in inventory with quantity, unit price, and lifecycle management.

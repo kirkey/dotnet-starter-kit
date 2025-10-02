@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.BankReconciliations.Create.v1;
 
 public sealed class CreateBankReconciliationHandler(

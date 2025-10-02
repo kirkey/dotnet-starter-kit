@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Consumptions;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Records a meter's consumption snapshot for a billing period with automated usage calculations and validation.

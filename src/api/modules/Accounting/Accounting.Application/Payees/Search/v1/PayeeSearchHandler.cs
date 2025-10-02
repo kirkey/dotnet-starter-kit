@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Get.v1;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Payees.Search.v1;
 

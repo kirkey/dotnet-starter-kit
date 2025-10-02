@@ -1,3 +1,4 @@
+using Accounting.Domain.Entities;
 using Finbuckle.MultiTenant.Abstractions;
 using FSH.Framework.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.Tenant;

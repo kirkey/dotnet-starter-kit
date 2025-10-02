@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.CreditMemos.Update;
 

@@ -1,3 +1,4 @@
+using Accounting.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Accounting.Infrastructure.Persistence;
@@ -238,7 +239,7 @@ internal sealed class AccountingDbInitializer(
                     FixedAsset.Create("Office Laptop A", DateTime.UtcNow.Date, 2000m, firstDepr.Id, 5, 200m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-LAP-001", "HQ", "IT", null, null, null, null, null, null, "AcmeCorp", "Model-LAP-1", true, "Office laptop"),
                     FixedAsset.Create("Office Laptop B", DateTime.UtcNow.Date, 2200m, firstDepr.Id, 5, 220m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-LAP-002", "HQ", "IT", null, null, null, null, null, null, "AcmeCorp", "Model-LAP-2", true, "Office laptop B"),
                     FixedAsset.Create("Forklift", DateTime.UtcNow.Date, 15000m, firstDepr.Id, 7, 1500m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-FLK-001", "Warehouse", "Operations", null, null, null, null, null, null, "LiftCo", "FL-1", true, "Seeded forklift"),
-                    FixedAsset.Create("Server Rack", DateTime.UtcNow.Date, 8000m, firstDepr.Id, 5, 800m, cashAccount.Id, expenseAccount.Id, "IT Infrastructure", "SN-SRV-001", "Data Center", "IT", null, null, null, null, null, null, "ServerCo", "Rack-Pro", true, "Data center server rack"),
+                    FixedAsset.Create("Server Rack", DateTime.UtcNow.Date, 8000m, firstDepr.Id, 5, 800m, cashAccount.Id, expenseAccount.Id, "IT Equipment", "SN-SRV-001", "Data Center", "IT", null, null, null, null, null, null, "ServerCo", "Rack-Pro", true, "Data center server rack"),
                     FixedAsset.Create("Office Furniture Set", DateTime.UtcNow.Date, 5000m, firstDepr.Id, 10, 500m, cashAccount.Id, expenseAccount.Id, "Furniture", "SN-FURN-001", "HQ", "Admin", null, null, null, null, null, null, "FurniturePlus", "Desk-Set-A", true, "Office furniture"),
                     FixedAsset.Create("Delivery Van", DateTime.UtcNow.Date, 35000m, firstDepr.Id, 8, 3500m, cashAccount.Id, expenseAccount.Id, "Vehicle", "SN-VAN-001", "Fleet", "Logistics", null, null, null, null, null, null, "AutoMakers", "Van-2024", true, "Delivery vehicle"),
                     FixedAsset.Create("Industrial Printer", DateTime.UtcNow.Date, 12000m, firstDepr.Id, 6, 1200m, cashAccount.Id, expenseAccount.Id, "Equipment", "SN-PRT-001", "Production", "Manufacturing", null, null, null, null, null, null, "PrintTech", "IP-5000", true, "Industrial printer"),

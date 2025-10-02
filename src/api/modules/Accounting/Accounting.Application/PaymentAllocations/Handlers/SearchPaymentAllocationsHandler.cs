@@ -1,5 +1,6 @@
 using Accounting.Application.PaymentAllocations.Queries;
 using Accounting.Application.PaymentAllocations.Responses;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.PaymentAllocations.Handlers;
 

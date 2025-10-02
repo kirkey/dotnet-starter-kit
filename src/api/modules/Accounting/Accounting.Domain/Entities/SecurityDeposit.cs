@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.SecurityDeposit;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a member's security deposit held by the utility with refund lifecycle management and interest tracking.

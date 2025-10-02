@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.AccountingPeriods.Specs;
 
 public sealed class AccountingPeriodByFiscalYearTypeSpec : Specification<AccountingPeriod>, ISingleResultSpecification<AccountingPeriod>

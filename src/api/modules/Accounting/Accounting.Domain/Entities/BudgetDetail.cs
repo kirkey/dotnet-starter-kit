@@ -1,4 +1,4 @@
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// A single detail item within a budget representing the amount allocated to a specific account.

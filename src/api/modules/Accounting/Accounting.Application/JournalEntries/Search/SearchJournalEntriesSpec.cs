@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Responses;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.JournalEntries.Search;
 

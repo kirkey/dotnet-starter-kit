@@ -1,5 +1,6 @@
 using Accounting.Application.RegulatoryReports.Responses;
 using Accounting.Application.RegulatoryReports.Specs;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.RegulatoryReports.Search.v1;
 

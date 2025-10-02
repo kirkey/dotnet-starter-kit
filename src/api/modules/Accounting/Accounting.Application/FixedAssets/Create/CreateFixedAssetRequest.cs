@@ -12,6 +12,7 @@ public sealed record CreateFixedAssetCommand(
     decimal SalvageValue,
     DefaultIdType AccumulatedDepreciationAccountId,
     DefaultIdType DepreciationExpenseAccountId,
+    string AssetType,
     string? SerialNumber = null,
     string? Location = null,
     string? Department = null,

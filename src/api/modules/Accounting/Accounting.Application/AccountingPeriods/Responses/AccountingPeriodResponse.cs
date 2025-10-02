@@ -1,8 +1,10 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.AccountingPeriods.Responses;
 
 /// <summary>
 /// Read model returned for accounting period queries and endpoints.
-/// Contains a flattened view of the <see cref="Accounting.Domain.AccountingPeriod"/> aggregate suitable for API responses.
+/// Contains a flattened view of the <see cref="AccountingPeriod"/> aggregate suitable for API responses.
 /// </summary>
 public class AccountingPeriodResponse(
     DefaultIdType id,

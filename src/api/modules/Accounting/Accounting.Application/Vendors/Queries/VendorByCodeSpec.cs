@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Vendors.Queries;
 
 public class VendorByCodeSpec : Specification<Vendor>

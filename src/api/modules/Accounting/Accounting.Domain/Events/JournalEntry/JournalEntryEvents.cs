@@ -2,7 +2,7 @@ namespace Accounting.Domain.Events.JournalEntry;
 
 public record JournalEntryCreated(DefaultIdType Id, DateTime Date, string ReferenceNumber, string Description, string Source) : DomainEvent;
 
-public record JournalEntryUpdated(Accounting.Domain.JournalEntry JournalEntry) : DomainEvent;
+public record JournalEntryUpdated(Entities.JournalEntry JournalEntry) : DomainEvent;
 
 public record JournalEntryDeleted(DefaultIdType Id) : DomainEvent;
 

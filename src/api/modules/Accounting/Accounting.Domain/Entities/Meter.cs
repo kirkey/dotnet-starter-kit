@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Meter;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a physical or smart meter installed at a service location for measuring electricity consumption and demand.

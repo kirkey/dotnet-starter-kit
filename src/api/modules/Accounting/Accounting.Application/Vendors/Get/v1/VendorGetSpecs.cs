@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Vendors.Get.v1;
 
 public class VendorGetSpecs : Specification<Vendor, VendorGetResponse>

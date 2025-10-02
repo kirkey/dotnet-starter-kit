@@ -2,7 +2,7 @@ namespace Accounting.Domain.Events.DepreciationMethod;
 
 public record DepreciationMethodCreated(DefaultIdType Id, string MethodCode, string MethodName, string CalculationFormula, string Description, string? Notes) : DomainEvent;
 
-public record DepreciationMethodUpdated(Accounting.Domain.DepreciationMethod Method) : DomainEvent;
+public record DepreciationMethodUpdated(Entities.DepreciationMethod Method) : DomainEvent;
 
 public record DepreciationMethodDeleted(DefaultIdType Id) : DomainEvent;
 

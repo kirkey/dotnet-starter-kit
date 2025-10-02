@@ -1,5 +1,6 @@
 using Accounting.Application.Members.Queries;
 using Accounting.Application.Members.Responses;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Members.Handlers;
 

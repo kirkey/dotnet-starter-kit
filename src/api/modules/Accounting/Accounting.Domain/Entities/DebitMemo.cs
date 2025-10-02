@@ -1,6 +1,7 @@
 using Accounting.Domain.Events.DebitMemo;
+using Accounting.Domain.Constants;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a debit memo used to increase a customer's receivable balance or vendor's payable balance.
@@ -145,7 +146,7 @@ public class DebitMemo : AuditableEntity, IAggregateRoot
 
         var rt = referenceType?.Trim() ?? string.Empty;
         if (!IsValidReferenceType(rt))
-            throw new ArgumentException($"Invalid reference type: {referenceType}. Must be 'Customer' or 'Vendor'.");
+            throw new Accounting.Domain.Exceptions.InvalidDebitMemoReferenceTypeException(referenceType);
 
         var rsn = reason?.Trim();
         if (!string.IsNullOrEmpty(rsn) && rsn.Length > MaxReasonLength)
@@ -299,6 +300,6 @@ public class DebitMemo : AuditableEntity, IAggregateRoot
 
     private static bool IsValidReferenceType(string referenceType)
     {
-        return referenceType == "Customer" || referenceType == "Vendor";
+        return MemoReferenceTypes.Contains(referenceType);
     }
 }

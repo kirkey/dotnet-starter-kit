@@ -15,7 +15,7 @@ public record DebitMemoCreated(
 /// <summary>
 /// Event raised when a debit memo is updated.
 /// </summary>
-public record DebitMemoUpdated(Accounting.Domain.DebitMemo DebitMemo) : DomainEvent;
+public record DebitMemoUpdated(Entities.DebitMemo DebitMemo) : DomainEvent;
 
 /// <summary>
 /// Event raised when a debit memo is deleted.

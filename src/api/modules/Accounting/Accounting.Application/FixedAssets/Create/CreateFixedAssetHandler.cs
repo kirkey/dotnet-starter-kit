@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.FixedAssets.Create;
 
 public sealed class CreateFixedAssetHandler(
@@ -17,9 +19,19 @@ public sealed class CreateFixedAssetHandler(
             request.SalvageValue,
             request.AccumulatedDepreciationAccountId,
             request.DepreciationExpenseAccountId,
+            request.AssetType,
             request.SerialNumber,
             request.Location,
             request.Department,
+            gpsCoordinates: null,
+            substationName: null,
+            assetUsoaId: null,
+            regulatoryClassification: null,
+            voltageRating: null,
+            capacity: null,
+            manufacturer: null,
+            modelNumber: null,
+            requiresUsoaReporting: true,
             request.Description,
             request.Notes);
 

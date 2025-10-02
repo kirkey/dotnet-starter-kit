@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Accruals.Queries;
 
 public sealed class AccrualByNumberSpec : Specification<Accrual>, ISingleResultSpecification<Accrual>

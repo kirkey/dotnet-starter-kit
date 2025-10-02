@@ -13,7 +13,7 @@ public record PatronageCapitalAllocated(
 /// <summary>
 /// Event raised when patronage capital is updated.
 /// </summary>
-public record PatronageCapitalUpdated(Accounting.Domain.PatronageCapital PatronageCapital) : DomainEvent;
+public record PatronageCapitalUpdated(Entities.PatronageCapital PatronageCapital) : DomainEvent;
 
 /// <summary>
 /// Event raised when patronage capital is deleted.

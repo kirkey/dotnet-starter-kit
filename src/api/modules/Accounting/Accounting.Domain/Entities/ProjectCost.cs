@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.ProjectCosting;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a cost entry associated with a project for job costing and budget tracking.

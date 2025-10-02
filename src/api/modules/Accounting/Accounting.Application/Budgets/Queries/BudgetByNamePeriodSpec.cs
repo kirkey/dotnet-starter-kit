@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Budgets.Queries;
 
 public sealed class BudgetByNamePeriodSpec : Specification<Budget>, ISingleResultSpecification<Budget>

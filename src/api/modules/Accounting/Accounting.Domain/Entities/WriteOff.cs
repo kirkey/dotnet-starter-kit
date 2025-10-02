@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.WriteOff;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a write-off of uncollectible receivables or bad debts, with approval workflow and journal entry tracking.

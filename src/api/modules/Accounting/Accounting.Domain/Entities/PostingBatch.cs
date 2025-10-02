@@ -1,4 +1,4 @@
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Groups multiple journal entries for approval and posting as a batch to ensure transaction integrity and workflow control.

@@ -1,6 +1,7 @@
+using Accounting.Domain.Constants;
 using Accounting.Domain.Events.FixedAsset;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a fixed asset tracked for depreciation, maintenance, regulatory reporting, and lifecycle management.
@@ -261,7 +262,7 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
             throw new InvalidAssetSalvageValueException();
 
         if (!IsValidAssetType(assetType))
-            throw new ArgumentException($"Invalid asset type: {assetType}");
+            throw new ArgumentException($"Invalid asset type: {assetType}. Allowed: {FixedAssetTypes.AsDisplayList()}");
 
         return new FixedAsset(assetName, purchaseDate, purchasePrice,
             depreciationMethodId, serviceLife, salvageValue, accumulatedDepreciationAccountId,
@@ -443,9 +444,7 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
 
     private static bool IsValidAssetType(string assetType)
     {
-        var validTypes = new[] { "Transformer", "Transmission Line", "Distribution Line", "Power Plant", 
-            "Generator", "Substation", "Meter", "Vehicle", "Building", "Equipment", "Software", "Land" };
-        return validTypes.Contains(assetType.Trim(), StringComparer.OrdinalIgnoreCase);
+        return FixedAssetTypes.Contains(assetType);
     }
 }
 

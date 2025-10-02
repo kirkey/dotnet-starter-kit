@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.RecurringJournalEntries.Delete.v1;
 
 public sealed class DeleteRecurringJournalEntryHandler(

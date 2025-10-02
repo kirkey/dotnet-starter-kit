@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Invoice;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a customer/member invoice including usage-based and fixed charges, taxes, fees, and line items.

@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.CostCenter;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a cost center (department, division, or business unit) for expense allocation and internal reporting.

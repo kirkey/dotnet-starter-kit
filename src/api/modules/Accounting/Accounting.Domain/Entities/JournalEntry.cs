@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.JournalEntry;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a journal entry grouping one or more debit/credit lines for posting to the general ledger.

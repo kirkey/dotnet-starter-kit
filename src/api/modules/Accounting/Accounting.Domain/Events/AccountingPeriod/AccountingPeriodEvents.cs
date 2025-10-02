@@ -2,7 +2,7 @@ namespace Accounting.Domain.Events.AccountingPeriod;
 
 public record AccountingPeriodCreated(DefaultIdType Id, string PeriodName, DateTime StartDate, DateTime EndDate, int FiscalYear, string? Description, string? Notes) : DomainEvent;
 
-public record AccountingPeriodUpdated(Accounting.Domain.AccountingPeriod Period) : DomainEvent;
+public record AccountingPeriodUpdated(Entities.AccountingPeriod Period) : DomainEvent;
 
 public record AccountingPeriodDeleted(DefaultIdType Id) : DomainEvent;
 

@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Consumptions.Queries;
 
 public sealed class ConsumptionByMeterDateSpec : Specification<Consumption>, ISingleResultSpecification<Consumption>

@@ -1,5 +1,6 @@
 using FSH.Framework.Core.Storage;
 using Accounting.Application.Payees.Specs;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Payees.Export.v1;
 

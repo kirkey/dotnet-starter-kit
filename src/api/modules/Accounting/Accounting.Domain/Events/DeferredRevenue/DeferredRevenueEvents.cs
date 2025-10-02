@@ -13,7 +13,7 @@ public record DeferredRevenueCreated(
 /// <summary>
 /// Event raised when deferred revenue is updated.
 /// </summary>
-public record DeferredRevenueUpdated(Accounting.Domain.DeferredRevenue DeferredRevenue) : DomainEvent;
+public record DeferredRevenueUpdated(Entities.DeferredRevenue DeferredRevenue) : DomainEvent;
 
 /// <summary>
 /// Event raised when deferred revenue is deleted.

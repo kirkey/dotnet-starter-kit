@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Vendors.Search.v1;
 public class VendorSearchSpecs : EntitiesByPaginationFilterSpec<Vendor, VendorSearchResponse>
 {

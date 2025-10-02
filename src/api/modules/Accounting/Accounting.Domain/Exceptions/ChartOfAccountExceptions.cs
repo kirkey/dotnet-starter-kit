@@ -1,8 +1,6 @@
 // ChartOfAccountExceptions.cs
 // Per-domain exceptions for Chart of Accounts (non-not-found cases)
 
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Domain.Exceptions;
 
 public sealed class ChartOfAccountInvalidException(string message) : ForbiddenException(message);

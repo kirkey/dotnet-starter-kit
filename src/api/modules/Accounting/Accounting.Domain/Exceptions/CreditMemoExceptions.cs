@@ -1,4 +1,4 @@
-using FSH.Framework.Core.Exceptions;
+using Accounting.Domain.Constants;
 
 namespace Accounting.Domain.Exceptions;
 
@@ -48,4 +48,4 @@ public sealed class InvalidCreditMemoAmountException()
 /// Exception thrown when the credit memo reference type is invalid.
 /// </summary>
 public sealed class InvalidCreditMemoReferenceTypeException(string referenceType)
-    : BadRequestException($"invalid credit memo reference type: {referenceType}. Must be 'Customer' or 'Vendor'");
+    : BadRequestException($"invalid credit memo reference type: {referenceType}. Must be one of: {MemoReferenceTypes.AsDisplayList()}");

@@ -1,3 +1,4 @@
+using Accounting.Domain.Entities;
 using FixedAssetNotFoundException = Accounting.Application.FixedAssets.Exceptions.FixedAssetNotFoundException;
 
 namespace Accounting.Application.FixedAssets.Update;

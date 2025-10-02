@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Member;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a utility member/customer account with service location, contact information, billing details, and account lifecycle management.

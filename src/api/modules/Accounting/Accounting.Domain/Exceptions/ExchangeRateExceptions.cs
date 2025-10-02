@@ -1,7 +1,5 @@
 // ExchangeRate Exceptions
 
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Domain.Exceptions;
 
 public sealed class ExchangeRateNotFoundException(DefaultIdType id) : NotFoundException($"exchange rate with id {id} not found");

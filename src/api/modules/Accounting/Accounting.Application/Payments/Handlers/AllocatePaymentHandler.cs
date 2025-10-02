@@ -1,4 +1,5 @@
 using Accounting.Application.Payments.Commands;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Payments.Handlers;
 

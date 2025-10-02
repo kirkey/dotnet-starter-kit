@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.AccountingPeriods.Update.v1;
 
 /// <summary>

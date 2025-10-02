@@ -14,7 +14,7 @@ public record PaymentAllocationCreated(
 /// <summary>
 /// Event raised when a payment allocation is updated.
 /// </summary>
-public record PaymentAllocationUpdated(Accounting.Domain.PaymentAllocation PaymentAllocation) : DomainEvent;
+public record PaymentAllocationUpdated(Entities.PaymentAllocation PaymentAllocation) : DomainEvent;
 
 /// <summary>
 /// Event raised when a payment allocation is deleted.

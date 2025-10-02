@@ -1,4 +1,5 @@
 using Accounting.Application.PostingBatches.Commands;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.PostingBatches.Handlers;
 

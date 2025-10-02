@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.RateSchedule;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a utility rate schedule with energy/demand pricing, fixed charges, and time-of-use capabilities for customer billing.

@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Budget;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a financial budget for a fiscal year and period, comprised of budget lines per account.
@@ -96,11 +96,11 @@ public class Budget : AuditableEntity, IAggregateRoot
     /// </summary>
     public string? ApprovedBy { get; private set; }
 
-    private readonly List<Accounting.Domain.BudgetDetail> _budgetDetails = new();
+    private readonly List<BudgetDetail> _budgetDetails = new();
     /// <summary>
     /// Collection of budget details, each representing a budgeted amount for a specific chart of account.
     /// </summary>
-    public IReadOnlyCollection<Accounting.Domain.BudgetDetail> BudgetDetails => _budgetDetails.AsReadOnly();
+    public IReadOnlyCollection<BudgetDetail> BudgetDetails => _budgetDetails.AsReadOnly();
 
     // Parameterless constructor for EF Core
     private Budget()

@@ -1,4 +1,4 @@
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents an accrual entry for recognizing expenses or revenues before associated cash movements occur.

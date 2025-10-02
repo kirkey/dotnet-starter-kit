@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.RegulatoryReport;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a regulatory report filing with compliance tracking, financial data aggregation, and submission workflow management.

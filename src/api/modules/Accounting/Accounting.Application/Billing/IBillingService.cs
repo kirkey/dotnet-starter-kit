@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Billing;
 
 public record InvoiceLineResponse(string Description, decimal Quantity, decimal UnitPrice, decimal TotalPrice);

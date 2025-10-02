@@ -1,7 +1,5 @@
 // Budget Exceptions
 
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Domain.Exceptions;
 
 public sealed class BudgetNotFoundException(DefaultIdType id) : NotFoundException($"budget with id {id} not found");

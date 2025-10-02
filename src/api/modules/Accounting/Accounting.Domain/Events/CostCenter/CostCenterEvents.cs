@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Domain.Events.CostCenter;
 
 public sealed record CostCenterCreated(

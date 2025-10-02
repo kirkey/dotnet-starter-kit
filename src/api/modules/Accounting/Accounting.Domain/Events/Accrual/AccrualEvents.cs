@@ -13,7 +13,7 @@ public record AccrualCreated(
 /// <summary>
 /// Event raised when an accrual is updated.
 /// </summary>
-public record AccrualUpdated(Accounting.Domain.Accrual Accrual) : DomainEvent;
+public record AccrualUpdated(Entities.Accrual Accrual) : DomainEvent;
 
 /// <summary>
 /// Event raised when an accrual is deleted.

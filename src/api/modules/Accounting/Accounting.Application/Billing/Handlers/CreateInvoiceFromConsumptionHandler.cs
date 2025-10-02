@@ -1,4 +1,5 @@
 using Accounting.Application.Billing.Commands;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Billing.Handlers;
 

@@ -1,6 +1,7 @@
 using Accounting.Domain.Events.CreditMemo;
+using Accounting.Domain.Constants;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a credit memo used to decrease a customer's receivable balance or vendor's payable balance.
@@ -153,7 +154,7 @@ public class CreditMemo : AuditableEntity, IAggregateRoot
 
         var rt = referenceType?.Trim() ?? string.Empty;
         if (!IsValidReferenceType(rt))
-            throw new ArgumentException($"Invalid reference type: {referenceType}. Must be 'Customer' or 'Vendor'.");
+            throw new Accounting.Domain.Exceptions.InvalidCreditMemoReferenceTypeException(referenceType);
 
         var rsn = reason?.Trim();
         if (!string.IsNullOrEmpty(rsn) && rsn.Length > MaxReasonLength)
@@ -335,6 +336,6 @@ public class CreditMemo : AuditableEntity, IAggregateRoot
 
     private static bool IsValidReferenceType(string referenceType)
     {
-        return referenceType == "Customer" || referenceType == "Vendor";
+        return MemoReferenceTypes.Contains(referenceType);
     }
 }

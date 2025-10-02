@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.DeferredRevenues.Recognize;
 
 /// <summary>

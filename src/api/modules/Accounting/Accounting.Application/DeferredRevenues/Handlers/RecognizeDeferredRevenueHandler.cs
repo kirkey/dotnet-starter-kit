@@ -1,4 +1,5 @@
 using Accounting.Application.DeferredRevenues.Commands;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.DeferredRevenues.Handlers;
 

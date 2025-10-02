@@ -1,5 +1,6 @@
 
 using Accounting.Application.DepreciationMethods.Responses;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.DepreciationMethods.Queries;
 

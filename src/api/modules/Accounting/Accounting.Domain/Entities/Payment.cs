@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Payment;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a customer/member payment, including method and allocations to invoices.

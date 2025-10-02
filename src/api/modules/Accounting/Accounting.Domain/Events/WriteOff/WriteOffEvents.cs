@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Domain.Events.WriteOff;
 
 public sealed record WriteOffCreated(

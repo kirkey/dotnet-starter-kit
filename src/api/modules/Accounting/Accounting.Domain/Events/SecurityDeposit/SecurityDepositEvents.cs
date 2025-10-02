@@ -13,7 +13,7 @@ public record SecurityDepositCreated(
 /// <summary>
 /// Event raised when a security deposit is updated.
 /// </summary>
-public record SecurityDepositUpdated(Accounting.Domain.SecurityDeposit SecurityDeposit) : DomainEvent;
+public record SecurityDepositUpdated(Entities.SecurityDeposit SecurityDeposit) : DomainEvent;
 
 /// <summary>
 /// Event raised when a security deposit is deleted.

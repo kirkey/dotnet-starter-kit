@@ -1,4 +1,5 @@
 using Accounting.Application.SecurityDeposits.Commands;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.SecurityDeposits.Handlers;
 

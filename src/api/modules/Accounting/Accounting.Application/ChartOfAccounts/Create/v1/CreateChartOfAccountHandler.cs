@@ -1,5 +1,6 @@
 using Accounting.Application.ChartOfAccounts.Exceptions;
 using Accounting.Application.ChartOfAccounts.Specs;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.ChartOfAccounts.Create.v1;
 public sealed class CreateChartOfAccountHandler(

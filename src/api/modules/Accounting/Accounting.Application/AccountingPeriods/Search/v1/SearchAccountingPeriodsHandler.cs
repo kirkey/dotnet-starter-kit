@@ -1,5 +1,6 @@
 using Accounting.Application.AccountingPeriods.Responses;
 using Accounting.Application.AccountingPeriods.Specs;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.AccountingPeriods.Search.v1;
 

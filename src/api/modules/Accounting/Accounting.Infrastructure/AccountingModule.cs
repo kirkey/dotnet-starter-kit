@@ -28,6 +28,7 @@ using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Import;
 using Accounting.Application.ChartOfAccounts.Import;
 using Accounting.Application.Payees.Import;
+using Accounting.Domain.Entities;
 using FSH.Framework.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 

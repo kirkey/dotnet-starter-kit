@@ -1,5 +1,3 @@
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Domain.Exceptions;
 
 public sealed class RecurringJournalEntryNotFoundException(DefaultIdType id) 

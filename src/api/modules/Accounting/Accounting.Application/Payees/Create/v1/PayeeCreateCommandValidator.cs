@@ -1,4 +1,5 @@
 ﻿using Accounting.Application.Payees.Queries;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Payees.Create.v1;
 

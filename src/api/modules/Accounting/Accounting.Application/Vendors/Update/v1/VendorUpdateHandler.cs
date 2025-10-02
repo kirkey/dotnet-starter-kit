@@ -1,5 +1,6 @@
 using Accounting.Application.Vendors.Exceptions;
 using Accounting.Application.Vendors.Queries;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Vendors.Update.v1;
 public sealed class VendorUpdateHandler(

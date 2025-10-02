@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.BankReconciliation;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a bank reconciliation process matching bank statements with general ledger cash accounts.

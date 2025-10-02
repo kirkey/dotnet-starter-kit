@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.TaxCode;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a tax code configuration for sales tax, VAT, GST and other tax calculations.

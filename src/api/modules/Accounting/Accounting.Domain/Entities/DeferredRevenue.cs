@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.DeferredRevenue;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents revenue that has been billed or received but not yet earned, to be recognized over time or at future dates.

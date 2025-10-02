@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.PatronageCapital;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a cooperative's patronage capital allocation and retirement for a member in a specific fiscal year.

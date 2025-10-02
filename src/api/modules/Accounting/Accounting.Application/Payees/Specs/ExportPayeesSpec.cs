@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Export.v1;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Payees.Specs;
 

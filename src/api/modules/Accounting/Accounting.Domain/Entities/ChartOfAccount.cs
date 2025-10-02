@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.ChartOfAccount;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a single account in the chart of accounts, including type, hierarchy, and regulatory classification.

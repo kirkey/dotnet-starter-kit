@@ -76,6 +76,47 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateTable(
+                name: "BankReconciliations",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BankAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReconciliationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    StatementBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    BookBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    AdjustedBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    OutstandingChecksTotal = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    DepositsInTransitTotal = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    BankErrors = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    BookErrors = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    IsReconciled = table.Column<bool>(type: "boolean", nullable: false),
+                    ReconciledDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ReconciledBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    StatementNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankReconciliations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Budgets",
                 schema: "accounting",
                 columns: table => new
@@ -181,6 +222,121 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Consumption", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CostCenters",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    CostCenterType = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    ParentCostCenterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ManagerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ManagerName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    BudgetAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ActualAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Location = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CostCenters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CreditMemos",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemoNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    MemoDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    AppliedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    RefundedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ReferenceType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ReferenceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OriginalDocumentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Reason = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    IsApplied = table.Column<bool>(type: "boolean", nullable: false),
+                    AppliedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ApprovalStatus = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2048, nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2048, nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CreditMemos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DebitMemos",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    MemoNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    MemoDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    AppliedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ReferenceType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ReferenceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OriginalDocumentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Reason = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    IsApplied = table.Column<bool>(type: "boolean", nullable: false),
+                    AppliedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ApprovalStatus = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2048, nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2048, nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DebitMemos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -648,6 +804,52 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateTable(
+                name: "PurchaseOrders",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrderNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpectedDeliveryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    VendorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    VendorName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ReceivedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    BilledAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Status = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    ApprovalStatus = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    IsFullyReceived = table.Column<bool>(type: "boolean", nullable: false),
+                    IsFullyBilled = table.Column<bool>(type: "boolean", nullable: false),
+                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RequesterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    RequesterName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    CostCenterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ProjectId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ShipToAddress = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    PaymentTerms = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    ReferenceNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseOrders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RateSchedules",
                 schema: "accounting",
                 columns: table => new
@@ -678,6 +880,48 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RateSchedules", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecurringJournalEntries",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TemplateCode = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    Frequency = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    CustomIntervalDays = table.Column<int>(type: "integer", nullable: true),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    DebitAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreditAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    NextRunDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastGeneratedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    GeneratedCount = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    PostingBatchId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Memo = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecurringJournalEntries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -762,6 +1006,44 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateTable(
+                name: "TaxCodes",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    TaxType = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    Rate = table.Column<decimal>(type: "numeric(10,6)", precision: 10, scale: 6, nullable: false),
+                    IsCompound = table.Column<bool>(type: "boolean", nullable: false),
+                    Jurisdiction = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EffectiveDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TaxCollectedAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TaxPaidAccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TaxAuthority = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    TaxRegistrationNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    ReportingCategory = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaxCodes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Vendors",
                 schema: "accounting",
                 columns: table => new
@@ -795,6 +1077,49 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vendors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WriteOffs",
+                schema: "accounting",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReferenceNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    WriteOffDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    WriteOffType = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    RecoveredAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    IsRecovered = table.Column<bool>(type: "boolean", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CustomerName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    InvoiceId = table.Column<Guid>(type: "uuid", nullable: true),
+                    InvoiceNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    ReceivableAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExpenseAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    JournalEntryId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    ApprovalStatus = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Reason = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    Description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WriteOffs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1122,6 +1447,27 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_Code",
+                schema: "accounting",
+                table: "CostCenters",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CreditMemos_MemoNumber",
+                schema: "accounting",
+                table: "CreditMemos",
+                column: "MemoNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DebitMemos_MemoNumber",
+                schema: "accounting",
+                table: "DebitMemos",
+                column: "MemoNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DepreciationEntry_FixedAssetId",
                 schema: "accounting",
                 table: "DepreciationEntry",
@@ -1185,10 +1531,24 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_OrderNumber",
+                schema: "accounting",
+                table: "PurchaseOrders",
+                column: "OrderNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RateTier_RateScheduleId",
                 schema: "accounting",
                 table: "RateTier",
                 column: "RateScheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecurringJournalEntries_TemplateCode",
+                schema: "accounting",
+                table: "RecurringJournalEntries",
+                column: "TemplateCode",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RegulatoryReports_DueDate",
@@ -1226,6 +1586,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting",
                 table: "RegulatoryReports",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaxCodes_Code",
+                schema: "accounting",
+                table: "TaxCodes",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_ReferenceNumber",
+                schema: "accounting",
+                table: "WriteOffs",
+                column: "ReferenceNumber",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -1240,6 +1614,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting");
 
             migrationBuilder.DropTable(
+                name: "BankReconciliations",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
                 name: "BudgetDetails",
                 schema: "accounting");
 
@@ -1249,6 +1627,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.DropTable(
                 name: "Consumption",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "CostCenters",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "CreditMemos",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "DebitMemos",
                 schema: "accounting");
 
             migrationBuilder.DropTable(
@@ -1304,7 +1694,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting");
 
             migrationBuilder.DropTable(
+                name: "PurchaseOrders",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
                 name: "RateTier",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "RecurringJournalEntries",
                 schema: "accounting");
 
             migrationBuilder.DropTable(
@@ -1316,7 +1714,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting");
 
             migrationBuilder.DropTable(
+                name: "TaxCodes",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
                 name: "Vendors",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "WriteOffs",
                 schema: "accounting");
 
             migrationBuilder.DropTable(

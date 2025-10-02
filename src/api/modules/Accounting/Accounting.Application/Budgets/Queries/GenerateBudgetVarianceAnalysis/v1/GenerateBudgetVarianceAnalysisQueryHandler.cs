@@ -1,4 +1,5 @@
 using Accounting.Application.GeneralLedgers.Specifications;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Budgets.Queries.GenerateBudgetVarianceAnalysis.v1;
 

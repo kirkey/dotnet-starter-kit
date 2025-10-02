@@ -1,5 +1,6 @@
 using Accounting.Application.ChartOfAccounts.Exceptions;
 using Accounting.Application.ChartOfAccounts.Specs;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.ChartOfAccounts.Update.v1;
 public sealed class UpdateChartOfAccountRequestHandler(

@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.TaxCodes.Delete.v1;
 
 public sealed class DeleteTaxCodeHandler(

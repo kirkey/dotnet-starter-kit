@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.RecurringJournalEntries.Approve.v1;
 
 public sealed class ApproveRecurringJournalEntryHandler(

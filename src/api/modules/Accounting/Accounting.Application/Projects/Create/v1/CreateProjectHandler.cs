@@ -1,4 +1,5 @@
 using Accounting.Application.Projects.Queries;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Projects.Create.v1;
 

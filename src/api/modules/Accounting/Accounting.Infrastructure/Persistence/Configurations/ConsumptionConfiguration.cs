@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
 public class ConsumptionConfiguration : IEntityTypeConfiguration<Consumption>

@@ -15,7 +15,7 @@ public record CreditMemoCreated(
 /// <summary>
 /// Event raised when a credit memo is updated.
 /// </summary>
-public record CreditMemoUpdated(Accounting.Domain.CreditMemo CreditMemo) : DomainEvent;
+public record CreditMemoUpdated(Entities.CreditMemo CreditMemo) : DomainEvent;
 
 /// <summary>
 /// Event raised when a credit memo is deleted.

@@ -1,5 +1,6 @@
 using FSH.Framework.Core.Storage;
 using Accounting.Application.ChartOfAccounts.Specs;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.ChartOfAccounts.Export.v1;
 

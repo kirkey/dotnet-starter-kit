@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.GeneralLedger;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a single general ledger posting line derived from journal entries for double-entry bookkeeping and financial reporting.

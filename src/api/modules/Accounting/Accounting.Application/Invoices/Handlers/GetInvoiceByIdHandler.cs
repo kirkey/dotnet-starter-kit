@@ -1,5 +1,6 @@
 using Accounting.Application.Invoices.Queries;
 using Accounting.Application.Invoices.Responses;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Invoices.Handlers;
 

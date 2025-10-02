@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.DepreciationMethod;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Defines depreciation calculation methods available for fixed asset depreciation schedules.

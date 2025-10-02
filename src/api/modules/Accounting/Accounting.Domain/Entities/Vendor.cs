@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Vendor;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a vendor/supplier with billing and contact details, default expense account mapping, and activation state.

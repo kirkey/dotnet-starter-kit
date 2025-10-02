@@ -15,7 +15,7 @@ public record RegulatoryReportFinancialDataUpdated(
     decimal? TotalRevenue,
     decimal? NetIncome) : DomainEvent;
 
-public record RegulatoryReportUpdated(Accounting.Domain.RegulatoryReport Report) : DomainEvent;
+public record RegulatoryReportUpdated(Entities.RegulatoryReport Report) : DomainEvent;
 
 public record RegulatoryReportDeleted(DefaultIdType Id) : DomainEvent;
 

@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Payee;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a payee/vendor entity for expense payments with default account mapping and tax identification.

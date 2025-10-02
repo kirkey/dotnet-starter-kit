@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.PurchaseOrder;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a purchase order for formal procurement tracking and three-way matching with receipts and invoices.

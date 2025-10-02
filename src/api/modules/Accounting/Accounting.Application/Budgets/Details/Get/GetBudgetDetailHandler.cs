@@ -1,4 +1,5 @@
 using Accounting.Application.Budgets.Details.Responses;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Budgets.Details.Get;
 

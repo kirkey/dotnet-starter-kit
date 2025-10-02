@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.RecurringJournalEntry;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a template for journal entries that recur on a regular schedule (monthly accruals, depreciation, etc.).

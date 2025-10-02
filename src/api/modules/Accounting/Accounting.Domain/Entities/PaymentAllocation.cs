@@ -1,4 +1,4 @@
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents an allocation of a payment amount to a specific invoice for accounts receivable management.

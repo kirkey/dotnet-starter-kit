@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.RegulatoryReports.Queries;
 
 public class RegulatoryReportByIdSpec : SingleResultSpecification<RegulatoryReport>

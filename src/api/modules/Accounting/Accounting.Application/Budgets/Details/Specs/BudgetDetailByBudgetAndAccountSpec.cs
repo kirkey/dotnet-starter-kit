@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.Budgets.Details.Specs;
 
 public sealed class BudgetDetailByBudgetAndAccountSpec : Specification<BudgetDetail>

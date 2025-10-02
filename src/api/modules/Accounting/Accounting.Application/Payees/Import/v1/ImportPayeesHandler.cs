@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Specs;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Payees.Import.v1;
 

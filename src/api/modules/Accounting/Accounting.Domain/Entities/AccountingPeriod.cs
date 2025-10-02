@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.AccountingPeriod;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Defines a fiscal accounting period (monthly, quarterly, yearly) used to group and control financial postings.

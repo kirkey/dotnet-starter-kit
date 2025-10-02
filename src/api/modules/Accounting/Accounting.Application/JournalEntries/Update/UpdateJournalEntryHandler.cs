@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.JournalEntries.Update;
 
 public sealed class UpdateJournalEntryHandler(

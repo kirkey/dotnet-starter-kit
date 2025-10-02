@@ -1,4 +1,5 @@
 using Accounting.Application.Projects.Queries;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Projects.Update.v1;
 

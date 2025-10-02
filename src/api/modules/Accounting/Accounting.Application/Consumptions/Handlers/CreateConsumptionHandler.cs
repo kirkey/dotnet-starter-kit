@@ -1,5 +1,6 @@
 using Accounting.Application.Consumptions.Commands;
 using Accounting.Application.Consumptions.Queries;
+using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Consumptions.Handlers;
 

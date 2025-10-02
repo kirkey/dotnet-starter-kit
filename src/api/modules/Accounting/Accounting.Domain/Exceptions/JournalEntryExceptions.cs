@@ -1,7 +1,5 @@
 // JournalEntry Exceptions (moved out of CoreAccountingExceptions.cs for clarity)
 
-using FSH.Framework.Core.Exceptions;
-
 namespace Accounting.Domain.Exceptions;
 
 public sealed class JournalEntryNotFoundException(DefaultIdType id) : NotFoundException($"journal entry with id {id} not found");

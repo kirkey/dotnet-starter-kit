@@ -1,3 +1,5 @@
+using Accounting.Domain.Entities;
+
 namespace Accounting.Application.BankReconciliations.Reject.v1;
 
 public sealed class RejectBankReconciliationHandler(

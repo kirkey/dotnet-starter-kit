@@ -1,3 +1,5 @@
+using Accounting.Domain.Constants;
+
 namespace Accounting.Application.FixedAssets.Create;
 
 public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateFixedAssetCommand>
@@ -9,7 +11,9 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
             .MaximumLength(256);
 
         RuleFor(x => x.PurchaseDate)
-            .NotEmpty();
+            .NotEmpty()
+            .LessThanOrEqualTo(DateTime.UtcNow.AddDays(1)) // allow slight clock skew
+            .WithMessage("Purchase date cannot be in the far future.");
 
         RuleFor(x => x.PurchasePrice)
             .GreaterThan(0);
@@ -18,7 +22,8 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
             .NotEmpty();
 
         RuleFor(x => x.ServiceLife)
-            .GreaterThan(0);
+            .GreaterThan(0)
+            .LessThanOrEqualTo(100);
 
         RuleFor(x => x.SalvageValue)
             .GreaterThanOrEqualTo(0)
@@ -30,6 +35,11 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
         RuleFor(x => x.DepreciationExpenseAccountId)
             .NotEmpty();
 
+        RuleFor(x => x.AssetType)
+            .NotEmpty()
+            .Must(FixedAssetTypes.Contains)
+            .WithMessage(_ => $"AssetType must be one of: {FixedAssetTypes.AsDisplayList()}");
+
         RuleFor(x => x.SerialNumber)
             .MaximumLength(100);
 
@@ -38,5 +48,11 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
 
         RuleFor(x => x.Department)
             .MaximumLength(100);
+
+        RuleFor(x => x.Description)
+            .MaximumLength(1024);
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(1024);
     }
 }

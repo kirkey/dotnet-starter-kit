@@ -1,6 +1,6 @@
 using Accounting.Domain.Events.Project;
 
-namespace Accounting.Domain;
+namespace Accounting.Domain.Entities;
 
 /// <summary>
 /// Represents a project for job costing, budget tracking, and financial performance analysis across multiple cost centers.
