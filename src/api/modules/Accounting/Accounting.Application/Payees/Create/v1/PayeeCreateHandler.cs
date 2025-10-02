@@ -1,4 +1,6 @@
-﻿namespace Accounting.Application.Payees.Create.v1;
+﻿using Accounting.Application.ChartOfAccounts.Specs;
+
+namespace Accounting.Application.Payees.Create.v1;
 
 /// <summary>
 /// Handler for creating new payee entities in the accounting system.
@@ -6,6 +8,7 @@
 /// </summary>
 public sealed class PayeeCreateHandler(
     ILogger<PayeeCreateHandler> logger,
+    [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> repositoryCoa,
     [FromKeyedServices("accounting:payees")] IRepository<Payee> repository)
     : IRequestHandler<PayeeCreateCommand, PayeeCreateResponse>
 {
@@ -20,12 +23,17 @@ public sealed class PayeeCreateHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        var coa = await repositoryCoa
+            .FirstOrDefaultAsync(new ChartOfAccountByCodeSpec(request.ExpenseAccountCode!), cancellationToken)
+            .ConfigureAwait(false);
+        _ = coa ?? throw new ChartOfAccountByCodeNotFoundException(request.ExpenseAccountCode!);
+        
         var entity = Payee.Create(
             request.PayeeCode,
             request.Name,
             request.Address,
             request.ExpenseAccountCode,
-            request.ExpenseAccountName,
+            coa.Name,
             request.Tin,
             request.Description,
             request.Notes);

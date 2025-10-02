@@ -1,3 +1,5 @@
+using Accounting.Application.ChartOfAccounts.Specs;
+
 namespace Accounting.Application.Payees.Update.v1;
 
 /// <summary>
@@ -6,6 +8,7 @@ namespace Accounting.Application.Payees.Update.v1;
 /// </summary>
 public sealed class PayeeUpdateHandler(
     ILogger<PayeeUpdateHandler> logger,
+    [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> repositoryCoa,
     [FromKeyedServices("accounting:payees")] IRepository<Payee> repository)
     : IRequestHandler<PayeeUpdateCommand, PayeeUpdateResponse>
 {
@@ -23,13 +26,18 @@ public sealed class PayeeUpdateHandler(
 
         var payee = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = payee ?? throw new PayeeNotFoundException(request.Id);
+        
+        var coa = await repositoryCoa
+            .FirstOrDefaultAsync(new ChartOfAccountByCodeSpec(request.ExpenseAccountCode!), cancellationToken)
+            .ConfigureAwait(false);
+        _ = coa ?? throw new ChartOfAccountByCodeNotFoundException(request.ExpenseAccountCode!);
 
         var updatedPayee = payee.Update(
             request.PayeeCode,
             request.Name,
             request.Address,
             request.ExpenseAccountCode,
-            request.ExpenseAccountName,
+            coa.Name,
             request.Tin,
             request.Description,
             request.Notes);

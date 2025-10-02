@@ -52,13 +52,6 @@ public class PayeeCreateCommandValidator : AbstractValidator<PayeeCreateCommand>
             .WithMessage("Expense Account Code must contain only numbers, uppercase letters, and hyphens.")
             .When(p => !string.IsNullOrEmpty(p.ExpenseAccountCode));
 
-        RuleFor(p => p.ExpenseAccountName)
-            .MaximumLength(256)
-            .WithMessage("Expense Account Name cannot exceed 256 characters.")
-            .Matches(@"^[a-zA-Z0-9\s\.\-&'(),]+$")
-            .WithMessage("Expense Account Name contains invalid characters.")
-            .When(p => !string.IsNullOrEmpty(p.ExpenseAccountName));
-
         RuleFor(p => p.Tin)
             .Length(9, 15)
             .WithMessage("TIN must be between 9 and 15 characters.")

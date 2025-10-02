@@ -7,3 +7,4 @@ public sealed class ChartOfAccountInvalidException(string message) : ForbiddenEx
 
 // Not-found exception grouped here for Chart of Accounts
 public sealed class ChartOfAccountNotFoundException(DefaultIdType id) : NotFoundException($"account with id {id} not found");
+public sealed class ChartOfAccountByCodeNotFoundException(string code) : NotFoundException($"account with code {code} not found");
