@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents an inbound goods receipt (typically against a Purchase Order) into the warehouse.

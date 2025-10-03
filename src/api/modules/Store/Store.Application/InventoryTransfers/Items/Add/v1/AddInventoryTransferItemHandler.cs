@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Items.Add.v1;
 public sealed class AddInventoryTransferItemHandler(
     ILogger<AddInventoryTransferItemHandler> logger,
     [FromKeyedServices("store:inventory-transfers")] IRepository<InventoryTransfer> repository,
-    [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> groceryReadRepository)
+    [FromKeyedServices("store:items")] IReadRepository<Item> itemReadRepository)
     : IRequestHandler<AddInventoryTransferItemCommand, AddInventoryTransferItemResponse>
 {
     public async Task<AddInventoryTransferItemResponse> Handle(AddInventoryTransferItemCommand request, CancellationToken cancellationToken)
@@ -15,10 +15,10 @@ public sealed class AddInventoryTransferItemHandler(
         var transfer = await repository.GetByIdAsync(request.InventoryTransferId, cancellationToken).ConfigureAwait(false);
         _ = transfer ?? throw new InventoryTransferNotFoundException(request.InventoryTransferId);
 
-        var gi = await groceryReadRepository.GetByIdAsync(request.GroceryItemId, cancellationToken).ConfigureAwait(false);
-        _ = gi ?? throw new GroceryItemNotFoundException(request.GroceryItemId);
+        var item = await itemReadRepository.GetByIdAsync(request.ItemId, cancellationToken).ConfigureAwait(false);
+        _ = item ?? throw new GroceryItemNotFoundException(request.ItemId);
 
-        transfer.AddItem(request.GroceryItemId, request.Quantity, request.UnitPrice);
+        transfer.AddItem(request.ItemId, request.Quantity, request.UnitPrice);
         await repository.UpdateAsync(transfer, cancellationToken).ConfigureAwait(false);
 
         var itemId = transfer.Items.Last().Id;

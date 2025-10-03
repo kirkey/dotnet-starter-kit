@@ -6,7 +6,7 @@ namespace Store.Domain.Events;
 public record InventoryTransferItemRemoved(
     DefaultIdType Id,
     DefaultIdType InventoryTransferId,
-    DefaultIdType GroceryItemId,
+    DefaultIdType ItemId,
     decimal TransferQuantity) : DomainEvent;
 
 /// <summary>
@@ -15,6 +15,6 @@ public record InventoryTransferItemRemoved(
 public record InventoryTransferItemQuantityAdjusted(
     DefaultIdType Id,
     DefaultIdType InventoryTransferId,
-    DefaultIdType GroceryItemId,
+    DefaultIdType ItemId,
     decimal OldQuantity,
     decimal NewQuantity) : DomainEvent;

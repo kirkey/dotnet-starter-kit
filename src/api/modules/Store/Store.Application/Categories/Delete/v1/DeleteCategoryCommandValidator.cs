@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.Categories.Specs;
-using FSH.Starter.WebApi.Store.Application.GroceryItems.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Categories.Delete.v1;
 
@@ -7,7 +6,7 @@ public class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategoryCo
 {
     public DeleteCategoryCommandValidator(
         [FromKeyedServices("store:categories")] IReadRepository<Category> categories,
-        [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> groceryItems)
+        [FromKeyedServices("store:items")] IReadRepository<Item> items)
     {
         RuleFor(x => x.Id)
             .NotEmpty()
@@ -21,7 +20,7 @@ public class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategoryCo
             .WithMessage("Cannot delete a category that has subcategories.")
             .MustAsync(async (id, ct) =>
             {
-                var hasItems = await groceryItems.AnyAsync(new GroceryItemsByCategoryIdSpec(id), ct);
+                var hasItems = await items.AnyAsync(new ItemsByCategoryIdSpec(id), ct);
                 return !hasItems;
             })
             .WithMessage("Cannot delete a category that has grocery items.");

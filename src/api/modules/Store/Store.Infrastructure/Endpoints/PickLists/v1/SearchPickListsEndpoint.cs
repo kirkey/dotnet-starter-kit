@@ -1,0 +1,20 @@
+namespace Store.Infrastructure.Endpoints.PickLists.v1;
+
+public static class SearchPickListsEndpoint
+{
+    internal static RouteHandlerBuilder MapSearchPickListsEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapPost("/search", async (SearchPickListsRequest request, ISender sender) =>
+            {
+                var response = await sender.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(SearchPickListsEndpoint))
+            .WithSummary("Search pick lists")
+            .WithDescription("Searches pick lists with pagination and filtering options.")
+            .Produces<PagedList<PickListDto>>()
+            .RequirePermission("Permissions.Store.View")
+            .MapToApiVersion(1);
+    }
+}

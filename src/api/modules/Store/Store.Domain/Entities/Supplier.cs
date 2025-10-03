@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Supplier that provides goods to the store. Stores contact, payment and rating information.
@@ -107,7 +107,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to grocery items supplied by this supplier.
     /// </summary>
-    public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
+    public ICollection<Item> GroceryItems { get; private set; } = new List<Item>();
 
     /// <summary>
     /// Navigation property to purchase orders placed with this supplier.

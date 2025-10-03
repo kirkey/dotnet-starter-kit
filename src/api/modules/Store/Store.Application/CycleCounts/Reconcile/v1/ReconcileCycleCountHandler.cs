@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.Store.Application.CycleCounts.Reconcile.v1;
 public sealed class ReconcileCycleCountHandler(
     ILogger<ReconcileCycleCountHandler> logger,
     [FromKeyedServices("store:cycle-counts")] IReadRepository<CycleCount> readRepository,
-    [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> groceryRepository,
+    [FromKeyedServices("store:items")] IReadRepository<Item> itemRepository,
     [FromKeyedServices("store:stock-adjustments")] IRepository<StockAdjustment> adjustmentRepository)
     : IRequestHandler<ReconcileCycleCountCommand, ReconcileCycleCountResponse>
 {
@@ -19,7 +19,7 @@ public sealed class ReconcileCycleCountHandler(
 
         var discrepancies = cc.Items
             .Where(i => !i.IsAccurate())
-            .Select(i => new CycleCountDiscrepancy(i.GroceryItemId, i.SystemQuantity, i.CountedQuantity ?? 0, (i.CountedQuantity ?? 0) - i.SystemQuantity))
+            .Select(i => new CycleCountDiscrepancy(i.ItemId, i.SystemQuantity, i.CountedQuantity ?? 0, (i.CountedQuantity ?? 0) - i.SystemQuantity))
             .ToList();
 
         // Create StockAdjustment records for each discrepancy
@@ -28,12 +28,12 @@ public sealed class ReconcileCycleCountHandler(
             var adjustmentType = d.Difference > 0 ? "Increase" : "Decrease";
             var adjustmentQuantity = Math.Abs(d.Difference);
 
-            // Obtain unit cost from grocery repository (fall back to 0)
+            // Obtain unit cost from item repository (fall back to 0)
             decimal unitCost = 0m;
             try
             {
-                var gi = await groceryRepository.GetByIdAsync(d.GroceryItemId, cancellationToken).ConfigureAwait(false);
-                if (gi is not null) unitCost = gi.Cost;
+                var item = await itemRepository.GetByIdAsync(request.ItemId, cancellationToken).ConfigureAwait(false);
+                if (item is not null) unitCost = item.Cost;
             }
             catch
             {

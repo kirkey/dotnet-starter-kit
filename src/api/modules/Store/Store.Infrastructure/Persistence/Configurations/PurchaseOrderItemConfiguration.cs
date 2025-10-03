@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<PurchaseOrderItem>
@@ -10,7 +12,7 @@ public class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<PurchaseO
         builder.Property(x => x.PurchaseOrderId)
             .IsRequired();
 
-        builder.Property(x => x.GroceryItemId)
+        builder.Property(x => x.ItemId)
             .IsRequired();
 
         builder.Property(x => x.Quantity)
@@ -37,9 +39,9 @@ public class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<PurchaseO
             .HasForeignKey(x => x.PurchaseOrderId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(x => x.GroceryItem)
+        builder.HasOne(x => x.Item)
             .WithMany()
-            .HasForeignKey(x => x.GroceryItemId)
+            .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.ToTable("PurchaseOrderItems", SchemaNames.Store);

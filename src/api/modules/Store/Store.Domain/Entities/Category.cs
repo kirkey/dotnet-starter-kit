@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents a product category used to organize and group grocery items with hierarchical navigation and business rule management.
@@ -88,7 +88,7 @@ public sealed class Category : AuditableEntity, IAggregateRoot
     /// Navigation property to grocery items in this category.
     /// Example count: varies widely by category breadth.
     /// </summary>
-    public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
+    public ICollection<Item> Items { get; private set; } = new List<Item>();
 
     private Category() { }
 

@@ -1,18 +1,16 @@
-using FSH.Starter.Blazor.Client.Services;
-
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
-/// Grocery Items page logic. Provides CRUD and search over GroceryItem entities using the generated API client.
+/// Items page logic. Provides CRUD and search over Item entities using the generated API client.
 /// Mirrors the structure of Budgets and Categories pages for consistency.
 /// </summary>
-public partial class GroceryItems
+public partial class Items
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
-    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] private IApiClient ApiClient { get; set; } = default!;
+    [Inject] private ISnackbar Snackbar { get; set; } = default!;
 
-    private EntityServerTableContext<GroceryItemResponse, DefaultIdType, GroceryItemViewModel> Context { get; set; } = default!;
-    private EntityTable<GroceryItemResponse, DefaultIdType, GroceryItemViewModel> _table = default!;
+    private EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = default!;
+    private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = default!;
 
     protected override void OnInitialized()
     {

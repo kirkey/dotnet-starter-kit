@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>

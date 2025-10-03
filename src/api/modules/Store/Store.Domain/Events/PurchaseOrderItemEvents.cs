@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Domain.Events;
 
 /// <summary>
@@ -11,7 +13,7 @@ public record PurchaseOrderItemUpdated(PurchaseOrderItem PurchaseOrderItem) : Do
 public record PurchaseOrderItemQuantityAdjusted(
     DefaultIdType Id,
     DefaultIdType PurchaseOrderId,
-    DefaultIdType GroceryItemId,
+    DefaultIdType ItemId,
     decimal OldQuantity,
     decimal NewQuantity,
     decimal NewLineTotal) : DomainEvent;

@@ -1,7 +1,7 @@
 using Store.Domain.Exceptions.PurchaseOrder;
 using Store.Domain.Exceptions.PurchaseOrderItem;
 
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents a purchase order sent to a supplier to procure inventory with comprehensive order lifecycle management.
@@ -218,7 +218,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     {
         EnsureModifiable();
 
-        var existingItem = Items.FirstOrDefault(i => i.GroceryItemId == groceryItemId);
+        var existingItem = Items.FirstOrDefault(i => i.ItemId == groceryItemId);
         
         if (existingItem != null)
         {
@@ -231,7 +231,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         }
 
         RecalculateTotals();
-        QueueDomainEvent(new PurchaseOrderItemAdded { PurchaseOrder = this, GroceryItemId = groceryItemId });
+        QueueDomainEvent(new PurchaseOrderItemAdded { PurchaseOrder = this, ItemId = groceryItemId });
         
         return this;
     }
@@ -240,7 +240,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     {
         EnsureModifiable();
 
-        var item = Items.FirstOrDefault(i => i.GroceryItemId == groceryItemId);
+        var item = Items.FirstOrDefault(i => i.ItemId == groceryItemId);
         if (item != null)
         {
             if (item.ReceivedQuantity > 0)
@@ -248,7 +248,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
             Items.Remove(item);
             RecalculateTotals();
-            QueueDomainEvent(new PurchaseOrderItemRemoved { PurchaseOrder = this, GroceryItemId = groceryItemId });
+            QueueDomainEvent(new PurchaseOrderItemRemoved { PurchaseOrder = this, ItemId = groceryItemId });
         }
 
         return this;

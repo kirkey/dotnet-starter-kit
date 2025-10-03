@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Domain.Events;
 
 public record GoodsReceiptCreated : DomainEvent { public GoodsReceipt GoodsReceipt { get; init; } = default!; }

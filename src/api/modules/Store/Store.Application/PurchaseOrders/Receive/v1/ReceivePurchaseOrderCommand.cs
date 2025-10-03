@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Receive.v1;
 
 /// <summary>

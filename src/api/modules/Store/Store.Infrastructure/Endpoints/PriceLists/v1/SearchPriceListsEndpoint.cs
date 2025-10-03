@@ -1,6 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.PriceLists.Get.v1;
-using FSH.Starter.WebApi.Store.Application.PriceLists.Search.v1;
-
 namespace Store.Infrastructure.Endpoints.PriceLists.v1;
 
 /// <summary>

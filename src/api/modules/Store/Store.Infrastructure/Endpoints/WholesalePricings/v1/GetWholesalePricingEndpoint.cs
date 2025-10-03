@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.WholesalePricings.Get.v1;
-
 namespace Store.Infrastructure.Endpoints.WholesalePricings.v1;
 
 public static class GetWholesalePricingEndpoint

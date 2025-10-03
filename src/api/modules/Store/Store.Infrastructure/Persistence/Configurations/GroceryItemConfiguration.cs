@@ -1,8 +1,10 @@
+using Store.Domain.Entities;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
-public class GroceryItemConfiguration : IEntityTypeConfiguration<GroceryItem>
+public class ItemConfiguration : IEntityTypeConfiguration<Item>
 {
-    public void Configure(EntityTypeBuilder<GroceryItem> builder)
+    public void Configure(EntityTypeBuilder<Item> builder)
     {
         builder.HasKey(x => x.Id);
 
@@ -46,20 +48,20 @@ public class GroceryItemConfiguration : IEntityTypeConfiguration<GroceryItem>
             .HasMaxLength(100);
 
         builder.HasOne(x => x.Category)
-            .WithMany(x => x.GroceryItems)
+            .WithMany(x => x.Items)
             .HasForeignKey(x => x.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.Supplier)
-            .WithMany(x => x.GroceryItems)
+            .WithMany(x => x.Items)
             .HasForeignKey(x => x.SupplierId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.WarehouseLocation)
-            .WithMany(x => x.GroceryItems)
+            .WithMany(x => x.Items)
             .HasForeignKey(x => x.WarehouseLocationId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        builder.ToTable("GroceryItems", SchemaNames.Store);
+        builder.ToTable("Items", SchemaNames.Store);
     }
 }

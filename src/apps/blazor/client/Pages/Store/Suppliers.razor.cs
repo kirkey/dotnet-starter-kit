@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
 /// Suppliers page logic. Provides CRUD and server-side search over Supplier entities via the generated API client.
-/// Mirrors Budgets/GroceryItems patterns for consistent UX.
+/// Mirrors Budgets/Items patterns for consistent UX.
 /// </summary>
 public partial class Suppliers
 {

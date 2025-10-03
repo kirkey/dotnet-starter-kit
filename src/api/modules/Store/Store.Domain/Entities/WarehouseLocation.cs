@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Specific storage location inside a warehouse (aisle/section/shelf/bin).
@@ -120,7 +120,7 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to grocery items stored in this location.
     /// </summary>
-    public ICollection<GroceryItem> GroceryItems { get; private set; } = new List<GroceryItem>();
+    public ICollection<Item> GroceryItems { get; private set; } = new List<Item>();
 
     private WarehouseLocation() { }
 

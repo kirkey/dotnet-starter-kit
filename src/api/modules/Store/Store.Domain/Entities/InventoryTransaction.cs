@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents a single inventory movement transaction with comprehensive tracking for stock level changes and financial impact.
@@ -16,7 +16,7 @@ namespace Store.Domain;
 /// 
 /// Default values:
 /// - TransactionNumber: required unique identifier (example: "TXN-2025-09-001")
-/// - GroceryItemId: required item reference for stock movement
+/// - ItemId: required item reference for stock movement
 /// - WarehouseId: optional warehouse location (example: main warehouse ID)
 /// - WarehouseLocationId: optional specific location (example: aisle, bin)
 /// - TransactionType: required movement type (example: "IN", "OUT", "ADJUSTMENT")
@@ -53,9 +53,9 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
     public string TransactionNumber { get; private set; } = default!;
 
     /// <summary>
-    /// ID of the grocery item affected by the transaction.
+    /// ID of the item affected by the transaction.
     /// </summary>
-    public DefaultIdType GroceryItemId { get; private set; }
+    public DefaultIdType ItemId { get; private set; }
 
     /// <summary>
     /// Warehouse where the transaction occurred (optional).
@@ -138,9 +138,9 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
     public DateTime? ApprovalDate { get; private set; }
     
     /// <summary>
-    /// Related grocery item details.
+    /// Related item details.
     /// </summary>
-    public GroceryItem GroceryItem { get; private set; } = default!;
+    public Item Item { get; private set; } = default!;
 
     /// <summary>
     /// Related warehouse details (if applicable).
@@ -162,7 +162,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
     private InventoryTransaction(
         DefaultIdType id,
         string transactionNumber,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         DefaultIdType? warehouseId,
         DefaultIdType? warehouseLocationId,
         DefaultIdType? purchaseOrderId,
@@ -181,7 +181,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(transactionNumber)) throw new ArgumentException("TransactionNumber is required", nameof(transactionNumber));
         if (transactionNumber.Length > 100) throw new ArgumentException("TransactionNumber must not exceed 100 characters", nameof(transactionNumber));
 
-        if (groceryItemId == default) throw new ArgumentException("GroceryItemId is required", nameof(groceryItemId));
+        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
 
         var allowedTypes = new[] { "IN", "OUT", "ADJUSTMENT", "TRANSFER" };
         if (string.IsNullOrWhiteSpace(transactionType) || !allowedTypes.Contains(transactionType)) throw new ArgumentException($"Invalid transaction type: {transactionType}", nameof(transactionType));
@@ -200,7 +200,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
 
         Id = id;
         TransactionNumber = transactionNumber;
-        GroceryItemId = groceryItemId;
+        ItemId = itemId;
         WarehouseId = warehouseId;
         WarehouseLocationId = warehouseLocationId;
         PurchaseOrderId = purchaseOrderId;
@@ -222,7 +222,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
 
     public static InventoryTransaction Create(
         string transactionNumber,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         DefaultIdType? warehouseId,
         DefaultIdType? warehouseLocationId,
         DefaultIdType? purchaseOrderId,
@@ -240,7 +240,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
         return new InventoryTransaction(
             DefaultIdType.NewGuid(),
             transactionNumber,
-            groceryItemId,
+            itemId,
             warehouseId,
             warehouseLocationId,
             purchaseOrderId,

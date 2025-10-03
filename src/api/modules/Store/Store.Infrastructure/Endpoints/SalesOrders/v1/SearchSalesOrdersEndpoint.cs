@@ -1,6 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.SalesOrders.Get.v1;
-using FSH.Starter.WebApi.Store.Application.SalesOrders.Search.v1;
-
 namespace Store.Infrastructure.Endpoints.SalesOrders.v1;
 
 /// <summary>

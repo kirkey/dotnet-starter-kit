@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents a single counted line in a cycle count (item-level result).
@@ -17,9 +17,9 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
     public DefaultIdType CycleCountId { get; private set; }
 
     /// <summary>
-    /// The grocery item being counted.
+    /// The item being counted.
     /// </summary>
-    public DefaultIdType GroceryItemId { get; private set; }
+    public DefaultIdType ItemId { get; private set; }
 
     /// <summary>
     /// Quantity recorded in the system before counting. Example: 10.
@@ -62,29 +62,29 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
     public CycleCount CycleCount { get; private set; } = default!;
 
     /// <summary>
-    /// The grocery item details.
+    /// The item details.
     /// </summary>
-    public GroceryItem GroceryItem { get; private set; } = default!;
+    public Item Item { get; private set; } = default!;
 
     private CycleCountItem() { }
 
     private CycleCountItem(
         DefaultIdType id,
         DefaultIdType cycleCountId,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         int systemQuantity,
         int? countedQuantity,
         string? notes)
     {
         // validations
         if (cycleCountId == default) throw new ArgumentException("CycleCountId is required", nameof(cycleCountId));
-        if (groceryItemId == default) throw new ArgumentException("GroceryItemId is required", nameof(groceryItemId));
+        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (systemQuantity < 0) throw new ArgumentException("SystemQuantity must be zero or greater", nameof(systemQuantity));
         if (countedQuantity.HasValue && countedQuantity.Value < 0) throw new ArgumentException("CountedQuantity must be zero or greater when provided", nameof(countedQuantity));
 
         Id = id;
         CycleCountId = cycleCountId;
-        GroceryItemId = groceryItemId;
+        ItemId = itemId;
         SystemQuantity = systemQuantity;
         CountedQuantity = countedQuantity;
         Notes = notes;
@@ -103,14 +103,14 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
     /// Factory method to create a new CycleCountItem.
     /// </summary>
     /// <param name="cycleCountId">The cycle count identifier.</param>
-    /// <param name="groceryItemId">The grocery item identifier.</param>
+    /// <param name="itemId">The item identifier.</param>
     /// <param name="systemQuantity">The system quantity of the item.</param>
     /// <param name="countedQuantity">The counted quantity of the item (optional).</param>
     /// <param name="notes">Additional notes about the item (optional).</param>
     /// <returns>A new instance of CycleCountItem.</returns>
     public static CycleCountItem Create(
         DefaultIdType cycleCountId,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         int systemQuantity,
         int? countedQuantity = null,
         string? notes = null)
@@ -118,7 +118,7 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
         return new CycleCountItem(
             DefaultIdType.NewGuid(),
             cycleCountId,
-            groceryItemId,
+            itemId,
             systemQuantity,
             countedQuantity,
             notes);

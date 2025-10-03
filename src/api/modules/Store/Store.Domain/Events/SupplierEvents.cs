@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Domain.Events;
 
 /// <summary>

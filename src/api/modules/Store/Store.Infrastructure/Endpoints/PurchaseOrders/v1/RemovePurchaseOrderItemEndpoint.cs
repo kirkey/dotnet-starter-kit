@@ -12,15 +12,15 @@ internal static class RemovePurchaseOrderItemEndpoint
     /// </summary>
     internal static RouteHandlerBuilder MapRemovePurchaseOrderItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapDelete("/{id:guid}/items/{groceryItemId:guid}", async (DefaultIdType id, DefaultIdType groceryItemId, ISender sender) =>
+        return endpoints.MapDelete("/{id:guid}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, ISender sender) =>
         {
-            var command = new RemovePurchaseOrderItemCommand(id, groceryItemId);
+            var command = new RemovePurchaseOrderItemCommand(id, itemId);
             await sender.Send(command).ConfigureAwait(false);
             return Results.NoContent();
         })
         .WithName(nameof(RemovePurchaseOrderItemEndpoint))
         .WithSummary("Remove an item from a purchase order")
-        .WithDescription("Removes a grocery item line from a purchase order. Only allowed for modifiable orders.")
+        .WithDescription("Removes an item line from a purchase order. Only allowed for modifiable orders.")
         .RequirePermission("Permissions.Store.Update")
         .MapToApiVersion(1);
     }

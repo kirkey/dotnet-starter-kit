@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class StockAdjustmentConfiguration : IEntityTypeConfiguration<StockAdjustment>
@@ -51,9 +53,9 @@ public class StockAdjustmentConfiguration : IEntityTypeConfiguration<StockAdjust
             .HasMaxLength(50)
             .IsRequired(false);
 
-        builder.HasOne(x => x.GroceryItem)
+        builder.HasOne(x => x.Item)
             .WithMany()
-            .HasForeignKey(x => x.GroceryItemId)
+            .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.Warehouse)

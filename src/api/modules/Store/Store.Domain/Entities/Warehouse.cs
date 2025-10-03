@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents a physical storage facility with comprehensive capacity management, location tracking, and operational control.

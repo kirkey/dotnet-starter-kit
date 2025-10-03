@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.GroceryItems.Get.v1;
-
 namespace Store.Infrastructure.Endpoints.GroceryItems.v1;
 
 public static class GetGroceryItemEndpoint

@@ -5,9 +5,9 @@ namespace FSH.Starter.WebApi.Store.Application.CycleCounts.Get.v1;
 public sealed class GetCycleCountHandler(
     [FromKeyedServices("store:cycle-counts")] IReadRepository<CycleCount> repository,
     ICacheService cache)
-    : IRequestHandler<GetCycleCountRequest, CycleCountResponse>
+    : IRequestHandler<GetCycleCountCommand, CycleCountResponse>
 {
-    public async Task<CycleCountResponse> Handle(GetCycleCountRequest request, CancellationToken cancellationToken)
+    public async Task<CycleCountResponse> Handle(GetCycleCountCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

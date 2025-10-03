@@ -3,7 +3,6 @@ namespace Store.Infrastructure.Import.GroceryItems;
 using System.Globalization;
 using ClosedXML.Excel;
 using FSH.Framework.Core.Storage.File.Features;
-using FSH.Starter.WebApi.Store.Application.GroceryItems.Import;
 
 /// <summary>
 /// Excel (.xlsx) parser for Grocery Item import using ClosedXML.
@@ -67,10 +66,10 @@ internal sealed class ClosedXmlGroceryItemImportParser : IGroceryItemImportParse
                 if (DateTime.TryParse(s, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out dt)) return dt;
                 return null;
             }
-            Guid? ReadGuid(string col)
+            DefaultIdType? ReadGuid(string col)
             {
                 var s = ws.Cell($"{col}{r}").GetString();
-                if (Guid.TryParse(s, out var g)) return g;
+                if (DefaultIdType.TryParse(s, out var g)) return g;
                 return null;
             }
 

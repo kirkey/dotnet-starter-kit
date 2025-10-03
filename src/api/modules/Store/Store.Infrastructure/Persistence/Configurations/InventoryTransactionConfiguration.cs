@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class InventoryTransactionConfiguration : IEntityTypeConfiguration<InventoryTransaction>
@@ -39,9 +41,9 @@ public class InventoryTransactionConfiguration : IEntityTypeConfiguration<Invent
         builder.Property(x => x.ApprovedBy)
             .HasMaxLength(100);
 
-        builder.HasOne(x => x.GroceryItem)
+        builder.HasOne(x => x.Item)
             .WithMany()
-            .HasForeignKey(x => x.GroceryItemId)
+            .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.Warehouse)

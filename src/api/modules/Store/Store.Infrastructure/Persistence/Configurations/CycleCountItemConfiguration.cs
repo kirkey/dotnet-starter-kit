@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class CycleCountItemConfiguration : IEntityTypeConfiguration<CycleCountItem>
@@ -20,9 +22,9 @@ public class CycleCountItemConfiguration : IEntityTypeConfiguration<CycleCountIt
             .HasForeignKey(x => x.CycleCountId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(x => x.GroceryItem)
+        builder.HasOne(x => x.Item)
             .WithMany()
-            .HasForeignKey(x => x.GroceryItemId)
+            .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.ToTable("CycleCountItems", SchemaNames.Store);

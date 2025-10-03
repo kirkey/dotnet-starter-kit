@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents a scheduled inventory cycle count in a warehouse with comprehensive tracking and variance analysis.

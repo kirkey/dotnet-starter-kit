@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Domain.Events;
 
 /// <summary>
@@ -11,7 +13,7 @@ public record GoodsReceiptItemUpdated(GoodsReceiptItem GoodsReceiptItem) : Domai
 public record GoodsReceiptItemRemoved(
     DefaultIdType Id,
     DefaultIdType GoodsReceiptId,
-    DefaultIdType GroceryItemId,
+    DefaultIdType ItemId,
     decimal ReceivedQuantity) : DomainEvent;
 
 /// <summary>
@@ -20,7 +22,7 @@ public record GoodsReceiptItemRemoved(
 public record GoodsReceiptItemQuantityAdjusted(
     DefaultIdType Id,
     DefaultIdType GoodsReceiptId,
-    DefaultIdType GroceryItemId,
+    DefaultIdType ItemId,
     decimal OldReceivedQuantity,
     decimal NewReceivedQuantity,
     decimal NewLineTotal) : DomainEvent;

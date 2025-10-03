@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Submit.v1;
 
 /// <summary>

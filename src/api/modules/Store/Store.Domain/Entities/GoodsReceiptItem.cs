@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents an item received into inventory during a goods receipt.
@@ -20,10 +20,10 @@ public sealed class GoodsReceiptItem : AuditableEntity
     public DefaultIdType GoodsReceiptId { get; private set; }
 
     /// <summary>
-    /// Grocery item being received.
-    /// Example: an existing <see cref="GroceryItem"/> Id.
+    /// Item being received.
+    /// Example: an existing <see cref="Item"/> Id.
     /// </summary>
-    public DefaultIdType GroceryItemId { get; private set; }
+    public DefaultIdType ItemId { get; private set; }
 
     /// <summary>
     /// Quantity received. Must be positive.
@@ -33,7 +33,7 @@ public sealed class GoodsReceiptItem : AuditableEntity
 
     private GoodsReceiptItem() { }
 
-    private GoodsReceiptItem(DefaultIdType id, DefaultIdType receiptId, DefaultIdType groceryItemId, string name, int quantity)
+    private GoodsReceiptItem(DefaultIdType id, DefaultIdType receiptId, DefaultIdType itemId, string name, int quantity)
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
         if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
@@ -41,7 +41,7 @@ public sealed class GoodsReceiptItem : AuditableEntity
 
         Id = id;
         GoodsReceiptId = receiptId;
-        GroceryItemId = groceryItemId;
+        ItemId = itemId;
         Name = name;
         Quantity = quantity;
     }
@@ -50,9 +50,9 @@ public sealed class GoodsReceiptItem : AuditableEntity
     /// Factory to create a goods receipt line item.
     /// </summary>
     /// <param name="receiptId">Parent receipt id.</param>
-    /// <param name="groceryItemId">Item received.</param>
+    /// <param name="itemId">Item received.</param>
     /// <param name="name">Item name. Example: "Bananas".</param>
     /// <param name="quantity">Received quantity. Example: 100.</param>
-    public static GoodsReceiptItem Create(DefaultIdType receiptId, DefaultIdType groceryItemId, string name, int quantity)
-        => new(DefaultIdType.NewGuid(), receiptId, groceryItemId, name, quantity);
+    public static GoodsReceiptItem Create(DefaultIdType receiptId, DefaultIdType itemId, string name, int quantity)
+        => new(DefaultIdType.NewGuid(), receiptId, itemId, name, quantity);
 }

@@ -6,9 +6,9 @@ namespace FSH.Starter.WebApi.Store.Application.Categories.Get.v1;
 public sealed class GetCategoryHandler(
     [FromKeyedServices("store:categories")] IReadRepository<Category> repository,
     ICacheService cache)
-    : IRequestHandler<GetCategoryRequest, CategoryResponse>
+    : IRequestHandler<GetCategoryCommand, CategoryResponse>
 {
-    public async Task<CategoryResponse> Handle(GetCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<CategoryResponse> Handle(GetCategoryCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

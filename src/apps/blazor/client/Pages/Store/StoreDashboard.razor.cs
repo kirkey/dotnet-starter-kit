@@ -130,13 +130,13 @@ public partial class StoreDashboard
         try
         {
             // Try to get real grocery item count
-            var request = new SearchGroceryItemsQuery
+            var request = new SearchItemsCommand
             {
                 PageNumber = 1,
                 PageSize = 1,
             };
             
-            var result = await ApiClient.SearchGroceryItemsEndpointAsync("1", request);
+            var result = await ApiClient.SearchItemsEndpointAsync("1", request);
             
             // Update only the total items with real data
             _metrics.TotalItems = result.TotalCount;

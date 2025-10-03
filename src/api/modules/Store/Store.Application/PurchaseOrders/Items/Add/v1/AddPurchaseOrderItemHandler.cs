@@ -19,7 +19,7 @@ public sealed class AddPurchaseOrderItemHandler(
 
         // Check if item already exists for this purchase order
         var existingItem = (await itemReadRepository.ListAsync(cancellationToken).ConfigureAwait(false))
-            .FirstOrDefault(i => i.PurchaseOrderId == request.PurchaseOrderId && i.GroceryItemId == request.GroceryItemId);
+            .FirstOrDefault(i => i.PurchaseOrderId == request.PurchaseOrderId && i.ItemId == request.ItemId);
 
         if (existingItem != null)
         {

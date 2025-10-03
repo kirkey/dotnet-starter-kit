@@ -9,9 +9,9 @@ namespace FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
 public sealed class GetSupplierHandler(
     [FromKeyedServices("store:suppliers")] IReadRepository<Supplier> repository,
     ICacheService cache)
-    : IRequestHandler<GetSupplierRequest, SupplierResponse>
+    : IRequestHandler<GetSupplierCommand, SupplierResponse>
 {
-    public async Task<SupplierResponse> Handle(GetSupplierRequest request, CancellationToken cancellationToken)
+    public async Task<SupplierResponse> Handle(GetSupplierCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

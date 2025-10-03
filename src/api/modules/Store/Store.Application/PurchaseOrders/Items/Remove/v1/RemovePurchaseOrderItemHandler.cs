@@ -19,7 +19,7 @@ public sealed class RemovePurchaseOrderItemHandler(
 
         // Find and remove the item
         var item = (await itemReadRepository.ListAsync(cancellationToken).ConfigureAwait(false))
-            .FirstOrDefault(i => i.PurchaseOrderId == request.PurchaseOrderId && i.GroceryItemId == request.GroceryItemId);
+            .FirstOrDefault(i => i.PurchaseOrderId == request.PurchaseOrderId && i.ItemId == request.ItemId);
         
         if (item != null)
         {

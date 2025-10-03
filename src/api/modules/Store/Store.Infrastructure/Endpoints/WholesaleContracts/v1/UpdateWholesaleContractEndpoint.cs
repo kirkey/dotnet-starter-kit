@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.WholesaleContracts.Update.v1;
-
 namespace Store.Infrastructure.Endpoints.WholesaleContracts.v1;
 
 /// <summary>

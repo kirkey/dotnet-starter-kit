@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Domain.Events;
 
 /// <summary>
@@ -66,16 +68,16 @@ public record PurchaseOrderItemAdded : DomainEvent
     /// <summary>The affected purchase order.</summary>
     public PurchaseOrder PurchaseOrder { get; init; } = default!;
     /// <summary>The grocery item identifier of the added line.</summary>
-    public DefaultIdType GroceryItemId { get; init; }
+    public DefaultIdType ItemId { get; init; }
 }
 
 /// <summary>
-/// Raised when a line item is removed from a purchase order.
+/// Event raised when an item is removed from a purchase order.
 /// </summary>
-public record PurchaseOrderItemRemoved : DomainEvent
+public sealed record PurchaseOrderItemRemoved : DomainEvent
 {
-    /// <summary>The affected purchase order.</summary>
     public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public DefaultIdType ItemId { get; init; }
     /// <summary>The grocery item identifier of the removed line.</summary>
     public DefaultIdType GroceryItemId { get; init; }
 }

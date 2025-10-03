@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Domain.Events;
 
 public record InventoryTransferCreated : DomainEvent
@@ -8,7 +10,7 @@ public record InventoryTransferCreated : DomainEvent
 public record InventoryTransferItemAdded : DomainEvent
 {
     public InventoryTransfer InventoryTransfer { get; init; } = default!;
-    public DefaultIdType GroceryItemId { get; init; }
+    public DefaultIdType ItemId { get; init; }
 }
 
 public record InventoryTransferApproved : DomainEvent

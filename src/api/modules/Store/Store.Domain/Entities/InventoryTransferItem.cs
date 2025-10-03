@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Line item inside an inventory transfer. Associates a grocery item with quantity and unit price.
@@ -16,9 +16,9 @@ public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
     public DefaultIdType InventoryTransferId { get; private set; }
 
     /// <summary>
-    /// Grocery item id being transferred.
+    /// Item id being transferred.
     /// </summary>
-    public DefaultIdType GroceryItemId { get; private set; }
+    public DefaultIdType ItemId { get; private set; }
 
     /// <summary>
     /// Quantity being transferred. Must be > 0.
@@ -36,15 +36,15 @@ public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
     public decimal LineTotal { get; private set; }
 
     public InventoryTransfer InventoryTransfer { get; private set; } = default!;
-    public GroceryItem GroceryItem { get; private set; } = default!;
+    public Item Item { get; private set; } = default!;
 
     protected InventoryTransferItem() { }
 
-    private InventoryTransferItem(DefaultIdType id, DefaultIdType inventoryTransferId, DefaultIdType groceryItemId, int quantity, decimal unitPrice)
+    private InventoryTransferItem(DefaultIdType id, DefaultIdType inventoryTransferId, DefaultIdType itemId, int quantity, decimal unitPrice)
     {
         Id = id;
         InventoryTransferId = inventoryTransferId;
-        GroceryItemId = groceryItemId;
+        ItemId = itemId;
         Quantity = quantity;
         UnitPrice = unitPrice;
         LineTotal = quantity * unitPrice;
@@ -57,17 +57,17 @@ public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
     /// Validates required identifiers and business rules (positive quantity, non-negative unit price).
     /// </summary>
     /// <param name="inventoryTransferId">The parent inventory transfer id. Required.</param>
-    /// <param name="groceryItemId">The grocery item id being transferred. Required.</param>
+    /// <param name="itemId">The item id being transferred. Required.</param>
     /// <param name="quantity">Quantity to transfer. Must be &gt; 0.</param>
     /// <param name="unitPrice">Unit price for valuation. Must be &gt;= 0.</param>
     /// <returns>A new <see cref="InventoryTransferItem"/>.</returns>
-    public static InventoryTransferItem Create(DefaultIdType inventoryTransferId, DefaultIdType groceryItemId, int quantity, decimal unitPrice)
+    public static InventoryTransferItem Create(DefaultIdType inventoryTransferId, DefaultIdType itemId, int quantity, decimal unitPrice)
     {
         if (inventoryTransferId == default) throw new ArgumentException("InventoryTransferId is required", nameof(inventoryTransferId));
-        if (groceryItemId == default) throw new ArgumentException("GroceryItemId is required", nameof(groceryItemId));
+        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
         if (unitPrice < 0) throw new ArgumentException("Unit price cannot be negative", nameof(unitPrice));
-        return new InventoryTransferItem(DefaultIdType.NewGuid(), inventoryTransferId, groceryItemId, quantity, unitPrice);
+        return new InventoryTransferItem(DefaultIdType.NewGuid(), inventoryTransferId, itemId, quantity, unitPrice);
     }
 
     /// <summary>

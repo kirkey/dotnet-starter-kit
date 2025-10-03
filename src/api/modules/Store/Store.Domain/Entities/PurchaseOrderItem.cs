@@ -1,6 +1,6 @@
 using Store.Domain.Exceptions.PurchaseOrderItem;
 
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Line item on a purchase order representing a requested quantity from a supplier.
@@ -18,9 +18,9 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
     public DefaultIdType PurchaseOrderId { get; private set; }
 
     /// <summary>
-    /// Grocery item id ordered from the supplier.
+    /// Item id ordered from the supplier.
     /// </summary>
-    public DefaultIdType GroceryItemId { get; private set; }
+    public DefaultIdType ItemId { get; private set; }
 
     /// <summary>
     /// Quantity ordered. Must be > 0.
@@ -48,14 +48,14 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
     public decimal TotalPrice { get; private set; }
 
     public PurchaseOrder PurchaseOrder { get; private set; } = default!;
-    public GroceryItem GroceryItem { get; private set; } = default!;
+    public Item Item { get; private set; } = default!;
 
     private PurchaseOrderItem() { }
 
     private PurchaseOrderItem(
         DefaultIdType id,
         DefaultIdType purchaseOrderId,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         int quantity,
         decimal unitPrice,
         decimal discountAmount,
@@ -69,7 +69,7 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
 
         Id = id;
         PurchaseOrderId = purchaseOrderId;
-        GroceryItemId = groceryItemId;
+        ItemId = itemId;
         Quantity = quantity;
         UnitPrice = unitPrice;
         DiscountAmount = discountAmount;
@@ -87,7 +87,7 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
     /// </summary>
     public static PurchaseOrderItem Create(
         DefaultIdType purchaseOrderId,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         int quantity,
         decimal unitPrice,
         decimal? discountAmount = null,
@@ -96,7 +96,7 @@ public sealed class PurchaseOrderItem : AuditableEntity, IAggregateRoot
         return new PurchaseOrderItem(
             DefaultIdType.NewGuid(),
             purchaseOrderId,
-            groceryItemId,
+            itemId,
             quantity,
             unitPrice,
             discountAmount ?? 0,

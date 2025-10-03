@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
 /// Purchase Orders page logic. Provides CRUD and search over PurchaseOrder entities using the generated API client.
-/// Mirrors the structure of GroceryItems and Suppliers pages for consistency.
+/// Mirrors the structure of Items and Suppliers pages for consistency.
 /// </summary>
 public partial class PurchaseOrders
 {

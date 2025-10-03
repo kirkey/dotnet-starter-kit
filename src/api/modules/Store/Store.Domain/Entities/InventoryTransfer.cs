@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Represents an inventory transfer between warehouses or locations with comprehensive tracking and approval workflows.
@@ -247,25 +247,25 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
             requestedBy);
     }
 
-    public InventoryTransfer AddItem(DefaultIdType groceryItemId, int quantity, decimal unitPrice)
+    public InventoryTransfer AddItem(DefaultIdType itemId, int quantity, decimal unitPrice)
     {
-        if (groceryItemId == default) throw new ArgumentException("GroceryItemId is required", nameof(groceryItemId));
+        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
 
         // Only allow adding items when transfer is in Pending state.
         if (!string.Equals(Status, "Pending", StringComparison.OrdinalIgnoreCase))
             throw new Store.Domain.Exceptions.InventoryTransfer.InventoryTransferCannotBeModifiedException(Id);
 
-        // Prevent duplicate grocery items in the same transfer.
-        if (Items.Any(i => i.GroceryItemId == groceryItemId))
-            throw new Store.Domain.Exceptions.InventoryTransferItem.DuplicateInventoryTransferItemException(Id, groceryItemId);
+        // Prevent duplicate items in the same transfer.
+        if (Items.Any(i => i.ItemId == itemId))
+            throw new Store.Domain.Exceptions.InventoryTransferItem.DuplicateInventoryTransferItemException(Id, itemId);
 
-        var item = InventoryTransferItem.Create(Id, groceryItemId, quantity, unitPrice);
+        var item = InventoryTransferItem.Create(Id, itemId, quantity, unitPrice);
         Items.Add(item);
         RecalculateTotal();
 
         // Raise a specific domain event for item addition
-        QueueDomainEvent(new InventoryTransferItemAdded { InventoryTransfer = this, GroceryItemId = groceryItemId });
+        QueueDomainEvent(new InventoryTransferItemAdded { InventoryTransfer = this, ItemId = itemId });
         return this;
     }
 

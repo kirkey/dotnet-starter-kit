@@ -1,4 +1,4 @@
-namespace Store.Domain;
+namespace Store.Domain.Entities;
 
 /// <summary>
 /// Well-known lifecycle statuses for <see cref="PurchaseOrder"/> including helper methods.

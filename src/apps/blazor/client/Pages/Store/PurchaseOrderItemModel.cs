@@ -4,9 +4,9 @@ public class PurchaseOrderItemModel
 {
     public DefaultIdType Id { get; set; } = DefaultIdType.NewGuid();
     public DefaultIdType PurchaseOrderId { get; set; }
-    public DefaultIdType GroceryItemId { get; set; }
-    public string GroceryItemName { get; set; } = string.Empty;
-    public string GroceryItemSku { get; set; } = string.Empty;
+    public DefaultIdType ItemId { get; set; }
+    public string ItemName { get; set; } = string.Empty;
+    public string ItemSku { get; set; } = string.Empty;
     public decimal Quantity { get; set; }
     public string Unit { get; set; } = string.Empty;
     public decimal UnitPrice { get; set; }

@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Infrastructure.Persistence.Configurations;
 
 public class InventoryTransferItemConfiguration : IEntityTypeConfiguration<InventoryTransferItem>
@@ -10,7 +12,7 @@ public class InventoryTransferItemConfiguration : IEntityTypeConfiguration<Inven
         builder.Property(x => x.InventoryTransferId)
             .IsRequired();
 
-        builder.Property(x => x.GroceryItemId)
+        builder.Property(x => x.ItemId)
             .IsRequired();
 
         builder.Property(x => x.Quantity)
@@ -28,9 +30,9 @@ public class InventoryTransferItemConfiguration : IEntityTypeConfiguration<Inven
             .HasForeignKey(x => x.InventoryTransferId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(x => x.GroceryItem)
+        builder.HasOne(x => x.Item)
             .WithMany()
-            .HasForeignKey(x => x.GroceryItemId)
+            .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.ToTable("InventoryTransferItems", SchemaNames.Store);

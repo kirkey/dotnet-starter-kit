@@ -1,5 +1,3 @@
-
-
 using Store.Domain.Exceptions.StockAdjustment;
 
 namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.Delete.v1;

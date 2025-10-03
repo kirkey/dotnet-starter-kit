@@ -4,7 +4,7 @@ public record CreateStockAdjustmentCommand(
     [property: DefaultValue("Stock Count Adjustment")] string Name,
     [property: DefaultValue("Inventory count adjustment")] string? Description,
     [property: DefaultValue("ADJ001")] string AdjustmentNumber,
-    DefaultIdType GroceryItemId,
+    DefaultIdType ItemId,
     DefaultIdType WarehouseId,
     DefaultIdType? WarehouseLocationId,
     [property: DefaultValue("2024-01-01")] DateTime AdjustmentDate,

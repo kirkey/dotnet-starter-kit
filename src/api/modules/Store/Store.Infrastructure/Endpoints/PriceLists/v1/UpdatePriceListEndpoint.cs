@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.PriceLists.Update.v1;
-
 namespace Store.Infrastructure.Endpoints.PriceLists.v1;
 
 /// <summary>

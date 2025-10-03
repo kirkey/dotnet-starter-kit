@@ -1,5 +1,5 @@
-using FSH.Starter.WebApi.Store.Application.GroceryItems.Specs;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
+using FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Delete.v1;
 
@@ -10,7 +10,7 @@ public sealed class DeleteSupplierCommandValidator : AbstractValidator<DeleteSup
 {
     public DeleteSupplierCommandValidator(
         [FromKeyedServices("store:suppliers")] IReadRepository<Supplier> suppliers,
-        [FromKeyedServices("store:grocery-items")] IReadRepository<GroceryItem> groceryItems,
+        [FromKeyedServices("store:items")] IReadRepository<Item> items,
         [FromKeyedServices("store:purchase-orders")] IReadRepository<PurchaseOrder> purchaseOrders)
     {
         RuleFor(x => x.Id)
@@ -19,8 +19,8 @@ public sealed class DeleteSupplierCommandValidator : AbstractValidator<DeleteSup
             .WithMessage("Supplier not found.")
             .MustAsync(async (id, ct) =>
             {
-                // No grocery items should reference this supplier
-                var hasItems = await groceryItems.AnyAsync(new GroceryItemsBySupplierIdSpec(id), ct).ConfigureAwait(false);
+                var hasItems = await items.AnyAsync(new ItemsBySupplierId(id), ct).ConfigureAwait(false);
+                return !hasItems;
                 return !hasItems;
             }).WithMessage("Cannot delete a supplier that has grocery items.")
             .MustAsync(async (id, ct) =>

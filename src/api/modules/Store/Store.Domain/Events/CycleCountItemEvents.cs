@@ -1,3 +1,5 @@
+using Store.Domain.Entities;
+
 namespace Store.Domain.Events;
 
 /// <summary>
@@ -11,4 +13,4 @@ public record CycleCountItemUpdated(CycleCountItem CycleCountItem) : DomainEvent
 public record CycleCountItemRemoved(
     DefaultIdType Id,
     DefaultIdType CycleCountId,
-    DefaultIdType GroceryItemId) : DomainEvent;
+    DefaultIdType ItemId) : DomainEvent;

@@ -1,6 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.GroceryItems.Get.v1;
-using FSH.Starter.WebApi.Store.Application.GroceryItems.Search.v1;
-
 namespace Store.Infrastructure.Endpoints.GroceryItems.v1;
 
 /// <summary>

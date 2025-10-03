@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
-using Store.Domain;
 
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1;
 

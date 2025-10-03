@@ -8,7 +8,7 @@ public static class GetCategoryEndpoint
     {
         return endpoints.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
-            var result = await mediator.Send(new GetCategoryRequest(id)).ConfigureAwait(false);
+            var result = await mediator.Send(new GetCategoryCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(nameof(GetCategoryEndpoint))
