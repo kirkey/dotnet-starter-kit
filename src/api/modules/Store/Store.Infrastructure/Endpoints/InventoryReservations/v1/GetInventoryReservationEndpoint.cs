@@ -9,7 +9,7 @@ public static class GetInventoryReservationEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
-                var response = await sender.Send(new GetInventoryReservationRequest { Id = id }).ConfigureAwait(false);
+                var response = await sender.Send(new GetInventoryReservationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GetInventoryReservationEndpoint))

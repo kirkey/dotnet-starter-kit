@@ -16,24 +16,6 @@ public sealed class SearchItemSuppliersSpec : EntitiesByPaginationFilterSpec<Ite
             .Where(i => i.SupplierId == request.SupplierId, request.SupplierId.HasValue)
             .Where(i => i.IsActive == request.IsActive, request.IsActive.HasValue)
             .Where(i => i.IsPreferred == request.IsPreferred, request.IsPreferred.HasValue)
-            .Where(i => i.CurrencyCode == request.CurrencyCode, !string.IsNullOrWhiteSpace(request.CurrencyCode))
             .Where(i => i.ReliabilityRating >= request.MinReliabilityRating, request.MinReliabilityRating.HasValue);
-
-        Query.Select(i => new ItemSupplierResponse(
-            i.Id,
-            i.ItemId,
-            i.SupplierId,
-            i.SupplierPartNumber,
-            i.UnitCost,
-            i.LeadTimeDays,
-            i.MinimumOrderQuantity,
-            i.PackagingQuantity,
-            i.CurrencyCode,
-            i.IsPreferred,
-            i.IsActive,
-            i.ReliabilityRating,
-            i.LastPriceUpdate,
-            i.CreatedOn,
-            i.CreatedBy));
     }
 }

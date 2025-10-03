@@ -31,7 +31,7 @@ public sealed class CreateStockAdjustmentHandler(
         
         var stockAdjustment = StockAdjustment.Create(
             request.AdjustmentNumber,
-            request.GroceryItemId,
+            request.ItemId,
             request.WarehouseId,
             request.WarehouseLocationId,
             request.AdjustmentDate,

@@ -2,10 +2,9 @@ using FSH.Starter.WebApi.Store.Application.SerialNumbers.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.SerialNumbers.Specs;
 
-public sealed class SearchSerialNumbersSpec : Specification<SerialNumber>
+public sealed class SearchSerialNumbersSpec : EntitiesByPaginationFilterSpec<SerialNumber, SerialNumberResponse>
 {
-    public SearchSerialNumbersSpec(SearchSerialNumbersCommand request)
-        : base(request)
+    public SearchSerialNumbersSpec(SearchSerialNumbersCommand request) : base(request)
     {
         Query
             .OrderBy(s => s.CreatedOn)

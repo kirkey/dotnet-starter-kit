@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.Store.Application.PutAwayTasks.Get.v1;
 
-public sealed class GetPutAwayTaskValidator : AbstractValidator<GetPutAwayTaskRequest>
+public sealed class GetPutAwayTaskValidator : AbstractValidator<GetPutAwayTaskQuery>
 {
     public GetPutAwayTaskValidator()
     {

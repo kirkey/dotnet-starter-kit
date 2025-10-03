@@ -64,13 +64,6 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
         builder.Property(x => x.Notes)
             .HasMaxLength(2000);
 
-        // Add table-level constraints to enforce invariants
-        // builder.ToTable("Suppliers", SchemaNames.Store, tb =>
-        // {
-        //     // Quote identifiers so PostgreSQL resolves them exactly (e.g. "CreditLimit").
-        //     tb.HasCheckConstraint("CK_Suppliers_CreditLimit_NonNegative", "\"CreditLimit\" IS NULL OR \"CreditLimit\" >= 0");
-        //     tb.HasCheckConstraint("CK_Suppliers_PaymentTerms_NonNegative", "\"PaymentTermsDays\" >= 0");
-        //     tb.HasCheckConstraint("CK_Suppliers_Rating_Range", "\"Rating\" >= 0 AND \"Rating\" <= 5");
-        // });
+        builder.ToTable("Suppliers", SchemaNames.Store);
     }
 }

@@ -64,7 +64,7 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
     /// Current utilization percentage (0-100).
     /// Example: 75.5 for 75.5% full.
     /// </summary>
-    public decimal CurrentUtilization { get; private set; }
+    public decimal? CurrentUtilization { get; private set; }
 
     /// <summary>
     /// Whether bin is active and available for use.

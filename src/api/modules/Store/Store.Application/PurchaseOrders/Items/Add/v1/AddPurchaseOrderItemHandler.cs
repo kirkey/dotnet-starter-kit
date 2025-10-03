@@ -32,7 +32,7 @@ public sealed class AddPurchaseOrderItemHandler(
             // Create new item
             var newItem = PurchaseOrderItem.Create(
                 request.PurchaseOrderId,
-                request.GroceryItemId,
+                request.ItemId,
                 request.Quantity,
                 request.UnitPrice,
                 request.Discount);

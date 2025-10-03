@@ -9,7 +9,7 @@ public class SearchStockAdjustmentsSpecs : EntitiesByPaginationFilterSpec<StockA
         : base(command)
     {
         Query
-            .Where(x => x.GroceryItemId == command.GroceryItemId, command.GroceryItemId.HasValue)
+            .Where(x => x.ItemId == command.ItemId, command.ItemId.HasValue)
             .Where(x => x.WarehouseLocationId == command.WarehouseLocationId, command.WarehouseLocationId.HasValue)
             .Where(x => x.AdjustmentType == command.AdjustmentType, !string.IsNullOrWhiteSpace(command.AdjustmentType))
             .Where(x => x.Reason != null && command.Reason != null && x.Reason.Contains(command.Reason), !string.IsNullOrWhiteSpace(command.Reason))

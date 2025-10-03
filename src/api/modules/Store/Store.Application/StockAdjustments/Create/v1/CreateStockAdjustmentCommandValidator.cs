@@ -18,9 +18,9 @@ public class CreateStockAdjustmentCommandValidator : AbstractValidator<CreateSto
             .MaximumLength(50)
             .WithMessage("Adjustment number must not exceed 50 characters");
 
-        RuleFor(x => x.GroceryItemId)
+        RuleFor(x => x.ItemId)
             .NotEmpty()
-            .WithMessage("Grocery item ID is required");
+            .WithMessage("Item ID is required");
 
         RuleFor(x => x.WarehouseId)
             .NotEmpty()

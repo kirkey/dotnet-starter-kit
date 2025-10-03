@@ -24,12 +24,7 @@ public class SearchItemSuppliersCommand : PaginationFilter, IRequest<PagedList<I
     /// Filter by preferred status.
     /// </summary>
     public bool? IsPreferred { get; init; }
-
-    /// <summary>
-    /// Filter by currency code.
-    /// </summary>
-    public string? CurrencyCode { get; init; }
-
+    
     /// <summary>
     /// Filter by minimum reliability rating.
     /// </summary>

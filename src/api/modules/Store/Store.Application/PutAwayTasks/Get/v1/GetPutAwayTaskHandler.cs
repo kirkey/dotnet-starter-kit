@@ -4,9 +4,9 @@ namespace FSH.Starter.WebApi.Store.Application.PutAwayTasks.Get.v1;
 
 public sealed class GetPutAwayTaskHandler(
     [FromKeyedServices("store:putawaytasks")] IRepository<PutAwayTask> repository)
-    : IRequestHandler<GetPutAwayTaskRequest, GetPutAwayTaskResponse>
+    : IRequestHandler<GetPutAwayTaskQuery, GetPutAwayTaskResponse>
 {
-    public async Task<GetPutAwayTaskResponse> Handle(GetPutAwayTaskRequest request, CancellationToken cancellationToken)
+    public async Task<GetPutAwayTaskResponse> Handle(GetPutAwayTaskQuery request, CancellationToken cancellationToken)
     {
         var spec = new GetPutAwayTaskByIdSpec(request.PutAwayTaskId);
         var putAwayTask = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false)

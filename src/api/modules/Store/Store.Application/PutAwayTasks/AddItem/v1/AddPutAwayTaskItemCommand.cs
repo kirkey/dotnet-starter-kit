@@ -1,12 +1,14 @@
 namespace FSH.Starter.WebApi.Store.Application.PutAwayTasks.AddItem.v1;
 
-public sealed class AddPutAwayTaskItemCommand : IRequest<AddPutAwayTaskItemResponse>
-{
-    public DefaultIdType PutAwayTaskId { get; set; }
-    public DefaultIdType ItemId { get; set; }
-    public DefaultIdType ToBinId { get; set; }
-    public DefaultIdType? LotNumberId { get; set; }
-    public DefaultIdType? SerialNumberId { get; set; }
-    public int Quantity { get; set; }
-    public string? Notes { get; set; }
-}
+/// <summary>
+/// Command to add an item to a put-away task.
+/// </summary>
+public sealed record AddPutAwayTaskItemCommand(
+    DefaultIdType PutAwayTaskId,
+    DefaultIdType ItemId,
+    DefaultIdType ToBinId,
+    DefaultIdType? LotNumberId,
+    DefaultIdType? SerialNumberId,
+    int Quantity,
+    string? Notes
+) : IRequest<AddPutAwayTaskItemResponse>;

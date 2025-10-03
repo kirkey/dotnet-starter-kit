@@ -7,9 +7,9 @@ public static class SearchInventoryTransactionsEndpoint
     internal static RouteHandlerBuilder MapSearchInventoryTransactionsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchInventoryTransactionsRequest request, ISender sender) =>
+            .MapPost("/search", async (SearchInventoryTransactionsCommand command, ISender sender) =>
             {
-                var response = await sender.Send(request).ConfigureAwait(false);
+                var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchInventoryTransactionsEndpoint))

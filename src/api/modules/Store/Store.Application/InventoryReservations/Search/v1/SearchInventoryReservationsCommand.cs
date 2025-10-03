@@ -1,25 +1,26 @@
-using FSH.Starter.WebApi.Store.Application.InventoryReservations.Get.v1;
-
 namespace FSH.Starter.WebApi.Store.Application.InventoryReservations.Search.v1;
 
+/// <summary>
+/// Command to search inventory reservations with filtering and pagination.
+/// </summary>
 public class SearchInventoryReservationsCommand : PaginationFilter, IRequest<PagedList<InventoryReservationResponse>>
 {
-    public string? ReservationNumber { get; set; }
-    public DefaultIdType? ItemId { get; set; }
-    public DefaultIdType? WarehouseId { get; set; }
-    public DefaultIdType? WarehouseLocationId { get; set; }
-    public DefaultIdType? BinId { get; set; }
-    public DefaultIdType? LotNumberId { get; set; }
-    public string? ReservationType { get; set; }
-    public string? Status { get; set; }
-    public string? ReferenceNumber { get; set; }
-    public DateTime? ReservationDateFrom { get; set; }
-    public DateTime? ReservationDateTo { get; set; }
-    public DateTime? ExpirationDateFrom { get; set; }
-    public DateTime? ExpirationDateTo { get; set; }
-    public bool? IsExpired { get; set; }
-    public bool? IsActive { get; set; }
-    public string? ReservedBy { get; set; }
+    public string? ReservationNumber { get; init; }
+    public DefaultIdType? ItemId { get; init; }
+    public DefaultIdType? WarehouseId { get; init; }
+    public DefaultIdType? WarehouseLocationId { get; init; }
+    public DefaultIdType? BinId { get; init; }
+    public DefaultIdType? LotNumberId { get; init; }
+    public string? ReservationType { get; init; }
+    public string? Status { get; init; }
+    public string? ReferenceNumber { get; init; }
+    public DateTime? ReservationDateFrom { get; init; }
+    public DateTime? ReservationDateTo { get; init; }
+    public DateTime? ExpirationDateFrom { get; init; }
+    public DateTime? ExpirationDateTo { get; init; }
+    public bool? IsExpired { get; init; }
+    public bool? IsActive { get; init; }
+    public string? ReservedBy { get; init; }
 }
 
 public class InventoryReservationDto

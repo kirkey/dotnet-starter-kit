@@ -74,14 +74,7 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
     /// Example: 12 for dozen packs, 24 for case packs.
     /// </summary>
     public int? PackagingQuantity { get; private set; }
-
-    /// <summary>
-    /// Currency code for pricing.
-    /// Example: "USD", "EUR", "GBP".
-    /// Max length: 3.
-    /// </summary>
-    public string CurrencyCode { get; private set; } = "USD";
-
+    
     /// <summary>
     /// Whether this is the preferred supplier for this item.
     /// </summary>
@@ -124,7 +117,6 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
         int leadTimeDays,
         int minimumOrderQuantity,
         int? packagingQuantity,
-        string currencyCode,
         bool isPreferred)
     {
         if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
@@ -137,9 +129,6 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
         if (minimumOrderQuantity <= 0) throw new ArgumentException("MinimumOrderQuantity must be positive", nameof(minimumOrderQuantity));
         if (packagingQuantity.HasValue && packagingQuantity.Value <= 0) throw new ArgumentException("PackagingQuantity must be positive", nameof(packagingQuantity));
 
-        if (string.IsNullOrWhiteSpace(currencyCode)) currencyCode = "USD";
-        if (currencyCode.Length != 3) throw new ArgumentException("CurrencyCode must be 3 characters", nameof(currencyCode));
-
         Id = id;
         ItemId = itemId;
         SupplierId = supplierId;
@@ -148,7 +137,6 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
         LeadTimeDays = leadTimeDays;
         MinimumOrderQuantity = minimumOrderQuantity;
         PackagingQuantity = packagingQuantity;
-        CurrencyCode = currencyCode.ToUpperInvariant();
         IsPreferred = isPreferred;
         IsActive = true;
         LastPriceUpdate = DateTime.UtcNow;
@@ -164,7 +152,6 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
         int minimumOrderQuantity = 1,
         string? supplierPartNumber = null,
         int? packagingQuantity = null,
-        string currencyCode = "USD",
         bool isPreferred = false)
     {
         return new ItemSupplier(
@@ -176,20 +163,15 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
             leadTimeDays,
             minimumOrderQuantity,
             packagingQuantity,
-            currencyCode,
             isPreferred);
     }
 
-    public ItemSupplier UpdatePricing(decimal unitCost, string? currencyCode = null)
+    public ItemSupplier UpdatePricing(decimal unitCost)
     {
         if (unitCost < 0) throw new ArgumentException("UnitCost cannot be negative", nameof(unitCost));
 
         UnitCost = unitCost;
-        if (!string.IsNullOrWhiteSpace(currencyCode))
-        {
-            if (currencyCode.Length != 3) throw new ArgumentException("CurrencyCode must be 3 characters", nameof(currencyCode));
-            CurrencyCode = currencyCode.ToUpperInvariant();
-        }
+        LastPriceUpdate = DateTime.UtcNow;
         LastPriceUpdate = DateTime.UtcNow;
 
         QueueDomainEvent(new ItemSupplierUpdated { ItemSupplier = this });

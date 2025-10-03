@@ -35,15 +35,5 @@ public sealed class SearchGoodsReceiptsSpec : Specification<GoodsReceipt>
         {
             Query.Where(x => x.ReceivedDate <= request.ReceivedDateTo.Value);
         }
-
-        Query.Select(x => new GoodsReceiptDto
-        {
-            Id = x.Id,
-            ReceiptNumber = x.ReceiptNumber,
-            PurchaseOrderId = x.PurchaseOrderId,
-            ReceivedDate = x.ReceivedDate,
-            Status = x.Status,
-            ItemCount = x.Items.Count
-        });
     }
 }

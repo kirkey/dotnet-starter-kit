@@ -30,7 +30,6 @@ public sealed class CreateItemSupplierHandler(
             request.MinimumOrderQuantity,
             request.SupplierPartNumber,
             request.PackagingQuantity,
-            request.CurrencyCode ?? "USD",
             request.IsPreferred);
 
         await repository.AddAsync(itemSupplier, cancellationToken);

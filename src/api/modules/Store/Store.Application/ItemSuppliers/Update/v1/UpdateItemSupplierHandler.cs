@@ -22,7 +22,7 @@ public sealed class UpdateItemSupplierHandler(
         // Update pricing if provided
         if (request.UnitCost.HasValue)
         {
-            itemSupplier.UpdatePricing(request.UnitCost.Value, request.CurrencyCode);
+            itemSupplier.UpdatePricing(request.UnitCost.Value);
         }
 
         // Update lead time if provided

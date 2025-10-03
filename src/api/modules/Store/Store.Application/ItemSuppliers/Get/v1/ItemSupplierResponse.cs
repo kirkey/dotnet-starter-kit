@@ -12,11 +12,10 @@ public sealed record ItemSupplierResponse(
     int LeadTimeDays,
     int MinimumOrderQuantity,
     int? PackagingQuantity,
-    string CurrencyCode,
     bool IsPreferred,
     bool IsActive,
     decimal? ReliabilityRating,
     DateTime? LastPriceUpdate,
-    DateTimeOffset CreatedOn,
-    DefaultIdType CreatedBy
+    DateTime CreatedOn,
+    DateTime? LastModifiedOn
 );

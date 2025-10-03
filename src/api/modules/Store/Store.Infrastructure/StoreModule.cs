@@ -1,28 +1,23 @@
 using Store.Domain.Entities;
-using Store.Infrastructure.Endpoints;
 using Store.Infrastructure.Endpoints.Bins;
 using Store.Infrastructure.Endpoints.Categories;
 using Store.Infrastructure.Endpoints.CycleCounts;
 using Store.Infrastructure.Endpoints.GoodsReceipts;
 using Store.Infrastructure.Endpoints.PickLists;
-using Store.Infrastructure.Endpoints.GroceryItems;
 using Store.Infrastructure.Endpoints.InventoryReservations;
 using Store.Infrastructure.Endpoints.InventoryTransactions;
 using Store.Infrastructure.Endpoints.InventoryTransfers;
 using Store.Infrastructure.Endpoints.Items;
 using Store.Infrastructure.Endpoints.ItemSuppliers;
 using Store.Infrastructure.Endpoints.LotNumbers;
-using Store.Infrastructure.Endpoints.PriceLists;
 using Store.Infrastructure.Endpoints.PurchaseOrders;
+using Store.Infrastructure.Endpoints.PutAwayTasks;
 using Store.Infrastructure.Endpoints.SerialNumbers;
-using Store.Infrastructure.Endpoints.SalesOrders;
 using Store.Infrastructure.Endpoints.StockAdjustments;
 using Store.Infrastructure.Endpoints.StockLevels;
 using Store.Infrastructure.Endpoints.Suppliers;
 using Store.Infrastructure.Endpoints.WarehouseLocations;
 using Store.Infrastructure.Endpoints.Warehouses;
-using Store.Infrastructure.Endpoints.WholesaleContracts;
-using Store.Infrastructure.Endpoints.WholesalePricings;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
@@ -47,10 +42,8 @@ public static class StoreModule
         // Map all functional area endpoints
         storeGroup.MapBinsEndpoints();
         storeGroup.MapCategoriesEndpoints();
-        storeGroup.MapCustomersEndpoints();
         storeGroup.MapCycleCountsEndpoints();
         storeGroup.MapGoodsReceiptsEndpoints();
-        storeGroup.MapGroceryItemsEndpoints();
         storeGroup.MapInventoryReservationsEndpoints();
         storeGroup.MapInventoryTransactionsEndpoints();
         storeGroup.MapInventoryTransfersEndpoints();
@@ -60,16 +53,12 @@ public static class StoreModule
         storeGroup.MapPickListsEndpoints();
         storeGroup.MapPutAwayTasksEndpoints();
         storeGroup.MapSerialNumbersEndpoints();
-        storeGroup.MapPriceListsEndpoints();
         storeGroup.MapPurchaseOrdersEndpoints();
-        storeGroup.MapSalesOrdersEndpoints();
         storeGroup.MapStockAdjustmentsEndpoints();
         storeGroup.MapStockLevelsEndpoints();
         storeGroup.MapSuppliersEndpoints();
         storeGroup.MapWarehouseLocationsEndpoints();
         storeGroup.MapWarehousesEndpoints();
-        storeGroup.MapWholesaleContractsEndpoints();
-        storeGroup.MapWholesalePricingsEndpoints();
 
         return app;
     }

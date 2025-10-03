@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.Store.Application.PutAwayTasks.Get.v1;
 
-public sealed class GetPutAwayTaskRequest : IRequest<GetPutAwayTaskResponse>
-{
-    public DefaultIdType PutAwayTaskId { get; set; }
-}
+/// <summary>
+/// Query to get a put-away task by ID.
+/// </summary>
+public sealed record GetPutAwayTaskQuery(DefaultIdType PutAwayTaskId) : IRequest<GetPutAwayTaskResponse>;

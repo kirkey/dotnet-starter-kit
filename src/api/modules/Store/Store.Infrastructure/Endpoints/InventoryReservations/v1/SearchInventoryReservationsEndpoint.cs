@@ -7,7 +7,7 @@ public static class SearchInventoryReservationsEndpoint
     internal static RouteHandlerBuilder MapSearchInventoryReservationsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchInventoryReservationsRequest request, ISender sender) =>
+            .MapPost("/search", async (SearchInventoryReservationsCommand request, ISender sender) =>
             {
                 var response = await sender.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

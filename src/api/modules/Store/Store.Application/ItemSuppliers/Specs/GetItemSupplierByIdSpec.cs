@@ -10,22 +10,5 @@ public sealed class GetItemSupplierByIdSpec : Specification<ItemSupplier, ItemSu
     public GetItemSupplierByIdSpec(DefaultIdType id)
     {
         Query.Where(i => i.Id == id);
-
-        Query.Select(i => new ItemSupplierResponse(
-            i.Id,
-            i.ItemId,
-            i.SupplierId,
-            i.SupplierPartNumber,
-            i.UnitCost,
-            i.LeadTimeDays,
-            i.MinimumOrderQuantity,
-            i.PackagingQuantity,
-            i.CurrencyCode,
-            i.IsPreferred,
-            i.IsActive,
-            i.ReliabilityRating,
-            i.LastPriceUpdate,
-            i.CreatedOn,
-            i.CreatedBy));
     }
 }

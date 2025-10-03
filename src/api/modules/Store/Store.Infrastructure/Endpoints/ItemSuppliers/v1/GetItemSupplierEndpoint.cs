@@ -9,7 +9,7 @@ public static class GetItemSupplierEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
-                var response = await sender.Send(new GetItemSupplierRequest(id));
+                var response = await sender.Send(new GetItemSupplierCommand(id));
                 return Results.Ok(response);
             })
             .WithName(nameof(GetItemSupplierEndpoint))

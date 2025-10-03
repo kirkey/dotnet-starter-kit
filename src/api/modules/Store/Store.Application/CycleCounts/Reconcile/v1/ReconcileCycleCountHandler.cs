@@ -23,16 +23,16 @@ public sealed class ReconcileCycleCountHandler(
             .ToList();
 
         // Create StockAdjustment records for each discrepancy
-        foreach (var d in discrepancies)
+        foreach (var discrepancy in discrepancies)
         {
-            var adjustmentType = d.Difference > 0 ? "Increase" : "Decrease";
-            var adjustmentQuantity = Math.Abs(d.Difference);
+            var adjustmentType = discrepancy.Difference > 0 ? "Increase" : "Decrease";
+            var adjustmentQuantity = Math.Abs(discrepancy.Difference);
 
             // Obtain unit cost from item repository (fall back to 0)
             decimal unitCost = 0m;
             try
             {
-                var item = await itemRepository.GetByIdAsync(request.ItemId, cancellationToken).ConfigureAwait(false);
+                var item = await itemRepository.GetByIdAsync(discrepancy.ItemId, cancellationToken).ConfigureAwait(false);
                 if (item is not null) unitCost = item.Cost;
             }
             catch
@@ -44,13 +44,13 @@ public sealed class ReconcileCycleCountHandler(
 
             var adjustment = StockAdjustment.Create(
                 adjustmentNumber,
-                d.GroceryItemId,
+                discrepancy.ItemId,
                 cc.WarehouseId,
                 cc.WarehouseLocationId,
                 DateTime.UtcNow,
                 adjustmentType,
                 "Cycle count reconciliation",
-                d.SystemQuantity,
+                discrepancy.SystemQuantity,
                 adjustmentQuantity,
                 unitCost,
                 reference: null,

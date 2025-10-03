@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.Store.Application.SerialNumbers.Get.v1;
 
-public sealed record GetSerialNumberCommand : IRequest<SerialNumberResponse>
-{
-    public DefaultIdType Id { get; set; }
-}
+/// <summary>
+/// Command to get a serial number by ID.
+/// </summary>
+public sealed record GetSerialNumberCommand(DefaultIdType Id) : IRequest<SerialNumberResponse>;

@@ -77,12 +77,7 @@ public sealed record ItemSupplierResponse
     public decimal? UnitCost { get; init; }
 
     /// <summary>
-    /// Currency for pricing.
-    /// </summary>
-    public string? Currency { get; init; }
-
-    /// <summary>
-    /// Date when pricing was last updated.
+    /// Date when price was last updated.
     /// </summary>
     public DateTime? LastPriceUpdate { get; init; }
 

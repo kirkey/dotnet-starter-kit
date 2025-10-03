@@ -12,7 +12,6 @@ public sealed class SearchItemsSpec : Specification<Item>
         Query
             .Where(i => i.Name.Contains(request.SearchTerm!), !string.IsNullOrWhiteSpace(request.SearchTerm))
             .Where(i => i.CategoryId == request.CategoryId, request.CategoryId.HasValue)
-            .Where(i => i.SupplierId == request.SupplierId, request.SupplierId.HasValue)
-            .Where(i => i.IsActive == request.IsActive, request.IsActive.HasValue);
+            .Where(i => i.SupplierId == request.SupplierId, request.SupplierId.HasValue);
     }
 }

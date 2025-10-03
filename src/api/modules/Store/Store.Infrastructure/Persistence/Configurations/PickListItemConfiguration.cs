@@ -17,28 +17,28 @@ public class PickListItemConfiguration : IEntityTypeConfiguration<PickListItem>
             .HasConversion<string>();
 
         // Foreign key relationships
-        builder.HasOne(x => x.PickList)
-            .WithMany(x => x.Items)
+        builder.HasOne<PickList>()
+            .WithMany()
             .HasForeignKey(x => x.PickListId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(x => x.Item)
+        builder.HasOne<Item>()
             .WithMany()
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.Bin)
+        builder.HasOne<Bin>()
             .WithMany()
             .HasForeignKey(x => x.BinId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.LotNumber)
+        builder.HasOne<LotNumber>()
             .WithMany()
             .HasForeignKey(x => x.LotNumberId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
-        builder.HasOne(x => x.SerialNumber)
+        builder.HasOne<SerialNumber>()
             .WithMany()
             .HasForeignKey(x => x.SerialNumberId)
             .OnDelete(DeleteBehavior.Restrict)

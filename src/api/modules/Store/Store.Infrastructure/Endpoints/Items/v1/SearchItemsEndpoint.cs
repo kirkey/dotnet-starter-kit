@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Items.Get.v1;
+using FSH.Starter.WebApi.Store.Application.Items.Search.v1;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -7,9 +8,9 @@ public static class SearchItemsEndpoint
     internal static RouteHandlerBuilder MapSearchItemsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchItemsRequest request, ISender mediator) =>
+            .MapPost("/search", async (SearchItemsCommand command, ISender mediator) =>
             {
-                var response = await mediator.Send(request).ConfigureAwait(false);
+                var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchItemsEndpoint))

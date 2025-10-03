@@ -5,7 +5,7 @@ public class RemovePurchaseOrderItemCommandValidator : AbstractValidator<RemoveP
     public RemovePurchaseOrderItemCommandValidator()
     {
         RuleFor(x => x.PurchaseOrderId).NotEmpty();
-        RuleFor(x => x.GroceryItemId).NotEmpty();
+        RuleFor(x => x.ItemId).NotEmpty();
     }
 }
 

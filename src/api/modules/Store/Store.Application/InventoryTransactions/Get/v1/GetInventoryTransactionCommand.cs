@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransactions.Get.v1;
 
-public class GetInventoryTransactionCommand : IRequest<InventoryTransactionResponse>
-{
-    public DefaultIdType Id { get; set; }
-}
+/// <summary>
+/// Command to get an inventory transaction by ID.
+/// </summary>
+public sealed record GetInventoryTransactionCommand(DefaultIdType Id) : IRequest<InventoryTransactionResponse>;

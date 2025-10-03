@@ -68,12 +68,6 @@ public class WarehouseLocationConfiguration : IEntityTypeConfiguration<Warehouse
             .HasForeignKey(x => x.WarehouseId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Table-level constraints: capacity positive and used within range; temperature constraints when required
-        // builder.ToTable("WarehouseLocations", SchemaNames.Store, tb =>
-        // {
-        //     tb.HasCheckConstraint("CK_WarehouseLocations_Capacity_Positive", "Capacity > 0");
-        //     tb.HasCheckConstraint("CK_WarehouseLocations_UsedCapacity_Range", "UsedCapacity >= 0 AND UsedCapacity <= Capacity");
-        //     tb.HasCheckConstraint("CK_WarehouseLocations_TemperatureConstraints", "RequiresTemperatureControl = false OR (MinTemperature IS NOT NULL AND MaxTemperature IS NOT NULL AND MaxTemperature > MinTemperature)");
-        // });
+        builder.ToTable("WarehouseLocations", SchemaNames.Store);
     }
 }

@@ -24,22 +24,5 @@ public sealed class SearchStockLevelsSpec : EntitiesByPaginationFilterSpec<Stock
             .Where(s => s.QuantityReserved == 0, request.HasReservedQuantity == false)
             .Where(s => s.QuantityAllocated > 0, request.HasAllocatedQuantity == true)
             .Where(s => s.QuantityAllocated == 0, request.HasAllocatedQuantity == false);
-
-        Query.Select(s => new StockLevelResponse(
-            s.Id,
-            s.ItemId,
-            s.WarehouseId,
-            s.WarehouseLocationId,
-            s.BinId,
-            s.LotNumberId,
-            s.SerialNumberId,
-            s.QuantityOnHand,
-            s.QuantityAvailable,
-            s.QuantityReserved,
-            s.QuantityAllocated,
-            s.LastCountDate,
-            s.LastMovementDate,
-            s.CreatedOn,
-            s.CreatedBy));
     }
 }

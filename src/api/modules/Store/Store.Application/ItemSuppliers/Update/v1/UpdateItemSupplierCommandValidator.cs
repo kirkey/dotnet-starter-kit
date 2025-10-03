@@ -36,11 +36,6 @@ public sealed class UpdateItemSupplierCommandValidator : AbstractValidator<Updat
             .WithMessage("PackagingQuantity must be positive")
             .When(x => x.PackagingQuantity.HasValue);
 
-        RuleFor(x => x.CurrencyCode)
-            .Length(3)
-            .WithMessage("CurrencyCode must be 3 characters")
-            .When(x => !string.IsNullOrWhiteSpace(x.CurrencyCode));
-
         RuleFor(x => x.ReliabilityRating)
             .InclusiveBetween(0, 100)
             .WithMessage("ReliabilityRating must be between 0 and 100")

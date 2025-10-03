@@ -16,9 +16,9 @@ public sealed class SearchGoodsReceiptsHandler([FromKeyedServices("store:goodsre
             PurchaseOrderId = gr.PurchaseOrderId,
             ReceivedDate = gr.ReceivedDate,
             Status = gr.Status,
-            TotalLines = gr.TotalLines,
-            ReceivedLines = gr.ReceivedLines,
-            Notes = gr.Notes
+            TotalLines = gr.Items?.Count ?? 0,
+            ReceivedLines = gr.Items?.Count(i => i.Quantity > 0) ?? 0,
+            Notes = null // GoodsReceipt entity doesn't have Notes property
         }).ToList();
 
         return new PagedList<GoodsReceiptResponse>(

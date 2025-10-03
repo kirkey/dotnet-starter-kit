@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
 
 public class SearchStockAdjustmentsCommand : PaginationFilter, IRequest<PagedList<StockAdjustmentResponse>>
 {
-    public DefaultIdType? GroceryItemId { get; set; }
+    public DefaultIdType? ItemId { get; set; }
     public DefaultIdType? WarehouseLocationId { get; set; }
     public string? AdjustmentType { get; set; }
     public string? Reason { get; set; }

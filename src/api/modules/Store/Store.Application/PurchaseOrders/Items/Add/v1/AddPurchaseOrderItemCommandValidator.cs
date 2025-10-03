@@ -5,7 +5,7 @@ public class AddPurchaseOrderItemCommandValidator : AbstractValidator<AddPurchas
     public AddPurchaseOrderItemCommandValidator()
     {
         RuleFor(x => x.PurchaseOrderId).NotEmpty().WithMessage("PurchaseOrderId is required");
-        RuleFor(x => x.GroceryItemId).NotEmpty().WithMessage("GroceryItemId is required");
+        RuleFor(x => x.ItemId).NotEmpty().WithMessage("ItemId is required");
 
         RuleFor(x => x.Quantity)
             .GreaterThan(0).WithMessage("Quantity must be greater than zero")

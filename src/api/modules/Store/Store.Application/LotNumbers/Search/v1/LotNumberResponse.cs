@@ -28,6 +28,11 @@ public sealed record LotNumberResponse
     public string LotNumber { get; init; } = default!;
 
     /// <summary>
+    /// Lot number value (alias for compatibility).
+    /// </summary>
+    public string LotNumberValue => LotNumber;
+
+    /// <summary>
     /// Associated item identifier.
     /// </summary>
     public DefaultIdType ItemId { get; init; }

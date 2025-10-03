@@ -11,6 +11,5 @@ public sealed record CreateItemSupplierCommand(
     int MinimumOrderQuantity,
     string? SupplierPartNumber,
     int? PackagingQuantity,
-    string? CurrencyCode,
     bool IsPreferred
 ) : IRequest<CreateItemSupplierResponse>;

@@ -10,7 +10,6 @@ public sealed record UpdateItemSupplierCommand(
     int? MinimumOrderQuantity,
     string? SupplierPartNumber,
     int? PackagingQuantity,
-    string? CurrencyCode,
     bool? IsPreferred,
     bool? IsActive,
     decimal? ReliabilityRating

@@ -9,8 +9,8 @@ public static class GetPickListEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
-                var request = new GetPickListRequest { PickListId = id };
-                var response = await sender.Send(request).ConfigureAwait(false);
+                var command = new GetPickListCommand(id);
+                var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GetPickListEndpoint))

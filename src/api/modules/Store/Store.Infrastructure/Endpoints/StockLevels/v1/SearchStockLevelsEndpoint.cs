@@ -1,4 +1,5 @@
 using StockLevelResponse = FSH.Starter.WebApi.Store.Application.StockLevels.Get.v1.StockLevelResponse;
+using FSH.Starter.WebApi.Store.Application.StockLevels.Search.v1;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 
@@ -7,9 +8,9 @@ public static class SearchStockLevelsEndpoint
     internal static RouteHandlerBuilder MapSearchStockLevelsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchStockLevelsRequest request, ISender sender) =>
+            .MapPost("/search", async (SearchStockLevelsCommand command, ISender sender) =>
             {
-                var response = await sender.Send(request);
+                var response = await sender.Send(command);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchStockLevelsEndpoint))

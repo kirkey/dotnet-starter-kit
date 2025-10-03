@@ -2,7 +2,7 @@ using FSH.Starter.WebApi.Store.Application.PickLists.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.PickLists;
 
-public sealed class SearchPickListsSpec : Specification<PickList>
+public sealed class SearchPickListsSpec : EntitiesByPaginationFilterSpec<PickList, PickListResponse>
 {
     public SearchPickListsSpec(SearchPickListsCommand request) : base(request)
     {
@@ -66,7 +66,7 @@ public sealed class SearchPickListsSpec : Specification<PickList>
             Query.Where(x => x.Priority <= request.MaxPriority.Value);
         }
 
-        Query.Select(x => new PickListDto
+        Query.Select(x => new PickListResponse
         {
             Id = x.Id,
             PickListNumber = x.PickListNumber,

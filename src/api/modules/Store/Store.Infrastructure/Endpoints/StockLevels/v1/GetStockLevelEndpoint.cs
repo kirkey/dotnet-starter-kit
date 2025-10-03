@@ -9,7 +9,7 @@ public static class GetStockLevelEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
-                var response = await sender.Send(new GetStockLevelRequest(id));
+                var response = await sender.Send(new GetStockLevelCommand(id));
                 return Results.Ok(response);
             })
             .WithName(nameof(GetStockLevelEndpoint))

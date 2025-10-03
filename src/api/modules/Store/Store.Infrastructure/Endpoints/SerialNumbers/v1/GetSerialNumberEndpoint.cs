@@ -9,7 +9,7 @@ public static class GetSerialNumberEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
-                var response = await sender.Send(new GetSerialNumberRequest { Id = id }).ConfigureAwait(false);
+                var response = await sender.Send(new GetSerialNumberCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GetSerialNumberEndpoint))

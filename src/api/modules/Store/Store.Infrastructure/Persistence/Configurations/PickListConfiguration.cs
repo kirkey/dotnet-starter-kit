@@ -36,7 +36,7 @@ public class PickListConfiguration : IEntityTypeConfiguration<PickList>
 
         // One-to-many relationship with PickListItems
         builder.HasMany(x => x.Items)
-            .WithOne(x => x.PickList)
+            .WithOne()
             .HasForeignKey(x => x.PickListId)
             .OnDelete(DeleteBehavior.Cascade);
 

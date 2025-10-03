@@ -9,7 +9,7 @@ public static class GetItemEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetItemRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetItemCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GetItemEndpoint))

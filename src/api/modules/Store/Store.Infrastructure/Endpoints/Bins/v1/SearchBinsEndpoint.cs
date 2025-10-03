@@ -8,9 +8,9 @@ public static class SearchBinsEndpoint
     internal static RouteHandlerBuilder MapSearchBinsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchBinsRequest request, ISender mediator) =>
+            .MapPost("/search", async (SearchBinsCommand command, ISender mediator) =>
             {
-                var response = await mediator.Send(request).ConfigureAwait(false);
+                var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchBinsEndpoint))

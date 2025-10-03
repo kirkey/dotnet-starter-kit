@@ -65,13 +65,6 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
             .IsRequired()
             .HasMaxLength(20);
 
-        // Table-level constraints
-        // builder.ToTable("Warehouses", SchemaNames.Store, tb =>
-        // {
-        //     // Quote identifiers so PostgreSQL resolves them exactly (e.g. "TotalCapacity").
-        //     // Use unquoted identifiers in the check expressions so EF/PGNQ identifier folding works consistently.
-        //     tb.HasCheckConstraint("CK_Warehouses_TotalCapacity_Positive", "TotalCapacity > 0");
-        //     tb.HasCheckConstraint("CK_Warehouses_UsedCapacity_Range", "UsedCapacity >= 0 AND UsedCapacity <= TotalCapacity");
-        // });
+        builder.ToTable("Warehouses", SchemaNames.Store);
     }
 }

@@ -36,10 +36,5 @@ public sealed class CreateItemSupplierCommandValidator : AbstractValidator<Creat
             .GreaterThan(0)
             .WithMessage("PackagingQuantity must be positive")
             .When(x => x.PackagingQuantity.HasValue);
-
-        RuleFor(x => x.CurrencyCode)
-            .Length(3)
-            .WithMessage("CurrencyCode must be 3 characters")
-            .When(x => !string.IsNullOrWhiteSpace(x.CurrencyCode));
     }
 }

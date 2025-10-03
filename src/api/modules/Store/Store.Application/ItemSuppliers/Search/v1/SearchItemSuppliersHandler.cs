@@ -23,7 +23,6 @@ public sealed class SearchItemSuppliersHandler(
             LeadTimeDays = itemSupplier.LeadTimeDays,
             MinimumOrderQuantity = itemSupplier.MinimumOrderQuantity,
             UnitCost = itemSupplier.UnitCost,
-            Currency = itemSupplier.Currency,
             LastPriceUpdate = itemSupplier.LastPriceUpdate,
             IsActive = itemSupplier.IsActive
         }).ToList();

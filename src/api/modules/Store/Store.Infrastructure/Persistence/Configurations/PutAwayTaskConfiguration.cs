@@ -42,7 +42,7 @@ public class PutAwayTaskConfiguration : IEntityTypeConfiguration<PutAwayTask>
 
         // One-to-many relationship with PutAwayTaskItems
         builder.HasMany(x => x.Items)
-            .WithOne(x => x.PutAwayTask)
+            .WithOne()
             .HasForeignKey(x => x.PutAwayTaskId)
             .OnDelete(DeleteBehavior.Cascade);
 

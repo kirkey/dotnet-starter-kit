@@ -1,4 +1,5 @@
 using ItemSupplierResponse = FSH.Starter.WebApi.Store.Application.ItemSuppliers.Get.v1.ItemSupplierResponse;
+using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Search.v1;
 
 namespace Store.Infrastructure.Endpoints.ItemSuppliers.v1;
 
@@ -7,9 +8,9 @@ public static class SearchItemSuppliersEndpoint
     internal static RouteHandlerBuilder MapSearchItemSuppliersEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchItemSuppliersRequest request, ISender sender) =>
+            .MapPost("/search", async (SearchItemSuppliersCommand command, ISender sender) =>
             {
-                var response = await sender.Send(request);
+                var response = await sender.Send(command);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchItemSuppliersEndpoint))
