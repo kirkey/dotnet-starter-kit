@@ -22,10 +22,11 @@ public partial class StoreDashboard
     /// <summary>
     /// Initialize the dashboard - load mock data immediately to avoid hanging.
     /// </summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         // Initialize with mock data immediately so something shows
         LoadMockData();
+        await Task.CompletedTask;
     }
 
     /// <summary>

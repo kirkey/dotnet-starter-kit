@@ -12,7 +12,7 @@ public partial class InventoryTransfers
     protected EntityServerTableContext<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> Context { get; set; } = default!;
     private EntityTable<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel>(
             entityName: "Inventory Transfer",
@@ -51,6 +51,7 @@ public partial class InventoryTransfers
                 await Client.UpdateInventoryTransferEndpointAsync("1", id, viewModel.Adapt<UpdateInventoryTransferCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteInventoryTransferEndpointAsync("1", id).ConfigureAwait(false));
+        await Task.CompletedTask;
     }
 
     private async Task ApproveTransfer(DefaultIdType id)

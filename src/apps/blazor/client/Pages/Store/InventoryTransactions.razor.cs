@@ -11,7 +11,7 @@ public partial class InventoryTransactions
     protected EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> Context { get; set; } = default!;
     private EntityTable<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel>(
             entityName: "Inventory Transaction",
@@ -47,6 +47,7 @@ public partial class InventoryTransactions
                 await Client.CreateInventoryTransactionEndpointAsync("1", viewModel.Adapt<CreateInventoryTransactionCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false));
+        await Task.CompletedTask;
     }
 
     private async Task ApproveTransaction(DefaultIdType id)

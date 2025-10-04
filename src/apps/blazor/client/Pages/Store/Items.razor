@@ -79,13 +79,6 @@
             <MudTextField Label="Weight Unit" For="@(() => context.WeightUnit)" @bind-Value="context.WeightUnit" />
         </MudItem>
 
-                <MudItem xs="12" md="6">
-            <AutocompleteCategoryId @bind-Value="context.CategoryId"
-                                   For="@(() => context.CategoryId)"
-                                   Label="Category"
-                                   Variant="Variant.Filled" />
-        </MudItem>
-
         <MudItem xs="12" md="6">
             <AutocompleteSupplier @bind-Value="context.SupplierId"
                                  For="@(() => context.SupplierId)"
@@ -97,4 +90,6 @@
         </MudItem>
     </EditFormContent>
 </EntityTable>
+
+
 

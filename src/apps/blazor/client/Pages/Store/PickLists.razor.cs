@@ -8,7 +8,7 @@ public partial class PickLists
     protected EntityServerTableContext<PickListResponse, DefaultIdType, PickListViewModel> Context { get; set; } = default!;
     private EntityTable<PickListResponse, DefaultIdType, PickListViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<PickListResponse, DefaultIdType, PickListViewModel>(
             entityName: "Pick List",
@@ -43,6 +43,7 @@ public partial class PickLists
                 await Client.CreatePickListEndpointAsync("1", viewModel.Adapt<CreatePickListCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeletePickListEndpointAsync("1", id).ConfigureAwait(false));
+        await Task.CompletedTask;
     }
 
     private async Task AssignPickList(DefaultIdType id)

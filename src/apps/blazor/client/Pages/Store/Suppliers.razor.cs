@@ -11,7 +11,7 @@ public partial class Suppliers
     protected EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> Context { get; set; } = default!;
     private EntityTable<SupplierResponse, DefaultIdType, SupplierViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel>(
             entityName: "Supplier",

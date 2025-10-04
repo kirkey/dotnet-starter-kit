@@ -2,9 +2,9 @@
 
 <PageHeader Title="Bins" Header="Storage Bins" SubHeader="Manage warehouse storage bin locations." />
 
-<EntityTable @ref="_table" TEntity="BinResponse" TId="DefaultIdType" TRequest="BinViewModel" Context="@_context">
+<EntityTable @ref="_table" TEntity="BinResponse" TId="DefaultIdType" TRequest="BinViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!_context.AddEditModal.IsCreate)
+        @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Bin Id" />

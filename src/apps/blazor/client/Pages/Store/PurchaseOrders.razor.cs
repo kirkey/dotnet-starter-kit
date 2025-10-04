@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class PurchaseOrders
 {
-    private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _context = default!;
+    private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> Context = default!;
     private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = default!;
 
     private List<SupplierResponse> _suppliers = new();
@@ -19,7 +19,7 @@ public partial class PurchaseOrders
     {
         await LoadSuppliersAsync();
 
-        _context = new EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel>(
+        Context = new EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel>(
             entityName: "Purchase Order",
             entityNamePlural: "Purchase Orders",
             entityResource: FshResources.Store,

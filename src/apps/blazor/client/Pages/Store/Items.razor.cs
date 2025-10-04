@@ -9,7 +9,7 @@ public partial class Items
     protected EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = default!;
     private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel>(
             entityName: "Item",
@@ -50,6 +50,8 @@ public partial class Items
                 await Client.UpdateItemEndpointAsync("1", id, viewModel.Adapt<UpdateItemCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteItemEndpointAsync("1", id).ConfigureAwait(false));
+        
+        await Task.CompletedTask;
     }
 }
 

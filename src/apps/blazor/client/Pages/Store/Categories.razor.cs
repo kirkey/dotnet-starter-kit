@@ -13,7 +13,8 @@ public partial class Categories
     protected EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = default!;
     private EntityTable<CategoryResponse, DefaultIdType, CategoryViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
         Context = new EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel>(
             entityName: "Category",
             entityNamePlural: "Categories",
@@ -60,6 +61,9 @@ public partial class Categories
                 await Client.UpdateCategoryEndpointAsync("1", id, viewModel.Adapt<UpdateCategoryCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteCategoryEndpointAsync("1", id).ConfigureAwait(false));
+        
+        await Task.CompletedTask;
+    }
 }
 
 /// <summary>

@@ -2,12 +2,15 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class ItemSuppliers
 {
-    
 
-    private EntityServerTableContext<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> Context { get; set; } = default!;
+
+    private EntityServerTableContext<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> Context { get; set; } =
+        default!;
+
     private EntityTable<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
         Context = new EntityServerTableContext<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel>(
             entityName: "Item Supplier",
             entityNamePlural: "Item Suppliers",
@@ -20,7 +23,8 @@ public partial class ItemSuppliers
                 new EntityField<ItemSupplierResponse>(x => x.LeadTimeDays, "Lead Time", "LeadTimeDays", typeof(int)),
                 new EntityField<ItemSupplierResponse>(x => x.IsPreferred, "Preferred", "IsPreferred", typeof(bool)),
                 new EntityField<ItemSupplierResponse>(x => x.IsActive, "Active", "IsActive", typeof(bool)),
-                new EntityField<ItemSupplierResponse>(x => x.ReliabilityRating, "Rating", "ReliabilityRating", typeof(double))
+                new EntityField<ItemSupplierResponse>(x => x.ReliabilityRating, "Rating", "ReliabilityRating",
+                    typeof(double))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
@@ -33,11 +37,13 @@ public partial class ItemSuppliers
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateItemSupplierEndpointAsync("1", viewModel.Adapt<CreateItemSupplierCommand>()).ConfigureAwait(false);
+                await Client.CreateItemSupplierEndpointAsync("1", viewModel.Adapt<CreateItemSupplierCommand>())
+                    .ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.UpdateItemSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateItemSupplierCommand>()).ConfigureAwait(false);
+                await Client.UpdateItemSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateItemSupplierCommand>())
+                    .ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteItemSupplierEndpointAsync("1", id).ConfigureAwait(false),
             getDetailsFunc: async id =>
@@ -45,6 +51,7 @@ public partial class ItemSuppliers
                 var dto = await Client.GetItemSupplierEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<ItemSupplierViewModel>();
             });
+    }
 }
 
 public class ItemSupplierViewModel

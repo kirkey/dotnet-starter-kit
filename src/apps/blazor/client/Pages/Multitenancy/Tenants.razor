@@ -22,7 +22,7 @@
                 Label="Admin Email" />
         </MudItem>
     </EditFormContent>
-    <ExtraActions>
+    <ExtraActions Context="context">
         @if(_canUpgrade)
         {
             <MudMenuItem OnClick="@(() => ViewUpgradeSubscriptionModalAsync(context.Id))">Upgrade Subscription</MudMenuItem>
@@ -43,7 +43,7 @@
         }
     </ExtraActions>
 
-    <ChildRowContent>
+    <ChildRowContent Context="context">
         @if (context.ShowDetails)
         {
             <MudTr>

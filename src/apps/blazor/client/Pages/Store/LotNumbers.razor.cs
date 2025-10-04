@@ -7,7 +7,8 @@ public partial class LotNumbers
     private EntityServerTableContext<LotNumberResponse, DefaultIdType, LotNumberViewModel> Context { get; set; } = default!;
     private EntityTable<LotNumberResponse, DefaultIdType, LotNumberViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
         Context = new EntityServerTableContext<LotNumberResponse, DefaultIdType, LotNumberViewModel>(
             entityName: "Lot Number",
             entityNamePlural: "Lot Numbers",
@@ -45,6 +46,9 @@ public partial class LotNumbers
                 var dto = await Client.GetLotNumberEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<LotNumberViewModel>();
             });
+        
+        await Task.CompletedTask;
+    }
 }
 
 public class LotNumberViewModel

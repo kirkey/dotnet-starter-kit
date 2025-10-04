@@ -2,7 +2,7 @@
 
 <PageHeader Title="Purchase Orders" Header="Purchase Orders" SubHeader="Manage purchase orders and supplier procurement." />
 
-<EntityTable @ref="_table" TEntity="PurchaseOrderResponse" TId="DefaultIdType" TRequest="PurchaseOrderViewModel" Context="@_context">
+<EntityTable @ref="_table" TEntity="PurchaseOrderResponse" TId="DefaultIdType" TRequest="PurchaseOrderViewModel" Context="@Context">
     
     <AdvancedSearchContent>
         <MudSelect T="DefaultIdType?" Label="Supplier" @bind-Value="SearchSupplierId">
@@ -80,7 +80,7 @@
     </ExtraActions>
     
     <EditFormContent Context="context">
-        @if (context.Id != default)
+        @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Order Id" />

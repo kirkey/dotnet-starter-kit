@@ -7,7 +7,8 @@ public partial class SerialNumbers
     private EntityServerTableContext<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> Context { get; set; } = default!;
     private EntityTable<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
         Context = new EntityServerTableContext<SerialNumberResponse, DefaultIdType, SerialNumberViewModel>(
             entityName: "Serial Number",
             entityNamePlural: "Serial Numbers",
@@ -44,6 +45,9 @@ public partial class SerialNumbers
                 var dto = await Client.GetSerialNumberEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<SerialNumberViewModel>();
             });
+        
+        await Task.CompletedTask;
+    }
 }
 
 public class SerialNumberViewModel

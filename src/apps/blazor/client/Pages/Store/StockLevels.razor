@@ -4,7 +4,7 @@
 
 <EntityTable @ref="_table" TEntity="StockLevelResponse" TId="DefaultIdType" TRequest="StockLevelViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (context.Id != DefaultIdType.Empty)
+        @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Stock Level Id" />
@@ -52,7 +52,7 @@
         </MudItem>
     </EditFormContent>
 
-    <ExtraActions>
+    <ExtraActions Context="context">
         <MudMenu Label="Stock Operations" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Inventory">
             <MudMenuItem OnClick="@(() => ReserveStock(context))">Reserve Stock</MudMenuItem>
             <MudMenuItem OnClick="@(() => AllocateStock(context))">Allocate Stock</MudMenuItem>

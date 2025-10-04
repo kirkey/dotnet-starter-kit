@@ -7,7 +7,7 @@ public partial class GoodsReceipts
     protected EntityServerTableContext<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> Context { get; set; } = default!;
     private EntityTable<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel>(
             entityName: "Goods Receipt",
@@ -41,6 +41,7 @@ public partial class GoodsReceipts
                 await Client.CreateGoodsReceiptEndpointAsync("1", viewModel.Adapt<CreateGoodsReceiptCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteGoodsReceiptEndpointAsync("1", id).ConfigureAwait(false));
+        await Task.CompletedTask;
     }
 }
 

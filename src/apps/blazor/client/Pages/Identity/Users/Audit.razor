@@ -4,13 +4,13 @@
 <PageHeader Title="Audit Trail" Header="Audit Trail" SubHeader="@_subHeader" />
 
 <EntityTable TEntity="AuditTrailExtension" TId="DefaultIdType" TRequest="object" Context="@Context">
-    <ActionsContent>
+    <ActionsContent Context="context">
         <MudButton Variant="Variant.Filled" DropShadow="false"
                    EndIcon="@Icons.Material.Filled.KeyboardArrowDown"
                    IconColor="Color.Secondary"
                    OnClick="@(() => ShowBtnPress(context.Id))">@(context.ShowDetails ? "Hide" : "Show") Trail Details</MudButton>
     </ActionsContent>
-    <ChildRowContent>
+    <ChildRowContent Context="context">
         @if (context.ShowDetails)
         {
             <MudTr>

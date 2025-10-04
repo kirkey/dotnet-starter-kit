@@ -8,7 +8,7 @@ public partial class PutAwayTasks
     protected EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> Context { get; set; } = default!;
     private EntityTable<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel>(
             entityName: "Put Away Task",
@@ -44,6 +44,7 @@ public partial class PutAwayTasks
                 await Client.CreatePutAwayTaskEndpointAsync("1", viewModel.Adapt<CreatePutAwayTaskCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeletePutAwayTaskEndpointAsync("1", id).ConfigureAwait(false));
+        await Task.CompletedTask;
     }
 
     private async Task AssignTask(DefaultIdType id)

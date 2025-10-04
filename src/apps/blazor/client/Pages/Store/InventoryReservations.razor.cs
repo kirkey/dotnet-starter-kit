@@ -7,7 +7,8 @@ public partial class InventoryReservations
     private EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> Context { get; set; } = default!;
     private EntityTable<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
         Context = new EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel>(
             entityName: "Inventory Reservation",
             entityNamePlural: "Inventory Reservations",
@@ -42,6 +43,9 @@ public partial class InventoryReservations
                 var dto = await Client.GetInventoryReservationEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<InventoryReservationViewModel>();
             });
+        
+        await Task.CompletedTask;
+    }
 }
 
 public class InventoryReservationViewModel

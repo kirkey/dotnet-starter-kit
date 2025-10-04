@@ -5,11 +5,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class Bins
 {
-    private EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> _context = default!;
+    private EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> Context = default!;
     private EntityTable<BinResponse, DefaultIdType, BinViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
-        _context = new EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel>(
+    protected override async Task OnInitializedAsync()
+    {
+        Context = new EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel>(
             entityName: "Bin",
             entityNamePlural: "Bins",
             entityResource: FshResources.Store,
@@ -45,6 +46,9 @@ public partial class Bins
                 var dto = await Client.GetBinEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<BinViewModel>();
             });
+
+    await Task.CompletedTask;
+    }
 }
 
 /// <summary>

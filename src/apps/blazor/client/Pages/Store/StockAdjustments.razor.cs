@@ -8,7 +8,7 @@ public partial class StockAdjustments
     protected EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> Context { get; set; } = default!;
     private EntityTable<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> _table = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel>(
             entityName: "Stock Adjustment",
@@ -44,6 +44,7 @@ public partial class StockAdjustments
                 await Client.UpdateStockAdjustmentEndpointAsync("1", id, viewModel.Adapt<UpdateStockAdjustmentCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false));
+        await Task.CompletedTask;
     }
 
     private async Task ApproveAdjustment(DefaultIdType id)

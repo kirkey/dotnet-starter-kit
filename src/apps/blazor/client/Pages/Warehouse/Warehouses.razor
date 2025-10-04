@@ -4,7 +4,7 @@
 
 <EntityTable @ref="_table" TEntity="WarehouseResponse" TId="DefaultIdType" TRequest="WarehouseViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (context.Id != default(DefaultIdType))
+        @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />

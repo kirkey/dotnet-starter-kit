@@ -5,7 +5,8 @@ public partial class StockLevels
     private EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel> Context { get; set; } = default!;
     private EntityTable<StockLevelResponse, DefaultIdType, StockLevelViewModel> _table = default!;
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
         Context = new EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel>(
             entityName: "Stock Level",
             entityNamePlural: "Stock Levels",
@@ -44,6 +45,9 @@ public partial class StockLevels
                 var dto = await Client.GetStockLevelEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<StockLevelViewModel>();
             });
+        
+        await Task.CompletedTask;
+    }
 }
 
 public class StockLevelViewModel
