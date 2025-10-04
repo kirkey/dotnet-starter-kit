@@ -71,10 +71,10 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="12" md="6">
-            <AutocompleteWarehouseId @bind-Value="context.FromWarehouseId" For="@(() => context.FromWarehouseId)" Label="From Warehouse" Required="true" />
+            <AutocompleteWarehouse @bind-Value="context.FromWarehouseId" For="@(() => context.FromWarehouseId)" Label="From Warehouse" Required="true" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <AutocompleteWarehouseId @bind-Value="context.ToWarehouseId" For="@(() => context.ToWarehouseId)" Label="To Warehouse" Required="true" />
+            <AutocompleteWarehouse @bind-Value="context.ToWarehouseId" For="@(() => context.ToWarehouseId)" Label="To Warehouse" Required="true" />
         </MudItem>
         <MudItem xs="12" md="6">
             <MudDatePicker @bind-Date="context.TransferDate" For="@(() => context.TransferDate)" Label="Transfer Date" Required="true" />

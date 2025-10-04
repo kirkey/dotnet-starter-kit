@@ -24,11 +24,11 @@
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <AutocompleteWarehouseId @bind-Value="context.WarehouseId"
-                                    For="@(() => context.WarehouseId)"
-                                    Label="Warehouse"
-                                    Variant="Variant.Filled"
-                                    Required="true" />
+            <AutocompleteWarehouse @bind-Value="context.WarehouseId"
+                                  For="@(() => context.WarehouseId)"
+                                  Label="Warehouse"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
         </MudItem>
 
         <MudItem xs="12" md="6">

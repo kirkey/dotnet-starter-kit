@@ -1,15 +1,11 @@
 namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 
 /// <summary>
-/// Autocomplete component for selecting a Warehouse by its identifier.
-/// - Fetches a single Warehouse by id when needed.
-/// - Searches Categories by code/name/description/notes and caches results in-memory.
+/// Autocomplete component for selecting a Warehouse by ID (non-nullable).
+/// Provides search functionality and displays warehouse name.
 /// </summary>
-public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClient, DefaultIdType?>
+public class AutocompleteWarehouse : AutocompleteBase<WarehouseResponse, IClient, DefaultIdType>
 {
-    // Local cache for id -> dto lookups. We don't rely on base's private cache.
-    private Dictionary<DefaultIdType, WarehouseResponse> _cache = [];
-
     [Inject] protected NavigationManager Navigation { get; set; } = default!;
     [Inject] protected Snackbar Snackbar { get; set; } = default!;
 
@@ -18,17 +14,15 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
     /// </summary>
     /// <param name="id">The warehouse identifier.</param>
     /// <returns>The warehouse response, or null if not found.</returns>
-    protected override async Task<WarehouseResponse?> GetItem(DefaultIdType? id)
+    protected override async Task<WarehouseResponse?> GetItem(DefaultIdType id)
     {
-        if (id is null || !id.HasValue) return null;
-        
-        if (_cache.TryGetValue(id.Value, out var cached)) return cached;
+        if (_dictionary.TryGetValue(id, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.GetWarehouseEndpointAsync("1", id.Value))
+                () => Client.GetWarehouseEndpointAsync("1", id))
             .ConfigureAwait(false);
 
-        if (dto is not null) _cache[id.Value] = dto;
+        if (dto is not null) _dictionary[id] = dto;
 
         return dto;
     }
@@ -39,7 +33,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
     /// <param name="value">The search text.</param>
     /// <param name="token">Cancellation token.</param>
     /// <returns>Enumerable of warehouse ids matching the search.</returns>
-    protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
+    protected override async Task<IEnumerable<DefaultIdType>> SearchText(string? value, CancellationToken token)
     {
         var request = new SearchWarehousesCommand
         {
@@ -58,19 +52,19 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
         if (response?.Items is { } items)
         {
             // Overwrite cache with latest page of results; guard against null Ids.
-            _cache = items
+            _dictionary = items
                 .Where(x => x.Id != default)
                 .GroupBy(x => x.Id)
                 .Select(g => g.First())
                 .ToDictionary(x => x.Id);
         }
 
-        return _cache.Keys.Cast<DefaultIdType?>();
+        return _dictionary.Keys;
     }
 
-    protected override string GetTextValue(DefaultIdType? id)
+    protected override string GetTextValue(DefaultIdType id)
     {
-        if (id is null || !id.HasValue) return string.Empty;
-        return _cache.TryGetValue(id.Value, out var dto) ? dto.Name ?? string.Empty : string.Empty;
+        return _dictionary.TryGetValue(id, out var dto) ? dto.Name ?? string.Empty : string.Empty;
     }
 }
+
