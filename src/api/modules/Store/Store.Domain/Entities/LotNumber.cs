@@ -186,4 +186,24 @@ public sealed class LotNumber : AuditableEntity, IAggregateRoot
 
     public bool IsExpiringSoon(int daysThreshold = 7) =>
         ExpirationDate.HasValue && ExpirationDate.Value <= DateTime.UtcNow.AddDays(daysThreshold);
+
+    /// <summary>
+    /// Updates the name, description, and notes fields.
+    /// </summary>
+    /// <param name="name">New name.</param>
+    /// <param name="description">New description.</param>
+    /// <param name="notes">New notes.</param>
+    /// <returns>Updated LotNumber instance.</returns>
+    public LotNumber UpdateDetails(string? name, string? description, string? notes)
+    {
+        if (name?.Length > 1024) throw new ArgumentException("Name must not exceed 1024 characters", nameof(name));
+        if (description?.Length > 2048) throw new ArgumentException("Description must not exceed 2048 characters", nameof(description));
+        if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
+
+        if (!string.IsNullOrWhiteSpace(name)) Name = name;
+        Description = description;
+        Notes = notes;
+        QueueDomainEvent(new LotNumberUpdated { LotNumber = this });
+        return this;
+    }
 }

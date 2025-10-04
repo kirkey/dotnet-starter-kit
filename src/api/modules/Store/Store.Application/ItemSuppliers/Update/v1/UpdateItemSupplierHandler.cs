@@ -56,6 +56,12 @@ public sealed class UpdateItemSupplierHandler(
             }
         }
 
+        // Update description and notes if provided
+        if (!string.IsNullOrWhiteSpace(request.Description) || !string.IsNullOrWhiteSpace(request.Notes))
+        {
+            itemSupplier.UpdateDetails(request.Description, request.Notes);
+        }
+
         await repository.UpdateAsync(itemSupplier, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 

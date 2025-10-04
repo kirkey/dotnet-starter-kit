@@ -296,6 +296,8 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Updates an existing stock adjustment.
     /// </summary>
+    /// <param name="name">New name.</param>
+    /// <param name="description">New description.</param>
     /// <param name="itemId">New item ID.</param>
     /// <param name="warehouseLocationId">New warehouse location ID (optional).</param>
     /// <param name="adjustmentType">New type of adjustment.</param>
@@ -304,6 +306,8 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// <param name="notes">New notes.</param>
     /// <returns>Updated StockAdjustment.</returns>
     public StockAdjustment Update(
+        string? name,
+        string? description,
         DefaultIdType itemId,
         DefaultIdType? warehouseLocationId,
         string adjustmentType,
@@ -324,6 +328,27 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
 
         if (string.IsNullOrWhiteSpace(reason))
             throw new ArgumentException("Reason is required", nameof(reason));
+        if (name?.Length > 1024)
+            throw new ArgumentException("Name must not exceed 1024 characters", nameof(name));
+
+        if (description?.Length > 2048)
+            throw new ArgumentException("Description must not exceed 2048 characters", nameof(description));
+
+        if (notes?.Length > 2048)
+            throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
+
+        if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
+        {
+            Name = name;
+            isUpdated = true;
+        }
+
+        if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
+        {
+            Description = description;
+            isUpdated = true;
+        }
+
 
         if (reason.Length > 200)
             throw new ArgumentException("Reason must not exceed 200 characters", nameof(reason));

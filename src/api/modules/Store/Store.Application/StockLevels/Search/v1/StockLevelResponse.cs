@@ -23,6 +23,21 @@ public sealed record StockLevelResponse
     public DefaultIdType Id { get; init; }
 
     /// <summary>
+    /// Name for display purposes.
+    /// </summary>
+    public string Name { get; init; } = default!;
+
+    /// <summary>
+    /// Optional description.
+    /// </summary>
+    public string? Description { get; init; }
+
+    /// <summary>
+    /// Optional notes.
+    /// </summary>
+    public string? Notes { get; init; }
+
+    /// <summary>
     /// Associated item identifier.
     /// </summary>
     public DefaultIdType ItemId { get; init; }

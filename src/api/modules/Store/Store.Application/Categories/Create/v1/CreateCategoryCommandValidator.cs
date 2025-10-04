@@ -43,5 +43,15 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
         RuleFor(x => x.ImageUrl)
             .MaximumLength(500)
             .When(x => !string.IsNullOrEmpty(x.ImageUrl));
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2048)
+            .WithMessage("Description must not exceed 2048 characters")
+            .When(x => !string.IsNullOrWhiteSpace(x.Description));
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048)
+            .WithMessage("Notes must not exceed 2048 characters")
+            .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

@@ -15,6 +15,7 @@ public sealed record UpdateCategoryCommand : IRequest<UpdateCategoryResponse>
 
     public string? Name { get; init; }
     public string? Description { get; init; }
+    public string? Notes { get; init; }
     public string? Code { get; init; }
     public DefaultIdType? ParentCategoryId { get; init; }
     public bool? IsActive { get; init; }

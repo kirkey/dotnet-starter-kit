@@ -5,6 +5,9 @@ namespace FSH.Starter.WebApi.Store.Application.StockLevels.Get.v1;
 /// </summary>
 public sealed record StockLevelResponse(
     DefaultIdType Id,
+    string Name,
+    string? Description,
+    string? Notes,
     DefaultIdType ItemId,
     DefaultIdType WarehouseId,
     DefaultIdType? WarehouseLocationId,

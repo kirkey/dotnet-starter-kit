@@ -5,6 +5,9 @@ namespace FSH.Starter.WebApi.Store.Application.ItemSuppliers.Get.v1;
 /// </summary>
 public sealed record ItemSupplierResponse(
     DefaultIdType Id,
+    string Name,
+    string? Description,
+    string? Notes,
     DefaultIdType ItemId,
     DefaultIdType SupplierId,
     string? SupplierPartNumber,

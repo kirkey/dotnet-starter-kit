@@ -253,7 +253,8 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
         bool? requiresTemperatureControl,
         decimal? minTemperature,
         decimal? maxTemperature,
-        string? temperatureUnit)
+        string? temperatureUnit,
+        string? notes)
     {
         bool isUpdated = false;
 
@@ -353,6 +354,13 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
             TemperatureUnit = temperatureUnit;
             isUpdated = true;
         }
+        if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+        {
+            if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
+            Notes = notes;
+            isUpdated = true;
+        }
+
 
         if (isUpdated)
         {

@@ -13,6 +13,8 @@ public sealed class UpdateStockAdjustmentHandler(
         var stockAdjustment = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = stockAdjustment ?? throw new StockAdjustmentNotFoundException(request.Id);
         var updatedStockAdjustment = stockAdjustment.Update(
+            request.Name,
+            request.Description,
             request.ItemId,
             request.WarehouseLocationId,
             request.AdjustmentType,

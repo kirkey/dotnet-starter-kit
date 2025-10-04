@@ -32,5 +32,14 @@ public class CreateInventoryTransactionValidator : AbstractValidator<CreateInven
         RuleFor(x => x.TransactionDate)
             .NotEmpty().WithMessage("Transaction date is required.")
             .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Transaction date cannot be in the future.");
+
+        RuleFor(x => x.Name)
+            .MaximumLength(1024).When(x => !string.IsNullOrWhiteSpace(x.Name));
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2048).When(x => !string.IsNullOrWhiteSpace(x.Description));
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048).When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

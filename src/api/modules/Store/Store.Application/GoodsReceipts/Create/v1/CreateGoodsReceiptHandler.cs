@@ -20,8 +20,10 @@ public sealed class CreateGoodsReceiptHandler(
         var goodsReceipt = GoodsReceipt.Create(
             request.ReceiptNumber,
             request.ReceivedDate,
-            request.PurchaseOrderId);
-
+            request.PurchaseOrderId,
+            request.Notes);
+        if (!string.IsNullOrWhiteSpace(request.Name)) goodsReceipt.Name = request.Name;
+        if (!string.IsNullOrWhiteSpace(request.Description)) goodsReceipt.Description = request.Description;
         await repository.AddAsync(goodsReceipt, cancellationToken).ConfigureAwait(false);
 
         return new CreateGoodsReceiptResponse(goodsReceipt.Id);

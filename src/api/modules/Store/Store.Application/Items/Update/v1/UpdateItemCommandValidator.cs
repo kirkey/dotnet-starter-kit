@@ -80,6 +80,10 @@ public class UpdateItemCommandValidator : AbstractValidator<UpdateItemCommand>
             .LessThanOrEqualTo(365).When(c => c.LeadTimeDays.HasValue)
             .WithMessage("Lead Time Days must not exceed 365 days.");
 
+        RuleFor(c => c.Notes)
+            .MaximumLength(2048).When(c => !string.IsNullOrWhiteSpace(c.Notes))
+            .WithMessage("Notes must not exceed 2048 characters.");
+
         RuleFor(c => c.ShelfLifeDays)
             .GreaterThan(0).When(c => c.IsPerishable == true && c.ShelfLifeDays.HasValue)
             .WithMessage("Shelf Life Days must be greater than zero for perishable items.")

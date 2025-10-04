@@ -6,6 +6,8 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryTransactions.Get.v1;
 public sealed record InventoryTransactionResponse
 {
     public DefaultIdType Id { get; init; }
+    public string Name { get; init; } = default!;
+    public string? Description { get; init; }
     public string TransactionNumber { get; init; } = default!;
     public DefaultIdType ItemId { get; init; }
     public string? ItemName { get; init; }

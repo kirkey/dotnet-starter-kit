@@ -28,5 +28,13 @@ public class CreateSerialNumberValidator : AbstractValidator<CreateSerialNumberC
             .LessThanOrEqualTo(DateTime.UtcNow)
             .WithMessage("Receipt date cannot be in the future.")
             .When(x => x.ReceiptDate.HasValue);
+
+        RuleFor(x => x.Name)
+            .MaximumLength(1024).WithMessage("Name must not exceed 1024 characters.")
+            .When(x => !string.IsNullOrWhiteSpace(x.Name));
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2048).WithMessage("Description must not exceed 2048 characters.")
+            .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

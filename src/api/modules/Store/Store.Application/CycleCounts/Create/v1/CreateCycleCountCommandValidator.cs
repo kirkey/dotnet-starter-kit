@@ -36,8 +36,19 @@ public class CreateCycleCountCommandValidator : AbstractValidator<CreateCycleCou
             .MaximumLength(100)
             .When(x => !string.IsNullOrEmpty(x.SupervisorName));
 
-        RuleFor(x => x.Notes)
+        RuleFor(x => x.Name)
             .MaximumLength(1024)
+            .WithMessage("Name must not exceed 1024 characters")
+            .When(x => !string.IsNullOrEmpty(x.Name));
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2048)
+            .WithMessage("Description must not exceed 2048 characters")
+            .When(x => !string.IsNullOrEmpty(x.Description));
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048)
+            .WithMessage("Notes must not exceed 2048 characters")
             .When(x => !string.IsNullOrEmpty(x.Notes));
     }
 }

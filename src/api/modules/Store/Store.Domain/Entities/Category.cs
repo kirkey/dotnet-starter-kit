@@ -162,6 +162,7 @@ public sealed class Category : AuditableEntity, IAggregateRoot
     /// </summary>
     /// <param name="name">The new name of the category.</param>
     /// <param name="description">The new description of the category.</param>
+    /// <param name="notes">The new notes for the category.</param>
     /// <param name="code">The new code for the category.</param>
     /// <param name="parentCategoryId">The new parent category ID.</param>
     /// <param name="isActive">Whether the category is active.</param>
@@ -172,6 +173,7 @@ public sealed class Category : AuditableEntity, IAggregateRoot
     public Category Update(
         string? name,
         string? description,
+        string? notes,
         string? code,
         DefaultIdType? parentCategoryId,
         bool? isActive,
@@ -190,6 +192,12 @@ public sealed class Category : AuditableEntity, IAggregateRoot
         {
             Description = description;
             isUpdated = true;
+        if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+        {
+            Notes = notes;
+            isUpdated = true;
+        }
+
         }
 
         if (!string.IsNullOrWhiteSpace(code) && !string.Equals(Code, code, StringComparison.OrdinalIgnoreCase))

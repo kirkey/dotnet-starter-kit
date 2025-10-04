@@ -95,7 +95,7 @@ public sealed class SerialNumber : AuditableEntity, IAggregateRoot
     /// Optional notes about condition, repairs, etc.
     /// Max length: 1000.
     /// </summary>
-    public string? Notes { get; private set; }
+    
 
     /// <summary>
     /// Navigation property to item.
@@ -247,6 +247,20 @@ public sealed class SerialNumber : AuditableEntity, IAggregateRoot
 
         if (Notes.Length > 1000) Notes = Notes.Substring(Notes.Length - 1000);
 
+        QueueDomainEvent(new SerialNumberUpdated { SerialNumber = this });
+        return this;
+    }
+
+    /// <summary>
+    /// Updates the name and description fields.
+    /// </summary>
+    public SerialNumber UpdateDetails(string? name, string? description)
+    {
+        if (name?.Length > 1024) throw new ArgumentException("Name must not exceed 1024 characters", nameof(name));
+        if (description?.Length > 2048) throw new ArgumentException("Description must not exceed 2048 characters", nameof(description));
+
+        if (!string.IsNullOrWhiteSpace(name)) Name = name;
+        Description = description;
         QueueDomainEvent(new SerialNumberUpdated { SerialNumber = this });
         return this;
     }

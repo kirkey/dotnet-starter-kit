@@ -18,5 +18,14 @@ public sealed class CreateStockLevelCommandValidator : AbstractValidator<CreateS
         RuleFor(x => x.QuantityOnHand)
             .GreaterThanOrEqualTo(0)
             .WithMessage("QuantityOnHand cannot be negative");
+
+        RuleFor(x => x.Name)
+            .MaximumLength(1024).When(x => !string.IsNullOrWhiteSpace(x.Name));
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2048).When(x => !string.IsNullOrWhiteSpace(x.Description));
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048).When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

@@ -3,6 +3,8 @@ namespace FSH.Starter.WebApi.Store.Application.SerialNumbers.Get.v1;
 public class SerialNumberResponse
 {
     public DefaultIdType Id { get; set; }
+    public string Name { get; set; } = default!;
+    public string? Description { get; set; }
     public string SerialNumberValue { get; set; } = default!;
     public DefaultIdType ItemId { get; set; }
     public DefaultIdType? WarehouseId { get; set; }

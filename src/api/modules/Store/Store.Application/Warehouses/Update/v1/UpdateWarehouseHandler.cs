@@ -15,6 +15,7 @@ public sealed class UpdateWarehouseHandler(
         var updatedWarehouse = warehouse.Update(
             request.Name,
             request.Description,
+            request.Notes,
             request.Address,
             request.City,
             request.State,

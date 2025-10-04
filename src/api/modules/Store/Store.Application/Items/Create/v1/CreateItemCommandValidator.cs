@@ -58,8 +58,11 @@ public class CreateItemCommandValidator : AbstractValidator<CreateItemCommand>
             .GreaterThanOrEqualTo(0).WithMessage("Weight must be zero or greater.");
 
         RuleFor(c => c.WeightUnit)
-            .NotEmpty().When(c => c.Weight > 0).WithMessage("WeightUnit is required when Weight > 0.")
-            .MaximumLength(20).WithMessage("WeightUnit must not exceed 20 characters.");
+            .NotEmpty().When(c => c.Weight > 0).WithMessage("WeightUnit is required when Weight > 0.");
+
+        RuleFor(c => c.Notes)
+            .MaximumLength(2048).WithMessage("Notes must not exceed 2048 characters.")
+            .When(c => !string.IsNullOrWhiteSpace(c.Notes));
 
         RuleFor(c => c.Length)
             .GreaterThanOrEqualTo(0).When(c => c.Length.HasValue)

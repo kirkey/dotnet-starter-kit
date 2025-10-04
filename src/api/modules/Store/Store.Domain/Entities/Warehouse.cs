@@ -307,6 +307,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// </summary>
     /// <param name="name">New name for the warehouse.</param>
     /// <param name="description">New description.</param>
+    /// <param name="notes">New notes.</param>
     /// <param name="address">New street address.</param>
     /// <param name="city">New city.</param>
     /// <param name="state">New state.</param>
@@ -322,6 +323,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     public Warehouse Update(
         string? name,
         string? description,
+        string? notes,
         string? address,
         string? city,
         string? state,
@@ -348,6 +350,14 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         if (description is not null && !string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
         {
             Description = description;
+            isUpdated = true;
+        }
+
+        // Notes can be null/empty but check length if provided
+        if (notes is not null && !string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+        {
+            if (notes.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
+            Notes = notes;
             isUpdated = true;
         }
 

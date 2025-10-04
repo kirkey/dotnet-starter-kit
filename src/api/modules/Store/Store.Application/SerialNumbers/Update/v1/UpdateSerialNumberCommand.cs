@@ -5,6 +5,8 @@ namespace FSH.Starter.WebApi.Store.Application.SerialNumbers.Update.v1;
 public class UpdateSerialNumberCommand : IRequest<UpdateSerialNumberResponse>
 {
     public DefaultIdType Id { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public string Status { get; set; } = default!;
     public DefaultIdType? WarehouseId { get; set; }
     public DefaultIdType? WarehouseLocationId { get; set; }

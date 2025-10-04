@@ -161,7 +161,8 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
         decimal? capacity,
         int? priority,
         bool? isPickable,
-        bool? isPutable)
+        bool? isPutable,
+        string? notes)
     {
         bool isUpdated = false;
 
@@ -210,6 +211,13 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
             IsPutable = isPutable.Value;
             isUpdated = true;
         }
+        if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+        {
+            if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
+            Notes = notes;
+            isUpdated = true;
+        }
+
 
         if (isUpdated)
         {

@@ -35,5 +35,14 @@ public class CreateInventoryReservationValidator : AbstractValidator<CreateInven
             .GreaterThan(DateTime.UtcNow)
             .WithMessage("Expiration date must be in the future.")
             .When(x => x.ExpirationDate.HasValue);
+
+        RuleFor(x => x.Name)
+            .MaximumLength(1024).When(x => !string.IsNullOrWhiteSpace(x.Name));
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2048).When(x => !string.IsNullOrWhiteSpace(x.Description));
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048).When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

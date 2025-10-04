@@ -3,6 +3,8 @@ namespace FSH.Starter.WebApi.Store.Application.GoodsReceipts.Search.v1;
 public sealed record GoodsReceiptResponse
 {
     public DefaultIdType Id { get; set; }
+    public string Name { get; set; } = default!;
+    public string? Description { get; set; }
     public string ReceiptNumber { get; set; } = default!;
     public DefaultIdType? PurchaseOrderId { get; set; }
     public DateTime ReceivedDate { get; set; }

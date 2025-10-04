@@ -57,6 +57,11 @@ public class CreateWarehouseCommandValidator : AbstractValidator<CreateWarehouse
             .MaximumLength(100)
             .WithMessage("Manager name must not exceed 100 characters");
 
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048)
+            .WithMessage("Notes must not exceed 2048 characters")
+            .When(x => !string.IsNullOrEmpty(x.Notes));
+
         RuleFor(x => x.ManagerEmail)
             .NotEmpty()
             .WithMessage("Manager email is required")

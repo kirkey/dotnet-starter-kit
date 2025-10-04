@@ -33,6 +33,10 @@ public class CreateInventoryReservationHandler(
             request.ExpirationDate,
             request.ReservedBy);
 
+        if (!string.IsNullOrWhiteSpace(request.Name)) reservation.Name = request.Name;
+        if (!string.IsNullOrWhiteSpace(request.Description)) reservation.Description = request.Description;
+        if (!string.IsNullOrWhiteSpace(request.Notes)) reservation.Notes = request.Notes;
+
         await repository.AddAsync(reservation, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 

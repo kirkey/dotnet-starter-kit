@@ -78,14 +78,12 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
 
         RuleFor(x => x.TotalCapacity)
             .GreaterThan(0)
-            .WithMessage("Total capacity must be greater than 0")
-            .MustAsync(async (cmd, totalCapacity, ct) =>
-            {
-                // Ensure we don't reduce total capacity below currently used capacity
-                var warehouse = await repository.GetByIdAsync(cmd.Id, ct).ConfigureAwait(false);
-                if (warehouse is null) return true; // other rules will catch missing warehouse
-                return totalCapacity >= warehouse.UsedCapacity;
-            }).WithMessage("Total capacity cannot be less than the current used capacity of the warehouse");
+            .WithMessage("Total capacity must be greater than 0");
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048)
+            .WithMessage("Notes must not exceed 2048 characters")
+            .When(x => !string.IsNullOrEmpty(x.Notes));
 
         RuleFor(x => x.CapacityUnit)
             .NotEmpty()

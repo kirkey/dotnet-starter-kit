@@ -4,6 +4,9 @@ namespace FSH.Starter.WebApi.Store.Application.LotNumbers.Create.v1;
 /// Command to create a new lot number.
 /// </summary>
 public sealed record CreateLotNumberCommand(
+    [property: DefaultValue("Lot Number")] string? Name,
+    [property: DefaultValue(null)] string? Description,
+    [property: DefaultValue(null)] string? Notes,
     string LotCode,
     DefaultIdType ItemId,
     int QuantityReceived,

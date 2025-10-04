@@ -22,7 +22,8 @@ public sealed class UpdateBinHandler(
             request.Capacity,
             request.Priority,
             request.IsPickable,
-            request.IsPutable);
+            request.IsPutable,
+            request.Notes);
 
         await repository.UpdateAsync(bin, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("bin updated {BinId}", bin.Id);

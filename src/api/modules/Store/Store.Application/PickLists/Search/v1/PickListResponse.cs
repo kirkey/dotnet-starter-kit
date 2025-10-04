@@ -3,6 +3,9 @@ namespace FSH.Starter.WebApi.Store.Application.PickLists.Search.v1;
 public sealed record PickListResponse
 {
     public DefaultIdType Id { get; set; }
+    public string Name { get; set; } = default!;
+    public string? Description { get; set; }
+    public string? Notes { get; set; }
     public string PickListNumber { get; set; } = default!;
     public DefaultIdType WarehouseId { get; set; }
     public string Status { get; set; } = default!;

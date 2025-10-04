@@ -45,7 +45,8 @@ public sealed class UpdateWarehouseLocationHandler(
             request.RequiresTemperatureControl,
             request.MinTemperature,
             request.MaxTemperature,
-            request.TemperatureUnit);
+            request.TemperatureUnit,
+            request.Notes);
 
         // If temperature settings changed, use the domain helper to validate and event
         if (request.RequiresTemperatureControl)

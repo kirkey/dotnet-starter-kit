@@ -37,6 +37,10 @@ public class CreateInventoryTransactionHandler(
             request.PerformedBy,
             request.IsApproved);
 
+        if (!string.IsNullOrWhiteSpace(request.Name)) transaction.Name = request.Name;
+        if (!string.IsNullOrWhiteSpace(request.Description)) transaction.Description = request.Description;
+        if (!string.IsNullOrWhiteSpace(request.Notes)) transaction.Notes = request.Notes;
+
         await repository.AddAsync(transaction, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 

@@ -6,6 +6,8 @@ namespace FSH.Starter.WebApi.Store.Application.CycleCounts.Get.v1;
 public sealed record CycleCountResponse
 {
     public DefaultIdType Id { get; init; }
+    public string Name { get; init; } = default!;
+    public string? Description { get; init; }
     public string CountNumber { get; init; } = default!;
     public DefaultIdType WarehouseId { get; init; }
     public string? WarehouseName { get; init; }

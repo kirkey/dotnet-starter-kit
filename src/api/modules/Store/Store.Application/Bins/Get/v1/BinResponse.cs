@@ -7,6 +7,7 @@ public sealed record BinResponse
 {
     public DefaultIdType Id { get; init; }
     public string Name { get; init; } = default!;
+    public string? Description { get; init; }
     public string? Code { get; init; }
     public DefaultIdType WarehouseLocationId { get; init; }
     public string? WarehouseLocationName { get; init; }

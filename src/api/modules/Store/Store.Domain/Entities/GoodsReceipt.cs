@@ -40,23 +40,21 @@ public sealed class GoodsReceipt : AuditableEntity, IAggregateRoot
     /// </summary>
     public string Status { get; private set; } = "Open"; // Open, Received, Cancelled
 
-    /// <summary>
-    /// Items received in this delivery.
-    /// Example count: 0 at creation.
-    /// </summary>
     public ICollection<GoodsReceiptItem> Items { get; private set; } = new List<GoodsReceiptItem>();
 
     private GoodsReceipt() { }
 
-    private GoodsReceipt(DefaultIdType id, string receiptNumber, DateTime receivedDate, DefaultIdType? purchaseOrderId)
+    private GoodsReceipt(DefaultIdType id, string receiptNumber, DateTime receivedDate, DefaultIdType? purchaseOrderId, string? notes)
     {
         if (string.IsNullOrWhiteSpace(receiptNumber)) throw new ArgumentException("ReceiptNumber is required", nameof(receiptNumber));
         if (receiptNumber.Length > 100) throw new ArgumentException("ReceiptNumber must not exceed 100 characters", nameof(receiptNumber));
+        if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
 
         Id = id;
         ReceiptNumber = receiptNumber;
         ReceivedDate = receivedDate == default ? DateTime.UtcNow : receivedDate;
         PurchaseOrderId = purchaseOrderId;
+        Notes = notes; // Inherited from AuditableEntity base class
         Status = "Open";
         QueueDomainEvent(new GoodsReceiptCreated { GoodsReceipt = this });
     }
@@ -67,11 +65,12 @@ public sealed class GoodsReceipt : AuditableEntity, IAggregateRoot
     /// <param name="receiptNumber">Unique receipt number. Example: "GR-2025-09-001".</param>
     /// <param name="receivedDate">Receipt date. Defaults to now if unspecified.</param>
     /// <param name="purchaseOrderId">Optional PO reference.</param>
-    public static GoodsReceipt Create(string receiptNumber, DateTime receivedDate, DefaultIdType? purchaseOrderId = null)
-        => new(DefaultIdType.NewGuid(), receiptNumber, receivedDate, purchaseOrderId);
+    /// <param name="notes">Optional notes. Max length: 500 characters.</param>
+    public static GoodsReceipt Create(string receiptNumber, DateTime receivedDate, DefaultIdType? purchaseOrderId = null, string? notes = null)
+        => new(DefaultIdType.NewGuid(), receiptNumber, receivedDate, purchaseOrderId, notes);
 
     /// <summary>
-    /// Adds an item to the receipt and updates inventory.
+    /// <param name="notes">Optional notes. Max length: 2048 characters (inherited from AuditableEntity).</param>
     /// </summary>
     /// <param name="itemId">Item received.</param>
     /// <param name="name">Item name snapshot. Example: "Bananas".</param>

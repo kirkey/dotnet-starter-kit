@@ -2,6 +2,8 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Get.v1;
 
 public record GetInventoryTransferResponse(
     DefaultIdType Id,
+    string Name,
+    string? Description,
     string TransferNumber,
     DefaultIdType FromWarehouseId,
     string FromWarehouseName,

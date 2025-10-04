@@ -16,4 +16,5 @@ public record CreateWarehouseCommand(
     [property: DefaultValue("sqft")] string CapacityUnit,
     [property: DefaultValue("Standard")] string WarehouseType,
     [property: DefaultValue(true)] bool IsActive,
-    [property: DefaultValue(false)] bool IsMainWarehouse) : IRequest<CreateWarehouseResponse>;
+    [property: DefaultValue(false)] bool IsMainWarehouse,
+    [property: DefaultValue(null)] string? Notes = null) : IRequest<CreateWarehouseResponse>;

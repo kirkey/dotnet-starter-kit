@@ -17,4 +17,5 @@ public record UpdateWarehouseCommand(
     [property: DefaultValue("sqft")] string CapacityUnit,
     [property: DefaultValue("Standard")] string WarehouseType,
     [property: DefaultValue(true)] bool IsActive,
-    [property: DefaultValue(false)] bool IsMainWarehouse) : IRequest<UpdateWarehouseResponse>;
+    [property: DefaultValue(false)] bool IsMainWarehouse,
+    string? Notes) : IRequest<UpdateWarehouseResponse>;

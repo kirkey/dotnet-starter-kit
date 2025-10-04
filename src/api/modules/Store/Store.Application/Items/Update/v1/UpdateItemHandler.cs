@@ -23,6 +23,7 @@ public sealed class UpdateItemHandler(
         item.Update(
             request.Name,
             request.Description,
+            request.Notes,
             request.Sku,
             request.Barcode,
             request.UnitPrice,

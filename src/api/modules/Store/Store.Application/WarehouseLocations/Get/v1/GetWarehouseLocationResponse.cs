@@ -20,5 +20,6 @@ public record GetWarehouseLocationResponse(
     decimal? MinTemperature,
     decimal? MaxTemperature,
     string? TemperatureUnit,
+    string? Notes,
     DateTime CreatedOn,
     DateTime? LastModifiedOn);

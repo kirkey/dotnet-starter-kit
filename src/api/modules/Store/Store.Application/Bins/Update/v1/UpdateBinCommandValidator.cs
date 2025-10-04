@@ -22,5 +22,13 @@ public class UpdateBinCommandValidator : AbstractValidator<UpdateBinCommand>
         RuleFor(c => c.Priority)
             .GreaterThanOrEqualTo(0).When(c => c.Priority.HasValue)
             .WithMessage("Priority cannot be negative.");
+
+        RuleFor(c => c.Description)
+            .MaximumLength(2048).When(c => !string.IsNullOrWhiteSpace(c.Description))
+            .WithMessage("Description must not exceed 2048 characters.");
+
+        RuleFor(c => c.Notes)
+            .MaximumLength(2048).When(c => !string.IsNullOrWhiteSpace(c.Notes))
+            .WithMessage("Notes must not exceed 2048 characters.");
     }
 }

@@ -97,7 +97,7 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
     /// Optional notes or special instructions.
     /// Max length: 500.
     /// </summary>
-    public string? Notes { get; private set; }
+    
 
     /// <summary>
     /// Total lines on pick list.

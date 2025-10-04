@@ -18,6 +18,10 @@ public sealed class CreateStockLevelHandler(
             request.SerialNumberId,
             request.QuantityOnHand);
 
+        if (!string.IsNullOrWhiteSpace(request.Name)) stockLevel.Name = request.Name;
+        if (!string.IsNullOrWhiteSpace(request.Description)) stockLevel.Description = request.Description;
+        if (!string.IsNullOrWhiteSpace(request.Notes)) stockLevel.Notes = request.Notes;
+
         await repository.AddAsync(stockLevel, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 

@@ -58,6 +58,12 @@ public class UpdateSerialNumberHandler(
             externalReferenceProperty?.SetValue(serialNumber, request.ExternalReference);
         }
 
+        // Update name and description if provided
+        if (!string.IsNullOrWhiteSpace(request.Name) || !string.IsNullOrWhiteSpace(request.Description))
+        {
+            serialNumber.UpdateDetails(request.Name, request.Description);
+        }
+
         // Add notes if provided
         if (!string.IsNullOrWhiteSpace(request.Notes))
         {

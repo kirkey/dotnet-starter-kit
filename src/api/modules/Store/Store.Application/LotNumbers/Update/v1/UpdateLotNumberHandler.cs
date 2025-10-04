@@ -25,6 +25,12 @@ public sealed class UpdateLotNumberHandler(
             lotNumber.UpdateStatus(request.Status);
         }
 
+        // Update name, description, and notes if provided
+        if (!string.IsNullOrWhiteSpace(request.Name) || !string.IsNullOrWhiteSpace(request.Description) || !string.IsNullOrWhiteSpace(request.Notes))
+        {
+            lotNumber.UpdateDetails(request.Name, request.Description, request.Notes);
+        }
+
         await repository.UpdateAsync(lotNumber, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 

@@ -27,5 +27,6 @@ public sealed record CreateItemCommand(
     [property: DefaultValue(null)] decimal? Length = null,
     [property: DefaultValue(null)] decimal? Width = null,
     [property: DefaultValue(null)] decimal? Height = null,
-    [property: DefaultValue(null)] string? DimensionUnit = null
+    [property: DefaultValue(null)] string? DimensionUnit = null,
+    [property: DefaultValue(null)] string? Notes = null
 ) : IRequest<CreateItemResponse>;

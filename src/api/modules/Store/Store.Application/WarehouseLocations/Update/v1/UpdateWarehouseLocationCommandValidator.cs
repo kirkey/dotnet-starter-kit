@@ -78,6 +78,11 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
             .GreaterThan(0)
             .WithMessage("Capacity must be greater than 0");
 
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048)
+            .WithMessage("Notes must not exceed 2048 characters")
+            .When(x => !string.IsNullOrEmpty(x.Notes));
+
         RuleFor(x => x.CapacityUnit)
             .NotEmpty()
             .WithMessage("Capacity unit is required")

@@ -12,5 +12,7 @@ public sealed record UpdateItemSupplierCommand(
     int? PackagingQuantity,
     bool? IsPreferred,
     bool? IsActive,
-    decimal? ReliabilityRating
+    decimal? ReliabilityRating,
+    string? Description,
+    string? Notes
 ) : IRequest<UpdateItemSupplierResponse>;

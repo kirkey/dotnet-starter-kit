@@ -17,4 +17,5 @@ public record UpdateWarehouseLocationCommand(
     [property: DefaultValue(false)] bool RequiresTemperatureControl,
     [property: DefaultValue(null)] decimal? MinTemperature,
     [property: DefaultValue(null)] decimal? MaxTemperature,
-    [property: DefaultValue("C")] string? TemperatureUnit) : IRequest<UpdateWarehouseLocationResponse>;
+    [property: DefaultValue("C")] string? TemperatureUnit,
+    string? Notes) : IRequest<UpdateWarehouseLocationResponse>;

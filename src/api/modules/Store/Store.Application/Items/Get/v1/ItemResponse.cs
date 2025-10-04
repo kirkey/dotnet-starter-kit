@@ -29,5 +29,6 @@ public sealed record ItemResponse(
     DefaultIdType CategoryId,
     DefaultIdType SupplierId,
     string UnitOfMeasure,
+    string? Notes,
     DateTimeOffset CreatedOn,
     DefaultIdType CreatedBy);

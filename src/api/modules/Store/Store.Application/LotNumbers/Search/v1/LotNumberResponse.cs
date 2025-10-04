@@ -22,6 +22,21 @@ public sealed record LotNumberResponse
     public DefaultIdType Id { get; init; }
 
     /// <summary>
+    /// Lot name for display purposes.
+    /// </summary>
+    public string Name { get; init; } = default!;
+
+    /// <summary>
+    /// Optional description.
+    /// </summary>
+    public string? Description { get; init; }
+
+    /// <summary>
+    /// Optional notes.
+    /// </summary>
+    public string? Notes { get; init; }
+
+    /// <summary>
     /// Lot number value.
     /// Example: "LOT-2025-001", "EXP-030125".
     /// </summary>

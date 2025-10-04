@@ -50,6 +50,7 @@ public sealed class UpdateCategoryHandler(
         var updated = category.Update(
             command.Name,
             command.Description,
+            command.Notes,
             command.Code,
             command.ParentCategoryId,
             command.IsActive,

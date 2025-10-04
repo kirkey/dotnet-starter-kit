@@ -7,5 +7,6 @@ public sealed record CreateBinCommand(
     DefaultIdType? WarehouseLocationId = null,
     [property: DefaultValue("Shelf")] string? BinType = "Shelf",
     [property: DefaultValue(null)] decimal? Capacity = null,
-    [property: DefaultValue(0)] int Priority = 0
+    [property: DefaultValue(0)] int Priority = 0,
+    [property: DefaultValue(null)] string? Notes = null
 ) : IRequest<CreateBinResponse>;

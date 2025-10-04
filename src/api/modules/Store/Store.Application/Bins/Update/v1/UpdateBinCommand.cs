@@ -8,5 +8,6 @@ public sealed record UpdateBinCommand(
     decimal? Capacity,
     int? Priority,
     bool? IsPickable,
-    bool? IsPutable
+    bool? IsPutable,
+    string? Notes
 ) : IRequest<UpdateBinResponse>;

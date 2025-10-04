@@ -26,6 +26,12 @@ public sealed class GoodsReceiptItem : AuditableEntity
     public DefaultIdType ItemId { get; private set; }
 
     /// <summary>
+    /// Name of the item (snapshot at time of receipt).
+    /// Example: "Bananas". Max length: 200.
+    /// </summary>
+    public string Name { get; private set; } = default!;
+
+    /// <summary>
     /// Quantity received. Must be positive.
     /// Example: 100.
     /// </summary>

@@ -13,6 +13,9 @@ public class CreateInventoryReservationCommand : IRequest<CreateInventoryReserva
     public string? ReferenceNumber { get; set; }
     public DateTime? ExpirationDate { get; set; }
     public string? ReservedBy { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public string? Notes { get; set; }
 }
 
 public class CreateInventoryReservationResponse(DefaultIdType id, string reservationNumber)

@@ -2,6 +2,9 @@ namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Get.v1;
 
 public sealed record PurchaseOrderResponse(
     DefaultIdType Id,
+    string Name,
+    string? Description,
+    string? Notes,
     string OrderNumber,
     DefaultIdType SupplierId,
     DateTime OrderDate,

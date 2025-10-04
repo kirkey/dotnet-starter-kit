@@ -45,5 +45,15 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
         RuleFor(x => x.SortOrder)
             .GreaterThanOrEqualTo(0)
             .When(x => x.SortOrder.HasValue);
+
+        RuleFor(x => x.Description)
+            .MaximumLength(2048)
+            .WithMessage("Description must not exceed 2048 characters")
+            .When(x => !string.IsNullOrWhiteSpace(x.Description));
+
+        RuleFor(x => x.Notes)
+            .MaximumLength(2048)
+            .WithMessage("Notes must not exceed 2048 characters")
+            .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

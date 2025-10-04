@@ -2,6 +2,8 @@ namespace FSH.Starter.WebApi.Store.Application.SerialNumbers.Create.v1;
 
 public class CreateSerialNumberCommand : IRequest<CreateSerialNumberResponse>
 {
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public string SerialNumberValue { get; set; } = default!;
     public DefaultIdType ItemId { get; set; }
     public DefaultIdType? WarehouseId { get; set; }

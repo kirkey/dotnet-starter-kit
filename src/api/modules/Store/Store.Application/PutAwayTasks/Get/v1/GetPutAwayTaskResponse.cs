@@ -3,6 +3,8 @@ namespace FSH.Starter.WebApi.Store.Application.PutAwayTasks.Get.v1;
 public sealed record GetPutAwayTaskResponse
 {
     public DefaultIdType Id { get; set; }
+    public string Name { get; set; } = default!;
+    public string? Description { get; set; }
     public string TaskNumber { get; set; } = default!;
     public DefaultIdType WarehouseId { get; set; }
     public DefaultIdType? GoodsReceiptId { get; set; }

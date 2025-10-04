@@ -2,6 +2,8 @@ namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.Update.v1;
 
 public sealed record UpdateStockAdjustmentCommand(
     DefaultIdType Id,
+    string? Name,
+    string? Description,
     DefaultIdType ItemId,
     DefaultIdType WarehouseLocationId,
     string AdjustmentType,

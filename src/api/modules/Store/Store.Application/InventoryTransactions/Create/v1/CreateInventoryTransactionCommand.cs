@@ -16,6 +16,9 @@ public class CreateInventoryTransactionCommand : IRequest<CreateInventoryTransac
     public string? Reference { get; set; }
     public string? PerformedBy { get; set; }
     public bool IsApproved { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public string? Notes { get; set; }
 }
 
 public class CreateInventoryTransactionResponse(DefaultIdType id, string transactionNumber)

@@ -6,6 +6,8 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryReservations.Get.v1;
 public sealed record InventoryReservationResponse
 {
     public DefaultIdType Id { get; init; }
+    public string Name { get; init; } = default!;
+    public string? Description { get; init; }
     public string ReservationNumber { get; init; } = default!;
     public DefaultIdType ItemId { get; init; }
     public string? ItemName { get; init; }

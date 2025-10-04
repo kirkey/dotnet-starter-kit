@@ -29,6 +29,7 @@ public sealed record UpdateItemCommand(
     string? ManufacturerPartNumber,
     decimal? Weight,
     string? WeightUnit,
+    string? Notes,
     decimal? Length,
     decimal? Width,
     decimal? Height,

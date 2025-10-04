@@ -394,6 +394,7 @@ public sealed class Item : AuditableEntity, IAggregateRoot
     public Item Update(
         string? name,
         string? description,
+        string? notes,
         string? sku,
         string? barcode,
         decimal? unitPrice,
@@ -418,6 +419,13 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
         {
             Description = description;
+            isUpdated = true;
+        }
+
+        if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
+        {
+            if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
+            Notes = notes;
             isUpdated = true;
         }
 

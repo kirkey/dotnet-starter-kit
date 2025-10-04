@@ -2,6 +2,8 @@ namespace FSH.Starter.WebApi.Store.Application.PutAwayTasks.Create.v1;
 
 public sealed record CreatePutAwayTaskCommand : IRequest<CreatePutAwayTaskResponse>
 {
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public string TaskNumber { get; set; } = default!;
     public DefaultIdType WarehouseId { get; set; }
     public DefaultIdType? GoodsReceiptId { get; set; }

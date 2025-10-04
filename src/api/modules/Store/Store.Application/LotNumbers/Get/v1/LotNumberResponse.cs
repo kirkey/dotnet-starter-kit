@@ -5,6 +5,9 @@ namespace FSH.Starter.WebApi.Store.Application.LotNumbers.Get.v1;
 /// </summary>
 public sealed record LotNumberResponse(
     DefaultIdType Id,
+    string Name,
+    string? Description,
+    string? Notes,
     string LotCode,
     DefaultIdType ItemId,
     DefaultIdType? SupplierId,

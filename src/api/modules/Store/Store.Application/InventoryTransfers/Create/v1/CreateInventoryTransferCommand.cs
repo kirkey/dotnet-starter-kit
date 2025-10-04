@@ -1,6 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Create.v1;
 
 public record CreateInventoryTransferCommand(
+    [property: DefaultValue("Inventory Transfer")] string? Name,
+    [property: DefaultValue(null)] string? Description,
     [property: DefaultValue("TRF001")] string TransferNumber,
     DefaultIdType FromWarehouseId,
     DefaultIdType ToWarehouseId,

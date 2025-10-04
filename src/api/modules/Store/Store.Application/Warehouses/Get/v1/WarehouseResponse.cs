@@ -17,4 +17,5 @@ public sealed record WarehouseResponse(
     string CapacityUnit,
     string WarehouseType,
     bool IsActive,
-    bool IsMainWarehouse);
+    bool IsMainWarehouse,
+    string? Notes);

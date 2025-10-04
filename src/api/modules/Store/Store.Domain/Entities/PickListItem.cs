@@ -68,7 +68,7 @@ public sealed class PickListItem : AuditableEntity
     /// Optional notes or pick instructions.
     /// Max length: 500.
     /// </summary>
-    public string? Notes { get; private set; }
+    
 
     /// <summary>
     /// Time when item was picked.

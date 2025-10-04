@@ -1,6 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Create.v1;
 
 public sealed record CreatePurchaseOrderCommand(
+    [property: DefaultValue("Purchase Order")] string? Name,
+    [property: DefaultValue(null)] string? Description,
     [property: DefaultValue("PO-0001")] string OrderNumber,
     DefaultIdType SupplierId,
     DateTime OrderDate,
