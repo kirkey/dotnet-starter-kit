@@ -18,7 +18,7 @@ public sealed class InvalidPurchaseOrderItemCostException() : ForbiddenException
 /// <summary>
 /// Exception thrown when trying to add a duplicate item to a purchase order.
 /// </summary>
-public sealed class DuplicatePurchaseOrderItemException(DefaultIdType purchaseOrderId, DefaultIdType groceryItemId) : ConflictException($"grocery item {groceryItemId} already exists in purchase order {purchaseOrderId}");
+public sealed class DuplicatePurchaseOrderItemException(DefaultIdType purchaseOrderId, DefaultIdType itemId) : ConflictException($"item {itemId} already exists in purchase order {purchaseOrderId}");
 
 /// <summary>
 /// Exception thrown when trying to modify a submitted purchase order item.

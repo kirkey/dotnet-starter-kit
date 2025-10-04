@@ -13,7 +13,7 @@ public sealed class InvalidShipmentItemQuantityException() : ForbiddenException(
 /// <summary>
 /// Exception thrown when trying to add a duplicate item to a shipment.
 /// </summary>
-public sealed class DuplicateShipmentItemException(DefaultIdType shipmentId, DefaultIdType groceryItemId) : ConflictException($"grocery item {groceryItemId} already exists in shipment {shipmentId}");
+public sealed class DuplicateShipmentItemException(DefaultIdType shipmentId, DefaultIdType itemId) : ConflictException($"item {itemId} already exists in shipment {shipmentId}");
 
 /// <summary>
 /// Exception thrown when trying to modify a dispatched shipment item.

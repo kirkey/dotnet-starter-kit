@@ -73,13 +73,13 @@ public sealed class GoodsReceipt : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Adds an item to the receipt and updates inventory.
     /// </summary>
-    /// <param name="groceryItemId">Item received.</param>
+    /// <param name="itemId">Item received.</param>
     /// <param name="name">Item name snapshot. Example: "Bananas".</param>
     /// <param name="quantity">Received quantity. Example: 100.</param>
-    public GoodsReceipt AddItem(DefaultIdType groceryItemId, string name, int quantity)
+    public GoodsReceipt AddItem(DefaultIdType itemId, string name, int quantity)
     {
         if (quantity <= 0) throw new ArgumentException("Quantity must be positive", nameof(quantity));
-        var item = GoodsReceiptItem.Create(Id, groceryItemId, name, quantity);
+        var item = GoodsReceiptItem.Create(Id, itemId, name, quantity);
         Items.Add(item);
         QueueDomainEvent(new GoodsReceiptItemAdded { GoodsReceipt = this, Item = item });
         return this;

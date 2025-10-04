@@ -5,7 +5,7 @@ public class AddCycleCountItemCommandValidator : AbstractValidator<AddCycleCount
     public AddCycleCountItemCommandValidator()
     {
         RuleFor(x => x.CycleCountId).NotEmpty();
-        RuleFor(x => x.GroceryItemId).NotEmpty();
+        RuleFor(x => x.ItemId).NotEmpty();
         RuleFor(x => x.SystemQuantity).GreaterThanOrEqualTo(0);
         RuleFor(x => x.CountedQuantity).GreaterThanOrEqualTo(0).When(x => x.CountedQuantity.HasValue);
     }

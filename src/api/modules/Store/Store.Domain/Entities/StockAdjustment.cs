@@ -154,7 +154,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     private StockAdjustment(
         DefaultIdType id,
         string adjustmentNumber,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         DefaultIdType warehouseId,
         DefaultIdType? warehouseLocationId,
         DateTime adjustmentDate,
@@ -194,7 +194,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
 
         Id = id;
         AdjustmentNumber = adjustmentNumber;
-        ItemId = groceryItemId;
+        ItemId = itemId;
         WarehouseId = warehouseId;
         WarehouseLocationId = warehouseLocationId;
         AdjustmentDate = adjustmentDate;
@@ -222,7 +222,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// Creates a new StockAdjustment.
     /// </summary>
     /// <param name="adjustmentNumber">Adjustment reference number.</param>
-    /// <param name="groceryItemId">Item ID.</param>
+    /// <param name="itemId">Item ID.</param>
     /// <param name="warehouseId">Warehouse ID.</param>
     /// <param name="warehouseLocationId">Warehouse location ID (optional).</param>
     /// <param name="adjustmentDate">Date of the adjustment.</param>
@@ -239,7 +239,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// <returns>Newly created StockAdjustment.</returns>
     public static StockAdjustment Create(
         string adjustmentNumber,
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         DefaultIdType warehouseId,
         DefaultIdType? warehouseLocationId,
         DateTime adjustmentDate,
@@ -257,7 +257,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         return new StockAdjustment(
             DefaultIdType.NewGuid(),
             adjustmentNumber,
-            groceryItemId,
+            itemId,
             warehouseId,
             warehouseLocationId,
             adjustmentDate,
@@ -304,7 +304,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// <param name="notes">New notes.</param>
     /// <returns>Updated StockAdjustment.</returns>
     public StockAdjustment Update(
-        DefaultIdType groceryItemId,
+        DefaultIdType itemId,
         DefaultIdType? warehouseLocationId,
         string adjustmentType,
         int adjustmentQuantity,
@@ -313,8 +313,8 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     {
         bool isUpdated = false;
 
-        if (groceryItemId == default)
-            throw new ArgumentException("ItemId is required", nameof(groceryItemId));
+        if (itemId == default)
+            throw new ArgumentException("ItemId is required", nameof(itemId));
 
         if (!AllowedAdjustmentTypes.Contains(adjustmentType))
             throw new ArgumentException($"Invalid adjustment type: {adjustmentType}", nameof(adjustmentType));
@@ -328,9 +328,9 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
         if (reason.Length > 200)
             throw new ArgumentException("Reason must not exceed 200 characters", nameof(reason));
 
-        if (!Equals(ItemId, groceryItemId))
+        if (!Equals(ItemId, itemId))
         {
-            ItemId = groceryItemId;
+            ItemId = itemId;
             isUpdated = true;
         }
 

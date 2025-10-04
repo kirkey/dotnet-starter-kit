@@ -2,7 +2,7 @@ namespace FSH.Starter.WebApi.Store.Application.CycleCounts.AddItem.v1;
 
 public sealed record AddCycleCountItemCommand(
     DefaultIdType CycleCountId,
-    DefaultIdType GroceryItemId,
+    DefaultIdType ItemId,
     int SystemQuantity,
     int? CountedQuantity = null) : IRequest<AddCycleCountItemResponse>;
 

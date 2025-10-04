@@ -29,4 +29,4 @@ public sealed class CannotModifyCompletedTransferItemException(DefaultIdType id)
 /// <summary>
 /// Exception thrown when trying to add a duplicate item to an inventory transfer.
 /// </summary>
-public sealed class DuplicateInventoryTransferItemException(DefaultIdType transferId, DefaultIdType groceryItemId) : ConflictException($"grocery item {groceryItemId} already exists in inventory transfer {transferId}");
+public sealed class DuplicateInventoryTransferItemException(DefaultIdType transferId, DefaultIdType itemId) : ConflictException($"item {itemId} already exists in inventory transfer {transferId}");

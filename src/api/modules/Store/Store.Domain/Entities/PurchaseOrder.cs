@@ -214,11 +214,11 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         return this;
     }
 
-    public PurchaseOrder AddItem(DefaultIdType groceryItemId, int quantity, decimal unitPrice, decimal? discount = null)
+    public PurchaseOrder AddItem(DefaultIdType itemId, int quantity, decimal unitPrice, decimal? discount = null)
     {
         EnsureModifiable();
 
-        var existingItem = Items.FirstOrDefault(i => i.ItemId == groceryItemId);
+        var existingItem = Items.FirstOrDefault(i => i.ItemId == itemId);
         
         if (existingItem != null)
         {
@@ -226,21 +226,21 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         }
         else
         {
-            var newItem = PurchaseOrderItem.Create(Id, groceryItemId, quantity, unitPrice, discount);
+            var newItem = PurchaseOrderItem.Create(Id, itemId, quantity, unitPrice, discount);
             Items.Add(newItem);
         }
 
         RecalculateTotals();
-        QueueDomainEvent(new PurchaseOrderItemAdded { PurchaseOrder = this, ItemId = groceryItemId });
+        QueueDomainEvent(new PurchaseOrderItemAdded { PurchaseOrder = this, ItemId = itemId });
         
         return this;
     }
 
-    public PurchaseOrder RemoveItem(DefaultIdType groceryItemId)
+    public PurchaseOrder RemoveItem(DefaultIdType itemId)
     {
         EnsureModifiable();
 
-        var item = Items.FirstOrDefault(i => i.ItemId == groceryItemId);
+        var item = Items.FirstOrDefault(i => i.ItemId == itemId);
         if (item != null)
         {
             if (item.ReceivedQuantity > 0)
@@ -248,7 +248,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
 
             Items.Remove(item);
             RecalculateTotals();
-            QueueDomainEvent(new PurchaseOrderItemRemoved { PurchaseOrder = this, ItemId = groceryItemId });
+            QueueDomainEvent(new PurchaseOrderItemRemoved { PurchaseOrder = this, ItemId = itemId });
         }
 
         return this;

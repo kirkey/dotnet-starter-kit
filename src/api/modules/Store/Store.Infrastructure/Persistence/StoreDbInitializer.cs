@@ -588,7 +588,7 @@ internal sealed class StoreDbInitializer(
                     var adjQty = 5 + i;
                     var adjustment = StockAdjustment.Create(
                         adjustmentNumber: $"ADJ-2025-{i:000}",
-                        groceryItemId: item.Id,
+                        itemId: item.Id,
                         warehouseId: warehouse.Id,
                         warehouseLocationId: null,
                         adjustmentDate: DateTime.UtcNow.AddDays(-10 + i),

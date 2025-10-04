@@ -13,7 +13,7 @@ public sealed class AddCycleCountItemHandler(
         var cc = await repository.GetByIdAsync(request.CycleCountId, cancellationToken).ConfigureAwait(false);
         _ = cc ?? throw new CycleCountNotFoundException(request.CycleCountId);
         var beforeCount = cc.Items.Count;
-        var added = cc.AddItem(request.GroceryItemId, request.SystemQuantity, request.CountedQuantity);
+        var added = cc.AddItem(request.ItemId, request.SystemQuantity, request.CountedQuantity);
         await repository.UpdateAsync(cc, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("added item to cycle count {CycleCountId} - total items now {Total}", cc.Id, cc.Items.Count);
         var itemId = cc.Items.Last().Id;

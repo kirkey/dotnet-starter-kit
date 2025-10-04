@@ -13,7 +13,7 @@ public sealed class InvalidPriceListItemPriceException() : ForbiddenException("p
 /// <summary>
 /// Exception thrown when trying to add a duplicate item to a price list.
 /// </summary>
-public sealed class DuplicatePriceListItemException(DefaultIdType priceListId, DefaultIdType groceryItemId) : ConflictException($"grocery item {groceryItemId} already exists in price list {priceListId}");
+public sealed class DuplicatePriceListItemException(DefaultIdType priceListId, DefaultIdType itemId) : ConflictException($"item {itemId} already exists in price list {priceListId}");
 
 /// <summary>
 /// Exception thrown when effective date is invalid.

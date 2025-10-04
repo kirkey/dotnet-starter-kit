@@ -29,4 +29,4 @@ public sealed class CannotModifyProcessedReturnItemException(DefaultIdType id) :
 /// <summary>
 /// Exception thrown when grocery item is not returnable.
 /// </summary>
-public sealed class ItemNotReturnableException(DefaultIdType groceryItemId) : ForbiddenException($"grocery item with id {groceryItemId} is not returnable");
+public sealed class ItemNotReturnableException(DefaultIdType itemId) : ForbiddenException($"item with id {itemId} is not returnable");

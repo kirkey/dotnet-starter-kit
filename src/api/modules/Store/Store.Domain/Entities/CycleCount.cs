@@ -207,9 +207,9 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
         return this;
     }
 
-    public CycleCount AddItem(DefaultIdType groceryItemId, int systemQuantity, int? countedQuantity = null)
+    public CycleCount AddItem(DefaultIdType itemId, int systemQuantity, int? countedQuantity = null)
     {
-        var item = CycleCountItem.Create(Id, groceryItemId, systemQuantity, countedQuantity);
+        var item = CycleCountItem.Create(Id, itemId, systemQuantity, countedQuantity);
         Items.Add(item);
         UpdateCounts();
         return this;

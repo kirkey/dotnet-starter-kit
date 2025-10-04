@@ -29,4 +29,4 @@ public sealed class CannotModifyProcessedGoodsReceiptItemException(DefaultIdType
 /// <summary>
 /// Exception thrown when trying to add a duplicate item to a goods receipt.
 /// </summary>
-public sealed class DuplicateGoodsReceiptItemException(DefaultIdType goodsReceiptId, DefaultIdType groceryItemId) : ConflictException($"grocery item {groceryItemId} already exists in goods receipt {goodsReceiptId}");
+public sealed class DuplicateGoodsReceiptItemException(DefaultIdType goodsReceiptId, DefaultIdType itemId) : ConflictException($"item {itemId} already exists in goods receipt {goodsReceiptId}");

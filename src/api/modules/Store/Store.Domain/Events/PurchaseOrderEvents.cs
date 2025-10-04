@@ -78,8 +78,6 @@ public sealed record PurchaseOrderItemRemoved : DomainEvent
 {
     public PurchaseOrder PurchaseOrder { get; init; } = default!;
     public DefaultIdType ItemId { get; init; }
-    /// <summary>The grocery item identifier of the removed line.</summary>
-    public DefaultIdType GroceryItemId { get; init; }
 }
 
 /// <summary>

@@ -35,4 +35,4 @@ public sealed class DiscountExceedsItemTotalException(decimal itemTotal, decimal
 /// <summary>
 /// Exception thrown when trying to add a duplicate item to a POS sale.
 /// </summary>
-public sealed class DuplicatePosSaleItemException(DefaultIdType posSaleId, DefaultIdType groceryItemId) : ConflictException($"grocery item {groceryItemId} already exists in POS sale {posSaleId}");
+public sealed class DuplicatePosSaleItemException(DefaultIdType posSaleId, DefaultIdType itemId) : ConflictException($"item {itemId} already exists in POS sale {posSaleId}");

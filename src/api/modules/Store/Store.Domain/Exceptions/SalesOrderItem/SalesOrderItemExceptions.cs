@@ -18,7 +18,7 @@ public sealed class InvalidSalesOrderItemPriceException() : ForbiddenException("
 /// <summary>
 /// Exception thrown when trying to add a duplicate item to a sales order.
 /// </summary>
-public sealed class DuplicateSalesOrderItemException(DefaultIdType salesOrderId, DefaultIdType groceryItemId) : ConflictException($"grocery item {groceryItemId} already exists in sales order {salesOrderId}");
+public sealed class DuplicateSalesOrderItemException(DefaultIdType salesOrderId, DefaultIdType itemId) : ConflictException($"item {itemId} already exists in sales order {salesOrderId}");
 
 /// <summary>
 /// Exception thrown when trying to modify a confirmed sales order item.

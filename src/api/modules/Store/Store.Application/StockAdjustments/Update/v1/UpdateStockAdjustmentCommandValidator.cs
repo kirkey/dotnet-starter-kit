@@ -8,7 +8,7 @@ public class UpdateStockAdjustmentCommandValidator : AbstractValidator<UpdateSto
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required");
 
-        RuleFor(x => x.GroceryItemId).NotEmpty().WithMessage("GroceryItemId is required");
+        RuleFor(x => x.ItemId).NotEmpty().WithMessage("ItemId is required");
 
         RuleFor(x => x.AdjustmentType)
             .NotEmpty().WithMessage("Adjustment type is required")
