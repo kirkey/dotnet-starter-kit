@@ -1,0 +1,60 @@
+@page "/store/serial-numbers"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Serial Numbers" Header="Serial Number Tracking" SubHeader="Manage individual serial number tracking for items." />
+
+<EntityTable @ref="_table" TEntity="SerialNumberResponse" TId="DefaultIdType" TRequest="SerialNumberViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Serial Number Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Serial Number Value" For="@(() => context.SerialNumberValue)" @bind-Value="context.SerialNumberValue" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <AutocompleteItem @bind-Value="context.ItemId"
+                             For="@(() => context.ItemId)"
+                             Label="Item"
+                             Variant="Variant.Filled"
+                             Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudSelect T="string" Label="Status" @bind-Value="context.Status" For="@(() => context.Status)" Variant="Variant.Filled">
+                <MudSelectItem T="string" Value="@("Available")">Available</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Allocated")">Allocated</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Shipped")">Shipped</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Sold")">Sold</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Defective")">Defective</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Returned")">Returned</MudSelectItem>
+                <MudSelectItem T="string" Value="@("InRepair")">In Repair</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Scrapped")">Scrapped</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Receipt Date" @bind-Date="context.ReceiptDate" For="@(() => context.ReceiptDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Manufacture Date" @bind-Date="context.ManufactureDate" For="@(() => context.ManufactureDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Warranty Expiration" @bind-Date="context.WarrantyExpirationDate" For="@(() => context.WarrantyExpirationDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="External Reference" For="@(() => context.ExternalReference)" @bind-Value="context.ExternalReference" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

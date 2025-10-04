@@ -1,0 +1,57 @@
+@page "/store/inventory-transactions"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Inventory Transactions" Header="Inventory Transactions" SubHeader="Track inventory movement and changes." />
+
+<EntityTable @ref="_table" TEntity="InventoryTransactionResponse" TId="DefaultIdType" TRequest="InventoryTransactionViewModel" Context="@Context">
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ApproveTransaction(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
+                <span>Approve Transaction</span>
+            </div>
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.TransactionNumber" For="@(() => context.TransactionNumber)" Label="Transaction Number" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.TransactionType" For="@(() => context.TransactionType)" Label="Transaction Type" Required="true">
+                <MudSelectItem Value="@("IN")">IN</MudSelectItem>
+                <MudSelectItem Value="@("OUT")">OUT</MudSelectItem>
+                <MudSelectItem Value="@("ADJUSTMENT")">ADJUSTMENT</MudSelectItem>
+                <MudSelectItem Value="@("TRANSFER")">TRANSFER</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <AutocompleteItem @bind-Value="context.ItemId" For="@(() => context.ItemId)" Label="Item" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)" Label="Warehouse" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudNumericField @bind-Value="context.Quantity" For="@(() => context.Quantity)" Label="Quantity" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudNumericField @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker @bind-Date="context.TransactionDate" For="@(() => context.TransactionDate)" Label="Transaction Date" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.ReferenceType" For="@(() => context.ReferenceType)" Label="Reference Type">
+                <MudSelectItem Value="@("")">None</MudSelectItem>
+                <MudSelectItem Value="@("PurchaseOrder")">Purchase Order</MudSelectItem>
+                <MudSelectItem Value="@("StockAdjustment")">Stock Adjustment</MudSelectItem>
+                <MudSelectItem Value="@("InventoryTransfer")">Inventory Transfer</MudSelectItem>
+                <MudSelectItem Value="@("GoodsReceipt")">Goods Receipt</MudSelectItem>
+                <MudSelectItem Value="@("PickList")">Pick List</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

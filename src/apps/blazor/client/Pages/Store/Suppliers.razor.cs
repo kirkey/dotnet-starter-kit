@@ -7,14 +7,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 public partial class Suppliers
 {
     [Inject] protected IClient Client { get; set; } = default!;
-    [Inject] protected HttpClient Http { get; set; } = default!;
 
-    private EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> _context = default!;
+    protected EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> Context { get; set; } = default!;
     private EntityTable<SupplierResponse, DefaultIdType, SupplierViewModel> _table = default!;
 
     protected override void OnInitialized()
     {
-        _context = new EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel>(
+        Context = new EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel>(
             entityName: "Supplier",
             entityNamePlural: "Suppliers",
             entityResource: FshResources.Store,
@@ -34,8 +33,7 @@ public partial class Suppliers
             idFunc: response => response.Id ?? DefaultIdType.Empty,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = paginationFilter.Adapt<SearchSuppliersCommand>();
+                var command = filter.Adapt<SearchSuppliersCommand>();
                 var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<SupplierResponse>>();
             },

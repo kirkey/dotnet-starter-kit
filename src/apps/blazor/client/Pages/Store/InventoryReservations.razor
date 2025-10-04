@@ -1,0 +1,75 @@
+@page "/store/inventory-reservations"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Inventory Reservations" Header="Inventory Reservations" SubHeader="Manage inventory reservations to prevent overselling." />
+
+<EntityTable @ref="_table" TEntity="InventoryReservationResponse" TId="DefaultIdType" TRequest="InventoryReservationViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Reservation Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Reservation Number" For="@(() => context.ReservationNumber)" @bind-Value="context.ReservationNumber" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <AutocompleteItem @bind-Value="context.ItemId"
+                             For="@(() => context.ItemId)"
+                             Label="Item"
+                             Variant="Variant.Filled"
+                             Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseId"
+                                    For="@(() => context.WarehouseId)"
+                                    Label="Warehouse"
+                                    Variant="Variant.Filled"
+                                    Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudNumericField T="int" @bind-Value="context.QuantityReserved" For="@(() => context.QuantityReserved)" Label="Quantity Reserved" Required="true" Min="1" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudSelect T="string" Label="Reservation Type" @bind-Value="context.ReservationType" For="@(() => context.ReservationType)" Variant="Variant.Filled">
+                <MudSelectItem T="string" Value="@("Order")">Order</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Transfer")">Transfer</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Production")">Production</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Assembly")">Assembly</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudSelect T="string" Label="Status" @bind-Value="context.Status" For="@(() => context.Status)" Variant="Variant.Filled">
+                <MudSelectItem T="string" Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Active")">Active</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Allocated")">Allocated</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Released")">Released</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Expired")">Expired</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Reference Number" For="@(() => context.ReferenceNumber)" @bind-Value="context.ReferenceNumber" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Reservation Date" @bind-Date="context.ReservationDate" For="@(() => context.ReservationDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Expiration Date" @bind-Date="context.ExpirationDate" For="@(() => context.ExpirationDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudTextField Label="Reserved By" For="@(() => context.ReservedBy)" @bind-Value="context.ReservedBy" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

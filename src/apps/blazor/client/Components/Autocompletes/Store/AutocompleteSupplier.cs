@@ -6,13 +6,20 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// Autocomplete component for selecting a Supplier by ID.
 /// Provides search functionality and displays supplier name and code.
 /// </summary>
-public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, DefaultIdType>
+public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, DefaultIdType?>
 {
-    protected override async Task<SupplierResponse?> GetItem(DefaultIdType id)
+    private Dictionary<DefaultIdType, SupplierResponse> _cache = [];
+
+    protected override async Task<SupplierResponse?> GetItem(DefaultIdType? id)
     {
+        if (!id.HasValue) return null;
+        if (_cache.TryGetValue(id.Value, out var cached)) return cached;
+
         try
         {
-            return await Client.GetSupplierEndpointAsync("1", id).ConfigureAwait(false);
+            var dto = await Client.GetSupplierEndpointAsync("1", id.Value).ConfigureAwait(false);
+            if (dto is not null) _cache[id.Value] = dto;
+            return dto;
         }
         catch (Exception ex)
         {
@@ -21,7 +28,7 @@ public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, 
         }
     }
 
-    protected override async Task<IEnumerable<DefaultIdType>> SearchText(string? value, CancellationToken token)
+    protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
         try
         {
@@ -35,13 +42,16 @@ public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, 
 
             var result = await Client.SearchSuppliersEndpointAsync("1", command, token).ConfigureAwait(false);
             
-            foreach (var item in result.Items ?? [])
+            if (result?.Items is { } items)
             {
-                if (item.Id.HasValue)
-                    _dictionary[item.Id.Value] = item;
+                _cache = items
+                    .Where(x => x.Id.HasValue)
+                    .GroupBy(x => x.Id!.Value)
+                    .Select(g => g.First())
+                    .ToDictionary(x => x.Id!.Value);
             }
             
-            return result.Items?.Where(x => x.Id.HasValue).Select(x => x.Id!.Value) ?? [];
+            return result?.Items?.Where(x => x.Id.HasValue).Select(x => x.Id) ?? [];
         }
         catch (Exception ex)
         {
@@ -50,9 +60,9 @@ public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, 
         }
     }
 
-    protected override string GetTextValue(DefaultIdType id)
+    protected override string GetTextValue(DefaultIdType? id)
     {
-        if (!_dictionary.TryGetValue(id, out var supplier))
+        if (!id.HasValue || !_cache.TryGetValue(id.Value, out var supplier))
             return string.Empty;
         
         return $"{supplier.Name} ({supplier.Code})";

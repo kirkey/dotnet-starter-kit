@@ -1,0 +1,38 @@
+@page "/store/put-away-tasks"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Put Away Tasks" Header="Put Away Tasks" SubHeader="Manage warehouse put-away operations for received goods." />
+
+<EntityTable @ref="_table" TEntity="PutAwayTaskResponse" TId="DefaultIdType" TRequest="PutAwayTaskViewModel" Context="@Context">
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => AssignTask(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" />
+                <span>Assign</span>
+            </div>
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.TaskNumber" For="@(() => context.TaskNumber)" Label="Task Number" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)" Label="Warehouse" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.PutAwayStrategy" For="@(() => context.PutAwayStrategy)" Label="Put Away Strategy">
+                <MudSelectItem Value="@("FIFO")">FIFO</MudSelectItem>
+                <MudSelectItem Value="@("LIFO")">LIFO</MudSelectItem>
+                <MudSelectItem Value="@("NearestLocation")">Nearest Location</MudSelectItem>
+                <MudSelectItem Value="@("Directed")">Directed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudNumericField @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

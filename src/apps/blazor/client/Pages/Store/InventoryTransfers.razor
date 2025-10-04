@@ -1,0 +1,88 @@
+@page "/store/inventory-transfers"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Inventory Transfers" Header="Inventory Transfers" SubHeader="Manage inventory transfers between warehouses." />
+
+<EntityTable @ref="_table" TEntity="GetInventoryTransferListResponse" TId="DefaultIdType" TRequest="InventoryTransferViewModel" Context="@Context">
+    <ExtraActions Context="context">
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => ApproveTransfer(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
+                    <span>Approve Transfer</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Approved")
+        {
+            <MudMenuItem OnClick="@(() => MarkInTransit(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.LocalShipping" Class="mr-2" />
+                    <span>Mark In Transit</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "InTransit")
+        {
+            <MudMenuItem OnClick="@(() => CompleteTransfer(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Done" Class="mr-2" />
+                    <span>Complete Transfer</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Draft" || context.Status == "Approved")
+        {
+            <MudMenuItem OnClick="@(() => CancelTransfer(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+                    <span>Cancel Transfer</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.TransferNumber" For="@(() => context.TransferNumber)" Label="Transfer Number" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.TransferType" For="@(() => context.TransferType)" Label="Transfer Type" Required="true">
+                <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                <MudSelectItem Value="@("Emergency")">Emergency</MudSelectItem>
+                <MudSelectItem Value="@("Replenishment")">Replenishment</MudSelectItem>
+                <MudSelectItem Value="@("Return")">Return</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.FromWarehouseId" For="@(() => context.FromWarehouseId)" Label="From Warehouse" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.ToWarehouseId" For="@(() => context.ToWarehouseId)" Label="To Warehouse" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker @bind-Date="context.TransferDate" For="@(() => context.TransferDate)" Label="Transfer Date" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker @bind-Date="context.ExpectedArrivalDate" For="@(() => context.ExpectedArrivalDate)" Label="Expected Arrival Date" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority">
+                <MudSelectItem Value="@("Low")">Low</MudSelectItem>
+                <MudSelectItem Value="@("Normal")">Normal</MudSelectItem>
+                <MudSelectItem Value="@("High")">High</MudSelectItem>
+                <MudSelectItem Value="@("Urgent")">Urgent</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.TransportMethod" For="@(() => context.TransportMethod)" Label="Transport Method" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.TrackingNumber" For="@(() => context.TrackingNumber)" Label="Tracking Number" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

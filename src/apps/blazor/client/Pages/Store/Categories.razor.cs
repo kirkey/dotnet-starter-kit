@@ -10,7 +10,7 @@ public partial class Categories
     [Inject] protected IClient Client { get; set; } = default!;
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
-    private EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = default!;
     private EntityTable<CategoryResponse, DefaultIdType, CategoryViewModel> _table = default!;
 
     protected override void OnInitialized() =>

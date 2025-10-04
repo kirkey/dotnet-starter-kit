@@ -1,5 +1,3 @@
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
@@ -27,32 +25,30 @@ public partial class PurchaseOrderItemDialog
 
         try
         {
-            if (Model.Id == default)
+            if (Model.Id == Guid.Empty)
             {
                 // Add new item
-                var command = new AddPurchaseOrderItemCommand(
-                    PurchaseOrderId,
-                    Model.ItemId,
-                    Model.Quantity,
-                    (double)Model.UnitPrice,
-                    (double)Model.DiscountAmount,
-                    Model.Notes);
+                var command = new AddPurchaseOrderItemCommand
+                {
+                    PurchaseOrderId = PurchaseOrderId,
+                    ItemId = Model.ItemId,
+                    Quantity = Model.Quantity,
+                    UnitPrice = (double)Model.UnitPrice,
+                    Discount = Model.DiscountAmount > 0 ? (double)Model.DiscountAmount : null
+                };
 
-                await Client.AddPurchaseOrderItemEndpointAsync("1", command).ConfigureAwait(false);
+                await Client.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
                 Snackbar.Add("Item added successfully", Severity.Success);
             }
             else
             {
-                // Update existing item
-                var command = new UpdatePurchaseOrderItemCommand(
-                    Model.ItemId,
-                    Model.Quantity,
-                    (double)Model.UnitPrice,
-                    (double)Model.DiscountAmount,
-                    Model.ReceivedQuantity,
-                    Model.Notes);
+                var quantityCommand = new UpdatePurchaseOrderItemQuantityCommand
+                {
+                    PurchaseOrderItemId = Model.Id,
+                    Quantity = Model.Quantity
+                };
 
-                await Client.UpdatePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, Model.Id, command).ConfigureAwait(false);
+                await Client.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, Model.ItemId, quantityCommand).ConfigureAwait(false);
                 Snackbar.Add("Item updated successfully", Severity.Success);
             }
 

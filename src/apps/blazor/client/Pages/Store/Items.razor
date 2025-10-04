@@ -33,10 +33,10 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="decimal" @bind-Value="context.Price" For="@(() => context.Price)" Label="Price" Immediate="true" Required />
+            <MudNumericField T="double" @bind-Value="context.UnitPrice" For="@(() => context.UnitPrice)" Label="Unit Price" Immediate="true" Required />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="decimal" @bind-Value="context.Cost" For="@(() => context.Cost)" Label="Cost" Immediate="true" Required />
+            <MudNumericField T="double" @bind-Value="context.Cost" For="@(() => context.Cost)" Label="Cost" Immediate="true" Required />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
             <MudNumericField T="int" @bind-Value="context.MinimumStock" For="@(() => context.MinimumStock)" Label="Min Stock" Immediate="true" />
@@ -46,17 +46,24 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int" @bind-Value="context.CurrentStock" For="@(() => context.CurrentStock)" Label="Current Stock" Immediate="true" />
+            <MudNumericField T="int" @bind-Value="context.ReorderPoint" For="@(() => context.ReorderPoint)" Label="Reorder Point" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int" @bind-Value="context.ReorderPoint" For="@(() => context.ReorderPoint)" Label="Reorder Point" Immediate="true" />
+            <MudNumericField T="int" @bind-Value="context.ReorderQuantity" For="@(() => context.ReorderQuantity)" Label="Reorder Qty" Immediate="true" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
             <MudSwitch T="bool" @bind-Checked="context.IsPerishable" Color="Color.Primary">Perishable</MudSwitch>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudDatePicker @bind-Date="context.ExpiryDate" Label="Expiry Date" Disabled="@(!context.IsPerishable)" />
+            <MudNumericField T="int?" @bind-Value="context.ShelfLifeDays" For="@(() => context.ShelfLifeDays)" Label="Shelf Life (Days)" Disabled="@(!context.IsPerishable)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch T="bool" @bind-Checked="context.IsSerialTracked" Color="Color.Primary">Serial Tracked</MudSwitch>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch T="bool" @bind-Checked="context.IsLotTracked" Color="Color.Primary">Lot Tracked</MudSwitch>
         </MudItem>
 
         <MudItem xs="12" md="4">
@@ -67,39 +74,28 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="decimal" @bind-Value="context.Weight" For="@(() => context.Weight)" Label="Weight" Immediate="true" />
+            <MudNumericField T="double" @bind-Value="context.Weight" For="@(() => context.Weight)" Label="Weight" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
             <MudTextField Label="Weight Unit" For="@(() => context.WeightUnit)" @bind-Value="context.WeightUnit" />
         </MudItem>
 
+                <MudItem xs="12" md="6">
+            <AutocompleteCategoryId @bind-Value="context.CategoryId"
+                                   For="@(() => context.CategoryId)"
+                                   Label="Category"
+                                   Variant="Variant.Filled" />
+        </MudItem>
+
         <MudItem xs="12" md="6">
-            <MudTextField T="DefaultIdType?" Label="Supplier Id" For="@(() => context.SupplierId)" @bind-Value="context.SupplierId" HelperText="Enter supplier GUID (autocomplete TBD)" />
+            <AutocompleteSupplier @bind-Value="context.SupplierId"
+                                 For="@(() => context.SupplierId)"
+                                 Label="Supplier"
+                                 Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField T="DefaultIdType?" Label="Warehouse Location Id" For="@(() => context.WarehouseLocationId)" @bind-Value="context.WarehouseLocationId" HelperText="Enter warehouse location GUID (autocomplete TBD)" />
-        </MudItem>
-        
-        <!-- Image Management -->
-        <MudItem xs="12">
-            <ImageUploader CurrentImageUrl="@context.ImageUrl"
-                           CurrentImageUrlChanged="@(url => context.ImageUrl = url)"
-                           UploadedImage="@context.Image"
-                           UploadedImageChanged="@(img => context.Image = img)"
-                           AltText="Category image"
-                           UploadLabel="Upload Category Image" />
+            <MudTextField Label="Unit of Measure" For="@(() => context.UnitOfMeasure)" @bind-Value="context.UnitOfMeasure" />
         </MudItem>
     </EditFormContent>
 </EntityTable>
 
-@code {
-    private RenderFragment<CategoryResponse> TemplateImage => dto => __builder =>
-    {
-        <MudItem Class="d-flex justify-center align-center">
-            @if (dto.ImageUrl is not null)
-            {
-                <MudImage Src="@(string.IsNullOrEmpty(dto.ImageUrl) ? string.Empty : ImageUrlService.GetAbsoluteUrl(dto.ImageUrl))" Height="100"/>
-            }
-        </MudItem>
-    };
-}

@@ -1,0 +1,55 @@
+@page "/store/bins"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Bins" Header="Storage Bins" SubHeader="Manage warehouse storage bin locations." />
+
+<EntityTable @ref="_table" TEntity="BinResponse" TId="DefaultIdType" TRequest="BinViewModel" Context="@_context">
+    <EditFormContent Context="context">
+        @if (!_context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Bin Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseLocationId"
+                                     For="@(() => context.WarehouseLocationId)"
+                                     Label="Warehouse Location"
+                                     Variant="Variant.Filled"
+                                     Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Bin Type" For="@(() => context.BinType)" @bind-Value="context.BinType" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudNumericField T="decimal" @bind-Value="context.Capacity" For="@(() => context.Capacity)" Label="Capacity" Min="0" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudNumericField T="int" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" />
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudSwitch T="bool" @bind-Checked="context.IsActive" Color="Color.Primary">Active</MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudSwitch T="bool" @bind-Checked="context.IsPickable" Color="Color.Primary">Pickable</MudSwitch>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSwitch T="bool" @bind-Checked="context.IsPutable" Color="Color.Primary">Putable</MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

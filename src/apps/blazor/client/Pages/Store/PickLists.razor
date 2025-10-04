@@ -1,0 +1,38 @@
+@page "/store/pick-lists"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Pick Lists" Header="Pick Lists" SubHeader="Manage warehouse picking tasks for order fulfillment." />
+
+<EntityTable @ref="_table" TEntity="PickListResponse" TId="DefaultIdType" TRequest="PickListViewModel" Context="@Context">
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => AssignPickList(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" />
+                <span>Assign</span>
+            </div>
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.PickListNumber" For="@(() => context.PickListNumber)" Label="Pick List Number" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)" Label="Warehouse" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.PickingType" For="@(() => context.PickingType)" Label="Picking Type">
+                <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                <MudSelectItem Value="@("Wave")">Wave</MudSelectItem>
+                <MudSelectItem Value="@("Batch")">Batch</MudSelectItem>
+                <MudSelectItem Value="@("Zone")">Zone</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudNumericField @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.ReferenceNumber" For="@(() => context.ReferenceNumber)" Label="Reference Number" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

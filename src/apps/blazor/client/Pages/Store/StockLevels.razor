@@ -1,0 +1,85 @@
+@page "/store/stock-levels"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Stock Levels" Header="Inventory Stock Levels" SubHeader="Track and manage inventory quantities across warehouses." />
+
+<EntityTable @ref="_table" TEntity="StockLevelResponse" TId="DefaultIdType" TRequest="StockLevelViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Stock Level Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6">
+            <AutocompleteItem @bind-Value="context.ItemId"
+                             For="@(() => context.ItemId)"
+                             Label="Item"
+                             Variant="Variant.Filled"
+                             Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseId"
+                                    For="@(() => context.WarehouseId)"
+                                    Label="Warehouse"
+                                    Variant="Variant.Filled"
+                                    Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudNumericField T="int" @bind-Value="context.QuantityOnHand" For="@(() => context.QuantityOnHand)" Label="Quantity On Hand" Min="0" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudNumericField T="int" @bind-Value="context.QuantityAvailable" For="@(() => context.QuantityAvailable)" Label="Available" Min="0" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudNumericField T="int" @bind-Value="context.QuantityReserved" For="@(() => context.QuantityReserved)" Label="Reserved" Min="0" ReadOnly />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudNumericField T="int" @bind-Value="context.QuantityAllocated" For="@(() => context.QuantityAllocated)" Label="Allocated" Min="0" ReadOnly />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Last Count Date" @bind-Date="context.LastCountDate" For="@(() => context.LastCountDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Last Movement Date" @bind-Date="context.LastMovementDate" For="@(() => context.LastMovementDate)" />
+        </MudItem>
+    </EditFormContent>
+
+    <ExtraActions>
+        <MudMenu Label="Stock Operations" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Inventory">
+            <MudMenuItem OnClick="@(() => ReserveStock(context))">Reserve Stock</MudMenuItem>
+            <MudMenuItem OnClick="@(() => AllocateStock(context))">Allocate Stock</MudMenuItem>
+            <MudMenuItem OnClick="@(() => ReleaseStock(context))">Release Stock</MudMenuItem>
+        </MudMenu>
+    </ExtraActions>
+</EntityTable>
+
+@code {
+    private async Task ReserveStock(StockLevelResponse stockLevel)
+    {
+        // TODO: Implement reserve stock dialog
+        Snackbar.Add("Reserve stock functionality - to be implemented", Severity.Info);
+    }
+
+    private async Task AllocateStock(StockLevelResponse stockLevel)
+    {
+        // TODO: Implement allocate stock dialog
+        Snackbar.Add("Allocate stock functionality - to be implemented", Severity.Info);
+    }
+
+    private async Task ReleaseStock(StockLevelResponse stockLevel)
+    {
+        // TODO: Implement release stock dialog
+        Snackbar.Add("Release stock functionality - to be implemented", Severity.Info);
+    }
+
+    [Inject] private ISnackbar Snackbar { get; set; } = default!;
+}

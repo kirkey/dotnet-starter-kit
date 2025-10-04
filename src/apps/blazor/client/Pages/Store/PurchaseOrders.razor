@@ -97,7 +97,7 @@
         
         <MudItem xs="12" md="6">
             <AutocompleteSupplier Value="context.SupplierId"
-                                 ValueChanged="value => context.SupplierId = value"
+                                 ValueChanged="value => context.SupplierId = value ?? Guid.Empty"
                                  For="@(() => context.SupplierId)"
                                  Label="Supplier"
                                  Variant="Variant.Filled"

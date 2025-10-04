@@ -22,7 +22,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6">
-                    <MudNumericField @bind-Value="Model.UnitPrice"
+                    <MudNumericField T="decimal" @bind-Value="Model.UnitPrice"
                                      Label="Unit Price"
                                      For="@(() => Model.UnitPrice)"
                                      Required="true"
@@ -32,7 +32,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6">
-                    <MudNumericField @bind-Value="Model.DiscountAmount"
+                    <MudNumericField T="decimal" @bind-Value="Model.DiscountAmount"
                                      Label="Discount Amount"
                                      For="@(() => Model.DiscountAmount)"
                                      Min="0"

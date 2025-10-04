@@ -1,5 +1,3 @@
-using FSH.Starter.Blazor.Client.Services;
-
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
@@ -9,8 +7,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 public partial class PurchaseOrders
 {
     [Inject] protected IClient Client { get; set; } = default!;
-    [Inject] protected IDialogService DialogService { get; set; } = default!;
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
+    [Inject] protected NavigationManager NavigationManager { get; set; } = default!;
 
     private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _context = default!;
     private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = default!;
@@ -43,22 +41,15 @@ public partial class PurchaseOrders
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = new SearchPurchaseOrdersCommand
-                {
-                    PageNumber = paginationFilter.PageNumber,
-                    PageSize = paginationFilter.PageSize,
-                    Keyword = paginationFilter.Keyword,
-                    OrderBy = paginationFilter.OrderBy,
-                    SupplierId = SearchSupplierId,
-                    Status = SearchStatus,
-                    FromDate = SearchFromDate,
-                    ToDate = SearchToDate
-                };
+                var command = filter.Adapt<SearchPurchaseOrdersCommand>();
+                command.SupplierId = SearchSupplierId;
+                command.Status = SearchStatus;
+                command.FromDate = SearchFromDate;
+                command.ToDate = SearchToDate;
                 var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PurchaseOrderResponse>>();
             },
-            getFunc: async id =>
+            getDetailsFunc: async id =>
             {
                 var dto = await Client.GetPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<PurchaseOrderViewModel>();
@@ -71,23 +62,7 @@ public partial class PurchaseOrders
             {
                 await Client.UpdatePurchaseOrderEndpointAsync("1", id, viewModel.Adapt<UpdatePurchaseOrderCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeletePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false),
-            exportFunc: async filter =>
-            {
-                var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = new SearchPurchaseOrdersCommand
-                {
-                    PageNumber = paginationFilter.PageNumber,
-                    PageSize = paginationFilter.PageSize,
-                    Keyword = paginationFilter.Keyword,
-                    OrderBy = paginationFilter.OrderBy,
-                    SupplierId = SearchSupplierId,
-                    Status = SearchStatus,
-                    FromDate = SearchFromDate,
-                    ToDate = SearchToDate
-                };
-                return await Client.ExportPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
-            });
+            deleteFunc: async id => await Client.DeletePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false));
     }
 
     /// <summary>
@@ -115,9 +90,9 @@ public partial class PurchaseOrders
     /// <summary>
     /// Views the full details of a purchase order.
     /// </summary>
-    private async Task ViewOrderDetails(DefaultIdType id)
+    private void ViewOrderDetails(DefaultIdType id)
     {
-        await _table.InvokeEditAsync(id);
+        NavigationManager.NavigateTo($"/store/purchase-orders/{id}/items");
     }
 
     /// <summary>
@@ -161,7 +136,8 @@ public partial class PurchaseOrders
         {
             try
             {
-                await Client.ApprovePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
+                var request = new ApprovePurchaseOrderRequest { ApprovalNotes = null };
+                await Client.ApprovePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order approved successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -187,7 +163,8 @@ public partial class PurchaseOrders
         {
             try
             {
-                await Client.SendPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
+                var request = new SendPurchaseOrderRequest { DeliveryInstructions = null };
+                await Client.SendPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order sent successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -213,7 +190,8 @@ public partial class PurchaseOrders
         {
             try
             {
-                await Client.ReceivePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
+                var request = new ReceivePurchaseOrderRequest { ActualDeliveryDate = DateTime.Now, ReceiptNotes = null };
+                await Client.ReceivePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order marked as received", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -239,7 +217,8 @@ public partial class PurchaseOrders
         {
             try
             {
-                await Client.CancelPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
+                var request = new CancelPurchaseOrderRequest { CancellationReason = null };
+                await Client.CancelPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order cancelled", Severity.Success);
                 await _table.ReloadDataAsync();
             }

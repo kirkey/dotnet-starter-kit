@@ -1,0 +1,17 @@
+@page "/store/goods-receipts"
+
+<PageHeader Title="Goods Receipts" Header="Goods Receipts" SubHeader="Manage goods received from suppliers." />
+
+<EntityTable @ref="_table" TEntity="GoodsReceiptResponse" TId="DefaultIdType" TRequest="GoodsReceiptViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.ReceiptNumber" For="@(() => context.ReceiptNumber)" Label="Receipt Number" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker @bind-Date="context.ReceivedDate" For="@(() => context.ReceivedDate)" Label="Received Date" Required="true" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

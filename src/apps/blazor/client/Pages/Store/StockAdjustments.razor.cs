@@ -1,0 +1,75 @@
+namespace FSH.Starter.Blazor.Client.Pages.Store;
+
+public partial class StockAdjustments
+{
+    [Inject] protected IClient Client { get; set; } = default!;
+    
+
+    protected EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> Context { get; set; } = default!;
+    private EntityTable<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> _table = default!;
+
+    protected override void OnInitialized()
+    {
+        Context = new EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel>(
+            entityName: "Stock Adjustment",
+            entityNamePlural: "Stock Adjustments",
+            entityResource: FshResources.Store,
+            fields:
+            [
+                new EntityField<StockAdjustmentResponse>(x => x.AdjustmentType, "Type", "AdjustmentType"),
+                new EntityField<StockAdjustmentResponse>(x => x.QuantityAdjusted, "Quantity", "QuantityAdjusted", typeof(int)),
+                new EntityField<StockAdjustmentResponse>(x => x.Reason, "Reason", "Reason"),
+                new EntityField<StockAdjustmentResponse>(x => x.AdjustmentDate, "Date", "AdjustmentDate", typeof(DateTime))
+            ],
+            enableAdvancedSearch: true,
+            idFunc: response => response.Id ?? Guid.Empty,
+            getDetailsFunc: async id =>
+            {
+                var dto = await Client.GetStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false);
+                return dto.Adapt<StockAdjustmentViewModel>();
+            },
+            searchFunc: async filter =>
+            {
+                var paginationFilter = filter.Adapt<PaginationFilter>();
+                var command = paginationFilter.Adapt<SearchStockAdjustmentsCommand>();
+                var result = await Client.SearchStockAdjustmentsEndpointAsync("1", command).ConfigureAwait(false);
+                return result.Adapt<PaginationResponse<StockAdjustmentResponse>>();
+            },
+            createFunc: async viewModel =>
+            {
+                await Client.CreateStockAdjustmentEndpointAsync("1", viewModel.Adapt<CreateStockAdjustmentCommand>()).ConfigureAwait(false);
+            },
+            updateFunc: async (id, viewModel) =>
+            {
+                await Client.UpdateStockAdjustmentEndpointAsync("1", id, viewModel.Adapt<UpdateStockAdjustmentCommand>()).ConfigureAwait(false);
+            },
+            deleteFunc: async id => await Client.DeleteStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false));
+    }
+
+    private async Task ApproveAdjustment(DefaultIdType id)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Confirm Approval",
+            "Are you sure you want to approve this adjustment?",
+            yesText: "Approve",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            var command = new ApproveStockAdjustmentCommand();
+            await Client.ApproveStockAdjustmentEndpointAsync("1", id, command);
+            await _table.ReloadDataAsync();
+        }
+    }
+}
+
+public class StockAdjustmentViewModel
+{
+    public DefaultIdType ItemId { get; set; }
+    public DefaultIdType WarehouseLocationId { get; set; }
+    public string? AdjustmentType { get; set; }
+    public int QuantityAdjusted { get; set; }
+    public string? Reason { get; set; }
+    public DateTime? AdjustmentDate { get; set; }
+    public string? Notes { get; set; }
+}

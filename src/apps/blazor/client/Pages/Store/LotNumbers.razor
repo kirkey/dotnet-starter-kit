@@ -1,0 +1,63 @@
+@page "/store/lot-numbers"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Lot Numbers" Header="Lot Number Tracking" SubHeader="Manage batch and lot number tracking for inventory items." />
+
+<EntityTable @ref="_table" TEntity="LotNumberResponse" TId="DefaultIdType" TRequest="LotNumberViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Lot Number Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Lot Code" For="@(() => context.LotCode)" @bind-Value="context.LotCode" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <AutocompleteItem @bind-Value="context.ItemId"
+                             For="@(() => context.ItemId)"
+                             Label="Item"
+                             Variant="Variant.Filled"
+                             Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <AutocompleteSupplier @bind-Value="context.SupplierId"
+                                 For="@(() => context.SupplierId)"
+                                 Label="Supplier"
+                                 Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudNumericField T="int" @bind-Value="context.QuantityReceived" For="@(() => context.QuantityReceived)" Label="Quantity Received" Required="true" Min="0" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Manufacture Date" @bind-Date="context.ManufactureDate" For="@(() => context.ManufactureDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Expiration Date" @bind-Date="context.ExpirationDate" For="@(() => context.ExpirationDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudDatePicker Label="Receipt Date" @bind-Date="context.ReceiptDate" For="@(() => context.ReceiptDate)" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudSelect T="string" Label="Status" @bind-Value="context.Status" For="@(() => context.Status)" Variant="Variant.Filled">
+                <MudSelectItem T="string" Value="@("Active")">Active</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Expired")">Expired</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Quarantine")">Quarantine</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Recalled")">Recalled</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Quality Notes" For="@(() => context.QualityNotes)" @bind-Value="context.QualityNotes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

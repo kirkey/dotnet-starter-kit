@@ -32228,8 +32228,8 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
         public System.Guid CycleCountId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("systemQuantity")]
         public int SystemQuantity { get; set; } = default!;
@@ -36773,14 +36773,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("purchaseOrderId")]
         public System.Guid PurchaseOrderId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemName")]
-        public string? GroceryItemName { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("itemName")]
+        public string? ItemName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemSku")]
-        public string? GroceryItemSku { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("itemSku")]
+        public string? ItemSku { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("quantity")]
         public int Quantity { get; set; } = default!;
@@ -38786,8 +38786,8 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid? Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
         public System.Guid WarehouseLocationId { get; set; } = default!;
@@ -40013,8 +40013,8 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("groceryItemId")]
-        public System.Guid GroceryItemId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("itemId")]
+        public System.Guid ItemId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
         public System.Guid WarehouseLocationId { get; set; } = default!;

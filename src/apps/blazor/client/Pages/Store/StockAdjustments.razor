@@ -1,0 +1,45 @@
+@page "/store/stock-adjustments"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+
+<PageHeader Title="Stock Adjustments" Header="Stock Adjustments" SubHeader="Manage inventory adjustments and corrections." />
+
+<EntityTable @ref="_table" TEntity="StockAdjustmentResponse" TId="DefaultIdType" TRequest="StockAdjustmentViewModel" Context="@Context">
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ApproveAdjustment(context.Id ?? Guid.Empty))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
+                <span>Approve Adjustment</span>
+            </div>
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" md="6">
+            <AutocompleteItem @bind-Value="context.ItemId" For="@(() => context.ItemId)" Label="Item" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseLocationId" For="@(() => context.WarehouseLocationId)" Label="Warehouse Location" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.AdjustmentType" For="@(() => context.AdjustmentType)" Label="Adjustment Type" Required="true">
+                <MudSelectItem Value="@("Increase")">Increase</MudSelectItem>
+                <MudSelectItem Value="@("Decrease")">Decrease</MudSelectItem>
+                <MudSelectItem Value="@("Correction")">Correction</MudSelectItem>
+                <MudSelectItem Value="@("Damage")">Damage</MudSelectItem>
+                <MudSelectItem Value="@("Loss")">Loss</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudNumericField @bind-Value="context.QuantityAdjusted" For="@(() => context.QuantityAdjusted)" Label="Quantity Adjusted" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.Reason" For="@(() => context.Reason)" Label="Reason" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker @bind-Date="context.AdjustmentDate" For="@(() => context.AdjustmentDate)" Label="Adjustment Date" Required="true" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

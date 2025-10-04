@@ -132,10 +132,9 @@
         {
             try
             {
-                // TODO: Implement when RemovePurchaseOrderItemEndpointAsync is available in the API
-                Snackbar.Add("Item deletion requires additional API endpoint", Severity.Warning);
-                // await Client.RemovePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, itemId).ConfigureAwait(false);
-                // await LoadItemsAsync();
+                await Client.RemovePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, itemId).ConfigureAwait(false);
+                Snackbar.Add("Item deleted successfully", Severity.Success);
+                await LoadItemsAsync();
             }
             catch (Exception ex)
             {

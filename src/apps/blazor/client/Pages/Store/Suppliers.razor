@@ -3,9 +3,9 @@
 
 <PageHeader Title="Suppliers" Header="Store Suppliers" SubHeader="Manage supplier contacts and terms." />
 
-<EntityTable @ref="_table" TEntity="SupplierResponse" TId="DefaultIdType" TRequest="SupplierViewModel" Context="@_context">
+<EntityTable @ref="_table" TEntity="SupplierResponse" TId="DefaultIdType" TRequest="SupplierViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!_context.AddEditModal.IsCreate)
+        @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Supplier Id" />
