@@ -28,23 +28,19 @@
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <MudNumericField T="decimal" @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" Required="true" Min="0" Format="N2" />
-        </MudItem>
-
-        <MudItem xs="12" md="6">
-            <MudTextField Label="Currency Code" For="@(() => context.CurrencyCode)" @bind-Value="context.CurrencyCode" Required="true" />
+            <MudNumericField T="decimal?" @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" Required="true" Min="0" Format="N2" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.LeadTimeDays" For="@(() => context.LeadTimeDays)" Label="Lead Time (Days)" Required="true" Min="0" />
+            <MudNumericField T="int?" @bind-Value="context.LeadTimeDays" For="@(() => context.LeadTimeDays)" Label="Lead Time (Days)" Required="true" Min="0" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.MinimumOrderQuantity" For="@(() => context.MinimumOrderQuantity)" Label="Min Order Qty" Min="1" />
+            <MudNumericField T="int?" @bind-Value="context.MinimumOrderQuantity" For="@(() => context.MinimumOrderQuantity)" Label="Min Order Qty" Min="1" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.PackagingQuantity" For="@(() => context.PackagingQuantity)" Label="Packaging Qty" Min="1" />
+            <MudNumericField T="int?" @bind-Value="context.PackagingQuantity" For="@(() => context.PackagingQuantity)" Label="Packaging Qty" Min="1" />
         </MudItem>
 
         <MudItem xs="12" md="6">
@@ -52,15 +48,15 @@
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <MudNumericField T="decimal" @bind-Value="context.ReliabilityRating" For="@(() => context.ReliabilityRating)" Label="Reliability Rating (0-100)" Min="0" Max="100" />
+            <MudNumericField T="double?" @bind-Value="context.ReliabilityRating" For="@(() => context.ReliabilityRating)" Label="Reliability Rating (0-100)" Min="0" Max="100" />
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <MudSwitch T="bool" @bind-Checked="context.IsPreferred" Color="Color.Primary">Preferred Supplier</MudSwitch>
+            <MudSwitch T="bool?" @bind-Value="context.IsPreferred" Color="Color.Primary">Preferred Supplier</MudSwitch>
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <MudSwitch T="bool" @bind-Checked="context.IsActive" Color="Color.Primary">Active</MudSwitch>
+            <MudSwitch T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
         </MudItem>
     </EditFormContent>
 </EntityTable>

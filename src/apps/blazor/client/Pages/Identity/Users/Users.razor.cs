@@ -1,11 +1,12 @@
 ﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Users;
 
-public partial class Users
+public partial class Users : ComponentBase
 {
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Inject] protected IAuthorizationService AuthService { get; set; } = default!;
 
     [Inject] protected IClient UsersClient { get; set; } = default!;
+    [Inject] protected NavigationManager NavigationManager { get; set; } = default!;
 
     protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = default!;
 
@@ -60,12 +61,12 @@ public partial class Users
     }
 
     private void ViewProfile(in DefaultIdType userId) =>
-        Navigation.NavigateTo($"/identity/users/{userId}/profile");
+        NavigationManager.NavigateTo($"/identity/users/{userId}/profile");
 
     private void ManageRoles(in DefaultIdType userId) =>
-        Navigation.NavigateTo($"/identity/users/{userId}/roles");
+        NavigationManager.NavigateTo($"/identity/users/{userId}/roles");
     private void ViewAuditTrails(in DefaultIdType userId) =>
-        Navigation.NavigateTo($"/identity/users/{userId}/audit-trail");
+        NavigationManager.NavigateTo($"/identity/users/{userId}/audit-trail");
 
     private void TogglePasswordVisibility()
     {

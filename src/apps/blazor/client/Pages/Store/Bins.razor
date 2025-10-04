@@ -31,20 +31,20 @@
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="decimal" @bind-Value="context.Capacity" For="@(() => context.Capacity)" Label="Capacity" Min="0" />
+            <MudNumericField T="double?" @bind-Value="context.Capacity" For="@(() => context.Capacity)" Label="Capacity" Min="0" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" />
+            <MudNumericField T="int?" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudSwitch T="bool" @bind-Checked="context.IsActive" Color="Color.Primary">Active</MudSwitch>
+            <MudSwitch T="bool" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <MudSwitch T="bool" @bind-Checked="context.IsPickable" Color="Color.Primary">Pickable</MudSwitch>
+            <MudSwitch T="bool" @bind-Value="context.IsPickable" Color="Color.Primary">Pickable</MudSwitch>
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudSwitch T="bool" @bind-Checked="context.IsPutable" Color="Color.Primary">Putable</MudSwitch>
+            <MudSwitch T="bool" @bind-Value="context.IsPutable" Color="Color.Primary">Putable</MudSwitch>
         </MudItem>
 
         <MudItem xs="12">

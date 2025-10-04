@@ -56,13 +56,13 @@
             <MudNumericField T="decimal?" @bind-Value="context.CreditLimit" For="@(() => context.CreditLimit)" Label="Credit Limit" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int" @bind-Value="context.PaymentTermsDays" For="@(() => context.PaymentTermsDays)" Label="Payment Terms (Days)" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.PaymentTermsDays" For="@(() => context.PaymentTermsDays)" Label="Payment Terms (Days)" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudSwitch T="bool" @bind-Checked="context.IsActive" Color="Color.Primary">Active</MudSwitch>
+            <MudSwitch T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="decimal" @bind-Value="context.Rating" For="@(() => context.Rating)" Label="Rating (0-5)" Immediate="true" />
+            <MudNumericField T="double?" @bind-Value="context.Rating" For="@(() => context.Rating)" Label="Rating (0-5)" Immediate="true" />
         </MudItem>
 
         <MudItem xs="12">

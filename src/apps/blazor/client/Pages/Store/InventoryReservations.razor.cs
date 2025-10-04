@@ -52,4 +52,9 @@ public partial class InventoryReservations
 /// ViewModel for Inventory Reservation add/edit operations.
 /// Inherits from CreateInventoryReservationCommand (no update operation exists for reservations).
 /// </summary>
-public partial class InventoryReservationViewModel : CreateInventoryReservationCommand;
+public partial class InventoryReservationViewModel : CreateInventoryReservationCommand
+{
+    public DefaultIdType Id { get; set; } = DefaultIdType.Empty;
+    public string Status { get; set; } = string.Empty;
+    public DateTime? ReservationDate { get; set; }
+}

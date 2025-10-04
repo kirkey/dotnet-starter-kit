@@ -55,4 +55,9 @@ public partial class Bins
 /// ViewModel for Bin add/edit operations.
 /// Inherits from UpdateBinCommand to ensure proper mapping with the API.
 /// </summary>
-public partial class BinViewModel : UpdateBinCommand;
+public partial class BinViewModel : UpdateBinCommand
+{
+    public string? Code { get; set;}
+    public DefaultIdType WarehouseLocationId { get; set;}
+    public bool? IsActive { get; set;}
+}

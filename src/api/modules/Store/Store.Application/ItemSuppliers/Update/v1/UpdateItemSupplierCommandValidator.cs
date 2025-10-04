@@ -11,6 +11,15 @@ public sealed class UpdateItemSupplierCommandValidator : AbstractValidator<Updat
             .NotEmpty()
             .WithMessage("Id is required");
 
+        // New: ensure the UI-sent keys are present
+        RuleFor(x => x.ItemId)
+            .NotEmpty()
+            .WithMessage("ItemId is required");
+
+        RuleFor(x => x.SupplierId)
+            .NotEmpty()
+            .WithMessage("SupplierId is required");
+
         RuleFor(x => x.UnitCost)
             .GreaterThanOrEqualTo(0)
             .WithMessage("UnitCost cannot be negative")

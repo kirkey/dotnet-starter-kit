@@ -49,4 +49,7 @@ public partial class GoodsReceipts
 /// ViewModel for Goods Receipt add/edit operations.
 /// Inherits from CreateGoodsReceiptCommand (no update operation exists for goods receipts).
 /// </summary>
-public partial class GoodsReceiptViewModel : CreateGoodsReceiptCommand;
+public partial class GoodsReceiptViewModel : CreateGoodsReceiptCommand
+{
+    public DateTime? ReceivedDate { get; set; } = default!;
+}
