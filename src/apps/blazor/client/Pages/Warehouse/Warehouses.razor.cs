@@ -7,15 +7,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class Warehouses
 {
-    
-
-    private EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel> _context = default!;
+    protected EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel> Context { get; set; } = default!;
 
     private EntityTable<WarehouseResponse, DefaultIdType, WarehouseViewModel> _table = default!;
 
     protected override Task OnInitializedAsync()
     {
-        _context = new EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel>(
+        Context = new EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel>(
             entityName: "Warehouse",
             entityNamePlural: "Warehouses",
             entityResource: FshResources.Warehouse,

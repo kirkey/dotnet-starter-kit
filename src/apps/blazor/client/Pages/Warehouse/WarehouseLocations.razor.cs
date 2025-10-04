@@ -9,11 +9,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class WarehouseLocations
 {
-    private EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> _context = default!;
+    protected EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> Context { get; set; } = default!;
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
-        _context = new EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel>(
+        Context = new EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel>(
             entityName: "Warehouse Location",
             entityNamePlural: "Warehouse Locations",
             entityResource: FshResources.Warehouse,
@@ -49,6 +49,8 @@ public partial class WarehouseLocations
                 await Client.UpdateWarehouseLocationEndpointAsync("1", id, location.Adapt<UpdateWarehouseLocationCommand>());
             },
             deleteFunc: async id => await Client.DeleteWarehouseLocationEndpointAsync("1", id));
+        
+        return Task.CompletedTask;
     }
 }
 

@@ -2,9 +2,9 @@
 
 <PageHeader Title="Warehouses" Header="Warehouses" SubHeader="Manage warehouse facilities and storage locations." />
 
-<EntityTable @ref="_table" TEntity="WarehouseResponse" TId="DefaultIdType" TRequest="WarehouseViewModel" Context="@_context">
+<EntityTable @ref="_table" TEntity="WarehouseResponse" TId="DefaultIdType" TRequest="WarehouseViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!_context.AddEditModal.IsCreate)
+        @if (context.Id != default(DefaultIdType))
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
@@ -166,7 +166,7 @@
         </MudItem>
 
         @* Read-only capacity utilization info: only visible when editing an existing warehouse *@
-        @if (!_context.AddEditModal.IsCreate)
+        @if (context.Id != default(DefaultIdType))
         {
             <MudDivider />
             <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>

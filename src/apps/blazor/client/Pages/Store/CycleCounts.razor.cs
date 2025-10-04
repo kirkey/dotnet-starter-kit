@@ -3,7 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// <summary>
 /// Cycle Counts page logic. Provides CRUD and workflow operations over CycleCount entities.
 /// </summary>
-public partial class CycleCounts
+public partial class CycleCounts : ComponentBase
 {
     protected EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context { get; set; } = default!;
     private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = default!;
@@ -11,10 +11,11 @@ public partial class CycleCounts
     private List<WarehouseResponse> _warehouses = new();
     private List<GetWarehouseLocationListResponse> _warehouseLocations = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
-        await LoadWarehousesAsync();
-        await LoadWarehouseLocationsAsync();
+        // Load reference data asynchronously
+        _ = LoadWarehousesAsync();
+        _ = LoadWarehouseLocationsAsync();
         
         Context = new EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel>(
             entityName: "Cycle Count",
@@ -47,6 +48,8 @@ public partial class CycleCounts
             },
             updateFunc: null, // Cycle counts use workflow transitions instead of updates
             deleteFunc: null); // Cycle counts typically aren't deleted once created
+        
+        return Task.CompletedTask;
     }
 
     private async Task LoadWarehousesAsync()
