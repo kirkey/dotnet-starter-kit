@@ -1,10 +1,11 @@
 @page "/warehouse/warehouses"
+@using DocumentFormat.OpenXml.InkML
 
 <PageHeader Title="Warehouses" Header="Warehouses" SubHeader="Manage warehouse facilities and storage locations." />
 
-<EntityTable @ref="_table" TEntity="WarehouseResponse" TId="DefaultIdType" TRequest="WarehouseViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="WarehouseResponse" TId="DefaultIdType" TRequest="WarehouseViewModel" Context="@_context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (!_context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
@@ -166,7 +167,7 @@
         </MudItem>
 
         @* Read-only capacity utilization info: only visible when editing an existing warehouse *@
-        @if (!Context.AddEditModal.IsCreate)
+        @if (!_context.AddEditModal.IsCreate)
         {
             <MudDivider />
             <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>

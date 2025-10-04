@@ -3,7 +3,7 @@
 public partial class Audit : ComponentBase
 {
     [Inject]
-    private IClient ApiClient { get; set; } = default!;
+    private IClient Client { get; set; } = default!;
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Parameter] public DefaultIdType Id { get; set; }
 
@@ -46,7 +46,7 @@ public partial class Audit : ComponentBase
                 new EntityField<AuditTrailExtension>(audit => audit.DateTime, "Date", Template: DateFieldTemplate),
                 new EntityField<AuditTrailExtension>(audit => audit.Operation, "Operation")
             ],
-            loadDataFunc: async () => _trails = (await ApiClient.GetUserAuditTrailEndpointAsync(Id)).Adapt<List<AuditTrailExtension>>(),
+            loadDataFunc: async () => _trails = (await Client.GetUserAuditTrailEndpointAsync(Id)).Adapt<List<AuditTrailExtension>>(),
             searchFunc: (searchString, trail) =>
                 (string.IsNullOrWhiteSpace(searchString) // check Search String
                     || trail.Entity?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true

@@ -5,7 +5,7 @@ public partial class BudgetDetails
     [Parameter]
     public DefaultIdType BudgetId { get; set; }
 
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
     protected EntityClientTableContext<BudgetDetailResponse, DefaultIdType, BudgetDetailViewModel> Context { get; set; } = default!;
 
@@ -28,7 +28,7 @@ public partial class BudgetDetails
             idFunc: response => response.Id,
             loadDataFunc: async () =>
             {
-                var result = await ApiClient.BudgetDetailSearchEndpointAsync("1", BudgetId);
+                var result = await Client.BudgetDetailSearchEndpointAsync("1", BudgetId);
                 return result.Adapt<List<BudgetDetailResponse>>();
             },
             searchFunc: (searchString, detail) =>
@@ -38,15 +38,15 @@ public partial class BudgetDetails
             {
                 var command = period.Adapt<CreateBudgetDetailCommand>();
                 command.BudgetId = BudgetId;
-                await ApiClient.BudgetDetailCreateEndpointAsync("1", command);
+                await Client.BudgetDetailCreateEndpointAsync("1", command);
             },
             updateFunc: async (id, period) =>
             {
                 var command = period.Adapt<UpdateBudgetDetailCommand>();
                 if (BudgetId != command.Id) return;
-                await ApiClient.BudgetDetailUpdateEndpointAsync("1", BudgetId, command);
+                await Client.BudgetDetailUpdateEndpointAsync("1", BudgetId, command);
             },
-            deleteFunc: async id => await ApiClient.BudgetDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.BudgetDeleteEndpointAsync("1", id));
 
         return Task.CompletedTask;
     }

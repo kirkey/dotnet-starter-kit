@@ -1,4 +1,4 @@
-using Store.Domain.Exceptions.GroceryItem;
+using Store.Domain.Exceptions.Items;
 using Store.Domain.Exceptions.InventoryTransfer;
 
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Items.Add.v1;
@@ -16,7 +16,7 @@ public sealed class AddInventoryTransferItemHandler(
         _ = transfer ?? throw new InventoryTransferNotFoundException(request.InventoryTransferId);
 
         var item = await itemReadRepository.GetByIdAsync(request.ItemId, cancellationToken).ConfigureAwait(false);
-        _ = item ?? throw new GroceryItemNotFoundException(request.ItemId);
+        _ = item ?? throw new ItemNotFoundException(request.ItemId);
 
         transfer.AddItem(request.ItemId, request.Quantity, request.UnitPrice);
         await repository.UpdateAsync(transfer, cancellationToken).ConfigureAwait(false);

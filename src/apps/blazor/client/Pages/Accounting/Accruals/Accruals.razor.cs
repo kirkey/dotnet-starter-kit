@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Accruals;
 /// </summary>
 public partial class Accruals
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
@@ -35,25 +35,25 @@ public partial class Accruals
             searchFunc: async filter =>
             {
                 var query = filter.Adapt<SearchAccrualsQuery>();
-                var result = await ApiClient.AccrualSearchEndpointAsync("1", query).ConfigureAwait(false);
+                var result = await Client.AccrualSearchEndpointAsync("1", query).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<AccrualResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await ApiClient.AccrualCreateEndpointAsync("1", viewModel.Adapt<CreateAccrualCommand>()).ConfigureAwait(false);
+                await Client.AccrualCreateEndpointAsync("1", viewModel.Adapt<CreateAccrualCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
                 if (viewModel is { IsReversed: true, ReversalDate: not null })
                 {
-                    await ApiClient.AccrualReverseEndpointAsync("1", id, viewModel.Adapt<ReverseAccrualCommand>()).ConfigureAwait(false);
+                    await Client.AccrualReverseEndpointAsync("1", id, viewModel.Adapt<ReverseAccrualCommand>()).ConfigureAwait(false);
                 }
                 else
                 {
-                    await ApiClient.AccrualUpdateEndpointAsync("1", id, viewModel.Adapt<UpdateAccrualCommand>()).ConfigureAwait(false);
+                    await Client.AccrualUpdateEndpointAsync("1", id, viewModel.Adapt<UpdateAccrualCommand>()).ConfigureAwait(false);
                 }
             },
-            deleteFunc: async id => await ApiClient.AccrualDeleteEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.AccrualDeleteEndpointAsync("1", id).ConfigureAwait(false));
 
         return Task.CompletedTask;
     }

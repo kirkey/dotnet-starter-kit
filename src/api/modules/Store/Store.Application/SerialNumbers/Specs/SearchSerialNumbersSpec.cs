@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.SerialNumbers.Get.v1;
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.SerialNumbers.Specs;

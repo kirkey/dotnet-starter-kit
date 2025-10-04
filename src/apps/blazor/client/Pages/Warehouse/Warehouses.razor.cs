@@ -7,15 +7,15 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class Warehouses
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
-    protected EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel> Context { get; set; } = default!;
+    private EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel> _context = default!;
 
     private EntityTable<WarehouseResponse, DefaultIdType, WarehouseViewModel> _table = default!;
 
     protected override Task OnInitializedAsync()
     {
-        Context = new EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel>(
+        _context = new EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel>(
             entityName: "Warehouse",
             entityNamePlural: "Warehouses",
             entityResource: FshResources.Warehouse,
@@ -38,18 +38,18 @@ public partial class Warehouses
             {
                 var paginationFilter = filter.Adapt<SearchWarehousesCommand>();
 
-                var result = await ApiClient.SearchWarehousesAsync("1", paginationFilter);
+                var result = await Client.SearchWarehousesAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<WarehouseResponse>>();
             },
             createFunc: async warehouse =>
             {
-                await ApiClient.CreateWarehouseEndpointAsync("1", warehouse.Adapt<CreateWarehouseCommand>());
+                await Client.CreateWarehouseEndpointAsync("1", warehouse.Adapt<CreateWarehouseCommand>());
             },
             updateFunc: async (id, warehouse) =>
             {
-                await ApiClient.UpdateWarehouseAsync("1", id, warehouse.Adapt<UpdateWarehouseCommand>());
+                await Client.UpdateWarehouseAsync("1", id, warehouse.Adapt<UpdateWarehouseCommand>());
             },
-            deleteFunc: async id => await ApiClient.DeleteWarehouseAsync("1", id));
+            deleteFunc: async id => await Client.DeleteWarehouseAsync("1", id));
 
         return Task.CompletedTask;
     }

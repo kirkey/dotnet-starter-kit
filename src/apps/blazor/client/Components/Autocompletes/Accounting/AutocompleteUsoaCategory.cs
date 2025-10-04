@@ -5,7 +5,7 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
     private List<ChartOfAccountResponse> _list = new();
 
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
     [Inject] protected ISnackbar Toast { get; set; } = default!;
     [Inject] protected NavigationManager Navigation { get; set; } = default!;
 
@@ -30,7 +30,7 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
         };
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                    () => ApiClient.ChartOfAccountSearchEndpointAsync("1", filter, cancellationToken), Toast, Navigation)
+                    () => Client.ChartOfAccountSearchEndpointAsync("1", filter, cancellationToken), Toast, Navigation)
                 .ConfigureAwait(false)
             is var response)
         {

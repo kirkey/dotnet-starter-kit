@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets;
 
 public partial class Budgets
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
     protected EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel> Context { get; set; } = default!;
 
@@ -31,18 +31,18 @@ public partial class Budgets
             {
                 var paginationFilter = filter.Adapt<SearchBudgetsQuery>();
 
-                var result = await ApiClient.BudgetSearchEndpointAsync("1", paginationFilter);
+                var result = await Client.BudgetSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<BudgetResponse>>();
             },
             createFunc: async period =>
             {
-                await ApiClient.BudgetCreateEndpointAsync("1", period.Adapt<CreateBudgetCommand>());
+                await Client.BudgetCreateEndpointAsync("1", period.Adapt<CreateBudgetCommand>());
             },
             updateFunc: async (id, period) =>
             {
-                await ApiClient.BudgetUpdateEndpointAsync("1", id, period.Adapt<UpdateBudgetCommand>());
+                await Client.BudgetUpdateEndpointAsync("1", id, period.Adapt<UpdateBudgetCommand>());
             },
-            deleteFunc: async id => await ApiClient.BudgetDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.BudgetDeleteEndpointAsync("1", id));
 
         return Task.CompletedTask;
     }

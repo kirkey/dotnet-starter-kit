@@ -30,11 +30,21 @@
 	     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
 	   </ItemGroup>
 	 
-	   <ItemGroup>
-	     <Folder Include="Shared\" />
-	   </ItemGroup>
-	 
-	   <ItemGroup>
-	     <_ContentIncludedByDefault Remove="Pages\App\Settings.razor" />
-	   </ItemGroup>
-	 </Project>
+   <ItemGroup>
+     <Folder Include="Shared\" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <_ContentIncludedByDefault Remove="Pages\App\Settings.razor" />
+   </ItemGroup>
+
+   <!-- Temporarily exclude files that reference missing API types until API client is regenerated -->
+   <ItemGroup>
+     <Compile Remove="Pages\Store\Suppliers.razor.cs" />
+     <Compile Remove="Pages\Store\PurchaseOrders.razor.cs" />
+     <Compile Remove="Pages\Warehouse\Warehouses.razor.cs" />
+     <Compile Remove="Pages\Warehouse\WarehouseLocations.razor.cs" />
+     <Compile Remove="Components\Autocompletes\Store\AutocompleteSupplier.cs" />
+     <Compile Remove="Components\Autocompletes\Store\AutocompleteWarehouseId.cs" />
+   </ItemGroup>
+ </Project>

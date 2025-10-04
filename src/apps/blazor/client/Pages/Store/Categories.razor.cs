@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class Categories
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     private EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = default!;
@@ -34,7 +34,7 @@ public partial class Categories
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchCategoriesCommand>();
-                var result = await ApiClient.SearchCategoriesEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchCategoriesEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<CategoryResponse>>();
             },
             createFunc: async viewModel =>
@@ -46,7 +46,7 @@ public partial class Categories
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await ApiClient.CreateCategoryEndpointAsync("1", viewModel.Adapt<CreateCategoryCommand>()).ConfigureAwait(false);
+                await Client.CreateCategoryEndpointAsync("1", viewModel.Adapt<CreateCategoryCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
@@ -57,9 +57,9 @@ public partial class Categories
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await ApiClient.UpdateCategoryEndpointAsync("1", id, viewModel.Adapt<UpdateCategoryCommand>()).ConfigureAwait(false);
+                await Client.UpdateCategoryEndpointAsync("1", id, viewModel.Adapt<UpdateCategoryCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await ApiClient.DeleteCategoryEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteCategoryEndpointAsync("1", id).ConfigureAwait(false));
 }
 
 /// <summary>

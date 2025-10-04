@@ -9,7 +9,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 public partial class Payees
 {
     [Inject]
-    protected IClient ApiClient { get; set; } = default!;
+    protected IClient Client { get; set; } = default!;
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     /// <summary>
@@ -41,7 +41,7 @@ public partial class Payees
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PayeeSearchCommand>();
-                var result = await ApiClient.PayeeSearchEndpointAsync("1", paginationFilter);
+                var result = await Client.PayeeSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<PayeeResponse>>();
             },
             createFunc: async viewModel =>
@@ -53,7 +53,7 @@ public partial class Payees
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await ApiClient.PayeeCreateEndpointAsync("1", viewModel.Adapt<PayeeCreateCommand>());
+                await Client.PayeeCreateEndpointAsync("1", viewModel.Adapt<PayeeCreateCommand>());
             },
             updateFunc: async (id, viewModel) =>
             {
@@ -64,7 +64,7 @@ public partial class Payees
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await ApiClient.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<PayeeUpdateCommand>());
+                await Client.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<PayeeUpdateCommand>());
             },
-            deleteFunc: async id => await ApiClient.PayeeDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.PayeeDeleteEndpointAsync("1", id));
 }

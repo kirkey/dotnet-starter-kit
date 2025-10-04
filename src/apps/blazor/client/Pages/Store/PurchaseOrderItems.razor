@@ -1,55 +1,54 @@
-@page "/store/purchase-orders/items/{PurchaseOrderId:guid}"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
+@inject IClient Client
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
 
-<MudTable Items="@_items" Hover="true" Dense="true" Bordered="true" Striped="true" Loading="@_loading">
+<MudTable Items="@_items" Dense="true" Hover="true" Loading="@_loading" Class="mt-4">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Order Items</MudText>
         <MudSpacer />
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" OnClick="@OpenAddItemDialog">
-            Add Item
-        </MudButton>
+        @if (PurchaseOrderId != default)
+        {
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@AddItemAsync" Variant="Variant.Filled">
+                Add Item
+            </MudButton>
+        }
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>Grocery Item</MudTh>
-        <MudTh>Quantity</MudTh>
-        <MudTh>Unit Price</MudTh>
-        <MudTh>Discount</MudTh>
-        <MudTh>Total Price</MudTh>
-        <MudTh>Received Qty</MudTh>
-        <MudTh>Actions</MudTh>
+        <MudTh>Item</MudTh>
+        <MudTh>SKU</MudTh>
+        <MudTh Style="text-align: right">Quantity</MudTh>
+        <MudTh Style="text-align: right">Unit Price</MudTh>
+        <MudTh Style="text-align: right">Discount</MudTh>
+        <MudTh Style="text-align: right">Total</MudTh>
+        <MudTh Style="text-align: right">Received</MudTh>
+        <MudTh>Notes</MudTh>
+        <MudTh Style="text-align: center">Actions</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Grocery Item">@context.GroceryItemName (@context.GroceryItemSku)</MudTd>
-        <MudTd DataLabel="Quantity">@context.Quantity @context.Unit</MudTd>
-        <MudTd DataLabel="Unit Price">@context.UnitPrice.ToString("C2")</MudTd>
-        <MudTd DataLabel="Discount">@context.DiscountPercentage%</MudTd>
-        <MudTd DataLabel="Total Price">@context.Total.ToString("C2")</MudTd>
-        <MudTd DataLabel="Received Qty">N/A</MudTd>
-        <MudTd DataLabel="Actions">
-            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => OpenEditItemDialog(context))" />
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => RemoveItem(context.Id))" />
+        <MudTd DataLabel="Item">@context.ItemName</MudTd>
+        <MudTd DataLabel="SKU">@context.ItemSku</MudTd>
+        <MudTd DataLabel="Quantity" Style="text-align: right">@context.Quantity</MudTd>
+        <MudTd DataLabel="Unit Price" Style="text-align: right">@context.UnitPrice.ToString("C2")</MudTd>
+        <MudTd DataLabel="Discount" Style="text-align: right">@context.DiscountAmount.ToString("C2")</MudTd>
+        <MudTd DataLabel="Total" Style="text-align: right">@context.TotalPrice.ToString("C2")</MudTd>
+        <MudTd DataLabel="Received" Style="text-align: right">@context.ReceivedQuantity</MudTd>
+        <MudTd DataLabel="Notes">@context.Notes</MudTd>
+        <MudTd DataLabel="Actions" Style="text-align: center">
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => EditItemAsync(context))" />
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteItemAsync(context.Id))" />
         </MudTd>
     </RowTemplate>
     <NoRecordsContent>
-        <MudText>No items added yet. Click "Add Item" to start.</MudText>
+        <MudText>No items added yet</MudText>
     </NoRecordsContent>
 </MudTable>
 
 @code {
-    [Inject] private IClient ApiClient { get; set; } = default!;
-    [Inject] private HttpClient HttpClient { get; set; } = default!;
-
     [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
 
-    private bool _loading;
-    private List<PurchaseOrderItemModel> _items = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (PurchaseOrderId != default)
-        {
-            await LoadItemsAsync();
-        }
-    }
+    private List<PurchaseOrderItemResponse> _items = new();
+    private bool _loading = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -64,41 +63,11 @@
         _loading = true;
         try
         {
-            // TODO: Replace with ApiClient.GetPurchaseOrderItemsEndpointAsync once the API client is regenerated
-            // For now, making a direct HTTP call to the new endpoint
-            var response = await HttpClient.GetAsync($"api/v1/purchase-orders/{PurchaseOrderId}/items").ConfigureAwait(false);
-            
-            if (response.IsSuccessStatusCode)
-            {
-                var items = await response.Content.ReadFromJsonAsync<List<PurchaseOrderItemResponse>>().ConfigureAwait(false);
-                
-                if (items != null)
-                {
-                    // Map the response to PurchaseOrderItemModel
-                    _items = items.Select(item => new PurchaseOrderItemModel
-                    {
-                        Id = item.Id,
-                        PurchaseOrderId = item.PurchaseOrderId,
-                        GroceryItemId = item.GroceryItemId,
-                        GroceryItemName = item.GroceryItemName,
-                        GroceryItemSku = item.GroceryItemSku,
-                        Quantity = item.Quantity,
-                        UnitPrice = item.UnitPrice,
-                        DiscountPercentage = (item.UnitPrice > 0 && item.Quantity > 0) 
-                            ? (item.DiscountAmount / (item.Quantity * item.UnitPrice)) * 100 
-                            : 0,
-                        Unit = "" // Not available in the response yet
-                    }).ToList();
-                }
-            }
-            else
-            {
-                Toast.Add($"Failed to load order items: {response.ReasonPhrase}", Severity.Error);
-            }
+            _items = (await Client.GetPurchaseOrderItemsEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false))?.ToList() ?? new();
         }
         catch (Exception ex)
         {
-            Toast.Add($"Failed to load order items: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load items: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -106,87 +75,73 @@
         }
     }
 
-    // Helper class for deserializing the API response
-    private class PurchaseOrderItemResponse
+    private async Task AddItemAsync()
     {
-        public DefaultIdType Id { get; set; }
-        public DefaultIdType PurchaseOrderId { get; set; }
-        public DefaultIdType GroceryItemId { get; set; }
-        public string GroceryItemName { get; set; } = string.Empty;
-        public string GroceryItemSku { get; set; } = string.Empty;
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal DiscountAmount { get; set; }
-        public decimal TotalPrice { get; set; }
-        public int ReceivedQuantity { get; set; }
-        public string? Notes { get; set; }
-    }
-
-    private async Task OpenAddItemDialog()
-    {
-        var parameters = new DialogParameters
+        var parameters = new DialogParameters<PurchaseOrderItemDialog>
         {
-            { "PurchaseOrderId", PurchaseOrderId },
-            { "IsEdit", false }
+            { x => x.PurchaseOrderId, PurchaseOrderId },
+            { x => x.Model, new PurchaseOrderItemModel() }
         };
 
-        var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Add Order Item", parameters);
-        if (dialog == null) return;
+        var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Add Item", parameters);
         var result = await dialog.Result;
 
-        if (result is { Canceled: false })
+        if (!result.Canceled)
         {
-            // Reload the items list from the server
             await LoadItemsAsync();
-            Toast.Add("Item added successfully", Severity.Success);
         }
     }
 
-    private async Task OpenEditItemDialog(PurchaseOrderItemModel item)
+    private async Task EditItemAsync(PurchaseOrderItemResponse item)
     {
-        var parameters = new DialogParameters
+        var model = new PurchaseOrderItemModel
         {
-            { "PurchaseOrderId", PurchaseOrderId },
-            { "Item", item },
-            { "IsEdit", true }
+            Id = item.Id,
+            ItemId = item.ItemId,
+            Quantity = item.Quantity,
+            UnitPrice = (decimal)item.UnitPrice,
+            DiscountAmount = (decimal)item.DiscountAmount,
+            ReceivedQuantity = item.ReceivedQuantity,
+            Notes = item.Notes
         };
 
-        var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Edit Order Item", parameters);
-        if (dialog == null) return;
+        var parameters = new DialogParameters<PurchaseOrderItemDialog>
+        {
+            { x => x.PurchaseOrderId, PurchaseOrderId },
+            { x => x.Model, model }
+        };
+
+        var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Edit Item", parameters);
         var result = await dialog.Result;
 
-        if (result is { Canceled: false })
+        if (!result.Canceled)
         {
-            // Reload the items list from the server
             await LoadItemsAsync();
-            Toast.Add("Item updated successfully", Severity.Success);
         }
     }
 
-    private async Task RemoveItem(DefaultIdType itemId)
+    private async Task DeleteItemAsync(DefaultIdType itemId)
     {
         var confirmed = await DialogService.ShowMessageBox(
-            "Remove Item",
-            "Are you sure you want to remove this item from the order?",
-            yesText: "Remove", cancelText: "Cancel");
+            "Delete Item",
+            "Are you sure you want to delete this item?",
+            yesText: "Delete",
+            cancelText: "Cancel");
 
         if (confirmed == true)
         {
             try
             {
-                var item = _items.FirstOrDefault(x => x.Id == itemId);
-                if (item != null)
-                {
-                    await ApiClient.RemovePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, item.GroceryItemId).ConfigureAwait(false);
-                    // Reload the items list from the server
-                    await LoadItemsAsync();
-                    Toast.Add("Item removed successfully", Severity.Success);
-                }
+                // TODO: Implement when RemovePurchaseOrderItemEndpointAsync is available in the API
+                Snackbar.Add("Item deletion requires additional API endpoint", Severity.Warning);
+                // await Client.RemovePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, itemId).ConfigureAwait(false);
+                // await LoadItemsAsync();
             }
             catch (Exception ex)
             {
-                Toast.Add($"Failed to remove item: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to delete item: {ex.Message}", Severity.Error);
             }
         }
     }
 }
+

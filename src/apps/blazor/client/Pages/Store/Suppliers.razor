@@ -1,10 +1,11 @@
 @page "/store/suppliers"
+@using DocumentFormat.OpenXml.InkML
 
 <PageHeader Title="Suppliers" Header="Store Suppliers" SubHeader="Manage supplier contacts and terms." />
 
-<EntityTable @ref="_table" TEntity="SupplierResponse" TId="DefaultIdType" TRequest="SupplierViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="SupplierResponse" TId="DefaultIdType" TRequest="SupplierViewModel" Context="@_context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (!_context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Supplier Id" />

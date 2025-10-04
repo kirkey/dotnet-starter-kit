@@ -1,3 +1,5 @@
+using Store.Infrastructure.Endpoints.CycleCounts.v1;
+
 namespace Store.Infrastructure.Endpoints.CycleCounts;
 
 /// <summary>
@@ -14,12 +16,14 @@ public static class CycleCountsEndpoints
             .WithTags("Cycle-Counts")
             .WithDescription("Endpoints for managing inventory cycle counts");
 
-        // Version 1 endpoints will be added here when implemented
-        // cycleCountsGroup.MapCreateCycleCountEndpoint();
-        // cycleCountsGroup.MapUpdateCycleCountEndpoint();
-        // cycleCountsGroup.MapDeleteCycleCountEndpoint();
-        // cycleCountsGroup.MapGetCycleCountEndpoint();
-        // cycleCountsGroup.MapSearchCycleCountsEndpoint();
+        // Version 1 endpoints
+        cycleCountsGroup.MapCreateCycleCountEndpoint();
+        cycleCountsGroup.MapGetCycleCountEndpoint();
+        cycleCountsGroup.MapSearchCycleCountsEndpoint();
+        cycleCountsGroup.MapStartCycleCountEndpoint();
+        cycleCountsGroup.MapCompleteCycleCountEndpoint();
+        cycleCountsGroup.MapReconcileCycleCountEndpoint();
+        cycleCountsGroup.MapAddCycleCountItemEndpoint();
 
         return app;
     }

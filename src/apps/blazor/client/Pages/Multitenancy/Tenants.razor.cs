@@ -3,7 +3,7 @@
 public partial class Tenants
 {
     [Inject]
-    private IClient ApiClient { get; set; } = default!;
+    private IClient Client { get; set; } = default!;
     private string? _searchString;
     protected EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand> Context { get; set; } = default!;
     private List<TenantViewModel> _tenants = [];
@@ -33,11 +33,11 @@ public partial class Tenants
                 new EntityField<TenantViewModel>(tenant => tenant.ValidUpto.ToString("MMM dd, yyyy"), "Valid Upto"),
                 new EntityField<TenantViewModel>(tenant => tenant.IsActive, "Active", Type: typeof(bool))
             ],
-            loadDataFunc: async () => _tenants = (await ApiClient.GetTenantsEndpointAsync()).Adapt<List<TenantViewModel>>(),
+            loadDataFunc: async () => _tenants = (await Client.GetTenantsEndpointAsync()).Adapt<List<TenantViewModel>>(),
             searchFunc: (searchString, tenantDto) =>
                 string.IsNullOrWhiteSpace(searchString)
                     || tenantDto.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase),
-            createFunc: tenant => ApiClient.CreateTenantEndpointAsync(tenant.Adapt<CreateTenantCommand>()),
+            createFunc: tenant => Client.CreateTenantEndpointAsync(tenant.Adapt<CreateTenantCommand>()),
             hasExtraActionsFunc: () => true,
             exportAction: string.Empty);
 
@@ -82,7 +82,7 @@ public partial class Tenants
     private async Task DeactivateTenantAsync(string id)
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => ApiClient.DisableTenantEndpointAsync(id),
+            () => Client.DisableTenantEndpointAsync(id),
             Toast, Navigation,
             null,
             "Tenant Deactivated.") is not null)
@@ -94,7 +94,7 @@ public partial class Tenants
     private async Task ActivateTenantAsync(string id)
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => ApiClient.ActivateTenantEndpointAsync(id),
+            () => Client.ActivateTenantEndpointAsync(id),
             Toast, Navigation,
             null,
             "Tenant Activated.") is not null)

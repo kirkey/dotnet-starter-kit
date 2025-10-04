@@ -1,11 +1,12 @@
 @page "/warehouse/locations"
+@using DocumentFormat.OpenXml.InkML
 @using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
 
 <PageHeader Title="Warehouse Locations" Header="Warehouse Locations" SubHeader="Manage specific storage locations within warehouses." />
 
-<EntityTable TEntity="GetWarehouseLocationListResponse" TId="DefaultIdType" TRequest="WarehouseLocationViewModel" Context="@Context">
+<EntityTable TEntity="GetWarehouseLocationListResponse" TId="DefaultIdType" TRequest="WarehouseLocationViewModel" Context="@_context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (!_context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
@@ -40,7 +41,8 @@
         <MudText Typo="Typo.h6" Class="mt-4 mb-2">Warehouse & Location Hierarchy</MudText>
 
         <MudItem xs="12">
-            <AutocompleteWarehouseId @bind-Value="context.WarehouseId"
+            <AutocompleteWarehouseId Value="context.WarehouseId"
+                                     ValueChanged="value => context.WarehouseId = value"
                                      For="@(() => context.WarehouseId)"
                                      Label="Warehouse"
                                      Required="true"
@@ -178,7 +180,7 @@
         </MudItem>
 
         @* Read-only capacity utilization info: only visible when editing an existing location *@
-        @if (!Context.AddEditModal.IsCreate)
+        @if (!_context.AddEditModal.IsCreate)
         {
             <MudDivider />
             <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>

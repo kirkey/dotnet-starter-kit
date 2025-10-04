@@ -17,9 +17,22 @@ public static class PurchaseOrdersEndpoints
             .WithDescription("Endpoints for managing purchase orders");
 
         // Version 1 endpoints
-        purchaseOrdersGroup.MapReceivePurchaseOrderItemQuantityEndpoint();
-        purchaseOrdersGroup.MapUpdatePurchaseOrderItemQuantityEndpoint();
+        purchaseOrdersGroup.MapCreatePurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapUpdatePurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapDeletePurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapGetPurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapSearchPurchaseOrdersEndpoint();
+        purchaseOrdersGroup.MapAddPurchaseOrderItemEndpoint();
         purchaseOrdersGroup.MapRemovePurchaseOrderItemEndpoint();
+        purchaseOrdersGroup.MapUpdatePurchaseOrderItemQuantityEndpoint();
+        purchaseOrdersGroup.MapUpdatePurchaseOrderItemPriceEndpoint();
+        purchaseOrdersGroup.MapGetPurchaseOrderItemsEndpoint();
+        purchaseOrdersGroup.MapSubmitPurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapApprovePurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapSendPurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapReceivePurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapReceivePurchaseOrderItemQuantityEndpoint();
+        purchaseOrdersGroup.MapCancelPurchaseOrderEndpoint();
 
         return app;
     }

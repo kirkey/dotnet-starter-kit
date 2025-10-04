@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class StoreDashboard
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
     /// <summary>Flag indicating whether the dashboard is still loading metrics.</summary>
     private bool _loading = true;
@@ -136,7 +136,7 @@ public partial class StoreDashboard
                 PageSize = 1,
             };
             
-            var result = await ApiClient.SearchItemsEndpointAsync("1", request);
+            var result = await Client.SearchItemsEndpointAsync("1", request);
             
             // Update only the total items with real data
             _metrics.TotalItems = result.TotalCount;

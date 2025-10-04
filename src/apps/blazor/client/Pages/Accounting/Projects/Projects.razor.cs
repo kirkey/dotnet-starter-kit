@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Projects;
 /// </summary>
 public partial class Projects
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
     protected EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel> Context { get; set; } = default!;
 
@@ -40,18 +40,18 @@ public partial class Projects
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<SearchProjectsCommand>();
-                var result = await ApiClient.ProjectSearchEndpointAsync("1", request);
+                var result = await Client.ProjectSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<ProjectResponse>>();
             },
             createFunc: async vm =>
             {
-                await ApiClient.ProjectCreateEndpointAsync("1", vm.Adapt<CreateProjectCommand>());
+                await Client.ProjectCreateEndpointAsync("1", vm.Adapt<CreateProjectCommand>());
             },
             updateFunc: async (id, vm) =>
             {
-                await ApiClient.ProjectUpdateEndpointAsync("1", id, vm.Adapt<UpdateProjectCommand>());
+                await Client.ProjectUpdateEndpointAsync("1", id, vm.Adapt<UpdateProjectCommand>());
             },
-            deleteFunc: async id => await ApiClient.ProjectDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.ProjectDeleteEndpointAsync("1", id));
 
         return Task.CompletedTask;
     }

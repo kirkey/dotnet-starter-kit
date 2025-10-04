@@ -1,9 +1,9 @@
-PayeeResponse@page "/store/grocery-items"
+@page "/store/items"
 @using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
 
-<PageHeader Title="Grocery Items" Header="Store Grocery Items" SubHeader="Manage inventory-enabled grocery items." />
+<PageHeader Title="Items" Header="Store Items" SubHeader="Manage inventory-enabled items." />
 
-<EntityTable @ref="_table" TEntity="GroceryItemResponse" TId="DefaultIdType" TRequest="GroceryItemViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="ItemResponse" TId="DefaultIdType" TRequest="ItemViewModel" Context="@Context">
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

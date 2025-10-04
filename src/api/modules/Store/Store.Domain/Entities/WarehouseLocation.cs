@@ -118,9 +118,9 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
     public Warehouse Warehouse { get; private set; } = default!;
 
     /// <summary>
-    /// Navigation property to grocery items stored in this location.
+    /// Navigation property to items stored in this location.
     /// </summary>
-    public ICollection<Item> GroceryItems { get; private set; } = new List<Item>();
+    public ICollection<Item> Items { get; private set; } = new List<Item>();
 
     private WarehouseLocation() { }
 
@@ -409,12 +409,12 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Returns true if the location can be deactivated safely (no used capacity and no stored items).
     /// </summary>
-    public bool CanBeDeactivated() => UsedCapacity == 0 && (GroceryItems == null || !GroceryItems.Any());
+    public bool CanBeDeactivated() => UsedCapacity == 0 && (Items == null || !Items.Any());
 
     /// <summary>
     /// Returns true if the location can be deleted safely (no used capacity and no stored items).
     /// </summary>
-    public bool CanBeDeleted() => UsedCapacity == 0 && (GroceryItems == null || !GroceryItems.Any());
+    public bool CanBeDeleted() => UsedCapacity == 0 && (Items == null || !Items.Any());
 
     public WarehouseLocation Activate()
     {

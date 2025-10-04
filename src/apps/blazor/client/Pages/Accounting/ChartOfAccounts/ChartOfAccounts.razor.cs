@@ -3,7 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.ChartOfAccounts;
 public partial class ChartOfAccounts
 {
     [Inject]
-    protected IClient ApiClient { get; set; } = default!;
+    protected IClient Client { get; set; } = default!;
 
     protected EntityServerTableContext<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel> Context { get; set; } = default!;
 
@@ -30,18 +30,18 @@ public partial class ChartOfAccounts
             {
                 var paginationFilter = filter.Adapt<SearchChartOfAccountQuery>();
 
-                var result = await ApiClient.ChartOfAccountSearchEndpointAsync("1", paginationFilter);
+                var result = await Client.ChartOfAccountSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<ChartOfAccountResponse>>();
             },
             createFunc: async account =>
             {
-                await ApiClient.ChartOfAccountCreateEndpointAsync("1", account.Adapt<CreateChartOfAccountCommand>());
+                await Client.ChartOfAccountCreateEndpointAsync("1", account.Adapt<CreateChartOfAccountCommand>());
             },
             updateFunc: async (id, account) =>
             {
-                await ApiClient.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<UpdateChartOfAccountCommand>());
+                await Client.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<UpdateChartOfAccountCommand>());
             },
-            deleteFunc: async id => await ApiClient.ChartOfAccountDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.ChartOfAccountDeleteEndpointAsync("1", id));
 
         return Task.CompletedTask;
     }

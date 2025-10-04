@@ -16,7 +16,7 @@ SWAGGER_PATH:=/swagger/v1/swagger.json
 SWAGGER_URL:=$(API_URL)$(SWAGGER_PATH)
 
 # Output path used by the config is relative to NSWAG_JSON directory:
-#   apps/blazor/infrastructure/Api/ApiClient.cs
+#   apps/blazor/infrastructure/Api/Client.cs
 
 .PHONY: help install-nswag dev-certs swagger-check gen-client gen-client-direct openapi-download api-run print-swagger-url clean-client nswag-version
 
@@ -31,7 +31,7 @@ help:
 	@echo "  make api-run              Run the API using the Kestrel profile (foreground)."
 	@echo "  make print-swagger-url    Print the effective swagger URL used by these targets."
 	@echo "  make nswag-version        Print NSwag binary path and version."
-	@echo "  make clean-client         Remove the generated ApiClient.cs file."
+	@echo "  make clean-client         Remove the generated Client.cs file."
 
 install-nswag:
 	dotnet tool update -g Nswag.ConsoleCore
@@ -53,11 +53,11 @@ swagger-check:
 # Preferred: use consistent options and the configured Swagger URL
 # Delegate to the direct generator to avoid runtime mismatches with `nswag run`
 gen-client: gen-client-direct
-	@echo "Client generated. See apps/blazor/infrastructure/Api/ApiClient.cs"
+	@echo "Client generated. See apps/blazor/infrastructure/Api/Client.cs"
 
 # Fallback: generate via CLI with explicit switches (kept close to existing config)
 # You can override output with: make gen-client-direct OUTPUT=path/to/File.cs
-OUTPUT?=apps/blazor/infrastructure/Api/ApiClient.cs
+OUTPUT?=apps/blazor/infrastructure/Api/Client.cs
 NAMESPACE?=FSH.Starter.Blazor.Infrastructure.Api
 CLASSNAME?=Client
 
@@ -97,4 +97,4 @@ api-run:
 	dotnet run --project api/server/Server.csproj --launch-profile "Kestrel"
 
 clean-client:
-	rm -f apps/blazor/infrastructure/Api/ApiClient.cs
+	rm -f apps/blazor/infrastructure/Api/Client.cs

@@ -1,3 +1,5 @@
+using FSH.Starter.Blazor.Client.Services;
+
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
@@ -6,76 +8,77 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class Items
 {
-    [Inject] private IApiClient ApiClient { get; set; } = default!;
+    [Inject] private IClient Client { get; set; } = default!;
     [Inject] private ISnackbar Snackbar { get; set; } = default!;
+    [Inject] private ImageUrlService ImageUrlService { get; set; } = default!;
 
     private EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = default!;
     private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = default!;
 
     protected override void OnInitialized()
     {
-        Context = new EntityServerTableContext<GroceryItemResponse, DefaultIdType, GroceryItemViewModel>(
-            entityName: "Grocery Item",
-            entityNamePlural: "Grocery Items",
+        Context = new EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel>(
+            entityName: "Item",
+            entityNamePlural: "Items",
             entityResource: FshResources.Store,
             fields:
             [
-                new EntityField<GroceryItemResponse>(x => x.Sku, "SKU", "SKU"),
-                new EntityField<GroceryItemResponse>(x => x.Barcode, "Barcode", "Barcode"),
-                new EntityField<GroceryItemResponse>(x => x.Name, "Name", "Name"),
-                new EntityField<GroceryItemResponse>(x => x.WeightUnit, "Weight Unit", "WeightUnit"),
-                new EntityField<GroceryItemResponse>(x => x.Price, "Price", "Price", typeof(decimal)),
-                new EntityField<GroceryItemResponse>(x => x.Cost, "Cost", "Cost", typeof(decimal)),
-                new EntityField<GroceryItemResponse>(x => x.IsPerishable, "Perishable", "IsPerishable", typeof(bool)),
-                new EntityField<GroceryItemResponse>(x => x.CurrentStock, "Current", "CurrentStock", typeof(int)),
-                new EntityField<GroceryItemResponse>(x => x.ReorderPoint, "Reorder", "ReorderPoint", typeof(int)),
+                new EntityField<ItemResponse>(x => x.Sku, "SKU", "SKU"),
+                new EntityField<ItemResponse>(x => x.Barcode, "Barcode", "Barcode"),
+                new EntityField<ItemResponse>(x => x.Name, "Name", "Name"),
+                new EntityField<ItemResponse>(x => x.WeightUnit, "Weight Unit", "WeightUnit"),
+                new EntityField<ItemResponse>(x => x.Price, "Price", "Price", typeof(decimal)),
+                new EntityField<ItemResponse>(x => x.Cost, "Cost", "Cost", typeof(decimal)),
+                new EntityField<ItemResponse>(x => x.IsPerishable, "Perishable", "IsPerishable", typeof(bool)),
+                new EntityField<ItemResponse>(x => x.CurrentStock, "Current", "CurrentStock", typeof(int)),
+                new EntityField<ItemResponse>(x => x.ReorderPoint, "Reorder", "ReorderPoint", typeof(int)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id ?? DefaultIdType.Empty,
             getDetailsFunc: async id =>
             {
-                var dto = await ApiClient.GetGroceryItemEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<GroceryItemViewModel>();
+                var dto = await Client.GetItemEndpointAsync("1", id).ConfigureAwait(false);
+                return dto.Adapt<ItemViewModel>();
             },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = paginationFilter.Adapt<SearchGroceryItemsQuery>();
-                var result = await ApiClient.SearchGroceryItemsEndpointAsync("1", command).ConfigureAwait(false);
-                return result.Adapt<PaginationResponse<GroceryItemResponse>>();
+                var command = paginationFilter.Adapt<SearchItemsQuery>();
+                var result = await Client.SearchItemsEndpointAsync("1", command).ConfigureAwait(false);
+                return result.Adapt<PaginationResponse<ItemResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await ApiClient.CreateGroceryItemEndpointAsync("1", viewModel.Adapt<CreateGroceryItemCommand>()).ConfigureAwait(false);
+                await Client.CreateItemEndpointAsync("1", viewModel.Adapt<CreateItemCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await ApiClient.UpdateGroceryItemEndpointAsync("1", id, viewModel.Adapt<UpdateGroceryItemCommand>()).ConfigureAwait(false);
+                await Client.UpdateItemEndpointAsync("1", id, viewModel.Adapt<UpdateItemCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await ApiClient.DeleteGroceryItemEndpointAsync("1", id).ConfigureAwait(false),
+            deleteFunc: async id => await Client.DeleteItemEndpointAsync("1", id).ConfigureAwait(false),
             importAction: FshActions.Import,
             exportAction: FshActions.Export,
             importFunc: async fileUpload =>
             {
-                var command = new ImportGroceryItemsCommand { File = fileUpload };
-                return await ApiClient.ImportGroceryItemsEndpointAsync("1", command);
+                var command = new ImportItemsCommand { File = fileUpload };
+                return await Client.ImportItemsEndpointAsync("1", command);
             },
             exportFunc: async filter =>
             {
-                var request = filter.Adapt<ExportGroceryItemsQuery>();
-                var apiResponse = await ApiClient.ExportGroceryItemsEndpointAsync("1", request);
+                var request = filter.Adapt<ExportItemsQuery>();
+                var apiResponse = await Client.ExportItemsEndpointAsync("1", request);
                 return new Components.EntityTable.FileResponse(apiResponse.Stream);
             });
     }
 }
 
 /// <summary>
-/// ViewModel used by the Grocery Items page for add/edit operations; maps to UpdateGroceryItemCommand for update and to CreateGroceryItemCommand for create.
+/// ViewModel used by the Items page for add/edit operations; maps to UpdateItemCommand for update and to CreateItemCommand for create.
 /// Includes inventory, pricing, and related entity identifiers.
 /// </summary>
-public class GroceryItemViewModel
+public class ItemViewModel
 {
-    /// <summary>Unique identifier of the grocery item.</summary>
+    /// <summary>Unique identifier of the item.</summary>
     public DefaultIdType Id { get; set; }
 
     /// <summary>Display name of the item.</summary>

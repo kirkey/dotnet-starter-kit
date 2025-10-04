@@ -1,15 +1,44 @@
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
+/// <summary>
+/// Model for managing purchase order items in the dialog form.
+/// Used for both creating and editing purchase order items.
+/// </summary>
 public class PurchaseOrderItemModel
 {
-    public DefaultIdType Id { get; set; } = DefaultIdType.NewGuid();
-    public DefaultIdType PurchaseOrderId { get; set; }
+    /// <summary>
+    /// Gets or sets the purchase order item identifier.
+    /// </summary>
+    public DefaultIdType Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the grocery item identifier.
+    /// </summary>
     public DefaultIdType ItemId { get; set; }
-    public string ItemName { get; set; } = string.Empty;
-    public string ItemSku { get; set; } = string.Empty;
-    public decimal Quantity { get; set; }
-    public string Unit { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the quantity ordered.
+    /// </summary>
+    public int Quantity { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unit price for the item.
+    /// </summary>
     public decimal UnitPrice { get; set; }
-    public decimal DiscountPercentage { get; set; }
-    public decimal Total => Quantity * UnitPrice * (1 - DiscountPercentage / 100);
+
+    /// <summary>
+    /// Gets or sets the discount amount applied to this item.
+    /// </summary>
+    public decimal DiscountAmount { get; set; }
+
+    /// <summary>
+    /// Gets or sets the quantity received (for tracking deliveries).
+    /// </summary>
+    public int ReceivedQuantity { get; set; }
+
+    /// <summary>
+    /// Gets or sets any notes or comments about this item.
+    /// </summary>
+    public string? Notes { get; set; }
 }
+

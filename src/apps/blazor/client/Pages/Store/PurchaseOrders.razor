@@ -3,7 +3,7 @@
 
 <PageHeader Title="Purchase Orders" Header="Purchase Orders" SubHeader="Manage purchase orders and supplier procurement." />
 
-<EntityTable @ref="_table" TEntity="PurchaseOrderResponse" TId="DefaultIdType" TRequest="PurchaseOrderViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="PurchaseOrderResponse" TId="DefaultIdType" TRequest="PurchaseOrderViewModel" Context="@_context">
     
     <AdvancedSearchContent>
         <MudSelect T="DefaultIdType?" Label="Supplier" @bind-Value="SearchSupplierId">
@@ -22,8 +22,8 @@
             <MudSelectItem T="string?" Value="@("Received")">Received</MudSelectItem>
             <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
         </MudSelect>
-        <MudDatePicker Label="From Date" @bind-Date="SearchFromDate" />
-        <MudDatePicker Label="To Date" @bind-Date="SearchToDate" />
+        <MudDatePicker Label="From Date" Date="SearchFromDate" DateChanged="value => SearchFromDate = value" />
+        <MudDatePicker Label="To Date" Date="SearchToDate" DateChanged="value => SearchToDate = value" />
     </AdvancedSearchContent>
 
     <ExtraActions Context="context">
@@ -96,7 +96,8 @@
         </MudItem>
         
         <MudItem xs="12" md="6">
-            <AutocompleteSupplier @bind-Value="context.SupplierId"
+            <AutocompleteSupplier Value="context.SupplierId"
+                                 ValueChanged="value => context.SupplierId = value"
                                  For="@(() => context.SupplierId)"
                                  Label="Supplier"
                                  Variant="Variant.Filled"
@@ -142,12 +143,9 @@
             <MudTextField Label="Contact Phone" For="@(() => context.ContactPhone)" @bind-Value="context.ContactPhone" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudSwitch T="bool" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
+            <MudSwitch T="bool" @bind-Checked="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
         </MudItem>
 
-        <MudItem xs="12" md="12">
-            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
-        </MudItem>
 
         @if (context.Id != default)
         {

@@ -1,3 +1,5 @@
+using Store.Infrastructure.Endpoints.Warehouses.v1;
+
 namespace Store.Infrastructure.Endpoints.Warehouses;
 
 /// <summary>
@@ -14,12 +16,12 @@ public static class WarehousesEndpoints
             .WithTags("Warehouses")
             .WithDescription("Endpoints for managing warehouses");
 
-        // Version 1 endpoints will be added here when implemented
-        // warehousesGroup.MapCreateWarehouseEndpoint();
-        // warehousesGroup.MapUpdateWarehouseEndpoint();
-        // warehousesGroup.MapDeleteWarehouseEndpoint();
-        // warehousesGroup.MapGetWarehouseEndpoint();
-        // warehousesGroup.MapSearchWarehousesEndpoint();
+        // Version 1 endpoints
+        warehousesGroup.MapCreateWarehouseEndpoint();
+        warehousesGroup.MapUpdateWarehouseEndpoint();
+        warehousesGroup.MapDeleteWarehouseEndpoint();
+        warehousesGroup.MapGetWarehouseEndpoint();
+        warehousesGroup.MapSearchWarehousesEndpoint();
 
         return app;
     }

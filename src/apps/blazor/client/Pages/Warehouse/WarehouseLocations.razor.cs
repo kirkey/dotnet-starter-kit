@@ -9,13 +9,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class WarehouseLocations
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
-    protected EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> Context { get; set; } = default!;
+    private EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> _context = default!;
 
     protected override Task OnInitializedAsync()
     {
-        Context = new EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel>(
+        _context = new EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel>(
             entityName: "Warehouse Location",
             entityNamePlural: "Warehouse Locations",
             entityResource: FshResources.Warehouse,
@@ -39,18 +39,18 @@ public partial class WarehouseLocations
             {
                 var paginationFilter = filter.Adapt<SearchWarehouseLocationsCommand>();
 
-                var result = await ApiClient.SearchWarehouseLocationsAsync("1", paginationFilter);
+                var result = await Client.SearchWarehouseLocationsAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<GetWarehouseLocationListResponse>>();
             },
             createFunc: async location =>
             {
-                await ApiClient.CreateWarehouseLocationAsync("1", location.Adapt<CreateWarehouseLocationCommand>());
+                await Client.CreateWarehouseLocationAsync("1", location.Adapt<CreateWarehouseLocationCommand>());
             },
             updateFunc: async (id, location) =>
             {
-                await ApiClient.UpdateWarehouseLocationAsync("1", id, location.Adapt<UpdateWarehouseLocationCommand>());
+                await Client.UpdateWarehouseLocationAsync("1", id, location.Adapt<UpdateWarehouseLocationCommand>());
             },
-            deleteFunc: async id => await ApiClient.DeleteWarehouseLocationAsync("1", id));
+            deleteFunc: async id => await Client.DeleteWarehouseLocationAsync("1", id));
 
         return Task.CompletedTask;
     }

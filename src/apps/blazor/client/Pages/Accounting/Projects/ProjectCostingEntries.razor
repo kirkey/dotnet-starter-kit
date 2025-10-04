@@ -56,7 +56,7 @@
 }
 
 @code {
-    [Inject] private IClient ApiClient { get; set; } = default!;
+    [Inject] private IClient Client { get; set; } = default!;
     [Inject] private HttpClient HttpClient { get; set; } = default!;
 
     [Parameter] public DefaultIdType ProjectId { get; set; }

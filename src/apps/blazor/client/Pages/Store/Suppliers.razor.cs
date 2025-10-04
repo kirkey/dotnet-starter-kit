@@ -6,15 +6,15 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class Suppliers
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
     [Inject] protected HttpClient Http { get; set; } = default!;
 
-    private EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> Context { get; set; } = default!;
+    private EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> _context = default!;
     private EntityTable<SupplierResponse, DefaultIdType, SupplierViewModel> _table = default!;
 
     protected override void OnInitialized()
     {
-        Context = new EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel>(
+        _context = new EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel>(
             entityName: "Supplier",
             entityNamePlural: "Suppliers",
             entityResource: FshResources.Store,
@@ -36,21 +36,21 @@ public partial class Suppliers
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchSuppliersCommand>();
-                var result = await ApiClient.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<SupplierResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await ApiClient.CreateSupplierEndpointAsync("1", viewModel.Adapt<CreateSupplierCommand>()).ConfigureAwait(false);
+                await Client.CreateSupplierEndpointAsync("1", viewModel.Adapt<CreateSupplierCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await ApiClient.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
+                await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await ApiClient.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false),
+            deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false),
             getDetailsFunc: async id =>
             {
-                var dto = await ApiClient.GetSupplierEndpointAsync("1", id).ConfigureAwait(false);
+                var dto = await Client.GetSupplierEndpointAsync("1", id).ConfigureAwait(false);
                 return dto.Adapt<SupplierViewModel>();
             });
     }

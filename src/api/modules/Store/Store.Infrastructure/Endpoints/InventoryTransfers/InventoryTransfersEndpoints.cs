@@ -1,3 +1,5 @@
+using Store.Infrastructure.Endpoints.InventoryTransfers.v1;
+
 namespace Store.Infrastructure.Endpoints.InventoryTransfers;
 
 /// <summary>
@@ -14,12 +16,19 @@ public static class InventoryTransfersEndpoints
             .WithTags("Inventory-Transfers")
             .WithDescription("Endpoints for managing inventory transfers between locations");
 
-        // Version 1 endpoints will be added here when implemented
-        // inventoryTransfersGroup.MapCreateInventoryTransferEndpoint();
-        // inventoryTransfersGroup.MapUpdateInventoryTransferEndpoint();
-        // inventoryTransfersGroup.MapDeleteInventoryTransferEndpoint();
-        // inventoryTransfersGroup.MapGetInventoryTransferEndpoint();
-        // inventoryTransfersGroup.MapSearchInventoryTransfersEndpoint();
+        // Version 1 endpoints
+        inventoryTransfersGroup.MapCreateInventoryTransferEndpoint();
+        inventoryTransfersGroup.MapUpdateInventoryTransferEndpoint();
+        inventoryTransfersGroup.MapDeleteInventoryTransferEndpoint();
+        inventoryTransfersGroup.MapGetInventoryTransferEndpoint();
+        inventoryTransfersGroup.MapSearchInventoryTransfersEndpoint();
+        inventoryTransfersGroup.MapAddInventoryTransferItemEndpoint();
+        inventoryTransfersGroup.MapRemoveInventoryTransferItemEndpoint();
+        inventoryTransfersGroup.MapUpdateInventoryTransferItemEndpoint();
+        inventoryTransfersGroup.MapApproveInventoryTransferEndpoint();
+        inventoryTransfersGroup.MapMarkInTransitInventoryTransferEndpoint();
+        inventoryTransfersGroup.MapCompleteInventoryTransferEndpoint();
+        inventoryTransfersGroup.MapCancelInventoryTransferEndpoint();
 
         return app;
     }

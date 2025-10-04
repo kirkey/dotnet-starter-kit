@@ -1,3 +1,5 @@
+using Store.Infrastructure.Endpoints.StockAdjustments.v1;
+
 namespace Store.Infrastructure.Endpoints.StockAdjustments;
 
 /// <summary>
@@ -14,12 +16,13 @@ public static class StockAdjustmentsEndpoints
             .WithTags("Stock-Adjustments")
             .WithDescription("Endpoints for managing inventory stock adjustments");
 
-        // Version 1 endpoints will be added here when implemented
-        // stockAdjustmentsGroup.MapCreateStockAdjustmentEndpoint();
-        // stockAdjustmentsGroup.MapUpdateStockAdjustmentEndpoint();
-        // stockAdjustmentsGroup.MapDeleteStockAdjustmentEndpoint();
-        // stockAdjustmentsGroup.MapGetStockAdjustmentEndpoint();
-        // stockAdjustmentsGroup.MapSearchStockAdjustmentsEndpoint();
+        // Version 1 endpoints
+        stockAdjustmentsGroup.MapCreateStockAdjustmentEndpoint();
+        stockAdjustmentsGroup.MapUpdateStockAdjustmentEndpoint();
+        stockAdjustmentsGroup.MapDeleteStockAdjustmentEndpoint();
+        stockAdjustmentsGroup.MapGetStockAdjustmentEndpoint();
+        stockAdjustmentsGroup.MapSearchStockAdjustmentsEndpoint();
+        stockAdjustmentsGroup.MapApproveStockAdjustmentEndpoint();
 
         return app;
     }

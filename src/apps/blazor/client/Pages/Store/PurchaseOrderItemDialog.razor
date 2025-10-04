@@ -2,155 +2,68 @@
 
 <MudDialog>
     <DialogContent>
-        <MudGrid>
-            <MudItem xs="12">
-                <AutocompleteGroceryItem @bind-Value="_model.GroceryItemId"
-                                        Label="Grocery Item"
-                                        Variant="Variant.Filled"
-                                        Required="true"
-                                        Disabled="@IsEdit" />
-            </MudItem>
-            
-            <MudItem xs="12" sm="6">
-                <MudNumericField @bind-Value="_model.Quantity"
-                                Label="Quantity"
-                                Min="1"
-                                Required="true"
-                                Immediate="true" />
-            </MudItem>
-            
-            <MudItem xs="12" sm="6">
-                <MudNumericField @bind-Value="_model.UnitPrice"
-                                Label="Unit Price"
-                                Min="0"
-                                Format="N2"
-                                Required="true"
-                                Immediate="true" />
-            </MudItem>
-            
-            <MudItem xs="12" sm="6">
-                <MudNumericField @bind-Value="_model.DiscountPercentage"
-                                Label="Discount %"
-                                Min="0"
-                                Max="100"
-                                Format="N2"
-                                Immediate="true" />
-            </MudItem>
-            
-            <MudItem xs="12" sm="6">
-                <MudTextField Value="@CalculatedTotal"
-                            Label="Total Price"
-                            ReadOnly="true"
-                            Variant="Variant.Filled" />
-            </MudItem>
-        </MudGrid>
+        <MudForm @ref="_form" Model="@Model">
+            <MudGrid>
+                <MudItem xs="12">
+                    <AutocompleteItem @bind-Value="Model.ItemId"
+                                     For="@(() => Model.ItemId)"
+                                     Label="Item"
+                                     Variant="Variant.Filled"
+                                     Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField @bind-Value="Model.Quantity"
+                                     Label="Quantity"
+                                     For="@(() => Model.Quantity)"
+                                     Required="true"
+                                     Min="1"
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField @bind-Value="Model.UnitPrice"
+                                     Label="Unit Price"
+                                     For="@(() => Model.UnitPrice)"
+                                     Required="true"
+                                     Min="0"
+                                     Format="N2"
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField @bind-Value="Model.DiscountAmount"
+                                     Label="Discount Amount"
+                                     For="@(() => Model.DiscountAmount)"
+                                     Min="0"
+                                     Format="N2"
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField @bind-Value="Model.ReceivedQuantity"
+                                     Label="Received Quantity"
+                                     For="@(() => Model.ReceivedQuantity)"
+                                     Min="0"
+                                     Variant="Variant.Filled"
+                                     ReadOnly="@(Model.Id == default)" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Model.Notes"
+                                  Label="Notes"
+                                  For="@(() => Model.Notes)"
+                                  Lines="3"
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">@(IsEdit ? "Update" : "Add")</MudButton>
+        <MudButton Color="Color.Primary" OnClick="SaveAsync" Variant="Variant.Filled">
+            @(Model.Id == default ? "Add" : "Update")
+        </MudButton>
     </DialogActions>
 </MudDialog>
 
-@code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
-    [Inject] private IClient ApiClient { get; set; } = default!;
-
-    [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
-    [Parameter] public PurchaseOrderItemModel? Item { get; set; }
-    [Parameter] public bool IsEdit { get; set; }
-
-    private PurchaseOrderItemModel _model = new();
-
-    private string CalculatedTotal => _model.Total.ToString("C2");
-
-    protected override void OnInitialized()
-    {
-        if (IsEdit && Item != null)
-        {
-            // Copy properties from item to model
-            _model.Id = Item.Id;
-            _model.GroceryItemId = Item.GroceryItemId;
-            _model.GroceryItemName = Item.GroceryItemName;
-            _model.GroceryItemSku = Item.GroceryItemSku;
-            _model.Quantity = Item.Quantity;
-            _model.Unit = Item.Unit;
-            _model.UnitPrice = Item.UnitPrice;
-            _model.DiscountPercentage = Item.DiscountPercentage;
-        }
-        else
-        {
-            _model = new PurchaseOrderItemModel();
-        }
-    }
-
-    private void Cancel()
-    {
-        MudDialog.Cancel();
-    }
-
-    private async Task Submit()
-    {
-        if (_model.GroceryItemId == default)
-        {
-            Toast.Add("Please select a grocery item", Severity.Warning);
-            return;
-        }
-
-        if (_model.Quantity <= 0)
-        {
-            Toast.Add("Quantity must be greater than 0", Severity.Warning);
-            return;
-        }
-
-        if (_model.UnitPrice < 0)
-        {
-            Toast.Add("Unit price cannot be negative", Severity.Warning);
-            return;
-        }
-
-        try
-        {
-            if (IsEdit)
-            {
-                // For edit, we'll update quantity and price separately
-                var quantityCommand = new UpdatePurchaseOrderItemQuantityCommand
-                {
-                    PurchaseOrderItemId = _model.Id,
-                    Quantity = (int)_model.Quantity
-                };
-                await ApiClient.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, _model.Id, quantityCommand).ConfigureAwait(false);
-                
-                var discountAmount = (_model.DiscountPercentage / 100) * _model.UnitPrice * _model.Quantity;
-                var priceCommand = new UpdatePurchaseOrderItemPriceCommand
-                {
-                    PurchaseOrderItemId = _model.Id,
-                    UnitPrice = (double)_model.UnitPrice,
-                    DiscountAmount = (double)discountAmount
-                };
-                await ApiClient.UpdatePurchaseOrderItemPriceEndpointAsync("1", PurchaseOrderId, _model.Id, priceCommand).ConfigureAwait(false);
-                
-                Toast.Add("Order item updated successfully", Severity.Success);
-            }
-            else
-            {
-                var discountAmount = (_model.DiscountPercentage / 100) * _model.UnitPrice * _model.Quantity;
-                var command = new AddPurchaseOrderItemCommand
-                {
-                    PurchaseOrderId = PurchaseOrderId,
-                    GroceryItemId = _model.GroceryItemId,
-                    Quantity = (int)_model.Quantity,
-                    UnitPrice = (double)_model.UnitPrice,
-                    Discount = (double)discountAmount
-                };
-                await ApiClient.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
-                Toast.Add("Order item added successfully", Severity.Success);
-            }
-
-            MudDialog.Close(DialogResult.Ok(_model));
-        }
-        catch (Exception ex)
-        {
-            Toast.Add($"Failed to {(IsEdit ? "update" : "add")} order item: {ex.Message}", Severity.Error);
-        }
-    }
-}

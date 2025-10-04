@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountingPeriods;
 
 public partial class AccountingPeriods
 {
-    [Inject] protected IClient ApiClient { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = default!;
 
     protected EntityServerTableContext<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> Context { get; set; } = default!;
 
@@ -31,18 +31,18 @@ public partial class AccountingPeriods
             {
                 var paginationFilter = filter.Adapt<SearchAccountingPeriodsQuery>();
 
-                var result = await ApiClient.AccountingPeriodSearchEndpointAsync("1", paginationFilter);
+                var result = await Client.AccountingPeriodSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<AccountingPeriodResponse>>();
             },
             createFunc: async period =>
             {
-                await ApiClient.AccountingPeriodCreateEndpointAsync("1", period.Adapt<CreateAccountingPeriodCommand>());
+                await Client.AccountingPeriodCreateEndpointAsync("1", period.Adapt<CreateAccountingPeriodCommand>());
             },
             updateFunc: async (id, period) =>
             {
-                await ApiClient.AccountingPeriodUpdateEndpointAsync("1", id, period.Adapt<UpdateAccountingPeriodCommand>());
+                await Client.AccountingPeriodUpdateEndpointAsync("1", id, period.Adapt<UpdateAccountingPeriodCommand>());
             },
-            deleteFunc: async id => await ApiClient.AccountingPeriodDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.AccountingPeriodDeleteEndpointAsync("1", id));
 
         return Task.CompletedTask;
     }

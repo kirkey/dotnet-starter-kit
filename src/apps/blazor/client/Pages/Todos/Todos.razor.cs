@@ -3,7 +3,7 @@
 public partial class Todos
 {
     [Inject]
-    protected IClient ApiClient { get; set; } = default!;
+    protected IClient Client { get; set; } = default!;
 
     protected EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel> Context { get; set; } = default!;
 
@@ -27,18 +27,18 @@ public partial class Todos
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
 
-                var result = await ApiClient.GetTodoListEndpointAsync("1", paginationFilter);
+                var result = await Client.GetTodoListEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<GetTodoResponse>>();
             },
             createFunc: async todo =>
             {
-                await ApiClient.CreateTodoEndpointAsync("1", todo.Adapt<CreateTodoCommand>());
+                await Client.CreateTodoEndpointAsync("1", todo.Adapt<CreateTodoCommand>());
             },
             updateFunc: async (id, todo) =>
             {
-                await ApiClient.UpdateTodoEndpointAsync("1", id, todo.Adapt<UpdateTodoCommand>());
+                await Client.UpdateTodoEndpointAsync("1", id, todo.Adapt<UpdateTodoCommand>());
             },
-            deleteFunc: async id => await ApiClient.DeleteTodoEndpointAsync("1", id));
+            deleteFunc: async id => await Client.DeleteTodoEndpointAsync("1", id));
 }
 
 public partial class TodoViewModel : UpdateTodoCommand;

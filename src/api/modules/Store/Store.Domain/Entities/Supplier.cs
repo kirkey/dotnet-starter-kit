@@ -105,9 +105,9 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
 
     /// <summary>
-    /// Navigation property to grocery items supplied by this supplier.
+    /// Navigation property to items supplied by this supplier.
     /// </summary>
-    public ICollection<Item> GroceryItems { get; private set; } = new List<Item>();
+    public ICollection<Item> Items { get; private set; } = new List<Item>();
 
     /// <summary>
     /// Navigation property to purchase orders placed with this supplier.
