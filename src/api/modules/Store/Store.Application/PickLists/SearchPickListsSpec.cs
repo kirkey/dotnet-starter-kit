@@ -65,21 +65,5 @@ public sealed class SearchPickListsSpec : EntitiesByPaginationFilterSpec<PickLis
         {
             Query.Where(x => x.Priority <= request.MaxPriority.Value);
         }
-
-        Query.Select(x => new PickListResponse
-        {
-            Id = x.Id,
-            PickListNumber = x.PickListNumber,
-            WarehouseId = x.WarehouseId,
-            Status = x.Status,
-            PickingType = x.PickingType,
-            Priority = x.Priority,
-            AssignedTo = x.AssignedTo,
-            StartDate = x.StartDate,
-            CompletedDate = x.CompletedDate,
-            ReferenceNumber = x.ReferenceNumber,
-            TotalLines = x.TotalLines,
-            CompletedLines = x.CompletedLines
-        });
     }
 }

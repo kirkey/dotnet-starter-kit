@@ -44,22 +44,6 @@ public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer, Ge
             Query.Where(it => it.TransferDate <= request.ToDate.Value);
         }
 
-        // Project to DTO expected by handlers and PaginatedListAsync
-        Query.Select(it => new GetInventoryTransferListResponse(
-            it.Id,
-            it.Name,
-            it.Description,
-            it.Notes,
-            it.TransferNumber,
-            it.FromWarehouseId,
-            it.FromWarehouse != null ? it.FromWarehouse.Name : string.Empty,
-            it.ToWarehouseId,
-            it.ToWarehouse != null ? it.ToWarehouse.Name : string.Empty,
-            it.TransferDate,
-            it.Status,
-            it.TransferType,
-            it.Priority));
-
         Query.OrderByDescending(it => it.TransferDate).ThenBy(it => it.TransferNumber);
     }
 }

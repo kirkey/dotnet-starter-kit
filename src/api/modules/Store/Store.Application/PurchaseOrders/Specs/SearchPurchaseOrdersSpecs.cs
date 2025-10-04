@@ -13,7 +13,7 @@ public class SearchPurchaseOrdersSpecs : Specification<PurchaseOrder, GetPurchas
             var term = request.SearchTerm!;
             Query.Where(po =>
                 po.OrderNumber.Contains(term) ||
-                (po.Supplier != null && po.Supplier.Name!.Contains(term)) ||
+                (po.Supplier != null && po.Supplier.Name != null && po.Supplier.Name.Contains(term)) ||
                 (po.Notes != null && po.Notes.Contains(term))
             );
         }
@@ -41,14 +41,6 @@ public class SearchPurchaseOrdersSpecs : Specification<PurchaseOrder, GetPurchas
             var to = request.ToDate.Value;
             Query.Where(po => po.OrderDate <= to);
         }
-
-        Query.Select(po => new GetPurchaseOrderListResponse(
-            po.Id,
-            po.OrderNumber,
-            po.SupplierId,
-            po.OrderDate,
-            po.Status,
-            po.TotalAmount));
 
         Query.OrderByDescending(po => po.OrderDate).ThenBy(po => po.OrderNumber);
     }

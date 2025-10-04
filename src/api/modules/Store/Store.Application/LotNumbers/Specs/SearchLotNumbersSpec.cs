@@ -24,23 +24,5 @@ public sealed class SearchLotNumbersSpec : EntitiesByPaginationFilterSpec<LotNum
             .Where(l => l.ExpirationDate.HasValue && l.ExpirationDate.Value <= now, request.IsExpired == true)
             .Where(l => !l.ExpirationDate.HasValue || l.ExpirationDate.Value > now, request.IsExpired == false)
             .Where(l => l.QuantityRemaining >= request.MinQuantityRemaining, request.MinQuantityRemaining.HasValue);
-
-        Query.Select(l => new LotNumberResponse(
-            l.Id,
-            l.Name,
-            l.Description,
-            l.Notes,
-            l.LotCode,
-            l.ItemId,
-            l.SupplierId,
-            l.ManufactureDate,
-            l.ExpirationDate,
-            l.ReceiptDate,
-            l.QuantityReceived,
-            l.QuantityRemaining,
-            l.Status,
-            l.QualityNotes,
-            l.CreatedOn,
-            l.CreatedBy));
     }
 }

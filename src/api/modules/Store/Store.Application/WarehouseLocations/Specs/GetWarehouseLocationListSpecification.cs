@@ -42,26 +42,6 @@ public class GetWarehouseLocationListSpecification : Specification<WarehouseLoca
             Query.Where(wl => wl.RequiresTemperatureControl == request.RequiresTemperatureControl.Value);
         }
 
-        // Project to DTO expected by handlers
-        Query.Select(wl => new GetWarehouseLocationListResponse(
-            wl.Id,
-            wl.Name,
-            wl.Description,
-            wl.Notes,
-            wl.Code,
-            wl.Aisle,
-            wl.Section,
-            wl.Shelf,
-            wl.Bin,
-            wl.WarehouseId,
-            wl.Warehouse.Name,
-            wl.LocationType,
-            wl.Capacity,
-            wl.UsedCapacity,
-            wl.CapacityUnit,
-            wl.IsActive,
-            wl.RequiresTemperatureControl));
-
         Query.OrderBy(wl => wl.Warehouse.Name).ThenBy(wl => wl.Aisle).ThenBy(wl => wl.Section).ThenBy(wl => wl.Shelf);
     }
 }

@@ -21,17 +21,6 @@ public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, Se
         if (request.ToDate.HasValue)
             Query.Where(po => po.OrderDate <= request.ToDate.Value);
 
-        Query.Select(po => new Search.v1.GetPurchaseOrderListResponse(
-            po.Id,
-            po.Name,
-            po.Description,
-            po.Notes,
-            po.OrderNumber,
-            po.SupplierId,
-            po.OrderDate,
-            po.Status,
-            po.TotalAmount));
-
         Query.OrderByDescending(po => po.OrderDate).ThenBy(po => po.OrderNumber);
     }
 }

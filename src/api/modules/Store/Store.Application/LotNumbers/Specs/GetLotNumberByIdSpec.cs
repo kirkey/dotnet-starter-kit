@@ -10,23 +10,5 @@ public sealed class GetLotNumberByIdSpec : Specification<LotNumber, LotNumberRes
     public GetLotNumberByIdSpec(DefaultIdType id)
     {
         Query.Where(l => l.Id == id);
-
-        Query.Select(l => new LotNumberResponse(
-            l.Id,
-            l.Name,
-            l.Description,
-            l.Notes,
-            l.LotCode,
-            l.ItemId,
-            l.SupplierId,
-            l.ManufactureDate,
-            l.ExpirationDate,
-            l.ReceiptDate,
-            l.QuantityReceived,
-            l.QuantityRemaining,
-            l.Status,
-            l.QualityNotes,
-            l.CreatedOn,
-            l.CreatedBy));
     }
 }

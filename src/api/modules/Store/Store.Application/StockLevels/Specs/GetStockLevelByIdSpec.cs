@@ -10,22 +10,5 @@ public sealed class GetStockLevelByIdSpec : Specification<StockLevel, StockLevel
     public GetStockLevelByIdSpec(DefaultIdType id)
     {
         Query.Where(s => s.Id == id);
-
-        Query.Select(s => new StockLevelResponse(
-            s.Id,
-            s.ItemId,
-            s.WarehouseId,
-            s.WarehouseLocationId,
-            s.BinId,
-            s.LotNumberId,
-            s.SerialNumberId,
-            s.QuantityOnHand,
-            s.QuantityAvailable,
-            s.QuantityReserved,
-            s.QuantityAllocated,
-            s.LastCountDate,
-            s.LastMovementDate,
-            s.CreatedOn,
-            s.CreatedBy));
     }
 }
