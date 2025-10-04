@@ -44,6 +44,7 @@ public sealed class SearchItemsHandler(
             i.CategoryId,
             i.SupplierId,
             i.UnitOfMeasure,
+            i.Notes,
             i.CreatedOn,
             i.CreatedBy)).ToList();
 

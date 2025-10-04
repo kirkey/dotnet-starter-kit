@@ -10,7 +10,7 @@ public class GetWarehouseLocationListSpecification : Specification<WarehouseLoca
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            Query.Where(wl => wl.Name!.Contains(request.SearchTerm) ||
+            Query.Where(wl => wl.Name.Contains(request.SearchTerm) ||
                             wl.Code.Contains(request.SearchTerm) ||
                             wl.Aisle.Contains(request.SearchTerm) ||
                             wl.Section.Contains(request.SearchTerm) ||
@@ -45,14 +45,16 @@ public class GetWarehouseLocationListSpecification : Specification<WarehouseLoca
         // Project to DTO expected by handlers
         Query.Select(wl => new GetWarehouseLocationListResponse(
             wl.Id,
-            wl.Name!,
+            wl.Name,
+            wl.Description,
+            wl.Notes,
             wl.Code,
             wl.Aisle,
             wl.Section,
             wl.Shelf,
             wl.Bin,
             wl.WarehouseId,
-            wl.Warehouse != null ? wl.Warehouse.Name! : null,
+            wl.Warehouse.Name,
             wl.LocationType,
             wl.Capacity,
             wl.UsedCapacity,

@@ -13,6 +13,9 @@ public sealed class GetLotNumberByIdSpec : Specification<LotNumber, LotNumberRes
 
         Query.Select(l => new LotNumberResponse(
             l.Id,
+            l.Name,
+            l.Description,
+            l.Notes,
             l.LotCode,
             l.ItemId,
             l.SupplierId,

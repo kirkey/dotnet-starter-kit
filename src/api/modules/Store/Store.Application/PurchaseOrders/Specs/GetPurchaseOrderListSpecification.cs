@@ -23,6 +23,9 @@ public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, Se
 
         Query.Select(po => new Search.v1.GetPurchaseOrderListResponse(
             po.Id,
+            po.Name,
+            po.Description,
+            po.Notes,
             po.OrderNumber,
             po.SupplierId,
             po.OrderDate,
@@ -32,4 +35,3 @@ public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, Se
         Query.OrderByDescending(po => po.OrderDate).ThenBy(po => po.OrderNumber);
     }
 }
-

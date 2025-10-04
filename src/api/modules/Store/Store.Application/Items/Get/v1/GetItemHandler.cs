@@ -46,6 +46,7 @@ public sealed class GetItemHandler(
             item.CategoryId,
             item.SupplierId,
             item.UnitOfMeasure,
+            item.Notes,
             item.CreatedOn,
             item.CreatedBy);
     }

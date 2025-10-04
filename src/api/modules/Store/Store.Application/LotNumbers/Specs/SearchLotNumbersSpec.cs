@@ -27,6 +27,9 @@ public sealed class SearchLotNumbersSpec : EntitiesByPaginationFilterSpec<LotNum
 
         Query.Select(l => new LotNumberResponse(
             l.Id,
+            l.Name,
+            l.Description,
+            l.Notes,
             l.LotCode,
             l.ItemId,
             l.SupplierId,

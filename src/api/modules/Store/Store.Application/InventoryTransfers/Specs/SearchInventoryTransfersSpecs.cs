@@ -47,11 +47,14 @@ public class SearchInventoryTransfersSpecs : Specification<InventoryTransfer, Ge
         // Project to DTO expected by handlers and PaginatedListAsync
         Query.Select(it => new GetInventoryTransferListResponse(
             it.Id,
+            it.Name,
+            it.Description,
+            it.Notes,
             it.TransferNumber,
             it.FromWarehouseId,
-            it.FromWarehouse.Name,
+            it.FromWarehouse != null ? it.FromWarehouse.Name : string.Empty,
             it.ToWarehouseId,
-            it.ToWarehouse.Name,
+            it.ToWarehouse != null ? it.ToWarehouse.Name : string.Empty,
             it.TransferDate,
             it.Status,
             it.TransferType,
