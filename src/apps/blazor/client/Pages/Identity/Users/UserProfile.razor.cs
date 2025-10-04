@@ -30,7 +30,7 @@ public partial class UserProfile
     private async Task ToggleUserStatus()
     {
         var request = new ToggleUserStatusCommand { ActivateUser = _active, UserId = Id };
-        await ApiHelper.ExecuteCallGuardedAsync(() => UsersClient.ToggleUserStatusEndpointAsync(Id!, request), Toast);
+        await ApiHelper.ExecuteCallGuardedAsync(() => UsersClient.ToggleUserStatusEndpointAsync(Id!, request));
         Navigation.NavigateTo("/identity/users");
     }
 
@@ -40,7 +40,7 @@ public partial class UserProfile
     protected override async Task OnInitializedAsync()
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation)
+                () => UsersClient.GetUserEndpointAsync(Id!))
             is { } user)
         {
             _firstName = user.FirstName;

@@ -11,6 +11,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
     private Dictionary<DefaultIdType, WarehouseResponse> _cache = [];
 
     [Inject] protected NavigationManager Navigation { get; set; } = default!;
+    [Inject] protected Snackbar Snackbar { get; set; } = default!;
 
     /// <summary>
     /// Gets a single Warehouse item by identifier.
@@ -22,9 +23,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
         if (_cache.TryGetValue(id, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.GetWarehouseAsync("1", id),
-                Snackbar,
-                Navigation)
+                () => Client.GetWarehouseEndpointAsync("1", id))
             .ConfigureAwait(false);
 
         if (dto is not null) _cache[id] = dto;
@@ -51,9 +50,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
         };
 
         var response = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.SearchWarehousesAsync("1", request, token),
-                Snackbar,
-                Navigation)
+                () => Client.SearchWarehousesEndpointAsync("1", request, token))
             .ConfigureAwait(false);
 
         if (response?.Items is { } items)
@@ -65,7 +62,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
                 .ToDictionary(x => x.Id);
         }
 
-        return _cache.Keys.Cast<DefaultIdType>();
+        return _cache.Keys;
     }
 
     protected override string GetTextValue(DefaultIdType id)

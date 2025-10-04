@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class StoreDashboard
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     /// <summary>Flag indicating whether the dashboard is still loading metrics.</summary>
     private bool _loading = true;

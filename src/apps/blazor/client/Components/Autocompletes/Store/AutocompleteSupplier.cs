@@ -1,5 +1,3 @@
-using FSH.Starter.Blazor.Client.Components.Autocompletes;
-
 namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 
 /// <summary>
@@ -8,6 +6,7 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, DefaultIdType?>
 {
+    private readonly ISnackbar _snackbar = default!;
     private Dictionary<DefaultIdType, SupplierResponse> _cache = [];
 
     protected override async Task<SupplierResponse?> GetItem(DefaultIdType? id)
@@ -23,7 +22,7 @@ public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, 
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load supplier: {ex.Message}", Severity.Error);
+            _snackbar.Add($"Failed to load supplier: {ex.Message}", Severity.Error);
             return null;
         }
     }
@@ -55,7 +54,7 @@ public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, 
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to search suppliers: {ex.Message}", Severity.Error);
+            _snackbar.Add($"Failed to search suppliers: {ex.Message}", Severity.Error);
             return [];
         }
     }

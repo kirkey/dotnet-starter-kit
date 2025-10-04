@@ -12,7 +12,7 @@ public static class UpdateWarehouseEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdateWarehouse")
+        .WithName(nameof(UpdateWarehouseEndpoint))
         .WithSummary("Update warehouse")
         .WithDescription("Updates an existing warehouse with the provided details")
         .Produces<UpdateWarehouseResponse>()

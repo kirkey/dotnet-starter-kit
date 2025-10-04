@@ -42,9 +42,9 @@ public partial class Profile
     private async Task UpdateProfileAsync()
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => PersonalClient.UpdateUserEndpointAsync(_profileModel), Toast, _customValidation))
+            () => PersonalClient.UpdateUserEndpointAsync(_profileModel)))
         {
-            Toast.Add("Your Profile has been updated. Please Login again to Continue.", Severity.Success);
+            Snackbar.Add("Your Profile has been updated. Please Login again to Continue.", Severity.Success);
             await AuthService.ReLoginAsync(Navigation.Uri);
         }
     }
@@ -57,7 +57,7 @@ public partial class Profile
             string? extension = Path.GetExtension(file.Name);
             if (!AppConstants.SupportedImageFormats.Contains(extension.ToLowerInvariant()))
             {
-                Toast.Add("Image Format Not Supported.", Severity.Error);
+                Snackbar.Add("Image Format Not Supported.", Severity.Error);
                 return;
             }
 

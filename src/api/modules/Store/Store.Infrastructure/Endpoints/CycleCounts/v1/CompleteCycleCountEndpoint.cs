@@ -11,7 +11,7 @@ public static class CompleteCycleCountEndpoint
             var result = await sender.Send(new CompleteCycleCountCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("CompleteCycleCount")
+        .WithName(nameof(CompleteCycleCountEndpoint))
         .WithSummary("Complete a cycle count")
         .WithDescription("Marks an in-progress cycle count as completed and computes metrics")
         .Produces<CompleteCycleCountResponse>()

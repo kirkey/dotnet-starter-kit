@@ -150,12 +150,12 @@
             else
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
-                Toast.Add($"Failed to {(IsEdit ? "update" : "add")} entry: {errorMessage}", Severity.Error);
+                Snackbar.Add($"Failed to {(IsEdit ? "update" : "add")} entry: {errorMessage}", Severity.Error);
             }
         }
         catch (Exception ex)
         {
-            Toast.Add($"Failed to {(IsEdit ? "update" : "add")} entry: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to {(IsEdit ? "update" : "add")} entry: {ex.Message}", Severity.Error);
         }
     }
 }

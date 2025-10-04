@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Accruals;
 /// </summary>
 public partial class Accruals
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.

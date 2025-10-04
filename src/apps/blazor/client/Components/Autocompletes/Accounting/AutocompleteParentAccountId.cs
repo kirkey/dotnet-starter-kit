@@ -23,9 +23,7 @@ public class AutocompleteParentAccountId : AutocompleteBase<ChartOfAccountRespon
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.ChartOfAccountGetEndpointAsync("1", id.Value),
-                Snackbar,
-                Navigation)
+                () => Client.ChartOfAccountGetEndpointAsync("1", id.Value))
             .ConfigureAwait(false);
 
         if (dto is not null) _cache[id.Value] = dto;
@@ -52,9 +50,7 @@ public class AutocompleteParentAccountId : AutocompleteBase<ChartOfAccountRespon
         };
 
         var response = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.ChartOfAccountSearchEndpointAsync("1", request, token),
-                Snackbar,
-                Navigation)
+                () => Client.ChartOfAccountSearchEndpointAsync("1", request, token))
             .ConfigureAwait(false);
 
         if (response?.Items is { } items)

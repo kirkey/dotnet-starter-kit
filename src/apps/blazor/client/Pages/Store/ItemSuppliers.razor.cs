@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class ItemSuppliers
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     private EntityServerTableContext<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> Context { get; set; } = default!;
     private EntityTable<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> _table = default!;

@@ -16,7 +16,7 @@ public partial class BaseLayout
         if (_themePreference == null) _themePreference = new ClientPreference();
         SetCurrentTheme(_themePreference);
 
-        Toast.Add("Like this project? ", Severity.Info, config =>
+        Snackbar.Add("Like this project? ", Severity.Info, config =>
         {
             config.BackgroundBlurred = true;
             config.Icon = Icons.Custom.Brands.GitHub;

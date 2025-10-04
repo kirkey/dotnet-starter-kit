@@ -1257,7 +1257,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body);
+        System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountEndpointAsync(string version, CreateCycleCountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1269,7 +1269,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountEndpointAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search cycle counts
@@ -1280,7 +1280,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsAsync(string version);
+        System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsEndpointAsync(string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1292,7 +1292,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsAsync(string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsEndpointAsync(string version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get cycle count by ID
@@ -1303,7 +1303,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1315,7 +1315,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Start a cycle count
@@ -1326,7 +1326,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1338,7 +1338,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete a cycle count
@@ -1349,7 +1349,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1361,7 +1361,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reconcile a cycle count
@@ -1372,7 +1372,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1384,7 +1384,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add an item count to a cycle count
@@ -1395,7 +1395,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body);
+        System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1407,7 +1407,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create deferred revenue
@@ -5270,7 +5270,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UserDetail> GetMeEndpointAsync();
+        System.Threading.Tasks.Task<UserDetail> GetUserProfileEndpointAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5281,7 +5281,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UserDetail> GetMeEndpointAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UserDetail> GetUserProfileEndpointAsync(System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get users list
@@ -5417,7 +5417,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsEndpointAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5428,7 +5428,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsEndpointAsync(System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Toggle a user's active status
@@ -5544,7 +5544,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body);
+        System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationEndpointAsync(string version, CreateWarehouseLocationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5556,7 +5556,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationEndpointAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update warehouse location
@@ -5567,7 +5567,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body);
+        System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationEndpointAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5579,7 +5579,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationEndpointAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete a warehouse location
@@ -5590,7 +5590,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteWarehouseLocationEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5602,7 +5602,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteWarehouseLocationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get warehouse location by ID
@@ -5613,7 +5613,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5625,7 +5625,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get list of warehouse locations
@@ -5636,7 +5636,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body);
+        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsEndpointAsync(string version, SearchWarehouseLocationsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5648,7 +5648,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsEndpointAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new warehouse
@@ -5682,7 +5682,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body);
+        System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseEndpointAsync(string version, System.Guid id, UpdateWarehouseCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5694,7 +5694,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseEndpointAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete warehouse
@@ -5705,7 +5705,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteWarehouseEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5717,7 +5717,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteWarehouseEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get warehouse by ID
@@ -5728,7 +5728,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5740,7 +5740,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search warehouses
@@ -5751,7 +5751,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body);
+        System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesEndpointAsync(string version, SearchWarehousesCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5763,7 +5763,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesEndpointAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -11258,9 +11258,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body)
+        public virtual System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountEndpointAsync(string version, CreateCycleCountCommand body)
         {
-            return CreateCycleCountAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateCycleCountEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11273,7 +11273,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateCycleCountResponse> CreateCycleCountEndpointAsync(string version, CreateCycleCountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11362,9 +11362,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsAsync(string version)
+        public virtual System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsEndpointAsync(string version)
         {
-            return SearchCycleCountsAsync(version, System.Threading.CancellationToken.None);
+            return SearchCycleCountsEndpointAsync(version, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11377,7 +11377,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsAsync(string version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CycleCountResponsePagedList> SearchCycleCountsEndpointAsync(string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11459,9 +11459,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountEndpointAsync(string version, System.Guid id)
         {
-            return GetCycleCountAsync(version, id, System.Threading.CancellationToken.None);
+            return GetCycleCountEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11474,7 +11474,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CycleCountResponse> GetCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11560,9 +11560,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id)
         {
-            return StartCycleCountAsync(version, id, System.Threading.CancellationToken.None);
+            return StartCycleCountEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11575,7 +11575,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11663,9 +11663,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id)
         {
-            return CompleteCycleCountAsync(version, id, System.Threading.CancellationToken.None);
+            return CompleteCycleCountEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11678,7 +11678,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11766,9 +11766,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id)
         {
-            return ReconcileCycleCountAsync(version, id, System.Threading.CancellationToken.None);
+            return ReconcileCycleCountEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11781,7 +11781,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11869,9 +11869,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body)
+        public virtual System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body)
         {
-            return AddCycleCountItemAsync(version, id, body, System.Threading.CancellationToken.None);
+            return AddCycleCountItemEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11884,7 +11884,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -29725,9 +29725,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UserDetail> GetMeEndpointAsync()
+        public virtual System.Threading.Tasks.Task<UserDetail> GetUserProfileEndpointAsync()
         {
-            return GetMeEndpointAsync(System.Threading.CancellationToken.None);
+            return GetUserProfileEndpointAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -29739,7 +29739,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UserDetail> GetMeEndpointAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UserDetail> GetUserProfileEndpointAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -30368,9 +30368,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsEndpointAsync()
         {
-            return GetUserPermissionsAsync(System.Threading.CancellationToken.None);
+            return GetUserPermissionsEndpointAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -30382,7 +30382,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// </remarks>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetUserPermissionsEndpointAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -30942,9 +30942,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body)
+        public virtual System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationEndpointAsync(string version, CreateWarehouseLocationCommand body)
         {
-            return CreateWarehouseLocationAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateWarehouseLocationEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -30957,7 +30957,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateWarehouseLocationResponse> CreateWarehouseLocationEndpointAsync(string version, CreateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31046,9 +31046,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationEndpointAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body)
         {
-            return UpdateWarehouseLocationAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateWarehouseLocationEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31061,7 +31061,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateWarehouseLocationResponse> UpdateWarehouseLocationEndpointAsync(string version, System.Guid id, UpdateWarehouseLocationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31154,9 +31154,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteWarehouseLocationEndpointAsync(string version, System.Guid id)
         {
-            return DeleteWarehouseLocationAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteWarehouseLocationEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31169,7 +31169,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteWarehouseLocationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31249,9 +31249,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationEndpointAsync(string version, System.Guid id)
         {
-            return GetWarehouseLocationAsync(version, id, System.Threading.CancellationToken.None);
+            return GetWarehouseLocationEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31264,7 +31264,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationResponse> GetWarehouseLocationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31350,9 +31350,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body)
+        public virtual System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsEndpointAsync(string version, SearchWarehouseLocationsCommand body)
         {
-            return SearchWarehouseLocationsAsync(version, body, System.Threading.CancellationToken.None);
+            return SearchWarehouseLocationsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31365,7 +31365,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetWarehouseLocationListResponsePagedList> SearchWarehouseLocationsEndpointAsync(string version, SearchWarehouseLocationsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31558,9 +31558,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseEndpointAsync(string version, System.Guid id, UpdateWarehouseCommand body)
         {
-            return UpdateWarehouseAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateWarehouseEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31573,7 +31573,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateWarehouseResponse> UpdateWarehouseEndpointAsync(string version, System.Guid id, UpdateWarehouseCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31666,9 +31666,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteWarehouseEndpointAsync(string version, System.Guid id)
         {
-            return DeleteWarehouseAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteWarehouseEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31681,7 +31681,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteWarehouseEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31761,9 +31761,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseEndpointAsync(string version, System.Guid id)
         {
-            return GetWarehouseAsync(version, id, System.Threading.CancellationToken.None);
+            return GetWarehouseEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31776,7 +31776,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<WarehouseResponse> GetWarehouseEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -31862,9 +31862,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body)
+        public virtual System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesEndpointAsync(string version, SearchWarehousesCommand body)
         {
-            return SearchWarehousesAsync(version, body, System.Threading.CancellationToken.None);
+            return SearchWarehousesEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -31877,7 +31877,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<WarehouseResponsePagedList> SearchWarehousesEndpointAsync(string version, SearchWarehousesCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");

@@ -2,8 +2,6 @@
 
 public partial class Audit : ComponentBase
 {
-    [Inject]
-    private IClient Client { get; set; } = default!;
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Parameter] public DefaultIdType Id { get; set; }
 

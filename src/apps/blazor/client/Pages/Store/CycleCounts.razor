@@ -1,0 +1,43 @@
+@page "/store/cycle-counts"
+@attribute [Authorize(Policy = "Permissions.Store.View")]
+
+<PageHeader Title="@Context.EntityNamePlural" />
+
+<EntityTable @ref="_table" TEntity="CycleCountResponse" TId="DefaultIdType" TRequest="CycleCountViewModel" Context="@Context">
+    <ExtraActions>
+        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Dense="true">
+            <MudMenuItem OnClick="@(() => StartCycleCount(context.Id))">
+                <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Small" Class="mr-2" /> Start
+            </MudMenuItem>
+            <MudMenuItem OnClick="@(() => CompleteCycleCount(context.Id))">
+                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" Class="mr-2" /> Complete
+            </MudMenuItem>
+            <MudMenuItem OnClick="@(() => ReconcileCycleCount(context.Id))">
+                <MudIcon Icon="@Icons.Material.Filled.Sync" Size="Size.Small" Class="mr-2" /> Reconcile
+            </MudMenuItem>
+            <MudMenuItem OnClick="@(() => AddCycleCountItem(context.Id))">
+                <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Small" Class="mr-2" /> Add Item
+            </MudMenuItem>
+        </MudMenu>
+    </ExtraActions>
+    <EditFormContent Context="context">
+        <MudTextField @bind-Value="context.CountNumber" For="@(() => context.CountNumber)" Label="Count Number" Required />
+        
+        <MudAutocomplete T="DefaultIdType" @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)"
+                         Label="Warehouse" Required
+                         SearchFunc="@SearchWarehouses"
+                         ToStringFunc="@(id => _warehouses.FirstOrDefault(w => w.Id == id)?.Name ?? string.Empty)" />
+        
+        <MudAutocomplete T="DefaultIdType?" @bind-Value="context.WarehouseLocationId" For="@(() => context.WarehouseLocationId)"
+                         Label="Warehouse Location (Optional)"
+                         SearchFunc="@SearchWarehouseLocations"
+                         ToStringFunc="@(id => id.HasValue ? _warehouseLocations.FirstOrDefault(l => l.Id == id)?.Name ?? string.Empty : string.Empty)" />
+        
+        <MudDatePicker @bind-Date="context.ScheduledDate" For="@(() => context.ScheduledDate)" Label="Scheduled Date" Required />
+        <MudTextField @bind-Value="context.CountType" For="@(() => context.CountType)" Label="Count Type" Placeholder="Full, Partial, Spot" />
+        
+        <MudTextField @bind-Value="context.CounterName" For="@(() => context.CounterName)" Label="Counter Name" />
+        <MudTextField @bind-Value="context.SupervisorName" For="@(() => context.SupervisorName)" Label="Supervisor Name" />
+        <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+    </EditFormContent>
+</EntityTable>

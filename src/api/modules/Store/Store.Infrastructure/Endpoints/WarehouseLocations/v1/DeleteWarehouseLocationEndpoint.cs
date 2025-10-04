@@ -19,7 +19,7 @@ public static class DeleteWarehouseLocationEndpoint
             await sender.Send(new DeleteWarehouseLocationCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteWarehouseLocation")
+        .WithName(nameof(DeleteWarehouseLocationEndpoint))
         .WithSummary("Delete a warehouse location")
         .WithDescription("Deletes a warehouse location by ID")
         .Produces(204)

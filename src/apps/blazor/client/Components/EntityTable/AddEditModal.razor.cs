@@ -38,7 +38,7 @@ public partial class AddEditModal<TRequest> : IAddEditModal<TRequest>
     private async Task SaveAsync()
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => SaveFunc(RequestModel), Toast, _customValidation, SuccessMessage))
+            () => SaveFunc(RequestModel), _customValidation, SuccessMessage))
         {
             MudDialog.Close();
         }

@@ -17,6 +17,7 @@ public sealed class DeleteTodoHandler(
         var todoItem = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = todoItem ?? throw new TodoItemNotFoundException(request.Id);
         await repository.DeleteAsync(todoItem, cancellationToken).ConfigureAwait(false);
+        TodoMetrics.Deleted.Add(1);
         logger.LogInformation("todo with id : {TodoId} successfully deleted", todoItem.Id);
     }
 }

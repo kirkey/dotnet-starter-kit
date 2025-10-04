@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class InventoryReservations
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     private EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> Context { get; set; } = default!;
     private EntityTable<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> _table = default!;

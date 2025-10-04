@@ -14,7 +14,7 @@ public static class PostingBatchUpdateEndpoint
             await mediator.Send(command).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("ApprovePostingBatch")
+        .WithName(nameof(PostingBatchUpdateEndpoint))
         .WithSummary("Approve posting batch")
         .WithDescription("Approves a posting batch")
         .RequirePermission("Permissions.Accounting.Update")

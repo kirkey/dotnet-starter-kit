@@ -1,5 +1,3 @@
-using FSH.Starter.Blazor.Client.Components.Autocompletes;
-
 namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 
 /// <summary>
@@ -8,6 +6,8 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultIdType>
 {
+    private readonly ISnackbar _snackbar = default!;
+    
     protected override async Task<ItemResponse?> GetItem(DefaultIdType id)
     {
         try
@@ -16,7 +16,7 @@ public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultI
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load item: {ex.Message}", Severity.Error);
+            _snackbar.Add($"Failed to load item: {ex.Message}", Severity.Error);
             return null;
         }
     }
@@ -44,7 +44,7 @@ public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultI
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to search items: {ex.Message}", Severity.Error);
+            _snackbar.Add($"Failed to search items: {ex.Message}", Severity.Error);
             return [];
         }
     }

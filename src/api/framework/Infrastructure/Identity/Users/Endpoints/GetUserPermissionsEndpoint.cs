@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
+
 public static class GetUserPermissionsEndpoint
 {
     internal static RouteHandlerBuilder MapGetCurrentUserPermissionsEndpoint(this IEndpointRouteBuilder endpoints)
@@ -20,7 +21,7 @@ public static class GetUserPermissionsEndpoint
 
             return await service.GetPermissionsAsync(userId, cancellationToken).ConfigureAwait(false);
         })
-        .WithName("GetUserPermissions")
+        .WithName(nameof(GetUserPermissionsEndpoint))
         .WithSummary("Get current user permissions")
         .WithDescription("Get current user permissions");
     }

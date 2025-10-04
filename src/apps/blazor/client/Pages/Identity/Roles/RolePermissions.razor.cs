@@ -32,8 +32,7 @@ public partial class RolePermissions
         _canSearchRoleClaims = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.RoleClaims);
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => RolesClient.GetRolePermissionsEndpointAsync(Id), Toast, Navigation)
-            is { Permissions: not null } role)
+                () => RolesClient.GetRolePermissionsEndpointAsync(Id)) is { Permissions: not null } role)
         {
             _title = $"{role.Name} Permissions";
             _description = $"Manage {role.Name} Role Permissions";
@@ -77,7 +76,6 @@ public partial class RolePermissions
         };
         await ApiHelper.ExecuteCallGuardedAsync(
                 () => RolesClient.UpdateRolePermissionsEndpointAsync(request.RoleId, request),
-                Toast,
                 successMessage: "Updated Permissions.");
         Navigation.NavigateTo("/identity/roles");
     }

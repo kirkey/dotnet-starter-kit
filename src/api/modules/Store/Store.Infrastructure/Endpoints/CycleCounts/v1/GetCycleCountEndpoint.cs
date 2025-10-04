@@ -11,7 +11,7 @@ public static class GetCycleCountEndpoint
             var result = await sender.Send(new GetCycleCountRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetCycleCount")
+        .WithName(nameof(GetCycleCountEndpoint))
         .WithSummary("Get cycle count by ID")
         .WithDescription("Retrieves a cycle count by its unique identifier")
         .Produces<CycleCountResponse>()

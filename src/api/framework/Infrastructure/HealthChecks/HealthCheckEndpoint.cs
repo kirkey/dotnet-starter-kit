@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace FSH.Framework.Infrastructure.HealthChecks;
+
 public static class HealthCheckEndpoint
 {
     internal static RouteHandlerBuilder MapCustomHealthCheckEndpoint(this IEndpointRouteBuilder endpoints)
@@ -31,7 +32,7 @@ public static class HealthCheckEndpoint
             context.Response.ContentType = "application/json";
             return JsonSerializer.Serialize(response);
         })
-        .WithName("HealthCheck")
+        .WithName(nameof(HealthCheckEndpoint))
         .WithSummary("Checks the health status of the application")
         .WithDescription("Provides detailed health information about the application.")
         .AllowAnonymous();

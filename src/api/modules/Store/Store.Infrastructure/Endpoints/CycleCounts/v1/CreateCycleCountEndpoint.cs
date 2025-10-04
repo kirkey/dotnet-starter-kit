@@ -11,7 +11,7 @@ public static class CreateCycleCountEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/cycle-counts/{result.Id}", result);
         })
-        .WithName("CreateCycleCount")
+        .WithName(nameof(CreateCycleCountEndpoint))
         .WithSummary("Create a new cycle count")
         .WithDescription("Schedules a new cycle count for a warehouse or location")
         .Produces<CreateCycleCountResponse>()

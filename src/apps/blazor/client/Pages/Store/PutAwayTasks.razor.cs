@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class PutAwayTasks
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
     
 
     protected EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> Context { get; set; } = default!;

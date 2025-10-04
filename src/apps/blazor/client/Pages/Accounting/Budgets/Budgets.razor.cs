@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets;
 
 public partial class Budgets
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     protected EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel> Context { get; set; } = default!;
 

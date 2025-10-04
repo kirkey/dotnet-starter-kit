@@ -10,8 +10,6 @@ public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
     private Dictionary<DefaultIdType, CategoryResponse> _cache = [];
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
-
     /// <summary>
     /// Gets a single Category item by identifier.
     /// </summary>
@@ -23,9 +21,7 @@ public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.GetCategoryEndpointAsync("1", id.Value),
-                Snackbar,
-                Navigation)
+                () => Client.GetCategoryEndpointAsync("1", id.Value))
             .ConfigureAwait(false);
 
         if (dto is not null) _cache[id.Value] = dto;
@@ -52,9 +48,7 @@ public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient
         };
 
         var response = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.SearchCategoriesEndpointAsync("1", request, token),
-                Snackbar,
-                Navigation)
+                () => Client.SearchCategoriesEndpointAsync("1", request, token))
             .ConfigureAwait(false);
 
         if (response?.Items is { } items)

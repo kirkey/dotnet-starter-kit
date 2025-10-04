@@ -80,25 +80,6 @@ public partial class ImageUploader : ComponentBase
 
     #endregion
 
-    #region Injected Services
-
-    /// <summary>
-    /// Injected snackbar service for displaying notifications.
-    /// </summary>
-    [Inject] private ISnackbar Snackbar { get; set; } = default!;
-
-    /// <summary>
-    /// Injected navigation manager for URL construction.
-    /// </summary>
-    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-
-    /// <summary>
-    /// JS runtime for DOM fallback actions.
-    /// </summary>
-    [Inject] private IJSRuntime JS { get; set; } = default!;
-
-    #endregion
-
     #region Public Methods
 
     /// <summary>
@@ -162,7 +143,7 @@ public partial class ImageUploader : ComponentBase
 
             // Fallback: programmatically click the native input with the unique id
             var js = $"(function(){{var el=document.getElementById('{_nativeInputId}'); if(el){{el.click();}}}})()";
-            await JS.InvokeVoidAsync("eval", js);
+            await Js.InvokeVoidAsync("eval", js);
         }
         catch
         {
@@ -170,7 +151,7 @@ public partial class ImageUploader : ComponentBase
             try
             {
                 var js = $"(function(){{var el=document.getElementById('{_nativeInputId}'); if(el){{el.click();}}}})()";
-                await JS.InvokeVoidAsync("eval", js);
+                await Js.InvokeVoidAsync("eval", js);
             }
             catch
             {
@@ -388,7 +369,7 @@ public partial class ImageUploader : ComponentBase
         {
             // Use a short JS snippet to click the native input. This is executed in response to a user interaction.
             var js = $"(function(){{var el=document.getElementById('{_nativeInputId}'); if(el){{el.click();}}}})()";
-            await JS.InvokeVoidAsync("eval", js);
+            await Js.InvokeVoidAsync("eval", js);
         }
         catch
         {

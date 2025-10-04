@@ -53,7 +53,7 @@
     private void Execute(CommandDescriptor cmd)
     {
         try { cmd.Execute(); }
-        catch(Exception ex) { Toast.Add($"Command failed: {ex.Message}", Severity.Error); }
+        catch(Exception ex) { Snackbar.Add($"Command failed: {ex.Message}", Severity.Error); }
         Close();
     }
 

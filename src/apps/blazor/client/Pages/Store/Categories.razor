@@ -14,9 +14,9 @@
         }
         <MudItem xs="12" md="6">
             <AutocompleteCategoryId @bind-Value="context.ParentCategoryId"
-                                  For="@(() => context.ParentCategoryId)"
-                                  Label="Parent Category">
-            </AutocompleteCategoryId>
+                                    For="@(() => context.ParentCategoryId)"
+                                    Label="Parent Category"/>
+            
         </MudItem>
         <MudItem xs="12" md="6">
             <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" />

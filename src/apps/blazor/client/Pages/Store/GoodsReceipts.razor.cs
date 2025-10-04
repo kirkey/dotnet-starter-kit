@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class GoodsReceipts
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     protected EntityServerTableContext<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> Context { get; set; } = default!;
     private EntityTable<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> _table = default!;

@@ -11,7 +11,7 @@ public static class SearchWarehouseLocationsEndpoint
             var result = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("SearchWarehouseLocations")
+        .WithName(nameof(SearchWarehouseLocationsEndpoint))
         .WithSummary("Get list of warehouse locations")
         .WithDescription("Retrieves a paginated list of warehouse locations with optional filtering")
         .Produces<PagedList<GetWarehouseLocationListResponse>>()

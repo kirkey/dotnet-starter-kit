@@ -3,6 +3,8 @@
 @using Blazored.LocalStorage
 @using FSH.Starter.Blazor.Client
 @using FSH.Starter.Blazor.Client.Components
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.Store
 @using FSH.Starter.Blazor.Client.Components.Common
 @using FSH.Starter.Blazor.Client.Components.Dialogs
 @using FSH.Starter.Blazor.Client.Components.EntityTable
@@ -32,8 +34,11 @@
 
 @attribute [Authorize]
 
-@inject NavigationManager Navigation
-@inject ISnackbar Toast
-@inject IDialogService DialogService
+@inject IClient Client
 @inject IConfiguration Config
 @inject IClientPreferenceManager ClientPreferences
+@inject IDialogService DialogService
+@inject NavigationManager NavigationManager
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+@inject IJSRuntime Js

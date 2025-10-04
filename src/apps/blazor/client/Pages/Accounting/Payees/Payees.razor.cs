@@ -8,8 +8,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 /// </summary>
 public partial class Payees
 {
-    [Inject]
-    protected IClient Client { get; set; } = default!;
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     /// <summary>

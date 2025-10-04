@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class InventoryTransactions
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
     
 
     protected EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> Context { get; set; } = default!;

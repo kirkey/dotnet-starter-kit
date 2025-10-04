@@ -2,8 +2,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class StockLevels
 {
-    [Inject] protected IClient Client { get; set; } = default!;
-
     private EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel> Context { get; set; } = default!;
     private EntityTable<StockLevelResponse, DefaultIdType, StockLevelViewModel> _table = default!;
 

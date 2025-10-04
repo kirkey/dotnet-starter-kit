@@ -6,8 +6,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class PurchaseOrderItemDialog
 {
-    [Inject] private IClient Client { get; set; } = default!;
-    [Inject] private ISnackbar Snackbar { get; set; } = default!;
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
 
     [Parameter] public DefaultIdType PurchaseOrderId { get; set; }

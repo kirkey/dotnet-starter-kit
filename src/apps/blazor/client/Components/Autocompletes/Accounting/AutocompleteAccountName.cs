@@ -2,14 +2,11 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting;
 
 public class AutocompleteAccountName : MudAutocomplete<string>
 {
+    [Inject] protected IClient Client { get; set; } = default!;
+    
     private List<ChartOfAccountResponse> _list = new();
 
     [Parameter] public string Parent { get; set; } = default!;
-
-    [Inject] protected ISnackbar Snackbar { get; set; } = default!;
-    [Inject] protected IClient Client { get; set; } = default!;
-    [Inject] protected ISnackbar Toast { get; set; } = default!;
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
@@ -32,7 +29,7 @@ public class AutocompleteAccountName : MudAutocomplete<string>
         };
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                    () => Client.ChartOfAccountSearchEndpointAsync("1", filter, cancellationToken), Toast, Navigation)
+                    () => Client.ChartOfAccountSearchEndpointAsync("1", filter, cancellationToken))
                 .ConfigureAwait(false)
             is var response)
         {

@@ -30,15 +30,13 @@ public partial class UserRoles
         _canSearchRoles = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.UserRoles);
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => UsersClient.GetUserEndpointAsync(Id!), Toast, Navigation)
-            is { } user)
+                () => UsersClient.GetUserEndpointAsync(Id!)) is { } user)
         {
             _title = $"{user.FirstName} {user.LastName}'s Roles";
             _description = $"Manage {user.FirstName} {user.LastName}'s Roles";
 
             if (await ApiHelper.ExecuteCallGuardedAsync(
-                    () => UsersClient.GetUserRolesEndpointAsync(user.Id.ToString()), Toast, Navigation)
-                is { } response)
+                    () => UsersClient.GetUserRolesEndpointAsync(user.Id.ToString())) is { } response)
             {
                 _userRolesList = [.. response];
             }
@@ -58,7 +56,6 @@ public partial class UserRoles
 
         await ApiHelper.ExecuteCallGuardedAsync(
                 () => UsersClient.AssignRolesToUserEndpointAsync(Id, request),
-                Toast,
                 successMessage: "updated user roles");
 
         Navigation.NavigateTo("/identity/users");

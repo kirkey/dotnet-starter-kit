@@ -52,7 +52,7 @@ These pages have API endpoints available but no Blazor UI yet:
 // Code-behind (.razor.cs)
 public partial class PageName
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
     
     private EntityServerTableContext<EntityResponse, DefaultIdType, EntityViewModel> Context { get; set; } = default!;
     private EntityTable<EntityResponse, DefaultIdType, EntityViewModel> _table = default!;

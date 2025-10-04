@@ -20,7 +20,7 @@ public static class SearchWarehousesEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("SearchWarehouses")
+        .WithName(nameof(SearchWarehousesEndpoint))
         .WithSummary("Search warehouses")
         .WithDescription("Search and filter warehouses with pagination support")
         .Produces<PagedList<WarehouseResponse>>()

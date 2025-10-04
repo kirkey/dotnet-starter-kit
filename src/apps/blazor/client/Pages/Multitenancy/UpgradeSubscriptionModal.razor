@@ -39,12 +39,9 @@
 
     private async Task UpgradeSubscriptionAsync()
     {
-        Request.ExtendedExpiryDate = date.HasValue ? date.Value : Request.ExtendedExpiryDate;
+        Request.ExtendedExpiryDate = date ?? Request.ExtendedExpiryDate;
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => TenantsClient.UpgradeSubscriptionEndpointAsync(Request),
-            Toast, Navigation,
-            null,
-            "Upgraded Subscription.") is not null)
+            () => TenantsClient.UpgradeSubscriptionEndpointAsync(Request), successMessage: "Upgraded Subscription.") is not null)
         {
             MudDialog.Close();
         }

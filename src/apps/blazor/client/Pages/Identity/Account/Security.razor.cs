@@ -13,7 +13,6 @@ public partial class Security
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
             () => PersonalClient.ChangePasswordEndpointAsync(_passwordModel),
-            Toast,
             _customValidation,
             "Password Changed!"))
         {

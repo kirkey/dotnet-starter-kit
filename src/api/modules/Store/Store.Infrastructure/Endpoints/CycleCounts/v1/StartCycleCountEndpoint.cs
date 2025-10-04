@@ -11,7 +11,7 @@ public static class StartCycleCountEndpoint
             var result = await sender.Send(new StartCycleCountCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("StartCycleCount")
+        .WithName(nameof(StartCycleCountEndpoint))
         .WithSummary("Start a cycle count")
         .WithDescription("Marks a scheduled cycle count as in-progress")
         .Produces<StartCycleCountResponse>()

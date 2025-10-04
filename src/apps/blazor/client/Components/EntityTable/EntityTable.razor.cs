@@ -108,7 +108,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         Loading = true;
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.ClientContext.LoadDataFunc(), Toast, Navigation)
+                () => Context.ClientContext.LoadDataFunc())
             is { } result)
         {
             _entityList = result;
@@ -158,7 +158,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         var filter = GetPaginationFilter(state);
 
         if (await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.ServerContext.SearchFunc(filter), Toast, Navigation)
+                () => Context.ServerContext.SearchFunc(filter))
             is { } result)
         {
             _totalItems = result.TotalCount;
@@ -223,7 +223,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         TRequest requestModel = isCreate || entityToDuplicate is not null
             ? await GetRequestModel(entityToDuplicate).ConfigureAwait(false)
             : Context.GetDetailsFunc is not null &&
-              await ApiHelper.ExecuteCallGuardedAsync(() => Context.GetDetailsFunc(Context.IdFunc!(entity!)), Toast, Navigation)
+              await ApiHelper.ExecuteCallGuardedAsync(() => Context.GetDetailsFunc(Context.IdFunc!(entity!)))
                   is { } detailsResult
                 ? detailsResult
                 : entity!.Adapt<TRequest>();
@@ -262,7 +262,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         {
             if (Context.GetDuplicateFunc is not null &&
                 await ApiHelper.ExecuteCallGuardedAsync(() => 
-                        Context.GetDuplicateFunc(entityToDuplicate), Toast, Navigation)
+                        Context.GetDuplicateFunc(entityToDuplicate))
                     .ConfigureAwait(false) is { } duplicateResult)
                 return duplicateResult;
 
@@ -271,7 +271,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
         if (Context.GetDefaultsFunc is not null &&
             await ApiHelper.ExecuteCallGuardedAsync(() =>
-                    Context.GetDefaultsFunc(), Toast, Navigation)
+                    Context.GetDefaultsFunc())
                 .ConfigureAwait(false) is { } defaultsResult)
             return defaultsResult;
 
@@ -304,8 +304,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
             var requestModel = entity!.Adapt<TRequest>();
 
             await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.UpdateFunc(id, requestModel),
-                Toast).ConfigureAwait(false);
+                () => Context.UpdateFunc(id, requestModel)).ConfigureAwait(false);
 
             await ReloadDataAsync().ConfigureAwait(false);
         }
@@ -329,8 +328,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
             _ = Context.DeleteFunc ?? throw new InvalidOperationException("DeleteFunc can't be null!");
 
             await ApiHelper.ExecuteCallGuardedAsync(
-                () => Context.DeleteFunc(id),
-                Toast);
+                () => Context.DeleteFunc(id));
 
             await ReloadDataAsync();
         }
@@ -380,7 +378,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
             if (Context.ServerContext?.ImportFunc != null)
             {
                 var importedCount = await ApiHelper.ExecuteCallGuardedAsync(
-                    () => Context.ServerContext.ImportFunc(fileUpload), Snackbar, Navigation);
+                    () => Context.ServerContext.ImportFunc(fileUpload));
 
                 if (importedCount > 0)
                 {
@@ -430,7 +428,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
                     Exporting = true;
                     var filter = GetBaseFilter();
                     if (await ApiHelper.ExecuteCallGuardedAsync(
-                            () => Context.ServerContext.ExportFunc(filter), Toast, Navigation).ConfigureAwait(false)
+                            () => Context.ServerContext.ExportFunc(filter)).ConfigureAwait(false)
                         is { } response)
                     {
                         using var streamRef = new DotNetStreamReference(response.Stream);

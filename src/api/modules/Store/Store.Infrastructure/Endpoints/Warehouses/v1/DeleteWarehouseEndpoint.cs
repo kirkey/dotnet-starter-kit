@@ -11,7 +11,7 @@ public static class DeleteWarehouseEndpoint
             await sender.Send(new DeleteWarehouseCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeleteWarehouse")
+        .WithName(nameof(DeleteWarehouseEndpoint))
         .WithSummary("Delete warehouse")
         .WithDescription("Deletes a warehouse by its unique identifier")
         .Produces(StatusCodes.Status204NoContent)

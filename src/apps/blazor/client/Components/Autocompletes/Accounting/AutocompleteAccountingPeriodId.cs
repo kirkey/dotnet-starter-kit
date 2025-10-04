@@ -22,9 +22,7 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
         if (_cache.TryGetValue(id, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.AccountingPeriodGetEndpointAsync("1", id),
-                Snackbar,
-                Navigation)
+                () => Client.AccountingPeriodGetEndpointAsync("1", id))
             .ConfigureAwait(false);
 
         if (dto is not null && dto.Id != default) _cache[dto.Id] = dto;
@@ -49,9 +47,7 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
         };
 
         var response = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.AccountingPeriodSearchEndpointAsync("1", request, token),
-                Snackbar,
-                Navigation)
+                () => Client.AccountingPeriodSearchEndpointAsync("1", request, token))
             .ConfigureAwait(false);
 
         var items = response?.Items?.ToList() ?? new List<AccountingPeriodResponse>();

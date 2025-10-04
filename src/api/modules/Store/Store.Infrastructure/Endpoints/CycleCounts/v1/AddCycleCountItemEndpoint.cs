@@ -12,7 +12,7 @@ public static class AddCycleCountItemEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/cycle-counts/{result.CycleCountId}/items/{result.ItemId}", result);
         })
-        .WithName("AddCycleCountItem")
+        .WithName(nameof(AddCycleCountItemEndpoint))
         .WithSummary("Add an item count to a cycle count")
         .WithDescription("Adds counted quantity for a grocery item to the cycle count")
         .Produces<AddCycleCountItemResponse>()

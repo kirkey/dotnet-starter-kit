@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class StockAdjustments
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
     
 
     protected EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> Context { get; set; } = default!;

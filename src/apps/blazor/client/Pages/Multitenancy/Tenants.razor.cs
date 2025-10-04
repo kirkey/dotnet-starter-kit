@@ -2,8 +2,6 @@
 
 public partial class Tenants
 {
-    [Inject]
-    private IClient Client { get; set; } = default!;
     private string? _searchString;
     protected EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand> Context { get; set; } = default!;
     private List<TenantViewModel> _tenants = [];
@@ -83,9 +81,7 @@ public partial class Tenants
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
             () => Client.DisableTenantEndpointAsync(id),
-            Toast, Navigation,
-            null,
-            "Tenant Deactivated.") is not null)
+            successMessage: "Tenant Deactivated.") is not null)
         {
             await EntityTable.ReloadDataAsync();
         }
@@ -95,9 +91,7 @@ public partial class Tenants
     {
         if (await ApiHelper.ExecuteCallGuardedAsync(
             () => Client.ActivateTenantEndpointAsync(id),
-            Toast, Navigation,
-            null,
-            "Tenant Activated.") is not null)
+            successMessage: "Tenant Activated.") is not null)
         {
             await EntityTable.ReloadDataAsync();
         }

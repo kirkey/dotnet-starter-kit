@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
+
 public static class GetUserProfileEndpoint
 {
     internal static RouteHandlerBuilder MapGetMeEndpoint(this IEndpointRouteBuilder endpoints)
@@ -20,7 +21,7 @@ public static class GetUserProfileEndpoint
 
             return await service.GetAsync(userId, cancellationToken).ConfigureAwait(false);
         })
-        .WithName("GetMeEndpoint")
+        .WithName(nameof(GetUserProfileEndpoint))
         .WithSummary("Get current user information based on token")
         .WithDescription("Get current user information based on token");
     }

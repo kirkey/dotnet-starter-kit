@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class PickLists
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
     
 
     protected EntityServerTableContext<PickListResponse, DefaultIdType, PickListViewModel> Context { get; set; } = default!;

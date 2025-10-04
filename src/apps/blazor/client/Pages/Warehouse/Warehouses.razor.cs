@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class Warehouses
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     private EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel> _context = default!;
 
@@ -38,7 +38,7 @@ public partial class Warehouses
             {
                 var paginationFilter = filter.Adapt<SearchWarehousesCommand>();
 
-                var result = await Client.SearchWarehousesAsync("1", paginationFilter);
+                var result = await Client.SearchWarehousesEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<WarehouseResponse>>();
             },
             createFunc: async warehouse =>
@@ -47,9 +47,9 @@ public partial class Warehouses
             },
             updateFunc: async (id, warehouse) =>
             {
-                await Client.UpdateWarehouseAsync("1", id, warehouse.Adapt<UpdateWarehouseCommand>());
+                await Client.UpdateWarehouseEndpointAsync("1", id, warehouse.Adapt<UpdateWarehouseCommand>());
             },
-            deleteFunc: async id => await Client.DeleteWarehouseAsync("1", id));
+            deleteFunc: async id => await Client.DeleteWarehouseEndpointAsync("1", id));
 
         return Task.CompletedTask;
     }

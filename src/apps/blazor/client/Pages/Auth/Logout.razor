@@ -6,6 +6,6 @@
     protected override async Task OnInitializedAsync()
     {
         await AuthService.LogoutAsync();
-        Toast.Add("Logged out", Severity.Error);
+        Snackbar.Add("Logged out", Severity.Error);
     }
 }

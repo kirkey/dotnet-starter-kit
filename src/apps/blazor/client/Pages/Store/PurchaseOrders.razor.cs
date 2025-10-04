@@ -6,10 +6,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class PurchaseOrders
 {
-    [Inject] protected IClient Client { get; set; } = default!;
-    [Inject] protected ISnackbar Snackbar { get; set; } = default!;
-    [Inject] protected NavigationManager NavigationManager { get; set; } = default!;
-
     private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _context = default!;
     private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = default!;
 

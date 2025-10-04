@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Projects;
 /// </summary>
 public partial class Projects
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     protected EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel> Context { get; set; } = default!;
 

@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class Categories
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     protected EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = default!;

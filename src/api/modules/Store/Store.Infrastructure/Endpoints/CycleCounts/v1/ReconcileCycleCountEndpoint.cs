@@ -11,7 +11,7 @@ public static class ReconcileCycleCountEndpoint
             var result = await sender.Send(new ReconcileCycleCountCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("ReconcileCycleCount")
+        .WithName(nameof(ReconcileCycleCountEndpoint))
         .WithSummary("Reconcile a cycle count")
         .WithDescription("Runs reconciliation for a completed cycle count and returns any discrepancies")
         .Produces<ReconcileCycleCountResponse>()

@@ -11,7 +11,7 @@ public static class GetWarehouseEndpoint
             var result = await sender.Send(new GetWarehouseQuery(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetWarehouse")
+        .WithName(nameof(GetWarehouseEndpoint))
         .WithSummary("Get warehouse by ID")
         .WithDescription("Retrieves a warehouse by its unique identifier")
         .Produces<WarehouseResponse>()

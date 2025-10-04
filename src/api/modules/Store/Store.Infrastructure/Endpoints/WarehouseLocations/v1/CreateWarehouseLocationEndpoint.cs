@@ -11,7 +11,7 @@ public static class CreateWarehouseLocationEndpoint
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/warehouse-locations/{result.Id}", result);
         })
-        .WithName("CreateWarehouseLocation")
+        .WithName(nameof(CreateWarehouseLocationEndpoint))
         .WithSummary("Create a new warehouse location")
         .WithDescription("Creates a new warehouse location for storing items")
         .Produces<CreateWarehouseLocationResponse>()

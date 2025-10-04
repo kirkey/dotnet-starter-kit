@@ -5,7 +5,7 @@ public partial class BudgetDetails
     [Parameter]
     public DefaultIdType BudgetId { get; set; }
 
-    [Inject] protected IClient Client { get; set; } = default!;
+    
 
     protected EntityClientTableContext<BudgetDetailResponse, DefaultIdType, BudgetDetailViewModel> Context { get; set; } = default!;
 

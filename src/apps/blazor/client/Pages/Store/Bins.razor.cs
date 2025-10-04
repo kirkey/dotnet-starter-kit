@@ -1,5 +1,3 @@
-using FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
-
 namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 /// <summary>
@@ -7,8 +5,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class Bins
 {
-    [Inject] protected IClient Client { get; set; } = default!;
-
     private EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> _context = default!;
     private EntityTable<BinResponse, DefaultIdType, BinViewModel> _table = default!;
 

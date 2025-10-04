@@ -21,7 +21,7 @@ public static class SearchCycleCountsEndpoint
             var result = await sender.Send(cmd).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("SearchCycleCounts")
+        .WithName(nameof(SearchCycleCountsEndpoint))
         .WithSummary("Search cycle counts")
         .WithDescription("Searches cycle counts with pagination and filters")
         .Produces<PagedList<CycleCountResponse>>()

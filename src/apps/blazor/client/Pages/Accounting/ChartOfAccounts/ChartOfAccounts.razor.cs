@@ -2,9 +2,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.ChartOfAccounts;
 
 public partial class ChartOfAccounts
 {
-    [Inject]
-    protected IClient Client { get; set; } = default!;
-
     protected EntityServerTableContext<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel> Context { get; set; } = default!;
 
     private EntityTable<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel> _table = default!;
