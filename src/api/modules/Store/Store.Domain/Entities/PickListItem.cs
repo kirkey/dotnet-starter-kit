@@ -107,8 +107,8 @@ public sealed class PickListItem : AuditableEntity
         int quantityToPick,
         string? notes)
     {
-        if (pickListId == Guid.Empty) throw new ArgumentException("PickListId is required", nameof(pickListId));
-        if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (pickListId == DefaultIdType.Empty) throw new ArgumentException("PickListId is required", nameof(pickListId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (quantityToPick <= 0) throw new ArgumentException("QuantityToPick must be positive", nameof(quantityToPick));
         if (notes is { Length: > 500 }) throw new ArgumentException("Notes must not exceed 500 characters", nameof(notes));
 

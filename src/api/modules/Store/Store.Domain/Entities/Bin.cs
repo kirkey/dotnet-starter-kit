@@ -110,7 +110,7 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is required", nameof(code));
         if (code.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
 
-        if (warehouseLocationId == Guid.Empty) throw new ArgumentException("WarehouseLocationId is required", nameof(warehouseLocationId));
+        if (warehouseLocationId == DefaultIdType.Empty) throw new ArgumentException("WarehouseLocationId is required", nameof(warehouseLocationId));
 
         if (string.IsNullOrWhiteSpace(binType)) throw new ArgumentException("BinType is required", nameof(binType));
         if (binType.Length > 50) throw new ArgumentException("BinType must not exceed 50 characters", nameof(binType));

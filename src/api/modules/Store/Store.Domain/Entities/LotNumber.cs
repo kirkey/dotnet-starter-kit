@@ -114,7 +114,7 @@ public sealed class LotNumber : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(lotCode)) throw new ArgumentException("LotCode is required", nameof(lotCode));
         if (lotCode.Length > 100) throw new ArgumentException("LotCode must not exceed 100 characters", nameof(lotCode));
 
-        if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
 
         if (manufactureDate.HasValue && expirationDate.HasValue && expirationDate.Value <= manufactureDate.Value)
             throw new ArgumentException("ExpirationDate must be after ManufactureDate", nameof(expirationDate));

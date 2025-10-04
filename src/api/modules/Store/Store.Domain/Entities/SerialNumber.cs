@@ -141,7 +141,7 @@ public sealed class SerialNumber : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(serialNumberValue)) throw new ArgumentException("SerialNumberValue is required", nameof(serialNumberValue));
         if (serialNumberValue.Length > 100) throw new ArgumentException("SerialNumberValue must not exceed 100 characters", nameof(serialNumberValue));
 
-        if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
 
         if (externalReference is { Length: > 100 }) throw new ArgumentException("ExternalReference must not exceed 100 characters", nameof(externalReference));
         if (notes is { Length: > 1000 }) throw new ArgumentException("Notes must not exceed 1000 characters", nameof(notes));

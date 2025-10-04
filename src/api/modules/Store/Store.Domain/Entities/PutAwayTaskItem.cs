@@ -87,9 +87,9 @@ public sealed class PutAwayTaskItem : AuditableEntity
         int quantityToPutAway,
         string? notes)
     {
-        if (putAwayTaskId == Guid.Empty) throw new ArgumentException("PutAwayTaskId is required", nameof(putAwayTaskId));
-        if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
-        if (toBinId == Guid.Empty) throw new ArgumentException("ToBinId is required", nameof(toBinId));
+        if (putAwayTaskId == DefaultIdType.Empty) throw new ArgumentException("PutAwayTaskId is required", nameof(putAwayTaskId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (toBinId == DefaultIdType.Empty) throw new ArgumentException("ToBinId is required", nameof(toBinId));
         if (quantityToPutAway <= 0) throw new ArgumentException("QuantityToPutAway must be positive", nameof(quantityToPutAway));
 
         Id = id;

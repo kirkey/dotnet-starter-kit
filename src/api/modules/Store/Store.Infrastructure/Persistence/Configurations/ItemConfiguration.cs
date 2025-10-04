@@ -29,8 +29,7 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
             .HasMaxLength(50);
 
         builder.HasIndex(x => x.Barcode)
-            .IsUnique()
-            .HasFilter("[Barcode] IS NOT NULL");
+            .IsUnique();
 
         builder.Property(x => x.UnitPrice)
             .HasPrecision(18, 2);

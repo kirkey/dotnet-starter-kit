@@ -153,8 +153,8 @@ public sealed class StockLevel : AuditableEntity, IAggregateRoot
         DefaultIdType? serialNumberId,
         int quantityOnHand)
     {
-        if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
-        if (warehouseId == Guid.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (warehouseId == DefaultIdType.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
         if (quantityOnHand < 0) throw new ArgumentException("QuantityOnHand cannot be negative", nameof(quantityOnHand));
 
         Id = id;

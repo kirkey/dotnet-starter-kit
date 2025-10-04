@@ -287,8 +287,8 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         if (manufacturer is { Length: > 200 }) throw new ArgumentException("Manufacturer must not exceed 200 characters", nameof(manufacturer));
         if (manufacturerPartNumber is { Length: > 100 }) throw new ArgumentException("ManufacturerPartNumber must not exceed 100 characters", nameof(manufacturerPartNumber));
 
-        if (categoryId == Guid.Empty) throw new ArgumentException("CategoryId is required", nameof(categoryId));
-        if (supplierId == Guid.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+        if (categoryId == DefaultIdType.Empty) throw new ArgumentException("CategoryId is required", nameof(categoryId));
+        if (supplierId == DefaultIdType.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
 
         if (string.IsNullOrWhiteSpace(unitOfMeasure)) unitOfMeasure = "EA";
         if (unitOfMeasure.Length > 20) throw new ArgumentException("UnitOfMeasure must not exceed 20 characters", nameof(unitOfMeasure));
@@ -458,14 +458,14 @@ public sealed class Item : AuditableEntity, IAggregateRoot
 
         if (categoryId.HasValue && CategoryId != categoryId.Value)
         {
-            if (categoryId.Value == Guid.Empty) throw new ArgumentException("CategoryId is required", nameof(categoryId));
+            if (categoryId.Value == DefaultIdType.Empty) throw new ArgumentException("CategoryId is required", nameof(categoryId));
             CategoryId = categoryId.Value;
             isUpdated = true;
         }
 
         if (supplierId.HasValue && SupplierId != supplierId.Value)
         {
-            if (supplierId.Value == Guid.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+            if (supplierId.Value == DefaultIdType.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
             SupplierId = supplierId.Value;
             isUpdated = true;
         }

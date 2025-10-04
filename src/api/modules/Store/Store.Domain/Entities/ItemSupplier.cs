@@ -119,8 +119,8 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
         int? packagingQuantity,
         bool isPreferred)
     {
-        if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
-        if (supplierId == Guid.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (supplierId == DefaultIdType.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
 
         if (supplierPartNumber is { Length: > 100 }) throw new ArgumentException("SupplierPartNumber must not exceed 100 characters", nameof(supplierPartNumber));
 

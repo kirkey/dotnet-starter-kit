@@ -160,8 +160,8 @@ public sealed class InventoryReservation : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(reservationNumber)) throw new ArgumentException("ReservationNumber is required", nameof(reservationNumber));
         if (reservationNumber.Length > 100) throw new ArgumentException("ReservationNumber must not exceed 100 characters", nameof(reservationNumber));
 
-        if (itemId == Guid.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
-        if (warehouseId == Guid.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (warehouseId == DefaultIdType.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
 
         if (quantityReserved <= 0) throw new ArgumentException("QuantityReserved must be positive", nameof(quantityReserved));
 

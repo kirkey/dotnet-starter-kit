@@ -131,8 +131,7 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Identity
 
                     b.HasIndex("NormalizedName", "TenantId")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("Roles", "identity");
 
@@ -225,8 +224,7 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Identity
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("Users", "identity");
 

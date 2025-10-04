@@ -126,7 +126,7 @@ public sealed class PutAwayTask : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(taskNumber)) throw new ArgumentException("TaskNumber is required", nameof(taskNumber));
         if (taskNumber.Length > 100) throw new ArgumentException("TaskNumber must not exceed 100 characters", nameof(taskNumber));
 
-        if (warehouseId == Guid.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (warehouseId == DefaultIdType.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
 
         if (putAwayStrategy is { Length: > 50 }) throw new ArgumentException("PutAwayStrategy must not exceed 50 characters", nameof(putAwayStrategy));
         if (notes is { Length: > 500 }) throw new ArgumentException("Notes must not exceed 500 characters", nameof(notes));

@@ -133,7 +133,7 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(pickListNumber)) throw new ArgumentException("PickListNumber is required", nameof(pickListNumber));
         if (pickListNumber.Length > 100) throw new ArgumentException("PickListNumber must not exceed 100 characters", nameof(pickListNumber));
 
-        if (warehouseId == Guid.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (warehouseId == DefaultIdType.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
 
         if (string.IsNullOrWhiteSpace(pickingType)) throw new ArgumentException("PickingType is required", nameof(pickingType));
         var validTypes = new[] { "Order", "Wave", "Batch", "Zone" };

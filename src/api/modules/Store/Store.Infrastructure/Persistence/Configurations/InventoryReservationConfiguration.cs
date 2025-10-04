@@ -32,29 +32,29 @@ public class InventoryReservationConfiguration : IEntityTypeConfiguration<Invent
             .HasMaxLength(100);
 
         // Foreign key relationships
-        builder.HasOne<Item>()
+        builder.HasOne(x => x.Item)
             .WithMany()
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Warehouse>()
+        builder.HasOne(x => x.Warehouse)
             .WithMany()
             .HasForeignKey(x => x.WarehouseId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<LotNumber>()
+        builder.HasOne(x => x.LotNumber)
             .WithMany()
             .HasForeignKey(x => x.LotNumberId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
-        builder.HasOne<WarehouseLocation>()
+        builder.HasOne(x => x.WarehouseLocation)
             .WithMany()
             .HasForeignKey(x => x.WarehouseLocationId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
-        builder.HasOne<Bin>()
+        builder.HasOne(x => x.Bin)
             .WithMany()
             .HasForeignKey(x => x.BinId)
             .OnDelete(DeleteBehavior.Restrict)

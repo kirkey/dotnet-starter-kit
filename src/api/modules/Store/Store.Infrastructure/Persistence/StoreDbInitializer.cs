@@ -240,20 +240,32 @@ internal sealed class StoreDbInitializer(
             var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
             var suppliers = await context.Suppliers.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
             var itemSuppliers = new List<ItemSupplier>();
-            for (var i = existingItemSuppliers + 1; i <= 10; i++)
+            var uniquePairs = new HashSet<(DefaultIdType, DefaultIdType)>();
+            int itemCount = items.Count;
+            int supplierCount = suppliers.Count;
+            int maxPairs = Math.Min(itemCount * supplierCount, 10);
+            int pairIndex = 0;
+            for (int itemIdx = 0; itemIdx < itemCount && pairIndex < maxPairs; itemIdx++)
             {
-                var item = items[i % items.Count];
-                var supplier = suppliers[i % suppliers.Count];
-                itemSuppliers.Add(ItemSupplier.Create(
-                    itemId: item.Id,
-                    supplierId: supplier.Id,
-                    supplierPartNumber: $"SUP-PART-{i:000}",
-                    unitCost: 5m + i,
-                    leadTimeDays: 5 + i,
-                    minimumOrderQuantity: 10,
-                    packagingQuantity: 12,
-                    isPreferred: i % 2 == 0
-                ));
+                for (int supplierIdx = 0; supplierIdx < supplierCount && pairIndex < maxPairs; supplierIdx++)
+                {
+                    var item = items[itemIdx];
+                    var supplier = suppliers[supplierIdx];
+                    if (uniquePairs.Add((item.Id, supplier.Id)))
+                    {
+                        itemSuppliers.Add(ItemSupplier.Create(
+                            itemId: item.Id,
+                            supplierId: supplier.Id,
+                            supplierPartNumber: $"SUP-PART-{pairIndex + 1:000}",
+                            unitCost: 5m + pairIndex + 1,
+                            leadTimeDays: 5 + pairIndex + 1,
+                            minimumOrderQuantity: 10,
+                            packagingQuantity: 12,
+                            isPreferred: pairIndex % 2 == 0
+                        ));
+                        pairIndex++;
+                    }
+                }
             }
             await context.ItemSuppliers.AddRangeAsync(itemSuppliers, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -385,15 +397,454 @@ internal sealed class StoreDbInitializer(
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        // 11) StockAdjustments - TODO: Update to use Items entity instead of GroceryItems
-        // Currently commented out pending Items entity implementation
+        // 11) Bins
+        var existingBins = await context.Bins.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingBins < 10)
+        {
+            var locations = await context.WarehouseLocations.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (locations.Count > 0)
+            {
+                var bins = new List<Bin>();
+                var binTypes = new[] { "Shelf", "Pallet", "Rack", "Floor", "Drawer" };
+                for (var i = existingBins + 1; i <= 10; i++)
+                {
+                    var location = locations[i % locations.Count];
+                    bins.Add(Bin.Create(
+                        name: $"Bin {i}",
+                        description: $"Storage bin {i}",
+                        code: $"BIN-{i:000}",
+                        warehouseLocationId: location.Id,
+                        binType: binTypes[i % binTypes.Length],
+                        capacity: 500m + (i * 50m),
+                        priority: i % 3
+                    ));
+                }
+                await context.Bins.AddRangeAsync(bins, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
 
-        // 12) CycleCounts - TODO: Update to use Items entity instead of GroceryItems
-        // Currently commented out pending Items entity implementation
+        // 12) StockLevels
+        var existingStockLevels = await context.StockLevels.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingStockLevels < 10)
+        {
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var warehouses = await context.Warehouses.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var locations = await context.WarehouseLocations.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var bins = await context.Bins.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            
+            if (items.Count > 0 && warehouses.Count > 0)
+            {
+                var stockLevels = new List<StockLevel>();
+                for (var i = existingStockLevels + 1; i <= 10; i++)
+                {
+                    var item = items[i % items.Count];
+                    var warehouse = warehouses[i % warehouses.Count];
+                    var qtyOnHand = 50 + (i * 10);
+                    var qtyReserved = i * 2;
+                    var qtyAllocated = i;
+                    var stockLevel = StockLevel.Create(
+                        itemId: item.Id,
+                        warehouseId: warehouse.Id,
+                        warehouseLocationId: locations.Count > 0 ? locations[i % locations.Count].Id : null,
+                        binId: bins.Count > 0 ? bins[i % bins.Count].Id : null,
+                        lotNumberId: null,
+                        serialNumberId: null,
+                        quantityOnHand: qtyOnHand
+                    );
+                    // Reserve and allocate quantities after creation
+                    if (qtyReserved > 0) stockLevel.ReserveQuantity(qtyReserved);
+                    if (qtyAllocated > 0) stockLevel.AllocateQuantity(qtyAllocated);
+                    stockLevels.Add(stockLevel);
+                }
+                await context.StockLevels.AddRangeAsync(stockLevels, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
 
-        // 13) WholesaleContracts - TODO: Implement WholesaleContracts seeding when WholesaleContract and Customer entities are implemented
-        // Currently commented out as these entities haven't been created yet
+        // 13) PurchaseOrders
+        var existingPurchaseOrders = await context.PurchaseOrders.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingPurchaseOrders < 10)
+        {
+            var suppliers = await context.Suppliers.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (suppliers.Count > 0)
+            {
+                var purchaseOrders = new List<PurchaseOrder>();
+                var statuses = new[] { "Draft", "Submitted", "Approved", "Sent", "Received" };
+                for (var i = existingPurchaseOrders + 1; i <= 10; i++)
+                {
+                    var supplier = suppliers[i % suppliers.Count];
+                    var orderDate = DateTime.UtcNow.AddDays(-30 + i);
+                    purchaseOrders.Add(PurchaseOrder.Create(
+                        orderNumber: $"PO-2025-{i:000}",
+                        supplierId: supplier.Id,
+                        orderDate: orderDate,
+                        expectedDeliveryDate: orderDate.AddDays(7 + (i % 5)),
+                        status: statuses[i % statuses.Length],
+                        notes: i % 2 == 0 ? "Standard order" : "Rush order",
+                        deliveryAddress: $"{i} Receiving Dock, Warehouse District",
+                        contactPerson: $"Receiving Manager {i}",
+                        contactPhone: $"+300000000{i:00}",
+                        isUrgent: i % 3 == 0
+                    ));
+                }
+                await context.PurchaseOrders.AddRangeAsync(purchaseOrders, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
 
-        logger.LogInformation("[{Tenant}] completed seeding store module data", context.TenantInfo!.Identifier);
+        // 14) PurchaseOrderItems
+        var existingPOItems = await context.PurchaseOrderItems.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingPOItems < 10)
+        {
+            var purchaseOrders = await context.PurchaseOrders.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (purchaseOrders.Count > 0 && items.Count > 0)
+            {
+                var poItems = new List<PurchaseOrderItem>();
+                for (var i = existingPOItems + 1; i <= 10; i++)
+                {
+                    var po = purchaseOrders[i % purchaseOrders.Count];
+                    var item = items[i % items.Count];
+                    var qty = 20 + (i * 5);
+                    var unitPrice = 10m + i;
+                    poItems.Add(PurchaseOrderItem.Create(
+                        purchaseOrderId: po.Id,
+                        itemId: item.Id,
+                        quantity: qty,
+                        unitPrice: unitPrice,
+                        discountAmount: i % 3 == 0 ? 10m : 0m,
+                        notes: i % 2 == 0 ? "Bulk order discount applied" : null
+                    ));
+                }
+                await context.PurchaseOrderItems.AddRangeAsync(poItems, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 15) GoodsReceipts
+        var existingGoodsReceipts = await context.GoodsReceipts.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingGoodsReceipts < 10)
+        {
+            var purchaseOrders = await context.PurchaseOrders.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var goodsReceipts = new List<GoodsReceipt>();
+            for (var i = existingGoodsReceipts + 1; i <= 10; i++)
+            {
+                var po = purchaseOrders.Count > 0 ? purchaseOrders[i % purchaseOrders.Count] : null;
+                var gr = GoodsReceipt.Create(
+                    receiptNumber: $"GR-2025-{i:000}",
+                    receivedDate: DateTime.UtcNow.AddDays(-15 + i),
+                    purchaseOrderId: po?.Id
+                );
+                if (i % 2 == 0) gr.MarkReceived();
+                goodsReceipts.Add(gr);
+            }
+            await context.GoodsReceipts.AddRangeAsync(goodsReceipts, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        // 16) GoodsReceiptItems
+        var existingGRItems = await context.GoodsReceiptItems.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingGRItems < 10)
+        {
+            var goodsReceipts = await context.GoodsReceipts.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (goodsReceipts.Count > 0 && items.Count > 0)
+            {
+                var grItems = new List<GoodsReceiptItem>();
+                for (var i = existingGRItems + 1; i <= 10; i++)
+                {
+                    var gr = goodsReceipts[i % goodsReceipts.Count];
+                    var item = items[i % items.Count];
+                    grItems.Add(GoodsReceiptItem.Create(
+                        receiptId: gr.Id,
+                        itemId: item.Id,
+                        name: $"Received {item.Name}",
+                        quantity: 50 + (i * 5)
+                    ));
+                }
+                await context.GoodsReceiptItems.AddRangeAsync(grItems, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 17) StockAdjustments
+        var existingStockAdjustments = await context.StockAdjustments.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingStockAdjustments < 10)
+        {
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var warehouses = await context.Warehouses.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (items.Count > 0 && warehouses.Count > 0)
+            {
+                var adjustments = new List<StockAdjustment>();
+                var adjustmentTypes = new[] { "Increase", "Decrease", "Write-Off", "Found", "Damage" };
+                var reasons = new[] { "Physical Count", "Damage", "Expiry", "Found", "Theft", "Quality Issue" };
+                for (var i = existingStockAdjustments + 1; i <= 10; i++)
+                {
+                    var item = items[i % items.Count];
+                    var warehouse = warehouses[i % warehouses.Count];
+                    var adjType = adjustmentTypes[i % adjustmentTypes.Length];
+                    var qtyBefore = 100;
+                    var adjQty = 5 + i;
+                    var adjustment = StockAdjustment.Create(
+                        adjustmentNumber: $"ADJ-2025-{i:000}",
+                        groceryItemId: item.Id,
+                        warehouseId: warehouse.Id,
+                        warehouseLocationId: null,
+                        adjustmentDate: DateTime.UtcNow.AddDays(-10 + i),
+                        adjustmentType: adjType,
+                        reason: reasons[i % reasons.Length],
+                        quantityBefore: qtyBefore,
+                        adjustmentQuantity: adjQty,
+                        unitCost: 5m + i,
+                        reference: i % 3 == 0 ? $"REF-{i:000}" : null,
+                        notes: i % 4 == 0 ? "High priority adjustment" : null,
+                        adjustedBy: $"user{i}"
+                    );
+                    // Approve some adjustments
+                    if (i % 2 == 0) adjustment.Approve($"manager{(i % 3) + 1}");
+                    adjustments.Add(adjustment);
+                }
+                await context.StockAdjustments.AddRangeAsync(adjustments, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 18) CycleCounts
+        var existingCycleCounts = await context.CycleCounts.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingCycleCounts < 10)
+        {
+            var warehouses = await context.Warehouses.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (warehouses.Count > 0)
+            {
+                var cycleCounts = new List<CycleCount>();
+                var countTypes = new[] { "Full", "Partial", "ABC", "Random", "Spot" };
+                for (var i = existingCycleCounts + 1; i <= 10; i++)
+                {
+                    var warehouse = warehouses[i % warehouses.Count];
+                    var scheduledDate = DateTime.UtcNow.AddDays(-20 + (i * 2));
+                    cycleCounts.Add(CycleCount.Create(
+                        countNumber: $"CC-2025-{i:000}",
+                        warehouseId: warehouse.Id,
+                        warehouseLocationId: null,
+                        scheduledDate: scheduledDate,
+                        countType: countTypes[i % countTypes.Length],
+                        counterName: $"Counter {(i % 3) + 1}",
+                        supervisorName: $"Supervisor {(i % 2) + 1}",
+                        notes: i % 3 == 0 ? "High priority count" : null
+                    ));
+                }
+                await context.CycleCounts.AddRangeAsync(cycleCounts, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 19) CycleCountItems
+        var existingCCItems = await context.CycleCountItems.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingCCItems < 10)
+        {
+            var cycleCounts = await context.CycleCounts.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (cycleCounts.Count > 0 && items.Count > 0)
+            {
+                var ccItems = new List<CycleCountItem>();
+                for (var i = existingCCItems + 1; i <= 10; i++)
+                {
+                    var cc = cycleCounts[i % cycleCounts.Count];
+                    var item = items[i % items.Count];
+                    var systemQty = 100 + (i * 10);
+                    var countedQty = i % 3 == 0 ? systemQty - 2 : systemQty; // Introduce variance on every 3rd item
+                    ccItems.Add(CycleCountItem.Create(
+                        cycleCountId: cc.Id,
+                        itemId: item.Id,
+                        systemQuantity: systemQty,
+                        countedQuantity: i % 2 == 0 ? countedQty : null, // Some items not yet counted
+                        notes: i % 3 == 0 ? "Variance detected" : null
+                    ));
+                }
+                await context.CycleCountItems.AddRangeAsync(ccItems, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 20) InventoryTransfers
+        var existingTransfers = await context.InventoryTransfers.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingTransfers < 10)
+        {
+            var warehouses = await context.Warehouses.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (warehouses.Count >= 2)
+            {
+                var transfers = new List<InventoryTransfer>();
+                var transportMethods = new[] { "Truck", "Air Freight", "Courier", "Internal Transfer" };
+                for (var i = existingTransfers + 1; i <= 10; i++)
+                {
+                    var fromWh = warehouses[i % warehouses.Count];
+                    var toWh = warehouses[(i + 1) % warehouses.Count];
+                    if (fromWh.Id == toWh.Id) toWh = warehouses[(i + 2) % warehouses.Count];
+                    
+                    var transferDate = DateTime.UtcNow.AddDays(-10 + i);
+                    transfers.Add(InventoryTransfer.Create(
+                        transferNumber: null,
+                        unused: null,
+                        transferNumberOverride: $"TRF-2025-{i:000}",
+                        fromWarehouseId: fromWh.Id,
+                        toWarehouseId: toWh.Id,
+                        fromLocationId: null,
+                        toLocationId: null,
+                        transferDate: transferDate,
+                        expectedArrivalDate: transferDate.AddDays(2 + (i % 3)),
+                        transferType: i % 2 == 0 ? "Store Replenishment" : "Stock Balancing",
+                        priority: i % 3 == 0 ? "High" : "Normal",
+                        transportMethod: transportMethods[i % transportMethods.Length],
+                        notes: i % 4 == 0 ? "Urgent transfer" : null,
+                        requestedBy: $"user{i}"
+                    ));
+                }
+                await context.InventoryTransfers.AddRangeAsync(transfers, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 21) InventoryTransferItems
+        var existingTransferItems = await context.InventoryTransferItems.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingTransferItems < 10)
+        {
+            var transfers = await context.InventoryTransfers.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (transfers.Count > 0 && items.Count > 0)
+            {
+                var transferItems = new List<InventoryTransferItem>();
+                for (var i = existingTransferItems + 1; i <= 10; i++)
+                {
+                    var transfer = transfers[i % transfers.Count];
+                    var item = items[i % items.Count];
+                    transferItems.Add(InventoryTransferItem.Create(
+                        inventoryTransferId: transfer.Id,
+                        itemId: item.Id,
+                        quantity: 10 + (i * 2),
+                        unitPrice: 12m + i
+                    ));
+                }
+                await context.InventoryTransferItems.AddRangeAsync(transferItems, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 22) PickLists
+        var existingPickLists = await context.PickLists.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingPickLists < 10)
+        {
+            var warehouses = await context.Warehouses.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (warehouses.Count > 0)
+            {
+                var pickLists = new List<PickList>();
+                var pickingTypes = new[] { "Order", "Wave", "Batch", "Zone" };
+                for (var i = existingPickLists + 1; i <= 10; i++)
+                {
+                    var warehouse = warehouses[i % warehouses.Count];
+                    pickLists.Add(PickList.Create(
+                        pickListNumber: $"PICK-2025-{i:000}",
+                        warehouseId: warehouse.Id,
+                        pickingType: pickingTypes[i % pickingTypes.Length],
+                        priority: i % 3 == 0 ? 10 : 5,
+                        referenceNumber: $"ORD-{i:000}",
+                        notes: i % 4 == 0 ? "Rush order - high priority" : null
+                    ));
+                }
+                await context.PickLists.AddRangeAsync(pickLists, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 23) PickListItems
+        var existingPickListItems = await context.PickListItems.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingPickListItems < 10)
+        {
+            var pickLists = await context.PickLists.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var bins = await context.Bins.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (pickLists.Count > 0 && items.Count > 0)
+            {
+                var pickListItems = new List<PickListItem>();
+                for (var i = existingPickListItems + 1; i <= 10; i++)
+                {
+                    var pickList = pickLists[i % pickLists.Count];
+                    var item = items[i % items.Count];
+                    var qtyToPick = 5 + (i * 2);
+                    pickListItems.Add(PickListItem.Create(
+                        pickListId: pickList.Id,
+                        itemId: item.Id,
+                        binId: bins.Count > 0 ? bins[i % bins.Count].Id : null,
+                        lotNumberId: null,
+                        serialNumberId: null,
+                        quantityToPick: qtyToPick,
+                        notes: i % 5 == 0 ? "Handle with care" : null
+                    ));
+                }
+                await context.PickListItems.AddRangeAsync(pickListItems, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 24) PutAwayTasks
+        var existingPutAwayTasks = await context.PutAwayTasks.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingPutAwayTasks < 10)
+        {
+            var warehouses = await context.Warehouses.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var goodsReceipts = await context.GoodsReceipts.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (warehouses.Count > 0)
+            {
+                var putAwayTasks = new List<PutAwayTask>();
+                var strategies = new[] { "Standard", "ABC", "CrossDock", "Directed" };
+                for (var i = existingPutAwayTasks + 1; i <= 10; i++)
+                {
+                    var warehouse = warehouses[i % warehouses.Count];
+                    var gr = goodsReceipts.Count > 0 ? goodsReceipts[i % goodsReceipts.Count] : null;
+                    putAwayTasks.Add(PutAwayTask.Create(
+                        taskNumber: $"PUT-2025-{i:000}",
+                        warehouseId: warehouse.Id,
+                        goodsReceiptId: gr?.Id,
+                        priority: i % 3 == 0 ? 10 : 5,
+                        putAwayStrategy: strategies[i % strategies.Length],
+                        notes: i % 4 == 0 ? "Perishable items - priority put-away" : null
+                    ));
+                }
+                await context.PutAwayTasks.AddRangeAsync(putAwayTasks, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 25) PutAwayTaskItems
+        var existingPutAwayTaskItems = await context.PutAwayTaskItems.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingPutAwayTaskItems < 10)
+        {
+            var putAwayTasks = await context.PutAwayTasks.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var bins = await context.Bins.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (putAwayTasks.Count > 0 && items.Count > 0 && bins.Count > 0)
+            {
+                var putAwayTaskItems = new List<PutAwayTaskItem>();
+                for (var i = existingPutAwayTaskItems + 1; i <= 10; i++)
+                {
+                    var task = putAwayTasks[i % putAwayTasks.Count];
+                    var item = items[i % items.Count];
+                    var bin = bins[i % bins.Count];
+                    putAwayTaskItems.Add(PutAwayTaskItem.Create(
+                        putAwayTaskId: task.Id,
+                        itemId: item.Id,
+                        toBinId: bin.Id,
+                        lotNumberId: null,
+                        serialNumberId: null,
+                        quantityToPutAway: 20 + (i * 5),
+                        notes: i % 5 == 0 ? "Stack carefully" : null
+                    ));
+                }
+                await context.PutAwayTaskItems.AddRangeAsync(putAwayTaskItems, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        logger.LogInformation("[{Tenant}] completed seeding store module data with comprehensive sample data across all {EntityCount} domain entities", 
+            context.TenantInfo!.Identifier, 25);
     }
 }

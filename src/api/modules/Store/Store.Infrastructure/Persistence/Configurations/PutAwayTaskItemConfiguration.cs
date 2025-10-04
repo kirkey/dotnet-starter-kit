@@ -18,27 +18,27 @@ public class PutAwayTaskItemConfiguration : IEntityTypeConfiguration<PutAwayTask
 
         // Foreign key relationships
         builder.HasOne<PutAwayTask>()
-            .WithMany()
+            .WithMany(p => p.Items)
             .HasForeignKey(x => x.PutAwayTaskId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<Item>()
+        builder.HasOne(x => x.Item)
             .WithMany()
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Bin>()
+        builder.HasOne(x => x.ToBin)
             .WithMany()
             .HasForeignKey(x => x.ToBinId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<LotNumber>()
+        builder.HasOne(x => x.LotNumber)
             .WithMany()
             .HasForeignKey(x => x.LotNumberId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
-        builder.HasOne<SerialNumber>()
+        builder.HasOne(x => x.SerialNumber)
             .WithMany()
             .HasForeignKey(x => x.SerialNumberId)
             .OnDelete(DeleteBehavior.Restrict)
