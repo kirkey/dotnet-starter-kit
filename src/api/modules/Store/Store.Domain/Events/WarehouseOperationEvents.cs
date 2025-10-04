@@ -52,41 +52,6 @@ public record StockLevelCounted : DomainEvent
     public int Variance { get; init; }
 }
 
-// ============================================================================
-// Bin Events
-// ============================================================================
-
-/// <summary>
-/// Event raised when a new bin is created.
-/// </summary>
-public record BinCreated : DomainEvent
-{
-    public Bin Bin { get; init; } = default!;
-}
-
-/// <summary>
-/// Event raised when a bin is updated.
-/// </summary>
-public record BinUpdated : DomainEvent
-{
-    public Bin Bin { get; init; } = default!;
-}
-
-/// <summary>
-/// Event raised when a bin is activated.
-/// </summary>
-public record BinActivated : DomainEvent
-{
-    public Bin Bin { get; init; } = default!;
-}
-
-/// <summary>
-/// Event raised when a bin is deactivated.
-/// </summary>
-public record BinDeactivated : DomainEvent
-{
-    public Bin Bin { get; init; } = default!;
-}
 
 // ============================================================================
 // LotNumber Events

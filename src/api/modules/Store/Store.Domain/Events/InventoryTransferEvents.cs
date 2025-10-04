@@ -2,11 +2,17 @@ using Store.Domain.Entities;
 
 namespace Store.Domain.Events;
 
+/// <summary>
+/// Event raised when a new inventory transfer is created.
+/// </summary>
 public record InventoryTransferCreated : DomainEvent
 {
     public InventoryTransfer InventoryTransfer { get; init; } = default!;
 }
 
+/// <summary>
+/// Event raised when an item is added to an inventory transfer.
+/// </summary>
 public record InventoryTransferItemAdded : DomainEvent
 {
     public InventoryTransfer InventoryTransfer { get; init; } = default!;

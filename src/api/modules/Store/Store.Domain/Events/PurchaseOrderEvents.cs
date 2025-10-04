@@ -12,6 +12,15 @@ public record PurchaseOrderCreated : DomainEvent
 }
 
 /// <summary>
+/// Raised when a purchase order is updated.
+/// </summary>
+public record PurchaseOrderUpdated : DomainEvent
+{
+    /// <summary>The purchase order instance that was updated.</summary>
+    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+}
+
+/// <summary>
 /// Raised when the status of a purchase order changes.
 /// </summary>
 public record PurchaseOrderStatusChanged : DomainEvent
@@ -140,11 +149,3 @@ public record PurchaseOrderItemReceived : DomainEvent
     public int NewReceivedQuantity { get; init; }
 }
 
-/// <summary>
-/// Raised when a purchase order header is updated (fields changed).
-/// </summary>
-public record PurchaseOrderUpdated : DomainEvent
-{
-    /// <summary>The updated purchase order.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
-}

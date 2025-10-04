@@ -45,3 +45,24 @@ public record SupplierDeactivated : DomainEvent
     /// </summary>
     public Supplier Supplier { get; init; } = default!;
 }
+
+/// <summary>
+/// Event raised when a supplier's rating is updated.
+/// </summary>
+public record SupplierRatingUpdated : DomainEvent
+{
+    public Supplier Supplier { get; init; } = default!;
+    public decimal OldRating { get; init; }
+    public decimal NewRating { get; init; }
+}
+
+/// <summary>
+/// Event raised when a supplier's credit limit is changed.
+/// </summary>
+public record SupplierCreditLimitChanged : DomainEvent
+{
+    public Supplier Supplier { get; init; } = default!;
+    public decimal? OldCreditLimit { get; init; }
+    public decimal? NewCreditLimit { get; init; }
+}
+
