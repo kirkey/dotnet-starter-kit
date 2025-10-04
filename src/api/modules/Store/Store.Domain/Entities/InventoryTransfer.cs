@@ -359,10 +359,15 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         string name,
         string? description,
         string transferNumber,
+        string transferType,
         DefaultIdType fromWarehouseId,
         DefaultIdType toWarehouseId,
         DateTime transferDate,
+        DateTime? expectedArrivalDate,
         string status,
+        string priority,
+        string? transportMethod,
+        string? trackingNumber,
         string? notes,
         string? reason)
     {
@@ -390,6 +395,12 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
             changed = true;
         }
 
+        if (TransferType != transferType)
+        {
+            TransferType = transferType;
+            changed = true;
+        }
+
         if (FromWarehouseId != fromWarehouseId)
         {
             FromWarehouseId = fromWarehouseId;
@@ -408,9 +419,33 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
             changed = true;
         }
 
+        if (ExpectedArrivalDate != expectedArrivalDate)
+        {
+            ExpectedArrivalDate = expectedArrivalDate;
+            changed = true;
+        }
+
         if (Status != status)
         {
             Status = status;
+            changed = true;
+        }
+
+        if (Priority != priority)
+        {
+            Priority = priority;
+            changed = true;
+        }
+
+        if (TransportMethod != transportMethod)
+        {
+            TransportMethod = transportMethod;
+            changed = true;
+        }
+
+        if (TrackingNumber != trackingNumber)
+        {
+            TrackingNumber = trackingNumber;
             changed = true;
         }
 

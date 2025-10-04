@@ -30,8 +30,8 @@ public partial class Products
             {
                 var productFilter = filter.Adapt<SearchProductsCommand>();
                 // TODO: Remove casts after regenerating API client with decimal types
-                productFilter.MinimumRate = (double)SearchMinimumRate;
-                productFilter.MaximumRate = (double)SearchMaximumRate;
+                productFilter.MinimumRate = SearchMinimumRate;
+                productFilter.MaximumRate = SearchMaximumRate;
                 productFilter.BrandId = SearchBrandId;
                 var result = await _client.SearchProductsEndpointAsync("1", productFilter);
                 return result.Adapt<PaginationResponse<ProductResponse>>();

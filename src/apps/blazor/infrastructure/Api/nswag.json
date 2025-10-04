@@ -61,6 +61,8 @@
       "jsonConverters": null,
       "anyType": "object",
       "dateTimeType": "System.DateTime",
+      "decimalType": "decimal",
+      "doubleType": "double",
       "timeType": "System.TimeSpan",
       "timeSpanType": "System.TimeSpan",
       "arrayType": "System.Collections.Generic.ICollection",

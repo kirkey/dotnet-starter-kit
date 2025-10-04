@@ -27,7 +27,6 @@ public sealed class CatalogDbContext(
         base.ConfigureConventions(configurationBuilder);
 
         configurationBuilder.Properties<decimal>().HavePrecision(16, 2);
-        configurationBuilder.Properties<double>().HavePrecision(8, 2);
         // configurationBuilder.Properties<string>().HaveMaxLength(8192);
     }
 }

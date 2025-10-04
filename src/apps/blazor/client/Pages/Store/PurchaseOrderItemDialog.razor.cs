@@ -32,8 +32,8 @@ public partial class PurchaseOrderItemDialog
                     PurchaseOrderId = PurchaseOrderId,
                     ItemId = Model.ItemId,
                     Quantity = Model.Quantity,
-                    UnitPrice = (double)Model.UnitPrice,
-                    Discount = Model.DiscountAmount > 0 ? (double)Model.DiscountAmount : null
+                    UnitPrice = Model.UnitPrice,
+                    Discount = Model.DiscountAmount > 0 ? Model.DiscountAmount : null
                 };
 
                 await Client.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);

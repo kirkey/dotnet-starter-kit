@@ -6,7 +6,6 @@ public partial class Users : ComponentBase
     [Inject] protected IAuthorizationService AuthService { get; set; } = default!;
 
     [Inject] protected IClient UsersClient { get; set; } = default!;
-    [Inject] protected NavigationManager NavigationManager { get; set; } = default!;
 
     protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = default!;
 
@@ -61,12 +60,12 @@ public partial class Users : ComponentBase
     }
 
     private void ViewProfile(in DefaultIdType userId) =>
-        NavigationManager.NavigateTo($"/identity/users/{userId}/profile");
+        Navigation.NavigateTo($"/identity/users/{userId}/profile");
 
     private void ManageRoles(in DefaultIdType userId) =>
-        NavigationManager.NavigateTo($"/identity/users/{userId}/roles");
+        Navigation.NavigateTo($"/identity/users/{userId}/roles");
     private void ViewAuditTrails(in DefaultIdType userId) =>
-        NavigationManager.NavigateTo($"/identity/users/{userId}/audit-trail");
+        Navigation.NavigateTo($"/identity/users/{userId}/audit-trail");
 
     private void TogglePasswordVisibility()
     {

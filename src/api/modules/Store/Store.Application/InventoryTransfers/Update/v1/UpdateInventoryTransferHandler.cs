@@ -32,10 +32,15 @@ public sealed class UpdateInventoryTransferHandler(
             request.Name,
             request.Description,
             request.TransferNumber,
+            request.TransferType,
             request.FromWarehouseId,
             request.ToWarehouseId,
             request.TransferDate,
+            request.ExpectedArrivalDate,
             request.Status,
+            request.Priority,
+            request.TransportMethod,
+            request.TrackingNumber,
             request.Notes,
             request.Reason);
             

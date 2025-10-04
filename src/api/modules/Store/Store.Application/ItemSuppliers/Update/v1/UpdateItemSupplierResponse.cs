@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.ItemSuppliers.Update.v1;
 
 /// <summary>
-/// Response after updating an item-supplier relationship.
+/// Response returned after updating an item-supplier relationship.
 /// </summary>
-public sealed record UpdateItemSupplierResponse(
-    DefaultIdType Id
-);
+/// <param name="Id">The identifier of the updated item-supplier relationship.</param>
+public record UpdateItemSupplierResponse(DefaultIdType Id);
+

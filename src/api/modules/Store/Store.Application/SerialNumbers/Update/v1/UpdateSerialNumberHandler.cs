@@ -77,6 +77,6 @@ public class UpdateSerialNumberHandler(
             new GetSerialNumberByIdSpec(request.Id),
             cancellationToken);
 
-        return new UpdateSerialNumberResponse(updatedSerialNumber!.Adapt<SerialNumberResponse>());
+        return new UpdateSerialNumberResponse(updatedSerialNumber!.Id);
     }
 }

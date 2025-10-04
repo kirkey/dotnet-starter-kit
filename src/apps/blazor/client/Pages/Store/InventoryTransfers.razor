@@ -44,7 +44,13 @@
 
     <EditFormContent Context="context">
         <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.Name" For="@(() => context.Name)" Label="Name" Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
             <MudTextField @bind-Value="context.TransferNumber" For="@(() => context.TransferNumber)" Label="Transfer Number" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" For="@(() => context.Description)" Label="Description" Lines="2" />
         </MudItem>
         <MudItem xs="12" md="6">
             <MudSelect @bind-Value="context.TransferType" For="@(() => context.TransferType)" Label="Transfer Type" Required="true">
@@ -52,6 +58,16 @@
                 <MudSelectItem Value="@("Emergency")">Emergency</MudSelectItem>
                 <MudSelectItem Value="@("Replenishment")">Replenishment</MudSelectItem>
                 <MudSelectItem Value="@("Return")">Return</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect @bind-Value="context.Status" For="@(() => context.Status)" Label="Status" Required="true">
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("InTransit")">In Transit</MudSelectItem>
+                <MudSelectItem Value="@("Completed")">Completed</MudSelectItem>
+                <MudSelectItem Value="@("Cancelled")">Cancelled</MudSelectItem>
             </MudSelect>
         </MudItem>
         <MudItem xs="12" md="6">
@@ -79,6 +95,9 @@
         </MudItem>
         <MudItem xs="12" md="6">
             <MudTextField @bind-Value="context.TrackingNumber" For="@(() => context.TrackingNumber)" Label="Tracking Number" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Reason" For="@(() => context.Reason)" Label="Reason" Required="true" />
         </MudItem>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />

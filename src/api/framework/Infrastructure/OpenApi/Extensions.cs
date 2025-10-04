@@ -22,6 +22,11 @@ public static class Extensions
                 options.OperationFilter<SwaggerDefaultValues>();
                 // Ensure unique schema Ids across modules by using fully qualified type names
                 // options.CustomSchemaIds(t => t.FullName);
+                
+                // Map decimal type to string in OpenAPI schema to preserve precision
+                options.MapType<decimal>(() => new OpenApiSchema { Type = "number", Format = "decimal" });
+                options.MapType<decimal?>(() => new OpenApiSchema { Type = "number", Format = "decimal", Nullable = true });
+                
                 options.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,

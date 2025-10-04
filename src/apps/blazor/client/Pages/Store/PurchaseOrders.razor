@@ -118,16 +118,16 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="3">
-                <MudNumericField T="decimal" @bind-Value="context.TotalAmount" Label="Total Amount" ReadOnly Immediate="true" Format="N2" />
+                <MudNumericField T="decimal?" @bind-Value="context.TotalAmount" Label="Total Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
             <MudItem xs="12" sm="6" md="3">
-                <MudNumericField T="decimal" @bind-Value="context.TaxAmount" Label="Tax Amount" ReadOnly Immediate="true" Format="N2" />
+                <MudNumericField T="decimal?" @bind-Value="context.TaxAmount" Label="Tax Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
             <MudItem xs="12" sm="6" md="3">
-                <MudNumericField T="decimal" @bind-Value="context.DiscountAmount" Label="Discount Amount" ReadOnly Immediate="true" Format="N2" />
+                <MudNumericField T="decimal?" @bind-Value="context.DiscountAmount" Label="Discount Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
             <MudItem xs="12" sm="6" md="3">
-                <MudNumericField T="decimal" @bind-Value="context.NetAmount" Label="Net Amount" ReadOnly Immediate="true" Format="N2" />
+                <MudNumericField T="decimal?" @bind-Value="context.NetAmount" Label="Net Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
         }
 
@@ -142,7 +142,7 @@
             <MudTextField Label="Contact Phone" For="@(() => context.ContactPhone)" @bind-Value="context.ContactPhone" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudSwitch T="bool" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
+            <MudSwitch T="bool?" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
         </MudItem>
 
 

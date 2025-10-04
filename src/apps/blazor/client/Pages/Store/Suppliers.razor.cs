@@ -59,8 +59,4 @@ public partial class Suppliers
 /// Inherits from UpdateSupplierCommand to ensure proper mapping with the API.
 /// Includes contact info, address, payment terms, status, and notes.
 /// </summary>
-public partial class SupplierViewModel : UpdateSupplierCommand
-{
-    public string? Code { get; set; }
-    public bool? IsActive { get; set; }
-}
+public partial class SupplierViewModel : UpdateSupplierCommand;

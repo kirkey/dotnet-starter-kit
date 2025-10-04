@@ -1,4 +1,7 @@
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Update.v1;
 
-public sealed record UpdatePurchaseOrderResponse(DefaultIdType Id);
-
+/// <summary>
+/// Response returned after updating a purchase order.
+/// </summary>
+/// <param name="Id">The identifier of the updated purchase order.</param>
+public record UpdatePurchaseOrderResponse(DefaultIdType Id);

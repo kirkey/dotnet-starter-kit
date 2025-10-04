@@ -31,7 +31,7 @@ public class CreateInventoryTransactionHandler(
             request.Quantity,
             request.QuantityBefore,
             request.UnitCost,
-            request.TransactionDate,
+            request.TransactionDate ?? DateTime.Now,
             request.Reference,
             null, // notes parameter
             request.PerformedBy,

@@ -58,9 +58,4 @@ public partial class ItemSuppliers
 /// ViewModel for Item Supplier add/edit operations.
 /// Inherits from UpdateItemSupplierCommand to ensure proper mapping with the API.
 /// </summary>
-public partial class ItemSupplierViewModel : UpdateItemSupplierCommand
-{
-    public DefaultIdType ItemId { get; set;} = DefaultIdType.Empty;
-    public DefaultIdType? SupplierId { get; set;}
-    
-}
+public partial class ItemSupplierViewModel : UpdateItemSupplierCommand;

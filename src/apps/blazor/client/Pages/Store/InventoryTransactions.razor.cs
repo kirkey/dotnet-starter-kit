@@ -71,4 +71,7 @@ public partial class InventoryTransactions
 /// ViewModel for Inventory Transaction add/edit operations.
 /// Inherits from CreateInventoryTransactionCommand to ensure proper mapping with the API.
 /// </summary>
-public partial class InventoryTransactionViewModel : CreateInventoryTransactionCommand;
+public partial class InventoryTransactionViewModel : CreateInventoryTransactionCommand
+{
+    public string? ReferenceType { get; set; }
+}

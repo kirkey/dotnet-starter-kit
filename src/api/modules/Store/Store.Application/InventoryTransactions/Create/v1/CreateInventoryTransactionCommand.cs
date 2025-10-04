@@ -4,7 +4,7 @@ public class CreateInventoryTransactionCommand : IRequest<CreateInventoryTransac
 {
     public string TransactionNumber { get; set; } = default!;
     public DefaultIdType ItemId { get; set; }
-    public DefaultIdType? WarehouseId { get; set; }
+    public DefaultIdType WarehouseId { get; set; }
     public DefaultIdType? WarehouseLocationId { get; set; }
     public DefaultIdType? PurchaseOrderId { get; set; }
     public string TransactionType { get; set; } = default!;
@@ -12,7 +12,7 @@ public class CreateInventoryTransactionCommand : IRequest<CreateInventoryTransac
     public int Quantity { get; set; }
     public int QuantityBefore { get; set; }
     public decimal UnitCost { get; set; }
-    public DateTime TransactionDate { get; set; }
+    public DateTime? TransactionDate { get; set; }
     public string? Reference { get; set; }
     public string? PerformedBy { get; set; }
     public bool IsApproved { get; set; }

@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.LotNumbers.Update.v1;
 
 /// <summary>
-/// Response after updating a lot number.
+/// Response returned after updating a lot number.
 /// </summary>
-public sealed record UpdateLotNumberResponse(
-    DefaultIdType Id
-);
+/// <param name="Id">The identifier of the updated lot number.</param>
+public record UpdateLotNumberResponse(DefaultIdType Id);
+

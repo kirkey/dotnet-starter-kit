@@ -64,6 +64,5 @@ public sealed class StoreDbContext(
     {
         base.ConfigureConventions(configurationBuilder);
         configurationBuilder.Properties<decimal>().HavePrecision(16, 2);
-        configurationBuilder.Properties<double>().HavePrecision(8, 2);
     }
 }

@@ -44,17 +44,18 @@ public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateI
         RuleFor(x => x.TransferType)
             .NotEmpty()
             .WithMessage("Transfer type is required")
-            .MaximumLength(100)
-            .WithMessage("Transfer type must not exceed 100 characters");
+            .Must(type => new[] { "Standard", "Emergency", "Replenishment", "Return" }.Contains(type))
+            .WithMessage("Transfer type must be one of: Standard, Emergency, Replenishment, Return");
 
         RuleFor(x => x.Priority)
             .NotEmpty()
             .WithMessage("Priority is required")
-            .Must(p => new[] { "Low", "Normal", "High", "Critical" }.Contains(p))
-            .WithMessage("Priority must be one of: Low, Normal, High, Critical");
+            .Must(p => new[] { "Low", "Normal", "High", "Urgent" }.Contains(p))
+            .WithMessage("Priority must be one of: Low, Normal, High, Urgent");
 
         RuleFor(x => x.TransportMethod)
             .MaximumLength(100)
+            .WithMessage("Transport method must not exceed 100 characters")
             .When(x => !string.IsNullOrEmpty(x.TransportMethod));
 
         RuleFor(x => x.Name)
