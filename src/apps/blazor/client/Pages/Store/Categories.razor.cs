@@ -67,18 +67,8 @@ public partial class Categories
 }
 
 /// <summary>
-/// ViewModel used by the Categories page for add/edit operations; maps to UpdateCategoryCommand for update and to CreateCategoryCommand for create.
+/// ViewModel used by the Categories page for add/edit operations.
+/// Inherits from UpdateCategoryCommand to ensure proper mapping with the API.
 /// Includes optional Image payload for upload and ImageUrl filename storage.
 /// </summary>
-public class CategoryViewModel
-{
-    public DefaultIdType Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-    public string? Code { get; set; }
-    public DefaultIdType? ParentCategoryId { get; set; }
-    public bool? IsActive { get; set; }
-    public int? SortOrder { get; set; }
-    public string? ImageUrl { get; set; }
-    public FileUploadCommand? Image { get; set; }
-}
+public partial class CategoryViewModel : UpdateCategoryCommand;

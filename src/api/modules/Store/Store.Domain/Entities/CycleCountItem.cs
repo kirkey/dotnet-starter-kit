@@ -80,7 +80,7 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
         if (cycleCountId == default) throw new ArgumentException("CycleCountId is required", nameof(cycleCountId));
         if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (systemQuantity < 0) throw new ArgumentException("SystemQuantity must be zero or greater", nameof(systemQuantity));
-        if (countedQuantity.HasValue && countedQuantity.Value < 0) throw new ArgumentException("CountedQuantity must be zero or greater when provided", nameof(countedQuantity));
+        if (countedQuantity is < 0) throw new ArgumentException("CountedQuantity must be zero or greater when provided", nameof(countedQuantity));
 
         Id = id;
         CycleCountId = cycleCountId;

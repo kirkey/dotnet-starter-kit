@@ -2,13 +2,10 @@
 
 public partial class Users
 {
-    [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
-    [Inject]
-    protected IAuthorizationService AuthService { get; set; } = default!;
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [Inject] protected IAuthorizationService AuthService { get; set; } = default!;
 
-    [Inject]
-    protected IClient UsersClient { get; set; } = default!;
+    [Inject] protected IClient UsersClient { get; set; } = default!;
 
     protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = default!;
 

@@ -26,6 +26,7 @@ public partial class PurchaseOrderItemDialog
             if (Model.Id == Guid.Empty)
             {
                 // Add new item
+                // TODO: Remove explicit casts after regenerating API client with decimal types
                 var command = new AddPurchaseOrderItemCommand
                 {
                     PurchaseOrderId = PurchaseOrderId,

@@ -39669,16 +39669,46 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? Barcode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
-        public double? UnitPrice { get; set; } = default!;
+        public decimal? UnitPrice { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public double? Cost { get; set; } = default!;
+        public decimal? Cost { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumStock")]
+        public int? MinimumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumStock")]
+        public int? MaximumStock { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderPoint")]
+        public int? ReorderPoint { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reorderQuantity")]
+        public int? ReorderQuantity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("leadTimeDays")]
+        public int? LeadTimeDays { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
         public System.Guid? CategoryId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
         public System.Guid? SupplierId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("unitOfMeasure")]
+        public string? UnitOfMeasure { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPerishable")]
+        public bool? IsPerishable { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isSerialTracked")]
+        public bool? IsSerialTracked { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isLotTracked")]
+        public bool? IsLotTracked { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("shelfLifeDays")]
+        public int? ShelfLifeDays { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("brand")]
         public string? Brand { get; set; } = default!;
@@ -39689,8 +39719,23 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("manufacturerPartNumber")]
         public string? ManufacturerPartNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("unitOfMeasure")]
-        public string? UnitOfMeasure { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("weight")]
+        public double? Weight { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weightUnit")]
+        public string? WeightUnit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("length")]
+        public double? Length { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("width")]
+        public double? Width { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("height")]
+        public double? Height { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dimensionUnit")]
+        public string? DimensionUnit { get; set; } = default!;
 
     }
 
@@ -39897,13 +39942,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? OrderNumber { get; set; } = "PO-0001";
 
         [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
+        public System.Guid? SupplierId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("orderDate")]
-        public System.DateTime OrderDate { get; set; } = default!;
+        public System.DateTime? OrderDate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expectedDeliveryDate")]
         public System.DateTime? ExpectedDeliveryDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actualDeliveryDate")]
+        public System.DateTime? ActualDeliveryDate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = "Draft";
@@ -39921,7 +39969,13 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? ContactPhone { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("isUrgent")]
-        public bool IsUrgent { get; set; } = false;
+        public bool? IsUrgent { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxAmount")]
+        public double? TaxAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
+        public double? DiscountAmount { get; set; } = default!;
 
     }
 

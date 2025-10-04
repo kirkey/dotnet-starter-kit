@@ -127,7 +127,7 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
         if (unitCost < 0) throw new ArgumentException("UnitCost cannot be negative", nameof(unitCost));
         if (leadTimeDays < 0) throw new ArgumentException("LeadTimeDays cannot be negative", nameof(leadTimeDays));
         if (minimumOrderQuantity <= 0) throw new ArgumentException("MinimumOrderQuantity must be positive", nameof(minimumOrderQuantity));
-        if (packagingQuantity.HasValue && packagingQuantity.Value <= 0) throw new ArgumentException("PackagingQuantity must be positive", nameof(packagingQuantity));
+        if (packagingQuantity is <= 0) throw new ArgumentException("PackagingQuantity must be positive", nameof(packagingQuantity));
 
         Id = id;
         ItemId = itemId;

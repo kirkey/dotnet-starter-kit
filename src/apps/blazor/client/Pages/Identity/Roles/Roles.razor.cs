@@ -1,6 +1,6 @@
 ﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
 
-public partial class Roles : ComponentBase
+public partial class Roles
 {
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Inject] protected IAuthorizationService AuthService { get; set; } = default!;

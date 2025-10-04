@@ -115,7 +115,7 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(binType)) throw new ArgumentException("BinType is required", nameof(binType));
         if (binType.Length > 50) throw new ArgumentException("BinType must not exceed 50 characters", nameof(binType));
 
-        if (capacity.HasValue && capacity.Value < 0) throw new ArgumentException("Capacity cannot be negative", nameof(capacity));
+        if (capacity is < 0) throw new ArgumentException("Capacity cannot be negative", nameof(capacity));
         if (priority < 0) throw new ArgumentException("Priority cannot be negative", nameof(priority));
 
         Id = id;

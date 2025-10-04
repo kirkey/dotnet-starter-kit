@@ -50,15 +50,8 @@ public partial class SerialNumbers
     }
 }
 
-public class SerialNumberViewModel
-{
-    public DefaultIdType Id { get; set; }
-    public string? SerialNumberValue { get; set; }
-    public DefaultIdType ItemId { get; set; }
-    public string? Status { get; set; }
-    public DateTime? ReceiptDate { get; set; }
-    public DateTime? ManufactureDate { get; set; }
-    public DateTime? WarrantyExpirationDate { get; set; }
-    public string? ExternalReference { get; set; }
-    public string? Notes { get; set; }
-}
+/// <summary>
+/// ViewModel for Serial Number add/edit operations.
+/// Inherits from UpdateSerialNumberCommand to ensure proper mapping with the API.
+/// </summary>
+public partial class SerialNumberViewModel : UpdateSerialNumberCommand;

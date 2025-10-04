@@ -64,12 +64,8 @@ public partial class PutAwayTasks
     }
 }
 
-public class PutAwayTaskViewModel
-{
-    public string? TaskNumber { get; set; }
-    public DefaultIdType WarehouseId { get; set; }
-    public DefaultIdType? GoodsReceiptId { get; set; }
-    public int Priority { get; set; }
-    public string? PutAwayStrategy { get; set; }
-    public string? Notes { get; set; }
-}
+/// <summary>
+/// ViewModel for Put Away Task add/edit operations.
+/// Inherits from CreatePutAwayTaskCommand (no update operation exists for put-away tasks).
+/// </summary>
+public partial class PutAwayTaskViewModel : CreatePutAwayTaskCommand;

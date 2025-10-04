@@ -64,13 +64,8 @@ public partial class StockAdjustments
     }
 }
 
-public class StockAdjustmentViewModel
-{
-    public DefaultIdType ItemId { get; set; }
-    public DefaultIdType WarehouseLocationId { get; set; }
-    public string? AdjustmentType { get; set; }
-    public int QuantityAdjusted { get; set; }
-    public string? Reason { get; set; }
-    public DateTime? AdjustmentDate { get; set; }
-    public string? Notes { get; set; }
-}
+/// <summary>
+/// ViewModel for Stock Adjustment add/edit operations.
+/// Inherits from UpdateStockAdjustmentCommand to ensure proper mapping with the API.
+/// </summary>
+public partial class StockAdjustmentViewModel : UpdateStockAdjustmentCommand;

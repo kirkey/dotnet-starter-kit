@@ -55,62 +55,8 @@ public partial class Suppliers
 }
 
 /// <summary>
-/// ViewModel for Supplier add/edit operations. Maps to CreateSupplierCommand for creation and UpdateSupplierCommand for updates.
+/// ViewModel for Supplier add/edit operations.
+/// Inherits from UpdateSupplierCommand to ensure proper mapping with the API.
 /// Includes contact info, address, payment terms, status, and notes.
 /// </summary>
-public class SupplierViewModel
-{
-    /// <summary>Unique supplier identifier.</summary>
-    public DefaultIdType Id { get; set; }
-
-    /// <summary>Supplier display name. Required; max length 200.</summary>
-    public string? Name { get; set; }
-
-    /// <summary>Optional description up to 2000 chars.</summary>
-    public string? Description { get; set; }
-
-    /// <summary>Unique supplier code. Required; max length 50.</summary>
-    public string? Code { get; set; }
-
-    /// <summary>Primary contact person. Required; max length 100.</summary>
-    public string? ContactPerson { get; set; }
-
-    /// <summary>Contact email. Required; max length 255.</summary>
-    public string? Email { get; set; }
-
-    /// <summary>Contact phone. Required; max length 50.</summary>
-    public string? Phone { get; set; }
-
-    /// <summary>Street address. Required; max length 500.</summary>
-    public string? Address { get; set; }
-
-    /// <summary>City. Required; max length 100.</summary>
-    public string? City { get; set; }
-
-    /// <summary>State or region. Optional; max length 100.</summary>
-    public string? State { get; set; }
-
-    /// <summary>Country. Required; max length 100.</summary>
-    public string? Country { get; set; }
-
-    /// <summary>Postal or ZIP code. Optional; max length 20.</summary>
-    public string? PostalCode { get; set; }
-
-    /// <summary>Website URL. Optional; max length 255.</summary>
-    public string? Website { get; set; }
-
-    /// <summary>Optional credit limit; must be >= 0 when provided.</summary>
-    public decimal? CreditLimit { get; set; }
-
-    /// <summary>Payment terms in days; default 30; must be >= 0.</summary>
-    public int PaymentTermsDays { get; set; } = 30;
-
-    /// <summary>Activation status; default true.</summary>
-    public bool IsActive { get; set; } = true;
-
-    /// <summary>Rating between 0 and 5; default 0.</summary>
-    public decimal Rating { get; set; }
-
-    /// <summary>Optional notes up to 2000 chars.</summary>
-    public string? Notes { get; set; }
-}
+public partial class SupplierViewModel : UpdateSupplierCommand;

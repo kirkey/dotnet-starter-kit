@@ -122,18 +122,6 @@ public partial class InventoryTransfers
 
 /// <summary>
 /// ViewModel for InventoryTransfer add/edit operations.
+/// Inherits from UpdateInventoryTransferCommand to ensure proper mapping with the API.
 /// </summary>
-public class InventoryTransferViewModel
-{
-    public string? TransferNumber { get; set; }
-    public DefaultIdType FromWarehouseId { get; set; }
-    public DefaultIdType ToWarehouseId { get; set; }
-    public DateTime? TransferDate { get; set; }
-    public DateTime? ExpectedArrivalDate { get; set; }
-    public DateTime? ActualArrivalDate { get; set; }
-    public string? TransferType { get; set; }
-    public string? Priority { get; set; }
-    public string? TransportMethod { get; set; }
-    public string? TrackingNumber { get; set; }
-    public string? Notes { get; set; }
-}
+public partial class InventoryTransferViewModel : UpdateInventoryTransferCommand;

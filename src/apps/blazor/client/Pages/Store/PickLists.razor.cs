@@ -63,11 +63,8 @@ public partial class PickLists
     }
 }
 
-public class PickListViewModel
-{
-    public string? PickListNumber { get; set; }
-    public DefaultIdType WarehouseId { get; set; }
-    public string? PickingType { get; set; }
-    public int Priority { get; set; }
-    public string? ReferenceNumber { get; set; }
-}
+/// <summary>
+/// ViewModel for Pick List add/edit operations.
+/// Inherits from CreatePickListCommand (no update operation exists for pick lists).
+/// </summary>
+public partial class PickListViewModel : CreatePickListCommand;

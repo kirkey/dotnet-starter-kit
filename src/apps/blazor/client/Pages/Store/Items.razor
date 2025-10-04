@@ -32,37 +32,37 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="double" @bind-Value="context.UnitPrice" For="@(() => context.UnitPrice)" Label="Unit Price" Immediate="true" Required />
+            <MudNumericField T="decimal?" @bind-Value="context.UnitPrice" For="@(() => context.UnitPrice)" Label="Unit Price" Immediate="true" Required />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="double" @bind-Value="context.Cost" For="@(() => context.Cost)" Label="Cost" Immediate="true" Required />
+            <MudNumericField T="decimal?" @bind-Value="context.Cost" For="@(() => context.Cost)" Label="Cost" Immediate="true" Required />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int" @bind-Value="context.MinimumStock" For="@(() => context.MinimumStock)" Label="Min Stock" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.MinimumStock" For="@(() => context.MinimumStock)" Label="Min Stock" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int" @bind-Value="context.MaximumStock" For="@(() => context.MaximumStock)" Label="Max Stock" Immediate="true" />
-        </MudItem>
-
-        <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int" @bind-Value="context.ReorderPoint" For="@(() => context.ReorderPoint)" Label="Reorder Point" Immediate="true" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int" @bind-Value="context.ReorderQuantity" For="@(() => context.ReorderQuantity)" Label="Reorder Qty" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.MaximumStock" For="@(() => context.MaximumStock)" Label="Max Stock" Immediate="true" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
-            <MudSwitch T="bool" @bind-Checked="context.IsPerishable" Color="Color.Primary">Perishable</MudSwitch>
+            <MudNumericField T="int?" @bind-Value="context.ReorderPoint" For="@(() => context.ReorderPoint)" Label="Reorder Point" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="int?" @bind-Value="context.ShelfLifeDays" For="@(() => context.ShelfLifeDays)" Label="Shelf Life (Days)" Disabled="@(!context.IsPerishable)" />
+            <MudNumericField T="int?" @bind-Value="context.ReorderQuantity" For="@(() => context.ReorderQuantity)" Label="Reorder Qty" Immediate="true" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
-            <MudSwitch T="bool" @bind-Checked="context.IsSerialTracked" Color="Color.Primary">Serial Tracked</MudSwitch>
+            <MudSwitch T="bool?" @bind-Checked="context.IsPerishable" Color="Color.Primary">Perishable</MudSwitch>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudSwitch T="bool" @bind-Checked="context.IsLotTracked" Color="Color.Primary">Lot Tracked</MudSwitch>
+            <MudNumericField T="int?" @bind-Value="context.ShelfLifeDays" For="@(() => context.ShelfLifeDays)" Label="Shelf Life (Days)" Disabled="@(context.IsPerishable != true)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch T="bool?" @bind-Checked="context.IsSerialTracked" Color="Color.Primary">Serial Tracked</MudSwitch>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch T="bool?" @bind-Checked="context.IsLotTracked" Color="Color.Primary">Lot Tracked</MudSwitch>
         </MudItem>
 
         <MudItem xs="12" md="4">
@@ -73,7 +73,7 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="3">
-            <MudNumericField T="double" @bind-Value="context.Weight" For="@(() => context.Weight)" Label="Weight" Immediate="true" />
+            <MudNumericField T="decimal?" @bind-Value="context.Weight" For="@(() => context.Weight)" Label="Weight" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
             <MudTextField Label="Weight Unit" For="@(() => context.WeightUnit)" @bind-Value="context.WeightUnit" />

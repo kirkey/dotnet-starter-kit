@@ -2,6 +2,10 @@ using Store.Domain.Exceptions.Items;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Update.v1;
 
+/// <summary>
+/// Handler for UpdateItemCommand.
+/// Updates Item entity by calling all three update methods: Update, UpdateStockLevels, and UpdatePhysicalAttributes.
+/// </summary>
 public sealed class UpdateItemHandler(
     ILogger<UpdateItemHandler> logger,
     [FromKeyedServices("store:items")] IRepository<Item> repository)
@@ -15,6 +19,7 @@ public sealed class UpdateItemHandler(
         if (item is null)
             throw new ItemNotFoundException(request.Id);
 
+        // Update basic details
         item.Update(
             request.Name,
             request.Description,
@@ -28,6 +33,30 @@ public sealed class UpdateItemHandler(
             request.Manufacturer,
             request.ManufacturerPartNumber,
             request.UnitOfMeasure);
+
+        // Update stock control parameters
+        item.UpdateStockLevels(
+            request.MinimumStock,
+            request.MaximumStock,
+            request.ReorderPoint,
+            request.ReorderQuantity,
+            request.LeadTimeDays);
+
+        // Update physical attributes
+        item.UpdatePhysicalAttributes(
+            request.Weight,
+            request.WeightUnit,
+            request.Length,
+            request.Width,
+            request.Height,
+            request.DimensionUnit);
+
+        // Update tracking settings
+        item.UpdateTrackingSettings(
+            request.IsPerishable,
+            request.IsSerialTracked,
+            request.IsLotTracked,
+            request.ShelfLifeDays);
 
         await repository.UpdateAsync(item, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("item updated {ItemId}", item.Id);

@@ -1,6 +1,6 @@
 ﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Users;
 
-public partial class Audit : ComponentBase
+public partial class Audit
 {
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
     [Parameter] public DefaultIdType Id { get; set; }

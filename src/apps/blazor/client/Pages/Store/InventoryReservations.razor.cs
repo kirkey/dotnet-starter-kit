@@ -48,20 +48,8 @@ public partial class InventoryReservations
     }
 }
 
-public class InventoryReservationViewModel
-{
-    public DefaultIdType Id { get; set; }
-    public string? ReservationNumber { get; set; }
-    public DefaultIdType ItemId { get; set; }
-    public DefaultIdType WarehouseId { get; set; }
-    public DefaultIdType? WarehouseLocationId { get; set; }
-    public DefaultIdType? BinId { get; set; }
-    public DefaultIdType? LotNumberId { get; set; }
-    public int QuantityReserved { get; set; }
-    public string? ReservationType { get; set; }
-    public string? Status { get; set; }
-    public string? ReferenceNumber { get; set; }
-    public DateTime? ReservationDate { get; set; }
-    public DateTime? ExpirationDate { get; set; }
-    public string? ReservedBy { get; set; }
-}
+/// <summary>
+/// ViewModel for Inventory Reservation add/edit operations.
+/// Inherits from CreateInventoryReservationCommand (no update operation exists for reservations).
+/// </summary>
+public partial class InventoryReservationViewModel : CreateInventoryReservationCommand;

@@ -269,16 +269,16 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         if (reorderQuantity < 0) throw new ArgumentException("ReorderQuantity must be zero or greater", nameof(reorderQuantity));
         if (leadTimeDays < 0) throw new ArgumentException("LeadTimeDays must be zero or greater", nameof(leadTimeDays));
 
-        if (isPerishable && shelfLifeDays.HasValue && shelfLifeDays.Value <= 0)
+        if (isPerishable && shelfLifeDays is <= 0)
             throw new ArgumentException("ShelfLifeDays must be greater than zero for perishable items", nameof(shelfLifeDays));
 
         if (weight < 0m) throw new ArgumentException("Weight must be zero or greater", nameof(weight));
         if (weight > 0 && string.IsNullOrWhiteSpace(weightUnit)) throw new ArgumentException("WeightUnit is required when Weight > 0", nameof(weightUnit));
         if (weightUnit is { Length: > 20 }) throw new ArgumentException("WeightUnit must not exceed 20 characters", nameof(weightUnit));
 
-        if (length.HasValue && length.Value < 0m) throw new ArgumentException("Length must be zero or greater", nameof(length));
-        if (width.HasValue && width.Value < 0m) throw new ArgumentException("Width must be zero or greater", nameof(width));
-        if (height.HasValue && height.Value < 0m) throw new ArgumentException("Height must be zero or greater", nameof(height));
+        if (length is < 0m) throw new ArgumentException("Length must be zero or greater", nameof(length));
+        if (width is < 0m) throw new ArgumentException("Width must be zero or greater", nameof(width));
+        if (height is < 0m) throw new ArgumentException("Height must be zero or greater", nameof(height));
         if ((length.HasValue || width.HasValue || height.HasValue) && string.IsNullOrWhiteSpace(dimensionUnit))
             throw new ArgumentException("DimensionUnit is required when dimensions are specified", nameof(dimensionUnit));
         if (dimensionUnit is { Length: > 20 }) throw new ArgumentException("DimensionUnit must not exceed 20 characters", nameof(dimensionUnit));
@@ -626,6 +626,61 @@ public sealed class Item : AuditableEntity, IAggregateRoot
             if (dimensionUnit is { Length: > 20 }) throw new ArgumentException("DimensionUnit must not exceed 20 characters", nameof(dimensionUnit));
             DimensionUnit = dimensionUnit;
             isUpdated = true;
+        }
+
+        if (isUpdated)
+        {
+            QueueDomainEvent(new ItemUpdated { Item = this });
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Updates tracking settings for perishable items, serial tracking, and lot tracking.
+    /// </summary>
+    public Item UpdateTrackingSettings(
+        bool? isPerishable,
+        bool? isSerialTracked,
+        bool? isLotTracked,
+        int? shelfLifeDays)
+    {
+        bool isUpdated = false;
+
+        if (isPerishable.HasValue && IsPerishable != isPerishable.Value)
+        {
+            IsPerishable = isPerishable.Value;
+            isUpdated = true;
+        }
+
+        if (isSerialTracked.HasValue && IsSerialTracked != isSerialTracked.Value)
+        {
+            IsSerialTracked = isSerialTracked.Value;
+            isUpdated = true;
+        }
+
+        if (isLotTracked.HasValue && IsLotTracked != isLotTracked.Value)
+        {
+            IsLotTracked = isLotTracked.Value;
+            isUpdated = true;
+        }
+
+        if (shelfLifeDays.HasValue && ShelfLifeDays != shelfLifeDays.Value)
+        {
+            var perishable = isPerishable ?? IsPerishable;
+            if (perishable && shelfLifeDays.Value <= 0)
+                throw new ArgumentException("ShelfLifeDays must be greater than zero for perishable items", nameof(shelfLifeDays));
+            
+            ShelfLifeDays = shelfLifeDays.Value;
+            isUpdated = true;
+        }
+
+        // Validate: if item is perishable, ShelfLifeDays should be set
+        var finalPerishable = isPerishable ?? IsPerishable;
+        var finalShelfLifeDays = shelfLifeDays ?? ShelfLifeDays;
+        if (finalPerishable && !finalShelfLifeDays.HasValue)
+        {
+            throw new ArgumentException("ShelfLifeDays is required when item is perishable");
         }
 
         if (isUpdated)

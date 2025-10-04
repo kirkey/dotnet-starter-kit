@@ -228,24 +228,7 @@ public partial class PurchaseOrders
 
 /// <summary>
 /// ViewModel used by the PurchaseOrders page for add/edit operations.
-/// Maps to UpdatePurchaseOrderCommand for update and to CreatePurchaseOrderCommand for create.
+/// Inherits from UpdatePurchaseOrderCommand to ensure proper mapping with the API.
 /// </summary>
-public class PurchaseOrderViewModel
-{
-    public DefaultIdType Id { get; set; }
-    public string? OrderNumber { get; set; }
-    public DefaultIdType SupplierId { get; set; }
-    public DateTime? OrderDate { get; set; }
-    public DateTime? ExpectedDeliveryDate { get; set; }
-    public DateTime? ActualDeliveryDate { get; set; }
-    public string? Status { get; set; }
-    public decimal TotalAmount { get; set; }
-    public decimal TaxAmount { get; set; }
-    public decimal DiscountAmount { get; set; }
-    public decimal NetAmount { get; set; }
-    public string? DeliveryAddress { get; set; }
-    public string? ContactPerson { get; set; }
-    public string? ContactPhone { get; set; }
-    public bool IsUrgent { get; set; }
-}
+public partial class PurchaseOrderViewModel : UpdatePurchaseOrderCommand;
 

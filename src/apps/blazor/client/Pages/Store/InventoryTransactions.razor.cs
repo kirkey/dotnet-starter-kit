@@ -24,8 +24,8 @@ public partial class InventoryTransactions
                 new EntityField<InventoryTransactionResponse>(x => x.ItemName, "Item", "ItemName"),
                 new EntityField<InventoryTransactionResponse>(x => x.ItemSku, "SKU", "ItemSku"),
                 new EntityField<InventoryTransactionResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
-                new EntityField<InventoryTransactionResponse>(x => x.Quantity, "Quantity", "Quantity", typeof(double)),
-                new EntityField<InventoryTransactionResponse>(x => x.UnitCost, "Unit Cost", "UnitCost", typeof(double?)),
+                new EntityField<InventoryTransactionResponse>(x => x.Quantity, "Quantity", "Quantity", typeof(decimal)),
+                new EntityField<InventoryTransactionResponse>(x => x.UnitCost, "Unit Cost", "UnitCost", typeof(decimal?)),
                 new EntityField<InventoryTransactionResponse>(x => x.TransactionDate, "Date", "TransactionDate", typeof(DateTime))
             ],
             enableAdvancedSearch: true,
@@ -67,19 +67,8 @@ public partial class InventoryTransactions
     }
 }
 
-public class InventoryTransactionViewModel
-{
-    public string? TransactionNumber { get; set; }
-    public DefaultIdType ItemId { get; set; }
-    public DefaultIdType WarehouseId { get; set; }
-    public DefaultIdType? WarehouseLocationId { get; set; }
-    public DefaultIdType? BinId { get; set; }
-    public DefaultIdType? LotNumberId { get; set; }
-    public double Quantity { get; set; }
-    public DateTime? TransactionDate { get; set; }
-    public string? TransactionType { get; set; }
-    public string? ReferenceType { get; set; }
-    public DefaultIdType? ReferenceId { get; set; }
-    public double? UnitCost { get; set; }
-    public string? Notes { get; set; }
-}
+/// <summary>
+/// ViewModel for Inventory Transaction add/edit operations.
+/// Inherits from CreateInventoryTransactionCommand to ensure proper mapping with the API.
+/// </summary>
+public partial class InventoryTransactionViewModel : CreateInventoryTransactionCommand;

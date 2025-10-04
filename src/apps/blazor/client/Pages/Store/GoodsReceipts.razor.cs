@@ -45,10 +45,8 @@ public partial class GoodsReceipts
     }
 }
 
-public class GoodsReceiptViewModel
-{
-    public string? ReceiptNumber { get; set; }
-    public DefaultIdType? PurchaseOrderId { get; set; }
-    public DateTime? ReceivedDate { get; set; }
-    public string? Notes { get; set; }
-}
+/// <summary>
+/// ViewModel for Goods Receipt add/edit operations.
+/// Inherits from CreateGoodsReceiptCommand (no update operation exists for goods receipts).
+/// </summary>
+public partial class GoodsReceiptViewModel : CreateGoodsReceiptCommand;

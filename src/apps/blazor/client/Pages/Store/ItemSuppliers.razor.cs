@@ -19,12 +19,12 @@ public partial class ItemSuppliers
             [
                 new EntityField<ItemSupplierResponse>(x => x.ItemId, "Item", "ItemId"),
                 new EntityField<ItemSupplierResponse>(x => x.SupplierId, "Supplier", "SupplierId"),
-                new EntityField<ItemSupplierResponse>(x => x.UnitCost, "Unit Cost", "UnitCost", typeof(double)),
+                new EntityField<ItemSupplierResponse>(x => x.UnitCost, "Unit Cost", "UnitCost", typeof(decimal)),
                 new EntityField<ItemSupplierResponse>(x => x.LeadTimeDays, "Lead Time", "LeadTimeDays", typeof(int)),
                 new EntityField<ItemSupplierResponse>(x => x.IsPreferred, "Preferred", "IsPreferred", typeof(bool)),
                 new EntityField<ItemSupplierResponse>(x => x.IsActive, "Active", "IsActive", typeof(bool)),
                 new EntityField<ItemSupplierResponse>(x => x.ReliabilityRating, "Rating", "ReliabilityRating",
-                    typeof(double))
+                    typeof(decimal))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
@@ -54,18 +54,8 @@ public partial class ItemSuppliers
     }
 }
 
-public class ItemSupplierViewModel
-{
-    public DefaultIdType Id { get; set; }
-    public DefaultIdType ItemId { get; set; }
-    public DefaultIdType? SupplierId { get; set; }
-    public decimal UnitCost { get; set; }
-    public string? CurrencyCode { get; set; } = "USD";
-    public int LeadTimeDays { get; set; }
-    public int MinimumOrderQuantity { get; set; } = 1;
-    public int PackagingQuantity { get; set; } = 1;
-    public string? SupplierPartNumber { get; set; }
-    public decimal ReliabilityRating { get; set; }
-    public bool IsPreferred { get; set; }
-    public bool IsActive { get; set; } = true;
-}
+/// <summary>
+/// ViewModel for Item Supplier add/edit operations.
+/// Inherits from UpdateItemSupplierCommand to ensure proper mapping with the API.
+/// </summary>
+public partial class ItemSupplierViewModel : UpdateItemSupplierCommand;

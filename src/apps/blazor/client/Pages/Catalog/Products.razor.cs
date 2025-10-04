@@ -29,8 +29,9 @@ public partial class Products
             searchFunc: async filter =>
             {
                 var productFilter = filter.Adapt<SearchProductsCommand>();
-                productFilter.MinimumRate = Convert.ToDouble(SearchMinimumRate);
-                productFilter.MaximumRate = Convert.ToDouble(SearchMaximumRate);
+                // TODO: Remove casts after regenerating API client with decimal types
+                productFilter.MinimumRate = (double)SearchMinimumRate;
+                productFilter.MaximumRate = (double)SearchMaximumRate;
                 productFilter.BrandId = SearchBrandId;
                 var result = await _client.SearchProductsEndpointAsync("1", productFilter);
                 return result.Adapt<PaginationResponse<ProductResponse>>();

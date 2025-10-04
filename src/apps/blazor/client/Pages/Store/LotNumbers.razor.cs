@@ -51,16 +51,8 @@ public partial class LotNumbers
     }
 }
 
-public class LotNumberViewModel
-{
-    public DefaultIdType Id { get; set; }
-    public string? LotCode { get; set; }
-    public DefaultIdType ItemId { get; set; }
-    public DefaultIdType? SupplierId { get; set; }
-    public int QuantityReceived { get; set; }
-    public DateTime? ManufactureDate { get; set; }
-    public DateTime? ExpirationDate { get; set; }
-    public DateTime? ReceiptDate { get; set; }
-    public string? Status { get; set; }
-    public string? QualityNotes { get; set; }
-}
+/// <summary>
+/// ViewModel for Lot Number add/edit operations.
+/// Inherits from UpdateLotNumberCommand to ensure proper mapping with the API.
+/// </summary>
+public partial class LotNumberViewModel : UpdateLotNumberCommand;

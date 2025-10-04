@@ -88,6 +88,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     public decimal TotalAmount { get; private set; }
     public decimal TaxAmount { get; private set; }
     public decimal DiscountAmount { get; private set; }
+    public decimal ShippingCost { get; private set; }
     public decimal NetAmount { get; private set; }
     public string? DeliveryAddress { get; private set; }
     public string? ContactPerson { get; private set; }
@@ -434,7 +435,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     private void RecalculateTotals()
     {
         TotalAmount = Items.Sum(i => i.TotalPrice);
-        NetAmount = TotalAmount + TaxAmount - DiscountAmount;
+        NetAmount = TotalAmount + TaxAmount + ShippingCost - DiscountAmount;
     }
 
     /// <summary>
@@ -448,7 +449,42 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Total amount cannot be negative", nameof(totalAmount));
 
         TotalAmount = totalAmount;
-        NetAmount = TotalAmount + TaxAmount - DiscountAmount;
+        NetAmount = TotalAmount + TaxAmount + ShippingCost - DiscountAmount;
+        QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
+        return this;
+    }
+
+    /// <summary>
+    /// Updates the tax amount for the purchase order and recalculates net amount.
+    /// </summary>
+    public PurchaseOrder UpdateTaxAmount(decimal taxAmount)
+    {
+        if (taxAmount < 0m) throw new ArgumentException("Tax amount must be zero or greater", nameof(taxAmount));
+        
+        if (TaxAmount != taxAmount)
+        {
+            TaxAmount = taxAmount;
+            RecalculateTotals();
+            QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Updates the shipping cost for the purchase order and recalculates net amount.
+    /// </summary>
+    public PurchaseOrder UpdateShippingCost(decimal shippingCost)
+    {
+        if (shippingCost < 0m) throw new ArgumentException("Shipping cost must be zero or greater", nameof(shippingCost));
+        
+        if (ShippingCost != shippingCost)
+        {
+            ShippingCost = shippingCost;
+            RecalculateTotals();
+            QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
+        }
+
         QueueDomainEvent(new PurchaseOrderUpdated { PurchaseOrder = this });
         return this;
     }
