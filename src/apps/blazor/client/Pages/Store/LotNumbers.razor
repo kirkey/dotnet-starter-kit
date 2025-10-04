@@ -16,7 +16,8 @@
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <AutocompleteItem @bind-Value="context.ItemId"
+            <AutocompleteItem Value="context.ItemId"
+                             ValueChanged="@((Guid val) => context.ItemId = val)"
                              For="@(() => context.ItemId)"
                              Label="Item"
                              Variant="Variant.Filled"
@@ -24,7 +25,8 @@
         </MudItem>
 
         <MudItem xs="12" md="6">
-            <AutocompleteSupplier @bind-Value="context.SupplierId"
+            <AutocompleteSupplier Value="context.SupplierId"
+                                 ValueChanged="@((Guid? val) => context.SupplierId = val)"
                                  For="@(() => context.SupplierId)"
                                  Label="Supplier"
                                  Variant="Variant.Filled" />

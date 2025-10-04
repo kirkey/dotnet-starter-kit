@@ -48,7 +48,7 @@ public record UpdateInventoryTransferCommand : IRequest<UpdateInventoryTransferR
     /// Gets or sets the transfer date.
     /// </summary>
     [DefaultValue("2024-01-01")]
-    public DateTime TransferDate { get; set; }
+    public DateTime? TransferDate { get; set; }
 
     /// <summary>
     /// Gets or sets the expected arrival date.

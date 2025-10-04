@@ -54,7 +54,7 @@ public record UpdateLotNumberCommand : IRequest<UpdateLotNumberResponse>
     /// Gets or sets the receipt date.
     /// </summary>
     [DefaultValue("2025-10-04")]
-    public DateTime ReceiptDate { get; set; }
+    public DateTime? ReceiptDate { get; set; }
 
     /// <summary>
     /// Gets or sets the quantity received.

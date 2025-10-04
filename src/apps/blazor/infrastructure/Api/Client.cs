@@ -39852,7 +39852,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public System.Guid ToWarehouseId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transferDate")]
-        public System.DateTime TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
+        public System.DateTime? TransferDate { get; set; } = System.DateTime.Parse("2024-01-01");
 
         [System.Text.Json.Serialization.JsonPropertyName("expectedArrivalDate")]
         public System.DateTime? ExpectedArrivalDate { get; set; } = default!;
@@ -39936,10 +39936,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? Barcode { get; set; } = "0123456789012";
 
         [System.Text.Json.Serialization.JsonPropertyName("categoryId")]
-        public System.Guid CategoryId { get; set; } = default!;
+        public System.Guid? CategoryId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
+        public System.Guid? SupplierId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("unitPrice")]
         public decimal? UnitPrice { get; set; } = 24.99M;
@@ -40104,7 +40104,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public System.DateTime? ExpirationDate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("receiptDate")]
-        public System.DateTime ReceiptDate { get; set; } = System.DateTime.Parse("2025-10-04");
+        public System.DateTime? ReceiptDate { get; set; } = System.DateTime.Parse("2025-10-04");
 
         [System.Text.Json.Serialization.JsonPropertyName("quantityReceived")]
         public int QuantityReceived { get; set; } = 100;
@@ -40377,7 +40377,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         public string? Status { get; set; } = "Available";
 
         [System.Text.Json.Serialization.JsonPropertyName("receiptDate")]
-        public System.DateTime ReceiptDate { get; set; } = System.DateTime.Parse("2025-10-04");
+        public System.DateTime? ReceiptDate { get; set; } = System.DateTime.Parse("2025-10-04");
 
         [System.Text.Json.Serialization.JsonPropertyName("manufactureDate")]
         public System.DateTime? ManufactureDate { get; set; } = default!;

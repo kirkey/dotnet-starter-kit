@@ -63,7 +63,7 @@ public record UpdateSerialNumberCommand : IRequest<UpdateSerialNumberResponse>
     /// Gets or sets the date the serial number was received into inventory.
     /// </summary>
     [DefaultValue("2025-10-04")]
-    public DateTime ReceiptDate { get; set; }
+    public DateTime? ReceiptDate { get; set; }
 
     /// <summary>
     /// Gets or sets the manufacture date.

@@ -37,15 +37,15 @@
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudDatePicker Label="Receipt Date" @bind-Date="context.ReceiptDate" For="@(() => context.ReceiptDate)" />
+            <MudDatePicker Label="Receipt Date" Date="context.ReceiptDate" For="@(() => context.ReceiptDate)" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudDatePicker Label="Manufacture Date" @bind-Date="context.ManufactureDate" For="@(() => context.ManufactureDate)" />
+            <MudDatePicker Label="Manufacture Date" Date="context.ManufactureDate" DateChanged="@((DateTime? val) => context.ManufactureDate = val)" For="@(() => context.ManufactureDate)" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudDatePicker Label="Warranty Expiration" @bind-Date="context.WarrantyExpirationDate" For="@(() => context.WarrantyExpirationDate)" />
+            <MudDatePicker Label="Warranty Expiration" Date="context.WarrantyExpirationDate" DateChanged="@((DateTime? val) => context.WarrantyExpirationDate = val)" For="@(() => context.WarrantyExpirationDate)" />
         </MudItem>
 
         <MudItem xs="12" md="6">

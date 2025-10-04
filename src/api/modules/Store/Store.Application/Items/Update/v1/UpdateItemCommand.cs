@@ -37,12 +37,12 @@ public record UpdateItemCommand : IRequest<UpdateItemResponse>
     /// <summary>
     /// Gets or sets the category identifier.
     /// </summary>
-    public DefaultIdType CategoryId { get; set; }
+    public DefaultIdType? CategoryId { get; set; }
 
     /// <summary>
     /// Gets or sets the supplier identifier.
     /// </summary>
-    public DefaultIdType SupplierId { get; set; }
+    public DefaultIdType? SupplierId { get; set; }
 
     /// <summary>
     /// Gets or sets the unit price.
