@@ -16,13 +16,13 @@
     </ExtraActions>
 
     <EditFormContent Context="context">
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteItem @bind-Value="context.ItemId" For="@(() => context.ItemId)" Label="Item" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteWarehouseId @bind-Value="context.WarehouseLocationId" For="@(() => context.WarehouseLocationId)" Label="Warehouse Location" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.AdjustmentType" For="@(() => context.AdjustmentType)" Label="Adjustment Type" Required="true">
                 <MudSelectItem Value="@("Increase")">Increase</MudSelectItem>
                 <MudSelectItem Value="@("Decrease")">Decrease</MudSelectItem>
@@ -31,13 +31,13 @@
                 <MudSelectItem Value="@("Loss")">Loss</MudSelectItem>
             </MudSelect>
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField @bind-Value="context.QuantityAdjusted" For="@(() => context.QuantityAdjusted)" Label="Quantity Adjusted" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.Reason" For="@(() => context.Reason)" Label="Reason" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.AdjustmentDate" For="@(() => context.AdjustmentDate)" Label="Adjustment Date" Required="true" />
         </MudItem>
         <MudItem xs="12">

@@ -26,11 +26,11 @@ public partial class PickLists
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetPickListEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<PickListViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetPickListEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<PickListViewModel>();
+            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();

@@ -35,7 +35,7 @@ public sealed class UpdateInventoryTransferHandler(
             request.TransferType,
             request.FromWarehouseId,
             request.ToWarehouseId,
-            request.TransferDate,
+            request.TransferDate ?? DateTime.Now,
             request.ExpectedArrivalDate,
             request.Status,
             request.Priority,

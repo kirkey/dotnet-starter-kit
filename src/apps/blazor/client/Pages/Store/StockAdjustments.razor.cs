@@ -23,11 +23,11 @@ public partial class StockAdjustments
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id ?? Guid.Empty,
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<StockAdjustmentViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<StockAdjustmentViewModel>();
+            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();

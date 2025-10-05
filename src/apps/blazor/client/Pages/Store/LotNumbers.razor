@@ -6,16 +6,16 @@
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Lot Number Id" />
             </MudItem>
         }
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Lot Code" For="@(() => context.LotCode)" @bind-Value="context.LotCode" Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteItem Value="context.ItemId"
                              ValueChanged="@((Guid val) => context.ItemId = val)"
                              For="@(() => context.ItemId)"
@@ -24,7 +24,7 @@
                              Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteSupplier Value="context.SupplierId"
                                  ValueChanged="@((Guid? val) => context.SupplierId = val)"
                                  For="@(() => context.SupplierId)"
@@ -32,7 +32,7 @@
                                  Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="int" @bind-Value="context.QuantityReceived" For="@(() => context.QuantityReceived)" Label="Quantity Received" Required="true" Min="0" />
         </MudItem>
 
@@ -48,7 +48,7 @@
             <MudDatePicker Label="Receipt Date" @bind-Date="context.ReceiptDate" For="@(() => context.ReceiptDate)" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string" Label="Status" @bind-Value="context.Status" For="@(() => context.Status)" Variant="Variant.Filled">
                 <MudSelectItem T="string" Value="@("Active")">Active</MudSelectItem>
                 <MudSelectItem T="string" Value="@("Expired")">Expired</MudSelectItem>

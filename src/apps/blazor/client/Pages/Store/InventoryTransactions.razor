@@ -13,10 +13,10 @@
     </ExtraActions>
 
     <EditFormContent Context="context">
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.TransactionNumber" For="@(() => context.TransactionNumber)" Label="Transaction Number" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.TransactionType" For="@(() => context.TransactionType)" Label="Transaction Type" Required="true">
                 <MudSelectItem Value="@("IN")">IN</MudSelectItem>
                 <MudSelectItem Value="@("OUT")">OUT</MudSelectItem>
@@ -24,22 +24,22 @@
                 <MudSelectItem Value="@("TRANSFER")">TRANSFER</MudSelectItem>
             </MudSelect>
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteItem @bind-Value="context.ItemId" For="@(() => context.ItemId)" Label="Item" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteWarehouse @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)" Label="Warehouse" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField @bind-Value="context.Quantity" For="@(() => context.Quantity)" Label="Quantity" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.TransactionDate" For="@(() => context.TransactionDate)" Label="Transaction Date" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.ReferenceType" For="@(() => context.ReferenceType)" Label="Reference Type">
                 <MudSelectItem Value="@("")">None</MudSelectItem>
                 <MudSelectItem Value="@("PurchaseOrder")">Purchase Order</MudSelectItem>

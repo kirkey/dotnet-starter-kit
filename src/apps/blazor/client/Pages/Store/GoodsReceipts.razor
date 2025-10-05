@@ -4,10 +4,10 @@
 
 <EntityTable @ref="_table" TEntity="GoodsReceiptResponse" TId="DefaultIdType" TRequest="GoodsReceiptViewModel" Context="@Context">
     <EditFormContent Context="context">
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.ReceiptNumber" For="@(() => context.ReceiptNumber)" Label="Receipt Number" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.ReceivedDate" For="@(() => context.ReceivedDate)" Label="Received Date" Required="true" />
         </MudItem>
         <MudItem xs="12">

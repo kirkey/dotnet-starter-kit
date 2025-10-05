@@ -27,11 +27,11 @@ public partial class PutAwayTasks
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetPutAwayTaskEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<PutAwayTaskViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetPutAwayTaskEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<PutAwayTaskViewModel>();
+            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();

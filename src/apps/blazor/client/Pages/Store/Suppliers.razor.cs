@@ -31,6 +31,11 @@ public partial class Suppliers
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id ?? DefaultIdType.Empty,
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetSupplierEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<SupplierViewModel>();
+            // }
             searchFunc: async filter =>
             {
                 var command = filter.Adapt<SearchSuppliersCommand>();
@@ -45,12 +50,7 @@ public partial class Suppliers
             {
                 await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetSupplierEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<SupplierViewModel>();
-            });
+            deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }
 }
 

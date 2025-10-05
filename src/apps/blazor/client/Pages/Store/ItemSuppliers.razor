@@ -6,12 +6,12 @@
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Item Supplier Id" />
             </MudItem>
         }
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteItem Value="context.ItemId"
                              ValueChanged="@((Guid val) => context.ItemId = val)"
                              For="@(() => context.ItemId)"
@@ -20,7 +20,7 @@
                              Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteSupplier Value="context.SupplierId"
                                  For="@(() => context.SupplierId)"
                                  Label="Supplier"
@@ -28,7 +28,7 @@
                                  Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="decimal?" @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" Required="true" Min="0" Format="N2" />
         </MudItem>
 
@@ -44,19 +44,19 @@
             <MudNumericField T="int?" @bind-Value="context.PackagingQuantity" For="@(() => context.PackagingQuantity)" Label="Packaging Qty" Min="1" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Supplier Part Number" For="@(() => context.SupplierPartNumber)" @bind-Value="context.SupplierPartNumber" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="decimal?" @bind-Value="context.ReliabilityRating" For="@(() => context.ReliabilityRating)" Label="Reliability Rating (0-100)" Min="0" Max="100" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch T="bool?" @bind-Value="context.IsPreferred" Color="Color.Primary">Preferred Supplier</MudSwitch>
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
         </MudItem>
     </EditFormContent>

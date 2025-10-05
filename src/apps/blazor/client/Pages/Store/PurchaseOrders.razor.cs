@@ -45,11 +45,11 @@ public partial class PurchaseOrders
                 var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PurchaseOrderResponse>>();
             },
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<PurchaseOrderViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<PurchaseOrderViewModel>();
+            // },
             createFunc: async viewModel =>
             {
                 await Client.CreatePurchaseOrderEndpointAsync("1", viewModel.Adapt<CreatePurchaseOrderCommand>()).ConfigureAwait(false);

@@ -24,6 +24,11 @@ public partial class StockLevels
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetStockLevelEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<StockLevelViewModel>();
+            // }
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
@@ -39,12 +44,7 @@ public partial class StockLevels
             {
                 await Client.UpdateStockLevelEndpointAsync("1", id, viewModel.Adapt<UpdateStockLevelCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteStockLevelEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetStockLevelEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<StockLevelViewModel>();
-            });
+            deleteFunc: async id => await Client.DeleteStockLevelEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

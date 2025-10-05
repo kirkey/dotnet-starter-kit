@@ -30,11 +30,11 @@ public partial class InventoryTransactions
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<InventoryTransactionViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<InventoryTransactionViewModel>();
+            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();

@@ -25,6 +25,11 @@ public partial class Bins
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetBinEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<BinViewModel>();
+            // }
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
@@ -40,12 +45,7 @@ public partial class Bins
             {
                 await Client.UpdateBinEndpointAsync("1", id, viewModel.Adapt<UpdateBinCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteBinEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetBinEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<BinViewModel>();
-            });
+            deleteFunc: async id => await Client.DeleteBinEndpointAsync("1", id).ConfigureAwait(false));
 
     await Task.CompletedTask;
     }

@@ -43,16 +43,16 @@
     </ExtraActions>
 
     <EditFormContent Context="context">
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.Name" For="@(() => context.Name)" Label="Name" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.TransferNumber" For="@(() => context.TransferNumber)" Label="Transfer Number" />
         </MudItem>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Description" For="@(() => context.Description)" Label="Description" Lines="2" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.TransferType" For="@(() => context.TransferType)" Label="Transfer Type" Required="true">
                 <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
                 <MudSelectItem Value="@("Emergency")">Emergency</MudSelectItem>
@@ -60,7 +60,7 @@
                 <MudSelectItem Value="@("Return")">Return</MudSelectItem>
             </MudSelect>
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.Status" For="@(() => context.Status)" Label="Status" Required="true">
                 <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
                 <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
@@ -70,19 +70,19 @@
                 <MudSelectItem Value="@("Cancelled")">Cancelled</MudSelectItem>
             </MudSelect>
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteWarehouse @bind-Value="context.FromWarehouseId" For="@(() => context.FromWarehouseId)" Label="From Warehouse" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteWarehouse @bind-Value="context.ToWarehouseId" For="@(() => context.ToWarehouseId)" Label="To Warehouse" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.TransferDate" For="@(() => context.TransferDate)" Label="Transfer Date" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.ExpectedArrivalDate" For="@(() => context.ExpectedArrivalDate)" Label="Expected Arrival Date" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority">
                 <MudSelectItem Value="@("Low")">Low</MudSelectItem>
                 <MudSelectItem Value="@("Normal")">Normal</MudSelectItem>
@@ -90,10 +90,10 @@
                 <MudSelectItem Value="@("Urgent")">Urgent</MudSelectItem>
             </MudSelect>
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.TransportMethod" For="@(() => context.TransportMethod)" Label="Transport Method" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.TrackingNumber" For="@(() => context.TrackingNumber)" Label="Tracking Number" />
         </MudItem>
         <MudItem xs="12">

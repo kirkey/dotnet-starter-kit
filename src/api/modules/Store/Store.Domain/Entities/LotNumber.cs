@@ -155,7 +155,7 @@ public sealed class LotNumber : AuditableEntity, IAggregateRoot
             supplierId,
             manufactureDate,
             expirationDate,
-            receiptDate ?? DateTime.UtcNow,
+            receiptDate ?? DateTime.Now,
             quantityReceived,
             qualityNotes);
     }

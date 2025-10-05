@@ -26,6 +26,11 @@ public partial class InventoryReservations
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetInventoryReservationEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<InventoryReservationViewModel>();
+            // }
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
@@ -37,12 +42,7 @@ public partial class InventoryReservations
             {
                 await Client.CreateInventoryReservationEndpointAsync("1", viewModel.Adapt<CreateInventoryReservationCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteInventoryReservationEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetInventoryReservationEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<InventoryReservationViewModel>();
-            });
+            deleteFunc: async id => await Client.DeleteInventoryReservationEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

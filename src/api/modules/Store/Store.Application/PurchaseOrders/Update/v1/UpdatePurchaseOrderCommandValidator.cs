@@ -48,12 +48,12 @@ public class UpdatePurchaseOrderCommandValidator : AbstractValidator<UpdatePurch
             .GreaterThanOrEqualTo(DateTime.UtcNow.AddYears(-5)).WithMessage("Order date cannot be more than 5 years in the past.");
 
         RuleFor(x => x.ExpectedDeliveryDate)
-            .GreaterThanOrEqualTo(x => x.OrderDate ?? DateTime.UtcNow)
+            .GreaterThanOrEqualTo(x => x.OrderDate ?? DateTime.Now)
             .When(x => x.ExpectedDeliveryDate.HasValue)
             .WithMessage("Expected delivery date must be on or after the order date.");
 
         RuleFor(x => x.ActualDeliveryDate)
-            .GreaterThanOrEqualTo(x => x.OrderDate ?? DateTime.UtcNow)
+            .GreaterThanOrEqualTo(x => x.OrderDate ?? DateTime.Now)
             .When(x => x.ActualDeliveryDate.HasValue)
             .WithMessage("Actual delivery date must be on or after the order date.")
             .LessThanOrEqualTo(DateTime.UtcNow.AddDays(1))

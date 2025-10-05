@@ -184,7 +184,7 @@ public sealed class SerialNumber : AuditableEntity, IAggregateRoot
             warehouseLocationId,
             binId,
             lotNumberId,
-            receiptDate ?? DateTime.UtcNow,
+            receiptDate ?? DateTime.Now,
             manufactureDate,
             warrantyExpirationDate,
             externalReference,

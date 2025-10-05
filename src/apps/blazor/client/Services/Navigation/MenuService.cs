@@ -111,7 +111,7 @@ public class MenuService : IMenuService
                         
                         // Suppliers & Customers
                         new MenuSectionSubItemModel { Title = "Suppliers", Icon = Icons.Material.Filled.LocalShipping, Href = "/store/suppliers", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Item Suppliers", Icon = Icons.Material.Filled.LinkOff, Href = "/store/item-suppliers", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Item Suppliers", Icon = Icons.Material.Filled.Link, Href = "/store/item-suppliers", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Customers", Icon = Icons.Material.Filled.Groups, Href = "/store/customers", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         
                         // Procurement

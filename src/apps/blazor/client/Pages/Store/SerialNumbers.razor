@@ -6,16 +6,16 @@
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Serial Number Id" />
             </MudItem>
         }
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Serial Number Value" For="@(() => context.SerialNumberValue)" @bind-Value="context.SerialNumberValue" Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteItem @bind-Value="context.ItemId"
                              For="@(() => context.ItemId)"
                              Label="Item"
@@ -23,7 +23,7 @@
                              Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string" Label="Status" @bind-Value="context.Status" For="@(() => context.Status)" Variant="Variant.Filled">
                 <MudSelectItem T="string" Value="@("Available")">Available</MudSelectItem>
                 <MudSelectItem T="string" Value="@("Allocated")">Allocated</MudSelectItem>
@@ -48,7 +48,7 @@
             <MudDatePicker Label="Warranty Expiration" Date="context.WarrantyExpirationDate" DateChanged="@((DateTime? val) => context.WarrantyExpirationDate = val)" For="@(() => context.WarrantyExpirationDate)" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="External Reference" For="@(() => context.ExternalReference)" @bind-Value="context.ExternalReference" />
         </MudItem>
 

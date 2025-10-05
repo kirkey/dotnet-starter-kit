@@ -6,12 +6,12 @@
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Stock Level Id" />
             </MudItem>
         }
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteItem @bind-Value="context.ItemId"
                              For="@(() => context.ItemId)"
                              Label="Item"
@@ -19,7 +19,7 @@
                              Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteWarehouse @bind-Value="context.WarehouseId"
                                   For="@(() => context.WarehouseId)"
                                   Label="Warehouse"

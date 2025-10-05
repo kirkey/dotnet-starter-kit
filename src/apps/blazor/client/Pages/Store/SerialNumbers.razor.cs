@@ -24,6 +24,11 @@ public partial class SerialNumbers
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetSerialNumberEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<SerialNumberViewModel>();
+            // }
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
@@ -39,12 +44,7 @@ public partial class SerialNumbers
             {
                 await Client.UpdateSerialNumberEndpointAsync("1", id, viewModel.Adapt<UpdateSerialNumberCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteSerialNumberEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetSerialNumberEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<SerialNumberViewModel>();
-            });
+            deleteFunc: async id => await Client.DeleteSerialNumberEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

@@ -25,6 +25,11 @@ public partial class LotNumbers
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetLotNumberEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<LotNumberViewModel>();
+            // }
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
@@ -40,12 +45,7 @@ public partial class LotNumbers
             {
                 await Client.UpdateLotNumberEndpointAsync("1", id, viewModel.Adapt<UpdateLotNumberCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteLotNumberEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetLotNumberEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<LotNumberViewModel>();
-            });
+            deleteFunc: async id => await Client.DeleteLotNumberEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

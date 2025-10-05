@@ -20,37 +20,37 @@
         </MudMenu>
     </ExtraActions>
     <EditFormContent Context="context">
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.CountNumber" For="@(() => context.CountNumber)" Label="Count Number" Required />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudAutocomplete T="DefaultIdType" @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)"
                              Label="Warehouse" Required
                              SearchFunc="@SearchWarehouses"
                              ToStringFunc="@(id => _warehouses.FirstOrDefault(w => w.Id == id)?.Name ?? string.Empty)" />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudAutocomplete T="DefaultIdType?" @bind-Value="context.WarehouseLocationId" For="@(() => context.WarehouseLocationId)"
                              Label="Warehouse Location (Optional)"
                              SearchFunc="@SearchWarehouseLocations"
                              ToStringFunc="@(id => id.HasValue ? _warehouseLocations.FirstOrDefault(l => l.Id == id)?.Name ?? string.Empty : string.Empty)" />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.ScheduledDate" For="@(() => context.ScheduledDate)" Label="Scheduled Date" Required />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.CountType" For="@(() => context.CountType)" Label="Count Type" Placeholder="Full, Partial, Spot" />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.CounterName" For="@(() => context.CounterName)" Label="Counter Name" />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.SupervisorName" For="@(() => context.SupervisorName)" Label="Supervisor Name" />
         </MudItem>
         

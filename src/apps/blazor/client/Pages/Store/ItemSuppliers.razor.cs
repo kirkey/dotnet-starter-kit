@@ -28,6 +28,11 @@ public partial class ItemSuppliers
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetItemSupplierEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<ItemSupplierViewModel>();
+            // }
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
@@ -45,12 +50,7 @@ public partial class ItemSuppliers
                 await Client.UpdateItemSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateItemSupplierCommand>())
                     .ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteItemSupplierEndpointAsync("1", id).ConfigureAwait(false),
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetItemSupplierEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<ItemSupplierViewModel>();
-            });
+            deleteFunc: async id => await Client.DeleteItemSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }
 }
 

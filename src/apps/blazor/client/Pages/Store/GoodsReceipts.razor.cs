@@ -24,11 +24,11 @@ public partial class GoodsReceipts
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetGoodsReceiptEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<GoodsReceiptViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetGoodsReceiptEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<GoodsReceiptViewModel>();
+            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();

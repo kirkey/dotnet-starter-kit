@@ -29,11 +29,11 @@ public partial class Items
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetItemEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<ItemViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetItemEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<ItemViewModel>();
+            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();

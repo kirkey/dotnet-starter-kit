@@ -6,9 +6,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 /// </summary>
 public partial class InventoryTransfers
 {
-    
-    
-
     protected EntityServerTableContext<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> Context { get; set; } = default!;
     private EntityTable<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> _table = default!;
 
@@ -30,11 +27,11 @@ public partial class InventoryTransfers
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            getDetailsFunc: async id =>
-            {
-                var dto = await Client.GetInventoryTransferEndpointAsync("1", id).ConfigureAwait(false);
-                return dto.Adapt<InventoryTransferViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var dto = await Client.GetInventoryTransferEndpointAsync("1", id).ConfigureAwait(false);
+            //     return dto.Adapt<InventoryTransferViewModel>();
+            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();

@@ -6,16 +6,16 @@
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Reservation Id" />
             </MudItem>
         }
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Reservation Number" For="@(() => context.ReservationNumber)" @bind-Value="context.ReservationNumber" Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteItem @bind-Value="context.ItemId"
                              For="@(() => context.ItemId)"
                              Label="Item"
@@ -23,7 +23,7 @@
                              Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteWarehouse @bind-Value="context.WarehouseId"
                                   For="@(() => context.WarehouseId)"
                                   Label="Warehouse"
@@ -31,11 +31,11 @@
                                   Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="int" @bind-Value="context.QuantityReserved" For="@(() => context.QuantityReserved)" Label="Quantity Reserved" Required="true" Min="1" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string" Label="Reservation Type" @bind-Value="context.ReservationType" For="@(() => context.ReservationType)" Variant="Variant.Filled">
                 <MudSelectItem T="string" Value="@("Order")">Order</MudSelectItem>
                 <MudSelectItem T="string" Value="@("Transfer")">Transfer</MudSelectItem>
@@ -45,7 +45,7 @@
             </MudSelect>
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string" Label="Status" @bind-Value="context.Status" For="@(() => context.Status)" Variant="Variant.Filled">
                 <MudSelectItem T="string" Value="@("Pending")">Pending</MudSelectItem>
                 <MudSelectItem T="string" Value="@("Active")">Active</MudSelectItem>
@@ -55,7 +55,7 @@
             </MudSelect>
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Reference Number" For="@(() => context.ReferenceNumber)" @bind-Value="context.ReferenceNumber" />
         </MudItem>
 

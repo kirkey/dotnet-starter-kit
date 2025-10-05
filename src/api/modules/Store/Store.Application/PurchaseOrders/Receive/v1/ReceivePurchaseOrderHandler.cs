@@ -30,7 +30,7 @@ public sealed class ReceivePurchaseOrderHandler(
             throw new ConflictException($"Purchase order '{request.Id}' cannot be received. Current status: {purchaseOrder.Status}. Only sent orders can be received.");
 
         // Set actual delivery date (default to current date if not provided)
-        var actualDeliveryDate = request.ActualDeliveryDate ?? DateTime.UtcNow;
+        var actualDeliveryDate = request.ActualDeliveryDate ?? DateTime.Now;
         purchaseOrder.UpdateDeliveryDate(actualDeliveryDate);
         
         // Add receipt notes if provided

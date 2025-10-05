@@ -82,19 +82,19 @@
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Order Id" />
             </MudItem>
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
             </MudItem>
         }
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Order Number" For="@(() => context.OrderNumber)" @bind-Value="context.OrderNumber" Required="true" />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteSupplier Value="context.SupplierId"
                                  ValueChanged="value => context.SupplierId = value ?? Guid.Empty"
                                  For="@(() => context.SupplierId)"
@@ -103,30 +103,30 @@
                                  Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.OrderDate" DateFormat="MMMM dd, yyyy" Label="Order Date" Required="true" />
         </MudItem>
         
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.ExpectedDeliveryDate" DateFormat="MMMM dd, yyyy" Label="Expected Delivery Date" />
         </MudItem>
 
         @if (context.Id != default)
         {
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudDatePicker @bind-Date="context.ActualDeliveryDate" DateFormat="MMMM dd, yyyy" Label="Actual Delivery Date" ReadOnly />
             </MudItem>
 
-            <MudItem xs="12" sm="6" md="3">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField T="decimal?" @bind-Value="context.TotalAmount" Label="Total Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
-            <MudItem xs="12" sm="6" md="3">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField T="decimal?" @bind-Value="context.TaxAmount" Label="Tax Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
-            <MudItem xs="12" sm="6" md="3">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField T="decimal?" @bind-Value="context.DiscountAmount" Label="Discount Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
-            <MudItem xs="12" sm="6" md="3">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField T="decimal?" @bind-Value="context.NetAmount" Label="Net Amount" ReadOnly Immediate="true" Format="N2" />
             </MudItem>
         }
