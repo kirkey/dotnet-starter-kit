@@ -85,7 +85,10 @@
             <MudNumericField T="decimal?" @bind-Value="context.Weight" For="@(() => context.Weight)" Label="Weight" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Weight Unit" For="@(() => context.WeightUnit)" @bind-Value="context.WeightUnit" />
+            <AutocompleteWeightUnit @bind-Value="context.WeightUnit"
+                                    For="@(() => context.WeightUnit!)"
+                                    Label="Weight Unit"
+                                    Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteUnitOfMeasure @bind-Value="context.UnitOfMeasure"

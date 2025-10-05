@@ -36,13 +36,22 @@
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudTextField Label="City" For="@(() => context.City)" @bind-Value="context.City" Required="true" />
+            <AutocompleteCity @bind-Value="context.City"
+                             For="@(() => context.City!)"
+                             Label="City"
+                             Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudTextField Label="State" For="@(() => context.State)" @bind-Value="context.State" />
+            <AutocompleteState @bind-Value="context.State"
+                              For="@(() => context.State!)"
+                              Label="State"
+                              Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudTextField Label="Country" For="@(() => context.Country)" @bind-Value="context.Country" Required="true" />
+            <AutocompleteCountry @bind-Value="context.Country"
+                                For="@(() => context.Country!)"
+                                Label="Country"
+                                Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">
