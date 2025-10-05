@@ -41,24 +41,24 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.ClientName"
-                          For="@(() => context.ClientName)"
-                          Label="Client Name"
-                          Variant="Variant.Filled" />
+            <AutocompleteClientName @bind-Value="context.ClientName"
+                                    For="@(() => context.ClientName)"
+                                    Label="Client Name"
+                                    Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.ProjectManager"
-                          For="@(() => context.ProjectManager)"
-                          Label="Project Manager"
-                          Variant="Variant.Filled" />
+            <AutocompleteProjectManager @bind-Value="context.ProjectManager"
+                                        For="@(() => context.ProjectManager)"
+                                        Label="Project Manager"
+                                        Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.Department"
-                          For="@(() => context.Department)"
-                          Label="Department"
-                          Variant="Variant.Filled" />
+            <AutocompleteDepartment @bind-Value="context.Department"
+                                    For="@(() => context.Department)"
+                                    Label="Department"
+                                    Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">

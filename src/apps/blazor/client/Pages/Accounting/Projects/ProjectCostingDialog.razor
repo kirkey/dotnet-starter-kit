@@ -15,7 +15,9 @@
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudTextField @bind-Value="_model.Category" Label="Category" Placeholder="e.g., Labor, Materials, Equipment" />
+                    <AutocompleteCostingCategory @bind-Value="_model.Category" 
+                                                 Label="Category" 
+                                                 Variant="Variant.Filled" />
                 </MudItem>
 
                 <MudItem xs="12" md="6">
@@ -26,7 +28,9 @@
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudTextField @bind-Value="_model.CostCenter" Label="Cost Center" />
+                    <AutocompleteCostCenter @bind-Value="_model.CostCenter" 
+                                           Label="Cost Center" 
+                                           Variant="Variant.Filled" />
                 </MudItem>
 
                 <MudItem xs="12" md="6">
@@ -34,7 +38,9 @@
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudTextField @bind-Value="_model.Vendor" Label="Vendor" />
+                    <AutocompleteVendor @bind-Value="_model.Vendor" 
+                                       Label="Vendor" 
+                                       Variant="Variant.Filled" />
                 </MudItem>
 
                 <MudItem xs="12" md="6">
