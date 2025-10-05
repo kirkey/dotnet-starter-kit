@@ -1,4 +1,4 @@
-﻿namespace FSH.Starter.Blazor.Client.Pages.Auth;
+﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Auth;
 
 public partial class ForgotPassword
 {

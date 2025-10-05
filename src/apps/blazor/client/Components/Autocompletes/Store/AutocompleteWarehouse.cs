@@ -6,9 +6,6 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteWarehouse : AutocompleteBase<WarehouseResponse, IClient, DefaultIdType>
 {
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
-    [Inject] protected Snackbar Snackbar { get; set; } = default!;
-
     /// <summary>
     /// Gets a single Warehouse item by identifier.
     /// </summary>

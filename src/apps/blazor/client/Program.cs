@@ -16,6 +16,9 @@ builder.Services.AddSingleton(apiBase);
 // Register ImageUrlService so components can inject it
 builder.Services.AddScoped<ImageUrlService>();
 
+// Register ApiHelper for guarded API call execution
+builder.Services.AddScoped<ApiHelper>();
+
 // Register dynamic navigation menu service
 builder.Services.AddSingleton<IMenuService, MenuService>();
 

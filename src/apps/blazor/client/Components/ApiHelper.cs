@@ -1,11 +1,12 @@
 ﻿namespace FSH.Starter.Blazor.Client.Components;
 
-public static class ApiHelper
+/// <summary>
+/// Helper service for executing API calls with proper error handling and user notifications.
+/// Handles API exceptions and provides consistent error messaging throughout the application.
+/// </summary>
+public class ApiHelper(ISnackbar snackbar, NavigationManager navigationManager)
 {
-    private static readonly ISnackbar Snackbar = default!;
-    private static readonly NavigationManager NavigationManager = default!;
-    
-    public static async Task<T?> ExecuteCallGuardedAsync<T>(
+    public async Task<T?> ExecuteCallGuardedAsync<T>(
         Func<Task<T>> call,
         FshValidation? customValidation = null,
         string? successMessage = null)
@@ -17,7 +18,7 @@ public static class ApiHelper
 
             if (!string.IsNullOrWhiteSpace(successMessage))
             {
-                Snackbar.Add(successMessage, Severity.Info);
+                snackbar.Add(successMessage, Severity.Info);
             }
 
             return result;
@@ -26,20 +27,20 @@ public static class ApiHelper
         {
             if (ex.StatusCode == 401)
             {
-                NavigationManager.NavigateTo("/logout");
+                navigationManager.NavigateTo("/logout");
             }
             var message = ex.Message switch
             {
                 "TypeError: Failed to fetch" => "Unable to Reach API",
                 _ => ex.Message
             };
-            Snackbar.Add(message, Severity.Error);
+            snackbar.Add(message, Severity.Error);
         }
 
         return default;
     }
 
-    public static async Task<bool> ExecuteCallGuardedAsync(
+    public async Task<bool> ExecuteCallGuardedAsync(
         Func<Task> call,
         FshValidation? customValidation = null,
         string? successMessage = null)
@@ -51,14 +52,14 @@ public static class ApiHelper
 
             if (!string.IsNullOrWhiteSpace(successMessage))
             {
-                Snackbar.Add(successMessage, Severity.Success);
+                snackbar.Add(successMessage, Severity.Success);
             }
 
             return true;
         }
         catch (ApiException ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            snackbar.Add(ex.Message, Severity.Error);
         }
 
         return false;

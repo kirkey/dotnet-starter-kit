@@ -17,11 +17,29 @@
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Barcode" For="@(() => context.Barcode)" @bind-Value="context.Barcode" Required="true" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3">
+        <MudItem xs="12" sm="6" md="4">
             <AutocompleteCategoryId @bind-Value="context.CategoryId"
                                     For="@(() => context.CategoryId)"
                                     Label="Category"
                                     Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteBrand @bind-Value="context.Brand"
+                               For="@(() => context.Brand!)"
+                               Label="Brand"
+                               Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteManufacturer @bind-Value="context.Manufacturer"
+                                      For="@(() => context.Manufacturer!)"
+                                      Label="Manufacturer"
+                                      Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteSupplier Value="context.SupplierId"
+                                  For="@(() => context.SupplierId)"
+                                  Label="Supplier"
+                                  Variant="Variant.Filled" />
         </MudItem>
         
         <MudItem xs="12">
@@ -47,44 +65,35 @@
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="int?" @bind-Value="context.ReorderQuantity" For="@(() => context.ReorderQuantity)" Label="Reorder Qty" Immediate="true" />
         </MudItem>
-
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSwitch T="bool?" @bind-Checked="context.IsPerishable" Color="Color.Primary">Perishable</MudSwitch>
-        </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="int?" @bind-Value="context.ShelfLifeDays" For="@(() => context.ShelfLifeDays)" Label="Shelf Life (Days)" Disabled="@(context.IsPerishable != true)" />
         </MudItem>
-
+        
+        <MudDivider DividerType="DividerType.Middle"/>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSwitch T="bool?" @bind-Checked="context.IsSerialTracked" Color="Color.Primary">Serial Tracked</MudSwitch>
+            <MudSwitch T="bool?" @bind-Value="context.IsPerishable" Color="Color.Primary">Perishable</MudSwitch>
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSwitch T="bool?" @bind-Checked="context.IsLotTracked" Color="Color.Primary">Lot Tracked</MudSwitch>
+            <MudSwitch T="bool?" @bind-Value="context.IsSerialTracked" Color="Color.Primary">Serial Tracked</MudSwitch>
         </MudItem>
-
-        <MudItem xs="12" md="4">
-            <MudTextField Label="Brand" For="@(() => context.Brand)" @bind-Value="context.Brand" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch T="bool?" @bind-Value="context.IsLotTracked" Color="Color.Primary">Lot Tracked</MudSwitch>
         </MudItem>
-        <MudItem xs="12" md="4">
-            <MudTextField Label="Manufacturer" For="@(() => context.Manufacturer)" @bind-Value="context.Manufacturer" />
-        </MudItem>
-
+        
+        <MudDivider DividerType="DividerType.Middle"/>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="decimal?" @bind-Value="context.Weight" For="@(() => context.Weight)" Label="Weight" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Weight Unit" For="@(() => context.WeightUnit)" @bind-Value="context.WeightUnit" />
         </MudItem>
-
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <AutocompleteSupplier Value="context.SupplierId"
-                                 For="@(() => context.SupplierId)"
-                                 Label="Supplier"
-                                 Variant="Variant.Filled" />
+            <AutocompleteUnitOfMeasure @bind-Value="context.UnitOfMeasure"
+                                       For="@(() => context.UnitOfMeasure!)"
+                                       Label="Unit of Measure"
+                                       Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Unit of Measure" For="@(() => context.UnitOfMeasure)" @bind-Value="context.UnitOfMeasure" />
-        </MudItem>
+        
         <MudItem xs="12">
             <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" />
         </MudItem>

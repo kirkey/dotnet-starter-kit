@@ -9,9 +9,6 @@ public class AutocompleteWarehouseLocation : AutocompleteBase<GetWarehouseLocati
     // Local cache for id -> dto lookups.
     private Dictionary<DefaultIdType, GetWarehouseLocationListResponse> _cache = [];
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
-    [Inject] protected Snackbar Snackbar { get; set; } = default!;
-
     /// <summary>
     /// Gets a single Warehouse Location item by identifier.
     /// </summary>

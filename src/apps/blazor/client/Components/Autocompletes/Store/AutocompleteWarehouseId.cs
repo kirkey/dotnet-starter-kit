@@ -10,9 +10,6 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
     private Dictionary<DefaultIdType, WarehouseResponse> _cache = [];
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
-    [Inject] protected Snackbar Snackbar { get; set; } = default!;
-
     /// <summary>
     /// Gets a single Warehouse item by identifier.
     /// </summary>

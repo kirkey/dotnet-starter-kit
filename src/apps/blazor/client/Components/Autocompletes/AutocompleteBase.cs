@@ -6,6 +6,7 @@ public abstract class AutocompleteBase<TDto, TClient, TKey> : MudAutocomplete<TK
 {
     protected Dictionary<TKey, TDto> _dictionary = [];
     [Inject] protected TClient Client { get; set; } = default!;
+    [Inject] protected ApiHelper ApiHelper { get; set; } = default!;
 
     public override Task SetParametersAsync(ParameterView parameters)
     {

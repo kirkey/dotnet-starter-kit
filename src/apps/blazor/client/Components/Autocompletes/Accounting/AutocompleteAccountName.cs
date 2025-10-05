@@ -3,6 +3,7 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Accounting;
 public class AutocompleteAccountName : MudAutocomplete<string>
 {
     [Inject] protected IClient Client { get; set; } = default!;
+    [Inject] protected ApiHelper ApiHelper { get; set; } = default!;
     
     private List<ChartOfAccountResponse> _list = new();
 
