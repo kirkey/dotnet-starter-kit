@@ -1,5 +1,4 @@
 ﻿using FSH.Framework.Core.Mail;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Framework.Infrastructure.Mail;
 internal static class Extensions

@@ -1,8 +1,4 @@
-﻿using FSH.Framework.Core.Identity.Users.Abstractions;
-using FSH.Framework.Core.Identity.Users.Features.AssignUserRole;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
+﻿using FSH.Framework.Core.Identity.Users.Features.AssignUserRole;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 public static class AssignRolesToUserEndpoint

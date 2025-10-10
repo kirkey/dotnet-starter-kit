@@ -1,4 +1,4 @@
-namespace Store.Application.Items.Import;
+namespace FSH.Starter.WebApi.Store.Application.Items.Import;
 
 /// <summary>
 /// Represents a single row of data from an Item import file.

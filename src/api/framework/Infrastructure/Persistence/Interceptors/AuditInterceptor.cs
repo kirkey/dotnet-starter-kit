@@ -1,11 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using FSH.Framework.Core.Audit;
 using FSH.Framework.Core.Domain;
-using FSH.Framework.Core.Domain.Contracts;
-using FSH.Framework.Core.Identity.Users.Abstractions;
 using FSH.Framework.Infrastructure.Identity.Audit;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 

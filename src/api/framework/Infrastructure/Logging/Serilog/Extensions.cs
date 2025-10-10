@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Serilog;
-using Serilog.Events;
+﻿using Serilog.Events;
 using Serilog.Filters;
 
 namespace FSH.Framework.Infrastructure.Logging.Serilog;

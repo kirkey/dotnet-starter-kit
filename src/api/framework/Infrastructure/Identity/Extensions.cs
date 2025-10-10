@@ -1,24 +1,10 @@
-﻿using FSH.Framework.Core.Audit;
-using FSH.Framework.Core.Identity.Roles;
-using FSH.Framework.Core.Identity.Tokens;
-using FSH.Framework.Core.Identity.Users.Abstractions;
-using FSH.Framework.Core.Persistence;
-using FSH.Framework.Infrastructure.Auth;
+﻿using FSH.Framework.Infrastructure.Auth;
 using FSH.Framework.Infrastructure.Identity.Audit;
-using FSH.Framework.Infrastructure.Identity.Persistence;
-using FSH.Framework.Infrastructure.Identity.Roles;
 using FSH.Framework.Infrastructure.Identity.Roles.Endpoints;
 using FSH.Framework.Infrastructure.Identity.Tokens;
 using FSH.Framework.Infrastructure.Identity.Tokens.Endpoints;
-using FSH.Framework.Infrastructure.Identity.Users;
 using FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 using FSH.Framework.Infrastructure.Identity.Users.Services;
-using FSH.Framework.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 using IdentityConstants = Shared.Authorization.IdentityConstants;
 
 namespace FSH.Framework.Infrastructure.Identity;

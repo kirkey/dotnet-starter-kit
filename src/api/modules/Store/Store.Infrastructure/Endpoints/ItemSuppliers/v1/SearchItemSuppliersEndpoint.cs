@@ -1,5 +1,5 @@
-using ItemSupplierResponse = FSH.Starter.WebApi.Store.Application.ItemSuppliers.Get.v1.ItemSupplierResponse;
 using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Search.v1;
+using ItemSupplierResponse = FSH.Starter.WebApi.Store.Application.ItemSuppliers.Get.v1.ItemSupplierResponse;
 
 namespace Store.Infrastructure.Endpoints.ItemSuppliers.v1;
 

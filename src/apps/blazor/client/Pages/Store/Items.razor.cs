@@ -49,7 +49,39 @@ public partial class Items
             {
                 await Client.UpdateItemEndpointAsync("1", id, viewModel.Adapt<UpdateItemCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteItemEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteItemEndpointAsync("1", id).ConfigureAwait(false),
+            exportFunc: async filter =>
+            {
+                var exportQuery = new ExportItemsQuery
+                {
+                    Filter = new ItemExportFilter
+                    {
+                        SearchTerm = filter.Keyword,
+                        CategoryId = null, // Can be extended to include category filter from advanced search
+                        SupplierId = null, // Can be extended to include supplier filter from advanced search
+                        IsPerishable = null,
+                        MinPrice = null,
+                        MaxPrice = null
+                    },
+                    SheetName = "Items"
+                };
+                
+                var result = await Client.ExportItemsEndpointAsync("1", exportQuery).ConfigureAwait(false);
+                var stream = new MemoryStream(result.Data);
+                return new Components.EntityTable.FileResponse(stream);
+            },
+            importFunc: async fileUpload =>
+            {
+                var command = new ImportItemsCommand
+                {
+                    File = fileUpload,
+                    SheetName = "Sheet1",
+                    ValidateStructure = true
+                };
+                
+                var result = await Client.ImportItemsEndpointAsync("1", command).ConfigureAwait(false);
+                return result.ImportedCount;
+            });
         
         await Task.CompletedTask;
     }

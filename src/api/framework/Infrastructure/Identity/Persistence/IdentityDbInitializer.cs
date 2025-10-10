@@ -1,17 +1,4 @@
-﻿using Finbuckle.MultiTenant.Abstractions;
-using FSH.Framework.Core.Origin;
-using FSH.Framework.Core.Persistence;
-using FSH.Framework.Infrastructure.Identity.RoleClaims;
-using FSH.Framework.Infrastructure.Identity.Roles;
-using FSH.Framework.Infrastructure.Identity.Users;
-using FSH.Framework.Infrastructure.Tenant;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Shared.Authorization;
-
-namespace FSH.Framework.Infrastructure.Identity.Persistence;
+﻿namespace FSH.Framework.Infrastructure.Identity.Persistence;
 internal sealed class IdentityDbInitializer(
     ILogger<IdentityDbInitializer> logger,
     IdentityDbContext context,

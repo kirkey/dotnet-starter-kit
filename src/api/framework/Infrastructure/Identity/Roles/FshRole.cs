@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace FSH.Framework.Infrastructure.Identity.Roles;
+﻿namespace FSH.Framework.Infrastructure.Identity.Roles;
 public class FshRole : IdentityRole
 {
     public string? Description { get; set; }

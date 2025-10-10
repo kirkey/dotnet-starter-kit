@@ -1,11 +1,4 @@
-﻿using FSH.Framework.Core.Identity.Users.Abstractions;
-using FSH.Framework.Core.Identity.Users.Features.RegisterUser;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
+﻿using FSH.Framework.Core.Identity.Users.Features.RegisterUser;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 public static class SelfRegisterUserEndpoint

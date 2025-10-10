@@ -1,9 +1,4 @@
 ﻿using FSH.Framework.Core.Tenant.Features.UpgradeSubscription;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Framework.Infrastructure.Tenant.Endpoints;
 

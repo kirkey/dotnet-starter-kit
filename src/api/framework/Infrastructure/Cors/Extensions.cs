@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace FSH.Framework.Infrastructure.Cors;
+﻿namespace FSH.Framework.Infrastructure.Cors;
 public static class Extensions
 {
     private const string CorsPolicy = nameof(CorsPolicy);

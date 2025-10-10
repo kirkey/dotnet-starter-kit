@@ -1,11 +1,4 @@
-﻿using Finbuckle.MultiTenant;
-using FSH.Framework.Core.Audit;
-using FSH.Framework.Infrastructure.Identity.RoleClaims;
-using FSH.Framework.Infrastructure.Identity.Roles;
-using FSH.Framework.Infrastructure.Identity.Users;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using IdentityConstants = Shared.Authorization.IdentityConstants;
 
 namespace FSH.Framework.Infrastructure.Identity.Persistence;

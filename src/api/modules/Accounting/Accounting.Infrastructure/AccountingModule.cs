@@ -1,3 +1,6 @@
+using Accounting.Application.ChartOfAccounts.Import;
+using Accounting.Application.Payees.Import;
+using Accounting.Domain.Entities;
 using Accounting.Infrastructure.Endpoints.AccountingPeriods;
 using Accounting.Infrastructure.Endpoints.Accruals;
 using Accounting.Infrastructure.Endpoints.BankReconciliations;
@@ -24,11 +27,8 @@ using Accounting.Infrastructure.Endpoints.Projects.Costing;
 using Accounting.Infrastructure.Endpoints.RecurringJournalEntries;
 using Accounting.Infrastructure.Endpoints.TaxCodes;
 using Accounting.Infrastructure.Endpoints.TrialBalance;
-using Accounting.Infrastructure.Persistence;
 using Accounting.Infrastructure.Import;
-using Accounting.Application.ChartOfAccounts.Import;
-using Accounting.Application.Payees.Import;
-using Accounting.Domain.Entities;
+using Accounting.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,5 +1,5 @@
-using Accounting.Domain.Events.DebitMemo;
 using Accounting.Domain.Constants;
+using Accounting.Domain.Events.DebitMemo;
 
 namespace Accounting.Domain.Entities;
 

@@ -1,12 +1,5 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using FSH.Framework.Core.Identity.Users.Abstractions;
+﻿using FluentValidation.Results;
 using FSH.Framework.Core.Identity.Users.Features.ResetPassword;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 

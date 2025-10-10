@@ -1,5 +1,4 @@
 ﻿using Finbuckle.MultiTenant.EntityFrameworkCore.Stores.EFCoreStore;
-using Microsoft.EntityFrameworkCore;
 
 namespace FSH.Framework.Infrastructure.Tenant.Persistence;
 public class TenantDbContext : EFCoreStoreDbContext<FshTenantInfo>

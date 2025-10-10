@@ -1,10 +1,4 @@
-﻿using FSH.Framework.Core.Audit;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-
-namespace FSH.Framework.Infrastructure.Identity.Audit.Endpoints;
+﻿namespace FSH.Framework.Infrastructure.Identity.Audit.Endpoints;
 
 public static class GetUserAuditTrailEndpoint
 {

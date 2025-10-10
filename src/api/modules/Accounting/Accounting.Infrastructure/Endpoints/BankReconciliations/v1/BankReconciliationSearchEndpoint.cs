@@ -1,5 +1,5 @@
-using Accounting.Application.BankReconciliations.Search.v1;
 using Accounting.Application.BankReconciliations.Responses;
+using Accounting.Application.BankReconciliations.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 

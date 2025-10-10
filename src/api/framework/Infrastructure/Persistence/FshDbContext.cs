@@ -1,11 +1,4 @@
-﻿using Finbuckle.MultiTenant.Abstractions;
-using Finbuckle.MultiTenant.EntityFrameworkCore;
-using FSH.Framework.Core.Domain.Contracts;
-using FSH.Framework.Core.Persistence;
-using FSH.Framework.Infrastructure.Tenant;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Finbuckle.MultiTenant.EntityFrameworkCore;
 
 namespace FSH.Framework.Infrastructure.Persistence;
 public class FshDbContext(IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor,

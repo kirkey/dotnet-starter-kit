@@ -1,5 +1,5 @@
-using Accounting.Application.RecurringJournalEntries.Search.v1;
 using Accounting.Application.RecurringJournalEntries.Responses;
+using Accounting.Application.RecurringJournalEntries.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.RecurringJournalEntries.v1;
 

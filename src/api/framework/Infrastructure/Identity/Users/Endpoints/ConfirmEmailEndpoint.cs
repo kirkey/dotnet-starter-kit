@@ -1,9 +1,4 @@
-﻿using FSH.Framework.Core.Identity.Users.Abstractions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-
-namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
+﻿namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 public static class ConfirmEmailEndpoint
 {
     internal static RouteHandlerBuilder MapConfirmEmailEndpoint(this IEndpointRouteBuilder endpoints)

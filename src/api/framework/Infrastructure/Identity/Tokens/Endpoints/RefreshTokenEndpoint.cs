@@ -1,10 +1,4 @@
-﻿using FSH.Framework.Core.Identity.Tokens;
-using FSH.Framework.Core.Identity.Tokens.Features.Refresh;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
+﻿using FSH.Framework.Core.Identity.Tokens.Features.Refresh;
 
 namespace FSH.Framework.Infrastructure.Identity.Tokens.Endpoints;
 public static class RefreshTokenEndpoint

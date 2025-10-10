@@ -1,0 +1,335 @@
+using FSH.Framework.Core.Storage;
+using FSH.Framework.Core.Storage.Commands;
+using FSH.Starter.WebApi.Store.Application.Items.Specs;
+using Store.Domain.Entities;
+
+namespace FSH.Starter.WebApi.Store.Application.Items.Import.v1;
+
+/// <summary>
+/// Handler for importing Items from Excel files.
+/// Implements strict validation and mapping rules for Store Items.
+/// </summary>
+public sealed class ImportItemsHandler(
+    IDataImportService importService,
+    [FromKeyedServices("store:items")] IRepository<Item> repository,
+    [FromKeyedServices("store:items")] IReadRepository<Item> readRepository,
+    [FromKeyedServices("store:categories")] IReadRepository<Category> categoryRepository,
+    [FromKeyedServices("store:suppliers")] IReadRepository<Supplier> supplierRepository,
+    ILogger<ImportItemsHandler> logger)
+    : IRequestHandler<ImportItemsCommand, ImportResponse>
+{
+    public async Task<ImportResponse> Handle(ImportItemsCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        ArgumentNullException.ThrowIfNull(request.File);
+
+        logger.LogInformation("Starting import for Items from file: {FileName}", request.File.Name);
+
+        try
+        {
+            // Validate file structure if required
+            if (request.ValidateStructure)
+            {
+                var expectedColumns = GetExpectedColumns();
+                var validationResult = await importService.ValidateFileStructureAsync(
+                    request.File, expectedColumns, request.SheetName, cancellationToken);
+
+                if (!validationResult.IsValid)
+                {
+                    logger.LogWarning("File structure validation failed: {Errors}", 
+                        string.Join(", ", validationResult.Errors));
+                    return ImportResponse.Failure(validationResult.Errors);
+                }
+            }
+
+            // Parse the file
+            var rows = await importService.ParseAsync<ItemImportRow>(
+                request.File, request.SheetName, cancellationToken);
+
+            if (rows.Count == 0)
+            {
+                logger.LogInformation("No rows found in the import file");
+                return ImportResponse.Success(0);
+            }
+
+            // Process rows
+            var result = await ProcessRowsAsync(rows, cancellationToken);
+
+            logger.LogInformation("Import completed: {Imported} successful, {Failed} failed out of {Total} total",
+                result.ImportedCount, result.FailedCount, result.TotalCount);
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Import failed for Items");
+            return ImportResponse.Failure(new List<string> { $"Import failed: {ex.Message}" });
+        }
+    }
+
+    private async Task<ImportResponse> ProcessRowsAsync(IReadOnlyList<ItemImportRow> rows, CancellationToken cancellationToken)
+    {
+        var errors = new List<string>();
+        var importedCount = 0;
+
+        for (int i = 0; i < rows.Count; i++)
+        {
+            var rowIndex = i + 1;
+            var row = rows[i];
+
+            try
+            {
+                // Validate the row
+                var validationErrors = await ValidateRowAsync(row, rowIndex, cancellationToken);
+                if (validationErrors.Any())
+                {
+                    errors.AddRange(validationErrors);
+                    continue;
+                }
+
+                // Map to entity
+                var entity = await MapToEntityAsync(row, cancellationToken);
+
+                // Save entity
+                await repository.AddAsync(entity, cancellationToken);
+                await repository.SaveChangesAsync(cancellationToken);
+
+                importedCount++;
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Failed to import row {RowIndex}", rowIndex);
+                errors.Add($"Row {rowIndex}: {ex.Message}");
+            }
+        }
+
+        var failedCount = rows.Count - importedCount;
+        return failedCount > 0
+            ? ImportResponse.PartialSuccess(importedCount, failedCount, errors)
+            : ImportResponse.Success(importedCount);
+    }
+
+    private IEnumerable<string> GetExpectedColumns()
+    {
+        return new[]
+        {
+            nameof(ItemImportRow.Name),
+            nameof(ItemImportRow.Sku),
+            nameof(ItemImportRow.Barcode),
+            nameof(ItemImportRow.Price),
+            nameof(ItemImportRow.Cost),
+            nameof(ItemImportRow.MinimumStock),
+            nameof(ItemImportRow.MaximumStock),
+            nameof(ItemImportRow.ReorderPoint),
+            nameof(ItemImportRow.CategoryId),
+            nameof(ItemImportRow.SupplierId)
+        };
+    }
+
+    /// <summary>
+    /// Validates a single import row with strict business rules.
+    /// </summary>
+    private async Task<IReadOnlyList<string>> ValidateRowAsync(
+        ItemImportRow row,
+        int rowIndex,
+        CancellationToken cancellationToken)
+    {
+        var errors = new List<string>();
+
+        // Validate required fields
+        if (string.IsNullOrWhiteSpace(row.Name))
+        {
+            errors.Add($"Row {rowIndex}: Name is required");
+        }
+        else if (row.Name.Length > 200)
+        {
+            errors.Add($"Row {rowIndex}: Name cannot exceed 200 characters");
+        }
+
+        if (string.IsNullOrWhiteSpace(row.Sku))
+        {
+            errors.Add($"Row {rowIndex}: SKU is required");
+        }
+        else if (row.Sku.Length > 100)
+        {
+            errors.Add($"Row {rowIndex}: SKU cannot exceed 100 characters");
+        }
+        else
+        {
+            // Check for duplicate SKU
+            var existingBySku = await readRepository.FirstOrDefaultAsync(
+                new ItemBySkuSpec(row.Sku.Trim()), cancellationToken);
+            if (existingBySku != null)
+            {
+                errors.Add($"Row {rowIndex}: Item with SKU '{row.Sku}' already exists");
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(row.Barcode))
+        {
+            errors.Add($"Row {rowIndex}: Barcode is required");
+        }
+        else if (row.Barcode.Length > 100)
+        {
+            errors.Add($"Row {rowIndex}: Barcode cannot exceed 100 characters");
+        }
+        else
+        {
+            // Check for duplicate Barcode
+            var existingByBarcode = await readRepository.FirstOrDefaultAsync(
+                new ItemByBarcodeSpec(row.Barcode.Trim()), cancellationToken);
+            if (existingByBarcode != null)
+            {
+                errors.Add($"Row {rowIndex}: Item with Barcode '{row.Barcode}' already exists");
+            }
+        }
+
+        // Validate pricing
+        if (!row.Price.HasValue || row.Price.Value < 0)
+        {
+            errors.Add($"Row {rowIndex}: Price is required and must be >= 0");
+        }
+
+        if (!row.Cost.HasValue || row.Cost.Value < 0)
+        {
+            errors.Add($"Row {rowIndex}: Cost is required and must be >= 0");
+        }
+
+        if (row.Price.HasValue && row.Cost.HasValue && row.Price.Value < row.Cost.Value)
+        {
+            errors.Add($"Row {rowIndex}: Price must be greater than or equal to Cost");
+        }
+
+        // Validate stock levels
+        if (!row.MinimumStock.HasValue || row.MinimumStock.Value < 0)
+        {
+            errors.Add($"Row {rowIndex}: Minimum Stock is required and must be >= 0");
+        }
+
+        if (!row.MaximumStock.HasValue || row.MaximumStock.Value <= 0)
+        {
+            errors.Add($"Row {rowIndex}: Maximum Stock is required and must be > 0");
+        }
+
+        if (row.MinimumStock.HasValue && row.MaximumStock.HasValue &&
+            row.MinimumStock.Value > row.MaximumStock.Value)
+        {
+            errors.Add($"Row {rowIndex}: Minimum Stock must be less than or equal to Maximum Stock");
+        }
+
+        if (!row.ReorderPoint.HasValue || row.ReorderPoint.Value < 0)
+        {
+            errors.Add($"Row {rowIndex}: Reorder Point is required and must be >= 0");
+        }
+
+        if (row.ReorderPoint.HasValue && row.MaximumStock.HasValue &&
+            row.ReorderPoint.Value > row.MaximumStock.Value)
+        {
+            errors.Add($"Row {rowIndex}: Reorder Point must be less than or equal to Maximum Stock");
+        }
+
+        // Validate optional fields
+        if (!string.IsNullOrWhiteSpace(row.Description) && row.Description.Length > 2000)
+        {
+            errors.Add($"Row {rowIndex}: Description cannot exceed 2000 characters");
+        }
+
+        if (!string.IsNullOrWhiteSpace(row.Brand) && row.Brand.Length > 200)
+        {
+            errors.Add($"Row {rowIndex}: Brand cannot exceed 200 characters");
+        }
+
+        if (!string.IsNullOrWhiteSpace(row.Manufacturer) && row.Manufacturer.Length > 200)
+        {
+            errors.Add($"Row {rowIndex}: Manufacturer cannot exceed 200 characters");
+        }
+
+        if (!string.IsNullOrWhiteSpace(row.WeightUnit) && row.WeightUnit.Length > 20)
+        {
+            errors.Add($"Row {rowIndex}: Weight Unit cannot exceed 20 characters");
+        }
+
+        if (row.Weight.HasValue && row.Weight.Value < 0)
+        {
+            errors.Add($"Row {rowIndex}: Weight must be >= 0");
+        }
+
+        // Validate Category exists
+        if (row.CategoryId.HasValue)
+        {
+            var categoryExists = await categoryRepository.AnyAsync(
+                new CategoryByIdSpec(row.CategoryId.Value), cancellationToken);
+            if (!categoryExists)
+            {
+                errors.Add($"Row {rowIndex}: Category with ID '{row.CategoryId}' does not exist");
+            }
+        }
+        else
+        {
+            errors.Add($"Row {rowIndex}: Category ID is required");
+        }
+
+        // Validate Supplier exists
+        if (row.SupplierId.HasValue)
+        {
+            var supplierExists = await supplierRepository.AnyAsync(
+                new SupplierByIdSpec(row.SupplierId.Value), cancellationToken);
+            if (!supplierExists)
+            {
+                errors.Add($"Row {rowIndex}: Supplier with ID '{row.SupplierId}' does not exist");
+            }
+        }
+        else
+        {
+            errors.Add($"Row {rowIndex}: Supplier ID is required");
+        }
+
+        // Validate expiry date for perishable items
+        if (row.IsPerishable == true && row.ExpiryDate.HasValue && row.ExpiryDate.Value < DateTime.UtcNow)
+        {
+            errors.Add($"Row {rowIndex}: Expiry Date for perishable items cannot be in the past");
+        }
+
+        return errors;
+    }
+
+    /// <summary>
+    /// Maps an import row to an Item domain entity.
+    /// </summary>
+    private async Task<Item> MapToEntityAsync(
+        ItemImportRow row,
+        CancellationToken cancellationToken)
+    {
+        var item = Item.Create(
+            name: row.Name!.Trim(),
+            description: row.Description?.Trim(),
+            sku: row.Sku!.Trim(),
+            barcode: row.Barcode!.Trim(),
+            unitPrice: row.Price!.Value,
+            cost: row.Cost!.Value,
+            minimumStock: row.MinimumStock!.Value,
+            maximumStock: row.MaximumStock!.Value,
+            reorderPoint: row.ReorderPoint!.Value,
+            reorderQuantity: row.CurrentStock ?? row.MinimumStock!.Value,
+            leadTimeDays: 7, // Default lead time
+            categoryId: row.CategoryId!.Value,
+            supplierId: row.SupplierId!.Value,
+            unitOfMeasure: "EA",
+            isPerishable: row.IsPerishable ?? false,
+            isSerialTracked: false, // Default not serial tracked
+            isLotTracked: false, // Default not lot tracked
+            shelfLifeDays: null,
+            brand: row.Brand?.Trim(),
+            manufacturer: row.Manufacturer?.Trim(),
+            manufacturerPartNumber: null,
+            weight: row.Weight ?? 0,
+            weightUnit: row.WeightUnit?.Trim(),
+            length: null,
+            width: null,
+            height: null,
+            dimensionUnit: null);
+
+        return await Task.FromResult(item);
+    }
+}
+

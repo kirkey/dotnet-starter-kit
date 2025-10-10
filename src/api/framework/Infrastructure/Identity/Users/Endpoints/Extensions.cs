@@ -1,5 +1,4 @@
 ﻿using FSH.Framework.Infrastructure.Identity.Audit.Endpoints;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 internal static class Extensions

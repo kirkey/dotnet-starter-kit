@@ -1,6 +1,6 @@
 using FSH.Framework.Core.Storage.File.Features;
 
-namespace Store.Application.Items.Import;
+namespace FSH.Starter.WebApi.Store.Application.Items.Import;
 
 /// <summary>
 /// Interface for parsing Item import files.

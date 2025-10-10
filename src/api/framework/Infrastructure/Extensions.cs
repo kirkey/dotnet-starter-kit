@@ -1,7 +1,5 @@
 ﻿using Asp.Versioning.Conventions;
-using FluentValidation;
 using FSH.Framework.Core;
-using FSH.Framework.Core.Origin;
 using FSH.Framework.Infrastructure.Auth;
 using FSH.Framework.Infrastructure.Auth.Jwt;
 using FSH.Framework.Infrastructure.Behaviours;
@@ -13,16 +11,11 @@ using FSH.Framework.Infrastructure.Jobs;
 using FSH.Framework.Infrastructure.Logging.Serilog;
 using FSH.Framework.Infrastructure.Mail;
 using FSH.Framework.Infrastructure.OpenApi;
-using FSH.Framework.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.RateLimit;
 using FSH.Framework.Infrastructure.SecurityHeaders;
 using FSH.Framework.Infrastructure.Storage;
-using FSH.Framework.Infrastructure.Tenant;
 using FSH.Framework.Infrastructure.Tenant.Endpoints;
 using FSH.Starter.Aspire.ServiceDefaults;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Framework.Infrastructure;
 

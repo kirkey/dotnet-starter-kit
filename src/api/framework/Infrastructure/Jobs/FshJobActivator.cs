@@ -1,12 +1,6 @@
-﻿using Finbuckle.MultiTenant;
-using Finbuckle.MultiTenant.Abstractions;
-using FSH.Framework.Core.Identity.Users.Abstractions;
-using FSH.Framework.Infrastructure.Constants;
-using FSH.Framework.Infrastructure.Tenant;
+﻿using FSH.Framework.Infrastructure.Constants;
 using Hangfire;
 using Hangfire.Server;
-using Microsoft.Extensions.DependencyInjection;
-using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Jobs;
 

@@ -1,13 +1,7 @@
-﻿using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Jobs;
-using FSH.Framework.Core.Persistence;
-using FSH.Framework.Infrastructure.Persistence;
+﻿using FSH.Framework.Core.Jobs;
 using Hangfire;
 using Hangfire.MySql;
 using Hangfire.PostgreSql;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Framework.Infrastructure.Jobs;
 

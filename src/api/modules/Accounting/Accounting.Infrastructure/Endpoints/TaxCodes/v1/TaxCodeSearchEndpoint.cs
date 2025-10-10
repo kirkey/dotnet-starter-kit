@@ -1,5 +1,5 @@
-using Accounting.Application.TaxCodes.Search.v1;
 using Accounting.Application.TaxCodes.Responses;
+using Accounting.Application.TaxCodes.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.TaxCodes.v1;
 

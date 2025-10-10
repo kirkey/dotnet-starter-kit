@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-
-namespace FSH.Framework.Infrastructure.Identity.Tokens.Endpoints;
+﻿namespace FSH.Framework.Infrastructure.Identity.Tokens.Endpoints;
 internal static class Extensions
 {
     public static IEndpointRouteBuilder MapTokenEndpoints(this IEndpointRouteBuilder app)

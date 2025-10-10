@@ -1,5 +1,5 @@
-using StockLevelResponse = FSH.Starter.WebApi.Store.Application.StockLevels.Get.v1.StockLevelResponse;
 using FSH.Starter.WebApi.Store.Application.StockLevels.Search.v1;
+using StockLevelResponse = FSH.Starter.WebApi.Store.Application.StockLevels.Get.v1.StockLevelResponse;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 

@@ -1,11 +1,6 @@
-﻿using FSH.Framework.Core.Persistence;
-using FSH.Framework.Infrastructure.Persistence.Interceptors;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
+﻿using FSH.Framework.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace FSH.Framework.Infrastructure.Persistence;
 public static class Extensions

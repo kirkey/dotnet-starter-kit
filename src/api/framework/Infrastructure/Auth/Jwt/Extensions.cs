@@ -1,8 +1,4 @@
-﻿using FSH.Framework.Core.Auth.Jwt;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace FSH.Framework.Infrastructure.Auth.Jwt;
 internal static class Extensions

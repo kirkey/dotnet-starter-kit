@@ -1,23 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
-using Finbuckle.MultiTenant.Abstractions;
-using FSH.Framework.Core.Auth.Jwt;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Identity.Tokens;
 using FSH.Framework.Core.Identity.Tokens.Features.Generate;
 using FSH.Framework.Core.Identity.Tokens.Features.Refresh;
 using FSH.Framework.Core.Identity.Tokens.Models;
 using FSH.Framework.Infrastructure.Auth.Jwt;
 using FSH.Framework.Infrastructure.Identity.Audit;
-using FSH.Framework.Infrastructure.Identity.Users;
-using FSH.Framework.Infrastructure.Tenant;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Tokens;
 public sealed class TokenService(

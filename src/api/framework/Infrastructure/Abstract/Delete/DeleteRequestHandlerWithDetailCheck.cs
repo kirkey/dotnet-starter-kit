@@ -1,9 +1,3 @@
-using Ardalis.Specification;
-using FSH.Framework.Core.Caching;
-using FSH.Framework.Core.Domain.Contracts;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Persistence;
-
 namespace FSH.Framework.Infrastructure.Abstract.Delete;
 
 public class DeleteRequestHandlerWithDetailCheck<TRequest, TEntity, TId, TCheck>(

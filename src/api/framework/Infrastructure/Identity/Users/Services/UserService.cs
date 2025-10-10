@@ -1,27 +1,14 @@
-﻿using System.Security.Claims;
-using System.Text;
-using Finbuckle.MultiTenant.Abstractions;
-using FSH.Framework.Core.Caching;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Identity.Users.Abstractions;
-using FSH.Framework.Core.Identity.Users.Dtos;
+﻿using FSH.Framework.Core.Identity.Users.Dtos;
 using FSH.Framework.Core.Identity.Users.Features.AssignUserRole;
 using FSH.Framework.Core.Identity.Users.Features.RegisterUser;
 using FSH.Framework.Core.Identity.Users.Features.ToggleUserStatus;
 using FSH.Framework.Core.Identity.Users.Features.UpdateUser;
 using FSH.Framework.Core.Jobs;
 using FSH.Framework.Core.Mail;
-using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.File;
 using FSH.Framework.Infrastructure.Constants;
-using FSH.Framework.Infrastructure.Identity.Persistence;
-using FSH.Framework.Infrastructure.Identity.Roles;
-using FSH.Framework.Infrastructure.Tenant;
 using Mapster;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
-using Shared.Authorization;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Services;
 

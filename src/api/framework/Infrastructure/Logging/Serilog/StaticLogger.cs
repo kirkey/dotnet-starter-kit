@@ -1,5 +1,4 @@
-﻿using Serilog;
-using Serilog.Core;
+﻿using Serilog.Core;
 
 namespace FSH.Framework.Infrastructure.Logging.Serilog;
 

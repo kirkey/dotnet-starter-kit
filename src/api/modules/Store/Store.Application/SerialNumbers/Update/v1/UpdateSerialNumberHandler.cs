@@ -1,4 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.SerialNumbers.Get.v1;
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Specs;
 using Store.Domain.Exceptions.SerialNumber;
 

@@ -1,10 +1,4 @@
-﻿using FSH.Framework.Core.Origin;
-using FSH.Framework.Core.Storage;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.FileProviders;
 
 namespace FSH.Framework.Infrastructure.Storage;
 
@@ -21,6 +15,10 @@ internal static class Extension
         services.AddTransient<IStorageService, LocalFileStorageService>();
         services.AddTransient<IDataExport, DataExport>();
         services.AddTransient<IDataImport, DataImport>();
+        
+        // Register generic import/export services
+        services.AddTransient<IDataImportService, DataImportService>();
+        services.AddTransient<IDataExportService, DataExportService>();
 
         return services;
     }

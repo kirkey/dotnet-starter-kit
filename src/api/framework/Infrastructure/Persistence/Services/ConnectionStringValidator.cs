@@ -1,7 +1,4 @@
-﻿using FSH.Framework.Core.Persistence;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Data.SqlClient;
 using Npgsql;
 
 namespace FSH.Framework.Infrastructure.Persistence.Services;

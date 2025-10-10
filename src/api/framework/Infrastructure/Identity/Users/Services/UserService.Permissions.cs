@@ -1,9 +1,4 @@
-﻿using FSH.Framework.Core.Caching;
-using FSH.Framework.Core.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using Shared.Authorization;
-
-namespace FSH.Framework.Infrastructure.Identity.Users.Services;
+﻿namespace FSH.Framework.Infrastructure.Identity.Users.Services;
 internal sealed partial class UserService
 {
     public async Task<List<string>?> GetPermissionsAsync(string userId, CancellationToken cancellationToken)

@@ -1,7 +1,4 @@
-﻿using FSH.Framework.Core.Caching;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+﻿using ILogger = Serilog.ILogger;
 
 namespace FSH.Framework.Infrastructure.Caching;
 internal static class Extensions

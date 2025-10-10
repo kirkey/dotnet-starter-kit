@@ -1,5 +1,5 @@
-using Accounting.Domain.Events.CreditMemo;
 using Accounting.Domain.Constants;
+using Accounting.Domain.Events.CreditMemo;
 
 namespace Accounting.Domain.Entities;
 

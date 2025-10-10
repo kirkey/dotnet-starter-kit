@@ -1,13 +1,4 @@
-﻿using System.Security.Claims;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Identity.Users.Abstractions;
-using FSH.Framework.Core.Identity.Users.Features.UpdateUser;
-using FSH.Framework.Infrastructure.Auth.Policy;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
+﻿using FSH.Framework.Core.Identity.Users.Features.UpdateUser;
 
 namespace FSH.Framework.Infrastructure.Identity.Users.Endpoints;
 public static class UpdateUserEndpoint

@@ -1,13 +1,7 @@
-﻿using Finbuckle.MultiTenant;
-using Finbuckle.MultiTenant.Abstractions;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Persistence;
-using FSH.Framework.Core.Tenant.Abstractions;
+﻿using FSH.Framework.Core.Tenant.Abstractions;
 using FSH.Framework.Core.Tenant.Dtos;
 using FSH.Framework.Core.Tenant.Features.CreateTenant;
 using Mapster;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace FSH.Framework.Infrastructure.Tenant.Services;
 

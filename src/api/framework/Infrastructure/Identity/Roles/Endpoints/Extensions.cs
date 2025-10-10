@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing;
-
-namespace FSH.Framework.Infrastructure.Identity.Roles.Endpoints;
+﻿namespace FSH.Framework.Infrastructure.Identity.Roles.Endpoints;
 
 internal static class Extensions
 {

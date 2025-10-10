@@ -22,6 +22,8 @@ public static class ItemsEndpoints
         itemsGroup.MapDeleteItemEndpoint();
         itemsGroup.MapGetItemEndpoint();
         itemsGroup.MapSearchItemsEndpoint();
+        itemsGroup.MapImportItemsEndpoint();
+        itemsGroup.MapExportItemsEndpoint();
 
         return app;
     }

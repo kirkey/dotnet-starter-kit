@@ -1,9 +1,4 @@
-﻿using System.Security.Claims;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Identity.Users.Abstractions;
-using Shared.Authorization;
-
-namespace FSH.Framework.Infrastructure.Identity.Users.Services;
+﻿namespace FSH.Framework.Infrastructure.Identity.Users.Services;
 public class CurrentUser : ICurrentUser, ICurrentUserInitializer
 {
     private ClaimsPrincipal? _user;
