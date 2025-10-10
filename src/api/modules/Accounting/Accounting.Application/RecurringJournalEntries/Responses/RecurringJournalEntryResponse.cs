@@ -22,7 +22,7 @@ public class RecurringJournalEntryResponse
     public string? Memo { get; set; }
     public string? Notes { get; set; }
     public DateTimeOffset CreatedOn { get; set; }
-    public Guid? CreatedBy { get; set; }
+    public DefaultIdType? CreatedBy { get; set; }
     public DateTimeOffset? LastModifiedOn { get; set; }
-    public Guid? LastModifiedBy { get; set; }
+    public DefaultIdType? LastModifiedBy { get; set; }
 }

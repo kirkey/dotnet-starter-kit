@@ -132,10 +132,7 @@
         }
 
         <MudItem xs="12" md="12">
-            <AutocompleteDeliveryAddress @bind-Value="context.DeliveryAddress"
-                                        For="@(() => context.DeliveryAddress!)"
-                                        Label="Delivery Address"
-                                        Variant="Variant.Filled" />
+            <MudTextField @bind-Value="context.DeliveryAddress" For="@(() => context.DeliveryAddress!)" Label="Delivery Address" Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">

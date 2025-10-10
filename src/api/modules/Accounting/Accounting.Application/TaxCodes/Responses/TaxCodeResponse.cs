@@ -19,7 +19,7 @@ public class TaxCodeResponse
     public string? ReportingCategory { get; set; }
     public string? Description { get; set; }
     public DateTimeOffset CreatedOn { get; set; }
-    public Guid? CreatedBy { get; set; }
+    public DefaultIdType? CreatedBy { get; set; }
     public DateTimeOffset? LastModifiedOn { get; set; }
-    public Guid? LastModifiedBy { get; set; }
+    public DefaultIdType? LastModifiedBy { get; set; }
 }
