@@ -88,11 +88,31 @@ public partial class PurchaseOrders
     }
 
     /// <summary>
-    /// Views the full details of a purchase order.
+    /// Views the full details of a purchase order in a dialog.
     /// </summary>
-    private void ViewOrderDetails(DefaultIdType id)
+    private async Task ViewOrderDetails(DefaultIdType id)
     {
-        NavigationManager.NavigateTo($"/store/purchase-orders/{id}/items");
+        var parameters = new DialogParameters<PurchaseOrderDetailsDialog>
+        {
+            { x => x.PurchaseOrderId, id }
+        };
+
+        var options = new DialogOptions 
+        { 
+            CloseButton = true,
+            CloseOnEscapeKey = true,
+            FullWidth = false,
+            MaxWidth = MaxWidth.Large, 
+        };
+
+        var dialog = await DialogService.ShowAsync<PurchaseOrderDetailsDialog>("Purchase Order Details", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // Reload the table to reflect any changes made in the dialog
+            await _table.ReloadDataAsync();
+        }
     }
 
     /// <summary>

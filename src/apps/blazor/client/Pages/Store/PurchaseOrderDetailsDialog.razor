@@ -1,0 +1,108 @@
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
+            @if (_loading)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+            else if (_purchaseOrder != null)
+            {
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h5" Class="mb-4">Purchase Order Details</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%; font-weight: 500;">Order Number</td>
+                                    <td><strong>@_purchaseOrder.OrderNumber</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Status</td>
+                                    <td><strong>@_purchaseOrder.Status</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Supplier</td>
+                                    <td><strong>@_supplierName</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Order Date</td>
+                                    <td>@_purchaseOrder.OrderDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Expected Delivery</td>
+                                    <td>@(_purchaseOrder.ExpectedDeliveryDate?.ToString("MMMM dd, yyyy") ?? "Not set")</td>
+                                </tr>
+                                @if (_purchaseOrder.ActualDeliveryDate.HasValue)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Actual Delivery</td>
+                                        <td>@_purchaseOrder.ActualDeliveryDate?.ToString("MMMM dd, yyyy")</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="font-weight: 500;">Total Amount</td>
+                                    <td><strong>@_purchaseOrder.TotalAmount.ToString("C2")</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Tax Amount</td>
+                                    <td>@_purchaseOrder.TaxAmount.ToString("C2")</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Discount Amount</td>
+                                    <td>@_purchaseOrder.DiscountAmount.ToString("C2")</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Net Amount</td>
+                                    <td><strong>@_purchaseOrder.NetAmount.ToString("C2")</strong></td>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(_purchaseOrder.DeliveryAddress))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Delivery Address</td>
+                                        <td>@_purchaseOrder.DeliveryAddress</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_purchaseOrder.ContactPerson))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Contact Person</td>
+                                        <td>@_purchaseOrder.ContactPerson</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_purchaseOrder.ContactPhone))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Contact Phone</td>
+                                        <td>@_purchaseOrder.ContactPhone</td>
+                                    </tr>
+                                }
+                                @if (_purchaseOrder.IsUrgent)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Priority</td>
+                                        <td><MudChip T="string" Color="Color.Warning" Size="Size.Small">Urgent</MudChip></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem Class="pa-2" xs="12">
+                        <PurchaseOrderItems PurchaseOrderId="@PurchaseOrderId" OnItemsChanged="@HandleItemsChanged" />
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

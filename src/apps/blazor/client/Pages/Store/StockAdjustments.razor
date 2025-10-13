@@ -5,7 +5,7 @@
 <EntityTable @ref="_table" TEntity="StockAdjustmentResponse" TId="DefaultIdType" TRequest="StockAdjustmentViewModel" Context="@Context">
     <ExtraActions Context="context">
         @{
-            var adjustmentId = context.Id ?? Guid.Empty;
+            var adjustmentId = context.Id ?? DefaultIdType.Empty;
         }
         <MudMenuItem OnClick="@(() => ApproveAdjustment(adjustmentId))">
             <div class="d-flex align-center">

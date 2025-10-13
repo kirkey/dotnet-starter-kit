@@ -23,7 +23,7 @@ public partial class PurchaseOrderItemDialog
 
         try
         {
-            if (Model.Id == Guid.Empty)
+            if (Model.Id == DefaultIdType.Empty)
             {
                 // Add new item
                 // TODO: Remove explicit casts after regenerating API client with decimal types

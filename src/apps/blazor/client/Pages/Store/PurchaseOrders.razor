@@ -96,7 +96,7 @@
         
         <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteSupplier Value="context.SupplierId"
-                                 ValueChanged="value => context.SupplierId = value ?? Guid.Empty"
+                                 ValueChanged="value => context.SupplierId = value ?? DefaultIdType.Empty"
                                  For="@(() => context.SupplierId)"
                                  Label="Supplier"
                                  Variant="Variant.Filled"
@@ -145,13 +145,17 @@
             <MudSwitch T="bool?" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
         </MudItem>
 
-
         @if (context.Id != default)
         {
             <MudItem xs="12">
                 <MudDivider Class="my-4" />
-                <MudText Typo="Typo.h6" Class="mb-3">Order Items</MudText>
-                <PurchaseOrderItems PurchaseOrderId="@context.Id" />
+                <MudButton StartIcon="@Icons.Material.Filled.ListAlt" 
+                           Color="Color.Info" 
+                           OnClick="@(() => ViewOrderDetails(context.Id))" 
+                           Variant="Variant.Filled"
+                           FullWidth="true">
+                    Manage Order Items
+                </MudButton>
             </MudItem>
         }
     </EditFormContent>

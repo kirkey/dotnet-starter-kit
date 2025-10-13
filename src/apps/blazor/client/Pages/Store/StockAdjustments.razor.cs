@@ -22,7 +22,7 @@ public partial class StockAdjustments
                 new EntityField<StockAdjustmentResponse>(x => x.AdjustmentDate, "Date", "AdjustmentDate", typeof(DateTime))
             ],
             enableAdvancedSearch: true,
-            idFunc: response => response.Id ?? Guid.Empty,
+            idFunc: response => response.Id ?? DefaultIdType.Empty,
             // getDetailsFunc: async id =>
             // {
             //     var dto = await Client.GetStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false);

@@ -41,9 +41,10 @@
 
 @code {
     [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
+    [Parameter] public EventCallback OnItemsChanged { get; set; }
 
     private List<PurchaseOrderItemResponse> _items = new();
-    private bool _loading = false;
+    private bool _loading;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -84,6 +85,7 @@
         if (!result.Canceled)
         {
             await LoadItemsAsync();
+            await OnItemsChanged.InvokeAsync();
         }
     }
 
@@ -94,8 +96,8 @@
             Id = item.Id,
             ItemId = item.ItemId,
             Quantity = item.Quantity,
-            UnitPrice = (decimal)item.UnitPrice,
-            DiscountAmount = (decimal)item.DiscountAmount,
+            UnitPrice = item.UnitPrice,
+            DiscountAmount = item.DiscountAmount,
             ReceivedQuantity = item.ReceivedQuantity,
             Notes = item.Notes
         };
@@ -112,6 +114,7 @@
         if (!result.Canceled)
         {
             await LoadItemsAsync();
+            await OnItemsChanged.InvokeAsync();
         }
     }
 
@@ -130,6 +133,7 @@
                 await Client.RemovePurchaseOrderItemEndpointAsync("1", PurchaseOrderId, itemId).ConfigureAwait(false);
                 Snackbar.Add("Item deleted successfully", Severity.Success);
                 await LoadItemsAsync();
+                await OnItemsChanged.InvokeAsync();
             }
             catch (Exception ex)
             {
