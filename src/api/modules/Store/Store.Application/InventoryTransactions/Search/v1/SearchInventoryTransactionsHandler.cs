@@ -36,7 +36,7 @@ public sealed class SearchInventoryTransactionsHandler(
             Id = it.Id,
             TransactionNumber = it.TransactionNumber,
             ItemId = it.ItemId,
-            WarehouseId = it.WarehouseId ?? Guid.Empty, // Handle nullable WarehouseId by providing default value
+            WarehouseId = it.WarehouseId ?? DefaultIdType.Empty, // Handle nullable WarehouseId by providing default value
             Quantity = it.Quantity,
             TransactionDate = it.TransactionDate,
             TransactionType = it.TransactionType,

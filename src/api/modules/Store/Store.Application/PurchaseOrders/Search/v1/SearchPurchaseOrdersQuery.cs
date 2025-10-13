@@ -1,12 +1,33 @@
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1;
 
-public record SearchPurchaseOrdersCommand(
-    int PageNumber = 1,
-    int PageSize = 10,
-    string? SearchTerm = null,
-    DefaultIdType? SupplierId = null,
-    string? Status = null,
-    DateTime? FromDate = null,
-    DateTime? ToDate = null
-) : IRequest<PagedList<GetPurchaseOrderListResponse>>;
+/// <summary>
+/// Command for searching purchase orders with pagination and filtering support.
+/// </summary>
+public class SearchPurchaseOrdersCommand : PaginationFilter, IRequest<PagedList<GetPurchaseOrderListResponse>>
+{
+    /// <summary>
+    /// Search term to filter by order number, supplier name, or notes.
+    /// </summary>
+    public string? SearchTerm { get; set; }
+
+    /// <summary>
+    /// Filter by supplier ID.
+    /// </summary>
+    public DefaultIdType? SupplierId { get; set; }
+
+    /// <summary>
+    /// Filter by purchase order status.
+    /// </summary>
+    public string? Status { get; set; }
+
+    /// <summary>
+    /// Filter by order date from this date onwards.
+    /// </summary>
+    public DateTime? FromDate { get; set; }
+
+    /// <summary>
+    /// Filter by order date up to this date.
+    /// </summary>
+    public DateTime? ToDate { get; set; }
+}
 

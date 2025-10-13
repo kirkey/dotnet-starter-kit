@@ -116,13 +116,7 @@ public sealed class ImportItemsHandler(
             nameof(ItemImportRow.Name),
             nameof(ItemImportRow.Sku),
             nameof(ItemImportRow.Barcode),
-            nameof(ItemImportRow.Price),
-            nameof(ItemImportRow.Cost),
-            nameof(ItemImportRow.MinimumStock),
-            nameof(ItemImportRow.MaximumStock),
-            nameof(ItemImportRow.ReorderPoint),
-            nameof(ItemImportRow.CategoryId),
-            nameof(ItemImportRow.SupplierId)
+            nameof(ItemImportRow.Brand),
         };
     }
 
@@ -185,110 +179,110 @@ public sealed class ImportItemsHandler(
         }
 
         // Validate pricing
-        if (!row.Price.HasValue || row.Price.Value < 0)
-        {
-            errors.Add($"Row {rowIndex}: Price is required and must be >= 0");
-        }
-
-        if (!row.Cost.HasValue || row.Cost.Value < 0)
-        {
-            errors.Add($"Row {rowIndex}: Cost is required and must be >= 0");
-        }
-
-        if (row.Price.HasValue && row.Cost.HasValue && row.Price.Value < row.Cost.Value)
-        {
-            errors.Add($"Row {rowIndex}: Price must be greater than or equal to Cost");
-        }
+        // if (row.Price is null or < 0)
+        // {
+        //     errors.Add($"Row {rowIndex}: Price is required and must be >= 0");
+        // }
+        //
+        // if (row.Cost is null or < 0)
+        // {
+        //     errors.Add($"Row {rowIndex}: Cost is required and must be >= 0");
+        // }
+        //
+        // if (row is { Price: not null, Cost: not null } && row.Price.Value < row.Cost.Value)
+        // {
+        //     errors.Add($"Row {rowIndex}: Price must be greater than or equal to Cost");
+        // }
 
         // Validate stock levels
-        if (!row.MinimumStock.HasValue || row.MinimumStock.Value < 0)
-        {
-            errors.Add($"Row {rowIndex}: Minimum Stock is required and must be >= 0");
-        }
-
-        if (!row.MaximumStock.HasValue || row.MaximumStock.Value <= 0)
-        {
-            errors.Add($"Row {rowIndex}: Maximum Stock is required and must be > 0");
-        }
-
-        if (row.MinimumStock.HasValue && row.MaximumStock.HasValue &&
-            row.MinimumStock.Value > row.MaximumStock.Value)
-        {
-            errors.Add($"Row {rowIndex}: Minimum Stock must be less than or equal to Maximum Stock");
-        }
-
-        if (!row.ReorderPoint.HasValue || row.ReorderPoint.Value < 0)
-        {
-            errors.Add($"Row {rowIndex}: Reorder Point is required and must be >= 0");
-        }
-
-        if (row.ReorderPoint.HasValue && row.MaximumStock.HasValue &&
-            row.ReorderPoint.Value > row.MaximumStock.Value)
-        {
-            errors.Add($"Row {rowIndex}: Reorder Point must be less than or equal to Maximum Stock");
-        }
+        // if (row.MinimumStock is null or < 0)
+        // {
+        //     errors.Add($"Row {rowIndex}: Minimum Stock is required and must be >= 0");
+        // }
+        //
+        // if (!row.MaximumStock.HasValue || row.MaximumStock.Value <= 0)
+        // {
+        //     errors.Add($"Row {rowIndex}: Maximum Stock is required and must be > 0");
+        // }
+        //
+        // if (row is { MinimumStock: not null, MaximumStock: not null } &&
+        //     row.MinimumStock.Value > row.MaximumStock.Value)
+        // {
+        //     errors.Add($"Row {rowIndex}: Minimum Stock must be less than or equal to Maximum Stock");
+        // }
+        //
+        // if (row.ReorderPoint is null or < 0)
+        // {
+        //     errors.Add($"Row {rowIndex}: Reorder Point is required and must be >= 0");
+        // }
+        //
+        // if (row is { ReorderPoint: not null, MaximumStock: not null } &&
+        //     row.ReorderPoint.Value > row.MaximumStock.Value)
+        // {
+        //     errors.Add($"Row {rowIndex}: Reorder Point must be less than or equal to Maximum Stock");
+        // }
 
         // Validate optional fields
-        if (!string.IsNullOrWhiteSpace(row.Description) && row.Description.Length > 2000)
-        {
-            errors.Add($"Row {rowIndex}: Description cannot exceed 2000 characters");
-        }
-
         if (!string.IsNullOrWhiteSpace(row.Brand) && row.Brand.Length > 200)
         {
             errors.Add($"Row {rowIndex}: Brand cannot exceed 200 characters");
         }
-
-        if (!string.IsNullOrWhiteSpace(row.Manufacturer) && row.Manufacturer.Length > 200)
-        {
-            errors.Add($"Row {rowIndex}: Manufacturer cannot exceed 200 characters");
-        }
-
-        if (!string.IsNullOrWhiteSpace(row.WeightUnit) && row.WeightUnit.Length > 20)
-        {
-            errors.Add($"Row {rowIndex}: Weight Unit cannot exceed 20 characters");
-        }
-
-        if (row.Weight.HasValue && row.Weight.Value < 0)
-        {
-            errors.Add($"Row {rowIndex}: Weight must be >= 0");
-        }
+        
+        // if (!string.IsNullOrWhiteSpace(row.Description) && row.Description.Length > 2000)
+        // {
+        //     errors.Add($"Row {rowIndex}: Description cannot exceed 2000 characters");
+        // }
+        //
+        // if (!string.IsNullOrWhiteSpace(row.Manufacturer) && row.Manufacturer.Length > 200)
+        // {
+        //     errors.Add($"Row {rowIndex}: Manufacturer cannot exceed 200 characters");
+        // }
+        //
+        // if (!string.IsNullOrWhiteSpace(row.WeightUnit) && row.WeightUnit.Length > 20)
+        // {
+        //     errors.Add($"Row {rowIndex}: Weight Unit cannot exceed 20 characters");
+        // }
+        //
+        // if (row.Weight is < 0)
+        // {
+        //     errors.Add($"Row {rowIndex}: Weight must be >= 0");
+        // }
 
         // Validate Category exists
-        if (row.CategoryId.HasValue)
-        {
-            var categoryExists = await categoryRepository.AnyAsync(
-                new CategoryByIdSpec(row.CategoryId.Value), cancellationToken);
-            if (!categoryExists)
-            {
-                errors.Add($"Row {rowIndex}: Category with ID '{row.CategoryId}' does not exist");
-            }
-        }
-        else
-        {
-            errors.Add($"Row {rowIndex}: Category ID is required");
-        }
+        // if (row.CategoryId.HasValue)
+        // {
+        //     var categoryExists = await categoryRepository.AnyAsync(
+        //         new CategoryByIdSpec(row.CategoryId.Value), cancellationToken);
+        //     if (!categoryExists)
+        //     {
+        //         errors.Add($"Row {rowIndex}: Category with ID '{row.CategoryId}' does not exist");
+        //     }
+        // }
+        // else
+        // {
+        //     errors.Add($"Row {rowIndex}: Category ID is required");
+        // }
 
         // Validate Supplier exists
-        if (row.SupplierId.HasValue)
-        {
-            var supplierExists = await supplierRepository.AnyAsync(
-                new SupplierByIdSpec(row.SupplierId.Value), cancellationToken);
-            if (!supplierExists)
-            {
-                errors.Add($"Row {rowIndex}: Supplier with ID '{row.SupplierId}' does not exist");
-            }
-        }
-        else
-        {
-            errors.Add($"Row {rowIndex}: Supplier ID is required");
-        }
+        // if (row.SupplierId.HasValue)
+        // {
+        //     var supplierExists = await supplierRepository.AnyAsync(
+        //         new SupplierByIdSpec(row.SupplierId.Value), cancellationToken);
+        //     if (!supplierExists)
+        //     {
+        //         errors.Add($"Row {rowIndex}: Supplier with ID '{row.SupplierId}' does not exist");
+        //     }
+        // }
+        // else
+        // {
+        //     errors.Add($"Row {rowIndex}: Supplier ID is required");
+        // }
 
         // Validate expiry date for perishable items
-        if (row.IsPerishable == true && row.ExpiryDate.HasValue && row.ExpiryDate.Value < DateTime.UtcNow)
-        {
-            errors.Add($"Row {rowIndex}: Expiry Date for perishable items cannot be in the past");
-        }
+        // if (row is { IsPerishable: true, ExpiryDate: not null } && row.ExpiryDate.Value < DateTime.UtcNow)
+        // {
+        //     errors.Add($"Row {rowIndex}: Expiry Date for perishable items cannot be in the past");
+        // }
 
         return errors;
     }
@@ -296,34 +290,32 @@ public sealed class ImportItemsHandler(
     /// <summary>
     /// Maps an import row to an Item domain entity.
     /// </summary>
-    private async Task<Item> MapToEntityAsync(
-        ItemImportRow row,
-        CancellationToken cancellationToken)
+    private async Task<Item> MapToEntityAsync(ItemImportRow row, CancellationToken cancellationToken)
     {
         var item = Item.Create(
             name: row.Name!.Trim(),
             description: row.Description?.Trim(),
             sku: row.Sku!.Trim(),
             barcode: row.Barcode!.Trim(),
-            unitPrice: row.Price!.Value,
-            cost: row.Cost!.Value,
-            minimumStock: row.MinimumStock!.Value,
-            maximumStock: row.MaximumStock!.Value,
-            reorderPoint: row.ReorderPoint!.Value,
-            reorderQuantity: row.CurrentStock ?? row.MinimumStock!.Value,
-            leadTimeDays: 7, // Default lead time
-            categoryId: row.CategoryId!.Value,
-            supplierId: row.SupplierId!.Value,
+            unitPrice: 0, // row.Price!.Value,
+            cost: 0, // row.Cost!.Value,
+            minimumStock: 0, // row.MinimumStock!.Value,
+            maximumStock: 10, // row.MaximumStock!.Value,
+            reorderPoint: 0, // row.ReorderPoint!.Value,
+            reorderQuantity: 0, // row.CurrentStock ?? row.MinimumStock!.Value,
+            leadTimeDays: 0, // 7, // Default lead time
+            categoryId: DefaultIdType.Parse("8a15eb13-c33f-4d47-bd73-b3924577fb6d"), // row.CategoryId!.Value,
+            supplierId: DefaultIdType.Parse("ac0939b2-17c3-4c9f-916a-a908865cd55b"), // row.SupplierId!.Value,
             unitOfMeasure: "EA",
             isPerishable: row.IsPerishable ?? false,
             isSerialTracked: false, // Default not serial tracked
             isLotTracked: false, // Default not lot tracked
             shelfLifeDays: null,
             brand: row.Brand?.Trim(),
-            manufacturer: row.Manufacturer?.Trim(),
+            manufacturer: string.Empty, // row.Manufacturer?.Trim(),
             manufacturerPartNumber: null,
-            weight: row.Weight ?? 0,
-            weightUnit: row.WeightUnit?.Trim(),
+            weight: 0, // row.Weight ?? 0,
+            weightUnit: string.Empty, // row.WeightUnit?.Trim(),
             length: null,
             width: null,
             height: null,

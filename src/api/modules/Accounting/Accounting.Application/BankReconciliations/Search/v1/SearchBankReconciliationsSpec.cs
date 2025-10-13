@@ -3,18 +3,24 @@ using Accounting.Domain.Entities;
 
 namespace Accounting.Application.BankReconciliations.Search.v1;
 
-public class SearchBankReconciliationsSpec : Specification<BankReconciliation, BankReconciliationResponse>
+/// <summary>
+/// Specification for searching bank reconciliations with various filters and pagination support.
+/// </summary>
+public class SearchBankReconciliationsSpec : EntitiesByPaginationFilterSpec<BankReconciliation, BankReconciliationResponse>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchBankReconciliationsSpec"/> class.
+    /// </summary>
+    /// <param name="request">The search bank reconciliations command containing filter criteria and pagination parameters.</param>
     public SearchBankReconciliationsSpec(SearchBankReconciliationsCommand request)
+        : base(request)
     {
         Query
-            .Where(r => !request.BankAccountId.HasValue || r.BankAccountId == request.BankAccountId.Value)
-            .Where(r => !request.FromDate.HasValue || r.ReconciliationDate >= request.FromDate.Value)
-            .Where(r => !request.ToDate.HasValue || r.ReconciliationDate <= request.ToDate.Value)
-            .Where(r => string.IsNullOrEmpty(request.Status) || r.Status.ToString() == request.Status)
-            .Where(r => !request.IsReconciled.HasValue || r.IsReconciled == request.IsReconciled.Value)
-            .OrderByDescending(r => r.ReconciliationDate)
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize);
+            .Where(r => r.BankAccountId == request.BankAccountId!.Value, request.BankAccountId.HasValue)
+            .Where(r => r.ReconciliationDate >= request.FromDate!.Value, request.FromDate.HasValue)
+            .Where(r => r.ReconciliationDate <= request.ToDate!.Value, request.ToDate.HasValue)
+            .Where(r => r.Status.ToString() == request.Status, !string.IsNullOrEmpty(request.Status))
+            .Where(r => r.IsReconciled == request.IsReconciled!.Value, request.IsReconciled.HasValue)
+            .OrderByDescending(r => r.ReconciliationDate, !request.HasOrderBy());
     }
 }

@@ -2,38 +2,26 @@ using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.GoodsReceipts;
 
-public sealed class SearchGoodsReceiptsSpec : Specification<GoodsReceipt>
+/// <summary>
+/// Specification for searching goods receipts with various filters and pagination support.
+/// </summary>
+public sealed class SearchGoodsReceiptsSpec : EntitiesByPaginationFilterSpec<GoodsReceipt>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchGoodsReceiptsSpec"/> class.
+    /// </summary>
+    /// <param name="request">The search goods receipts command containing filter criteria and pagination parameters.</param>
     public SearchGoodsReceiptsSpec(SearchGoodsReceiptsCommand request)
+        : base(request)
     {
         Query
-            .OrderByDescending(x => x.ReceivedDate)
-            .ThenBy(x => x.ReceiptNumber)
-            .Include(x => x.Items);
-
-        if (!string.IsNullOrWhiteSpace(request.ReceiptNumber))
-        {
-            Query.Where(x => x.ReceiptNumber.Contains(request.ReceiptNumber));
-        }
-
-        if (request.PurchaseOrderId.HasValue)
-        {
-            Query.Where(x => x.PurchaseOrderId == request.PurchaseOrderId.Value);
-        }
-
-        if (!string.IsNullOrWhiteSpace(request.Status))
-        {
-            Query.Where(x => x.Status == request.Status);
-        }
-
-        if (request.ReceivedDateFrom.HasValue)
-        {
-            Query.Where(x => x.ReceivedDate >= request.ReceivedDateFrom.Value);
-        }
-
-        if (request.ReceivedDateTo.HasValue)
-        {
-            Query.Where(x => x.ReceivedDate <= request.ReceivedDateTo.Value);
-        }
+            .Include(x => x.Items)
+            .Where(x => x.ReceiptNumber.Contains(request.ReceiptNumber!), !string.IsNullOrWhiteSpace(request.ReceiptNumber))
+            .Where(x => x.PurchaseOrderId == request.PurchaseOrderId!.Value, request.PurchaseOrderId.HasValue)
+            .Where(x => x.Status == request.Status, !string.IsNullOrWhiteSpace(request.Status))
+            .Where(x => x.ReceivedDate >= request.ReceivedDateFrom!.Value, request.ReceivedDateFrom.HasValue)
+            .Where(x => x.ReceivedDate <= request.ReceivedDateTo!.Value, request.ReceivedDateTo.HasValue)
+            .OrderByDescending(x => x.ReceivedDate, !request.HasOrderBy())
+            .ThenBy(x => x.ReceiptNumber);
     }
 }
