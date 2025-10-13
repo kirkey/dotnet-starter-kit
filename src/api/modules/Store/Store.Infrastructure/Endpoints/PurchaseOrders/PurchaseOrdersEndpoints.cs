@@ -33,6 +33,7 @@ public static class PurchaseOrdersEndpoints
         purchaseOrdersGroup.MapReceivePurchaseOrderEndpoint();
         purchaseOrdersGroup.MapReceivePurchaseOrderItemQuantityEndpoint();
         purchaseOrdersGroup.MapCancelPurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapGeneratePurchaseOrderPdfEndpoint();
 
         return app;
     }

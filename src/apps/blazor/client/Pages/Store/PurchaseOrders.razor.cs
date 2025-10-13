@@ -248,6 +248,42 @@ public partial class PurchaseOrders
             }
         }
     }
+
+    /// <summary>
+    /// Downloads a PDF report for the purchase order.
+    /// </summary>
+    /// <remarks>
+    /// Uses the API client to generate and download a PDF report for the specified purchase order.
+    /// The endpoint returns a FileResponse containing the PDF file stream.
+    /// </remarks>
+    private async Task DownloadPdf(DefaultIdType id)
+    {
+        try
+        {
+            Snackbar.Add("Generating PDF report...", Severity.Info);
+            
+            // Call the API endpoint to generate the PDF
+            var fileResponse = await Client.GeneratePurchaseOrderPdfEndpointAsync("1", id).ConfigureAwait(false);
+            
+            // Create filename with timestamp
+            var fileName = $"PurchaseOrder_{id}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+            
+            // Read the stream content
+            using var memoryStream = new MemoryStream();
+            await fileResponse.Stream.CopyToAsync(memoryStream);
+            var pdfBytes = memoryStream.ToArray();
+            
+            // Convert to base64 and use the fshDownload.saveFile method
+            var base64 = Convert.ToBase64String(pdfBytes);
+            await Js.InvokeVoidAsync("fshDownload.saveFile", fileName, base64);
+            
+            Snackbar.Add("PDF report downloaded successfully", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error downloading PDF: {ex.Message}", Severity.Error);
+        }
+    }
 }
 
 /// <summary>

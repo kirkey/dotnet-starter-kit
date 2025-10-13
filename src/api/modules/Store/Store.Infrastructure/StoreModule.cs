@@ -1,4 +1,6 @@
+using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Report.v1.Services;
 using Store.Domain.Entities;
+using Store.Infrastructure.Services;
 using Store.Infrastructure.Endpoints.Bins;
 using Store.Infrastructure.Endpoints.Categories;
 using Store.Infrastructure.Endpoints.CycleCounts;
@@ -214,6 +216,9 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IReadRepository<Warehouse>, StoreRepository<Warehouse>>("store:warehouses");
         builder.Services.AddKeyedScoped<IRepository<WarehouseLocation>, StoreRepository<WarehouseLocation>>("store:warehouse-locations");
         builder.Services.AddKeyedScoped<IReadRepository<WarehouseLocation>, StoreRepository<WarehouseLocation>>("store:warehouse-locations");
+
+        // Register PDF service for Purchase Orders
+        builder.Services.AddScoped<IPurchaseOrderPdfService, PurchaseOrderPdfService>();
 
         return builder;
     }

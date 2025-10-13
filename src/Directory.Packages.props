@@ -105,4 +105,7 @@
     <!-- Adjusted to latest available version on nuget.org (NU1102 fix) -->
     <PackageVersion Include="ClosedXML.Report" Version="0.2.12" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="QuestPDF" Version="2024.12.3" />
+  </ItemGroup>
 </Project>

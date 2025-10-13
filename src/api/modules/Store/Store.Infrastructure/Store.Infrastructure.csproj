@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <PackageReference Include="ClosedXML" />
+      <PackageReference Include="QuestPDF" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.Commands;
 using FSH.Starter.WebApi.Store.Application.Items.Specs;
-using Store.Domain.Entities;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Import.v1;
 

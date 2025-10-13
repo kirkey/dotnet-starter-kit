@@ -32,6 +32,12 @@
                 <span>View Details</span>
             </div>
         </MudMenuItem>
+        <MudMenuItem OnClick="@(() => DownloadPdf(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.PictureAsPdf" Class="mr-2" Color="Color.Error" />
+                <span>Download PDF</span>
+            </div>
+        </MudMenuItem>
         @if (context.Status == "Draft")
         {
             <MudMenuItem OnClick="@(() => SubmitOrder(context.Id))">
