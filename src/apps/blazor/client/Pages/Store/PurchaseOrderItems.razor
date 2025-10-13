@@ -120,13 +120,15 @@
 
     private async Task DeleteItemAsync(DefaultIdType itemId)
     {
-        var confirmed = await DialogService.ShowMessageBox(
-            "Delete Item",
-            "Are you sure you want to delete this item?",
-            yesText: "Delete",
-            cancelText: "Cancel");
+        var parameters = new DialogParameters<DeleteConfirmation>
+        {
+            { x => x.ContentText, "Are you sure you want to delete this item?" }
+        };
 
-        if (confirmed == true)
+        var dialog = await DialogService.ShowAsync<DeleteConfirmation>("Delete Item", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
         {
             try
             {
