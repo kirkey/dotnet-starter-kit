@@ -300,7 +300,7 @@ public partial class ImageUploader : ComponentBase
             return false;
 
         // JPEG: FF D8 FF
-        if (bytes.Length >= 3 && bytes[0] == 0xFF && bytes[1] == 0xD8 && bytes[2] == 0xFF)
+        if (bytes is [0xFF, 0xD8, 0xFF, ..])
             return true;
 
         // PNG: 89 50 4E 47 0D 0A 1A 0A

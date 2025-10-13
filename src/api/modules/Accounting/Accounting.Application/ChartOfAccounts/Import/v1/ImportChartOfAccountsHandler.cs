@@ -1,10 +1,11 @@
 using Accounting.Application.ChartOfAccounts.Specs;
 using Accounting.Domain.Entities;
+using FSH.Framework.Core.Storage.Commands;
 
 namespace Accounting.Application.ChartOfAccounts.Import.v1;
 
 /// <summary>
-/// Imports chart of accounts from an Excel file and returns the total number of successfully imported accounts.
+/// Imports chart of accounts from an Excel file and returns detailed import results.
 /// Handles validation, duplicate checking, and account hierarchy relationships.
 /// </summary>
 public sealed class ImportChartOfAccountsHandler(
@@ -12,15 +13,15 @@ public sealed class ImportChartOfAccountsHandler(
     IChartOfAccountImportParser parser,
     [FromKeyedServices("accounting:chartofaccounts")] IRepository<ChartOfAccount> repository,
     [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> readRepository)
-    : IRequestHandler<ImportChartOfAccountsCommand, int>
+    : IRequestHandler<ImportChartOfAccountsCommand, ImportResponse>
 {
     /// <summary>
-    /// Handles the import command and returns the count of imported accounts.
+    /// Handles the import command and returns detailed import results.
     /// </summary>
     /// <param name="request">The import command containing the file to process.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The number of accounts successfully imported.</returns>
-    public async Task<int> Handle(ImportChartOfAccountsCommand request, CancellationToken cancellationToken)
+    /// <returns>ImportResponse containing the number of accounts successfully imported, failed count, and errors.</returns>
+    public async Task<ImportResponse> Handle(ImportChartOfAccountsCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.File);
@@ -28,9 +29,8 @@ public sealed class ImportChartOfAccountsHandler(
         var rows = await parser.ParseAsync(request.File, cancellationToken).ConfigureAwait(false);
         if (rows.Count == 0)
         {
-            var noRowsMsg = "chart of accounts import: file had no rows";
-            logger.LogInformation(noRowsMsg);
-            return 0;
+            logger.LogInformation("Chart of accounts import: file had no rows");
+            return ImportResponse.Success(0);
         }
 
         int imported = 0;
@@ -152,16 +152,20 @@ public sealed class ImportChartOfAccountsHandler(
             }
         }
 
+        var failedCount = rows.Count - imported;
+
         if (errors.Count > 0)
         {
             logger.LogWarning("Chart of accounts import completed with {ErrorCount} errors: {Errors}", 
                 errors.Count, string.Join("; ", errors.Take(10)));
         }
 
-        logger.LogInformation("Successfully imported {ImportedCount} of {TotalRows} chart of accounts", 
-            imported, rows.Count);
+        logger.LogInformation("Successfully imported {ImportedCount} of {TotalRows} chart of accounts (Failed: {FailedCount})", 
+            imported, rows.Count, failedCount);
 
-        return imported;
+        return failedCount > 0
+            ? ImportResponse.PartialSuccess(imported, failedCount, errors)
+            : ImportResponse.Success(imported);
     }
 
     /// <summary>
@@ -182,3 +186,4 @@ public sealed class ImportChartOfAccountsHandler(
         return validCategories.Contains(usoaCategory, StringComparer.OrdinalIgnoreCase);
     }
 }
+

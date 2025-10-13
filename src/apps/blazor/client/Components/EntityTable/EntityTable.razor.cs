@@ -144,7 +144,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
     }
 
     private Func<TableState, CancellationToken, Task<TableData<TEntity>>>? ServerReloadFunc =>
-        Context.IsServerContext ? ServerReload : null;
+        Context?.IsServerContext == true ? ServerReload : null;
 
     private async Task<TableData<TEntity>> ServerReload(TableState state, CancellationToken cancellationToken)
     {
@@ -377,17 +377,46 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
             if (Context.ServerContext?.ImportFunc != null)
             {
-                var importedCount = await ApiHelper.ExecuteCallGuardedAsync(
+                var importResult = await ApiHelper.ExecuteCallGuardedAsync(
                     () => Context.ServerContext.ImportFunc(fileUpload));
 
-                if (importedCount > 0)
+                if (importResult != null)
                 {
-                    Snackbar.Add($"Successfully imported {importedCount} {Context.EntityNamePlural}.", Severity.Success);
-                    await ReloadDataAsync(); // Refresh the table data
-                }
-                else
-                {
-                    Snackbar.Add("No records were imported from the file.", Severity.Warning);
+                    if (importResult.IsSuccess)
+                    {
+                        Snackbar.Add($"Successfully imported {importResult.ImportedCount} {Context.EntityNamePlural}.", Severity.Success);
+                        await ReloadDataAsync(); // Refresh the table data
+                    }
+                    else if (importResult is { ImportedCount: > 0, FailedCount: > 0 })
+                    {
+                        var message = $"Imported {importResult.ImportedCount} {Context.EntityNamePlural} successfully. {importResult.FailedCount} failed.";
+                        Snackbar.Add(message, Severity.Warning);
+                        
+                        // Show first few errors if available
+                        if (importResult.Errors.Any())
+                        {
+                            var errorSummary = string.Join("; ", importResult.Errors.Take(3));
+                            Snackbar.Add($"Errors: {errorSummary}", Severity.Error);
+                        }
+                        
+                        await ReloadDataAsync(); // Refresh the table data even with partial success
+                    }
+                    else if (importResult is { ImportedCount: 0, FailedCount: > 0 })
+                    {
+                        var message = $"Import failed. {importResult.FailedCount} records could not be imported.";
+                        Snackbar.Add(message, Severity.Error);
+                        
+                        // Show first few errors
+                        if (importResult.Errors.Any())
+                        {
+                            var errorSummary = string.Join("; ", importResult.Errors.Take(3));
+                            Snackbar.Add($"Errors: {errorSummary}", Severity.Error);
+                        }
+                    }
+                    else
+                    {
+                        Snackbar.Add("No records were imported from the file.", Severity.Warning);
+                    }
                 }
             }
             else

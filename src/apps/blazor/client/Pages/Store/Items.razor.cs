@@ -80,7 +80,7 @@ public partial class Items
                 };
                 
                 var result = await Client.ImportItemsEndpointAsync("1", command).ConfigureAwait(false);
-                return result.ImportedCount;
+                return result;
             });
         
         await Task.CompletedTask;

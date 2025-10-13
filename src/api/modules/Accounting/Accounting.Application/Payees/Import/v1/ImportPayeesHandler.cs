@@ -1,10 +1,11 @@
 using Accounting.Application.Payees.Specs;
 using Accounting.Domain.Entities;
+using FSH.Framework.Core.Storage.Commands;
 
 namespace Accounting.Application.Payees.Import.v1;
 
 /// <summary>
-/// Imports payees from an Excel file and returns the total number of successfully imported payees.
+/// Imports payees from an Excel file and returns detailed import results.
 /// Handles validation, duplicate checking, and vendor master data management.
 /// </summary>
 public sealed class ImportPayeesHandler(
@@ -12,15 +13,15 @@ public sealed class ImportPayeesHandler(
     IPayeeImportParser parser,
     [FromKeyedServices("accounting:payees")] IRepository<Payee> repository,
     [FromKeyedServices("accounting:payees")] IReadRepository<Payee> readRepository)
-    : IRequestHandler<ImportPayeesCommand, int>
+    : IRequestHandler<ImportPayeesCommand, ImportResponse>
 {
     /// <summary>
-    /// Handles the import command and returns the count of imported payees.
+    /// Handles the import command and returns detailed import results.
     /// </summary>
     /// <param name="request">The import command containing the file to process.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The number of payees successfully imported.</returns>
-    public async Task<int> Handle(ImportPayeesCommand request, CancellationToken cancellationToken)
+    /// <returns>ImportResponse containing the number of payees successfully imported, failed count, and errors.</returns>
+    public async Task<ImportResponse> Handle(ImportPayeesCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.File);
@@ -28,9 +29,8 @@ public sealed class ImportPayeesHandler(
         var rows = await parser.ParseAsync(request.File, cancellationToken).ConfigureAwait(false);
         if (rows.Count == 0)
         {
-            var noRowsMsg = "payees import: file had no rows";
-            logger.LogInformation(noRowsMsg);
-            return 0;
+            logger.LogInformation("Payees import: file had no rows");
+            return ImportResponse.Success(0);
         }
 
         int imported = 0;
@@ -139,15 +139,20 @@ public sealed class ImportPayeesHandler(
             }
         }
 
+        var failedCount = rows.Count - imported;
+
         if (errors.Count > 0)
         {
             logger.LogWarning("Payees import completed with {ErrorCount} errors: {Errors}", 
                 errors.Count, string.Join("; ", errors.Take(10)));
         }
 
-        logger.LogInformation("Successfully imported {ImportedCount} of {TotalRows} payees", 
-            imported, rows.Count);
+        logger.LogInformation("Successfully imported {ImportedCount} of {TotalRows} payees (Failed: {FailedCount})", 
+            imported, rows.Count, failedCount);
 
-        return imported;
+        return failedCount > 0
+            ? ImportResponse.PartialSuccess(imported, failedCount, errors)
+            : ImportResponse.Success(imported);
     }
 }
+

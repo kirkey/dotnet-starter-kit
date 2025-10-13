@@ -18,29 +18,14 @@ public static class ImportItemsEndpoint
             {
                 var result = await mediator.Send(command, cancellationToken);
 
-                if (result.IsSuccess)
-                {
-                    return Results.Ok(new
-                    {
-                        Message = $"Successfully imported {result.ImportedCount} items",
-                        Data = result
-                    });
-                }
-
-                return Results.BadRequest(new
-                {
-                    Message = result.FailedCount > 0
-                        ? $"Import completed with {result.FailedCount} errors. {result.ImportedCount} items imported successfully."
-                        : "Import validation failed",
-                    Data = result,
-                    Errors = result.Errors
-                });
+                // Always return 200 OK with the ImportResponse
+                // The client will check IsSuccess, ImportedCount, and FailedCount to determine the outcome
+                return Results.Ok(result);
             })
             .WithName(nameof(ImportItemsEndpoint))
             .WithSummary("Import items from Excel file")
-            .WithDescription("Imports items from an Excel file with validation. Returns count of successful and failed imports with detailed error messages.")
+            .WithDescription("Imports items from an Excel file with validation. Returns ImportResponse with successful/failed counts and detailed error messages.")
             .Produces<ImportResponse>(200)
-            .Produces<ImportResponse>(400)
             .RequirePermission("Permissions.Store.Import")
             .MapToApiVersion(1);
     }

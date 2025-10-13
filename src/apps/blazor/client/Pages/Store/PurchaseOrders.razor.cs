@@ -15,9 +15,8 @@ public partial class PurchaseOrders
     private DateTime? SearchFromDate { get; set; }
     private DateTime? SearchToDate { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await LoadSuppliersAsync();
 
         Context = new EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel>(
             entityName: "Purchase Order",
@@ -61,6 +60,11 @@ public partial class PurchaseOrders
             deleteFunc: async id => await Client.DeletePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false));
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSuppliersAsync();
+    }
+
     /// <summary>
     /// Loads suppliers for the search filter dropdown.
     /// </summary>
@@ -71,7 +75,7 @@ public partial class PurchaseOrders
             var command = new SearchSuppliersCommand
             {
                 PageNumber = 1,
-                PageSize = 1000,
+                PageSize = 500,
                 OrderBy = ["Name"]
             };
             var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
