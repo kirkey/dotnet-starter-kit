@@ -18,7 +18,14 @@ SWAGGER_URL:=$(API_URL)$(SWAGGER_PATH)
 # Output path used by the config is relative to NSWAG_JSON directory:
 #   apps/blazor/infrastructure/Api/Client.cs
 
-.PHONY: help install-nswag dev-certs swagger-check gen-client gen-client-direct openapi-download api-run print-swagger-url clean-client nswag-version
+.PHONY: help install-nswag dev-certs swagger-check gen-client gen-client-direct openapi-download api-run print-swagger-url clean-client nswag-version publish-all publish-api publish-blazor clean-all
+
+# Publish configuration
+PUBLISH_OUTPUT?=./publishfsh9
+API_PUBLISH_PATH=$(PUBLISH_OUTPUT)/api
+BLAZOR_PUBLISH_PATH=$(PUBLISH_OUTPUT)/blazor
+PUBLISH_CONFIG?=Release
+PUBLISH_RUNTIME?=win-x64
 
 help:
 	@echo "NSwag client generation targets:"
@@ -32,6 +39,13 @@ help:
 	@echo "  make print-swagger-url    Print the effective swagger URL used by these targets."
 	@echo "  make nswag-version        Print NSwag binary path and version."
 	@echo "  make clean-client         Remove the generated Client.cs file."
+	@echo "  make clean-all            Remove all bin and obj folders recursively."
+	@echo ""
+	@echo "Publish targets:"
+	@echo "  make publish-all          Publish both API and Blazor client for IIS deployment."
+	@echo "  make publish-api          Publish API only to $(API_PUBLISH_PATH)."
+	@echo "  make publish-blazor       Publish Blazor client only to $(BLAZOR_PUBLISH_PATH)."
+	@echo "  Variables: PUBLISH_OUTPUT (default: ./publish), PUBLISH_CONFIG (default: Release), PUBLISH_RUNTIME (default: win-x64)"
 
 install-nswag:
 	dotnet tool update -g Nswag.ConsoleCore
@@ -98,3 +112,43 @@ api-run:
 
 clean-client:
 	rm -f apps/blazor/infrastructure/Api/Client.cs
+
+# ============================================================================
+# PUBLISH TARGETS FOR IIS DEPLOYMENT
+# ============================================================================
+
+publish-all: publish-api publish-blazor
+	@echo ""
+	@echo "============================================"
+	@echo "✅ Both projects published successfully!"
+	@echo "============================================"
+	@echo "API:           $(API_PUBLISH_PATH)"
+	@echo "Blazor Client: $(BLAZOR_PUBLISH_PATH)"
+	@echo ""
+	@echo "Next steps for IIS deployment:"
+	@echo "1. Copy $(API_PUBLISH_PATH) to your IIS server"
+	@echo "2. Copy $(BLAZOR_PUBLISH_PATH) to your IIS server"
+	@echo "3. Create two IIS sites or configure as site + sub-application"
+	@echo "4. Update Blazor's appsettings.json with the API URL"
+	@echo "5. Configure CORS in API to allow Blazor client URL"
+	@echo "============================================"
+
+publish-api:
+	@echo "Publishing API ($(PUBLISH_CONFIG)) to $(API_PUBLISH_PATH)..."
+	dotnet publish api/server/Server.csproj -c $(PUBLISH_CONFIG) -r $(PUBLISH_RUNTIME) -o $(API_PUBLISH_PATH) /p:PublishProfile=Default /p:PublishSingleFile=false /p:PublishReadyToRun=false /p:EnableCompressionInSingleFile=false /p:IncludeNativeLibrariesForSelfExtract=false /p:PublishTrimmed=false
+	@echo "✅ API published to $(API_PUBLISH_PATH)"
+
+publish-blazor:
+	@echo "Publishing Blazor WebAssembly ($(PUBLISH_CONFIG)) to $(BLAZOR_PUBLISH_PATH)..."
+	dotnet publish apps/blazor/client/Client.csproj -c $(PUBLISH_CONFIG) -r $(PUBLISH_RUNTIME) -o $(BLAZOR_PUBLISH_PATH) /p:PublishSingleFile=false /p:PublishReadyToRun=false /p:EnableCompressionInSingleFile=false /p:IncludeNativeLibrariesForSelfExtract=false /p:PublishTrimmed=false
+	@echo "✅ Blazor client published to $(BLAZOR_PUBLISH_PATH)"
+
+# ============================================================================
+# CLEAN TARGETS
+# ============================================================================
+
+clean-all:
+	@echo "Removing all bin and obj folders recursively..."
+	find . -type d \( -name 'bin' -o -name 'obj' \) -exec rm -rf {} +
+	@echo "✅ All bin and obj folders deleted."
+
