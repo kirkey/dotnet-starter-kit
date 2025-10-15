@@ -12,14 +12,8 @@ public sealed class GetRegulatoryReportRequestHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var report = await repository.FirstOrDefaultAsync(
-            new RegulatoryReportByIdSpec(request.Id), cancellationToken);
-
-        if (report == null)
-        {
-            throw new RegulatoryReportNotFoundException(request.Id);
-        }
-
-        return report.Adapt<RegulatoryReportResponse>();
+        var spec = new RegulatoryReportByIdSpec(request.Id);
+        return await repository.FirstOrDefaultAsync(spec, cancellationToken)
+            ?? throw new RegulatoryReportNotFoundException(request.Id);
     }
 }

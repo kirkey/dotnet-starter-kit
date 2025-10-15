@@ -1,11 +1,12 @@
 using Accounting.Application.AccountingPeriods.Responses;
+using Accounting.Application.AccountingPeriods.Specs;
 using Accounting.Domain.Entities;
 
 namespace Accounting.Application.AccountingPeriods.Get.v1;
 
 /// <summary>
 /// Handler for <see cref="GetAccountingPeriodQuery"/> that returns a detailed <see cref="AccountingPeriodResponse"/>.
-/// Uses caching to avoid repeated repository lookups for frequently requested periods.
+/// Uses database-level projection for optimal performance with caching.
 /// </summary>
 public sealed class GetAccountingPeriodHandler(
     [FromKeyedServices("accounting:periods")] IReadRepository<AccountingPeriod> repository,
@@ -13,7 +14,7 @@ public sealed class GetAccountingPeriodHandler(
     : IRequestHandler<GetAccountingPeriodQuery, AccountingPeriodResponse>
 {
     /// <summary>
-    /// Handles the query by retrieving the accounting period from cache or repository and mapping it to the response DTO.
+    /// Handles the query by retrieving the accounting period from cache or repository using specification projection.
     /// Throws <see cref="Accounting.Application.AccountingPeriods.Exceptions.AccountingPeriodNotFoundException"/>
     /// when the requested period cannot be found.
     /// </summary>
@@ -28,9 +29,9 @@ public sealed class GetAccountingPeriodHandler(
             $"period:{request.Id}",
             async () =>
             {
-                var period = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
-                if (period == null) throw new AccountingPeriodNotFoundException(request.Id);
-                return period.Adapt<AccountingPeriodResponse>();
+                var spec = new GetAccountingPeriodSpec(request.Id);
+                return await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false)
+                    ?? throw new AccountingPeriodNotFoundException(request.Id);
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

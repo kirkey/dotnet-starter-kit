@@ -1,13 +1,25 @@
 using Accounting.Application.JournalEntries.Responses;
+using Accounting.Application.JournalEntries.Specs;
 using Accounting.Domain.Entities;
 
 namespace Accounting.Application.JournalEntries.Get;
 
+/// <summary>
+/// Handler for getting a journal entry by ID.
+/// Uses database-level projection for optimal performance with caching.
+/// </summary>
 public sealed class GetJournalEntryHandler(
     [FromKeyedServices("accounting:journals")] IReadRepository<JournalEntry> repository,
     ICacheService cache)
     : IRequestHandler<GetJournalEntryQuery, JournalEntryResponse>
 {
+    /// <summary>
+    /// Handles the get journal entry query.
+    /// </summary>
+    /// <param name="request">The query containing the journal entry ID.</param>
+    /// <param name="cancellationToken">Cancellation token for async operations.</param>
+    /// <returns>The journal entry response.</returns>
+    /// <exception cref="JournalEntryNotFoundException">Thrown when journal entry is not found.</exception>
     public async Task<JournalEntryResponse> Handle(GetJournalEntryQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -16,9 +28,9 @@ public sealed class GetJournalEntryHandler(
             $"journal:{request.Id}",
             async () =>
             {
-                var entry = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
-                if (entry == null) throw new JournalEntryNotFoundException(request.Id);
-                return entry.Adapt<JournalEntryResponse>();
+                var spec = new GetJournalEntrySpec(request.Id);
+                return await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false)
+                    ?? throw new JournalEntryNotFoundException(request.Id);
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

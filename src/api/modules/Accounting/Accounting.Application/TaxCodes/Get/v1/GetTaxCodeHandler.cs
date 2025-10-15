@@ -1,42 +1,30 @@
 using Accounting.Application.TaxCodes.Responses;
+using Accounting.Application.TaxCodes.Specs;
 using Accounting.Domain.Entities;
 
 namespace Accounting.Application.TaxCodes.Get.v1;
 
+/// <summary>
+/// Handler for getting a tax code by ID.
+/// Uses database-level projection for optimal performance.
+/// </summary>
 public sealed class GetTaxCodeHandler(
     IReadRepository<TaxCode> repository)
     : IRequestHandler<GetTaxCodeRequest, TaxCodeResponse>
 {
+    /// <summary>
+    /// Handles the get tax code request.
+    /// </summary>
+    /// <param name="request">The request containing the tax code ID.</param>
+    /// <param name="cancellationToken">Cancellation token for async operations.</param>
+    /// <returns>The tax code response.</returns>
+    /// <exception cref="TaxCodeNotFoundException">Thrown when tax code is not found.</exception>
     public async Task<TaxCodeResponse> Handle(GetTaxCodeRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var taxCode = await repository.GetByIdAsync(request.Id, cancellationToken);
-        if (taxCode == null)
-            throw new TaxCodeNotFoundException(request.Id);
-
-        return new TaxCodeResponse
-        {
-            Id = taxCode.Id,
-            Code = taxCode.Code,
-            Name = taxCode.Name,
-            TaxType = taxCode.TaxType.ToString(),
-            Rate = taxCode.Rate,
-            IsCompound = taxCode.IsCompound,
-            Jurisdiction = taxCode.Jurisdiction,
-            EffectiveDate = taxCode.EffectiveDate,
-            ExpiryDate = taxCode.ExpiryDate,
-            IsActive = taxCode.IsActive,
-            TaxCollectedAccountId = taxCode.TaxCollectedAccountId,
-            TaxPaidAccountId = taxCode.TaxPaidAccountId,
-            TaxAuthority = taxCode.TaxAuthority,
-            TaxRegistrationNumber = taxCode.TaxRegistrationNumber,
-            ReportingCategory = taxCode.ReportingCategory,
-            Description = taxCode.Description,
-            CreatedOn = taxCode.CreatedOn,
-            CreatedBy = taxCode.CreatedBy,
-            LastModifiedOn = taxCode.LastModifiedOn,
-            LastModifiedBy = taxCode.LastModifiedBy
-        };
+        var spec = new GetTaxCodeSpec(request.Id);
+        return await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false)
+            ?? throw new TaxCodeNotFoundException(request.Id);
     }
 }

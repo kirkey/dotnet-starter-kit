@@ -1,9 +1,18 @@
+using Accounting.Application.RegulatoryReports.Responses;
 using Accounting.Domain.Entities;
 
 namespace Accounting.Application.RegulatoryReports.Queries;
 
-public class RegulatoryReportByIdSpec : SingleResultSpecification<RegulatoryReport>
+/// <summary>
+/// Specification to retrieve a regulatory report by ID projected to <see cref="RegulatoryReportResponse"/>.
+/// Performs database-level projection for optimal performance.
+/// </summary>
+public class RegulatoryReportByIdSpec : SingleResultSpecification<RegulatoryReport, RegulatoryReportResponse>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RegulatoryReportByIdSpec"/> class.
+    /// </summary>
+    /// <param name="id">The unique identifier of the regulatory report to retrieve.</param>
     public RegulatoryReportByIdSpec(DefaultIdType id)
     {
         Query.Where(r => r.Id == id);

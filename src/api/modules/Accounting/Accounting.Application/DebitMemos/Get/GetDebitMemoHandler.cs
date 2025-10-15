@@ -1,48 +1,30 @@
 using Accounting.Application.DebitMemos.Responses;
+using Accounting.Application.DebitMemos.Specs;
 using Accounting.Domain.Entities;
 
 namespace Accounting.Application.DebitMemos.Get;
 
 /// <summary>
 /// Handler for getting a debit memo by ID.
+/// Uses database-level projection for optimal performance.
 /// </summary>
 public sealed class GetDebitMemoHandler(
-    [FromKeyedServices("accounting:debitmemos")] IRepository<DebitMemo> repository)
+    [FromKeyedServices("accounting:debitmemos")] IReadRepository<DebitMemo> repository)
     : IRequestHandler<GetDebitMemoQuery, DebitMemoResponse>
 {
+    /// <summary>
+    /// Handles the get debit memo query.
+    /// </summary>
+    /// <param name="request">The query containing the debit memo ID.</param>
+    /// <param name="cancellationToken">Cancellation token for async operations.</param>
+    /// <returns>The debit memo response.</returns>
+    /// <exception cref="DebitMemoNotFoundException">Thrown when debit memo is not found.</exception>
     public async Task<DebitMemoResponse> Handle(GetDebitMemoQuery request, CancellationToken cancellationToken)
     {
-        var debitMemo = await repository.GetByIdAsync(request.Id, cancellationToken);
-        
-        if (debitMemo == null)
-        {
-            throw new DebitMemoNotFoundException(request.Id);
-        }
+        ArgumentNullException.ThrowIfNull(request);
 
-        return new DebitMemoResponse
-        {
-            Id = debitMemo.Id,
-            MemoNumber = debitMemo.MemoNumber,
-            MemoDate = debitMemo.MemoDate,
-            Amount = debitMemo.Amount,
-            AppliedAmount = debitMemo.AppliedAmount,
-            UnappliedAmount = debitMemo.UnappliedAmount,
-            ReferenceType = debitMemo.ReferenceType,
-            ReferenceId = debitMemo.ReferenceId,
-            OriginalDocumentId = debitMemo.OriginalDocumentId,
-            Reason = debitMemo.Reason,
-            Status = debitMemo.Status,
-            IsApplied = debitMemo.IsApplied,
-            AppliedDate = debitMemo.AppliedDate,
-            ApprovalStatus = debitMemo.ApprovalStatus,
-            ApprovedBy = debitMemo.ApprovedBy,
-            ApprovedDate = debitMemo.ApprovedDate,
-            Description = debitMemo.Description,
-            Notes = debitMemo.Notes,
-            CreatedOn = debitMemo.CreatedOn,
-            CreatedBy = debitMemo.CreatedBy,
-            LastModifiedOn = debitMemo.LastModifiedOn,
-            LastModifiedBy = debitMemo.LastModifiedBy
-        };
+        var spec = new GetDebitMemoSpec(request.Id);
+        return await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false)
+            ?? throw new DebitMemoNotFoundException(request.Id);
     }
 }

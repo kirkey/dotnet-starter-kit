@@ -13,7 +13,7 @@ public sealed class UpdateRegulatoryReportRequestHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var report = await repository.FirstOrDefaultAsync(
-            new RegulatoryReportByIdSpec(request.Id), cancellationToken);
+            new RegulatoryReportByIdEntitySpec(request.Id), cancellationToken);
 
         if (report == null)
         {
