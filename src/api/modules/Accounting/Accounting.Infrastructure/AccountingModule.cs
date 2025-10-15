@@ -8,6 +8,7 @@ using Accounting.Infrastructure.Endpoints.Billing;
 using Accounting.Infrastructure.Endpoints.BudgetDetails;
 using Accounting.Infrastructure.Endpoints.Budgets;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts;
+using Accounting.Infrastructure.Endpoints.Checks.v1;
 using Accounting.Infrastructure.Endpoints.Consumptions;
 using Accounting.Infrastructure.Endpoints.DeferredRevenue;
 using Accounting.Infrastructure.Endpoints.DepreciationMethods;
@@ -58,6 +59,7 @@ public static class AccountingModule
         accountingGroup.MapBillingEndpoints();
         accountingGroup.MapBudgetDetailsEndpoints();
         accountingGroup.MapBudgetsEndpoints();
+        accountingGroup.MapCheckEndpointsV1();
         accountingGroup.MapChartOfAccountsEndpoints();
         accountingGroup.MapConsumptionsEndpoints();
         accountingGroup.MapDeferredRevenueEndpoints();
@@ -101,6 +103,8 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<Budget>, AccountingRepository<Budget>>();
         builder.Services.AddScoped<IRepository<BudgetDetail>, AccountingRepository<BudgetDetail>>();
         builder.Services.AddScoped<IReadRepository<BudgetDetail>, AccountingRepository<BudgetDetail>>();
+        builder.Services.AddScoped<IRepository<Check>, AccountingRepository<Check>>();
+        builder.Services.AddScoped<IReadRepository<Check>, AccountingRepository<Check>>();
         builder.Services.AddScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
         builder.Services.AddScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>();
         builder.Services.AddScoped<IRepository<Consumption>, AccountingRepository<Consumption>>();
@@ -180,6 +184,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Budget>, AccountingRepository<Budget>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Budget>, AccountingRepository<Budget>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Check>, AccountingRepository<Check>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Check>, AccountingRepository<Check>>("accounting:checks");
         builder.Services.AddKeyedScoped<IRepository<BudgetDetail>, AccountingRepository<BudgetDetail>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<BudgetDetail>, AccountingRepository<BudgetDetail>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting");
