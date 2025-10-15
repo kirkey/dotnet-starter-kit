@@ -42,5 +42,6 @@
   <ItemGroup>
     <Folder Include="assets\images\FshUser\" />
     <Folder Include="Files\" />
+    <Folder Include="Files\images\Category\" />
   </ItemGroup>
 </Project>

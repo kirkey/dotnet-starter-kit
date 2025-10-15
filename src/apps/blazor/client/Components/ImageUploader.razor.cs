@@ -1,3 +1,5 @@
+using FSH.Starter.Blazor.Client.Services;
+
 namespace FSH.Starter.Blazor.Client.Components;
 
 /// <summary>
@@ -6,6 +8,15 @@ namespace FSH.Starter.Blazor.Client.Components;
 /// </summary>
 public partial class ImageUploader : ComponentBase
 {
+    #region Injected Services
+
+    /// <summary>
+    /// Gets or sets the image URL service for constructing absolute image URLs using the API base URI.
+    /// </summary>
+    [Inject] private ImageUrlService ImageUrlService { get; set; } = default!;
+    
+    #endregion
+
     #region Parameters
 
     /// <summary>
@@ -84,24 +95,35 @@ public partial class ImageUploader : ComponentBase
 
     /// <summary>
     /// Gets the image preview URL to display.
-    /// Returns the uploaded image data URL if available, otherwise the current image URL.
+    /// Returns the uploaded image data URL if available, otherwise constructs the absolute URL
+    /// using the API base URI (localhost:7000) via ImageUrlService.
     /// </summary>
     /// <returns>The image URL to display in the preview.</returns>
 #pragma warning disable CA1055 // URI-like return values should not be strings
     public string? GetImagePreviewUrl()
 #pragma warning restore CA1055
     {
+        // If we have a newly uploaded image with base64 data, return it as a data URL
         if (!string.IsNullOrWhiteSpace(UploadedImage?.Data))
         {
             return $"data:{UploadedImage.Extension};base64,{UploadedImage.Data}";
         }
 
+        // If we have a current image URL from the server, use ImageUrlService to construct the absolute URL
+        // This ensures images are fetched from the API server (localhost:7000) not the Blazor client (localhost:7100)
         if (!string.IsNullOrWhiteSpace(CurrentImageUrl))
         {
-            var baseUri = BaseUri ?? NavigationManager.BaseUri.TrimEnd('/');
-            return CurrentImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase) 
-                ? CurrentImageUrl 
-                : $"{baseUri}/{CurrentImageUrl.TrimStart('/')}";
+            // If BaseUri parameter is provided, use it; otherwise delegate to ImageUrlService
+            if (!string.IsNullOrWhiteSpace(BaseUri))
+            {
+                var result = CurrentImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase) 
+                    ? CurrentImageUrl 
+                    : $"{BaseUri.TrimEnd('/')}/{CurrentImageUrl.TrimStart('/')}";
+                return result;
+            }
+            
+            // Use ImageUrlService which uses the configured API base URL (localhost:7000)
+            return ImageUrlService.GetAbsoluteUrl(CurrentImageUrl);
         }
 
         return null;

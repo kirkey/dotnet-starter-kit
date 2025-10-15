@@ -8,7 +8,7 @@
                 <MudCardContent Class="d-flex flex-column align-center justify-center" Style="width:100%;">
                     @if (GetImagePreviewUrl() is { } previewUrl)
                     {
-                        <img src="@previewUrl"
+                        <MudImage src="@previewUrl"
                              alt="@(AltText ?? "Image")"
                              style="width:100%;height:100%;max-width:200px;max-height:200px;border-radius:8px;object-fit:cover;" />
                     }
