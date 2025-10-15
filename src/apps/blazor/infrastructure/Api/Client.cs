@@ -1249,6 +1249,174 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<FileResponse> ChartOfAccountExportEndpointAsync(string version, ExportChartOfAccountsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Register a new check
+        /// </summary>
+        /// <remarks>
+        /// Register a new check in the system for later use in payments
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckCreateResponse> CheckCreateEndpointAsync(CheckCreateCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Register a new check
+        /// </summary>
+        /// <remarks>
+        /// Register a new check in the system for later use in payments
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckCreateResponse> CheckCreateEndpointAsync(CheckCreateCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Issue a check for payment
+        /// </summary>
+        /// <remarks>
+        /// Issue a check to a payee/vendor for payment of expenses or invoices
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckIssueResponse> CheckIssueEndpointAsync(CheckIssueCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Issue a check for payment
+        /// </summary>
+        /// <remarks>
+        /// Issue a check to a payee/vendor for payment of expenses or invoices
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckIssueResponse> CheckIssueEndpointAsync(CheckIssueCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Void a check
+        /// </summary>
+        /// <remarks>
+        /// Void a check that was issued in error or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckVoidResponse> CheckVoidEndpointAsync(CheckVoidCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Void a check
+        /// </summary>
+        /// <remarks>
+        /// Void a check that was issued in error or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckVoidResponse> CheckVoidEndpointAsync(CheckVoidCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Mark check as cleared
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as cleared through bank reconciliation
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckClearResponse> CheckClearEndpointAsync(CheckClearCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Mark check as cleared
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as cleared through bank reconciliation
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckClearResponse> CheckClearEndpointAsync(CheckClearCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Request stop payment on check
+        /// </summary>
+        /// <remarks>
+        /// Request stop payment on a check that is lost, stolen, or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckStopPaymentResponse> CheckStopPaymentEndpointAsync(CheckStopPaymentCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Request stop payment on check
+        /// </summary>
+        /// <remarks>
+        /// Request stop payment on a check that is lost, stolen, or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckStopPaymentResponse> CheckStopPaymentEndpointAsync(CheckStopPaymentCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Mark check as printed
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as printed for audit trail purposes
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckPrintResponse> CheckPrintEndpointAsync(CheckPrintCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Mark check as printed
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as printed for audit trail purposes
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckPrintResponse> CheckPrintEndpointAsync(CheckPrintCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get check by ID
+        /// </summary>
+        /// <remarks>
+        /// Retrieve detailed information about a specific check
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckGetResponse> CheckGetEndpointAsync(System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get check by ID
+        /// </summary>
+        /// <remarks>
+        /// Retrieve detailed information about a specific check
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckGetResponse> CheckGetEndpointAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Search checks
+        /// </summary>
+        /// <remarks>
+        /// Search and filter checks with pagination, status filtering, and date ranges
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckSearchResponsePagedList> CheckSearchEndpointAsync(CheckSearchQuery body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search checks
+        /// </summary>
+        /// <remarks>
+        /// Search and filter checks with pagination, status filtering, and date ranges
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CheckSearchResponsePagedList> CheckSearchEndpointAsync(CheckSearchQuery body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Create a new cycle count
         /// </summary>
         /// <remarks>
@@ -11297,6 +11465,787 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             throw new ApiException<HttpValidationProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Register a new check
+        /// </summary>
+        /// <remarks>
+        /// Register a new check in the system for later use in payments
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckCreateResponse> CheckCreateEndpointAsync(CheckCreateCommand body)
+        {
+            return CheckCreateEndpointAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Register a new check
+        /// </summary>
+        /// <remarks>
+        /// Register a new check in the system for later use in payments
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckCreateResponse> CheckCreateEndpointAsync(CheckCreateCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckCreateResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Issue a check for payment
+        /// </summary>
+        /// <remarks>
+        /// Issue a check to a payee/vendor for payment of expenses or invoices
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckIssueResponse> CheckIssueEndpointAsync(CheckIssueCommand body)
+        {
+            return CheckIssueEndpointAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Issue a check for payment
+        /// </summary>
+        /// <remarks>
+        /// Issue a check to a payee/vendor for payment of expenses or invoices
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckIssueResponse> CheckIssueEndpointAsync(CheckIssueCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks/issue"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks/issue");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckIssueResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Void a check
+        /// </summary>
+        /// <remarks>
+        /// Void a check that was issued in error or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckVoidResponse> CheckVoidEndpointAsync(CheckVoidCommand body)
+        {
+            return CheckVoidEndpointAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Void a check
+        /// </summary>
+        /// <remarks>
+        /// Void a check that was issued in error or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckVoidResponse> CheckVoidEndpointAsync(CheckVoidCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks/void"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks/void");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckVoidResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Mark check as cleared
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as cleared through bank reconciliation
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckClearResponse> CheckClearEndpointAsync(CheckClearCommand body)
+        {
+            return CheckClearEndpointAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Mark check as cleared
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as cleared through bank reconciliation
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckClearResponse> CheckClearEndpointAsync(CheckClearCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks/clear"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks/clear");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckClearResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Request stop payment on check
+        /// </summary>
+        /// <remarks>
+        /// Request stop payment on a check that is lost, stolen, or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckStopPaymentResponse> CheckStopPaymentEndpointAsync(CheckStopPaymentCommand body)
+        {
+            return CheckStopPaymentEndpointAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Request stop payment on check
+        /// </summary>
+        /// <remarks>
+        /// Request stop payment on a check that is lost, stolen, or needs to be cancelled
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckStopPaymentResponse> CheckStopPaymentEndpointAsync(CheckStopPaymentCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks/stop-payment"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks/stop-payment");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckStopPaymentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Mark check as printed
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as printed for audit trail purposes
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckPrintResponse> CheckPrintEndpointAsync(CheckPrintCommand body)
+        {
+            return CheckPrintEndpointAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Mark check as printed
+        /// </summary>
+        /// <remarks>
+        /// Mark a check as printed for audit trail purposes
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckPrintResponse> CheckPrintEndpointAsync(CheckPrintCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks/print"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks/print");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckPrintResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get check by ID
+        /// </summary>
+        /// <remarks>
+        /// Retrieve detailed information about a specific check
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckGetResponse> CheckGetEndpointAsync(System.Guid id)
+        {
+            return CheckGetEndpointAsync(id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get check by ID
+        /// </summary>
+        /// <remarks>
+        /// Retrieve detailed information about a specific check
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckGetResponse> CheckGetEndpointAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckGetResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Search checks
+        /// </summary>
+        /// <remarks>
+        /// Search and filter checks with pagination, status filtering, and date ranges
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CheckSearchResponsePagedList> CheckSearchEndpointAsync(CheckSearchQuery body)
+        {
+            return CheckSearchEndpointAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Search checks
+        /// </summary>
+        /// <remarks>
+        /// Search and filter checks with pagination, status filtering, and date ranges
+        /// </remarks>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CheckSearchResponsePagedList> CheckSearchEndpointAsync(CheckSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/checks/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append("/accounting/checks/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CheckSearchResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -33578,6 +34527,435 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
         public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckClearCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkId")]
+        public System.Guid CheckId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("clearedDate")]
+        public System.DateTime ClearedDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckClearResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckCreateCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankAccountCode")]
+        public string? BankAccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankAccountName")]
+        public string? BankAccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckCreateResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckGetResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankAccountCode")]
+        public string? BankAccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankAccountName")]
+        public string? BankAccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal? Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeName")]
+        public string? PayeeName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("vendorId")]
+        public System.Guid? VendorId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeId")]
+        public System.Guid? PayeeId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuedDate")]
+        public System.DateTime? IssuedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("clearedDate")]
+        public System.DateTime? ClearedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("voidedDate")]
+        public System.DateTime? VoidedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("voidReason")]
+        public string? VoidReason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
+        public System.Guid? PaymentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expenseId")]
+        public System.Guid? ExpenseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("memo")]
+        public string? Memo { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPrinted")]
+        public bool IsPrinted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("printedDate")]
+        public System.DateTime? PrintedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("printedBy")]
+        public string? PrintedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isStopPayment")]
+        public bool IsStopPayment { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("stopPaymentDate")]
+        public System.DateTime? StopPaymentDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("stopPaymentReason")]
+        public string? StopPaymentReason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdBy")]
+        public System.Guid? CreatedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedOn")]
+        public System.DateTime? LastModifiedOn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastModifiedBy")]
+        public System.Guid? LastModifiedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckIssueCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkId")]
+        public System.Guid CheckId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeName")]
+        public string? PayeeName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuedDate")]
+        public System.DateTime IssuedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeId")]
+        public System.Guid? PayeeId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("vendorId")]
+        public System.Guid? VendorId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentId")]
+        public System.Guid? PaymentId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expenseId")]
+        public System.Guid? ExpenseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("memo")]
+        public string? Memo { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckIssueResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckPrintCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkId")]
+        public System.Guid CheckId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("printedBy")]
+        public string? PrintedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("printedDate")]
+        public System.DateTime? PrintedDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckPrintResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPrinted")]
+        public bool IsPrinted { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckSearchQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankAccountCode")]
+        public string? BankAccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeName")]
+        public string? PayeeName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("vendorId")]
+        public System.Guid? VendorId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeId")]
+        public System.Guid? PayeeId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuedDateFrom")]
+        public System.DateTime? IssuedDateFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuedDateTo")]
+        public System.DateTime? IssuedDateTo { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("clearedDateFrom")]
+        public System.DateTime? ClearedDateFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("clearedDateTo")]
+        public System.DateTime? ClearedDateTo { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPrinted")]
+        public bool? IsPrinted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isStopPayment")]
+        public bool? IsStopPayment { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountFrom")]
+        public decimal? AmountFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountTo")]
+        public decimal? AmountTo { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckSearchResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankAccountCode")]
+        public string? BankAccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankAccountName")]
+        public string? BankAccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal? Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeName")]
+        public string? PayeeName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("vendorId")]
+        public System.Guid? VendorId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("payeeId")]
+        public System.Guid? PayeeId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issuedDate")]
+        public System.DateTime? IssuedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("clearedDate")]
+        public System.DateTime? ClearedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPrinted")]
+        public bool IsPrinted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isStopPayment")]
+        public bool IsStopPayment { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("memo")]
+        public string? Memo { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdOn")]
+        public System.DateTime CreatedOn { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckSearchResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CheckSearchResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckStopPaymentCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkId")]
+        public System.Guid CheckId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("stopPaymentReason")]
+        public string? StopPaymentReason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("stopPaymentDate")]
+        public System.DateTime? StopPaymentDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckStopPaymentResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckVoidCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkId")]
+        public System.Guid CheckId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("voidReason")]
+        public string? VoidReason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("voidedDate")]
+        public System.DateTime? VoidedDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CheckVoidResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("checkNumber")]
+        public string? CheckNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
 
     }
 

@@ -1,0 +1,408 @@
+@page "/accounting/checks"
+
+<PageHeader Title="Check Management" Header="Check Management" SubHeader="Manage checks, issue payments, and track check status." />
+
+<EntityTable @ref="_table" TEntity="CheckSearchResponse" TId="DefaultIdType" TRequest="CheckViewModel" Context="@Context">
+    <AdvancedSearchContent Context="search">
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="search.CheckNumber"
+                          Label="Check Number"
+                          Placeholder="Search by check number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="search.BankAccountCode"
+                          Label="Bank Account Code"
+                          Placeholder="Search by account"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.AccountBalance" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="search.Status"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Available")">Available</MudSelectItem>
+                <MudSelectItem Value="@("Issued")">Issued</MudSelectItem>
+                <MudSelectItem Value="@("Cleared")">Cleared</MudSelectItem>
+                <MudSelectItem Value="@("Void")">Void</MudSelectItem>
+                <MudSelectItem Value="@("Stale")">Stale</MudSelectItem>
+                <MudSelectItem Value="@("StopPayment")">Stop Payment</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="search.PayeeName"
+                          Label="Payee Name"
+                          Placeholder="Search by payee"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Person" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="search.AmountFrom"
+                             Label="Amount From"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="search.AmountTo"
+                             Label="Amount To"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="search.IssuedDateFrom"
+                           Label="Issued From"
+                           DateFormat="MM/dd/yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="search.IssuedDateTo"
+                           Label="Issued To"
+                           DateFormat="MM/dd/yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="search.IsPrinted"
+                       Label="Printed Checks Only"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ActionsContent Context="check">
+        @if (check.Status == "Available")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Payment" OnClick="@(() => OnIssueCheck(check.Id))">
+                Issue Check
+            </MudMenuItem>
+        }
+        @if (check.Status == "Issued")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => OnPrintCheck(check.Id))">
+                Mark as Printed
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnClearCheck(check.Id))">
+                Mark as Cleared
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => OnStopPayment(check.Id))">
+                Stop Payment
+            </MudMenuItem>
+        }
+        @if (check.Status == "Available" || check.Status == "Issued")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnVoidCheck(check.Id))">
+                Void Check
+            </MudMenuItem>
+        }
+    </ActionsContent>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Check ID" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudChip Color="@GetStatusColor(context.Status)" Size="Size.Large">
+                    @context.Status
+                </MudChip>
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.CheckNumber"
+                          For="@(() => context.CheckNumber)"
+                          Label="Check Number"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteChartOfAccountCode @bind-Value="context.BankAccountCode"
+                                            For="@(() => context.BankAccountCode)"
+                                            Label="Bank Account"
+                                            TextFormat="CodeName"
+                                            Variant="Variant.Filled"
+                                            Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.BankAccountName"
+                          For="@(() => context.BankAccountName)"
+                          Label="Bank Account Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            @if (context.Amount.HasValue)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.Amount"
+                                     Label="Amount"
+                                     Format="N2"
+                                     ReadOnly
+                                     Variant="Variant.Filled"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                </MudItem>
+            }
+
+            @if (!string.IsNullOrEmpty(context.PayeeName))
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@context.PayeeName"
+                                  Label="Payee Name"
+                                  ReadOnly
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            }
+
+            @if (context.IssuedDate.HasValue)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker Date="@context.IssuedDate"
+                                   Label="Issued Date"
+                                   ReadOnly
+                                   DateFormat="MMMM dd, yyyy"
+                                   Variant="Variant.Filled" />
+                </MudItem>
+            }
+
+            @if (context.ClearedDate.HasValue)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker Date="@context.ClearedDate"
+                                   Label="Cleared Date"
+                                   ReadOnly
+                                   DateFormat="MMMM dd, yyyy"
+                                   Variant="Variant.Filled" />
+                </MudItem>
+            }
+
+            @if (context.VoidedDate.HasValue)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker Date="@context.VoidedDate"
+                                   Label="Voided Date"
+                                   ReadOnly
+                                   DateFormat="MMMM dd, yyyy"
+                                   Variant="Variant.Filled" />
+                </MudItem>
+            }
+
+            @if (!string.IsNullOrEmpty(context.VoidReason))
+            {
+                <MudItem xs="12">
+                    <MudTextField Value="@context.VoidReason"
+                                  Label="Void Reason"
+                                  ReadOnly
+                                  Variant="Variant.Filled"
+                                  Lines="2" />
+                </MudItem>
+            }
+
+            @if (!string.IsNullOrEmpty(context.Memo))
+            {
+                <MudItem xs="12">
+                    <MudTextField Value="@context.Memo"
+                                  Label="Memo"
+                                  ReadOnly
+                                  Variant="Variant.Filled"
+                                  Lines="2" />
+                </MudItem>
+            }
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudSwitch @bind-Value="context.IsPrinted"
+                           Label="Printed"
+                           ReadOnly
+                           Color="Color.Info" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudSwitch @bind-Value="context.IsStopPayment"
+                           Label="Stop Payment"
+                           ReadOnly
+                           Color="Color.Warning" />
+            </MudItem>
+
+            @if (context.IsPrinted && context.PrintedDate.HasValue)
+            {
+                <MudItem xs="12" sm="6" md="3">
+                    <MudDatePicker Date="@context.PrintedDate"
+                                   Label="Printed Date"
+                                   ReadOnly
+                                   DateFormat="MMMM dd, yyyy"
+                                   Variant="Variant.Filled" />
+                </MudItem>
+            }
+
+            @if (!string.IsNullOrEmpty(context.PrintedBy))
+            {
+                <MudItem xs="12" sm="6" md="3">
+                    <MudTextField Value="@context.PrintedBy"
+                                  Label="Printed By"
+                                  ReadOnly
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            }
+        }
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+<!-- Issue Check Dialog -->
+<MudDialog @bind-IsVisible="_issueDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Payment" Class="mr-3" /> Issue Check
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="_issueCommand.Amount"
+                                 Label="Amount"
+                                 Format="N2"
+                                 Required="true"
+                                 Variant="Variant.Outlined"
+                                 Adornment="Adornment.Start"
+                                 AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudDatePicker @bind-Date="_issueCommand.IssuedDate"
+                               Label="Issue Date"
+                               Required="true"
+                               DateFormat="MMMM dd, yyyy"
+                               Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_issueCommand.PayeeName"
+                              Label="Payee Name"
+                              Required="true"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_issueCommand.Memo"
+                              Label="Memo"
+                              Variant="Variant.Outlined"
+                              Lines="2" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _issueDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitIssueCheck">Issue Check</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<!-- Void Check Dialog -->
+<MudDialog @bind-IsVisible="_voidDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-3" /> Void Check
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_voidCommand.VoidReason"
+                              Label="Void Reason"
+                              Required="true"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              HelperText="Minimum 5 characters" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudDatePicker @bind-Date="_voidCommand.VoidedDate"
+                               Label="Void Date"
+                               DateFormat="MMMM dd, yyyy"
+                               Variant="Variant.Outlined" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _voidDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="SubmitVoidCheck">Void Check</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<!-- Clear Check Dialog -->
+<MudDialog @bind-IsVisible="_clearDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-3" /> Clear Check
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudDatePicker @bind-Date="_clearCommand.ClearedDate"
+                               Label="Cleared Date"
+                               Required="true"
+                               DateFormat="MMMM dd, yyyy"
+                               Variant="Variant.Outlined"
+                               HelperText="Date when check cleared the bank" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _clearDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="SubmitClearCheck">Clear Check</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<!-- Stop Payment Dialog -->
+<MudDialog @bind-IsVisible="_stopPaymentDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Block" Class="mr-3" /> Stop Payment Request
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_stopPaymentCommand.StopPaymentReason"
+                              Label="Stop Payment Reason"
+                              Required="true"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              HelperText="Minimum 10 characters" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudDatePicker @bind-Date="_stopPaymentCommand.StopPaymentDate"
+                               Label="Stop Payment Date"
+                               DateFormat="MMMM dd, yyyy"
+                               Variant="Variant.Outlined" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _stopPaymentDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="SubmitStopPayment">Submit Request</MudButton>
+    </DialogActions>
+</MudDialog>

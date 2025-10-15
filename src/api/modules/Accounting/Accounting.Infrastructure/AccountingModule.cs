@@ -10,6 +10,8 @@ using Accounting.Infrastructure.Endpoints.Budgets;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts;
 using Accounting.Infrastructure.Endpoints.Checks.v1;
 using Accounting.Infrastructure.Endpoints.Consumptions;
+using Accounting.Infrastructure.Endpoints.CreditMemos;
+using Accounting.Infrastructure.Endpoints.DebitMemos;
 using Accounting.Infrastructure.Endpoints.DeferredRevenue;
 using Accounting.Infrastructure.Endpoints.DepreciationMethods;
 using Accounting.Infrastructure.Endpoints.FinancialStatements;
@@ -62,6 +64,8 @@ public static class AccountingModule
         accountingGroup.MapCheckEndpointsV1();
         accountingGroup.MapChartOfAccountsEndpoints();
         accountingGroup.MapConsumptionsEndpoints();
+        accountingGroup.MapCreditMemosEndpoints();
+        accountingGroup.MapDebitMemosEndpoints();
         accountingGroup.MapDeferredRevenueEndpoints();
         accountingGroup.MapDepreciationMethodsEndpoints();
         accountingGroup.MapFinancialStatementsEndpoints();
