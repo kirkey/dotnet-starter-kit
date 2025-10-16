@@ -76,8 +76,8 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
             .WithMessage("Warehouse type is required")
             .MaximumLength(50)
             .WithMessage("Warehouse type must not exceed 50 characters")
-            .Must(type => new[] { "standard", "cold storage", "frozen", "hazmat", "pharmaceutical", "automotive" }.Contains(type.ToLower()))
-            .WithMessage("Warehouse type must be one of: Standard, Cold Storage, Frozen, Hazmat, Pharmaceutical, Automotive");
+            .Must(type => new[] { "standard", "store", "cold storage", "frozen", "hazmat", "pharmaceutical", "automotive" }.Contains(type.ToLower()))
+            .WithMessage("Warehouse type must be one of: Standard, Store, Cold Storage, Frozen, Hazmat, Pharmaceutical, Automotive");
 
         // Add business rule validation for deactivation
         RuleFor(x => x)
