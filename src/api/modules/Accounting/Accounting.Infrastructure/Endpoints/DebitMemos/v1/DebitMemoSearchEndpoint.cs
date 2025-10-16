@@ -1,5 +1,5 @@
+using Accounting.Application.DebitMemos.Responses;
 using Accounting.Application.DebitMemos.Search;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
@@ -8,7 +8,7 @@ public static class DebitMemoSearchEndpoint
     internal static RouteHandlerBuilder MapDebitMemoSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async ([FromBody] SearchDebitMemosQuery query, ISender mediator) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchDebitMemosQuery query) =>
             {
                 var response = await mediator.Send(query).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -16,7 +16,7 @@ public static class DebitMemoSearchEndpoint
             .WithName(nameof(DebitMemoSearchEndpoint))
             .WithSummary("Search debit memos")
             .WithDescription("Search and filter debit memos with pagination")
-            .Produces<FSH.Framework.Core.Paging.PaginationResponse<Accounting.Application.DebitMemos.Responses.DebitMemoResponse>>()
+            .Produces<PagedList<DebitMemoResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

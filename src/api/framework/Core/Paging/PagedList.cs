@@ -8,14 +8,14 @@ public record PagedList<T>(IReadOnlyList<T> Items, int PageNumber, int PageSize,
     public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
     public bool HasPrevious => PageNumber > 1;
     public bool HasNext => PageNumber < TotalPages;
-    public IPagedList<TR> MapTo<TR>(Func<T, TR> map)
-        where TR : class
+    public IPagedList<Tr> MapTo<Tr>(Func<T, Tr> map)
+        where Tr : class
     {
-        return new PagedList<TR>([.. Items.Select(map)], PageNumber, PageSize, TotalCount);
+        return new PagedList<Tr>([.. Items.Select(map)], PageNumber, PageSize, TotalCount);
     }
-    public IPagedList<TR> MapTo<TR>()
-        where TR : class
+    public IPagedList<Tr> MapTo<Tr>()
+        where Tr : class
     {
-        return new PagedList<TR>(Items.Adapt<IReadOnlyList<TR>>(), PageNumber, PageSize, TotalCount);
+        return new PagedList<Tr>(Items.Adapt<IReadOnlyList<Tr>>(), PageNumber, PageSize, TotalCount);
     }
 }

@@ -1,5 +1,4 @@
 using Accounting.Application.Checks.Exceptions;
-using Accounting.Application.Checks.Queries;
 using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Checks.Issue.v1;
