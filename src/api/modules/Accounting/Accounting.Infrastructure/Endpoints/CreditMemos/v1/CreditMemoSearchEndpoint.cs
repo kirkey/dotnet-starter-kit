@@ -3,6 +3,9 @@ using Accounting.Application.CreditMemos.Search;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
+/// <summary>
+/// Endpoint for searching credit memos with pagination and filtering.
+/// </summary>
 public static class CreditMemoSearchEndpoint
 {
     internal static RouteHandlerBuilder MapCreditMemoSearchEndpoint(this IEndpointRouteBuilder endpoints)

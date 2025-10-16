@@ -21,7 +21,7 @@ public sealed class CheckClearHandler(
             throw new CheckNotFoundException(request.CheckId);
         }
 
-        check.MarkAsCleared(request.ClearedDate);
+        check.MarkAsCleared(request.ClearedDate ?? DateTime.Today);
 
         await repository.UpdateAsync(check, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

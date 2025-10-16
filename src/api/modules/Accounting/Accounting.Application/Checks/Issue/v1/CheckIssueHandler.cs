@@ -24,7 +24,7 @@ public sealed class CheckIssueHandler(
         check.Issue(
             request.Amount,
             request.PayeeName,
-            request.IssuedDate,
+            request.IssuedDate ?? DateTime.Today,
             request.PayeeId,
             request.VendorId,
             request.PaymentId,

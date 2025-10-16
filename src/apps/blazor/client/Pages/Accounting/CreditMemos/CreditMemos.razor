@@ -3,55 +3,11 @@
 
 <PageHeader Title="Credit Memos" Header="Credit Memos" Subheader="Manage credit memos for receivables and payables adjustments" />
 
-<EntityTable TEntity="CreditMemoSearchResponse" TId="DefaultIdType" TViewModel="CreditMemoViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="CreditMemoResponse" TId="DefaultIdType" TRequest="CreditMemoViewModel" Context="@Context">
     
-    <AdvancedSearchContent>
-        <MudGrid>
-            <MudItem xs="12" md="4">
-                <MudTextField @bind-Value="Context.SearchRequest.MemoNumber" Label="Memo Number" Variant="Variant.Outlined" />
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudSelect @bind-Value="Context.SearchRequest.ReferenceType" Label="Reference Type" Variant="Variant.Outlined" Clearable>
-                    <MudSelectItem Value="@("Customer")">Customer</MudSelectItem>
-                    <MudSelectItem Value="@("Vendor")">Vendor</MudSelectItem>
-                </MudSelect>
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudSelect @bind-Value="Context.SearchRequest.Status" Label="Status" Variant="Variant.Outlined" Clearable>
-                    <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
-                    <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
-                    <MudSelectItem Value="@("Applied")">Applied</MudSelectItem>
-                    <MudSelectItem Value="@("Refunded")">Refunded</MudSelectItem>
-                    <MudSelectItem Value="@("Voided")">Voided</MudSelectItem>
-                </MudSelect>
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudSelect @bind-Value="Context.SearchRequest.ApprovalStatus" Label="Approval Status" Variant="Variant.Outlined" Clearable>
-                    <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
-                    <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
-                    <MudSelectItem Value="@("Rejected")">Rejected</MudSelectItem>
-                </MudSelect>
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudNumericField @bind-Value="Context.SearchRequest.AmountFrom" Label="Amount From" Variant="Variant.Outlined" Format="F2" />
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudNumericField @bind-Value="Context.SearchRequest.AmountTo" Label="Amount To" Variant="Variant.Outlined" Format="F2" />
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudDatePicker @bind-Date="Context.SearchRequest.MemoDateFrom" Label="Memo Date From" Variant="Variant.Outlined" />
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudDatePicker @bind-Date="Context.SearchRequest.MemoDateTo" Label="Memo Date To" Variant="Variant.Outlined" />
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudCheckBox @bind-Value="Context.SearchRequest.HasUnappliedAmount" Label="Has Unapplied Amount" Color="Color.Primary" />
-            </MudItem>
-        </MudGrid>
-    </AdvancedSearchContent>
 
-    <ActionsContent>
-        @if (context.Id != Guid.Empty)
+    <ActionsContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
         {
             var status = context.Status;
             var approvalStatus = context.ApprovalStatus;
@@ -103,13 +59,13 @@
         }
     </ActionsContent>
 
-    <EditFormContent>
+    <EditFormContent Context="context">
         <MudGrid>
             <MudItem xs="12" md="6">
                 <MudTextField @bind-Value="context.MemoNumber" Label="Memo Number" Required Variant="Variant.Outlined" />
             </MudItem>
             <MudItem xs="12" md="6">
-                <MudDatePicker @bind-Date="context.MemoDate" Label="Memo Date" Required Variant="Variant.Outlined" />
+                <MudDatePicker Date="@context.MemoDate" DateChanged="@(date => context.MemoDate = date ?? DateTime.UtcNow)" Label="Memo Date" Required Variant="Variant.Outlined" />
             </MudItem>
             <MudItem xs="12" md="6">
                 <MudNumericField @bind-Value="context.Amount" Label="Amount" Required Variant="Variant.Outlined" Format="F2" Min="0" />
@@ -140,13 +96,13 @@
             </MudItem>
             
             @* Display-only fields for existing records *@
-            @if (context.Id != Guid.Empty)
+            @if (context.Id != DefaultIdType.Empty)
             {
                 <MudItem xs="12" md="4">
-                    <MudChip Color="@GetStatusColor(context.Status)" Text="@context.Status" />
+                    <MudChip T="string" Color="@GetStatusColor(context.Status)" Text="@context.Status" />
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudChip Color="@GetApprovalStatusColor(context.ApprovalStatus)" Text="@context.ApprovalStatus" />
+                    <MudChip T="string" Color="@GetApprovalStatusColor(context.ApprovalStatus)" Text="@context.ApprovalStatus" />
                 </MudItem>
                 <MudItem xs="12" md="4">
                     <MudText Typo="Typo.body2">Applied: @context.AppliedAmount.ToString("C")</MudText>
@@ -166,43 +122,6 @@
         </MudGrid>
     </EditFormContent>
 
-    <ExtraBodyContent>
-        @* Table columns with custom formatting *@
-        <PropertyColumn Property="x => x.MemoNumber" Title="Memo Number" />
-        <PropertyColumn Property="x => x.MemoDate" Title="Date" Format="d" />
-        <PropertyColumn Property="x => x.Amount" Title="Amount">
-            <CellTemplate>
-                @context.Item.Amount.ToString("C")
-            </CellTemplate>
-        </PropertyColumn>
-        <PropertyColumn Property="x => x.AppliedAmount" Title="Applied">
-            <CellTemplate>
-                @context.Item.AppliedAmount.ToString("C")
-            </CellTemplate>
-        </PropertyColumn>
-        <PropertyColumn Property="x => x.RefundedAmount" Title="Refunded">
-            <CellTemplate>
-                @context.Item.RefundedAmount.ToString("C")
-            </CellTemplate>
-        </PropertyColumn>
-        <PropertyColumn Property="x => x.UnappliedAmount" Title="Unapplied">
-            <CellTemplate>
-                @context.Item.UnappliedAmount.ToString("C")
-            </CellTemplate>
-        </PropertyColumn>
-        <PropertyColumn Property="x => x.ReferenceType" Title="Type" />
-        <PropertyColumn Property="x => x.Status" Title="Status">
-            <CellTemplate>
-                <MudChip Size="Size.Small" Color="@GetStatusColor(context.Item.Status)" Text="@context.Item.Status" />
-            </CellTemplate>
-        </PropertyColumn>
-        <PropertyColumn Property="x => x.ApprovalStatus" Title="Approval">
-            <CellTemplate>
-                <MudChip Size="Size.Small" Color="@GetApprovalStatusColor(context.Item.ApprovalStatus)" Text="@context.Item.ApprovalStatus" />
-            </CellTemplate>
-        </PropertyColumn>
-        <PropertyColumn Property="x => x.Reason" Title="Reason" />
-    </ExtraBodyContent>
 
 </EntityTable>
 
@@ -217,7 +136,6 @@
     <DialogContent>
         <MudText Typo="Typo.body1" Class="mb-4">Are you sure you want to approve this credit memo?</MudText>
         <MudTextField @bind-Value="_approveCommand.ApprovedBy" Label="Approved By" Required Variant="Variant.Outlined" />
-        <MudDatePicker @bind-Date="_approveCommand.ApprovedDate" Label="Approval Date" Required Variant="Variant.Outlined" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => _approveDialogVisible = false)">Cancel</MudButton>
@@ -234,11 +152,8 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudTextField @bind-Value="_applyCommand.DocumentId" Label="Document ID" Required Variant="Variant.Outlined" 
-                      HelperText="Invoice or bill to apply the credit memo to" />
         <MudNumericField @bind-Value="_applyCommand.AmountToApply" Label="Amount to Apply" Required Variant="Variant.Outlined" 
                          Format="F2" Min="0" HelperText="Amount to apply from unapplied balance" />
-        <MudDatePicker @bind-Date="_applyCommand.AppliedDate" Label="Application Date" Required Variant="Variant.Outlined" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => _applyDialogVisible = false)">Cancel</MudButton>
@@ -257,7 +172,6 @@
     <DialogContent>
         <MudNumericField @bind-Value="_refundCommand.RefundAmount" Label="Refund Amount" Required Variant="Variant.Outlined" 
                          Format="F2" Min="0" HelperText="Amount to refund from unapplied balance" />
-        <MudDatePicker @bind-Date="_refundCommand.RefundDate" Label="Refund Date" Required Variant="Variant.Outlined" />
         <MudTextField @bind-Value="_refundCommand.RefundMethod" Label="Refund Method" Variant="Variant.Outlined" 
                       HelperText="e.g., Check, ACH, Credit Card Reversal" />
         <MudTextField @bind-Value="_refundCommand.RefundReference" Label="Refund Reference" Variant="Variant.Outlined" 

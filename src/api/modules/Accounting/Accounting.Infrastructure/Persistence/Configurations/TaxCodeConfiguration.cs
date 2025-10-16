@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
 public class TaxCodeConfiguration : IEntityTypeConfiguration<TaxCode>

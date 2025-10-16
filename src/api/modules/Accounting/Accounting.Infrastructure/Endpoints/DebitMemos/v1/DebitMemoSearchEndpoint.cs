@@ -3,6 +3,9 @@ using Accounting.Application.DebitMemos.Search;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
+/// <summary>
+/// Endpoint for searching debit memos with pagination and filtering.
+/// </summary>
 public static class DebitMemoSearchEndpoint
 {
     internal static RouteHandlerBuilder MapDebitMemoSearchEndpoint(this IEndpointRouteBuilder endpoints)

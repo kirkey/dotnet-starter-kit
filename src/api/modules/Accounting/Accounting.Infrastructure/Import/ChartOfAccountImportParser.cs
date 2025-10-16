@@ -25,8 +25,7 @@ public sealed class ChartOfAccountImportParser(
             // Use the framework's DataImport service directly to parse Excel to strongly-typed objects
             var rows = await dataImport.ToListAsync<ChartOfAccountImportRow>(
                 file, 
-                FileType.Document, 
-                "Sheet1").ConfigureAwait(false);
+                FileType.Document).ConfigureAwait(false);
 
             logger.LogInformation("Successfully parsed {Count} rows from chart of accounts import file", rows.Count);
             

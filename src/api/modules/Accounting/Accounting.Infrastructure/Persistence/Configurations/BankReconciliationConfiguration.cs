@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
 public class BankReconciliationConfiguration : IEntityTypeConfiguration<BankReconciliation>

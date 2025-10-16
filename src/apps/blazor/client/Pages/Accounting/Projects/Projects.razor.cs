@@ -1,3 +1,5 @@
+using FSH.Starter.Blazor.Client.Services;
+
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Projects;
 
 /// <summary>
@@ -6,7 +8,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Projects;
 /// </summary>
 public partial class Projects
 {
-    
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     protected EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel> Context { get; set; } = default!;
 
@@ -23,6 +25,7 @@ public partial class Projects
             entityResource: FshResources.Accounting,
             fields:
             [
+                new EntityField<ProjectResponse>(response => response.ImageUrl, "Image", "ImageUrl", Template: TemplateImage),
                 new EntityField<ProjectResponse>(r => r.Name, "Name", "Name"),
                 new EntityField<ProjectResponse>(r => r.StartDate, "Start Date", "StartDate", typeof(DateOnly)),
                 new EntityField<ProjectResponse>(r => r.EndDate, "End Date", "EndDate", typeof(DateOnly)),
@@ -45,10 +48,24 @@ public partial class Projects
             },
             createFunc: async vm =>
             {
+                vm.Image = new FileUploadCommand
+                {
+                    Name = vm.Image?.Name,
+                    Extension = vm.Image?.Extension,
+                    Data = vm.Image?.Data,
+                    Size = vm.Image?.Size,
+                };
                 await Client.ProjectCreateEndpointAsync("1", vm.Adapt<CreateProjectCommand>());
             },
             updateFunc: async (id, vm) =>
             {
+                vm.Image = new FileUploadCommand
+                {
+                    Name = vm.Image?.Name,
+                    Extension = vm.Image?.Extension,
+                    Data = vm.Image?.Data,
+                    Size = vm.Image?.Size,
+                };
                 await Client.ProjectUpdateEndpointAsync("1", id, vm.Adapt<UpdateProjectCommand>());
             },
             deleteFunc: async id => await Client.ProjectDeleteEndpointAsync("1", id));

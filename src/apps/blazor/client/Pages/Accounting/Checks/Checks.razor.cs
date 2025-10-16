@@ -16,11 +16,11 @@ public partial class Checks
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
     // Command objects for dialogs
-    private CheckIssueCommand _issueCommand = new() { CheckId = Guid.Empty, Amount = 0, PayeeName = string.Empty, IssuedDate = DateTime.UtcNow };
-    private CheckVoidCommand _voidCommand = new() { CheckId = Guid.Empty, VoidReason = string.Empty };
-    private CheckClearCommand _clearCommand = new() { CheckId = Guid.Empty, ClearedDate = DateTime.UtcNow };
-    private CheckStopPaymentCommand _stopPaymentCommand = new() { CheckId = Guid.Empty, StopPaymentReason = string.Empty };
-    private CheckPrintCommand _printCommand = new() { CheckId = Guid.Empty, PrintedBy = string.Empty };
+    private CheckIssueCommand _issueCommand = new() { CheckId = DefaultIdType.Empty, Amount = 0, PayeeName = string.Empty, IssuedDate = DateTime.UtcNow };
+    private CheckVoidCommand _voidCommand = new() { CheckId = DefaultIdType.Empty, VoidReason = string.Empty };
+    private CheckClearCommand _clearCommand = new() { CheckId = DefaultIdType.Empty, ClearedDate = DateTime.UtcNow };
+    private CheckStopPaymentCommand _stopPaymentCommand = new() { CheckId = DefaultIdType.Empty, StopPaymentReason = string.Empty };
+    private CheckPrintCommand _printCommand = new() { CheckId = DefaultIdType.Empty, PrintedBy = string.Empty };
 
     // Get status color for badges
     private static Color GetStatusColor(string? status) => status switch
@@ -58,6 +58,15 @@ public partial class Checks
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<CheckSearchQuery>();
+                paginationFilter.CheckNumber = CheckNumber;
+                paginationFilter.BankAccountCode = BankAccountCode;
+                paginationFilter.Status = Status;
+                paginationFilter.PayeeName = PayeeName;
+                paginationFilter.AmountFrom = AmountFrom;
+                paginationFilter.AmountTo = AmountTo;
+                paginationFilter.IssuedDateFrom = IssuedDateFrom;
+                paginationFilter.IssuedDateTo = IssuedDateTo;
+                paginationFilter.IsPrinted = IsPrinted;
                 var result = await Client.CheckSearchEndpointAsync(paginationFilter);
                 return result.Adapt<PaginationResponse<CheckSearchResponse>>();
             },
@@ -223,6 +232,106 @@ public partial class Checks
         catch (Exception ex)
         {
             Snackbar.Add($"Error marking check as printed: {ex.Message}", Severity.Error);
+        }
+    }
+
+    // Advanced Search Properties
+    private string? _checkNumber;
+    public string? CheckNumber
+    {
+        get => _checkNumber;
+        set
+        {
+            _checkNumber = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _bankAccountCode;
+    public string? BankAccountCode
+    {
+        get => _bankAccountCode;
+        set
+        {
+            _bankAccountCode = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _status;
+    public string? Status
+    {
+        get => _status;
+        set
+        {
+            _status = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _payeeName;
+    public string? PayeeName
+    {
+        get => _payeeName;
+        set
+        {
+            _payeeName = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private decimal? _amountFrom;
+    public decimal? AmountFrom
+    {
+        get => _amountFrom;
+        set
+        {
+            _amountFrom = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private decimal? _amountTo;
+    public decimal? AmountTo
+    {
+        get => _amountTo;
+        set
+        {
+            _amountTo = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private DateTime? _issuedDateFrom;
+    public DateTime? IssuedDateFrom
+    {
+        get => _issuedDateFrom;
+        set
+        {
+            _issuedDateFrom = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private DateTime? _issuedDateTo;
+    public DateTime? IssuedDateTo
+    {
+        get => _issuedDateTo;
+        set
+        {
+            _issuedDateTo = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private bool? _isPrinted;
+    public bool? IsPrinted
+    {
+        get => _isPrinted;
+        set
+        {
+            _isPrinted = value;
+            _ = _table.ReloadDataAsync();
         }
     }
 }

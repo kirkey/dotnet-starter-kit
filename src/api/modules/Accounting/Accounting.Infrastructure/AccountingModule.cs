@@ -1,8 +1,8 @@
 using Accounting.Application.ChartOfAccounts.Import;
 using Accounting.Application.Payees.Import;
-using Accounting.Domain.Entities;
 using Accounting.Infrastructure.Endpoints.AccountingPeriods;
 using Accounting.Infrastructure.Endpoints.Accruals;
+using Accounting.Infrastructure.Endpoints.Banks;
 using Accounting.Infrastructure.Endpoints.BankReconciliations;
 using Accounting.Infrastructure.Endpoints.Billing;
 using Accounting.Infrastructure.Endpoints.BudgetDetails;
@@ -57,6 +57,7 @@ public static class AccountingModule
         // Map all functional area endpoints
         accountingGroup.MapAccountingPeriodsEndpoints();
         accountingGroup.MapAccrualsEndpoints();
+        accountingGroup.MapBanksEndpoints();
         accountingGroup.MapBankReconciliationsEndpoints();
         accountingGroup.MapBillingEndpoints();
         accountingGroup.MapBudgetDetailsEndpoints();
@@ -143,6 +144,8 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<DeferredRevenue>, AccountingRepository<DeferredRevenue>>();
         builder.Services.AddScoped<IRepository<Accrual>, AccountingRepository<Accrual>>();
         builder.Services.AddScoped<IReadRepository<Accrual>, AccountingRepository<Accrual>>();
+        builder.Services.AddScoped<IRepository<Bank>, AccountingRepository<Bank>>();
+        builder.Services.AddScoped<IReadRepository<Bank>, AccountingRepository<Bank>>();
         // Added missing repository registrations for PostingBatch, DeferredRevenue, and Accrual
         builder.Services.AddScoped<IRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
         builder.Services.AddScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>();
@@ -296,6 +299,11 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<DebitMemo>, AccountingRepository<DebitMemo>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<DebitMemo>, AccountingRepository<DebitMemo>>("accounting:debitmemos");
         builder.Services.AddKeyedScoped<IReadRepository<DebitMemo>, AccountingRepository<DebitMemo>>("accounting:debitmemos");
+        // Register Bank repositories with keyed services
+        builder.Services.AddKeyedScoped<IRepository<Bank>, AccountingRepository<Bank>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Bank>, AccountingRepository<Bank>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Bank>, AccountingRepository<Bank>>("accounting:banks");
+        builder.Services.AddKeyedScoped<IReadRepository<Bank>, AccountingRepository<Bank>>("accounting:banks");
 
         return builder;
     }

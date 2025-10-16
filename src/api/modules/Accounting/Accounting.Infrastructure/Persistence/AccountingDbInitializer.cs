@@ -1,4 +1,3 @@
-using Accounting.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Accounting.Infrastructure.Persistence;
@@ -171,6 +170,82 @@ internal sealed class AccountingDbInitializer(
             await context.Payees.AddRangeAsync(payees, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             logger.LogInformation("[{Tenant}] seeded {Count} Payees", context.TenantInfo!.Identifier, payees.Count);
+        }
+
+        // Seed Banks (5 records) - for check management and bank reconciliation
+        if (!await context.Banks.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var banks = new List<Bank>
+            {
+                Bank.Create(
+                    "BNK001",
+                    "Chase Bank",
+                    "021000021",
+                    "CHASUS33",
+                    "270 Park Avenue, New York, NY 10017",
+                    "John Smith",
+                    "+1-212-270-6000",
+                    "business@chase.com",
+                    "https://www.chase.com",
+                    "Primary operating bank account",
+                    "Main checking and payroll account"),
+
+                Bank.Create(
+                    "BNK002",
+                    "Bank of America",
+                    "026009593",
+                    "BOFAUS3N",
+                    "100 North Tryon Street, Charlotte, NC 28255",
+                    "Sarah Johnson",
+                    "+1-704-386-5681",
+                    "business@bankofamerica.com",
+                    "https://www.bankofamerica.com",
+                    "Secondary operating account",
+                    "Backup account for operations"),
+
+                Bank.Create(
+                    "BNK003",
+                    "Wells Fargo Bank",
+                    "121000248",
+                    "WFBIUS6S",
+                    "420 Montgomery Street, San Francisco, CA 94104",
+                    "Michael Davis",
+                    "+1-866-249-3302",
+                    "business@wellsfargo.com",
+                    "https://www.wellsfargo.com",
+                    "Investment and savings account",
+                    "Used for reserves and investments"),
+
+                Bank.Create(
+                    "BNK004",
+                    "Citibank",
+                    "021000089",
+                    "CITIUS33",
+                    "388 Greenwich Street, New York, NY 10013",
+                    "Emily Chen",
+                    "+1-212-559-1000",
+                    "business@citi.com",
+                    "https://www.citibank.com",
+                    "International transactions account",
+                    "Used for foreign currency and international payments"),
+
+                Bank.Create(
+                    "BNK005",
+                    "US Bank",
+                    "091000022",
+                    "USBKUS44",
+                    "425 Walnut Street, Cincinnati, OH 45202",
+                    "Robert Wilson",
+                    "+1-513-632-4000",
+                    "business@usbank.com",
+                    "https://www.usbank.com",
+                    "Regional operations account",
+                    "Used for regional branch operations")
+            };
+
+            await context.Banks.AddRangeAsync(banks, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            logger.LogInformation("[{Tenant}] seeded {Count} Banks", context.TenantInfo!.Identifier, banks.Count);
         }
 
         // Seed Projects (10 records)
@@ -477,7 +552,7 @@ internal sealed class AccountingDbInitializer(
                 for (int i = 0; i < Math.Min(10, members.Count); i++)
                 {
                     var member = members[i];
-                    writeOffs.Add(WriteOff.Create($"WO-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 10), WriteOffType.BadDebt, 500m + i * 100m, receivableAccount.Id, expenseAccount.Id, member.Id, member.Name, null, null, "Uncollectible debt", $"Seeded write-off {i + 1}", null));
+                    writeOffs.Add(WriteOff.Create($"WO-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 10), WriteOffType.BadDebt, 500m + i * 100m, receivableAccount.Id, expenseAccount.Id, member.Id, member.Name, null, null, "Uncollectible debt", $"Seeded write-off {i + 1}"));
                 }
 
                 await context.WriteOffs.AddRangeAsync(writeOffs, cancellationToken).ConfigureAwait(false);
@@ -496,7 +571,7 @@ internal sealed class AccountingDbInitializer(
                 for (int i = 0; i < Math.Min(10, members.Count); i++)
                 {
                     var member = members[i];
-                    debitMemos.Add(DebitMemo.Create($"DM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 7), 250m + i * 50m, "Member", member.Id, null, "Additional charges", $"Seeded debit memo {i + 1}", null));
+                    debitMemos.Add(DebitMemo.Create($"DM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 7), 250m + i * 50m, "Member", member.Id, null, "Additional charges", $"Seeded debit memo {i + 1}"));
                 }
 
                 await context.DebitMemos.AddRangeAsync(debitMemos, cancellationToken).ConfigureAwait(false);
@@ -515,7 +590,7 @@ internal sealed class AccountingDbInitializer(
                 for (int i = 0; i < Math.Min(10, members.Count); i++)
                 {
                     var member = members[i];
-                    creditMemos.Add(CreditMemo.Create($"CM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 6), 180m + i * 30m, "Member", member.Id, null, "Service credit", $"Seeded credit memo {i + 1}", null));
+                    creditMemos.Add(CreditMemo.Create($"CM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 6), 180m + i * 30m, "Member", member.Id, null, "Service credit", $"Seeded credit memo {i + 1}"));
                 }
 
                 await context.CreditMemos.AddRangeAsync(creditMemos, cancellationToken).ConfigureAwait(false);
@@ -535,7 +610,7 @@ internal sealed class AccountingDbInitializer(
                 {
                     var statementBalance = 50000m + i * 5000m;
                     var bookBalance = statementBalance - (i * 100m);
-                    reconciliations.Add(BankReconciliation.Create(bankAccount.Id, DateTime.UtcNow.Date.AddMonths(-i), statementBalance, bookBalance, $"STMT-{1000 + i}", $"Seeded bank reconciliation {i}", null));
+                    reconciliations.Add(BankReconciliation.Create(bankAccount.Id, DateTime.UtcNow.Date.AddMonths(-i), statementBalance, bookBalance, $"STMT-{1000 + i}", $"Seeded bank reconciliation {i}"));
                 }
 
                 await context.BankReconciliations.AddRangeAsync(reconciliations, cancellationToken).ConfigureAwait(false);
@@ -554,16 +629,16 @@ internal sealed class AccountingDbInitializer(
             {
                 var recurringEntries = new List<RecurringJournalEntry>
                 {
-                    RecurringJournalEntry.Create("RJE-001", "Monthly Rent Payment", RecurrenceFrequency.Monthly, 5000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Recurring rent", null),
-                    RecurringJournalEntry.Create("RJE-002", "Monthly Office Supplies", RecurrenceFrequency.Monthly, 500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddMonths(6), null, "Office supplies purchase", null),
-                    RecurringJournalEntry.Create("RJE-003", "Quarterly Insurance", RecurrenceFrequency.Quarterly, 3000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(2), null, "Insurance premium", null),
-                    RecurringJournalEntry.Create("RJE-004", "Annual License Fee", RecurrenceFrequency.Annually, 12000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(5), null, "Software license", null),
-                    RecurringJournalEntry.Create("RJE-005", "Quarterly Maintenance", RecurrenceFrequency.Quarterly, 8000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(3), null, "Equipment maintenance", null),
-                    RecurringJournalEntry.Create("RJE-006", "Monthly Utilities", RecurrenceFrequency.Monthly, 1500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Utility bills", null),
-                    RecurringJournalEntry.Create("RJE-007", "Monthly Payroll Processing", RecurrenceFrequency.Monthly, 45000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Payroll processing", null),
-                    RecurringJournalEntry.Create("RJE-008", "Annually Subscription Fees", RecurrenceFrequency.Annually, 25000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddMonths(3), null, "Annual subscription fees", null),
-                    RecurringJournalEntry.Create("RJE-009", "Custom Interval Payment", RecurrenceFrequency.Custom, 2000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), 45, "45-day interval payment", null),
-                    RecurringJournalEntry.Create("RJE-010", "Monthly Marketing Spend", RecurrenceFrequency.Monthly, 7500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Marketing campaign", null)
+                    RecurringJournalEntry.Create("RJE-001", "Monthly Rent Payment", RecurrenceFrequency.Monthly, 5000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Recurring rent"),
+                    RecurringJournalEntry.Create("RJE-002", "Monthly Office Supplies", RecurrenceFrequency.Monthly, 500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddMonths(6), null, "Office supplies purchase"),
+                    RecurringJournalEntry.Create("RJE-003", "Quarterly Insurance", RecurrenceFrequency.Quarterly, 3000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(2), null, "Insurance premium"),
+                    RecurringJournalEntry.Create("RJE-004", "Annual License Fee", RecurrenceFrequency.Annually, 12000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(5), null, "Software license"),
+                    RecurringJournalEntry.Create("RJE-005", "Quarterly Maintenance", RecurrenceFrequency.Quarterly, 8000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(3), null, "Equipment maintenance"),
+                    RecurringJournalEntry.Create("RJE-006", "Monthly Utilities", RecurrenceFrequency.Monthly, 1500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Utility bills"),
+                    RecurringJournalEntry.Create("RJE-007", "Monthly Payroll Processing", RecurrenceFrequency.Monthly, 45000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Payroll processing"),
+                    RecurringJournalEntry.Create("RJE-008", "Annually Subscription Fees", RecurrenceFrequency.Annually, 25000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddMonths(3), null, "Annual subscription fees"),
+                    RecurringJournalEntry.Create("RJE-009", "Custom Interval Payment", RecurrenceFrequency.Custom, 2000m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), 45, "45-day interval payment"),
+                    RecurringJournalEntry.Create("RJE-010", "Monthly Marketing Spend", RecurrenceFrequency.Monthly, 7500m, debitAccount.Id, creditAccount.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddYears(1), null, "Marketing campaign")
                 };
 
                 await context.RecurringJournalEntries.AddRangeAsync(recurringEntries, cancellationToken).ConfigureAwait(false);
@@ -588,7 +663,7 @@ internal sealed class AccountingDbInitializer(
                     var costCenter = costCenters.Count > 0 ? costCenters[i % costCenters.Count].Id : (DefaultIdType?)null;
                     var project = projects.Count > 0 ? projects[i % projects.Count].Id : (DefaultIdType?)null;
                     
-                    purchaseOrders.Add(PurchaseOrder.Create($"PO-{2000 + i}", DateTime.UtcNow.Date.AddDays(-i * 5), vendor.Id, vendor.Name, null, $"Requester {i + 1}", costCenter, project, DateTime.UtcNow.Date.AddDays(30), $"Delivery Address {i + 1}", "Net 30", $"REF-{1000 + i}", $"Seeded purchase order {i + 1}", null));
+                    purchaseOrders.Add(PurchaseOrder.Create($"PO-{2000 + i}", DateTime.UtcNow.Date.AddDays(-i * 5), vendor.Id, vendor.Name, null, $"Requester {i + 1}", costCenter, project, DateTime.UtcNow.Date.AddDays(30), $"Delivery Address {i + 1}", "Net 30", $"REF-{1000 + i}", $"Seeded purchase order {i + 1}"));
                 }
 
                 await context.PurchaseOrders.AddRangeAsync(purchaseOrders, cancellationToken).ConfigureAwait(false);

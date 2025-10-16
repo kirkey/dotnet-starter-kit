@@ -25,8 +25,7 @@ public sealed class PayeeImportParser(
             // Use the framework's DataImport service directly to parse Excel to strongly-typed objects
             var rows = await dataImport.ToListAsync<PayeeImportRow>(
                 file, 
-                FileType.Document, 
-                "Sheet1").ConfigureAwait(false);
+                FileType.Document).ConfigureAwait(false);
 
             logger.LogInformation("Successfully parsed {Count} rows from payees/import file", rows.Count);
             

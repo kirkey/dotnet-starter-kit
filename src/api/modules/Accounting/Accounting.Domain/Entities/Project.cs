@@ -91,7 +91,7 @@ public class Project : AuditableEntity, IAggregateRoot
     /// Accumulated actual revenues (sum of negative amount entries categorized as revenue).
     /// </summary>
     public decimal ActualRevenue { get; private set; }
-    
+
     private readonly List<ProjectCostEntry> _costingEntries = new();
     /// <summary>
     /// Cost and revenue entries associated with this project.
@@ -100,7 +100,7 @@ public class Project : AuditableEntity, IAggregateRoot
 
     private Project(string projectName, DateTime startDate, decimal budgetedAmount,
         string? clientName = null, string? projectManager = null, string? department = null,
-        string? description = null, string? notes = null)
+        string? description = null, string? notes = null, string? imageUrl = null)
     {
         Name = projectName.Trim();
         StartDate = startDate;
@@ -113,6 +113,7 @@ public class Project : AuditableEntity, IAggregateRoot
         ActualRevenue = 0;
         Description = description?.Trim();
         Notes = notes?.Trim();
+        ImageUrl = imageUrl;
 
         QueueDomainEvent(new ProjectCreated(Id, Name, StartDate, BudgetedAmount, Description, Notes));
     }
@@ -136,7 +137,7 @@ public class Project : AuditableEntity, IAggregateRoot
     /// </summary>
     public static Project Create(string projectName, DateTime startDate, decimal budgetedAmount,
         string? clientName = null, string? projectManager = null, string? department = null,
-        string? description = null, string? notes = null)
+        string? description = null, string? notes = null, string? imageUrl = null)
     {
         if (string.IsNullOrWhiteSpace(projectName))
             throw new ProjectNameRequiredException();
@@ -147,7 +148,7 @@ public class Project : AuditableEntity, IAggregateRoot
         if (budgetedAmount < 0)
             throw new InvalidProjectBudgetException();
 
-        return new Project(projectName, startDate, budgetedAmount, clientName, projectManager, department, description, notes);
+        return new Project(projectName, startDate, budgetedAmount, clientName, projectManager, department, description, notes, imageUrl);
     }
 
     /// <summary>
@@ -155,7 +156,7 @@ public class Project : AuditableEntity, IAggregateRoot
     /// </summary>
     public Project Update(string? projectName, DateTime? startDate, DateTime? endDate, decimal? budgetedAmount,
         string? status, string? clientName, string? projectManager, string? department,
-        string? description, string? notes)
+        string? description, string? notes, string? imageUrl)
     {
         bool isUpdated = false;
 
@@ -228,6 +229,12 @@ public class Project : AuditableEntity, IAggregateRoot
         if (notes != Notes)
         {
             Notes = notes?.Trim();
+            isUpdated = true;
+        }
+
+        if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
+        {
+            ImageUrl = imageUrl;
             isUpdated = true;
         }
 

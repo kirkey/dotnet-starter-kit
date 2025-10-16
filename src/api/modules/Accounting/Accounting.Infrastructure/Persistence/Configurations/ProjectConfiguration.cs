@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
 public class ProjectConfiguration : IEntityTypeConfiguration<Project>
@@ -39,6 +37,9 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.Property(x => x.ActualRevenue)
             .HasPrecision(18, 2)
             .IsRequired();
+
+        builder.Property(x => x.ImageUrl)
+            .HasMaxLength(512);
 
         // One-to-many relationship to ProjectCost entries
         builder

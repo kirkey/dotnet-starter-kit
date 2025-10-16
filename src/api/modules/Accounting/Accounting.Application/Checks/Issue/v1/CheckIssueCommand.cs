@@ -7,7 +7,7 @@ public record CheckIssueCommand(
     DefaultIdType CheckId,
     decimal Amount,
     string PayeeName,
-    DateTime IssuedDate,
+    DateTime? IssuedDate,
     DefaultIdType? PayeeId,
     DefaultIdType? VendorId,
     DefaultIdType? PaymentId,

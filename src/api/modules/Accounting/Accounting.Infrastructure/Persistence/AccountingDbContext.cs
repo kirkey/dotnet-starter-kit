@@ -1,4 +1,3 @@
-using Accounting.Domain.Entities;
 using Finbuckle.MultiTenant.Abstractions;
 using FSH.Framework.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.Tenant;
@@ -28,6 +27,8 @@ public sealed class AccountingDbContext(
     public DbSet<Member> Members { get; set; } = null!;
     public DbSet<Meter> Meters { get; set; } = null!;
     public DbSet<Payee> Payees { get; set; } = null!;
+    public DbSet<Bank> Banks { get; set; } = null!;
+    public DbSet<Check> Checks { get; set; } = null!;
     public DbSet<Project> Projects { get; set; } = null!;
     public DbSet<ProjectCostEntry> ProjectCostEntries { get; set; } = null!;
     public DbSet<Vendor> Vendors { get; set; } = null!;

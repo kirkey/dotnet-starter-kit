@@ -1,0 +1,135 @@
+@page "/accounting/banks"
+
+<PageHeader Title="Banks" Header="Banks" SubHeader="Manage Banks for check management and bank reconciliation." />
+
+<EntityTable @ref="_table" TEntity="BankResponse" TId="DefaultIdType" TRequest="BankViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.BankCode"
+                          For="@(() => context.BankCode)"
+                          Label="Bank Code"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.RoutingNumber"
+                          For="@(() => context.RoutingNumber)"
+                          Label="Routing Number"
+                          Variant="Variant.Filled"
+                          HelperText="9-digit ABA routing number" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.SwiftCode"
+                          For="@(() => context.SwiftCode)"
+                          Label="SWIFT Code"
+                          Variant="Variant.Filled"
+                          HelperText="8 or 11 characters" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Bank Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Address"
+                          For="@(() => context.Address)"
+                          Label="Bank Address"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ContactPerson"
+                          For="@(() => context.ContactPerson)"
+                          Label="Contact Person"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PhoneNumber"
+                          For="@(() => context.PhoneNumber)"
+                          Label="Phone Number"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Email" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Website"
+                          For="@(() => context.Website)"
+                          Label="Website"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Url" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+
+        <!-- Image Management -->
+        <MudItem xs="12">
+            <ImageUploader CurrentImageUrl="@(string.IsNullOrEmpty(context.ImageUrl) ? string.Empty : ImageUrlService.GetAbsoluteUrl(context.ImageUrl))"
+                           CurrentImageUrlChanged="@(url => context.ImageUrl = url)"
+                           UploadedImage="@context.Image"
+                           UploadedImageChanged="@(img => context.Image = img)"
+                           AltText="Bank Logo"
+                           UploadLabel="Upload Bank Logo" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12">
+                <MudSwitch @bind-Checked="context.IsActive"
+                          For="@(() => context.IsActive)"
+                          Label="Active"
+                          Color="Color.Success" />
+            </MudItem>
+        }
+    </EditFormContent>
+</EntityTable>
+
+@code {
+    private RenderFragment<BankResponse> TemplateImage => dto => __builder =>
+    {
+        <MudItem Class="d-flex justify-center align-center">
+            @if (dto.ImageUrl is not null)
+            {
+                <MudImage Src="@(string.IsNullOrEmpty(dto.ImageUrl) ? string.Empty : ImageUrlService.GetAbsoluteUrl(dto.ImageUrl))" Height="100" Alt="Bank Logo"/>
+            }
+        </MudItem>
+    };
+
+    private RenderFragment<BankResponse> TemplateIsActive => dto => __builder =>
+    {
+        <MudItem Class="d-flex justify-center align-center">
+            @if (dto.IsActive)
+            {
+                <MudChip Color="Color.Success" Size="Size.Small">Active</MudChip>
+            }
+            else
+            {
+                <MudChip Color="Color.Default" Size="Size.Small">Inactive</MudChip>
+            }
+        </MudItem>
+    };
+}
+

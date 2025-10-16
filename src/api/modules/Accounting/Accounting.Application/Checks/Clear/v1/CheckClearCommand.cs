@@ -5,6 +5,6 @@ namespace Accounting.Application.Checks.Clear.v1;
 /// </summary>
 public record CheckClearCommand(
     DefaultIdType CheckId,
-    DateTime ClearedDate
+    DateTime? ClearedDate
 ) : IRequest<CheckClearResponse>;
 

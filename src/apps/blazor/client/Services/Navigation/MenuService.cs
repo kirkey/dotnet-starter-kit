@@ -93,6 +93,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.List, Href = "/accounting-budgets", PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.List, Href = "/accounting-projects", PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/accounting/payees", PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Banks", Icon = Icons.Material.Filled.AccountBalance, Href = "/accounting/banks", Action = FshActions.View, Resource = FshResources.Accounting },
                         new MenuSectionSubItemModel { Title = "Checks", Icon = Icons.Material.Filled.Receipt, Href = "/accounting/checks", Action = FshActions.View, Resource = FshResources.Accounting },
                         new MenuSectionSubItemModel { Title = "Debit Memos", Icon = Icons.Material.Filled.AddCircleOutline, Href = "/accounting/debit-memos", Action = FshActions.View, Resource = FshResources.Accounting },
                         new MenuSectionSubItemModel { Title = "Credit Memos", Icon = Icons.Material.Filled.RemoveCircleOutline, Href = "/accounting/credit-memos", Action = FshActions.View, Resource = FshResources.Accounting }

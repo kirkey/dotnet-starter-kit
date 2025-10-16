@@ -2,9 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.DebitMemos;
 
 public partial class DebitMemos
 {
-    protected EntityServerTableContext<DebitMemoSearchResponse, DefaultIdType, DebitMemoViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<DebitMemoResponse, DefaultIdType, DebitMemoViewModel> Context { get; set; } = default!;
 
-    private EntityTable<DebitMemoSearchResponse, DefaultIdType, DebitMemoViewModel> _table = default!;
+    private EntityTable<DebitMemoResponse, DefaultIdType, DebitMemoViewModel> _table = default!;
 
     // Dialog visibility flags
     private bool _approveDialogVisible;
@@ -14,10 +14,11 @@ public partial class DebitMemos
     // Dialog options
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
-    // Command objects for dialogs
-    private DebitMemoApproveCommand _approveCommand = new() { DebitMemoId = Guid.Empty, ApprovedBy = string.Empty, ApprovedDate = DateTime.UtcNow };
-    private DebitMemoApplyCommand _applyCommand = new() { DebitMemoId = Guid.Empty, DocumentId = Guid.Empty, AmountToApply = 0, AppliedDate = DateTime.UtcNow };
-    private DebitMemoVoidCommand _voidCommand = new() { DebitMemoId = Guid.Empty, VoidReason = string.Empty };
+    // Command objects for dialogs - using API-generated command classes
+    private DefaultIdType _currentMemoId = DefaultIdType.Empty;
+    private ApproveDebitMemoCommand _approveCommand = new() { ApprovedBy = string.Empty };
+    private ApplyDebitMemoCommand _applyCommand = new() { AmountToApply = 0 };
+    private VoidDebitMemoCommand _voidCommand = new();
 
     // Get status color for badges
     private static Color GetStatusColor(string? status) => status switch
@@ -39,37 +40,37 @@ public partial class DebitMemos
 
     protected override Task OnInitializedAsync()
     {
-        Context = new EntityServerTableContext<DebitMemoSearchResponse, DefaultIdType, DebitMemoViewModel>(
+        Context = new EntityServerTableContext<DebitMemoResponse, DefaultIdType, DebitMemoViewModel>(
             entityName: "Debit Memo",
             entityNamePlural: "Debit Memos",
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<DebitMemoSearchResponse>(response => response.MemoNumber, "Memo Number", "MemoNumber"),
-                new EntityField<DebitMemoSearchResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateTime)),
-                new EntityField<DebitMemoSearchResponse>(response => response.Amount, "Amount", "Amount", typeof(decimal)),
-                new EntityField<DebitMemoSearchResponse>(response => response.AppliedAmount, "Applied", "AppliedAmount", typeof(decimal)),
-                new EntityField<DebitMemoSearchResponse>(response => response.UnappliedAmount, "Unapplied", "UnappliedAmount", typeof(decimal)),
-                new EntityField<DebitMemoSearchResponse>(response => response.ReferenceType, "Type", "ReferenceType"),
-                new EntityField<DebitMemoSearchResponse>(response => response.Status, "Status", "Status"),
-                new EntityField<DebitMemoSearchResponse>(response => response.ApprovalStatus, "Approval", "ApprovalStatus"),
-                new EntityField<DebitMemoSearchResponse>(response => response.Reason, "Reason", "Reason"),
+                new EntityField<DebitMemoResponse>(response => response.MemoNumber, "Memo Number", "MemoNumber"),
+                new EntityField<DebitMemoResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateTime)),
+                new EntityField<DebitMemoResponse>(response => response.Amount, "Amount", "Amount", typeof(decimal)),
+                new EntityField<DebitMemoResponse>(response => response.AppliedAmount, "Applied", "AppliedAmount", typeof(decimal)),
+                new EntityField<DebitMemoResponse>(response => response.UnappliedAmount, "Unapplied", "UnappliedAmount", typeof(decimal)),
+                new EntityField<DebitMemoResponse>(response => response.ReferenceType, "Type", "ReferenceType"),
+                new EntityField<DebitMemoResponse>(response => response.Status, "Status", "Status"),
+                new EntityField<DebitMemoResponse>(response => response.ApprovalStatus, "Approval", "ApprovalStatus"),
+                new EntityField<DebitMemoResponse>(response => response.Reason, "Reason", "Reason"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<DebitMemoSearchQuery>();
-                var result = await Client.DebitMemoSearchEndpointAsync(paginationFilter);
-                return result.Adapt<PaginationResponse<DebitMemoSearchResponse>>();
+                var paginationFilter = filter.Adapt<SearchDebitMemosQuery>();
+                var result = await Client.DebitMemoSearchEndpointAsync("1", paginationFilter);
+                return result.Adapt<PaginationResponse<DebitMemoResponse>>();
             },
             createFunc: async debitMemo =>
             {
-                await Client.DebitMemoCreateEndpointAsync(debitMemo.Adapt<DebitMemoCreateCommand>());
+                await Client.DebitMemoCreateEndpointAsync("1", debitMemo.Adapt<CreateDebitMemoCommand>());
             },
             updateFunc: async (id, debitMemo) =>
             {
-                var updateCommand = new DebitMemoUpdateCommand
+                var updateCommand = new UpdateDebitMemoCommand
                 {
                     Id = id,
                     MemoDate = debitMemo.MemoDate,
@@ -78,22 +79,22 @@ public partial class DebitMemos
                     Description = debitMemo.Description,
                     Notes = debitMemo.Notes
                 };
-                await Client.DebitMemoUpdateEndpointAsync(id, updateCommand);
+                await Client.DebitMemoUpdateEndpointAsync("1", id, updateCommand);
             },
             deleteFunc: async id =>
             {
                 // Only allow deletion of Draft memos
-                var memoDetails = await Client.DebitMemoGetEndpointAsync(id);
+                var memoDetails = await Client.DebitMemoGetEndpointAsync("1", id);
                 if (memoDetails.Status != "Draft")
                 {
                     Snackbar.Add("Only draft debit memos can be deleted.", Severity.Warning);
                     return;
                 }
-                await Client.DebitMemoDeleteEndpointAsync(id);
+                await Client.DebitMemoDeleteEndpointAsync("1", id);
             },
             getDetailsFunc: async id =>
             {
-                var response = await Client.DebitMemoGetEndpointAsync(id);
+                var response = await Client.DebitMemoGetEndpointAsync("1", id);
                 return response.Adapt<DebitMemoViewModel>();
             },
             hasExtraActionsFunc: () => true);
@@ -104,11 +105,10 @@ public partial class DebitMemos
     // Approve Debit Memo Dialog
     private void OnApproveMemo(DefaultIdType debitMemoId)
     {
-        _approveCommand = new DebitMemoApproveCommand 
+        _currentMemoId = debitMemoId;
+        _approveCommand = new ApproveDebitMemoCommand 
         { 
-            DebitMemoId = debitMemoId, 
-            ApprovedBy = string.Empty, 
-            ApprovedDate = DateTime.UtcNow 
+            ApprovedBy = string.Empty
         };
         _approveDialogVisible = true;
     }
@@ -123,7 +123,7 @@ public partial class DebitMemos
 
         try
         {
-            await Client.DebitMemoApproveEndpointAsync(_approveCommand.DebitMemoId, _approveCommand);
+            await Client.DebitMemoApproveEndpointAsync("1", _currentMemoId, _approveCommand);
             Snackbar.Add("Debit memo approved successfully.", Severity.Success);
             _approveDialogVisible = false;
             await _table.ReloadDataAsync();
@@ -137,24 +137,16 @@ public partial class DebitMemos
     // Apply Debit Memo Dialog
     private void OnApplyMemo(DefaultIdType debitMemoId)
     {
-        _applyCommand = new DebitMemoApplyCommand 
+        _currentMemoId = debitMemoId;
+        _applyCommand = new ApplyDebitMemoCommand 
         { 
-            DebitMemoId = debitMemoId, 
-            DocumentId = Guid.Empty, 
-            AmountToApply = 0, 
-            AppliedDate = DateTime.UtcNow 
+            AmountToApply = 0
         };
         _applyDialogVisible = true;
     }
 
     private async Task SubmitApplyMemo()
     {
-        if (_applyCommand.DocumentId == Guid.Empty)
-        {
-            Snackbar.Add("Please enter a document ID to apply the memo to.", Severity.Error);
-            return;
-        }
-
         if (_applyCommand.AmountToApply <= 0)
         {
             Snackbar.Add("Amount to apply must be greater than zero.", Severity.Error);
@@ -163,7 +155,7 @@ public partial class DebitMemos
 
         try
         {
-            await Client.DebitMemoApplyEndpointAsync(_applyCommand.DebitMemoId, _applyCommand);
+            await Client.DebitMemoApplyEndpointAsync("1", _currentMemoId, _applyCommand);
             Snackbar.Add("Debit memo applied successfully.", Severity.Success);
             _applyDialogVisible = false;
             await _table.ReloadDataAsync();
@@ -177,21 +169,16 @@ public partial class DebitMemos
     // Void Debit Memo Dialog
     private void OnVoidMemo(DefaultIdType debitMemoId)
     {
-        _voidCommand = new DebitMemoVoidCommand { DebitMemoId = debitMemoId, VoidReason = string.Empty };
+        _currentMemoId = debitMemoId;
+        _voidCommand = new VoidDebitMemoCommand();
         _voidDialogVisible = true;
     }
 
     private async Task SubmitVoidMemo()
     {
-        if (string.IsNullOrWhiteSpace(_voidCommand.VoidReason))
-        {
-            Snackbar.Add("Please provide a reason for voiding this memo.", Severity.Error);
-            return;
-        }
-
         try
         {
-            await Client.DebitMemoVoidEndpointAsync(_voidCommand.DebitMemoId, _voidCommand);
+            await Client.DebitMemoVoidEndpointAsync("1", _currentMemoId, _voidCommand);
             Snackbar.Add("Debit memo voided successfully.", Severity.Success);
             _voidDialogVisible = false;
             await _table.ReloadDataAsync();
@@ -208,40 +195,4 @@ public partial class DebitMemos
         // Navigate to applications view or show dialog with application history
         Snackbar.Add("View applications feature coming soon.", Severity.Info);
     }
-}
-
-// Command objects for API calls
-public record DebitMemoApproveCommand
-{
-    public DefaultIdType DebitMemoId { get; set; }
-    public string ApprovedBy { get; set; } = string.Empty;
-    public DateTime ApprovedDate { get; set; }
-}
-
-public record DebitMemoApplyCommand
-{
-    public DefaultIdType DebitMemoId { get; set; }
-    public DefaultIdType DocumentId { get; set; }
-    public decimal AmountToApply { get; set; }
-    public DateTime AppliedDate { get; set; }
-}
-
-public record DebitMemoVoidCommand
-{
-    public DefaultIdType DebitMemoId { get; set; }
-    public string VoidReason { get; set; } = string.Empty;
-}
-
-// Search request extension (if not already defined in API client)
-public class DebitMemoSearchRequest
-{
-    public string? MemoNumber { get; set; }
-    public string? ReferenceType { get; set; }
-    public string? Status { get; set; }
-    public string? ApprovalStatus { get; set; }
-    public decimal? AmountFrom { get; set; }
-    public decimal? AmountTo { get; set; }
-    public DateTime? MemoDateFrom { get; set; }
-    public DateTime? MemoDateTo { get; set; }
-    public bool HasUnappliedAmount { get; set; }
 }

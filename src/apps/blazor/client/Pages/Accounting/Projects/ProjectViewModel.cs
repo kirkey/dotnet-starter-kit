@@ -70,4 +70,14 @@ public class ProjectViewModel
     /// Read-only actual revenue to date (displayed on edit).
     /// </summary>
     public decimal ActualRevenue { get; set; }
+
+    /// <summary>
+    /// Image URL for project logo or reference image.
+    /// </summary>
+    public string? ImageUrl { get; set; }
+
+    /// <summary>
+    /// Image file upload command for uploading project image.
+    /// </summary>
+    public FileUploadCommand? Image { get; set; }
 }

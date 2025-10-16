@@ -3,9 +3,9 @@
 <PageHeader Title="Check Management" Header="Check Management" SubHeader="Manage checks, issue payments, and track check status." />
 
 <EntityTable @ref="_table" TEntity="CheckSearchResponse" TId="DefaultIdType" TRequest="CheckViewModel" Context="@Context">
-    <AdvancedSearchContent Context="search">
+    <AdvancedSearchContent>
         <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="search.CheckNumber"
+            <MudTextField @bind-Value="@CheckNumber"
                           Label="Check Number"
                           Placeholder="Search by check number"
                           Variant="Variant.Outlined"
@@ -13,7 +13,7 @@
                           AdornmentIcon="@Icons.Material.Filled.Search" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="search.BankAccountCode"
+            <MudTextField @bind-Value="@BankAccountCode"
                           Label="Bank Account Code"
                           Placeholder="Search by account"
                           Variant="Variant.Outlined"
@@ -22,7 +22,7 @@
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <MudSelect T="string"
-                       @bind-Value="search.Status"
+                       @bind-Value="@Status"
                        Label="Status"
                        Variant="Variant.Outlined"
                        Clearable="true">
@@ -35,7 +35,7 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="search.PayeeName"
+            <MudTextField @bind-Value="@PayeeName"
                           Label="Payee Name"
                           Placeholder="Search by payee"
                           Variant="Variant.Outlined"
@@ -43,7 +43,7 @@
                           AdornmentIcon="@Icons.Material.Filled.Person" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudNumericField @bind-Value="search.AmountFrom"
+            <MudNumericField @bind-Value="@AmountFrom"
                              Label="Amount From"
                              Format="N2"
                              Variant="Variant.Outlined"
@@ -51,7 +51,7 @@
                              AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudNumericField @bind-Value="search.AmountTo"
+            <MudNumericField @bind-Value="@AmountTo"
                              Label="Amount To"
                              Format="N2"
                              Variant="Variant.Outlined"
@@ -59,19 +59,19 @@
                              AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudDatePicker @bind-Date="search.IssuedDateFrom"
+            <MudDatePicker @bind-Date="@IssuedDateFrom"
                            Label="Issued From"
                            DateFormat="MM/dd/yyyy"
                            Variant="Variant.Outlined" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudDatePicker @bind-Date="search.IssuedDateTo"
+            <MudDatePicker @bind-Date="@IssuedDateTo"
                            Label="Issued To"
                            DateFormat="MM/dd/yyyy"
                            Variant="Variant.Outlined" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudSwitch @bind-Value="search.IsPrinted"
+            <MudSwitch @bind-Value="@IsPrinted"
                        Label="Printed Checks Only"
                        Color="Color.Primary" />
         </MudItem>
@@ -111,7 +111,7 @@
                 <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Check ID" />
             </MudItem>
             <MudItem xs="12" md="6">
-                <MudChip Color="@GetStatusColor(context.Status)" Size="Size.Large">
+                <MudChip T="object" Color="@GetStatusColor(context.Status)" Size="Size.Large">
                     @context.Status
                 </MudChip>
             </MudItem>
