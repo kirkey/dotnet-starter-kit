@@ -128,7 +128,7 @@
         <MudText Typo="Typo.h6" Class="mt-4 mb-2">Temperature Control</MudText>
 
         <MudItem xs="12" md="6" lg="4">
-            <MudSwitch @bind-Checked="context.RequiresTemperatureControl"
+            <MudSwitch @bind-Value="context.RequiresTemperatureControl"
                        For="@(() => context.RequiresTemperatureControl)"
                        Label="Requires Temperature Control"
                        Color="Color.Primary" />
@@ -170,7 +170,7 @@
         <MudText Typo="Typo.h6" Class="mt-4 mb-2">Status</MudText>
 
         <MudItem xs="12" md="6" lg="4">
-            <MudSwitch @bind-Checked="context.IsActive"
+            <MudSwitch @bind-Value="context.IsActive"
                        For="@(() => context.IsActive)"
                        Label="Active"
                        Color="Color.Primary" />

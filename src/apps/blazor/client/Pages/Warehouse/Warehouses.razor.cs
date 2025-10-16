@@ -21,8 +21,7 @@ public partial class Warehouses
             [
                 new EntityField<WarehouseResponse>(response => response.Code, "Code", "Code"),
                 new EntityField<WarehouseResponse>(response => response.Name, "Name", "Name"),
-                new EntityField<WarehouseResponse>(response => response.City, "City", "City"),
-                new EntityField<WarehouseResponse>(response => response.Country, "Country", "Country"),
+                new EntityField<WarehouseResponse>(response => response.Address, "Address", "Address"),
                 new EntityField<WarehouseResponse>(response => response.ManagerName, "Manager", "ManagerName"),
                 new EntityField<WarehouseResponse>(response => response.TotalCapacity, "Capacity", "TotalCapacity", typeof(decimal)),
                 new EntityField<WarehouseResponse>(response => response.CapacityUnit, "Unit", "CapacityUnit"),
@@ -88,30 +87,6 @@ public class WarehouseViewModel
     /// Required field with a maximum length of 500 characters.
     /// </summary>
     public string Address { get; set; } = default!;
-
-    /// <summary>
-    /// City where the warehouse is located.
-    /// Required field with a maximum length of 100 characters.
-    /// </summary>
-    public string City { get; set; } = default!;
-
-    /// <summary>
-    /// State or province where the warehouse is located.
-    /// Optional field with a maximum length of 100 characters.
-    /// </summary>
-    public string? State { get; set; }
-
-    /// <summary>
-    /// Country where the warehouse is located.
-    /// Required field with a maximum length of 100 characters.
-    /// </summary>
-    public string Country { get; set; } = default!;
-
-    /// <summary>
-    /// Postal code for the warehouse address.
-    /// Optional field with a maximum length of 20 characters.
-    /// </summary>
-    public string? PostalCode { get; set; }
 
     /// <summary>
     /// Name of the warehouse manager responsible for operations.

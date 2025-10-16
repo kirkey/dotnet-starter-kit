@@ -16,11 +16,7 @@ namespace Store.Domain.Entities;
 /// 
 /// Default values:
 /// - Code: required unique identifier, max 50 characters (example: "WH-MAIN", "WH-NYC-01")
-/// - Address: required physical address, max 500 characters
-/// - City: required city name, max 100 characters (example: "Seattle")
-/// - State: optional state/region, max 100 characters (example: "WA")
-/// - Country: required country code, max 100 characters (example: "US")
-/// - PostalCode: optional postal code, max 20 characters (example: "98101")
+/// - Address: required physical address, max 500 characters (includes street, city, state, country, postal code)
 /// - Phone: optional contact phone number (example: "+1-555-0123")
 /// - Email: optional contact email (example: "warehouse@company.com")
 /// - ManagerName: optional warehouse manager name (example: "John Smith")
@@ -64,30 +60,6 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// Example: "1234 Industrial Blvd". Max length: 500.
     /// </summary>
     public string Address { get; private set; } = default!;
-
-    /// <summary>
-    /// City where the warehouse is located.
-    /// Example: "Seattle". Max length: 100.
-    /// </summary>
-    public string City { get; private set; } = default!;
-
-    /// <summary>
-    /// State where the warehouse is located (optional).
-    /// Example: "WA". Max length: 100.
-    /// </summary>
-    public string? State { get; private set; }
-
-    /// <summary>
-    /// Country where the warehouse is located.
-    /// Example: "US". Max length: 100.
-    /// </summary>
-    public string Country { get; private set; } = default!;
-
-    /// <summary>
-    /// Postal code for the warehouse address (optional).
-    /// Example: "98101". Max length: 20.
-    /// </summary>
-    public string? PostalCode { get; private set; }
 
     /// <summary>
     /// Manager name responsible for warehouse operations.
@@ -172,10 +144,6 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         string? description,
         string code,
         string address,
-        string city,
-        string? state,
-        string country,
-        string? postalCode,
         string managerName,
         string managerEmail,
         string managerPhone,
@@ -191,19 +159,12 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
 
         if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is required", nameof(code));
         if (code.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
+        
+        // Convert code to uppercase for consistency
+        code = code.ToUpperInvariant();
 
         if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Address is required", nameof(address));
         if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
-
-        if (string.IsNullOrWhiteSpace(city)) throw new ArgumentException("City is required", nameof(city));
-        if (city.Length > 100) throw new ArgumentException("City must not exceed 100 characters", nameof(city));
-
-        if (state is { Length: > 100 }) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
-
-        if (string.IsNullOrWhiteSpace(country)) throw new ArgumentException("Country is required", nameof(country));
-        if (country.Length > 100) throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
-
-        if (postalCode is { Length: > 20 }) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
 
         if (string.IsNullOrWhiteSpace(managerName)) throw new ArgumentException("Manager name is required", nameof(managerName));
         if (managerName.Length > 100) throw new ArgumentException("Manager name must not exceed 100 characters", nameof(managerName));
@@ -227,10 +188,6 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         Description = description;
         Code = code;
         Address = address;
-        City = city;
-        State = state;
-        Country = country;
-        PostalCode = postalCode;
         ManagerName = managerName;
         ManagerEmail = managerEmail;
         ManagerPhone = managerPhone;
@@ -250,11 +207,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// <param name="name">Warehouse name.</param>
     /// <param name="description">Optional warehouse description.</param>
     /// <param name="code">Warehouse code.</param>
-    /// <param name="address">Street address.</param>
-    /// <param name="city">City.</param>
-    /// <param name="state">State (optional).</param>
-    /// <param name="country">Country.</param>
-    /// <param name="postalCode">Postal code (optional).</param>
+    /// <param name="address">Complete street address including city, state, country, postal code.</param>
     /// <param name="managerName">Manager's full name.</param>
     /// <param name="managerEmail">Manager's email address.</param>
     /// <param name="managerPhone">Manager's phone number.</param>
@@ -269,10 +222,6 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         string? description,
         string code,
         string address,
-        string city,
-        string? state,
-        string country,
-        string? postalCode,
         string managerName,
         string managerEmail,
         string managerPhone,
@@ -288,10 +237,6 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
             description,
             code,
             address,
-            city,
-            state,
-            country,
-            postalCode,
             managerName,
             managerEmail,
             managerPhone,
@@ -308,11 +253,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// <param name="name">New name for the warehouse.</param>
     /// <param name="description">New description.</param>
     /// <param name="notes">New notes.</param>
-    /// <param name="address">New street address.</param>
-    /// <param name="city">New city.</param>
-    /// <param name="state">New state.</param>
-    /// <param name="country">New country.</param>
-    /// <param name="postalCode">New postal code.</param>
+    /// <param name="address">New street address (including city, state, country, postal code).</param>
     /// <param name="managerName">New manager name.</param>
     /// <param name="managerEmail">New manager email.</param>
     /// <param name="managerPhone">New manager phone.</param>
@@ -325,10 +266,6 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         string? description,
         string? notes,
         string? address,
-        string? city,
-        string? state,
-        string? country,
-        string? postalCode,
         string? managerName,
         string? managerEmail,
         string? managerPhone,
@@ -366,38 +303,6 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
         {
             if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
             Address = address;
-            isUpdated = true;
-        }
-
-        // City
-        if (!string.IsNullOrWhiteSpace(city) && !string.Equals(City, city, StringComparison.OrdinalIgnoreCase))
-        {
-            if (city.Length > 100) throw new ArgumentException("City must not exceed 100 characters", nameof(city));
-            City = city;
-            isUpdated = true;
-        }
-
-        // State (nullable)
-        if (state is not null && !string.Equals(State, state, StringComparison.OrdinalIgnoreCase))
-        {
-            if (state.Length > 100) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
-            State = state;
-            isUpdated = true;
-        }
-
-        // Country
-        if (!string.IsNullOrWhiteSpace(country) && !string.Equals(Country, country, StringComparison.OrdinalIgnoreCase))
-        {
-            if (country.Length > 100) throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
-            Country = country;
-            isUpdated = true;
-        }
-
-        // Postal code
-        if (postalCode is not null && !string.Equals(PostalCode, postalCode, StringComparison.OrdinalIgnoreCase))
-        {
-            if (postalCode.Length > 20) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
-            PostalCode = postalCode;
             isUpdated = true;
         }
 

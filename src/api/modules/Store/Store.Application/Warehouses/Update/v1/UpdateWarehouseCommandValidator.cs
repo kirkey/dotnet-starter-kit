@@ -34,28 +34,6 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
             .MaximumLength(500)
             .WithMessage("Address must not exceed 500 characters");
 
-        RuleFor(x => x.City)
-            .NotEmpty()
-            .WithMessage("City is required")
-            .MaximumLength(100)
-            .WithMessage("City must not exceed 100 characters");
-
-        RuleFor(x => x.State)
-            .MaximumLength(100)
-            .WithMessage("State must not exceed 100 characters")
-            .When(x => !string.IsNullOrEmpty(x.State));
-
-        RuleFor(x => x.Country)
-            .NotEmpty()
-            .WithMessage("Country is required")
-            .MaximumLength(100)
-            .WithMessage("Country must not exceed 100 characters");
-
-        RuleFor(x => x.PostalCode)
-            .MaximumLength(20)
-            .WithMessage("Postal code must not exceed 20 characters")
-            .When(x => !string.IsNullOrEmpty(x.PostalCode));
-
         RuleFor(x => x.ManagerName)
             .NotEmpty()
             .WithMessage("Manager name is required")

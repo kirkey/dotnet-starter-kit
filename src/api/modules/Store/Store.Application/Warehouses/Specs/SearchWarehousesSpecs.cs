@@ -12,8 +12,6 @@ public class SearchWarehousesSpecs : EntitiesByPaginationFilterSpec<Warehouse, W
             .OrderBy(w => w.Name, !command.HasOrderBy())
             .Where(w => w.Name!.Contains(command.Name!), !string.IsNullOrEmpty(command.Name))
             .Where(w => w.Code == command.Code, !string.IsNullOrEmpty(command.Code))
-            .Where(w => w.City == command.City, !string.IsNullOrEmpty(command.City))
-            .Where(w => w.Country == command.Country, !string.IsNullOrEmpty(command.Country))
             .Where(w => w.IsActive == command.IsActive, command.IsActive.HasValue)
             .Where(w => w.IsMainWarehouse == command.IsMainWarehouse, command.IsMainWarehouse.HasValue);
 }

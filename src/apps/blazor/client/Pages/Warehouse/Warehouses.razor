@@ -1,4 +1,4 @@
-@page "/warehouse/warehouses"
+@page "/warehouses"
 
 <PageHeader Title="Warehouses" Header="Warehouses" SubHeader="Manage warehouse facilities and storage locations." />
 
@@ -11,7 +11,7 @@
             </MudItem>
         }
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.Code"
                           For="@(() => context.Code)"
                           Label="Warehouse Code"
@@ -19,7 +19,7 @@
                           Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Name"
                           For="@(() => context.Name)"
                           Label="Warehouse Name"
@@ -36,50 +36,22 @@
         </MudItem>
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Address Information</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Address Information</MudText>
+        </MudItem>
 
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Address"
                           For="@(() => context.Address)"
-                          Label="Street Address"
-                          Placeholder="e.g., 1234 Industrial Blvd"
-                          Variant="Variant.Filled" />
-        </MudItem>
-
-        <MudItem xs="12" md="6" lg="4">
-            <MudTextField @bind-Value="context.City"
-                          For="@(() => context.City)"
-                          Label="City"
-                          Placeholder="e.g., Seattle"
-                          Variant="Variant.Filled" />
-        </MudItem>
-
-        <MudItem xs="12" md="6" lg="4">
-            <MudTextField @bind-Value="context.State"
-                          For="@(() => context.State)"
-                          Label="State/Province"
-                          Placeholder="e.g., WA"
-                          Variant="Variant.Filled" />
-        </MudItem>
-
-        <MudItem xs="12" md="6" lg="4">
-            <MudTextField @bind-Value="context.Country"
-                          For="@(() => context.Country)"
-                          Label="Country"
-                          Placeholder="e.g., US"
-                          Variant="Variant.Filled" />
-        </MudItem>
-
-        <MudItem xs="12" md="6" lg="4">
-            <MudTextField @bind-Value="context.PostalCode"
-                          For="@(() => context.PostalCode)"
-                          Label="Postal Code"
-                          Placeholder="e.g., 98101"
+                          Label="Complete Address"
+                          Placeholder="e.g., 1234 Industrial Blvd, Seattle, WA 98101, USA"
                           Variant="Variant.Filled" />
         </MudItem>
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Manager Information</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Manager Information</MudText>
+        </MudItem>
 
         <MudItem xs="12" md="6" lg="4">
             <MudTextField @bind-Value="context.ManagerName"
@@ -106,9 +78,11 @@
         </MudItem>
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity & Configuration</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity & Configuration</MudText>
+        </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="decimal" 
                              @bind-Value="context.TotalCapacity"
                              For="@(() => context.TotalCapacity)"
@@ -118,10 +92,10 @@
                              Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string"
                        @bind-Value="context.CapacityUnit"
-                       For="@(() => context.CapacityUnit!)"
+                       For="@(() => context.CapacityUnit)"
                        Label="Capacity Unit"
                        Variant="Variant.Filled">
                 <MudSelectItem Value="@("sqft")">Square Feet</MudSelectItem>
@@ -132,13 +106,14 @@
             </MudSelect>
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string"
                        @bind-Value="context.WarehouseType"
-                       For="@(() => context.WarehouseType!)"
+                       For="@(() => context.WarehouseType)"
                        Label="Warehouse Type"
                        Variant="Variant.Filled">
                 <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                <MudSelectItem Value="@("Store")">Standard</MudSelectItem>
                 <MudSelectItem Value="@("Cold Storage")">Cold Storage</MudSelectItem>
                 <MudSelectItem Value="@("Frozen")">Frozen</MudSelectItem>
                 <MudSelectItem Value="@("Hazmat")">Hazmat</MudSelectItem>
@@ -149,17 +124,19 @@
         </MudItem>
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Status & Settings</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Status & Settings</MudText>
+        </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
-            <MudSwitch @bind-Checked="context.IsActive"
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch @bind-Value="context.IsActive"
                        For="@(() => context.IsActive)"
                        Label="Active"
                        Color="Color.Primary" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
-            <MudSwitch @bind-Checked="context.IsMainWarehouse"
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch @bind-Value="context.IsMainWarehouse"
                        For="@(() => context.IsMainWarehouse)"
                        Label="Main Warehouse"
                        Color="Color.Primary" />
@@ -169,9 +146,11 @@
         @if (context.Id != default(DefaultIdType))
         {
             <MudDivider />
-            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>
+            <MudItem xs="12" Class="mb-n4">
+                <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>
+            </MudItem>
 
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField Format="N2" 
                                  Label="Used Capacity" 
                                  ReadOnly 
@@ -180,7 +159,7 @@
                                  Variant="Variant.Outlined" />
             </MudItem>
 
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField Format="P1" 
                                  Label="Utilization %" 
                                  ReadOnly 
@@ -189,7 +168,7 @@
                                  Variant="Variant.Outlined" />
             </MudItem>
 
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField Format="N2" 
                                  Label="Available Capacity" 
                                  ReadOnly 

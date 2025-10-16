@@ -98,7 +98,7 @@
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12">
-                <MudSwitch @bind-Checked="context.IsActive"
+                <MudSwitch @bind-Value="context.IsActive"
                           For="@(() => context.IsActive)"
                           Label="Active"
                           Color="Color.Success" />
