@@ -92,16 +92,22 @@ public partial class Checks
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var searchQuery = filter.Adapt<CheckSearchQuery>();
-                searchQuery.CheckNumber = CheckNumber;
-                searchQuery.BankAccountCode = BankAccountCode;
-                searchQuery.Status = Status;
-                searchQuery.PayeeName = PayeeName;
-                searchQuery.AmountFrom = AmountFrom;
-                searchQuery.AmountTo = AmountTo;
-                searchQuery.IssuedDateFrom = IssuedDateFrom;
-                searchQuery.IssuedDateTo = IssuedDateTo;
-                searchQuery.IsPrinted = IsPrinted;
+                var searchQuery = new CheckSearchQuery
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    OrderBy = filter.OrderBy,
+                    Keyword = filter.Keyword,
+                    CheckNumber = CheckNumber,
+                    BankAccountCode = BankAccountCode,
+                    Status = Status,
+                    PayeeName = PayeeName,
+                    AmountFrom = AmountFrom,
+                    AmountTo = AmountTo,
+                    IssuedDateFrom = IssuedDateFrom,
+                    IssuedDateTo = IssuedDateTo,
+                    IsPrinted = IsPrinted
+                };
                 var result = await Client.CheckSearchEndpointAsync("1", searchQuery);
                 return result.Adapt<PaginationResponse<CheckSearchResponse>>();
             },
@@ -126,24 +132,12 @@ public partial class Checks
                 updateCommand.CheckId = id;
                 await Client.CheckUpdateEndpointAsync("1", id, updateCommand);
             },
-            deleteFunc: async id =>
-            {
-                // Only allow deletion of Available checks
-                var checkDetails = await Client.CheckGetEndpointAsync("1", id);
-                if (checkDetails.Status != "Available")
-                {
-                    Snackbar.Add("Only available checks can be deleted.", Severity.Warning);
-                    return;
-                }
-                // Note: There's no delete endpoint in the current API - checks are voided instead
-                // This would need to be implemented if deletion is required
-                Snackbar.Add("Check deletion not implemented. Use Void instead for issued checks.", Severity.Info);
-            },
-            getDetailsFunc: async id =>
-            {
-                var response = await Client.CheckGetEndpointAsync("1", id);
-                return response.Adapt<CheckViewModel>();
-            },
+            deleteFunc: null,
+            // getDetailsFunc: async id =>
+            // {
+            //     var response = await Client.CheckGetEndpointAsync("1", id);
+            //     return response.Adapt<CheckViewModel>();
+            // },
             hasExtraActionsFunc: () => true);
 
         return Task.CompletedTask;

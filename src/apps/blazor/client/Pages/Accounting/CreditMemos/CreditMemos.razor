@@ -4,9 +4,7 @@
 <PageHeader Title="Credit Memos" Header="Credit Memos" Subheader="Manage credit memos for receivables and payables adjustments" />
 
 <EntityTable @ref="_table" TEntity="CreditMemoResponse" TId="DefaultIdType" TRequest="CreditMemoViewModel" Context="@Context">
-    
-
-    <ActionsContent Context="context">
+    <ExtraActions Context="context">
         @if (context.Id != DefaultIdType.Empty)
         {
             var status = context.Status;
@@ -57,7 +55,7 @@
                 </MudMenuItem>
             }
         }
-    </ActionsContent>
+    </ExtraActions>
 
     <EditFormContent Context="context">
         <MudGrid>

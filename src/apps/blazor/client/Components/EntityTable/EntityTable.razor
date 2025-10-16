@@ -52,7 +52,7 @@
                   ServerData="@ServerReloadFunc">
             <ToolBarContent>
                 <div class="d-flex flex-row flex-wrap justify-center mud-text-align-center" style="gap: 1rem;">
-                    @if (_canCreate)
+                    @if (_canCreate && Context.CreateFunc is not null)
                     {
                         <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false"
                                    OnClick="@(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add"
@@ -209,21 +209,21 @@
                                          OnClick="@(() => InvokeModal(context, isViewMode: true))">
                                 View
                             </MudMenuItem>
-                            @if (CanUpdateEntity(context))
+                            @if (CanUpdateEntity(context) && Context.UpdateFunc is not null)
                             {
                                 <MudMenuItem Icon="@Icons.Material.Filled.EditNote"
                                              OnClick="@(() => InvokeModal(context))">
                                     Edit
                                 </MudMenuItem>
                             }
-                            @if (CanUpdateEntity(context))
+                            @if (CanUpdateEntity(context) && Context.UpdateFunc is not null)
                             {
                                 <MudMenuItem Icon="@Icons.Material.Filled.PlaylistAddCheck"
                                              OnClick="@(() => InvokeUpdateAsync(context))">
                                     Update
                                 </MudMenuItem>
                             }
-                            @if (_canCreate && CanUpdateEntity(context))
+                            @if (_canCreate && CanUpdateEntity(context) && Context.CreateFunc is not null)
                             {
                                 <MudMenuItem Icon="@Icons.Material.Filled.ContentCopy"
                                              OnClick="@(() => InvokeModal(entityToDuplicate: context))">

@@ -5,7 +5,7 @@
 
 <EntityTable @ref="_table" TEntity="DebitMemoResponse" TId="DefaultIdType" TRequest="DebitMemoViewModel" Context="@Context">
     
-    <ActionsContent Context="context">
+    <ExtraActions Context="context">
         @if (context.Id != DefaultIdType.Empty)
         {
             var status = context.Status;
@@ -47,7 +47,7 @@
                 </MudMenuItem>
             }
         }
-    </ActionsContent>
+    </ExtraActions>
 
     <EditFormContent Context="context">
         <MudGrid>

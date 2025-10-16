@@ -92,11 +92,11 @@ public partial class DebitMemos
                 }
                 await Client.DebitMemoDeleteEndpointAsync("1", id);
             },
-            getDetailsFunc: async id =>
-            {
-                var response = await Client.DebitMemoGetEndpointAsync("1", id);
-                return response.Adapt<DebitMemoViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var response = await Client.DebitMemoGetEndpointAsync("1", id);
+            //     return response.Adapt<DebitMemoViewModel>();
+            // },
             hasExtraActionsFunc: () => true);
 
         return Task.CompletedTask;

@@ -89,8 +89,8 @@ public partial class EntityTable<TEntity, TId, TRequest>
             }
 
     private bool HasActions => _canUpdate || _canDelete || Context.HasExtraActionsFunc is not null && Context.HasExtraActionsFunc();
-    private bool CanUpdateEntity(TEntity entity) => _canUpdate && (Context.CanUpdateEntityFunc is null || Context.CanUpdateEntityFunc(entity));
-    private bool CanDeleteEntity(TEntity entity) => _canDelete && (Context.CanDeleteEntityFunc is null || Context.CanDeleteEntityFunc(entity));
+    private bool CanUpdateEntity(TEntity entity) => _canUpdate && Context.UpdateFunc is not null && (Context.CanUpdateEntityFunc is null || Context.CanUpdateEntityFunc(entity));
+    private bool CanDeleteEntity(TEntity entity) => _canDelete && Context.DeleteFunc is not null && (Context.CanDeleteEntityFunc is null || Context.CanDeleteEntityFunc(entity));
 
     // Client side paging/filtering
     private bool LocalSearch(TEntity entity) =>

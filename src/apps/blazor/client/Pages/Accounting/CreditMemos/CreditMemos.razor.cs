@@ -87,11 +87,11 @@ public partial class CreditMemos
                 }
                 await Client.CreditMemoDeleteEndpointAsync("1", id);
             },
-            getDetailsFunc: async id =>
-            {
-                var response = await Client.CreditMemoGetEndpointAsync("1", id);
-                return response.Adapt<CreditMemoViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var response = await Client.CreditMemoGetEndpointAsync("1", id);
+            //     return response.Adapt<CreditMemoViewModel>();
+            // },
             hasExtraActionsFunc: () => true);
 
         return Task.CompletedTask;

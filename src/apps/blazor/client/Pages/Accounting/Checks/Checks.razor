@@ -77,7 +77,7 @@
         </MudItem>
     </AdvancedSearchContent>
 
-    <ActionsContent Context="check">
+    <ExtraActions Context="check">
         @if (check.Status == "Available")
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Payment" OnClick="@(() => OnIssueCheck(check.Id))">
@@ -102,7 +102,7 @@
                 Void Check
             </MudMenuItem>
         }
-    </ActionsContent>
+    </ExtraActions>
 
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
