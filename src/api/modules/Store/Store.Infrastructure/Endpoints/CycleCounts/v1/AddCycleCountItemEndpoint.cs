@@ -15,7 +15,8 @@ public static class AddCycleCountItemEndpoint
         .WithName(nameof(AddCycleCountItemEndpoint))
         .WithSummary("Add an item count to a cycle count")
         .WithDescription("Adds counted quantity for a grocery item to the cycle count")
-        .Produces<AddCycleCountItemResponse>()
+        .Produces<AddCycleCountItemResponse>(StatusCodes.Status201Created)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
         .MapToApiVersion(1);
     }
 }

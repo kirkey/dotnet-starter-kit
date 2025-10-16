@@ -1,6 +1,8 @@
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.Commands;
 using FSH.Starter.WebApi.Store.Application.Items.Specs;
+using FSH.Starter.WebApi.Store.Application.Categories.Specs;
+using FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Import.v1;
 
@@ -247,35 +249,29 @@ public sealed class ImportItemsHandler(
         //     errors.Add($"Row {rowIndex}: Weight must be >= 0");
         // }
 
-        // Validate Category exists
-        // if (row.CategoryId.HasValue)
-        // {
-        //     var categoryExists = await categoryRepository.AnyAsync(
-        //         new CategoryByIdSpec(row.CategoryId.Value), cancellationToken);
-        //     if (!categoryExists)
-        //     {
-        //         errors.Add($"Row {rowIndex}: Category with ID '{row.CategoryId}' does not exist");
-        //     }
-        // }
-        // else
-        // {
-        //     errors.Add($"Row {rowIndex}: Category ID is required");
-        // }
+        // Validate Category exists (only if provided)
+        if (row.CategoryId.HasValue)
+        {
+            var category = await categoryRepository.FirstOrDefaultAsync(
+                new GetCategorySpecs(row.CategoryId.Value), cancellationToken);
+            if (category == null)
+            {
+                errors.Add($"Row {rowIndex}: Category with ID '{row.CategoryId}' does not exist");
+            }
+        }
+        // Note: CategoryId is optional - will use default if not provided
 
-        // Validate Supplier exists
-        // if (row.SupplierId.HasValue)
-        // {
-        //     var supplierExists = await supplierRepository.AnyAsync(
-        //         new SupplierByIdSpec(row.SupplierId.Value), cancellationToken);
-        //     if (!supplierExists)
-        //     {
-        //         errors.Add($"Row {rowIndex}: Supplier with ID '{row.SupplierId}' does not exist");
-        //     }
-        // }
-        // else
-        // {
-        //     errors.Add($"Row {rowIndex}: Supplier ID is required");
-        // }
+        // Validate Supplier exists (only if provided)
+        if (row.SupplierId.HasValue)
+        {
+            var supplier = await supplierRepository.FirstOrDefaultAsync(
+                new GetSupplierSpecs(row.SupplierId.Value), cancellationToken);
+            if (supplier == null)
+            {
+                errors.Add($"Row {rowIndex}: Supplier with ID '{row.SupplierId}' does not exist");
+            }
+        }
+        // Note: SupplierId is optional - will use default if not provided
 
         // Validate expiry date for perishable items
         // if (row is { IsPerishable: true, ExpiryDate: not null } && row.ExpiryDate.Value < DateTime.UtcNow)
@@ -288,39 +284,82 @@ public sealed class ImportItemsHandler(
 
     /// <summary>
     /// Maps an import row to an Item domain entity.
+    /// Uses default Category and Supplier if not provided in the import file.
     /// </summary>
     private async Task<Item> MapToEntityAsync(ItemImportRow row, CancellationToken cancellationToken)
     {
+        // Get or use default CategoryId
+        var categoryId = row.CategoryId ?? await GetOrCreateDefaultCategoryAsync(cancellationToken);
+        
+        // Get or use default SupplierId
+        var supplierId = row.SupplierId ?? await GetOrCreateDefaultSupplierAsync(cancellationToken);
+
         var item = Item.Create(
             name: row.Name!.Trim(),
             description: row.Description?.Trim(),
             sku: row.Sku!.Trim(),
             barcode: row.Barcode!.Trim(),
-            unitPrice: 0, // row.Price!.Value,
-            cost: 0, // row.Cost!.Value,
-            minimumStock: 0, // row.MinimumStock!.Value,
-            maximumStock: 10, // row.MaximumStock!.Value,
-            reorderPoint: 0, // row.ReorderPoint!.Value,
-            reorderQuantity: 0, // row.CurrentStock ?? row.MinimumStock!.Value,
-            leadTimeDays: 0, // 7, // Default lead time
-            categoryId: DefaultIdType.Parse("8a15eb13-c33f-4d47-bd73-b3924577fb6d"), // row.CategoryId!.Value,
-            supplierId: DefaultIdType.Parse("ac0939b2-17c3-4c9f-916a-a908865cd55b"), // row.SupplierId!.Value,
-            unitOfMeasure: "EA",
+            unitPrice: row.Price ?? 0,
+            cost: row.Cost ?? 0,
+            minimumStock: row.MinimumStock ?? 0,
+            maximumStock: row.MaximumStock ?? 10,
+            reorderPoint: row.ReorderPoint ?? 0,
+            reorderQuantity: row.ReorderPoint ?? 0, // Use ReorderPoint as default for ReorderQuantity
+            leadTimeDays: 7, // Default lead time
+            categoryId: categoryId,
+            supplierId: supplierId,
+            unitOfMeasure: "EA", // Default unit of measure
             isPerishable: row.IsPerishable ?? false,
-            isSerialTracked: false, // Default not serial tracked
-            isLotTracked: false, // Default not lot tracked
-            shelfLifeDays: null,
+            isSerialTracked: false, // Not in import row
+            isLotTracked: false, // Not in import row
+            shelfLifeDays: null, // Not in import row
             brand: row.Brand?.Trim(),
-            manufacturer: string.Empty, // row.Manufacturer?.Trim(),
-            manufacturerPartNumber: null,
-            weight: 0, // row.Weight ?? 0,
-            weightUnit: string.Empty, // row.WeightUnit?.Trim(),
-            length: null,
-            width: null,
-            height: null,
-            dimensionUnit: null);
+            manufacturer: row.Manufacturer?.Trim(),
+            manufacturerPartNumber: null, // Not in import row
+            weight: row.Weight ?? 0,
+            weightUnit: row.WeightUnit?.Trim(),
+            length: null, // Not in import row
+            width: null, // Not in import row
+            height: null, // Not in import row
+            dimensionUnit: null); // Not in import row
 
-        return await Task.FromResult(item);
+        return item;
+    }
+
+    /// <summary>
+    /// Gets the first available category or throws an exception if none exists.
+    /// In production, you should create a default "Uncategorized" category during setup.
+    /// </summary>
+    private async Task<DefaultIdType> GetOrCreateDefaultCategoryAsync(CancellationToken cancellationToken)
+    {
+        var categories = await categoryRepository.ListAsync(cancellationToken);
+        var defaultCategory = categories.FirstOrDefault();
+        
+        if (defaultCategory == null)
+        {
+            throw new InvalidOperationException(
+                "No categories found in the system. Please create at least one category before importing items without CategoryId.");
+        }
+
+        return defaultCategory.Id;
+    }
+
+    /// <summary>
+    /// Gets the first available supplier or throws an exception if none exists.
+    /// In production, you should create a default "Unknown Supplier" during setup.
+    /// </summary>
+    private async Task<DefaultIdType> GetOrCreateDefaultSupplierAsync(CancellationToken cancellationToken)
+    {
+        var suppliers = await supplierRepository.ListAsync(cancellationToken);
+        var defaultSupplier = suppliers.FirstOrDefault();
+        
+        if (defaultSupplier == null)
+        {
+            throw new InvalidOperationException(
+                "No suppliers found in the system. Please create at least one supplier before importing items without SupplierId.");
+        }
+
+        return defaultSupplier.Id;
     }
 }
 

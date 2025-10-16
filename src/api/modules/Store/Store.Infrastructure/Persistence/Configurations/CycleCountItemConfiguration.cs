@@ -17,15 +17,14 @@ public class CycleCountItemConfiguration : IEntityTypeConfiguration<CycleCountIt
         builder.Property(x => x.RecountReason)
             .HasMaxLength(500);
 
-        builder.HasOne(x => x.CycleCount)
-            .WithMany(x => x.Items)
-            .HasForeignKey(x => x.CycleCountId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasOne(x => x.Item)
             .WithMany()
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // Ensure an item can only appear once per cycle count
+        builder.HasIndex(x => new { x.CycleCountId, x.ItemId })
+            .IsUnique();
 
         builder.ToTable("CycleCountItems", SchemaNames.Store);
     }

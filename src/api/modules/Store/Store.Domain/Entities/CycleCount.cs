@@ -115,8 +115,15 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
     
     public Warehouse Warehouse { get; private set; } = default!;
     public WarehouseLocation? WarehouseLocation { get; private set; }
-    public ICollection<CycleCountItem> Items { get; private set; } = new List<CycleCountItem>();
+    
+    private readonly List<CycleCountItem> _items = new();
+    /// <summary>
+    /// Collection of cycle count items, each representing a counted item with system vs physical quantities.
+    /// Read-only to enforce proper aggregate management.
+    /// </summary>
+    public IReadOnlyCollection<CycleCountItem> Items => _items.AsReadOnly();
 
+    // Parameterless constructor for EF Core
     private CycleCount() { }
 
     private CycleCount(
@@ -225,26 +232,35 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
         return this;
     }
 
-    public CycleCount AddItem(DefaultIdType itemId, int systemQuantity, int? countedQuantity = null)
+    /// <summary>
+    /// Update the aggregate counts after items have changed. 
+    /// Intended to be called by application handlers managing CycleCountItem entities.
+    /// Similar to Budget.SetTotals() for consistency.
+    /// </summary>
+    /// <param name="totalItems">Total number of items in the count.</param>
+    /// <param name="itemsCountedCorrect">Number of items counted correctly (no variance).</param>
+    /// <param name="itemsWithDiscrepancies">Number of items with variances.</param>
+    public CycleCount SetCounts(int totalItems, int itemsCountedCorrect, int itemsWithDiscrepancies)
     {
-        var item = CycleCountItem.Create(Id, itemId, systemQuantity, countedQuantity);
-        Items.Add(item);
-        UpdateCounts();
+        TotalItemsToCount = totalItems;
+        ItemsCountedCorrect = itemsCountedCorrect;
+        ItemsWithDiscrepancies = itemsWithDiscrepancies;
+        AccuracyPercentage = totalItems > 0 ? (decimal)itemsCountedCorrect / totalItems * 100 : 100;
         return this;
     }
 
     private void CalculateAccuracy()
     {
-        TotalItemsToCount = Items.Count;
-        ItemsCountedCorrect = Items.Count(i => i.IsAccurate());
+        TotalItemsToCount = _items.Count;
+        ItemsCountedCorrect = _items.Count(i => i.IsAccurate());
         ItemsWithDiscrepancies = TotalItemsToCount - ItemsCountedCorrect;
         AccuracyPercentage = TotalItemsToCount > 0 ? (decimal)ItemsCountedCorrect / TotalItemsToCount * 100 : 100;
     }
 
     private void UpdateCounts()
     {
-        TotalItemsToCount = Items.Count;
-        ItemsCountedCorrect = Items.Count(i => i.IsAccurate());
+        TotalItemsToCount = _items.Count;
+        ItemsCountedCorrect = _items.Count(i => i.IsAccurate());
         ItemsWithDiscrepancies = TotalItemsToCount - ItemsCountedCorrect;
     }
 

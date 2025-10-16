@@ -23,7 +23,7 @@
                     </MudItem>
 
                     <MudItem xs="12" sm="6">
-                        <MudNumericField @bind-Value="Model.CountedQuantity"
+                        <MudNumericField T="int?" @bind-Value="Model.CountedQuantity"
                                          Label="Counted Quantity (Optional)"
                                          For="@(() => Model.CountedQuantity)"
                                          Min="0"
@@ -40,7 +40,7 @@
                     </MudItem>
 
                     <MudItem xs="12" sm="6">
-                        <MudNumericField @bind-Value="Model.CountedQuantity"
+                        <MudNumericField T="int?" @bind-Value="Model.CountedQuantity"
                                          Label="Counted Quantity"
                                          For="@(() => Model.CountedQuantity)"
                                          Required="true"

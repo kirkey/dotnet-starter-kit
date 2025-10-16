@@ -1945,7 +1945,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Adds counted quantity for a grocery item to the cycle count
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body);
 
@@ -1957,7 +1957,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Adds counted quantity for a grocery item to the cycle count
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken);
 
@@ -15507,7 +15507,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Adds counted quantity for a grocery item to the cycle count
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body)
         {
@@ -15522,7 +15522,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Adds counted quantity for a grocery item to the cycle count
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<AddCycleCountItemResponse> AddCycleCountItemEndpointAsync(string version, System.Guid id, AddCycleCountItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
@@ -15580,7 +15580,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 201)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<AddCycleCountItemResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -15588,6 +15588,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {

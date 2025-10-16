@@ -12,7 +12,7 @@ using Store.Infrastructure.Persistence;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20251015082303_InitialStoreDb")]
+    [Migration("20251016142900_InitialStoreDb")]
     partial class InitialStoreDb
     {
         /// <inheritdoc />
@@ -2357,20 +2357,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
@@ -2437,14 +2427,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.Property<string>("Notes")
                         .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<string>("State")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
 
                     b.Property<decimal>("TotalCapacity")
                         .HasPrecision(16, 2)
