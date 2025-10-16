@@ -4,9 +4,15 @@ namespace Accounting.Infrastructure.Endpoints.Checks.v1;
 
 /// <summary>
 /// Endpoint for voiding a check.
+/// Transitions a check to Void status and records the reason for cancellation.
 /// </summary>
 public static class CheckVoidEndpoint
 {
+    /// <summary>
+    /// Maps the check void endpoint to the route builder.
+    /// </summary>
+    /// <param name="endpoints">The endpoint route builder.</param>
+    /// <returns>Route handler builder for further configuration.</returns>
     internal static RouteHandlerBuilder MapCheckVoidEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
@@ -17,8 +23,11 @@ public static class CheckVoidEndpoint
             })
             .WithName(nameof(CheckVoidEndpoint))
             .WithSummary("Void a check")
-            .WithDescription("Void a check that was issued in error or needs to be cancelled")
+            .WithDescription("Void a check that was issued in error or needs to be cancelled. Records the void reason in audit trail.")
             .Produces<CheckVoidResponse>()
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesProblem(StatusCodes.Status409Conflict)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

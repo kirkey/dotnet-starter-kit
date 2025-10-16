@@ -117,19 +117,5 @@
             }
         </MudItem>
     };
-
-    private RenderFragment<BankResponse> TemplateIsActive => dto => __builder =>
-    {
-        <MudItem Class="d-flex justify-center align-center">
-            @if (dto.IsActive)
-            {
-                <MudChip Color="Color.Success" Size="Size.Small">Active</MudChip>
-            }
-            else
-            {
-                <MudChip Color="Color.Default" Size="Size.Small">Inactive</MudChip>
-            }
-        </MudItem>
-    };
 }
 

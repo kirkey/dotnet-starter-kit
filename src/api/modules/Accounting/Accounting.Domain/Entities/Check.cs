@@ -54,6 +54,18 @@ public class Check : AuditableEntity, IAggregateRoot
     public string? BankAccountName { get; private set; }
 
     /// <summary>
+    /// Bank ID that the check is associated with.
+    /// Links to the Bank entity for bank-level information.
+    /// </summary>
+    public DefaultIdType? BankId { get; private set; }
+
+    /// <summary>
+    /// Bank name for display purposes.
+    /// Example: "Chase Bank", "Bank of America".
+    /// </summary>
+    public string? BankName { get; private set; }
+
+    /// <summary>
     /// Check status: Available, Issued, Cleared, Void, Stale, StopPayment.
     /// Default: Available.
     /// </summary>
@@ -161,16 +173,17 @@ public class Check : AuditableEntity, IAggregateRoot
     /// </summary>
     public string? StopPaymentReason { get; private set; }
 
-    // Parameterless constructor for EF Core
     private Check()
     {
     }
 
-    private Check(string checkNumber, string bankAccountCode, string? bankAccountName, string? description = null, string? notes = null)
+    private Check(string checkNumber, string bankAccountCode, string? bankAccountName, DefaultIdType? bankId, string? bankName, string? description = null, string? notes = null)
     {
         CheckNumber = checkNumber.Trim();
         BankAccountCode = bankAccountCode.Trim();
         BankAccountName = bankAccountName?.Trim();
+        BankId = bankId;
+        BankName = bankName?.Trim();
         Description = description?.Trim();
         Notes = notes?.Trim();
         Status = "Available";
@@ -186,18 +199,20 @@ public class Check : AuditableEntity, IAggregateRoot
     /// <param name="checkNumber">Unique check number.</param>
     /// <param name="bankAccountCode">Bank account code from chart of accounts.</param>
     /// <param name="bankAccountName">Bank account name for display.</param>
+    /// <param name="bankId">Optional bank ID from the Bank entity.</param>
+    /// <param name="bankName">Optional bank name for display.</param>
     /// <param name="description">Optional description.</param>
     /// <param name="notes">Optional notes.</param>
     /// <returns>New Check entity.</returns>
     /// <exception cref="ArgumentException">Thrown when required fields are missing.</exception>
-    public static Check Create(string checkNumber, string bankAccountCode, string? bankAccountName = null, string? description = null, string? notes = null)
+    public static Check Create(string checkNumber, string bankAccountCode, string? bankAccountName = null, DefaultIdType? bankId = null, string? bankName = null, string? description = null, string? notes = null)
     {
         if (string.IsNullOrWhiteSpace(checkNumber))
             throw new ArgumentException("Check number is required.");
         if (string.IsNullOrWhiteSpace(bankAccountCode))
             throw new ArgumentException("Bank account code is required.");
 
-        return new Check(checkNumber, bankAccountCode, bankAccountName, description, notes);
+        return new Check(checkNumber, bankAccountCode, bankAccountName, bankId, bankName, description, notes);
     }
 
     /// <summary>
@@ -349,11 +364,13 @@ public class Check : AuditableEntity, IAggregateRoot
     /// </summary>
     /// <param name="bankAccountCode">Bank account code.</param>
     /// <param name="bankAccountName">Bank account name.</param>
+    /// <param name="bankId">Bank ID.</param>
+    /// <param name="bankName">Bank name.</param>
     /// <param name="description">Description.</param>
     /// <param name="notes">Notes.</param>
     /// <returns>Updated Check entity.</returns>
     /// <exception cref="InvalidOperationException">Thrown when check is not available.</exception>
-    public Check Update(string? bankAccountCode = null, string? bankAccountName = null, string? description = null, string? notes = null)
+    public Check Update(string? bankAccountCode = null, string? bankAccountName = null, DefaultIdType? bankId = null, string? bankName = null, string? description = null, string? notes = null)
     {
         if (Status != "Available")
             throw new InvalidOperationException("Only available checks can be updated.");
@@ -362,6 +379,10 @@ public class Check : AuditableEntity, IAggregateRoot
             BankAccountCode = bankAccountCode.Trim();
         if (!string.IsNullOrWhiteSpace(bankAccountName))
             BankAccountName = bankAccountName.Trim();
+        if (bankId != null)
+            BankId = bankId;
+        if (!string.IsNullOrWhiteSpace(bankName))
+            BankName = bankName.Trim();
         if (description != null)
             Description = description.Trim();
         if (notes != null)

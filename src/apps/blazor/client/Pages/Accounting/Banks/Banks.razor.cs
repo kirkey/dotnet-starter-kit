@@ -32,7 +32,7 @@ public partial class Banks
                 new EntityField<BankResponse>(response => response.ContactPerson, "Contact Person", "ContactPerson"),
                 new EntityField<BankResponse>(response => response.PhoneNumber, "Phone", "PhoneNumber"),
                 new EntityField<BankResponse>(response => response.Email, "Email", "Email"),
-                new EntityField<BankResponse>(response => response.IsActive, "Status", "IsActive", Template: TemplateIsActive),
+                new EntityField<BankResponse>(response => response.IsActive, "Status", "IsActive", typeof(bool)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

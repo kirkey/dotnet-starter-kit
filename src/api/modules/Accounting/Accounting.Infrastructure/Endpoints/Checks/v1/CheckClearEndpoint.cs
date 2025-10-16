@@ -4,9 +4,15 @@ namespace Accounting.Infrastructure.Endpoints.Checks.v1;
 
 /// <summary>
 /// Endpoint for marking a check as cleared.
+/// Transitions a check to Cleared status during bank reconciliation.
 /// </summary>
 public static class CheckClearEndpoint
 {
+    /// <summary>
+    /// Maps the check clear endpoint to the route builder.
+    /// </summary>
+    /// <param name="endpoints">The endpoint route builder.</param>
+    /// <returns>Route handler builder for further configuration.</returns>
     internal static RouteHandlerBuilder MapCheckClearEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
@@ -17,8 +23,11 @@ public static class CheckClearEndpoint
             })
             .WithName(nameof(CheckClearEndpoint))
             .WithSummary("Mark check as cleared")
-            .WithDescription("Mark a check as cleared through bank reconciliation")
+            .WithDescription("Mark a check as cleared during bank reconciliation when it appears on the bank statement.")
             .Produces<CheckClearResponse>()
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesProblem(StatusCodes.Status409Conflict)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

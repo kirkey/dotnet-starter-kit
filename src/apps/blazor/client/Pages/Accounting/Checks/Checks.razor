@@ -117,13 +117,38 @@
             </MudItem>
         }
 
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="context.CheckNumber"
-                          For="@(() => context.CheckNumber)"
-                          Label="Check Number"
-                          Variant="Variant.Filled"
-                          Required="true" />
-        </MudItem>
+        @if (Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField @bind-Value="context.StartCheckNumber"
+                              For="@(() => context.StartCheckNumber)"
+                              Label="Start Check Number"
+                              Placeholder="e.g., 3453000"
+                              Variant="Variant.Filled"
+                              HelperText="First check number in the bundle"
+                              Required="true" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField @bind-Value="context.EndCheckNumber"
+                              For="@(() => context.EndCheckNumber)"
+                              Label="End Check Number"
+                              Placeholder="e.g., 3453500"
+                              Variant="Variant.Filled"
+                              HelperText="Last check number in the bundle"
+                              Required="true" />
+            </MudItem>
+        }
+        else
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField @bind-Value="context.CheckNumber"
+                              For="@(() => context.CheckNumber)"
+                              Label="Check Number"
+                              Variant="Variant.Filled"
+                              ReadOnly="true" />
+            </MudItem>
+        }
 
         <MudItem xs="12" sm="6" md="4">
             <AutocompleteChartOfAccountCode @bind-Value="context.BankAccountCode"
@@ -138,11 +163,30 @@
             <MudTextField @bind-Value="context.BankAccountName"
                           For="@(() => context.BankAccountName)"
                           Label="Bank Account Name"
-                          Variant="Variant.Filled" />
+                          Variant="Variant.Filled"
+                          ReadOnly="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteBank @bind-Value="context.BankId"
+                              For="@(() => context.BankId)"
+                              Label="Bank"
+                              TextFormat="NameCode"
+                              Variant="Variant.Filled" />
         </MudItem>
 
         @if (!Context.AddEditModal.IsCreate)
         {
+            @if (!string.IsNullOrEmpty(context.BankName))
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@context.BankName"
+                                  Label="Bank Name"
+                                  ReadOnly
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            }
+
             @if (context.Amount.HasValue)
             {
                 <MudItem xs="12" sm="6" md="4">

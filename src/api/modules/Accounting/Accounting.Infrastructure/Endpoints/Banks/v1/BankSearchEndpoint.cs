@@ -5,6 +5,7 @@ namespace Accounting.Infrastructure.Endpoints.Banks.v1;
 
 /// <summary>
 /// Endpoint for searching banks with filtering and pagination.
+/// Supports advanced filtering by bank code, name, routing number, and SWIFT code.
 /// </summary>
 public static class BankSearchEndpoint
 {
@@ -23,7 +24,7 @@ public static class BankSearchEndpoint
             })
             .WithName(nameof(BankSearchEndpoint))
             .WithSummary("Search banks")
-            .WithDescription("Searches banks with filtering by bank code, name, routing number, SWIFT code, and active status. Supports pagination.")
+            .WithDescription("Searches banks with filtering by bank code, name, routing number, SWIFT code, and active status. Supports pagination and sorting.")
             .Produces<PagedList<BankResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.View")

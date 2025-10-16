@@ -679,6 +679,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<Guid?>("BankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BankName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
                     b.Property<string>("CheckNumber")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -788,6 +795,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasIndex("BankAccountCode")
                         .HasDatabaseName("IX_Checks_BankAccountCode");
+
+                    b.HasIndex("BankId")
+                        .HasDatabaseName("IX_Checks_BankId");
 
                     b.HasIndex("IssuedDate")
                         .HasDatabaseName("IX_Checks_IssuedDate");

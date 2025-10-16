@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20251002085926_Initial")]
-    partial class Initial
+    [Migration("20251016081744_InitialAccountingDb")]
+    partial class InitialAccountingDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Accounting.Domain.AccountingPeriod", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.AccountingPeriod", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("AccountingPeriods", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Accrual", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Accrual", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -176,7 +176,105 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Accruals", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.BankReconciliation", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Bank", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("BankCode")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<string>("RoutingNumber")
+                        .HasMaxLength(9)
+                        .HasColumnType("character varying(9)");
+
+                    b.Property<string>("SwiftCode")
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankCode")
+                        .IsUnique();
+
+                    b.HasIndex("RoutingNumber");
+
+                    b.ToTable("Banks", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.BankReconciliation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -289,7 +387,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("BankReconciliations", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Budget", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Budget", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -382,7 +480,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Budgets", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.BudgetDetail", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.BudgetDetail", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -453,7 +551,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("BudgetDetails", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.ChartOfAccount", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.ChartOfAccount", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -565,7 +663,165 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("ChartOfAccounts", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Consumption", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Check", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal?>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("BankAccountCode")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("BankAccountName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<Guid?>("BankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BankName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("CheckNumber")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTime?>("ClearedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1024)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("ExpenseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsPrinted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsStopPayment")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("IssuedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Memo")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1024)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("PayeeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PayeeName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<Guid?>("PaymentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PrintedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("PrintedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<DateTime?>("StopPaymentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("StopPaymentReason")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<Guid?>("VendorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("VoidReason")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<DateTime?>("VoidedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankAccountCode")
+                        .HasDatabaseName("IX_Checks_BankAccountCode");
+
+                    b.HasIndex("BankId")
+                        .HasDatabaseName("IX_Checks_BankId");
+
+                    b.HasIndex("IssuedDate")
+                        .HasDatabaseName("IX_Checks_IssuedDate");
+
+                    b.HasIndex("PayeeId")
+                        .HasDatabaseName("IX_Checks_PayeeId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Checks_Status");
+
+                    b.HasIndex("VendorId")
+                        .HasDatabaseName("IX_Checks_VendorId");
+
+                    b.HasIndex("CheckNumber", "BankAccountCode")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Checks_CheckNumber_BankAccount");
+
+                    b.ToTable("Checks", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.Consumption", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -660,7 +916,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Consumption", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.CostCenter", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.CostCenter", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -758,7 +1014,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("CostCenters", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.CreditMemo", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.CreditMemo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -872,7 +1128,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("CreditMemos", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.DebitMemo", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.DebitMemo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -982,7 +1238,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("DebitMemos", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.DeferredRevenue", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.DeferredRevenue", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1050,7 +1306,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("DeferredRevenues", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.DepreciationEntry", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.DepreciationEntry", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1076,7 +1332,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("DepreciationEntry", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.DepreciationMethod", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.DepreciationMethod", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1138,7 +1394,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("DepreciationMethods", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.FixedAsset", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.FixedAsset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1281,7 +1537,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("FixedAssets", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.GeneralLedger", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.GeneralLedger", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1362,7 +1618,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("GeneralLedgers", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.InventoryItem", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.InventoryItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1434,7 +1690,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("InventoryItems", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Invoice", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Invoice", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1562,7 +1818,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Invoices", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.InvoiceLineItem", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.InvoiceLineItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1597,7 +1853,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("InvoiceLineItem", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.JournalEntry", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.JournalEntry", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1689,7 +1945,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("JournalEntries", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Member", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Member", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1793,7 +2049,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Members", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Meter", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Meter", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1909,7 +2165,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Meters", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.MeterReading", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.MeterReading", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1942,7 +2198,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("MeterReading", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.PatronageCapital", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.PatronageCapital", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2011,7 +2267,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("PatronageCapitals", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Payee", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Payee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2088,7 +2344,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Payees", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Payment", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Payment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2167,7 +2423,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Payments", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.PaymentAllocation", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.PaymentAllocation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2230,7 +2486,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("PaymentAllocations", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.PostingBatch", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.PostingBatch", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2305,7 +2561,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("PostingBatches", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Project", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2356,7 +2612,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -2391,7 +2648,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Projects", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.ProjectCostEntry", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.ProjectCostEntry", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2484,7 +2741,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("ProjectCostEntries", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.PurchaseOrder", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.PurchaseOrder", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2619,7 +2876,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("PurchaseOrders", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.RateSchedule", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.RateSchedule", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2699,7 +2956,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("RateSchedules", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.RateTier", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.RateTier", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2726,7 +2983,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("RateTier", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.RecurringJournalEntry", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.RecurringJournalEntry", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2843,7 +3100,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("RecurringJournalEntries", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.RegulatoryReport", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.RegulatoryReport", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3007,7 +3264,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("RegulatoryReports", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.SecurityDeposit", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.SecurityDeposit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3077,7 +3334,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("SecurityDeposits", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.TaxCode", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.TaxCode", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3181,7 +3438,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("TaxCodes", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Vendor", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Vendor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3275,7 +3532,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("Vendors", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.WriteOff", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.WriteOff", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3399,40 +3656,40 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("WriteOffs", "accounting");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.BudgetDetail", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.BudgetDetail", b =>
                 {
-                    b.HasOne("Accounting.Domain.Budget", null)
+                    b.HasOne("Accounting.Domain.Entities.Budget", null)
                         .WithMany("BudgetDetails")
                         .HasForeignKey("BudgetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.DepreciationEntry", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.DepreciationEntry", b =>
                 {
-                    b.HasOne("Accounting.Domain.FixedAsset", null)
+                    b.HasOne("Accounting.Domain.Entities.FixedAsset", null)
                         .WithMany("DepreciationEntries")
                         .HasForeignKey("FixedAssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.InvoiceLineItem", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.InvoiceLineItem", b =>
                 {
-                    b.HasOne("Accounting.Domain.Invoice", null)
+                    b.HasOne("Accounting.Domain.Entities.Invoice", null)
                         .WithMany("LineItems")
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.JournalEntry", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.JournalEntry", b =>
                 {
-                    b.HasOne("Accounting.Domain.PostingBatch", null)
+                    b.HasOne("Accounting.Domain.Entities.PostingBatch", null)
                         .WithMany("JournalEntries")
                         .HasForeignKey("PostingBatchId");
 
-                    b.OwnsMany("Accounting.Domain.JournalEntryLine", "Lines", b1 =>
+                    b.OwnsMany("Accounting.Domain.Entities.JournalEntryLine", "Lines", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .ValueGeneratedOnAdd()
@@ -3468,78 +3725,78 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Navigation("Lines");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.MeterReading", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.MeterReading", b =>
                 {
-                    b.HasOne("Accounting.Domain.Meter", null)
+                    b.HasOne("Accounting.Domain.Entities.Meter", null)
                         .WithMany("Readings")
                         .HasForeignKey("MeterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.PaymentAllocation", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.PaymentAllocation", b =>
                 {
-                    b.HasOne("Accounting.Domain.Payment", null)
+                    b.HasOne("Accounting.Domain.Entities.Payment", null)
                         .WithMany("Allocations")
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.ProjectCostEntry", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.ProjectCostEntry", b =>
                 {
-                    b.HasOne("Accounting.Domain.Project", null)
+                    b.HasOne("Accounting.Domain.Entities.Project", null)
                         .WithMany("CostingEntries")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.RateTier", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.RateTier", b =>
                 {
-                    b.HasOne("Accounting.Domain.RateSchedule", null)
+                    b.HasOne("Accounting.Domain.Entities.RateSchedule", null)
                         .WithMany("Tiers")
                         .HasForeignKey("RateScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Budget", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Budget", b =>
                 {
                     b.Navigation("BudgetDetails");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.FixedAsset", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.FixedAsset", b =>
                 {
                     b.Navigation("DepreciationEntries");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Invoice", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Invoice", b =>
                 {
                     b.Navigation("LineItems");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Meter", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Meter", b =>
                 {
                     b.Navigation("Readings");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Payment", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Payment", b =>
                 {
                     b.Navigation("Allocations");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.PostingBatch", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.PostingBatch", b =>
                 {
                     b.Navigation("JournalEntries");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Project", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.Project", b =>
                 {
                     b.Navigation("CostingEntries");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.RateSchedule", b =>
+            modelBuilder.Entity("Accounting.Domain.Entities.RateSchedule", b =>
                 {
                     b.Navigation("Tiers");
                 });

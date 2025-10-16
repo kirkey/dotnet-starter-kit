@@ -8,6 +8,8 @@ public record CheckGetResponse(
     string CheckNumber,
     string BankAccountCode,
     string? BankAccountName,
+    DefaultIdType? BankId,
+    string? BankName,
     string Status,
     decimal? Amount,
     string? PayeeName,

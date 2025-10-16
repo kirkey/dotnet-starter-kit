@@ -27,7 +27,10 @@ public class CheckConfiguration : IEntityTypeConfiguration<Check>
         // Optional fields with max lengths
         builder.Property(x => x.BankAccountName)
             .HasMaxLength(256);
-        
+
+        builder.Property(x => x.BankName)
+            .HasMaxLength(256);
+
         builder.Property(x => x.PayeeName)
             .HasMaxLength(256);
         
@@ -72,6 +75,9 @@ public class CheckConfiguration : IEntityTypeConfiguration<Check>
         
         builder.HasIndex(x => x.PayeeId)
             .HasDatabaseName("IX_Checks_PayeeId");
+        
+        builder.HasIndex(x => x.BankId)
+            .HasDatabaseName("IX_Checks_BankId");
     }
 }
 

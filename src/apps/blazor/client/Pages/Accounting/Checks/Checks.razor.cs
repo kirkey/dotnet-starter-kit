@@ -16,11 +16,45 @@ public partial class Checks
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
     // Command objects for dialogs
-    private CheckIssueCommand _issueCommand = new() { CheckId = DefaultIdType.Empty, Amount = 0, PayeeName = string.Empty, IssuedDate = DateTime.UtcNow };
-    private CheckVoidCommand _voidCommand = new() { CheckId = DefaultIdType.Empty, VoidReason = string.Empty };
-    private CheckClearCommand _clearCommand = new() { CheckId = DefaultIdType.Empty, ClearedDate = DateTime.UtcNow };
-    private CheckStopPaymentCommand _stopPaymentCommand = new() { CheckId = DefaultIdType.Empty, StopPaymentReason = string.Empty };
-    private CheckPrintCommand _printCommand = new() { CheckId = DefaultIdType.Empty, PrintedBy = string.Empty };
+    private CheckIssueCommand _issueCommand = new()
+    {
+        CheckId = DefaultIdType.Empty,
+        Amount = 0,
+        PayeeName = string.Empty,
+        IssuedDate = DateTime.UtcNow,
+        PayeeId = null,
+        VendorId = null,
+        PaymentId = null,
+        ExpenseId = null,
+        Memo = null
+    };
+
+    private CheckVoidCommand _voidCommand = new()
+    {
+        CheckId = DefaultIdType.Empty,
+        VoidReason = string.Empty,
+        VoidedDate = DateTime.UtcNow
+    };
+
+    private CheckClearCommand _clearCommand = new()
+    {
+        CheckId = DefaultIdType.Empty,
+        ClearedDate = DateTime.UtcNow
+    };
+
+    private CheckStopPaymentCommand _stopPaymentCommand = new()
+    {
+        CheckId = DefaultIdType.Empty,
+        StopPaymentReason = string.Empty,
+        StopPaymentDate = DateTime.UtcNow
+    };
+
+    private CheckPrintCommand _printCommand = new()
+    {
+        CheckId = DefaultIdType.Empty,
+        PrintedBy = "System",
+        PrintedDate = DateTime.UtcNow
+    };
 
     // Get status color for badges
     private static Color GetStatusColor(string? status) => status switch
@@ -45,6 +79,7 @@ public partial class Checks
                 new EntityField<CheckSearchResponse>(response => response.CheckNumber, "Check Number", "CheckNumber"),
                 new EntityField<CheckSearchResponse>(response => response.BankAccountCode, "Account", "BankAccountCode"),
                 new EntityField<CheckSearchResponse>(response => response.BankAccountName, "Account Name", "BankAccountName"),
+                new EntityField<CheckSearchResponse>(response => response.BankName, "Bank", "BankName"),
                 new EntityField<CheckSearchResponse>(response => response.Status, "Status", "Status"),
                 new EntityField<CheckSearchResponse>(response => response.Amount, "Amount", "Amount", typeof(decimal?)),
                 new EntityField<CheckSearchResponse>(response => response.PayeeName, "Payee", "PayeeName"),
@@ -57,33 +92,44 @@ public partial class Checks
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<CheckSearchQuery>();
-                paginationFilter.CheckNumber = CheckNumber;
-                paginationFilter.BankAccountCode = BankAccountCode;
-                paginationFilter.Status = Status;
-                paginationFilter.PayeeName = PayeeName;
-                paginationFilter.AmountFrom = AmountFrom;
-                paginationFilter.AmountTo = AmountTo;
-                paginationFilter.IssuedDateFrom = IssuedDateFrom;
-                paginationFilter.IssuedDateTo = IssuedDateTo;
-                paginationFilter.IsPrinted = IsPrinted;
-                var result = await Client.CheckSearchEndpointAsync(paginationFilter);
+                var searchQuery = filter.Adapt<CheckSearchQuery>();
+                searchQuery.CheckNumber = CheckNumber;
+                searchQuery.BankAccountCode = BankAccountCode;
+                searchQuery.Status = Status;
+                searchQuery.PayeeName = PayeeName;
+                searchQuery.AmountFrom = AmountFrom;
+                searchQuery.AmountTo = AmountTo;
+                searchQuery.IssuedDateFrom = IssuedDateFrom;
+                searchQuery.IssuedDateTo = IssuedDateTo;
+                searchQuery.IsPrinted = IsPrinted;
+                var result = await Client.CheckSearchEndpointAsync("1", searchQuery);
                 return result.Adapt<PaginationResponse<CheckSearchResponse>>();
             },
             createFunc: async check =>
             {
-                await Client.CheckCreateEndpointAsync(check.Adapt<CheckCreateCommand>());
+                // For bundle creation, use StartCheckNumber and EndCheckNumber
+                if (!string.IsNullOrWhiteSpace(check.StartCheckNumber) && !string.IsNullOrWhiteSpace(check.EndCheckNumber))
+                {
+                    var createCommand = check.Adapt<CheckCreateCommand>();
+                    await Client.CheckCreateEndpointAsync("1", createCommand);
+                    Snackbar.Add($"Check bundle created: {check.StartCheckNumber} to {check.EndCheckNumber}", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Please provide both Start and End check numbers for bundle creation.", Severity.Warning);
+                }
             },
             updateFunc: async (id, check) =>
             {
-                // Checks don't have a traditional update endpoint - use view-only mode
-                // Updates happen through specialized operations (issue, void, clear, etc.)
-                await Task.CompletedTask;
+                // Update available checks with new command
+                var updateCommand = check.Adapt<CheckUpdateCommand>();
+                updateCommand.CheckId = id;
+                await Client.CheckUpdateEndpointAsync("1", id, updateCommand);
             },
             deleteFunc: async id =>
             {
                 // Only allow deletion of Available checks
-                var checkDetails = await Client.CheckGetEndpointAsync(id);
+                var checkDetails = await Client.CheckGetEndpointAsync("1", id);
                 if (checkDetails.Status != "Available")
                 {
                     Snackbar.Add("Only available checks can be deleted.", Severity.Warning);
@@ -95,7 +141,7 @@ public partial class Checks
             },
             getDetailsFunc: async id =>
             {
-                var response = await Client.CheckGetEndpointAsync(id);
+                var response = await Client.CheckGetEndpointAsync("1", id);
                 return response.Adapt<CheckViewModel>();
             },
             hasExtraActionsFunc: () => true);
@@ -106,7 +152,18 @@ public partial class Checks
     // Issue Check Dialog
     private void OnIssueCheck(DefaultIdType checkId)
     {
-        _issueCommand = new CheckIssueCommand { CheckId = checkId, Amount = 0, PayeeName = string.Empty, IssuedDate = DateTime.UtcNow };
+        _issueCommand = new()
+        {
+            CheckId = checkId,
+            Amount = 0,
+            PayeeName = string.Empty,
+            IssuedDate = DateTime.UtcNow,
+            PayeeId = null,
+            VendorId = null,
+            PaymentId = null,
+            ExpenseId = null,
+            Memo = null
+        };
         _issueDialogVisible = true;
     }
 
@@ -126,7 +183,7 @@ public partial class Checks
                 return;
             }
 
-            await Client.CheckIssueEndpointAsync(_issueCommand);
+            await Client.CheckIssueEndpointAsync("1", _issueCommand);
             Snackbar.Add("Check issued successfully.", Severity.Success);
             _issueDialogVisible = false;
             await _table.ReloadDataAsync();
@@ -140,7 +197,12 @@ public partial class Checks
     // Void Check Dialog
     private void OnVoidCheck(DefaultIdType checkId)
     {
-        _voidCommand = new CheckVoidCommand { CheckId = checkId, VoidReason = string.Empty };
+        _voidCommand = new()
+        {
+            CheckId = checkId,
+            VoidReason = string.Empty,
+            VoidedDate = DateTime.UtcNow
+        };
         _voidDialogVisible = true;
     }
 
@@ -154,7 +216,7 @@ public partial class Checks
                 return;
             }
 
-            await Client.CheckVoidEndpointAsync(_voidCommand);
+            await Client.CheckVoidEndpointAsync("1", _voidCommand);
             Snackbar.Add("Check voided successfully.", Severity.Success);
             _voidDialogVisible = false;
             await _table.ReloadDataAsync();
@@ -168,7 +230,11 @@ public partial class Checks
     // Clear Check Dialog
     private void OnClearCheck(DefaultIdType checkId)
     {
-        _clearCommand = new CheckClearCommand { CheckId = checkId, ClearedDate = DateTime.UtcNow };
+        _clearCommand = new()
+        {
+            CheckId = checkId,
+            ClearedDate = DateTime.UtcNow
+        };
         _clearDialogVisible = true;
     }
 
@@ -176,7 +242,7 @@ public partial class Checks
     {
         try
         {
-            await Client.CheckClearEndpointAsync(_clearCommand);
+            await Client.CheckClearEndpointAsync("1", _clearCommand);
             Snackbar.Add("Check marked as cleared.", Severity.Success);
             _clearDialogVisible = false;
             await _table.ReloadDataAsync();
@@ -190,7 +256,12 @@ public partial class Checks
     // Stop Payment Dialog
     private void OnStopPayment(DefaultIdType checkId)
     {
-        _stopPaymentCommand = new CheckStopPaymentCommand { CheckId = checkId, StopPaymentReason = string.Empty };
+        _stopPaymentCommand = new()
+        {
+            CheckId = checkId,
+            StopPaymentReason = string.Empty,
+            StopPaymentDate = DateTime.UtcNow
+        };
         _stopPaymentDialogVisible = true;
     }
 
@@ -204,7 +275,7 @@ public partial class Checks
                 return;
             }
 
-            await Client.CheckStopPaymentEndpointAsync(_stopPaymentCommand);
+            await Client.CheckStopPaymentEndpointAsync("1", _stopPaymentCommand);
             Snackbar.Add("Stop payment request submitted successfully.", Severity.Success);
             _stopPaymentDialogVisible = false;
             await _table.ReloadDataAsync();
@@ -223,8 +294,11 @@ public partial class Checks
             // Use a default value or get from current context
             var printedBy = "System"; // This should ideally come from the authenticated user context
 
-            _printCommand = new CheckPrintCommand { CheckId = checkId, PrintedBy = printedBy, PrintedDate = DateTime.UtcNow };
-            await Client.CheckPrintEndpointAsync(_printCommand);
+            _printCommand.CheckId = checkId;
+            _printCommand.PrintedBy = printedBy;
+            _printCommand.PrintedDate = DateTime.UtcNow;
+            
+            await Client.CheckPrintEndpointAsync("1", _printCommand);
             
             Snackbar.Add("Check marked as printed.", Severity.Success);
             await _table.ReloadDataAsync();
