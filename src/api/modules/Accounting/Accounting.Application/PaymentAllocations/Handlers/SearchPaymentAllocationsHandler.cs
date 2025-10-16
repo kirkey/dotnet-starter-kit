@@ -4,30 +4,27 @@ using Accounting.Domain.Entities;
 
 namespace Accounting.Application.PaymentAllocations.Handlers;
 
-public class SearchPaymentAllocationsHandler(IReadRepository<PaymentAllocation> repository)
-    : IRequestHandler<SearchPaymentAllocationsQuery, List<PaymentAllocationResponse>>
+/// <summary>
+/// Handler for searching payment allocations with filtering and pagination.
+/// </summary>
+public class SearchPaymentAllocationsHandler(
+    [FromKeyedServices("accounting:paymentallocations")] IReadRepository<PaymentAllocation> repository)
+    : IRequestHandler<SearchPaymentAllocationsQuery, PagedList<PaymentAllocationResponse>>
 {
-    public async Task<List<PaymentAllocationResponse>> Handle(SearchPaymentAllocationsQuery request, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the search payment allocations query.
+    /// </summary>
+    /// <param name="request">The search query containing filter criteria and pagination parameters.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A paged list of payment allocation responses.</returns>
+    public async Task<PagedList<PaymentAllocationResponse>> Handle(SearchPaymentAllocationsQuery request, CancellationToken cancellationToken)
     {
-        var query = (await repository.ListAsync(cancellationToken)).AsQueryable();
+        ArgumentNullException.ThrowIfNull(request);
 
-        if (request.PaymentId.HasValue)
-            query = query.Where(x => x.PaymentId == request.PaymentId.Value);
-        if (request.InvoiceId.HasValue)
-            query = query.Where(x => x.InvoiceId == request.InvoiceId.Value);
+        var spec = new SearchPaymentAllocationsSpec(request);
+        var list = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        if (request.Skip.HasValue)
-            query = query.Skip(request.Skip.Value);
-        if (request.Take.HasValue)
-            query = query.Take(request.Take.Value);
-
-        return query.Select(x => new PaymentAllocationResponse
-        {
-            Id = x.Id,
-            PaymentId = x.PaymentId,
-            InvoiceId = x.InvoiceId,
-            Amount = x.Amount,
-            Notes = x.Description ?? x.Notes
-        }).ToList();
+        return new PagedList<PaymentAllocationResponse>(list, request.PageNumber, request.PageSize, totalCount);
     }
 }

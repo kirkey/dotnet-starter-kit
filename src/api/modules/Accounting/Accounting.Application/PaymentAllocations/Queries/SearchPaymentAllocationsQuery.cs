@@ -2,10 +2,18 @@ using Accounting.Application.PaymentAllocations.Responses;
 
 namespace Accounting.Application.PaymentAllocations.Queries;
 
-public class SearchPaymentAllocationsQuery : IRequest<List<PaymentAllocationResponse>>
+/// <summary>
+/// Query to search payment allocations with filtering and pagination.
+/// </summary>
+public class SearchPaymentAllocationsQuery : PaginationFilter, IRequest<PagedList<PaymentAllocationResponse>>
 {
+    /// <summary>
+    /// Gets or sets the payment ID to filter by.
+    /// </summary>
     public DefaultIdType? PaymentId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the invoice ID to filter by.
+    /// </summary>
     public DefaultIdType? InvoiceId { get; set; }
-    public int? Skip { get; set; }
-    public int? Take { get; set; }
 }
