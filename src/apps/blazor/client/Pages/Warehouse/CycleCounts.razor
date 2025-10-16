@@ -3,21 +3,19 @@
 <PageHeader Title="@Context.EntityNamePlural" />
 
 <EntityTable @ref="_table" TEntity="CycleCountResponse" TId="DefaultIdType" TRequest="CycleCountViewModel" Context="@Context">
-    <ExtraActions Context="entity">
-        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Dense="true">
-            <MudMenuItem OnClick="@(() => StartCycleCount(entity.Id))">
-                <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Small" Class="mr-2" /> Start
-            </MudMenuItem>
-            <MudMenuItem OnClick="@(() => CompleteCycleCount(entity.Id))">
-                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" Class="mr-2" /> Complete
-            </MudMenuItem>
-            <MudMenuItem OnClick="@(() => ReconcileCycleCount(entity.Id))">
-                <MudIcon Icon="@Icons.Material.Filled.Sync" Size="Size.Small" Class="mr-2" /> Reconcile
-            </MudMenuItem>
-            <MudMenuItem OnClick="@(() => AddCycleCountItem(entity.Id))">
-                <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Small" Class="mr-2" /> Add Item
-            </MudMenuItem>
-        </MudMenu>
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => StartCycleCount(context.Id))">
+            <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Small" Class="mr-2" /> Start
+        </MudMenuItem>
+        <MudMenuItem OnClick="@(() => CompleteCycleCount(context.Id))">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" Class="mr-2" /> Complete
+        </MudMenuItem>
+        <MudMenuItem OnClick="@(() => ReconcileCycleCount(context.Id))">
+            <MudIcon Icon="@Icons.Material.Filled.Sync" Size="Size.Small" Class="mr-2" /> Reconcile
+        </MudMenuItem>
+        <MudMenuItem OnClick="@(() => AddCycleCountItem(context.Id))">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Small" Class="mr-2" /> Add Item
+        </MudMenuItem>
     </ExtraActions>
     <EditFormContent Context="context">
         <MudItem xs="12" sm="6" md="4" lg="3">
@@ -39,7 +37,7 @@
         </MudItem>
         
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudDatePicker @bind-Date="context.ScheduledDate" For="@(() => context.ScheduledDate)" Label="Scheduled Date" Required />
+            <MudDatePicker @bind-Date="context.ScheduledDate" For="@(() => context.ScheduledDate)" Label="Scheduled Date" DateFormat="MMMM dd, yyyy" Required />
         </MudItem>
         
         <MudItem xs="12" sm="6" md="4" lg="3">

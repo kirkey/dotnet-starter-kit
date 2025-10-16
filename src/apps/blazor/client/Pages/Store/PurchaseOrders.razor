@@ -21,8 +21,8 @@
             <MudSelectItem T="string?" Value="@("Received")">Received</MudSelectItem>
             <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
         </MudSelect>
-        <MudDatePicker Label="From Date" Date="SearchFromDate" DateChanged="value => SearchFromDate = value" />
-        <MudDatePicker Label="To Date" Date="SearchToDate" DateChanged="value => SearchToDate = value" />
+        <MudDatePicker Label="From Date" Date="SearchFromDate" DateChanged="value => SearchFromDate = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="To Date" Date="SearchToDate" DateChanged="value => SearchToDate = value" DateFormat="MMMM dd, yyyy" />
     </AdvancedSearchContent>
 
     <ExtraActions Context="context">

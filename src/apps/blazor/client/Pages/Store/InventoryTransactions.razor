@@ -37,7 +37,7 @@
             <MudNumericField @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudDatePicker @bind-Date="context.TransactionDate" For="@(() => context.TransactionDate)" Label="Transaction Date" Required="true" />
+            <MudDatePicker @bind-Date="context.TransactionDate" For="@(() => context.TransactionDate)" Label="Transaction Date" DateFormat="MMMM dd, yyyy" Required="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.ReferenceType" For="@(() => context.ReferenceType)" Label="Reference Type">

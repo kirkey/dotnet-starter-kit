@@ -148,7 +148,7 @@ public class MenuService : IMenuService
                         // Warehouse Management
                         new MenuSectionSubItemModel { Title = "Warehouses", Icon = Icons.Material.Filled.Warehouse, Href = "/warehouses", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Warehouse Locations", Icon = Icons.Material.Filled.LocationOn, Href = "/warehouse/locations", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Cycle Counts", Icon = Icons.Material.Filled.Checklist, Href = "/warehouse/cycle-counts", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Cycle Counts", Icon = Icons.Material.Filled.Checklist, Href = "/warehouse/cycle-counts", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         
                         // Warehouse Operations
                         new MenuSectionSubItemModel { Title = "Pick Lists", Icon = Icons.Material.Filled.PlaylistAddCheck, Href = "/store/pick-lists", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.ComingSoon },

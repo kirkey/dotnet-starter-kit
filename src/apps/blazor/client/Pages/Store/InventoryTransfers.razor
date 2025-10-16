@@ -77,10 +77,10 @@
             <AutocompleteWarehouse @bind-Value="context.ToWarehouseId" For="@(() => context.ToWarehouseId)" Label="To Warehouse" Required="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudDatePicker @bind-Date="context.TransferDate" For="@(() => context.TransferDate)" Label="Transfer Date" Required="true" />
+            <MudDatePicker @bind-Date="context.TransferDate" For="@(() => context.TransferDate)" Label="Transfer Date" DateFormat="MMMM dd, yyyy" Required="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudDatePicker @bind-Date="context.ExpectedArrivalDate" For="@(() => context.ExpectedArrivalDate)" Label="Expected Arrival Date" />
+            <MudDatePicker @bind-Date="context.ExpectedArrivalDate" For="@(() => context.ExpectedArrivalDate)" Label="Expected Arrival Date" DateFormat="MMMM dd, yyyy" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority">

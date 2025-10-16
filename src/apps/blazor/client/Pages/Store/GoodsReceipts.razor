@@ -8,7 +8,7 @@
             <MudTextField @bind-Value="context.ReceiptNumber" For="@(() => context.ReceiptNumber)" Label="Receipt Number" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudDatePicker @bind-Date="context.ReceivedDate" For="@(() => context.ReceivedDate)" Label="Received Date" Required="true" />
+            <MudDatePicker @bind-Date="context.ReceivedDate" For="@(() => context.ReceivedDate)" Label="Received Date" DateFormat="MMMM dd, yyyy" Required="true" />
         </MudItem>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />

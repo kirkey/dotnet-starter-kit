@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 
 /// <summary>
 /// Cycle Counts page logic. Provides CRUD and workflow operations over CycleCount entities.

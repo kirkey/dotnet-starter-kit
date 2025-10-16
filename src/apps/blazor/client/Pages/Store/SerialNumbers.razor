@@ -37,11 +37,11 @@
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudDatePicker Label="Receipt Date" Date="context.ReceiptDate" For="@(() => context.ReceiptDate)" />
+            <MudDatePicker Label="Receipt Date" Date="context.ReceiptDate" For="@(() => context.ReceiptDate)" DateFormat="MMMM dd, yyyy" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudDatePicker Label="Manufacture Date" Date="context.ManufactureDate" DateChanged="@((DateTime? val) => context.ManufactureDate = val)" For="@(() => context.ManufactureDate)" />
+            <MudDatePicker Label="Manufacture Date" Date="context.ManufactureDate" DateChanged="@((DateTime? val) => context.ManufactureDate = val)" For="@(() => context.ManufactureDate)" DateFormat="MMMM dd, yyyy" />
         </MudItem>
 
         <MudItem xs="12" md="4">
