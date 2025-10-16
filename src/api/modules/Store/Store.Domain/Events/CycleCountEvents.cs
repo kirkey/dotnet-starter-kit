@@ -40,6 +40,7 @@ public record CycleCountCompleted : DomainEvent
 public record CycleCountCancelled : DomainEvent
 {
     public CycleCount CycleCount { get; init; } = default!;
+    public string Reason { get; init; } = default!;
 }
 
 /// <summary>

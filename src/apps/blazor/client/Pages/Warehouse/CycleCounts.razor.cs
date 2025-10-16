@@ -5,6 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class CycleCounts : ComponentBase
 {
+
     protected EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context { get; set; } = default!;
     private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = default!;
 
@@ -26,7 +27,7 @@ public partial class CycleCounts : ComponentBase
                 new EntityField<CycleCountResponse>(x => x.CountNumber, "Count #", "CountNumber"),
                 new EntityField<CycleCountResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
                 new EntityField<CycleCountResponse>(x => x.WarehouseLocationName, "Location", "WarehouseLocationName"),
-                new EntityField<CycleCountResponse>(x => x.CountDate, "Date", "CountDate", typeof(DateTime)),
+                new EntityField<CycleCountResponse>(x => x.CountDate, "Date", "CountDate", typeof(DateOnly)),
                 new EntityField<CycleCountResponse>(x => x.Status, "Status", "Status"),
                 new EntityField<CycleCountResponse>(x => x.CountType, "Type", "CountType"),
                 new EntityField<CycleCountResponse>(x => x.CountedBy, "Counted By", "CountedBy"),
@@ -38,7 +39,6 @@ public partial class CycleCounts : ComponentBase
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                // Note: Cycle Count search uses GET with query params
                 var result = await Client.SearchCycleCountsEndpointAsync("1");
                 return result.Adapt<PaginationResponse<CycleCountResponse>>();
             },
@@ -153,11 +153,55 @@ public partial class CycleCounts : ComponentBase
         }
     }
 
-    private async Task AddCycleCountItem(DefaultIdType id)
+    private async Task CancelCycleCount(DefaultIdType id)
     {
-        // This would typically open a dialog to add items
-        Snackbar.Add("Add item functionality to be implemented", Severity.Info);
-        await Task.CompletedTask;
+        bool? result = await DialogService.ShowMessageBox(
+            "Cancel Cycle Count",
+            "Are you sure you want to cancel this cycle count? This action cannot be undone.",
+            yesText: "Yes, Cancel",
+            cancelText: "No");
+
+        if (result == true)
+        {
+            try
+            {
+                var cancelCommand = new CancelCycleCountCommand
+                {
+                    Id = id,
+                    Reason = "Cancelled by user"
+                };
+                await Client.CancelCycleCountEndpointAsync("1", id, cancelCommand);
+                Snackbar.Add("Cycle count cancelled successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to cancel cycle count: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task ViewCycleCountDetails(DefaultIdType id)
+    {
+        var parameters = new DialogParameters<CycleCountDetailsDialog>
+        {
+            { x => x.CycleCountId, id }
+        };
+
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Large,
+            FullWidth = false
+        };
+
+        var dialog = await DialogService.ShowAsync<CycleCountDetailsDialog>("Cycle Count Details", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await _table.ReloadDataAsync();
+        }
     }
 }
 

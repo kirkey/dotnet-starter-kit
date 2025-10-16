@@ -23,4 +23,5 @@ public sealed record CycleCountResponse
     public int CountedItems { get; init; }
     public int VarianceItems { get; init; }
     public string? Notes { get; init; }
+    public ICollection<CycleCountItemResponse>? Items { get; init; }
 }

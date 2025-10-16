@@ -22,8 +22,10 @@ public static class CycleCountsEndpoints
         cycleCountsGroup.MapSearchCycleCountsEndpoint();
         cycleCountsGroup.MapStartCycleCountEndpoint();
         cycleCountsGroup.MapCompleteCycleCountEndpoint();
+        cycleCountsGroup.MapCancelCycleCountEndpoint();
         cycleCountsGroup.MapReconcileCycleCountEndpoint();
         cycleCountsGroup.MapAddCycleCountItemEndpoint();
+        cycleCountsGroup.MapRecordCycleCountItemEndpoint();
 
         return app;
     }

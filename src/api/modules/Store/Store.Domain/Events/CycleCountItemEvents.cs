@@ -2,10 +2,14 @@ using Store.Domain.Entities;
 
 namespace Store.Domain.Events;
 
+
 /// <summary>
 /// Event raised when a cycle count item is updated.
 /// </summary>
-public record CycleCountItemUpdated(CycleCountItem CycleCountItem) : DomainEvent;
+public record CycleCountItemUpdated : DomainEvent
+{
+    public CycleCountItem CycleCountItem { get; init; } = default!;
+}
 
 /// <summary>
 /// Event raised when a cycle count item is removed.

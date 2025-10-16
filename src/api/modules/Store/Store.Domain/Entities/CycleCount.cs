@@ -207,6 +207,24 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Cancels the cycle count.
+    /// </summary>
+    /// <param name="reason">The reason for cancellation.</param>
+    /// <returns>The updated CycleCount.</returns>
+    public CycleCount Cancel(string reason)
+    {
+        if (Status == "Scheduled" || Status == "InProgress")
+        {
+            Status = "Cancelled";
+            Notes = string.IsNullOrWhiteSpace(Notes) 
+                ? $"Cancelled: {reason}" 
+                : $"{Notes}\nCancelled: {reason}";
+            QueueDomainEvent(new CycleCountCancelled { CycleCount = this, Reason = reason });
+        }
+        return this;
+    }
+
     public CycleCount AddItem(DefaultIdType itemId, int systemQuantity, int? countedQuantity = null)
     {
         var item = CycleCountItem.Create(Id, itemId, systemQuantity, countedQuantity);

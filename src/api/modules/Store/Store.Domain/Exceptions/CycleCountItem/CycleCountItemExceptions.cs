@@ -29,3 +29,9 @@ public sealed class VarianceThresholdExceededException(decimal variance, decimal
 /// Exception thrown when trying to count an item that doesn't exist in the cycle count.
 /// </summary>
 public sealed class ItemNotInCycleCountException(DefaultIdType itemId, DefaultIdType cycleCountId) : ForbiddenException($"item {itemId} is not included in cycle count {cycleCountId}");
+
+/// <summary>
+/// Exception thrown when a cycle count item is not found.
+/// </summary>
+public sealed class CycleCountItemNotFoundException(DefaultIdType id) : NotFoundException($"cycle count item with id {id} not found");
+

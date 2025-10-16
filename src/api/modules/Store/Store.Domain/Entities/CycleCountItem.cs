@@ -154,6 +154,18 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Updates the notes for the cycle count item.
+    /// </summary>
+    /// <param name="notes">The updated notes.</param>
+    /// <returns>The updated CycleCountItem.</returns>
+    public CycleCountItem Update(string? notes)
+    {
+        Notes = notes;
+        QueueDomainEvent(new CycleCountItemUpdated { CycleCountItem = this });
+        return this;
+    }
+
     private void CalculateVariance()
     {
         if (CountedQuantity.HasValue)

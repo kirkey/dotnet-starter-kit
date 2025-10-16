@@ -5,4 +5,3 @@ public sealed class CycleCountNotFoundException(DefaultIdType id)
 
 public sealed class CycleCountNotFoundByNumberException(string countNumber)
     : NotFoundException($"Cycle Count with Number '{countNumber}' was not found.") {}
-
