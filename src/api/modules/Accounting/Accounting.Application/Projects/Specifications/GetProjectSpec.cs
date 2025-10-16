@@ -31,6 +31,7 @@ public sealed class GetProjectSpec : Specification<Project, GetProjectResponse>
             p.Department,
             p.Description,
             p.Notes,
+            p.ImageUrl,
             p.ActualCost,
             p.ActualRevenue,
             p.BudgetVariance,

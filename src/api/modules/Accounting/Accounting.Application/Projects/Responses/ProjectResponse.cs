@@ -16,4 +16,5 @@ public sealed record ProjectResponse(
     decimal ActualCost,
     decimal ActualRevenue,
     string? Description,
-    string? Notes);
+    string? Notes,
+    string? ImageUrl);

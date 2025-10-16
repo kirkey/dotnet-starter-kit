@@ -14,6 +14,7 @@ namespace Accounting.Application.Projects.Get.v1;
 /// <param name="Department">The owning department</param>
 /// <param name="Description">The project description</param>
 /// <param name="Notes">The project notes</param>
+/// <param name="ImageUrl">The project image URL</param>
 /// <param name="ActualCost">The current actual cost</param>
 /// <param name="ActualRevenue">The current actual revenue</param>
 /// <param name="BudgetVariance">The current budget variance</param>
@@ -34,6 +35,7 @@ public sealed record GetProjectResponse(
     string? Department,
     string? Description,
     string? Notes,
+    string? ImageUrl,
     decimal ActualCost,
     decimal ActualRevenue,
     decimal BudgetVariance,

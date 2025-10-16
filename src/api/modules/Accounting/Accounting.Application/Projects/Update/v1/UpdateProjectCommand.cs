@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using FSH.Framework.Core.Storage.File.Features;
 
 namespace Accounting.Application.Projects.Update.v1;
 
@@ -16,6 +17,7 @@ namespace Accounting.Application.Projects.Update.v1;
 /// <param name="Department">Updated owning department</param>
 /// <param name="Description">Updated project description</param>
 /// <param name="Notes">Updated project notes</param>
+/// <param name="ImageUrl">Updated image URL for the project</param>
 public sealed record UpdateProjectCommand(
     DefaultIdType Id,
     [property: DefaultValue("Updated Infrastructure Project")] string? Name = null,
@@ -27,4 +29,11 @@ public sealed record UpdateProjectCommand(
     [property: DefaultValue("Jane Doe")] string? ProjectManager = null,
     [property: DefaultValue("Engineering")] string? Department = null,
     [property: DefaultValue("Updated project description")] string? Description = null,
-    [property: DefaultValue("Updated project notes")] string? Notes = null) : IRequest<UpdateProjectResponse>;
+    [property: DefaultValue("Updated project notes")] string? Notes = null,
+    [property: DefaultValue(null)] string? ImageUrl = null) : IRequest<UpdateProjectResponse>
+{
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image is uploaded to storage and ImageUrl is set from the saved file name.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
+}

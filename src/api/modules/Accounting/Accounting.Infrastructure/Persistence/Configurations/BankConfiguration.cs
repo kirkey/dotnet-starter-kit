@@ -17,8 +17,10 @@ public class BankConfiguration : IEntityTypeConfiguration<Bank>
         builder.HasKey(x => x.Id);
 
         // Unique indexes for business keys
-        builder.HasIndex(x => x.BankCode).IsUnique();
-        builder.HasIndex(x => x.RoutingNumber).IsUnique().HasFilter("[RoutingNumber] IS NOT NULL");
+        builder.HasIndex(x => x.BankCode)
+            .IsUnique();
+
+        builder.HasIndex(x => x.RoutingNumber);
 
         // BankCode configuration
         builder.Property(x => x.BankCode)
