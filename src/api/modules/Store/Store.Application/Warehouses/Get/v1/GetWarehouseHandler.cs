@@ -5,9 +5,9 @@ namespace FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
 public sealed class GetWarehouseHandler(
     [FromKeyedServices("store:warehouses")] IReadRepository<Warehouse> repository,
     ICacheService cache)
-    : IRequestHandler<GetWarehouseCommand, WarehouseResponse>
+    : IRequestHandler<GetWarehouseQuery, WarehouseResponse>
 {
-    public async Task<WarehouseResponse> Handle(GetWarehouseCommand request, CancellationToken cancellationToken)
+    public async Task<WarehouseResponse> Handle(GetWarehouseQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

@@ -129,7 +129,7 @@ public class WarehouseLocationViewModel
     /// Required foreign key reference to parent warehouse.
     /// </summary>
     [Required]
-    public DefaultIdType WarehouseId { get; set; }
+    public DefaultIdType? WarehouseId { get; set; }
 
     /// <summary>
     /// Type of location indicating storage capabilities and characteristics.

@@ -6,12 +6,12 @@
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
             </MudItem>
         }
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.Code"
                           For="@(() => context.Code)"
                           Label="Location Code"
@@ -19,7 +19,7 @@
                           Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="8" lg="8">
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Name"
                           For="@(() => context.Name)"
                           Label="Location Name"
@@ -36,7 +36,9 @@
         </MudItem>
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Warehouse & Location Hierarchy</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Warehouse & Location Hierarchy</MudText>
+        </MudItem>
 
         <MudItem xs="12">
             <AutocompleteWarehouseId Value="context.WarehouseId"
@@ -46,42 +48,44 @@
                                      Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="3">
-            <MudTextField @bind-Value="context.Aisle"
-                          For="@(() => context.Aisle)"
-                          Label="Aisle"
-                          Placeholder="e.g., A1, A2, COLD"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <AutocompleteAisle @bind-Value="context.Aisle"
+                               For="@(() => context.Aisle)"
+                               Label="Aisle"
+                               Placeholder="e.g., A1, A2, COLD"
+                               Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="3">
-            <MudTextField @bind-Value="context.Section"
-                          For="@(() => context.Section)"
-                          Label="Section"
-                          Placeholder="e.g., S1, S2, ZONE-A"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <AutocompleteSection @bind-Value="context.Section"
+                                 For="@(() => context.Section)"
+                                 Label="Section"
+                                 Placeholder="e.g., S1, S2, ZONE-A"
+                                 Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="3">
-            <MudTextField @bind-Value="context.Shelf"
-                          For="@(() => context.Shelf)"
-                          Label="Shelf"
-                          Placeholder="e.g., SH1, TOP, BOTTOM"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <AutocompleteShelf @bind-Value="context.Shelf"
+                               For="@(() => context.Shelf)"
+                               Label="Shelf"
+                               Placeholder="e.g., SH1, TOP, BOTTOM"
+                               Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="3">
-            <MudTextField @bind-Value="context.Bin"
-                          For="@(() => context.Bin)"
-                          Label="Bin (Optional)"
-                          Placeholder="e.g., BIN-01, LEFT, RIGHT"
-                          Variant="Variant.Filled" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <AutocompleteBin @bind-Value="context.Bin"
+                             For="@(() => context.Bin)"
+                             Label="Bin (Optional)"
+                             Placeholder="e.g., BIN-01, LEFT, RIGHT"
+                             Variant="Variant.Filled" />
         </MudItem>
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Location Configuration</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Location Configuration</MudText>
+        </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string"
                        @bind-Value="context.LocationType"
                        For="@(() => context.LocationType)"
@@ -98,7 +102,7 @@
             </MudSelect>
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField @bind-Value="context.Capacity"
                              For="@(() => context.Capacity)"
                              Label="Capacity"
@@ -108,7 +112,7 @@
                              Variant="Variant.Filled" />
         </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSelect T="string"
                        @bind-Value="context.CapacityUnit"
                        For="@(() => context.CapacityUnit)"
@@ -125,9 +129,11 @@
         </MudItem>
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Temperature Control</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Temperature Control</MudText>
+        </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch @bind-Value="context.RequiresTemperatureControl"
                        For="@(() => context.RequiresTemperatureControl)"
                        Label="Requires Temperature Control"
@@ -136,7 +142,7 @@
 
         @if (context.RequiresTemperatureControl)
         {
-            <MudItem xs="12" md="6" lg="3">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField @bind-Value="context.MinTemperature"
                                  For="@(() => context.MinTemperature)"
                                  Label="Min Temperature"
@@ -145,7 +151,7 @@
                                  Variant="Variant.Filled" />
             </MudItem>
 
-            <MudItem xs="12" md="6" lg="3">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField @bind-Value="context.MaxTemperature"
                                  For="@(() => context.MaxTemperature)"
                                  Label="Max Temperature"
@@ -154,7 +160,7 @@
                                  Variant="Variant.Filled" />
             </MudItem>
 
-            <MudItem xs="12" md="6" lg="2">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudSelect T="string"
                            @bind-Value="context.TemperatureUnit"
                            For="@(() => context.TemperatureUnit)"
@@ -167,9 +173,11 @@
         }
 
         <MudDivider />
-        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Status</MudText>
+        <MudItem xs="12" Class="mb-n4">
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Status</MudText>
+        </MudItem>
 
-        <MudItem xs="12" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch @bind-Value="context.IsActive"
                        For="@(() => context.IsActive)"
                        Label="Active"
@@ -180,9 +188,11 @@
         @if (context.Id != default(DefaultIdType))
         {
             <MudDivider />
-            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>
+            <MudItem xs="12" Class="mb-n4">
+                <MudText Typo="Typo.h6" Class="mt-4 mb-2">Capacity Utilization</MudText>
+            </MudItem>
 
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField Format="N2" 
                                  Label="Used Capacity" 
                                  ReadOnly 
@@ -191,7 +201,7 @@
                                  Variant="Variant.Outlined" />
             </MudItem>
 
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField Format="P1" 
                                  Label="Utilization %" 
                                  ReadOnly 
@@ -200,7 +210,7 @@
                                  Variant="Variant.Outlined" />
             </MudItem>
 
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField Format="N2" 
                                  Label="Available Capacity" 
                                  ReadOnly 

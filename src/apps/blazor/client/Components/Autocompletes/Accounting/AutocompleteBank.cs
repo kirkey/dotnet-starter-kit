@@ -73,7 +73,7 @@ public class AutocompleteBank : AutocompleteBase<BankResponse, IClient, DefaultI
         _cache.Clear();
         foreach (var it in items)
         {
-            if (it.Id != Guid.Empty)
+            if (it.Id != DefaultIdType.Empty)
                 _cache[it.Id] = it;
         }
 
