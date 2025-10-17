@@ -280,6 +280,7 @@ public partial class ImageUploader : ComponentBase
                     "image/jpeg" => ".jpg",
                     "image/jpg" => ".jpg",
                     "image/png" => ".png",
+                    "image/webp" => ".webp",
                     _ => string.Empty
                 };
             }

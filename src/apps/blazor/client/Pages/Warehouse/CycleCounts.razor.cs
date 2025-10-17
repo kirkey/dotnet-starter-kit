@@ -46,8 +46,23 @@ public partial class CycleCounts : ComponentBase
             {
                 await Client.CreateCycleCountEndpointAsync("1", viewModel.Adapt<CreateCycleCountCommand>());
             },
-            updateFunc: null, // Cycle counts use workflow transitions instead of updates
-            deleteFunc: null); // Cycle counts typically aren't deleted once created
+            updateFunc: async (id, viewModel) =>
+            {
+                var updateCommand = new UpdateCycleCountCommand
+                {
+                    Id = id,
+                    WarehouseId = viewModel.WarehouseId,
+                    WarehouseLocationId = viewModel.WarehouseLocationId,
+                    ScheduledDate = viewModel.ScheduledDate ?? DateTime.Now,
+                    CountType = viewModel.CountType ?? "Full",
+                    Description = viewModel.Description,
+                    CounterName = viewModel.CounterName,
+                    SupervisorName = viewModel.SupervisorName,
+                    Notes = viewModel.Notes
+                };
+                await Client.UpdateCycleCountEndpointAsync("1", id, updateCommand);
+            },
+            deleteFunc: null);
         
         return Task.CompletedTask;
     }
@@ -207,7 +222,7 @@ public partial class CycleCounts : ComponentBase
 
 /// <summary>
 /// ViewModel used by the Cycle Counts page for add/edit operations.
-/// Maps to CreateCycleCountCommand for create.
+/// Maps to CreateCycleCountCommand for create and UpdateCycleCountCommand for update.
 /// </summary>
 public class CycleCountViewModel
 {
@@ -228,6 +243,9 @@ public class CycleCountViewModel
 
     /// <summary>Type of count (e.g., Full, Partial, Spot).</summary>
     public string? CountType { get; set; }
+
+    /// <summary>Optional description of the cycle count.</summary>
+    public string? Description { get; set; }
 
     /// <summary>Name of the person performing the count.</summary>
     public string? CounterName { get; set; }

@@ -59,6 +59,10 @@
         </MudItem>
         
         <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" For="@(() => context.Description)" Label="Description" />
+        </MudItem>
+        
+        <MudItem xs="12">
             <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
         </MudItem>
     </EditFormContent>

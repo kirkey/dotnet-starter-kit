@@ -18,6 +18,7 @@ public static class CycleCountsEndpoints
 
         // Version 1 endpoints
         cycleCountsGroup.MapCreateCycleCountEndpoint();
+        cycleCountsGroup.MapUpdateCycleCountEndpoint();
         cycleCountsGroup.MapGetCycleCountEndpoint();
         cycleCountsGroup.MapSearchCycleCountsEndpoint();
         cycleCountsGroup.MapStartCycleCountEndpoint();

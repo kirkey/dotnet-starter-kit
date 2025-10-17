@@ -7,7 +7,9 @@ public static class AppConstants
     [
         ".jpeg",
         ".jpg",
-        ".png"
+        ".png",
+        ".webp",
+        
     ];
 
     public const string StandardImageFormat = "image/jpeg";

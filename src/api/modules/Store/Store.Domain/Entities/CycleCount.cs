@@ -1,3 +1,5 @@
+using Store.Domain.Exceptions.CycleCount;
+
 namespace Store.Domain.Entities;
 
 /// <summary>
@@ -189,6 +191,57 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
             counterName,
             supervisorName,
             notes);
+    }
+
+    /// <summary>
+    /// Updates cycle count details. Only allowed for cycle counts in 'Scheduled' status.
+    /// </summary>
+    /// <param name="warehouseId">The warehouse where the count will take place.</param>
+    /// <param name="warehouseLocationId">Optional specific location within the warehouse.</param>
+    /// <param name="scheduledDate">The scheduled date for the count.</param>
+    /// <param name="countType">The type of count (Full, Partial, ABC, Random).</param>
+    /// <param name="description">Optional description of the cycle count.</param>
+    /// <param name="counterName">Optional name of the person who will perform the count.</param>
+    /// <param name="supervisorName">Optional name of the supervisor.</param>
+    /// <param name="notes">Optional notes about the count.</param>
+    /// <returns>The updated CycleCount.</returns>
+    /// <exception cref="Store.Domain.Exceptions.CycleCount.CycleCountCannotBeModifiedException">Thrown when attempting to modify a cycle count that is not in 'Scheduled' status.</exception>
+    public CycleCount Update(
+        DefaultIdType warehouseId,
+        DefaultIdType? warehouseLocationId,
+        DateTime scheduledDate,
+        string countType,
+        string? description,
+        string? counterName,
+        string? supervisorName,
+        string? notes)
+    {
+        if (Status != "Scheduled")
+        {
+            throw new CycleCountCannotBeModifiedException(Id, Status);
+        }
+
+        // Validations
+        if (warehouseId == default) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (scheduledDate == default) throw new ArgumentException("ScheduledDate is required", nameof(scheduledDate));
+        if (string.IsNullOrWhiteSpace(countType)) throw new ArgumentException("CountType is required", nameof(countType));
+        if (countType.Length > 50) throw new ArgumentException("CountType must not exceed 50 characters", nameof(countType));
+        if (description is { Length: > 2048 }) throw new ArgumentException("Description must not exceed 2048 characters", nameof(description));
+        if (counterName is { Length: > 100 }) throw new ArgumentException("CounterName must not exceed 100 characters", nameof(counterName));
+        if (supervisorName is { Length: > 100 }) throw new ArgumentException("SupervisorName must not exceed 100 characters", nameof(supervisorName));
+
+        WarehouseId = warehouseId;
+        WarehouseLocationId = warehouseLocationId;
+        ScheduledDate = scheduledDate;
+        CountType = countType;
+        Description = description;
+        CounterName = counterName;
+        SupervisorName = supervisorName;
+        Notes = notes;
+
+        QueueDomainEvent(new CycleCountUpdated { CycleCount = this });
+
+        return this;
     }
 
     public CycleCount Start()
