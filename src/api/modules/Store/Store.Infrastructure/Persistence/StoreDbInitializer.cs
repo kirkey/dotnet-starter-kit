@@ -523,20 +523,32 @@ internal sealed class StoreDbInitializer(
         if (existingGoodsReceipts < 10)
         {
             var purchaseOrders = await context.PurchaseOrders.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
-            var goodsReceipts = new List<GoodsReceipt>();
-            for (var i = existingGoodsReceipts + 1; i <= 10; i++)
+            var warehouses = await context.Warehouses.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var locations = await context.WarehouseLocations.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            
+            if (warehouses.Count > 0)
             {
-                var po = purchaseOrders.Count > 0 ? purchaseOrders[i % purchaseOrders.Count] : null;
-                var gr = GoodsReceipt.Create(
-                    receiptNumber: $"GR-2025-{i:000}",
-                    receivedDate: DateTime.UtcNow.AddDays(-15 + i),
-                    purchaseOrderId: po?.Id
-                );
-                if (i % 2 == 0) gr.MarkReceived();
-                goodsReceipts.Add(gr);
+                var goodsReceipts = new List<GoodsReceipt>();
+                for (var i = existingGoodsReceipts + 1; i <= 10; i++)
+                {
+                    var po = purchaseOrders.Count > 0 ? purchaseOrders[i % purchaseOrders.Count] : null;
+                    var warehouse = warehouses[i % warehouses.Count];
+                    var location = locations.Count > 0 ? locations[i % locations.Count] : null;
+                    
+                    var gr = GoodsReceipt.Create(
+                        receiptNumber: $"GR-2025-{i:000}",
+                        receivedDate: DateTime.UtcNow.AddDays(-15 + i),
+                        warehouseId: warehouse.Id,
+                        warehouseLocationId: location?.Id,
+                        purchaseOrderId: po?.Id,
+                        notes: i % 3 == 0 ? "Sample goods receipt" : null
+                    );
+                    if (i % 2 == 0) gr.MarkReceived();
+                    goodsReceipts.Add(gr);
+                }
+                await context.GoodsReceipts.AddRangeAsync(goodsReceipts, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
-            await context.GoodsReceipts.AddRangeAsync(goodsReceipts, cancellationToken).ConfigureAwait(false);
-            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
 
         // 16) GoodsReceiptItems
@@ -545,6 +557,8 @@ internal sealed class StoreDbInitializer(
         {
             var goodsReceipts = await context.GoodsReceipts.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
             var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var poItems = await context.PurchaseOrderItems.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
+            
             if (goodsReceipts.Count > 0 && items.Count > 0)
             {
                 var grItems = new List<GoodsReceiptItem>();
@@ -552,11 +566,15 @@ internal sealed class StoreDbInitializer(
                 {
                     var gr = goodsReceipts[i % goodsReceipts.Count];
                     var item = items[i % items.Count];
+                    var poItem = poItems.Count > 0 && i % 2 == 0 ? poItems[i % poItems.Count] : null;
+                    
                     grItems.Add(GoodsReceiptItem.Create(
                         receiptId: gr.Id,
                         itemId: item.Id,
                         name: $"Received {item.Name}",
-                        quantity: 50 + (i * 5)
+                        quantity: 50 + (i * 5),
+                        unitCost: item.Cost + (i * 0.5m),
+                        purchaseOrderItemId: poItem?.Id
                     ));
                 }
                 await context.GoodsReceiptItems.AddRangeAsync(grItems, cancellationToken).ConfigureAwait(false);

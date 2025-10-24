@@ -24,8 +24,16 @@ public class GoodsReceiptItemConfiguration : IEntityTypeConfiguration<GoodsRecei
         builder.Property(x => x.Quantity)
             .IsRequired();
 
+        builder.Property(x => x.UnitCost)
+            .IsRequired()
+            .HasPrecision(18, 2);
+
+        builder.Property(x => x.PurchaseOrderItemId)
+            .IsRequired(false); // Optional link for partial receiving
+
         builder.HasIndex(x => x.GoodsReceiptId);
         builder.HasIndex(x => x.ItemId);
+        builder.HasIndex(x => x.PurchaseOrderItemId);
     }
 }
 

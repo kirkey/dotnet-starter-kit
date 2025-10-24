@@ -16,6 +16,16 @@ public sealed class CreateGoodsReceiptCommand : IRequest<CreateGoodsReceiptRespo
     public DefaultIdType? PurchaseOrderId { get; set; }
     
     /// <summary>
+    /// Warehouse where goods are being received. Required.
+    /// </summary>
+    public DefaultIdType WarehouseId { get; set; }
+    
+    /// <summary>
+    /// Optional specific location within the warehouse.
+    /// </summary>
+    public DefaultIdType? WarehouseLocationId { get; set; }
+    
+    /// <summary>
     /// Date when goods were received.
     /// </summary>
     public DateTime ReceivedDate { get; set; }

@@ -12,6 +12,10 @@ public sealed class CreateGoodsReceiptValidator : AbstractValidator<CreateGoodsR
             .NotNull().WithMessage("Receipt number cannot be null")
             .MaximumLength(100).WithMessage("Receipt number must not exceed 100 characters");
 
+        RuleFor(x => x.WarehouseId)
+            .NotEmpty().WithMessage("Warehouse is required")
+            .NotEqual(DefaultIdType.Empty).WithMessage("Warehouse ID cannot be empty");
+
         RuleFor(x => x.ReceivedDate)
             .NotEmpty().WithMessage("Received date is required")
             .LessThanOrEqualTo(DateTime.UtcNow.AddDays(1)).WithMessage("Received date cannot be in the future");

@@ -11,7 +11,7 @@ public sealed class AddGoodsReceiptItemHandler(
         var goodsReceipt = await repository.GetByIdAsync(request.GoodsReceiptId, cancellationToken).ConfigureAwait(false)
             ?? throw new GoodsReceiptNotFoundException(request.GoodsReceiptId);
 
-        goodsReceipt.AddItem(request.ItemId, request.Name, request.Quantity);
+        goodsReceipt.AddItem(request.ItemId, request.Name, request.Quantity, request.UnitCost, request.PurchaseOrderItemId);
 
         await repository.UpdateAsync(goodsReceipt, cancellationToken).ConfigureAwait(false);
 

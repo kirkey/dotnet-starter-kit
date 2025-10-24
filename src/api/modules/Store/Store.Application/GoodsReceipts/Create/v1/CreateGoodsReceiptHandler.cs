@@ -20,6 +20,8 @@ public sealed class CreateGoodsReceiptHandler(
         var goodsReceipt = GoodsReceipt.Create(
             request.ReceiptNumber,
             request.ReceivedDate,
+            request.WarehouseId,
+            request.WarehouseLocationId,
             request.PurchaseOrderId,
             request.Notes);
         if (!string.IsNullOrWhiteSpace(request.Name)) goodsReceipt.Name = request.Name;

@@ -23,6 +23,7 @@ public static class GoodsReceiptsEndpoints
         goodsReceiptsGroup.MapDeleteGoodsReceiptEndpoint();
         goodsReceiptsGroup.MapGetGoodsReceiptEndpoint();
         goodsReceiptsGroup.MapSearchGoodsReceiptsEndpoint();
+        goodsReceiptsGroup.MapGetPurchaseOrderItemsForReceivingEndpoint();
 
         return app;
     }

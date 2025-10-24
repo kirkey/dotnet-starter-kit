@@ -16,5 +16,8 @@ public sealed class AddGoodsReceiptItemValidator : AbstractValidator<AddGoodsRec
 
         RuleFor(x => x.Quantity)
             .GreaterThan(0).WithMessage("Quantity must be positive");
+
+        RuleFor(x => x.UnitCost)
+            .GreaterThanOrEqualTo(0).WithMessage("Unit cost cannot be negative");
     }
 }

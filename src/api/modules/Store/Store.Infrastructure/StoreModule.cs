@@ -179,6 +179,8 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IReadRepository<ItemSupplier>, StoreRepository<ItemSupplier>>("store:itemsuppliers");
         builder.Services.AddKeyedScoped<IRepository<StockLevel>, StoreRepository<StockLevel>>("store:stocklevels");
         builder.Services.AddKeyedScoped<IReadRepository<StockLevel>, StoreRepository<StockLevel>>("store:stocklevels");
+        builder.Services.AddKeyedScoped<IRepository<StockLevel>, StoreRepository<StockLevel>>("store:stock-levels");
+        builder.Services.AddKeyedScoped<IReadRepository<StockLevel>, StoreRepository<StockLevel>>("store:stock-levels");
         builder.Services.AddKeyedScoped<IRepository<LotNumber>, StoreRepository<LotNumber>>("store:lotnumbers");
         builder.Services.AddKeyedScoped<IReadRepository<LotNumber>, StoreRepository<LotNumber>>("store:lotnumbers");
         builder.Services.AddKeyedScoped<IRepository<SerialNumber>, StoreRepository<SerialNumber>>("store:serialnumbers");

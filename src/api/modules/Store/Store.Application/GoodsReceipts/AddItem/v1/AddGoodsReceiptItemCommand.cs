@@ -6,4 +6,11 @@ public sealed record AddGoodsReceiptItemCommand : IRequest<AddGoodsReceiptItemRe
     public DefaultIdType ItemId { get; set; }
     public string Name { get; set; } = default!;
     public int Quantity { get; set; }
+    public decimal UnitCost { get; set; }
+    
+    /// <summary>
+    /// Optional link to PurchaseOrderItem for tracking partial receipts.
+    /// When provided, the system will update the PO item's ReceivedQuantity.
+    /// </summary>
+    public DefaultIdType? PurchaseOrderItemId { get; set; }
 }
