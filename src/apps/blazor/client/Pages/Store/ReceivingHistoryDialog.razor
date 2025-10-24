@@ -1,0 +1,140 @@
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
+            @if (_loading)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+            else if (_purchaseOrder != null)
+            {
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h5" Class="mb-4">Receiving History</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%; font-weight: 500;">Purchase Order</td>
+                                    <td><strong>@_purchaseOrder.OrderNumber</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Status</td>
+                                    <td>
+                                        <MudChip T="string" Color="@GetStatusColor(_purchaseOrder.Status)" Size="Size.Small">
+                                            @_purchaseOrder.Status
+                                        </MudChip>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Order Date</td>
+                                    <td>@_purchaseOrder.OrderDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(_supplierName))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Supplier</td>
+                                        <td>@_supplierName</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="font-weight: 500;">Total Receipts</td>
+                                    <td><strong>@_receipts.Count</strong></td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mb-3">Receipt History</MudText>
+                        
+                        @if (_receipts.Any())
+                        {
+                            <MudTable Items="@_receipts" Dense="true" Hover="true" Bordered="true" Striped="true">
+                                <HeaderContent>
+                                    <MudTh>Receipt #</MudTh>
+                                    <MudTh>Received Date</MudTh>
+                                    <MudTh>Status</MudTh>
+                                    <MudTh Style="text-align: right;">Items</MudTh>
+                                    <MudTh Style="text-align: center;">Actions</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Receipt #">
+                                        <MudLink OnClick="@(() => ViewReceiptDetails(context.Id))">
+                                            @context.ReceiptNumber
+                                        </MudLink>
+                                    </MudTd>
+                                    <MudTd DataLabel="Received Date">@context.ReceivedDate.ToString("MMM dd, yyyy")</MudTd>
+                                    <MudTd DataLabel="Status">
+                                        <MudChip T="string" Color="@GetReceiptStatusColor(context.Status)" Size="Size.Small">
+                                            @context.Status
+                                        </MudChip>
+                                    </MudTd>
+                                    <MudTd DataLabel="Items" Style="text-align: right;">@context.ItemCount</MudTd>
+                                    <MudTd DataLabel="Actions" Style="text-align: center;">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Visibility" 
+                                                      Size="Size.Small" 
+                                                      Color="Color.Primary"
+                                                      OnClick="@(() => ViewReceiptDetails(context.Id))" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                        else
+                        {
+                            <MudAlert Severity="Severity.Info">No receipts have been created for this purchase order yet.</MudAlert>
+                        }
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mb-3">Item Receiving Summary</MudText>
+                        
+                        @if (_poItems.Any())
+                        {
+                            <MudTable Items="@_poItems" Dense="true" Hover="true" Bordered="true" Striped="true">
+                                <HeaderContent>
+                                    <MudTh>Item</MudTh>
+                                    <MudTh Style="text-align: right;">Ordered</MudTh>
+                                    <MudTh Style="text-align: right;">Received</MudTh>
+                                    <MudTh Style="text-align: right;">Remaining</MudTh>
+                                    <MudTh Style="text-align: center;">Progress</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Item">@context.ItemName</MudTd>
+                                    <MudTd DataLabel="Ordered" Style="text-align: right;">@context.Quantity</MudTd>
+                                    <MudTd DataLabel="Received" Style="text-align: right;">@context.ReceivedQuantity</MudTd>
+                                    <MudTd DataLabel="Remaining" Style="text-align: right;">
+                                        <strong>@(context.Quantity - context.ReceivedQuantity)</strong>
+                                    </MudTd>
+                                    <MudTd DataLabel="Progress" Style="text-align: center;">
+                                        @{
+                                            var percentage = context.Quantity > 0 ? (int)((decimal)context.ReceivedQuantity / context.Quantity * 100) : 0;
+                                        }
+                                        <MudProgressLinear Color="@GetProgressColor(percentage)" Value="@percentage" Size="Size.Small" Class="my-1" />
+                                        <MudText Typo="Typo.caption">@percentage%</MudText>
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                        else
+                        {
+                            <MudAlert Severity="Severity.Warning">No items found for this purchase order.</MudAlert>
+                        }
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

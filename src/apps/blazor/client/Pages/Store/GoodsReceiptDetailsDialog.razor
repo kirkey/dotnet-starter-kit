@@ -1,0 +1,142 @@
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
+            @if (_loading)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+            else if (_goodsReceipt != null)
+            {
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h5" Class="mb-4">Goods Receipt Details</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%; font-weight: 500;">Receipt Number</td>
+                                    <td><strong>@_goodsReceipt.ReceiptNumber</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Status</td>
+                                    <td>
+                                        <MudChip T="string" Color="@GetStatusColor(_goodsReceipt.Status)" Size="Size.Small">
+                                            @_goodsReceipt.Status
+                                        </MudChip>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Received Date</td>
+                                    <td>@_goodsReceipt.ReceivedDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                @if (_goodsReceipt.PurchaseOrderId.HasValue && !string.IsNullOrEmpty(_purchaseOrderNumber))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Purchase Order</td>
+                                        <td>
+                                            <MudLink OnClick="@(() => ViewPurchaseOrder(_goodsReceipt.PurchaseOrderId.Value))">
+                                                @_purchaseOrderNumber
+                                            </MudLink>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_goodsReceipt.Name))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Name</td>
+                                        <td>@_goodsReceipt.Name</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_goodsReceipt.Description))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Description</td>
+                                        <td>@_goodsReceipt.Description</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_goodsReceipt.Notes))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Notes</td>
+                                        <td>@_goodsReceipt.Notes</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <div class="d-flex justify-space-between align-center mb-3">
+                            <MudText Typo="Typo.h6">Receipt Items</MudText>
+                            @if (_goodsReceipt.Status == "Draft")
+                            {
+                                <MudButton Variant="Variant.Filled" 
+                                          Color="Color.Primary" 
+                                          OnClick="AddItem" 
+                                          StartIcon="@Icons.Material.Filled.Add"
+                                          Size="Size.Small">
+                                    Add Item
+                                </MudButton>
+                            }
+                        </div>
+
+                        @if (_goodsReceipt.Items?.Any() == true)
+                        {
+                            <MudTable Items="@_goodsReceipt.Items" Dense="true" Hover="true" Bordered="true" Striped="true">
+                                <HeaderContent>
+                                    <MudTh>Item</MudTh>
+                                    <MudTh Style="text-align: right;">Quantity</MudTh>
+                                    @if (_goodsReceipt.Status == "Draft")
+                                    {
+                                        <MudTh Style="text-align: center;">Actions</MudTh>
+                                    }
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Item">@context.Name</MudTd>
+                                    <MudTd DataLabel="Quantity" Style="text-align: right;">@context.Quantity</MudTd>
+                                    @if (_goodsReceipt.Status == "Draft")
+                                    {
+                                        <MudTd DataLabel="Actions" Style="text-align: center;">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" 
+                                                          Color="Color.Error" 
+                                                          Size="Size.Small" 
+                                                          OnClick="@(() => RemoveItem(context.Id))" />
+                                        </MudTd>
+                                    }
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                        else
+                        {
+                            <MudAlert Severity="Severity.Info">No items have been added to this receipt yet.</MudAlert>
+                        }
+                    </MudItem>
+
+                    @if (_goodsReceipt.Status == "Draft")
+                    {
+                        <MudItem xs="12" Class="mt-4">
+                            <MudAlert Severity="Severity.Warning">
+                                This receipt is in Draft status. Mark it as received to update inventory.
+                            </MudAlert>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        @if (_goodsReceipt?.Status == "Draft")
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="MarkReceived">
+                Mark as Received
+            </MudButton>
+        }
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

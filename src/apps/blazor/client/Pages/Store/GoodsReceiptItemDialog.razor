@@ -1,0 +1,111 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" Model="@_model">
+            <MudGrid>
+                <MudItem xs="12">
+                    <AutocompleteItem @bind-Value="_model.ItemId"
+                                        For="@(() => _model.ItemId)"
+                                        Label="Item"
+                                        Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="decimal" @bind-Value="_model.QuantityReceived"
+                                    Label="Quantity Received"
+                                    Min="0"
+                                    Required="true" />
+                </MudItem>
+
+                @if (_model.PurchaseOrderItemId.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudNumericField T="decimal?" @bind-Value="_model.QuantityOrdered"
+                                        For="@(() => _model.QuantityOrdered)"
+                                        ReadOnly="true" />
+                    </MudItem>
+                }
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="decimal?" @bind-Value="_model.QuantityRejected"
+                                    Label="Quantity Rejected"
+                                    Min="0" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="decimal?" @bind-Value="_model.UnitCost"
+                                    Label="Unit Cost"
+                                    Min="0"
+                                    Format="N2" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_model.LotNumber"
+                                 For="@(() => _model.LotNumber)"
+                                 Label="Lot Number" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_model.SerialNumber"
+                                 For="@(() => _model.SerialNumber)"
+                                 Label="Serial Number" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker @bind-Date="_model.ExpiryDate"
+                                  For="@(() => _model.ExpiryDate)"
+                                  Label="Expiry Date"
+                                  DateFormat="MMMM dd, yyyy" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudSelect T="string?" @bind-Value="_model.QualityStatus"
+                              For="@(() => _model.QualityStatus)"
+                              Label="Quality Status">
+                        <MudSelectItem T="string?" Value="@("Pending")">Pending</MudSelectItem>
+                        <MudSelectItem T="string?" Value="@("Passed")">Passed</MudSelectItem>
+                        <MudSelectItem T="string?" Value="@("Failed")">Failed</MudSelectItem>
+                        <MudSelectItem T="string?" Value="@("Quarantined")">Quarantined</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(_model.QualityStatus) && _model.QualityStatus != "Pending")
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudTextField @bind-Value="_model.InspectedBy"
+                                     For="@(() => _model.InspectedBy)"
+                                     Label="Inspected By" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6">
+                        <MudDatePicker @bind-Date="_model.InspectionDate"
+                                      For="@(() => _model.InspectionDate)"
+                                      Label="Inspection Date"
+                                      DateFormat="MMMM dd, yyyy" />
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_model.Notes"
+                                 For="@(() => _model.Notes)"
+                                 Label="Notes"
+                                 Lines="3" />
+                </MudItem>
+
+                @if (_hasVariance)
+                {
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="_model.VarianceReason"
+                                     For="@(() => _model.VarianceReason)"
+                                     Label="Variance Reason"
+                                     Lines="2"
+                                     Required="true" />
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Add Item</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -1,15 +1,95 @@
 @page "/store/goods-receipts"
 
-<PageHeader Title="Goods Receipts" Header="Goods Receipts" SubHeader="Manage goods received from suppliers." />
+<PageHeader Title="Goods Receipts" Header="Goods Receipts" SubHeader="Manage goods received from suppliers with partial receiving support." />
 
 <EntityTable @ref="_table" TEntity="GoodsReceiptResponse" TId="DefaultIdType" TRequest="GoodsReceiptViewModel" Context="@Context">
+    
+    <AdvancedSearchContent>
+        <MudSelect T="DefaultIdType?" Label="Purchase Order" @bind-Value="SearchPurchaseOrderId">
+            <MudSelectItem T="DefaultIdType?" Value="null">All Purchase Orders</MudSelectItem>
+            @foreach (var po in _purchaseOrders)
+            {
+                <MudSelectItem T="DefaultIdType?" Value="po.Id">@po.OrderNumber</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Draft")">Draft</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Received")">Received</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Posted")">Posted</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="Received From" Date="SearchReceivedDateFrom" DateChanged="value => SearchReceivedDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Received To" Date="SearchReceivedDateTo" DateChanged="value => SearchReceivedDateTo = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ViewReceiptDetails(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
+            </div>
+        </MudMenuItem>
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => MarkReceived(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Inbox" Class="mr-2" Color="Color.Success" />
+                    <span>Mark as Received</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.PurchaseOrderId.HasValue)
+        {
+            <MudMenuItem OnClick="@(() => ViewReceivingHistory(context.PurchaseOrderId.Value))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.History" Class="mr-2" />
+                    <span>Receiving History</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+    
+    <ActionsContent>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateFromPurchaseOrder" StartIcon="@Icons.Material.Filled.AddBox">
+            Create from PO
+        </MudButton>
+    </ActionsContent>
+
     <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Receipt Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
+            </MudItem>
+        }
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.ReceiptNumber" For="@(() => context.ReceiptNumber)" Label="Receipt Number" />
+            <MudTextField @bind-Value="context.ReceiptNumber" For="@(() => context.ReceiptNumber)" Label="Receipt Number" Required="true" />
         </MudItem>
+        
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.ReceivedDate" For="@(() => context.ReceivedDate)" Label="Received Date" DateFormat="MMMM dd, yyyy" Required="true" />
         </MudItem>
+
+        <MudItem xs="12">
+            <AutocompleteWarehouse @bind-Value="context.WarehouseId" 
+                                  For="@(() => context.WarehouseId)" 
+                                  Label="Warehouse" 
+                                  Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6" lg="6">
+            <MudTextField @bind-Value="context.Name" For="@(() => context.Name)" Label="Name" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6" lg="6">
+            <MudTextField @bind-Value="context.Description" For="@(() => context.Description)" Label="Description" />
+        </MudItem>
+
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
         </MudItem>
