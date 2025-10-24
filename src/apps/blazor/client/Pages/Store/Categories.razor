@@ -27,7 +27,7 @@
             <MudNumericField T="int?" Label="Sort Order" @bind-Value="context.SortOrder" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudSwitch T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
+            <MudSwitch Class="mt-3" T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
         </MudItem>
         <MudItem xs="12">
             <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />

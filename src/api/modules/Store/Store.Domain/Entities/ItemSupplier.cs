@@ -222,13 +222,19 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Updates the description and notes fields.
+    /// Updates the name, description and notes fields.
     /// </summary>
+    /// <param name="name">New name.</param>
     /// <param name="description">New description.</param>
     /// <param name="notes">New notes.</param>
     /// <returns>Updated ItemSupplier instance.</returns>
-    public ItemSupplier UpdateDetails(string? description, string? notes)
+    public ItemSupplier UpdateDetails(string? name, string? description, string? notes)
     {
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            if (name.Length > 1024) throw new ArgumentException("Name must not exceed 1024 characters", nameof(name));
+            Name = name;
+        }
         if (description?.Length > 2048) throw new ArgumentException("Description must not exceed 2048 characters", nameof(description));
         if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
 

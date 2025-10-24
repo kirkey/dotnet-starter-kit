@@ -22,8 +22,8 @@ else
                         </MudCardHeader>
                         <MudCardContent Class="pa-46" Style="padding:26px!important">
                             <MudGrid Style="padding-left:14px">
-                                    <MudSwitch T="bool" @bind-Value="@_active" Color="Color.Primary" Label="Active?"></MudSwitch>
-                                <MudSwitch T="bool" ReadOnly @bind-Value="@_emailConfirmed" Disabled Label="Email Confirmed?" Color="Color.Secondary"></MudSwitch>
+                                    <MudSwitch Class="mt-3" T="bool" @bind-Value="@_active" Color="Color.Primary" Label="Active?"></MudSwitch>
+                                <MudSwitch Class="mt-3" T="bool" ReadOnly @bind-Value="@_emailConfirmed" Disabled Label="Email Confirmed?" Color="Color.Secondary"></MudSwitch>
                                 <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"
                             OnClick="ToggleUserStatus" ButtonType="ButtonType.Submit">Save Changes
                                 </MudButton>

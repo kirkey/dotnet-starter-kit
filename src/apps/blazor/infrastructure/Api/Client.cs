@@ -42485,9 +42485,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("itemId")]
         public System.Guid ItemId { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("itemName")]
+        public string ItemName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
         public System.Guid SupplierId { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("supplierName")]
+        public string SupplierName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("supplierPartNumber")]
         public string? SupplierPartNumber { get; set; } = default!;
@@ -46596,14 +46602,17 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = "Item-supplier relationship";
+
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Item-supplier relationship";
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("itemId")]
         public System.Guid ItemId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("supplierId")]
-        public System.Guid SupplierId { get; set; } = default!;
+        public System.Guid? SupplierId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("supplierPartNumber")]
         public string? SupplierPartNumber { get; set; } = "SUP-PART-12345";

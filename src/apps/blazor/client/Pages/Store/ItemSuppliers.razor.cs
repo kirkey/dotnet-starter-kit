@@ -2,8 +2,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Store;
 
 public partial class ItemSuppliers
 {
-
-
     private EntityServerTableContext<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> Context { get; set; } =
         default!;
 
@@ -17,8 +15,9 @@ public partial class ItemSuppliers
             entityResource: FshResources.Store,
             fields:
             [
-                new EntityField<ItemSupplierResponse>(x => x.ItemId, "Item", "ItemId"),
-                new EntityField<ItemSupplierResponse>(x => x.SupplierId, "Supplier", "SupplierId"),
+                new EntityField<ItemSupplierResponse>(x => x.Name, "Name", "Name"),
+                new EntityField<ItemSupplierResponse>(x => x.ItemName, "Item", "ItemName"),
+                new EntityField<ItemSupplierResponse>(x => x.SupplierName, "Supplier", "SupplierName"),
                 new EntityField<ItemSupplierResponse>(x => x.UnitCost, "Unit Cost", "UnitCost", typeof(decimal)),
                 new EntityField<ItemSupplierResponse>(x => x.LeadTimeDays, "Lead Time", "LeadTimeDays", typeof(int)),
                 new EntityField<ItemSupplierResponse>(x => x.IsPreferred, "Preferred", "IsPreferred", typeof(bool)),

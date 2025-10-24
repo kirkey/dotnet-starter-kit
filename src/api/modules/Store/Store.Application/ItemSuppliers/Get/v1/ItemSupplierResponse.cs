@@ -9,7 +9,9 @@ public sealed record ItemSupplierResponse(
     string? Description,
     string? Notes,
     DefaultIdType ItemId,
+    string ItemName,
     DefaultIdType SupplierId,
+    string SupplierName,
     string? SupplierPartNumber,
     decimal UnitCost,
     int LeadTimeDays,
@@ -19,6 +21,6 @@ public sealed record ItemSupplierResponse(
     bool IsActive,
     decimal? ReliabilityRating,
     DateTime? LastPriceUpdate,
-    DateTime CreatedOn,
-    DateTime? LastModifiedOn
+    DateTimeOffset CreatedOn,
+    DateTimeOffset? LastModifiedOn
 );

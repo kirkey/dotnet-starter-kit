@@ -17,8 +17,16 @@ public sealed class SearchItemSuppliersHandler(
         var itemSupplierResponses = itemSuppliers.Select(itemSupplier => new ItemSupplierResponse
         {
             Id = itemSupplier.Id,
+            Name = itemSupplier.Name,
+            Description = itemSupplier.Description,
+            Notes = itemSupplier.Notes,
             ItemId = itemSupplier.ItemId,
+            ItemName = itemSupplier.Item.Name,
+            ItemSku = itemSupplier.Item.Sku,
             SupplierId = itemSupplier.SupplierId,
+            SupplierName = itemSupplier.Supplier.Name,
+            SupplierCode = itemSupplier.Supplier.Code,
+            SupplierPartNumber = itemSupplier.SupplierPartNumber,
             IsPreferred = itemSupplier.IsPreferred,
             LeadTimeDays = itemSupplier.LeadTimeDays,
             MinimumOrderQuantity = itemSupplier.MinimumOrderQuantity,

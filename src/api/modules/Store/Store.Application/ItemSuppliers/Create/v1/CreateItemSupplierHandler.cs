@@ -32,6 +32,20 @@ public sealed class CreateItemSupplierHandler(
             request.PackagingQuantity,
             request.IsPreferred);
 
+        // Set inherited AuditableEntity properties
+        if (!string.IsNullOrWhiteSpace(request.Name))
+        {
+            itemSupplier.Name = request.Name;
+        }
+        if (!string.IsNullOrWhiteSpace(request.Description))
+        {
+            itemSupplier.Description = request.Description;
+        }
+        if (!string.IsNullOrWhiteSpace(request.Notes))
+        {
+            itemSupplier.Notes = request.Notes;
+        }
+
         await repository.AddAsync(itemSupplier, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 

@@ -1,17 +1,18 @@
 using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Search.v1;
-using ItemSupplierResponse = FSH.Starter.WebApi.Store.Application.ItemSuppliers.Get.v1.ItemSupplierResponse;
 
 namespace FSH.Starter.WebApi.Store.Application.ItemSuppliers.Specs;
 
 /// <summary>
 /// Specification for searching item-supplier relationships with filters and pagination.
 /// </summary>
-public sealed class SearchItemSuppliersSpec : EntitiesByPaginationFilterSpec<ItemSupplier, ItemSupplierResponse>
+public sealed class SearchItemSuppliersSpec : EntitiesByPaginationFilterSpec<ItemSupplier>
 {
     public SearchItemSuppliersSpec(SearchItemSuppliersCommand request)
         : base(request)
     {
         Query
+            .Include(i => i.Item)
+            .Include(i => i.Supplier)
             .Where(i => i.ItemId == request.ItemId, request.ItemId.HasValue)
             .Where(i => i.SupplierId == request.SupplierId, request.SupplierId.HasValue)
             .Where(i => i.IsActive == request.IsActive, request.IsActive.HasValue)

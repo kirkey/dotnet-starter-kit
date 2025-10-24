@@ -11,9 +11,15 @@ public record UpdateItemSupplierCommand : IRequest<UpdateItemSupplierResponse>
     public DefaultIdType Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the description.
+    /// Gets or sets the name.
     /// </summary>
     [DefaultValue("Item-supplier relationship")]
+    public string? Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the description.
+    /// </summary>
+    [DefaultValue(null)]
     public string? Description { get; set; }
 
     /// <summary>
@@ -24,7 +30,7 @@ public record UpdateItemSupplierCommand : IRequest<UpdateItemSupplierResponse>
     /// <summary>
     /// Gets or sets the supplier identifier.
     /// </summary>
-    public DefaultIdType SupplierId { get; set; }
+    public DefaultIdType? SupplierId { get; set; }
 
     /// <summary>
     /// Gets or sets the supplier's part number.

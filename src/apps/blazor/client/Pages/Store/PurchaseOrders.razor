@@ -148,7 +148,7 @@
             <MudTextField Label="Contact Phone" For="@(() => context.ContactPhone)" @bind-Value="context.ContactPhone" />
         </MudItem>
         <MudItem xs="12" md="4">
-            <MudSwitch T="bool?" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
+            <MudSwitch Class="mt-3" T="bool?" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
         </MudItem>
 
         @if (context.Id != default)

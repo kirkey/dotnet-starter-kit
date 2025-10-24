@@ -115,7 +115,7 @@ public class EntityViewModel { /* properties */ }
 
 ### Switches
 ```razor
-<MudSwitch T="bool" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
+<MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
 ```
 
 ### Select Dropdowns
