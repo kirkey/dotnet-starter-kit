@@ -1,8 +1,5 @@
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.Commands;
-using FSH.Starter.WebApi.Store.Application.Items.Specs;
-using FSH.Starter.WebApi.Store.Application.Categories.Specs;
-using FSH.Starter.WebApi.Store.Application.Suppliers.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Import.v1;
 
@@ -71,8 +68,33 @@ public sealed class ImportItemsHandler(
     private async Task<ImportResponse> ProcessRowsAsync(IReadOnlyList<ItemImportRow> rows, CancellationToken cancellationToken)
     {
         var errors = new List<string>();
-        var importedCount = 0;
+        var validEntities = new List<Item>();
 
+        logger.LogInformation("Starting validation and caching for {Count} rows", rows.Count);
+
+        // Load all existing items, categories, and suppliers into memory for fast validation
+        var existingItems = await readRepository.ListAsync(cancellationToken);
+        var existingSkus = new HashSet<string>(existingItems.Select(i => i.Sku.ToUpperInvariant()), StringComparer.OrdinalIgnoreCase);
+        var existingBarcodes = new HashSet<string>(existingItems.Select(i => i.Barcode.ToUpperInvariant()), StringComparer.OrdinalIgnoreCase);
+
+        var categories = await categoryRepository.ListAsync(cancellationToken);
+        var categoryIds = new HashSet<DefaultIdType>(categories.Select(c => c.Id));
+        var defaultCategoryId = categories.FirstOrDefault()?.Id 
+            ?? throw new InvalidOperationException("No categories found. Please create at least one category before importing items.");
+
+        var suppliers = await supplierRepository.ListAsync(cancellationToken);
+        var supplierIds = new HashSet<DefaultIdType>(suppliers.Select(s => s.Id));
+        var defaultSupplierId = suppliers.FirstOrDefault()?.Id 
+            ?? throw new InvalidOperationException("No suppliers found. Please create at least one supplier before importing items.");
+
+        logger.LogInformation("Loaded {ItemCount} existing items, {CategoryCount} categories, {SupplierCount} suppliers", 
+            existingItems.Count, categories.Count, suppliers.Count);
+
+        // Track SKUs and barcodes from the import file to detect duplicates within the file
+        var importSkus = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var importBarcodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        // Validate all rows
         for (int i = 0; i < rows.Count; i++)
         {
             var rowIndex = i + 1;
@@ -80,8 +102,17 @@ public sealed class ImportItemsHandler(
 
             try
             {
-                // Validate the row
-                var validationErrors = await ValidateRowAsync(row, rowIndex, cancellationToken);
+                // Validate the row with cached data
+                var validationErrors = ValidateRow(
+                    row, 
+                    rowIndex, 
+                    existingSkus, 
+                    existingBarcodes,
+                    importSkus,
+                    importBarcodes,
+                    categoryIds,
+                    supplierIds);
+
                 if (validationErrors.Any())
                 {
                     errors.AddRange(validationErrors);
@@ -89,28 +120,136 @@ public sealed class ImportItemsHandler(
                 }
 
                 // Map to entity
-                var entity = await MapToEntityAsync(row, cancellationToken);
+                var entity = MapToEntity(row, defaultCategoryId, defaultSupplierId);
+                validEntities.Add(entity);
 
-                // Save entity
-                await repository.AddAsync(entity, cancellationToken);
-                await repository.SaveChangesAsync(cancellationToken);
-
-                importedCount++;
+                // Track SKUs and barcodes from this import batch
+                importSkus.Add(row.Sku!.Trim().ToUpperInvariant());
+                importBarcodes.Add(row.Barcode!.Trim().ToUpperInvariant());
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex, "Failed to import row {RowIndex}", rowIndex);
+                logger.LogWarning(ex, "Failed to process row {RowIndex}", rowIndex);
                 errors.Add($"Row {rowIndex}: {ex.Message}");
+            }
+
+            // Log progress for large imports
+            if ((i + 1) % 1000 == 0)
+            {
+                logger.LogInformation("Validated {Count}/{Total} rows", i + 1, rows.Count);
             }
         }
 
-        var failedCount = rows.Count - importedCount;
+        // Bulk insert valid entities
+        var successfullyInserted = 0;
+        if (validEntities.Count > 0)
+        {
+            logger.LogInformation("Inserting {Count} valid items in batches", validEntities.Count);
+
+            const int batchSize = 500;
+            var batches = validEntities.Chunk(batchSize).ToList();
+
+            for (int batchIndex = 0; batchIndex < batches.Count; batchIndex++)
+            {
+                // Check if operation has been canceled before processing the next batch
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    logger.LogWarning("Import operation canceled after inserting {Count} items. Remaining {Remaining} items not processed.", 
+                        successfullyInserted, validEntities.Count - successfullyInserted);
+                    break;
+                }
+                
+                var batch = batches[batchIndex].ToArray();
+                
+                try
+                {
+                    await repository.AddRangeAsync(batch, cancellationToken);
+                    await repository.SaveChangesAsync(cancellationToken);
+
+                    successfullyInserted += batch.Length;
+                    logger.LogInformation("Inserted batch {BatchIndex}/{TotalBatches} ({Count} items)", 
+                        batchIndex + 1, batches.Count, batch.Length);
+                }
+                catch (OperationCanceledException)
+                {
+                    // If operation was canceled due to timeout, log all items in the batch as failed
+                    logger.LogWarning("Batch {BatchIndex} canceled due to timeout. Marking {Count} items as failed.", 
+                        batchIndex + 1, batch.Length);
+                    
+                    foreach (var item in batch)
+                    {
+                        errors.Add($"Failed to insert item with SKU '{item.Sku}': Operation timed out");
+                    }
+                    
+                    // Stop processing further batches if we've hit a timeout
+                    logger.LogWarning("Stopping import due to operation timeout after inserting {Count} items", successfullyInserted);
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "Batch {BatchIndex} failed with error: {Message}. Attempting individual inserts to identify problem items", 
+                        batchIndex + 1, ex.Message);
+                    
+                    // Try inserting items individually to identify the problematic ones
+                    // Use a new cancellation token source with a reasonable timeout for individual items
+                    using var individualCts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                    using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, individualCts.Token);
+                    
+                    foreach (var item in batch)
+                    {
+                        try
+                        {
+                            // Check if the main cancellation token is already canceled
+                            if (cancellationToken.IsCancellationRequested)
+                            {
+                                errors.Add($"Failed to insert item with SKU '{item.Sku}': Operation canceled");
+                                continue;
+                            }
+                            
+                            await repository.AddAsync(item, linkedCts.Token);
+                            await repository.SaveChangesAsync(linkedCts.Token);
+                            successfullyInserted++;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            errors.Add($"Failed to insert item with SKU '{item.Sku}': Operation timed out");
+                            logger.LogWarning("Individual insert timed out for SKU: {Sku}", item.Sku);
+                        }
+                        catch (Exception itemEx)
+                        {
+                            var errorMessage = $"Failed to insert item with SKU '{item.Sku}': {GetDetailedErrorMessage(itemEx)}";
+                            logger.LogError(itemEx, "Failed to insert item with SKU: {Sku}", item.Sku);
+                            errors.Add(errorMessage);
+                        }
+                    }
+                }
+            }
+        }
+
+        var failedCount = rows.Count - successfullyInserted;
+
+        logger.LogInformation("Import summary: {Successful} successful, {Failed} failed, {Total} total", 
+            successfullyInserted, failedCount, rows.Count);
+
         return failedCount > 0
-            ? ImportResponse.PartialSuccess(importedCount, failedCount, errors)
-            : ImportResponse.Success(importedCount);
+            ? ImportResponse.PartialSuccess(successfullyInserted, failedCount, errors)
+            : ImportResponse.Success(successfullyInserted);
     }
 
-    private IEnumerable<string> GetExpectedColumns()
+    /// <summary>
+    /// Extracts detailed error message from exception, especially for database constraint violations.
+    /// </summary>
+    private static string GetDetailedErrorMessage(Exception ex)
+    {
+        if (ex.InnerException is Npgsql.PostgresException pgEx)
+        {
+            return $"{pgEx.MessageText} (Field: {pgEx.ColumnName ?? "unknown"}, SqlState: {pgEx.SqlState})";
+        }
+
+        return ex.InnerException?.Message ?? ex.Message;
+    }
+
+    private static IEnumerable<string> GetExpectedColumns()
     {
         return new[]
         {
@@ -122,12 +261,17 @@ public sealed class ImportItemsHandler(
     }
 
     /// <summary>
-    /// Validates a single import row with strict business rules.
+    /// Validates a single import row with strict business rules using cached data.
     /// </summary>
-    private async Task<IReadOnlyList<string>> ValidateRowAsync(
+    private static IReadOnlyList<string> ValidateRow(
         ItemImportRow row,
         int rowIndex,
-        CancellationToken cancellationToken)
+        HashSet<string> existingSkus,
+        HashSet<string> existingBarcodes,
+        HashSet<string> importSkus,
+        HashSet<string> importBarcodes,
+        HashSet<DefaultIdType> categoryIds,
+        HashSet<DefaultIdType> supplierIds)
     {
         var errors = new List<string>();
 
@@ -145,18 +289,23 @@ public sealed class ImportItemsHandler(
         {
             errors.Add($"Row {rowIndex}: SKU is required");
         }
-        else if (row.Sku.Length > 100)
+        else if (row.Sku.Trim().Length > 50)
         {
-            errors.Add($"Row {rowIndex}: SKU cannot exceed 100 characters");
+            errors.Add($"Row {rowIndex}: SKU cannot exceed 50 characters (actual: {row.Sku.Trim().Length})");
         }
         else
         {
-            // Check for duplicate SKU
-            var existingBySku = await readRepository.FirstOrDefaultAsync(
-                new ItemBySkuSpec(row.Sku.Trim()), cancellationToken);
-            if (existingBySku != null)
+            var skuUpper = row.Sku.Trim().ToUpperInvariant();
+            
+            // Check for duplicate SKU in existing items
+            if (existingSkus.Contains(skuUpper))
             {
-                errors.Add($"Row {rowIndex}: Item with SKU '{row.Sku}' already exists");
+                errors.Add($"Row {rowIndex}: Item with SKU '{row.Sku}' already exists in database");
+            }
+            // Check for duplicate SKU within the import file
+            else if (importSkus.Contains(skuUpper))
+            {
+                errors.Add($"Row {rowIndex}: Duplicate SKU '{row.Sku}' found within import file");
             }
         }
 
@@ -164,64 +313,69 @@ public sealed class ImportItemsHandler(
         {
             errors.Add($"Row {rowIndex}: Barcode is required");
         }
-        else if (row.Barcode.Length > 100)
+        else if (row.Barcode.Trim().Length > 50)
         {
-            errors.Add($"Row {rowIndex}: Barcode cannot exceed 100 characters");
+            errors.Add($"Row {rowIndex}: Barcode cannot exceed 50 characters (actual: {row.Barcode.Trim().Length})");
         }
         else
         {
-            // Check for duplicate Barcode
-            var existingByBarcode = await readRepository.FirstOrDefaultAsync(
-                new ItemByBarcodeSpec(row.Barcode.Trim()), cancellationToken);
-            if (existingByBarcode != null)
+            var barcodeUpper = row.Barcode.Trim().ToUpperInvariant();
+            
+            // Check for duplicate Barcode in existing items
+            if (existingBarcodes.Contains(barcodeUpper))
             {
-                errors.Add($"Row {rowIndex}: Item with Barcode '{row.Barcode}' already exists");
+                errors.Add($"Row {rowIndex}: Item with Barcode '{row.Barcode}' already exists in database");
+            }
+            // Check for duplicate Barcode within the import file
+            else if (importBarcodes.Contains(barcodeUpper))
+            {
+                errors.Add($"Row {rowIndex}: Duplicate Barcode '{row.Barcode}' found within import file");
             }
         }
 
         // Validate pricing
-        // if (row.Price is null or < 0)
-        // {
-        //     errors.Add($"Row {rowIndex}: Price is required and must be >= 0");
-        // }
-        //
-        // if (row.Cost is null or < 0)
-        // {
-        //     errors.Add($"Row {rowIndex}: Cost is required and must be >= 0");
-        // }
-        //
-        // if (row is { Price: not null, Cost: not null } && row.Price.Value < row.Cost.Value)
-        // {
-        //     errors.Add($"Row {rowIndex}: Price must be greater than or equal to Cost");
-        // }
+        if (row.Price is < 0)
+        {
+            errors.Add($"Row {rowIndex}: Price must be >= 0");
+        }
+
+        if (row.Cost is < 0)
+        {
+            errors.Add($"Row {rowIndex}: Cost must be >= 0");
+        }
+
+        if (row is { Price: not null, Cost: not null } && row.Price.Value < row.Cost.Value)
+        {
+            errors.Add($"Row {rowIndex}: Price must be greater than or equal to Cost");
+        }
 
         // Validate stock levels
-        // if (row.MinimumStock is null or < 0)
-        // {
-        //     errors.Add($"Row {rowIndex}: Minimum Stock is required and must be >= 0");
-        // }
-        //
-        // if (!row.MaximumStock.HasValue || row.MaximumStock.Value <= 0)
-        // {
-        //     errors.Add($"Row {rowIndex}: Maximum Stock is required and must be > 0");
-        // }
-        //
-        // if (row is { MinimumStock: not null, MaximumStock: not null } &&
-        //     row.MinimumStock.Value > row.MaximumStock.Value)
-        // {
-        //     errors.Add($"Row {rowIndex}: Minimum Stock must be less than or equal to Maximum Stock");
-        // }
-        //
-        // if (row.ReorderPoint is null or < 0)
-        // {
-        //     errors.Add($"Row {rowIndex}: Reorder Point is required and must be >= 0");
-        // }
-        //
-        // if (row is { ReorderPoint: not null, MaximumStock: not null } &&
-        //     row.ReorderPoint.Value > row.MaximumStock.Value)
-        // {
-        //     errors.Add($"Row {rowIndex}: Reorder Point must be less than or equal to Maximum Stock");
-        // }
+        if (row.MinimumStock is < 0)
+        {
+            errors.Add($"Row {rowIndex}: Minimum Stock must be >= 0");
+        }
+
+        if (row.MaximumStock is < 0)
+        {
+            errors.Add($"Row {rowIndex}: Maximum Stock must be >= 0");
+        }
+
+        if (row is { MinimumStock: not null, MaximumStock: not null } &&
+            row.MinimumStock.Value > row.MaximumStock.Value)
+        {
+            errors.Add($"Row {rowIndex}: Minimum Stock must be less than or equal to Maximum Stock");
+        }
+
+        if (row.ReorderPoint is < 0)
+        {
+            errors.Add($"Row {rowIndex}: Reorder Point must be >= 0");
+        }
+
+        if (row is { ReorderPoint: not null, MaximumStock: not null } &&
+            row.ReorderPoint.Value > row.MaximumStock.Value)
+        {
+            errors.Add($"Row {rowIndex}: Reorder Point must be less than or equal to Maximum Stock");
+        }
 
         // Validate optional fields
         if (!string.IsNullOrWhiteSpace(row.Brand) && row.Brand.Length > 200)
@@ -229,55 +383,37 @@ public sealed class ImportItemsHandler(
             errors.Add($"Row {rowIndex}: Brand cannot exceed 200 characters");
         }
         
-        // if (!string.IsNullOrWhiteSpace(row.Description) && row.Description.Length > 2000)
-        // {
-        //     errors.Add($"Row {rowIndex}: Description cannot exceed 2000 characters");
-        // }
-        //
-        // if (!string.IsNullOrWhiteSpace(row.Manufacturer) && row.Manufacturer.Length > 200)
-        // {
-        //     errors.Add($"Row {rowIndex}: Manufacturer cannot exceed 200 characters");
-        // }
-        //
-        // if (!string.IsNullOrWhiteSpace(row.WeightUnit) && row.WeightUnit.Length > 20)
-        // {
-        //     errors.Add($"Row {rowIndex}: Weight Unit cannot exceed 20 characters");
-        // }
-        //
-        // if (row.Weight is < 0)
-        // {
-        //     errors.Add($"Row {rowIndex}: Weight must be >= 0");
-        // }
+        if (!string.IsNullOrWhiteSpace(row.Description) && row.Description.Length > 2000)
+        {
+            errors.Add($"Row {rowIndex}: Description cannot exceed 2000 characters");
+        }
+
+        if (!string.IsNullOrWhiteSpace(row.Manufacturer) && row.Manufacturer.Length > 200)
+        {
+            errors.Add($"Row {rowIndex}: Manufacturer cannot exceed 200 characters");
+        }
+
+        if (!string.IsNullOrWhiteSpace(row.WeightUnit) && row.WeightUnit.Trim().Length > 10)
+        {
+            errors.Add($"Row {rowIndex}: Weight Unit cannot exceed 10 characters (actual: {row.WeightUnit.Trim().Length})");
+        }
+
+        if (row.Weight is < 0)
+        {
+            errors.Add($"Row {rowIndex}: Weight must be >= 0");
+        }
 
         // Validate Category exists (only if provided)
-        if (row.CategoryId.HasValue)
+        if (row.CategoryId.HasValue && !categoryIds.Contains(row.CategoryId.Value))
         {
-            var category = await categoryRepository.FirstOrDefaultAsync(
-                new GetCategorySpecs(row.CategoryId.Value), cancellationToken);
-            if (category == null)
-            {
-                errors.Add($"Row {rowIndex}: Category with ID '{row.CategoryId}' does not exist");
-            }
+            errors.Add($"Row {rowIndex}: Category with ID '{row.CategoryId}' does not exist");
         }
-        // Note: CategoryId is optional - will use default if not provided
 
         // Validate Supplier exists (only if provided)
-        if (row.SupplierId.HasValue)
+        if (row.SupplierId.HasValue && !supplierIds.Contains(row.SupplierId.Value))
         {
-            var supplier = await supplierRepository.FirstOrDefaultAsync(
-                new GetSupplierSpecs(row.SupplierId.Value), cancellationToken);
-            if (supplier == null)
-            {
-                errors.Add($"Row {rowIndex}: Supplier with ID '{row.SupplierId}' does not exist");
-            }
+            errors.Add($"Row {rowIndex}: Supplier with ID '{row.SupplierId}' does not exist");
         }
-        // Note: SupplierId is optional - will use default if not provided
-
-        // Validate expiry date for perishable items
-        // if (row is { IsPerishable: true, ExpiryDate: not null } && row.ExpiryDate.Value < DateTime.UtcNow)
-        // {
-        //     errors.Add($"Row {rowIndex}: Expiry Date for perishable items cannot be in the past");
-        // }
 
         return errors;
     }
@@ -286,13 +422,11 @@ public sealed class ImportItemsHandler(
     /// Maps an import row to an Item domain entity.
     /// Uses default Category and Supplier if not provided in the import file.
     /// </summary>
-    private async Task<Item> MapToEntityAsync(ItemImportRow row, CancellationToken cancellationToken)
+    private static Item MapToEntity(ItemImportRow row, DefaultIdType defaultCategoryId, DefaultIdType defaultSupplierId)
     {
-        // Get or use default CategoryId
-        var categoryId = row.CategoryId ?? await GetOrCreateDefaultCategoryAsync(cancellationToken);
-        
-        // Get or use default SupplierId
-        var supplierId = row.SupplierId ?? await GetOrCreateDefaultSupplierAsync(cancellationToken);
+        // Use provided IDs or defaults
+        var categoryId = row.CategoryId ?? defaultCategoryId;
+        var supplierId = row.SupplierId ?? defaultSupplierId;
 
         var item = Item.Create(
             name: row.Name!.Trim(),
@@ -324,42 +458,6 @@ public sealed class ImportItemsHandler(
             dimensionUnit: null); // Not in import row
 
         return item;
-    }
-
-    /// <summary>
-    /// Gets the first available category or throws an exception if none exists.
-    /// In production, you should create a default "Uncategorized" category during setup.
-    /// </summary>
-    private async Task<DefaultIdType> GetOrCreateDefaultCategoryAsync(CancellationToken cancellationToken)
-    {
-        var categories = await categoryRepository.ListAsync(cancellationToken);
-        var defaultCategory = categories.FirstOrDefault();
-        
-        if (defaultCategory == null)
-        {
-            throw new InvalidOperationException(
-                "No categories found in the system. Please create at least one category before importing items without CategoryId.");
-        }
-
-        return defaultCategory.Id;
-    }
-
-    /// <summary>
-    /// Gets the first available supplier or throws an exception if none exists.
-    /// In production, you should create a default "Unknown Supplier" during setup.
-    /// </summary>
-    private async Task<DefaultIdType> GetOrCreateDefaultSupplierAsync(CancellationToken cancellationToken)
-    {
-        var suppliers = await supplierRepository.ListAsync(cancellationToken);
-        var defaultSupplier = suppliers.FirstOrDefault();
-        
-        if (defaultSupplier == null)
-        {
-            throw new InvalidOperationException(
-                "No suppliers found in the system. Please create at least one supplier before importing items without SupplierId.");
-        }
-
-        return defaultSupplier.Id;
     }
 }
 
