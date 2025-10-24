@@ -100,7 +100,7 @@
             <MudTextField Label="Order Number" For="@(() => context.OrderNumber)" @bind-Value="context.OrderNumber" Required="true" />
         </MudItem>
         
-        <MudItem xs="12" sm="6" md="4" lg="3">
+        <MudItem xs="12">
             <AutocompleteSupplier Value="context.SupplierId"
                                  ValueChanged="value => context.SupplierId = value ?? DefaultIdType.Empty"
                                  For="@(() => context.SupplierId)"
@@ -159,7 +159,7 @@
                            Color="Color.Info" 
                            OnClick="@(() => ViewOrderDetails(context.Id))" 
                            Variant="Variant.Filled"
-                           FullWidth="true">
+                           FullWidth="false">
                     Manage Order Items
                 </MudButton>
             </MudItem>
