@@ -1,0 +1,189 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" Model="@_model">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mb-3">Record Count for Item</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudSimpleTable Dense="true">
+                        <tbody>
+                            <tr>
+                                <td style="width: 40%; font-weight: 500;">System Quantity</td>
+                                <td><strong>@Item.SystemQuantity</strong></td>
+                            </tr>
+                            @if (Item.CountedQuantity.HasValue)
+                            {
+                                <tr>
+                                    <td style="font-weight: 500;">Previous Count</td>
+                                    <td>@Item.CountedQuantity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-3" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="int?" @bind-Value="_model.CountedQuantity"
+                                    Label="Counted Quantity"
+                                    Required="true"
+                                    Min="0"
+                                    Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_model.CountedBy"
+                                 Label="Counted By"
+                                 For="@(() => _model.CountedBy)"
+                                 Variant="Variant.Filled" />
+                </MudItem>
+
+                @if (_variance.HasValue && _variance != 0)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="@GetVarianceSeverity(_variance.Value)" Dense="true">
+                            Variance detected: <strong>@_variance</strong> (@(_variance > 0 ? "overage" : "shortage"))
+                        </MudAlert>
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_model.Notes"
+                                 For="@(() => _model.Notes)"
+                                 Label="Notes (optional - add details about variance)"
+                                 Lines="3"
+                                 Variant="Variant.Filled" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveAsync">
+            Save Count
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    
+    /// <summary>
+    /// The cycle count ID.
+    /// </summary>
+    [Parameter] public DefaultIdType CycleCountId { get; set; }
+    
+    /// <summary>
+    /// The cycle count item to record.
+    /// </summary>
+    [Parameter] public CycleCountItemResponse Item { get; set; } = default!;
+
+    private MudForm _form = default!;
+    private CycleCountRecordModel _model = new();
+    private int? _variance;
+
+    /// <summary>
+    /// Initializes the form with existing data.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        // Pre-populate with existing data if available
+        _model.CountedQuantity = Item.CountedQuantity ?? Item.SystemQuantity;
+        _model.CountedBy = Item.CountedBy;
+        
+        CalculateVariance();
+    }
+
+    private void CalculateVariance()
+    {
+        if (_model.CountedQuantity.HasValue)
+        {
+            _variance = _model.CountedQuantity.Value - Item.SystemQuantity;
+        }
+    }
+
+    private Severity GetVarianceSeverity(int variance)
+    {
+        var absVariance = Math.Abs(variance);
+        return absVariance switch
+        {
+            0 => Severity.Success,
+            < 5 => Severity.Info,
+            < 10 => Severity.Warning,
+            _ => Severity.Error
+        };
+    }
+
+    private async Task SaveAsync()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        if (!_model.CountedQuantity.HasValue)
+        {
+            Snackbar.Add("Counted quantity is required", Severity.Warning);
+            return;
+        }
+
+        CalculateVariance();
+
+        try
+        {
+            // Use object initialization for the command
+            var command = new RecordCycleCountItemCommand
+            {
+                CycleCountId = CycleCountId,
+                CycleCountItemId = Item.Id ?? DefaultIdType.Empty,
+                CountedQuantity = _model.CountedQuantity.Value,
+                CountedBy = _model.CountedBy,
+                Notes = _model.Notes
+            };
+
+            await Client.RecordCycleCountItemEndpointAsync("1", CycleCountId, Item.ItemId, command).ConfigureAwait(false);
+            Snackbar.Add("Count recorded successfully", Severity.Success);
+            
+            if (_variance.HasValue && Math.Abs(_variance.Value) >= 10)
+            {
+                Snackbar.Add("Significant variance detected. Consider recounting.", Severity.Warning);
+            }
+            
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to record count: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    /// <summary>
+    /// Model for recording a cycle count item.
+    /// </summary>
+    public class CycleCountRecordModel
+    {
+        /// <summary>
+        /// The counted quantity.
+        /// </summary>
+        public int? CountedQuantity { get; set; }
+        
+        /// <summary>
+        /// The person who counted the item.
+        /// </summary>
+        public string? CountedBy { get; set; }
+        
+        /// <summary>
+        /// Optional notes about the count.
+        /// </summary>
+        public string? Notes { get; set; }
+    }
+}
+

@@ -13,6 +13,7 @@
 10. **StoreDashboard** - Dashboard with metrics and charts
 11. **GoodsReceipts** - Full CRUD with partial receiving workflow, two-step wizard, receiving history tracking
 12. **GoodsReceiptItems** - Sub-component with quality control fields (lot/serial numbers, quality status, variance tracking)
+13. **CycleCounts** - Full CRUD with workflow operations (Start, Complete, Cancel, Reconcile), variance tracking, progress monitoring
 
 ## Pages to Create 📝
 1. **StockLevels** - Inventory tracking with Reserve/Allocate/Release operations
@@ -20,9 +21,8 @@
 3. **InventoryTransactions** - Transaction tracking with Approve operation
 4. **InventoryTransfers** - Transfer management with workflow (Approve, Mark In Transit, Complete, Cancel)
 5. **StockAdjustments** - Adjustment management with Approve operation
-6. **CycleCounts** - Cycle count management with workflow (Start, Complete, Reconcile, Add Item)
-7. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)
-8. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
+6. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)
+7. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
 
 ## Warehouse Pages Status
 1. **Warehouses** - Exists, needs verification

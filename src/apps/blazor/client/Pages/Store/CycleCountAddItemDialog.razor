@@ -1,0 +1,91 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" Model="@_model">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.body1" Class="mb-3">
+                        Add an item to the cycle count. The system quantity will be automatically retrieved from current inventory levels.
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <AutocompleteItem @bind-Value="_model.ItemId"
+                                     For="@(() => _model.ItemId)"
+                                     Label="Item"
+                                     Variant="Variant.Filled"
+                                     Required="true" />
+                </MudItem>
+
+                @if (_systemQuantity.HasValue)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            Current system quantity for this item: <strong>@_systemQuantity</strong>
+                        </MudAlert>
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_model.Notes"
+                                 For="@(() => _model.Notes)"
+                                 Label="Notes"
+                                 Lines="3"
+                                 Variant="Variant.Filled" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveAsync">
+            Add Item
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public DefaultIdType CycleCountId { get; set; }
+
+    private MudForm _form = default!;
+    private CycleCountAddItemModel _model = new();
+    private int? _systemQuantity;
+
+    private async Task SaveAsync()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        try
+        {
+            var command = new AddCycleCountItemCommand
+            {
+                CycleCountId = CycleCountId,
+                ItemId = _model.ItemId
+            };
+
+            await Client.AddCycleCountItemEndpointAsync("1", CycleCountId, command).ConfigureAwait(false);
+            Snackbar.Add("Item added to cycle count successfully", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to add item: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    /// <summary>
+    /// Model for adding an item to a cycle count.
+    /// </summary>
+    public class CycleCountAddItemModel
+    {
+        public DefaultIdType ItemId { get; set; }
+        public string? Notes { get; set; }
+    }
+}
+

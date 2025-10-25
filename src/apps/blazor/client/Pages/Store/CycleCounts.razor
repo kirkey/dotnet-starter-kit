@@ -1,0 +1,130 @@
+@page "/store/cycle-counts"
+
+<PageHeader Title="Cycle Counts" Header="Cycle Counts" SubHeader="Manage inventory cycle counts with workflow operations and variance tracking." />
+
+<EntityTable @ref="_table" TEntity="CycleCountResponse" TId="DefaultIdType" TRequest="CycleCountViewModel" Context="@Context">
+    
+    <AdvancedSearchContent>
+        <MudSelect T="DefaultIdType?" Label="Warehouse" @bind-Value="SearchWarehouseId">
+            <MudSelectItem T="DefaultIdType?" Value="null">All Warehouses</MudSelectItem>
+            @foreach (var warehouse in _warehouses)
+            {
+                <MudSelectItem T="DefaultIdType?" Value="warehouse.Id">@warehouse.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Scheduled")">Scheduled</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("InProgress")">In Progress</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Completed")">Completed</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
+        </MudSelect>
+        <MudSelect T="string?" Label="Count Type" @bind-Value="SearchCountType">
+            <MudSelectItem T="string?" Value="null">All Types</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Full")">Full</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Partial")">Partial</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("ABC")">ABC</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Random")">Random</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="Count Date From" Date="SearchCountDateFrom" DateChanged="value => SearchCountDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Count Date To" Date="SearchCountDateTo" DateChanged="value => SearchCountDateTo = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ViewCountDetails(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
+            </div>
+        </MudMenuItem>
+        @if (context.Status == "Scheduled")
+        {
+            <MudMenuItem OnClick="@(() => StartCount(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Class="mr-2" Color="Color.Success" />
+                    <span>Start Count</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "InProgress")
+        {
+            <MudMenuItem OnClick="@(() => CompleteCount(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Primary" />
+                    <span>Complete Count</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Completed" && (context.VarianceItems > 0))
+        {
+            <MudMenuItem OnClick="@(() => ReconcileCount(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Balance" Class="mr-2" Color="Color.Warning" />
+                    <span>Reconcile Variances</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Scheduled" || context.Status == "InProgress")
+        {
+            <MudMenuItem OnClick="@(() => CancelCount(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+                    <span>Cancel Count</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+    
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Count Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.CountNumber" For="@(() => context.CountNumber)" Label="Count Number" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <AutocompleteWarehouse @bind-Value="context.WarehouseId" 
+                                  For="@(() => context.WarehouseId)" 
+                                  Label="Warehouse" 
+                                  Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.CountDate" For="@(() => context.CountDate)" Label="Scheduled Date" DateFormat="MMMM dd, yyyy" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect T="string" @bind-Value="context.CountType" For="@(() => context.CountType)" Label="Count Type" Required="true">
+                <MudSelectItem T="string" Value="@("Full")">Full</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Partial")">Partial</MudSelectItem>
+                <MudSelectItem T="string" Value="@("ABC")">ABC</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Random")">Random</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6" lg="6">
+            <MudTextField @bind-Value="context.Name" For="@(() => context.Name)" Label="Name" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6" lg="6">
+            <MudTextField @bind-Value="context.CountedBy" For="@(() => context.CountedBy)" Label="Counter Name" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" For="@(() => context.Description)" Label="Description" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

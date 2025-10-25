@@ -1,0 +1,220 @@
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
+            @if (_loading)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+            else if (_cycleCount != null)
+            {
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h5" Class="mb-4">Cycle Count Details</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%; font-weight: 500;">Count Number</td>
+                                    <td><strong>@_cycleCount.CountNumber</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Status</td>
+                                    <td>
+                                        <MudChip T="string" Color="@GetStatusColor(_cycleCount.Status)" Size="Size.Small">
+                                            @_cycleCount.Status
+                                        </MudChip>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Warehouse</td>
+                                    <td><strong>@_cycleCount.WarehouseName</strong></td>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(_cycleCount.WarehouseLocationName))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Location</td>
+                                        <td>@_cycleCount.WarehouseLocationName</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="font-weight: 500;">Count Type</td>
+                                    <td>@_cycleCount.CountType</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Scheduled Date</td>
+                                    <td>@_cycleCount.CountDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                @if (_cycleCount.StartDate.HasValue)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Started</td>
+                                        <td>@_cycleCount.StartDate?.ToString("MMMM dd, yyyy HH:mm")</td>
+                                    </tr>
+                                }
+                                @if (_cycleCount.CompletedDate.HasValue)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Completed</td>
+                                        <td>@_cycleCount.CompletedDate?.ToString("MMMM dd, yyyy HH:mm")</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_cycleCount.CountedBy))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Counter</td>
+                                        <td>@_cycleCount.CountedBy</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_cycleCount.Name))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Name</td>
+                                        <td>@_cycleCount.Name</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_cycleCount.Description))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Description</td>
+                                        <td>@_cycleCount.Description</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="font-weight: 500;">Progress</td>
+                                    <td>
+                                        <strong>@_cycleCount.CountedItems / @_cycleCount.TotalItems</strong> items counted
+                                        @if (_cycleCount.TotalItems > 0)
+                                        {
+                                            var percentage = (int)((decimal)_cycleCount.CountedItems / _cycleCount.TotalItems * 100);
+                                            <MudProgressLinear Color="@GetProgressColor(percentage)" Value="@percentage" Size="Size.Small" Class="my-1" />
+                                        }
+                                    </td>
+                                </tr>
+                                @if (_cycleCount.VarianceItems > 0)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Variances</td>
+                                        <td>
+                                            <MudChip T="string" Color="Color.Warning" Size="Size.Small">@_cycleCount.VarianceItems items</MudChip>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_cycleCount.Notes))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Notes</td>
+                                        <td>@_cycleCount.Notes</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <div class="d-flex justify-space-between align-center mb-3">
+                            <MudText Typo="Typo.h6">Count Items</MudText>
+                            @if (_cycleCount.Status == "Scheduled" || _cycleCount.Status == "InProgress")
+                            {
+                                <MudButton Variant="Variant.Filled" 
+                                          Color="Color.Primary" 
+                                          OnClick="AddItem" 
+                                          StartIcon="@Icons.Material.Filled.Add"
+                                          Size="Size.Small">
+                                    Add Item
+                                </MudButton>
+                            }
+                        </div>
+
+                        @if (_cycleCount.Items?.Any() == true)
+                        {
+                            <MudTable Items="@_cycleCount.Items" Dense="true" Hover="true" Bordered="true" Striped="true">
+                                <HeaderContent>
+                                    <MudTh>Item</MudTh>
+                                    <MudTh Style="text-align: right;">System Qty</MudTh>
+                                    <MudTh Style="text-align: right;">Counted Qty</MudTh>
+                                    <MudTh Style="text-align: right;">Variance</MudTh>
+                                    <MudTh Style="text-align: center;">Recount</MudTh>
+                                    @if (_cycleCount.Status == "InProgress")
+                                    {
+                                        <MudTh Style="text-align: center;">Actions</MudTh>
+                                    }
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Item">@GetItemName(context.ItemId)</MudTd>
+                                    <MudTd DataLabel="System Qty" Style="text-align: right;">@context.SystemQuantity</MudTd>
+                                    <MudTd DataLabel="Counted Qty" Style="text-align: right;">
+                                        @if (context.CountedQuantity.HasValue)
+                                        {
+                                            <span>@context.CountedQuantity</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: gray;">-</span>
+                                        }
+                                    </MudTd>
+                                    <MudTd DataLabel="Variance" Style="text-align: right;">
+                                        @if (context.VarianceQuantity.HasValue)
+                                        {
+                                            var varianceColor = context.VarianceQuantity.Value == 0 ? "color: green;" : "color: red; font-weight: bold;";
+                                            <span style="@varianceColor">@context.VarianceQuantity</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: gray;">-</span>
+                                        }
+                                    </MudTd>
+                                    <MudTd DataLabel="Recount" Style="text-align: center;">
+                                        @if (context.RequiresRecount)
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Warning" Size="Size.Small" />
+                                        }
+                                    </MudTd>
+                                    @if (_cycleCount.Status == "InProgress")
+                                    {
+                                        <MudTd DataLabel="Actions" Style="text-align: center;">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Edit" 
+                                                          Color="Color.Primary" 
+                                                          Size="Size.Small" 
+                                                          OnClick="@(() => RecordCount(context))" />
+                                        </MudTd>
+                                    }
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                        else
+                        {
+                            <MudAlert Severity="Severity.Info">No items have been added to this count yet.</MudAlert>
+                        }
+                    </MudItem>
+
+                    @if (_cycleCount.Status == "Scheduled")
+                    {
+                        <MudItem xs="12" Class="mt-4">
+                            <MudAlert Severity="Severity.Info">
+                                This count is scheduled. Start the count to begin recording quantities.
+                            </MudAlert>
+                        </MudItem>
+                    }
+                    @if (_cycleCount.Status == "InProgress")
+                    {
+                        <MudItem xs="12" Class="mt-4">
+                            <MudAlert Severity="Severity.Warning">
+                                Count all items and then complete the count to calculate variances.
+                            </MudAlert>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
