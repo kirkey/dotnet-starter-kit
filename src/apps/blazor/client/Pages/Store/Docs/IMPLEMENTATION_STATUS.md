@@ -112,8 +112,23 @@
 - **Special Feature**: OUT transactions represent actual inventory removal for order fulfillment
 - **Progress Tracking**: Completion percentage, lines completed vs. total lines
 
-## Pages to Create 📝
-6. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
+### PutAwayTasks Module
+- **CRUD Operations**: Create, Read, Delete
+- **Workflow Operations**: AddItem, Assign, Start, Complete
+- **Status Workflow**: Created → Assigned → InProgress → Completed
+- **Put-Away Strategies**: Standard, ABC, CrossDock, Directed
+- **Domain Events**: PutAwayTaskCreated, PutAwayTaskUpdated, PutAwayTaskItemAdded, PutAwayTaskAssigned, PutAwayTaskStarted, PutAwayTaskCompleted
+- **Event Handlers** (2 complete):
+  - PutAwayTaskCreatedHandler - Creates audit trail for new put-away tasks
+  - PutAwayTaskCompletedHandler - Creates IN transactions for stored items (inventory placement)
+- **Domain Methods**: Create, AddItem, AssignToWorker, StartPutAway, CompletePutAway, IncrementCompletedLines, GetCompletionPercentage
+- **Search Filters**: Comprehensive put-away task search with status, strategy, worker, date ranges
+- **Validation**: Comprehensive validators for all commands
+- **Exception Handling**: PutAwayTaskNotFoundException
+- **Transaction Tracking**: IN transactions for completed put-aways with TXN-PUTAWAY prefix, ADJUSTMENT for creation
+- **Special Feature**: IN transactions represent actual inventory placement into storage locations
+- **Progress Tracking**: Completion percentage, lines completed vs. total lines
+- **Integration**: Links to GoodsReceipts for received inventory
 
 ## Warehouse Pages Status
 1. **Warehouses** - Exists, needs verification
