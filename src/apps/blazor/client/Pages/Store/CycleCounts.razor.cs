@@ -42,15 +42,13 @@ public partial class CycleCounts
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var command = filter.Adapt<SearchCycleCountsCommand>();
-                command.WarehouseId = SearchWarehouseId;
-                command.Status = SearchStatus;
-                var result = await Client.SearchCycleCountsEndpointAsync("1", command).ConfigureAwait(false);
+                // Temporary: Simple search until API client includes SearchCycleCountsCommand
+                var result = await Client.SearchCycleCountsEndpointAsync("1").ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<CycleCountResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateCycleCountEndpointAsync("1", viewModel.Adapt<CreateCycleountCommand>()).ConfigureAwait(false);
+                await Client.CreateCycleCountEndpointAsync("1", viewModel.Adapt<CreateCycleCountCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
