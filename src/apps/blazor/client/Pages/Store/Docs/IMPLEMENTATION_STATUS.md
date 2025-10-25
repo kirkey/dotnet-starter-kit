@@ -4,13 +4,15 @@
 1. **Categories** - Full CRUD with image upload
 2. **Items** - Full CRUD with autocompletes for Category and Supplier
 3. **Suppliers** - Full CRUD with contact and payment info
-4. **PurchaseOrders** - Full CRUD with workflow operations (Submit, Approve, Send, Receive, Cancel)
+4. **PurchaseOrders** - Full CRUD with workflow operations (Submit, Approve, Send, Receive, Cancel, PDF generation)
 5. **PurchaseOrderItems** - Sub-component with Add/Edit/Delete functionality
 6. **Bins** - Full CRUD with warehouse location autocomplete
 7. **ItemSuppliers** - Partial (razor file exists, needs .cs file)
 8. **LotNumbers** - Full CRUD with status management
 9. **SerialNumbers** - Full CRUD with status lifecycle
 10. **StoreDashboard** - Dashboard with metrics and charts
+11. **GoodsReceipts** - Full CRUD with partial receiving workflow, two-step wizard, receiving history tracking
+12. **GoodsReceiptItems** - Sub-component with quality control fields (lot/serial numbers, quality status, variance tracking)
 
 ## Pages to Create 📝
 1. **StockLevels** - Inventory tracking with Reserve/Allocate/Release operations
@@ -19,9 +21,8 @@
 4. **InventoryTransfers** - Transfer management with workflow (Approve, Mark In Transit, Complete, Cancel)
 5. **StockAdjustments** - Adjustment management with Approve operation
 6. **CycleCounts** - Cycle count management with workflow (Start, Complete, Reconcile, Add Item)
-7. **GoodsReceipts** - Goods receipt management with Receive operation
-8. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)
-9. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
+7. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)
+8. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
 
 ## Warehouse Pages Status
 1. **Warehouses** - Exists, needs verification
