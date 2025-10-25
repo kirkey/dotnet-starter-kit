@@ -94,8 +94,25 @@
 - **Special Feature**: Intelligent transaction type determination (Increase/Found→IN, Decrease/Damage/Loss/Write-Off→OUT)
 - **Financial Impact**: Tracks unit cost and total cost impact for accounting
 
+### PickLists Module
+- **CRUD Operations**: Create, Read, Update, Delete
+- **Workflow Operations**: AddItem, Assign, Start, Complete, Cancel
+- **Status Workflow**: Created → Assigned → InProgress → Completed (or Cancelled at any stage before Completed)
+- **Picking Types**: Order, Wave, Batch, Zone
+- **Domain Events**: PickListCreated, PickListUpdated, PickListItemAdded, PickListAssigned, PickListStarted, PickListCompleted, PickListCancelled
+- **Event Handlers** (3 complete):
+  - PickListCreatedHandler - Creates audit trail for new pick lists
+  - PickListCompletedHandler - Creates OUT transactions for picked items (inventory removal)
+  - PickListCancelledHandler - Creates audit trail for cancellations
+- **Domain Methods**: Create, AddItem, AssignToPicker, StartPicking, CompletePicking, Cancel, IncrementCompletedLines, GetCompletionPercentage
+- **Search Filters**: Comprehensive pick list search with status, type, picker, date ranges
+- **Validation**: Comprehensive validators for all commands
+- **Exception Handling**: PickListNotFoundException
+- **Transaction Tracking**: OUT transactions for completed picks with TXN-PICK prefix, ADJUSTMENT for creation/cancellation
+- **Special Feature**: OUT transactions represent actual inventory removal for order fulfillment
+- **Progress Tracking**: Completion percentage, lines completed vs. total lines
+
 ## Pages to Create 📝
-5. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)
 6. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
 
 ## Warehouse Pages Status
