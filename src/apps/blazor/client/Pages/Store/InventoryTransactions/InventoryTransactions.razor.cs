@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransactions;
 
 /// <summary>
 /// InventoryTransactions page logic. Provides CRUD and search over InventoryTransaction entities using the generated API client.
@@ -39,20 +39,20 @@ public partial class InventoryTransactions
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchInventoryTransactionsCommand>();
-                var result = await Client.SearchInventoryTransactionsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchInventoryTransactionsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<InventoryTransactionResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateInventoryTransactionEndpointAsync("1", viewModel.Adapt<CreateInventoryTransactionCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateInventoryTransactionEndpointAsync("1", viewModel.Adapt<CreateInventoryTransactionCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
     private async Task ApproveTransaction(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Confirm Approval",
             "Are you sure you want to approve this transaction?",
             yesText: "Approve",
@@ -61,7 +61,7 @@ public partial class InventoryTransactions
         if (result == true)
         {
             var command = new ApproveInventoryTransactionCommand();
-            await Client.ApproveInventoryTransactionEndpointAsync("1", id, command);
+            await Blazor.Client.ApproveInventoryTransactionEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

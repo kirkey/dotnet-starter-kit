@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.StockAdjustments;
 
 public partial class StockAdjustments
 {
@@ -32,24 +32,24 @@ public partial class StockAdjustments
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchStockAdjustmentsCommand>();
-                var result = await Client.SearchStockAdjustmentsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchStockAdjustmentsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<StockAdjustmentResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateStockAdjustmentEndpointAsync("1", viewModel.Adapt<CreateStockAdjustmentCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateStockAdjustmentEndpointAsync("1", viewModel.Adapt<CreateStockAdjustmentCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.UpdateStockAdjustmentEndpointAsync("1", id, viewModel.Adapt<UpdateStockAdjustmentCommand>()).ConfigureAwait(false);
+                await Blazor.Client.UpdateStockAdjustmentEndpointAsync("1", id, viewModel.Adapt<UpdateStockAdjustmentCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
     private async Task ApproveAdjustment(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Confirm Approval",
             "Are you sure you want to approve this adjustment?",
             yesText: "Approve",
@@ -58,7 +58,7 @@ public partial class StockAdjustments
         if (result == true)
         {
             var command = new ApproveStockAdjustmentCommand();
-            await Client.ApproveStockAdjustmentEndpointAsync("1", id, command);
+            await Blazor.Client.ApproveStockAdjustmentEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

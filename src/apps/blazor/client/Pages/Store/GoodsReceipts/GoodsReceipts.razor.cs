@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts;
 
 /// <summary>
 /// Goods Receipts page logic. Provides CRUD and search over GoodsReceipt entities using the generated API client.
@@ -43,14 +43,14 @@ public partial class GoodsReceipts
                 command.Status = SearchStatus;
                 command.ReceivedDateFrom = SearchReceivedDateFrom;
                 command.ReceivedDateTo = SearchReceivedDateTo;
-                var result = await Client.SearchGoodsReceiptsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchGoodsReceiptsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<GoodsReceiptResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateGoodsReceiptEndpointAsync("1", viewModel.Adapt<CreateGoodsReceiptCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateGoodsReceiptEndpointAsync("1", viewModel.Adapt<CreateGoodsReceiptCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteGoodsReceiptEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteGoodsReceiptEndpointAsync("1", id).ConfigureAwait(false));
     }
 
     protected override async Task OnInitializedAsync()
@@ -72,12 +72,12 @@ public partial class GoodsReceipts
                 PageSize = 500,
                 OrderBy = ["Name"]
             };
-            var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
+            var result = await Blazor.Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
             _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load warehouses: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to load warehouses: {ex.Message}", Severity.Error);
         }
     }
 
@@ -94,12 +94,12 @@ public partial class GoodsReceipts
                 PageSize = 500,
                 OrderBy = ["OrderNumber"]
             };
-            var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
+            var result = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
             _purchaseOrders = result.Items?.Where(x => x.Status == "Sent" || x.Status == "PartiallyReceived").ToList() ?? new List<PurchaseOrderResponse>();
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load purchase orders: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to load purchase orders: {ex.Message}", Severity.Error);
         }
     }
 
@@ -121,7 +121,7 @@ public partial class GoodsReceipts
             MaxWidth = MaxWidth.Large, 
         };
 
-        var dialog = await DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
+        var dialog = await MudBlazor.DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled)
@@ -135,7 +135,7 @@ public partial class GoodsReceipts
     /// </summary>
     private async Task MarkReceived(DefaultIdType id)
     {
-        var confirmed = await DialogService.ShowMessageBox(
+        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
             "Mark as Received",
             "Are you sure you want to mark this goods receipt as received? This will update inventory quantities.",
             yesText: "Mark Received",
@@ -145,13 +145,13 @@ public partial class GoodsReceipts
         {
             try
             {
-                await Client.MarkReceivedEndpointAsync("1", id).ConfigureAwait(false);
-                Snackbar.Add("Goods receipt marked as received successfully", Severity.Success);
+                await Blazor.Client.MarkReceivedEndpointAsync("1", id).ConfigureAwait(false);
+                MudBlazor.Snackbar.Add("Goods receipt marked as received successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                Snackbar.Add($"Failed to mark receipt as received: {ex.Message}", Severity.Error);
+                MudBlazor.Snackbar.Add($"Failed to mark receipt as received: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -170,7 +170,7 @@ public partial class GoodsReceipts
             MaxWidth = MaxWidth.Large, 
         };
 
-        var dialog = await DialogService.ShowAsync<CreateReceiptFromPODialog>("Create Receipt from Purchase Order", options);
+        var dialog = await MudBlazor.DialogService.ShowAsync<CreateReceiptFromPODialog>("Create Receipt from Purchase Order", options);
         var result = await dialog.Result;
 
         if (!result.Canceled)
@@ -197,7 +197,7 @@ public partial class GoodsReceipts
             MaxWidth = MaxWidth.Large, 
         };
 
-        await DialogService.ShowAsync<ReceivingHistoryDialog>("Receiving History", parameters, options);
+        await MudBlazor.DialogService.ShowAsync<ReceivingHistoryDialog>("Receiving History", parameters, options);
     }
 }
 

@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryReservations;
 
 public partial class InventoryReservations
 {
@@ -35,14 +35,14 @@ public partial class InventoryReservations
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchInventoryReservationsCommand>();
-                var result = await Client.SearchInventoryReservationsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchInventoryReservationsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<InventoryReservationResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateInventoryReservationEndpointAsync("1", viewModel.Adapt<CreateInventoryReservationCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateInventoryReservationEndpointAsync("1", viewModel.Adapt<CreateInventoryReservationCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteInventoryReservationEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteInventoryReservationEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.PickLists;
 
 public partial class PickLists
 {
@@ -35,20 +35,20 @@ public partial class PickLists
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchPickListsCommand>();
-                var result = await Client.SearchPickListsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchPickListsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PickListResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreatePickListEndpointAsync("1", viewModel.Adapt<CreatePickListCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreatePickListEndpointAsync("1", viewModel.Adapt<CreatePickListCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeletePickListEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeletePickListEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
     private async Task AssignPickList(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Assign Pick List",
             "Assign this pick list to a worker?",
             yesText: "Assign",
@@ -57,7 +57,7 @@ public partial class PickLists
         if (result == true)
         {
             var command = new AssignPickListCommand();
-            await Client.AssignPickListEndpointAsync("1", id, command);
+            await Blazor.Client.AssignPickListEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

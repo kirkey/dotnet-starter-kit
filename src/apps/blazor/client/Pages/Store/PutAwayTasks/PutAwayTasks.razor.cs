@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.PutAwayTasks;
 
 public partial class PutAwayTasks
 {
@@ -36,20 +36,20 @@ public partial class PutAwayTasks
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchPutAwayTasksCommand>();
-                var result = await Client.SearchPutAwayTasksEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchPutAwayTasksEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PutAwayTaskResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreatePutAwayTaskEndpointAsync("1", viewModel.Adapt<CreatePutAwayTaskCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreatePutAwayTaskEndpointAsync("1", viewModel.Adapt<CreatePutAwayTaskCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeletePutAwayTaskEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeletePutAwayTaskEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
     private async Task AssignTask(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Assign Task",
             "Assign this put-away task to a worker?",
             yesText: "Assign",
@@ -58,7 +58,7 @@ public partial class PutAwayTasks
         if (result == true)
         {
             var command = new AssignPutAwayTaskCommand();
-            await Client.AssignPutAwayTaskEndpointAsync("1", id, command);
+            await Blazor.Client.AssignPutAwayTaskEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

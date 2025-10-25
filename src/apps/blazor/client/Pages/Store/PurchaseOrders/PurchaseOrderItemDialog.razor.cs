@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 
 /// <summary>
 /// Dialog component for adding or editing purchase order items.
@@ -36,8 +36,8 @@ public partial class PurchaseOrderItemDialog
                     Discount = Model.DiscountAmount > 0 ? Model.DiscountAmount : null
                 };
 
-                await Client.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
-                Snackbar.Add("Item added successfully", Severity.Success);
+                await Blazor.Client.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
+                MudBlazor.Snackbar.Add("Item added successfully", Severity.Success);
             }
             else
             {
@@ -47,15 +47,15 @@ public partial class PurchaseOrderItemDialog
                     Quantity = Model.Quantity
                 };
 
-                await Client.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, Model.ItemId, quantityCommand).ConfigureAwait(false);
-                Snackbar.Add("Item updated successfully", Severity.Success);
+                await Blazor.Client.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, Model.ItemId, quantityCommand).ConfigureAwait(false);
+                MudBlazor.Snackbar.Add("Item updated successfully", Severity.Success);
             }
 
             MudDialog.Close(DialogResult.Ok(true));
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to save item: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to save item: {ex.Message}", Severity.Error);
         }
     }
 

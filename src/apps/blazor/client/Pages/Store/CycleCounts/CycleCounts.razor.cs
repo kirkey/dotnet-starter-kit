@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts;
 
 /// <summary>
 /// Cycle Counts page logic. Provides CRUD and search over CycleCount entities using the generated API client.
@@ -43,16 +43,16 @@ public partial class CycleCounts
             searchFunc: async filter =>
             {
                 // Temporary: Simple search until API client includes SearchCycleCountsCommand
-                var result = await Client.SearchCycleCountsEndpointAsync("1").ConfigureAwait(false);
+                var result = await Blazor.Client.SearchCycleCountsEndpointAsync("1").ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<CycleCountResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateCycleCountEndpointAsync("1", viewModel.Adapt<CreateCycleCountCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateCycleCountEndpointAsync("1", viewModel.Adapt<CreateCycleCountCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.UpdateCycleCountEndpointAsync("1", id, viewModel.Adapt<UpdateCycleCountCommand>()).ConfigureAwait(false);
+                await Blazor.Client.UpdateCycleCountEndpointAsync("1", id, viewModel.Adapt<UpdateCycleCountCommand>()).ConfigureAwait(false);
             },
             deleteFunc: null); // Cycle counts should not be deleted, only cancelled
     }
@@ -75,12 +75,12 @@ public partial class CycleCounts
                 PageSize = 500,
                 OrderBy = ["Name"]
             };
-            var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
+            var result = await Blazor.Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
             _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load warehouses: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to load warehouses: {ex.Message}", Severity.Error);
         }
     }
 
@@ -102,7 +102,7 @@ public partial class CycleCounts
             MaxWidth = MaxWidth.Large, 
         };
 
-        var dialog = await DialogService.ShowAsync<CycleCountDetailsDialog>("Cycle Count Details", parameters, options);
+        var dialog = await MudBlazor.DialogService.ShowAsync<CycleCountDetailsDialog>("Cycle Count Details", parameters, options);
         var result = await dialog.Result;
 
         if (result is { Canceled: false })
@@ -116,7 +116,7 @@ public partial class CycleCounts
     /// </summary>
     private async Task StartCount(DefaultIdType id)
     {
-        var confirmed = await DialogService.ShowMessageBox(
+        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
             "Start Cycle Count",
             "Are you sure you want to start this cycle count? This will change the status to In Progress.",
             yesText: "Start Count",
@@ -126,13 +126,13 @@ public partial class CycleCounts
         {
             try
             {
-                await Client.StartCycleCountEndpointAsync("1", id).ConfigureAwait(false);
-                Snackbar.Add("Cycle count started successfully", Severity.Success);
+                await Blazor.Client.StartCycleCountEndpointAsync("1", id).ConfigureAwait(false);
+                MudBlazor.Snackbar.Add("Cycle count started successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                Snackbar.Add($"Failed to start cycle count: {ex.Message}", Severity.Error);
+                MudBlazor.Snackbar.Add($"Failed to start cycle count: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -142,7 +142,7 @@ public partial class CycleCounts
     /// </summary>
     private async Task CompleteCount(DefaultIdType id)
     {
-        var confirmed = await DialogService.ShowMessageBox(
+        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
             "Complete Cycle Count",
             "Are you sure you want to complete this cycle count? This will calculate variances and finalize the count.",
             yesText: "Complete Count",
@@ -152,13 +152,13 @@ public partial class CycleCounts
         {
             try
             {
-                await Client.CompleteCycleCountEndpointAsync("1", id).ConfigureAwait(false);
-                Snackbar.Add("Cycle count completed successfully", Severity.Success);
+                await Blazor.Client.CompleteCycleCountEndpointAsync("1", id).ConfigureAwait(false);
+                MudBlazor.Snackbar.Add("Cycle count completed successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                Snackbar.Add($"Failed to complete cycle count: {ex.Message}", Severity.Error);
+                MudBlazor.Snackbar.Add($"Failed to complete cycle count: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -175,7 +175,7 @@ public partial class CycleCounts
             { "Color", Color.Error }
         };
 
-        var dialog = await DialogService.ShowAsync<DeleteConfirmation>("Cancel Cycle Count", parameters);
+        var dialog = await MudBlazor.DialogService.ShowAsync<DeleteConfirmation>("Cancel Cycle Count", parameters);
         var result = await dialog.Result;
 
         if (result is { Canceled: false })
@@ -187,13 +187,13 @@ public partial class CycleCounts
                     Id = id,
                     Reason = "Cancelled by user"
                 };
-                await Client.CancelCycleCountEndpointAsync("1", id, command).ConfigureAwait(false);
-                Snackbar.Add("Cycle count cancelled successfully", Severity.Success);
+                await Blazor.Client.CancelCycleCountEndpointAsync("1", id, command).ConfigureAwait(false);
+                MudBlazor.Snackbar.Add("Cycle count cancelled successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                Snackbar.Add($"Failed to cancel cycle count: {ex.Message}", Severity.Error);
+                MudBlazor.Snackbar.Add($"Failed to cancel cycle count: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -203,7 +203,7 @@ public partial class CycleCounts
     /// </summary>
     private async Task ReconcileCount(DefaultIdType id)
     {
-        var confirmed = await DialogService.ShowMessageBox(
+        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
             "Reconcile Cycle Count",
             "Are you sure you want to reconcile this cycle count? This will adjust inventory levels to match the counted quantities.",
             yesText: "Reconcile",
@@ -213,13 +213,13 @@ public partial class CycleCounts
         {
             try
             {
-                await Client.ReconcileCycleCountEndpointAsync("1", id).ConfigureAwait(false);
-                Snackbar.Add("Cycle count reconciled successfully", Severity.Success);
+                await Blazor.Client.ReconcileCycleCountEndpointAsync("1", id).ConfigureAwait(false);
+                MudBlazor.Snackbar.Add("Cycle count reconciled successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                Snackbar.Add($"Failed to reconcile cycle count: {ex.Message}", Severity.Error);
+                MudBlazor.Snackbar.Add($"Failed to reconcile cycle count: {ex.Message}", Severity.Error);
             }
         }
     }

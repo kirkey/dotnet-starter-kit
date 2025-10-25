@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts;
 
 /// <summary>
 /// Dialog component for viewing cycle count details and managing count items.
@@ -34,7 +34,7 @@ public partial class CycleCountDetailsDialog
         _loading = true;
         try
         {
-            _cycleCount = await Client.GetCycleCountEndpointAsync("1", CycleCountId).ConfigureAwait(false);
+            _cycleCount = await Blazor.Client.GetCycleCountEndpointAsync("1", CycleCountId).ConfigureAwait(false);
             
             // Load item names for display
             if (_cycleCount?.Items != null && _cycleCount.Items.Any())
@@ -44,7 +44,7 @@ public partial class CycleCountDetailsDialog
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load cycle count: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to load cycle count: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -67,7 +67,7 @@ public partial class CycleCountDetailsDialog
             {
                 try
                 {
-                    var item = await Client.GetItemEndpointAsync("1", itemId).ConfigureAwait(false);
+                    var item = await Blazor.Client.GetItemEndpointAsync("1", itemId).ConfigureAwait(false);
                     _itemNames[itemId] = item?.Name ?? "Unknown Item";
                 }
                 catch
@@ -78,7 +78,7 @@ public partial class CycleCountDetailsDialog
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load item names: {ex.Message}", Severity.Warning);
+            MudBlazor.Snackbar.Add($"Failed to load item names: {ex.Message}", Severity.Warning);
         }
     }
 
@@ -128,7 +128,7 @@ public partial class CycleCountDetailsDialog
             { x => x.CycleCountId, CycleCountId }
         };
 
-        var dialog = await DialogService.ShowAsync<CycleCountAddItemDialog>("Add Item to Count", parameters);
+        var dialog = await MudBlazor.DialogService.ShowAsync<CycleCountAddItemDialog>("Add Item to Count", parameters);
         var result = await dialog.Result;
 
         if (result is { Canceled: false })
@@ -148,7 +148,7 @@ public partial class CycleCountDetailsDialog
             { x => x.Item, item }
         };
 
-        var dialog = await DialogService.ShowAsync<CycleCountRecordDialog>("Record Count", parameters);
+        var dialog = await MudBlazor.DialogService.ShowAsync<CycleCountRecordDialog>("Record Count", parameters);
         var result = await dialog.Result;
 
         if (result is { Canceled: false })

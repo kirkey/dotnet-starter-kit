@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts;
 
 /// <summary>
 /// Dialog for adding items to a goods receipt.
@@ -45,13 +45,13 @@ public partial class GoodsReceiptItemDialog
                 PurchaseOrderItemId = _model.PurchaseOrderItemId
             };
 
-            await Client.AddGoodsReceiptItemEndpointAsync("1", GoodsReceiptId, command).ConfigureAwait(false);
-            Snackbar.Add("Item added successfully", Severity.Success);
+            await Blazor.Client.AddGoodsReceiptItemEndpointAsync("1", GoodsReceiptId, command).ConfigureAwait(false);
+            MudBlazor.Snackbar.Add("Item added successfully", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to add item: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to add item: {ex.Message}", Severity.Error);
         }
     }
 

@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers;
 
 /// <summary>
 /// Suppliers page logic. Provides CRUD and server-side search over Supplier entities via the generated API client.
@@ -39,18 +39,18 @@ public partial class Suppliers
             searchFunc: async filter =>
             {
                 var command = filter.Adapt<SearchSuppliersCommand>();
-                var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<SupplierResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateSupplierEndpointAsync("1", viewModel.Adapt<CreateSupplierCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateSupplierEndpointAsync("1", viewModel.Adapt<CreateSupplierCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
+                await Blazor.Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }
 }
 

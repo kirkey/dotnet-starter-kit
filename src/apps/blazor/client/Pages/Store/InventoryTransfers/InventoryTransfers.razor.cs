@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransfers;
 
 /// <summary>
 /// InventoryTransfers page logic. Provides CRUD and search over InventoryTransfer entities using the generated API client.
@@ -36,24 +36,24 @@ public partial class InventoryTransfers
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchInventoryTransfersCommand>();
-                var result = await Client.SearchInventoryTransfersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchInventoryTransfersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<GetInventoryTransferListResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateInventoryTransferEndpointAsync("1", viewModel.Adapt<CreateInventoryTransferCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateInventoryTransferEndpointAsync("1", viewModel.Adapt<CreateInventoryTransferCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.UpdateInventoryTransferEndpointAsync("1", id, viewModel.Adapt<UpdateInventoryTransferCommand>()).ConfigureAwait(false);
+                await Blazor.Client.UpdateInventoryTransferEndpointAsync("1", id, viewModel.Adapt<UpdateInventoryTransferCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteInventoryTransferEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteInventoryTransferEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
     private async Task ApproveTransfer(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Confirm Approval",
             "Are you sure you want to approve this transfer?",
             yesText: "Approve",
@@ -62,14 +62,14 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new ApproveInventoryTransferCommand();
-            await Client.ApproveInventoryTransferEndpointAsync("1", id, command);
+            await Blazor.Client.ApproveInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }
 
     private async Task MarkInTransit(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Mark In Transit",
             "Mark this transfer as in transit?",
             yesText: "Confirm",
@@ -78,14 +78,14 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new MarkInTransitInventoryTransferCommand();
-            await Client.MarkInTransitInventoryTransferEndpointAsync("1", id, command);
+            await Blazor.Client.MarkInTransitInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }
 
     private async Task CompleteTransfer(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Complete Transfer",
             "Mark this transfer as completed?",
             yesText: "Complete",
@@ -94,14 +94,14 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new CompleteInventoryTransferCommand();
-            await Client.CompleteInventoryTransferEndpointAsync("1", id, command);
+            await Blazor.Client.CompleteInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }
 
     private async Task CancelTransfer(DefaultIdType id)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        bool? result = await MudBlazor.DialogService.ShowMessageBox(
             "Cancel Transfer",
             "Are you sure you want to cancel this transfer?",
             yesText: "Cancel Transfer",
@@ -111,7 +111,7 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new CancelInventoryTransferCommand();
-            await Client.CancelInventoryTransferEndpointAsync("1", id, command);
+            await Blazor.Client.CancelInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

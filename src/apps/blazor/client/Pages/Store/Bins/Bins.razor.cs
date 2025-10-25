@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.Bins;
 
 /// <summary>
 /// Bins page logic. Provides CRUD and search over Bin entities using the generated API client.
@@ -34,18 +34,18 @@ public partial class Bins
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchBinsCommand>();
-                var result = await Client.SearchBinsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchBinsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<BinResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.CreateBinEndpointAsync("1", viewModel.Adapt<CreateBinCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateBinEndpointAsync("1", viewModel.Adapt<CreateBinCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.UpdateBinEndpointAsync("1", id, viewModel.Adapt<UpdateBinCommand>()).ConfigureAwait(false);
+                await Blazor.Client.UpdateBinEndpointAsync("1", id, viewModel.Adapt<UpdateBinCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteBinEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteBinEndpointAsync("1", id).ConfigureAwait(false));
 
     await Task.CompletedTask;
     }

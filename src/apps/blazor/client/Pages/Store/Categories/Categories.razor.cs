@@ -1,6 +1,6 @@
 using FSH.Starter.Blazor.Client.Services;
 
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.Categories;
 
 /// <summary>
 /// Store Categories page logic. Provides CRUD and search over Category entities using the generated API client.
@@ -35,7 +35,7 @@ public partial class Categories
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchCategoriesCommand>();
-                var result = await Client.SearchCategoriesEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Blazor.Client.SearchCategoriesEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<CategoryResponse>>();
             },
             createFunc: async viewModel =>
@@ -47,7 +47,7 @@ public partial class Categories
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.CreateCategoryEndpointAsync("1", viewModel.Adapt<CreateCategoryCommand>()).ConfigureAwait(false);
+                await Blazor.Client.CreateCategoryEndpointAsync("1", viewModel.Adapt<CreateCategoryCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
@@ -58,9 +58,9 @@ public partial class Categories
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.UpdateCategoryEndpointAsync("1", id, viewModel.Adapt<UpdateCategoryCommand>()).ConfigureAwait(false);
+                await Blazor.Client.UpdateCategoryEndpointAsync("1", id, viewModel.Adapt<UpdateCategoryCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteCategoryEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Blazor.Client.DeleteCategoryEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

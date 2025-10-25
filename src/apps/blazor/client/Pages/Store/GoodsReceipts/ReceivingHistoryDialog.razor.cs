@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts;
 
 /// <summary>
 /// Dialog for viewing the receiving history of a purchase order.
@@ -29,14 +29,14 @@ public partial class ReceivingHistoryDialog
         try
         {
             // Load purchase order
-            _purchaseOrder = await Client.GetPurchaseOrderEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
+            _purchaseOrder = await Blazor.Client.GetPurchaseOrderEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
 
             // Load supplier name
             if (_purchaseOrder?.SupplierId != null)
             {
                 try
                 {
-                    var supplier = await Client.GetSupplierEndpointAsync("1", _purchaseOrder.SupplierId).ConfigureAwait(false);
+                    var supplier = await Blazor.Client.GetSupplierEndpointAsync("1", _purchaseOrder.SupplierId).ConfigureAwait(false);
                     _supplierName = supplier.Name;
                 }
                 catch
@@ -53,11 +53,11 @@ public partial class ReceivingHistoryDialog
                 PageSize = 100,
                 OrderBy = new[] { "ReceivedDate desc" }
             };
-            var receiptsResult = await Client.SearchGoodsReceiptsEndpointAsync("1", receiptsCommand).ConfigureAwait(false);
+            var receiptsResult = await Blazor.Client.SearchGoodsReceiptsEndpointAsync("1", receiptsCommand).ConfigureAwait(false);
             _receipts = receiptsResult.Items?.ToList() ?? new List<GoodsReceiptResponse>();
 
             // Load PO items to show receiving progress
-            var itemsResult = await Client.GetPurchaseOrderItemsForReceivingEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
+            var itemsResult = await Blazor.Client.GetPurchaseOrderItemsForReceivingEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
             
             // Convert to PurchaseOrderItemResponse format for compatibility with existing UI
             _poItems = itemsResult.Items?
@@ -79,7 +79,7 @@ public partial class ReceivingHistoryDialog
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load receiving history: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to load receiving history: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -104,7 +104,7 @@ public partial class ReceivingHistoryDialog
             FullWidth = true
         };
 
-        var dialog = await DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
+        var dialog = await MudBlazor.DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
         var result = await dialog.Result;
 
         // Reload data if changes were made

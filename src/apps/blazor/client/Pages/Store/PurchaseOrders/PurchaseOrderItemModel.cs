@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 
 /// <summary>
 /// Model for managing purchase order items in the dialog form.

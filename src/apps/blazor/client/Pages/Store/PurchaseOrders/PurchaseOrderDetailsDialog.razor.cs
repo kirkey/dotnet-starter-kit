@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 
 /// <summary>
 /// Dialog component for viewing purchase order details and managing order items.
@@ -34,14 +34,14 @@ public partial class PurchaseOrderDetailsDialog
         _loading = true;
         try
         {
-            _purchaseOrder = await Client.GetPurchaseOrderEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
+            _purchaseOrder = await Blazor.Client.GetPurchaseOrderEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
             
             // Load supplier name
             if (_purchaseOrder?.SupplierId != null && _purchaseOrder.SupplierId != DefaultIdType.Empty)
             {
                 try
                 {
-                    var supplier = await Client.GetSupplierEndpointAsync("1", _purchaseOrder.SupplierId).ConfigureAwait(false);
+                    var supplier = await Blazor.Client.GetSupplierEndpointAsync("1", _purchaseOrder.SupplierId).ConfigureAwait(false);
                     _supplierName = supplier?.Name ?? "Unknown";
                 }
                 catch
@@ -52,7 +52,7 @@ public partial class PurchaseOrderDetailsDialog
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load purchase order: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Failed to load purchase order: {ex.Message}", Severity.Error);
         }
         finally
         {

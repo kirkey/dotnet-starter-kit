@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Store;
+namespace FSH.Starter.Blazor.Client.Pages.Store.Dashboard;
 
 /// <summary>
 /// Store Dashboard page logic. Loads live metrics from Store API endpoints.
@@ -48,7 +48,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading dashboard data: {ex.Message}", Severity.Error);
+            MudBlazor.Snackbar.Add($"Error loading dashboard data: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -65,7 +65,7 @@ public partial class StoreDashboard
         try
         {
             // Get total items count
-            var itemsResult = await Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
+            var itemsResult = await Blazor.Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
             {
                 PageNumber = 1,
                 PageSize = 1
@@ -73,7 +73,7 @@ public partial class StoreDashboard
             _metrics.TotalItems = itemsResult.TotalCount;
 
             // Get perishable items count (these could potentially expire)
-            var perishableResult = await Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
+            var perishableResult = await Blazor.Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
             {
                 IsPerishable = true,
                 PageNumber = 1,
@@ -83,7 +83,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading item metrics: {ex.Message}", Severity.Warning);
+            MudBlazor.Snackbar.Add($"Error loading item metrics: {ex.Message}", Severity.Warning);
             _metrics.TotalItems = 0;
             _metrics.PerishableItemsCount = 0;
         }
@@ -97,13 +97,13 @@ public partial class StoreDashboard
         try
         {
             // Get pending purchase orders (Draft + Submitted)
-            var draftResult = await Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
+            var draftResult = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
             {
                 Status = "Draft",
                 PageNumber = 1,
                 PageSize = 1
             });
-            var submittedResult = await Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
+            var submittedResult = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
             {
                 Status = "Submitted",
                 PageNumber = 1,
@@ -112,13 +112,13 @@ public partial class StoreDashboard
             _metrics.PurchaseOrdersPending = draftResult.TotalCount + submittedResult.TotalCount;
 
             // Get approved/sent purchase orders
-            var approvedResult = await Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
+            var approvedResult = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
             {
                 Status = "Approved",
                 PageNumber = 1,
                 PageSize = 1
             });
-            var sentResult = await Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
+            var sentResult = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
             {
                 Status = "Sent",
                 PageNumber = 1,
@@ -127,7 +127,7 @@ public partial class StoreDashboard
             _metrics.PurchaseOrdersApproved = approvedResult.TotalCount + sentResult.TotalCount;
 
             // Get received purchase orders
-            var receivedResult = await Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
+            var receivedResult = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
             {
                 Status = "Received",
                 PageNumber = 1,
@@ -136,7 +136,7 @@ public partial class StoreDashboard
             _metrics.PurchaseOrdersCompleted = receivedResult.TotalCount;
 
             // Get cancelled purchase orders
-            var cancelledResult = await Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
+            var cancelledResult = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", new SearchPurchaseOrdersCommand
             {
                 Status = "Cancelled",
                 PageNumber = 1,
@@ -146,7 +146,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading purchase order metrics: {ex.Message}", Severity.Warning);
+            MudBlazor.Snackbar.Add($"Error loading purchase order metrics: {ex.Message}", Severity.Warning);
             _metrics.PurchaseOrdersPending = 0;
             _metrics.PurchaseOrdersApproved = 0;
             _metrics.PurchaseOrdersCompleted = 0;
@@ -161,7 +161,7 @@ public partial class StoreDashboard
     {
         try
         {
-            var warehousesResult = await Client.SearchWarehousesEndpointAsync("1", new SearchWarehousesCommand
+            var warehousesResult = await Blazor.Client.SearchWarehousesEndpointAsync("1", new SearchWarehousesCommand
             {
                 PageNumber = 1,
                 PageSize = 100
@@ -170,7 +170,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading warehouse metrics: {ex.Message}", Severity.Warning);
+            MudBlazor.Snackbar.Add($"Error loading warehouse metrics: {ex.Message}", Severity.Warning);
             _metrics.WarehousesCount = 0;
         }
     }
@@ -182,7 +182,7 @@ public partial class StoreDashboard
     {
         try
         {
-            var suppliersResult = await Client.SearchSuppliersEndpointAsync("1", new SearchSuppliersCommand
+            var suppliersResult = await Blazor.Client.SearchSuppliersEndpointAsync("1", new SearchSuppliersCommand
             {
                 PageNumber = 1,
                 PageSize = 1
@@ -191,7 +191,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading supplier metrics: {ex.Message}", Severity.Warning);
+            MudBlazor.Snackbar.Add($"Error loading supplier metrics: {ex.Message}", Severity.Warning);
             _metrics.SuppliersCount = 0;
         }
     }
@@ -204,7 +204,7 @@ public partial class StoreDashboard
         try
         {
             // Get all items to check stock levels
-            var itemsResult = await Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
+            var itemsResult = await Blazor.Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
             {
                 PageNumber = 1,
                 PageSize = 10,
@@ -220,7 +220,7 @@ public partial class StoreDashboard
                 foreach (var item in itemsResult.Items)
                 {
                     // Get stock levels for this item
-                    var stockResult = await Client.SearchStockLevelsEndpointAsync("1", new SearchStockLevelsCommand
+                    var stockResult = await Blazor.Client.SearchStockLevelsEndpointAsync("1", new SearchStockLevelsCommand
                     {
                         ItemId = item.Id,
                         PageNumber = 1,
@@ -258,7 +258,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading stock levels: {ex.Message}", Severity.Warning);
+            MudBlazor.Snackbar.Add($"Error loading stock levels: {ex.Message}", Severity.Warning);
             _metrics.LowStockItems = 0;
         }
     }
