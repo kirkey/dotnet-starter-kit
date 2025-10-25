@@ -17,7 +17,7 @@ public static class GetPutAwayTaskEndpoint
             .WithSummary("Get a put-away task by ID")
             .WithDescription("Retrieves a specific put-away task with all items and details.")
             .Produces<GetPutAwayTaskResponse>(200)
-            .RequirePermission("store:putawaytasks:view")
+            .RequirePermission("Permissions.Store.View")
             .MapToApiVersion(1);
     }
 }

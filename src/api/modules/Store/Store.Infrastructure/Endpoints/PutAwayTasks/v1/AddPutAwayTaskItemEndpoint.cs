@@ -21,7 +21,7 @@ public static class AddPutAwayTaskItemEndpoint
             .WithSummary("Add an item to a put-away task")
             .WithDescription("Adds an item to an existing put-away task for warehouse operations.")
             .Produces<AddPutAwayTaskItemResponse>(200)
-            .RequirePermission("store:putawaytasks:update")
+            .RequirePermission("Permissions.Store.Update")
             .MapToApiVersion(1);
     }
 }

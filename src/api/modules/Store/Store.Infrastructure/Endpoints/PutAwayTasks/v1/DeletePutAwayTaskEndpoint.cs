@@ -17,7 +17,7 @@ public static class DeletePutAwayTaskEndpoint
             .WithSummary("Delete a put-away task")
             .WithDescription("Deletes a put-away task and all associated items.")
             .Produces<DeletePutAwayTaskResponse>(200)
-            .RequirePermission("store:putawaytasks:delete")
+            .RequirePermission("Permissions.Store.Delete")
             .MapToApiVersion(1);
     }
 }

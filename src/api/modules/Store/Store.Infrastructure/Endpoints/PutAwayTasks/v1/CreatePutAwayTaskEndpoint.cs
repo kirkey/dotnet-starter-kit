@@ -16,7 +16,7 @@ public static class CreatePutAwayTaskEndpoint
             .WithSummary("Create a new put-away task")
             .WithDescription("Creates a new put-away task for warehouse operations.")
             .Produces<CreatePutAwayTaskResponse>(200)
-            .RequirePermission("store:putawaytasks:create")
+            .RequirePermission("Permissions.Store.Create")
             .MapToApiVersion(1);
     }
 }

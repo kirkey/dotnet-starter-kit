@@ -16,7 +16,7 @@ public static class SearchPutAwayTasksEndpoint
             .WithSummary("Search put-away tasks")
             .WithDescription("Searches put-away tasks with filtering, sorting, and pagination.")
             .Produces<PagedList<PutAwayTaskResponse>>(200)
-            .RequirePermission("store:putawaytasks:view")
+            .RequirePermission("Permissions.Store.View")
             .MapToApiVersion(1);
     }
 }

@@ -21,7 +21,7 @@ public static class AssignPutAwayTaskEndpoint
             .WithSummary("Assign a put-away task to a worker")
             .WithDescription("Assigns a put-away task to a warehouse worker for execution.")
             .Produces<AssignPutAwayTaskResponse>(200)
-            .RequirePermission("store:putawaytasks:update")
+            .RequirePermission("Permissions.Store.Update")
             .MapToApiVersion(1);
     }
 }

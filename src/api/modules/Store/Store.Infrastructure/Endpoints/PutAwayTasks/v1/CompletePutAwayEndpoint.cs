@@ -21,7 +21,7 @@ public static class CompletePutAwayEndpoint
             .WithSummary("Complete a put-away task")
             .WithDescription("Marks a put-away task as completed and records the completion time.")
             .Produces<CompletePutAwayResponse>(200)
-            .RequirePermission("store:putawaytasks:update")
+            .RequirePermission("Permissions.Store.Update")
             .MapToApiVersion(1);
     }
 }

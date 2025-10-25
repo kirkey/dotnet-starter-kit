@@ -21,7 +21,7 @@ public static class StartPutAwayEndpoint
             .WithSummary("Start a put-away task")
             .WithDescription("Marks a put-away task as started and records the start time.")
             .Produces<StartPutAwayResponse>(200)
-            .RequirePermission("store:putawaytasks:update")
+            .RequirePermission("Permissions.Store.Update")
             .MapToApiVersion(1);
     }
 }
