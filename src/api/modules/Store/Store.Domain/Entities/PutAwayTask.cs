@@ -85,7 +85,6 @@ public sealed class PutAwayTask : AuditableEntity, IAggregateRoot
     /// Optional notes or special instructions.
     /// Max length: 500.
     /// </summary>
-    
 
     /// <summary>
     /// Total lines on put-away task.
@@ -169,11 +168,13 @@ public sealed class PutAwayTask : AuditableEntity, IAggregateRoot
         DefaultIdType? lotNumberId,
         DefaultIdType? serialNumberId,
         int quantity,
+        int sequenceNumber,
         string? notes = null)
     {
         if (Status != "Created") throw new InvalidOperationException("Cannot add items to put-away task after it has been assigned");
 
         var taskItem = PutAwayTaskItem.Create(Id, itemId, toBinId, lotNumberId, serialNumberId, quantity, notes);
+        taskItem.SetSequence(sequenceNumber);
         Items.Add(taskItem);
         TotalLines++;
 

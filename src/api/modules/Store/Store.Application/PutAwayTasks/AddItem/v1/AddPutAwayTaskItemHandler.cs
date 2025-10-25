@@ -16,7 +16,8 @@ public sealed class AddPutAwayTaskItemHandler(
             request.ToBinId,
             request.LotNumberId,
             request.SerialNumberId,
-            request.Quantity,
+            request.QuantityToPutAway,
+            request.SequenceNumber,
             request.Notes);
 
         await repository.UpdateAsync(putAwayTask, cancellationToken).ConfigureAwait(false);

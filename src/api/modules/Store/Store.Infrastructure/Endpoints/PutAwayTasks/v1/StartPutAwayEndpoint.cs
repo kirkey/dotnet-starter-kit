@@ -7,15 +7,19 @@ public static class StartPutAwayEndpoint
     internal static RouteHandlerBuilder MapStartPutAwayEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id}/start", async (DefaultIdType id, IMediator mediator) =>
+            .MapPost("/{id}/start", async (DefaultIdType id, StartPutAwayCommand request, ISender sender) =>
             {
-                var request = new StartPutAwayCommand { PutAwayTaskId = id };
-                var response = await mediator.Send(request).ConfigureAwait(false);
+                if (id != request.PutAwayTaskId)
+                {
+                    return Results.BadRequest("Put-away task ID mismatch");
+                }
+                
+                var response = await sender.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(StartPutAwayEndpoint))
             .WithSummary("Start a put-away task")
-            .WithDescription("Start a put-away task")
+            .WithDescription("Marks a put-away task as started and records the start time.")
             .Produces<StartPutAwayResponse>(200)
             .RequirePermission("store:putawaytasks:update")
             .MapToApiVersion(1);

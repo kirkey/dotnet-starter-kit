@@ -132,9 +132,16 @@ All Store pages have been organized into feature-based folders for better access
 ### 📍 Put Away Tasks
 - **Location**: `PutAwayTasks/`
 - **Files**:
-  - `PutAwayTasks.razor` - Manage warehouse put-away tasks
+  - `PutAwayTasks.razor` - Main put-away tasks list
   - `PutAwayTasks.razor.cs`
+  - `PutAwayTaskDetailsDialog.razor` - View/edit put-away task details
+  - `PutAwayTaskDetailsDialog.razor.cs`
+  - `AssignPutAwayTaskDialog.razor` - Assign tasks to warehouse workers
+  - `AssignPutAwayTaskDialog.razor.cs`
+  - `AddPutAwayTaskItemDialog.razor` - Add items to put-away tasks
+  - `AddPutAwayTaskItemDialog.razor.cs`
 - **Route**: `/store/put-away-tasks`
+- **Features**: Workflow operations (assign, start, complete), item management, strategy-based put-away, progress tracking, advanced search filters
 
 ### 🔢 Serial Numbers
 - **Location**: `SerialNumbers/`

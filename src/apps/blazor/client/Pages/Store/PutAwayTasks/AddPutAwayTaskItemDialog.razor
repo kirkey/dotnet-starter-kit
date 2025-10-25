@@ -1,0 +1,154 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1" />
+            Add Item to Put Away Task
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Info" Class="mb-4">
+                        Add items to put-away task <strong>@TaskNumber</strong>. Items can only be added when the task status is "Created".
+                    </MudAlert>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudAutocomplete T="ItemResponse"
+                                     Label="Item"
+                                     @bind-Value="_selectedItem"
+                                     SearchFunc="SearchItems"
+                                     ToStringFunc="@(item => item?.Name ?? string.Empty)"
+                                     Required="true"
+                                     RequiredError="Item is required"
+                                     Variant="Variant.Outlined"
+                                     AdornmentIcon="@Icons.Material.Filled.Search"
+                                     AdornmentColor="Color.Primary"
+                                     HelperText="Search and select an item to add" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudAutocomplete T="BinResponse"
+                                     Label="To Bin Location"
+                                     @bind-Value="_selectedToBin"
+                                     SearchFunc="SearchBins"
+                                     ToStringFunc="@(bin => bin?.Code ?? string.Empty)"
+                                     Required="true"
+                                     RequiredError="Destination bin is required"
+                                     Variant="Variant.Outlined"
+                                     AdornmentIcon="@Icons.Material.Filled.LocationOn"
+                                     AdornmentColor="Color.Primary"
+                                     HelperText="Destination bin for put-away" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudNumericField T="int"
+                                     Label="Quantity to Put Away"
+                                     @bind-Value="_quantityToPutAway"
+                                     Required="true"
+                                     RequiredError="Quantity is required"
+                                     Min="1"
+                                     Variant="Variant.Outlined"
+                                     HelperText="Number of units to put away" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudNumericField T="int"
+                                     Label="Sequence Number"
+                                     @bind-Value="_sequenceNumber"
+                                     Required="true"
+                                     RequiredError="Sequence number is required"
+                                     Min="1"
+                                     Variant="Variant.Outlined"
+                                     HelperText="Order of put-away operations" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField T="string"
+                                  Label="Notes (Optional)"
+                                  @bind-Value="_notes"
+                                  Lines="3"
+                                  Counter="500"
+                                  MaxLength="500"
+                                  Variant="Variant.Outlined"
+                                  HelperText="Special instructions for putting away this item" />
+                </MudItem>
+
+                @if (_selectedItem != null)
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="0" Class="pa-3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-2">Selected Item Details</MudText>
+                            <MudDivider Class="mb-2" />
+                            <MudSimpleTable Dense="true">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Item Name:</strong></td>
+                                        <td>@_selectedItem.Name</td>
+                                    </tr>
+                                    @if (!string.IsNullOrEmpty(_selectedItem.Description))
+                                    {
+                                        <tr>
+                                            <td><strong>Description:</strong></td>
+                                            <td>@_selectedItem.Description</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </MudSimpleTable>
+                        </MudPaper>
+                    </MudItem>
+                }
+
+                @if (_selectedToBin != null)
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="0" Class="pa-3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-2">Destination Bin Details</MudText>
+                            <MudDivider Class="mb-2" />
+                            <MudSimpleTable Dense="true">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Bin Code:</strong></td>
+                                        <td>@_selectedToBin.Code</td>
+                                    </tr>
+                                    @if (!string.IsNullOrEmpty(_selectedToBin.Name))
+                                    {
+                                        <tr>
+                                            <td><strong>Bin Name:</strong></td>
+                                            <td>@_selectedToBin.Name</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </MudSimpleTable>
+                        </MudPaper>
+                    </MudItem>
+                }
+            </MudGrid>
+
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Class="mt-3">@_errorMessage</MudAlert>
+            }
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Filled">Cancel</MudButton>
+        <MudButton OnClick="AddItem" 
+                   Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   Disabled="@(_adding || _selectedItem == null || _selectedToBin == null || _quantityToPutAway <= 0)">
+            @if (_adding)
+            {
+                <MudProgressCircular Class="mr-2" Size="Size.Small" Indeterminate="true" />
+            }
+            Add Item
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

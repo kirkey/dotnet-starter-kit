@@ -1,0 +1,163 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AddToQueue" Class="mr-1" />
+            Put Away Task Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else if (_putAwayTask != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">General Information</MudText>
+                        <MudDivider Class="mb-3" />
+                        
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudTextField Label="Task Number" Value="@_putAwayTask.TaskNumber" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudChip T="string" Color="@GetStatusColor(_putAwayTask.Status ?? string.Empty)" Size="Size.Medium">@_putAwayTask.Status</MudChip>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField Label="Warehouse ID" Value="@_putAwayTask.WarehouseId.ToString()" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField Label="Put Away Strategy" Value="@_putAwayTask.PutAwayStrategy" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField Label="Priority" Value="@_putAwayTask.Priority" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            @if (!string.IsNullOrEmpty(_putAwayTask.AssignedTo))
+                            {
+                                <MudItem xs="12" md="6">
+                                    <MudTextField Label="Assigned To" Value="@_putAwayTask.AssignedTo" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                            @if (_putAwayTask.GoodsReceiptId.HasValue)
+                            {
+                                <MudItem xs="12" md="6">
+                                    <MudTextField Label="Goods Receipt ID" Value="@_putAwayTask.GoodsReceiptId.ToString()" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">Progress</MudText>
+                        <MudDivider Class="mb-3" />
+                        
+                        <MudGrid>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField Label="Total Items" Value="@_putAwayTask.TotalLines" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField Label="Completed Items" Value="@_putAwayTask.CompletedLines" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField Label="Completion" Value="@GetCompletionPercentage()" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                        </MudGrid>
+                        
+                        @if (_putAwayTask.TotalLines > 0)
+                        {
+                            <MudProgressLinear Color="Color.Success" Value="@GetCompletionValue()" Class="mt-3" Size="Size.Large" />
+                        }
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">Dates & Timeline</MudText>
+                        <MudDivider Class="mb-3" />
+                        
+                        <MudGrid>
+                            @if (_putAwayTask.StartDate.HasValue)
+                            {
+                                <MudItem xs="12" md="6">
+                                    <MudTextField Label="Started" Value="@_putAwayTask.StartDate?.ToString("MMMM dd, yyyy HH:mm")" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                            @if (_putAwayTask.CompletedDate.HasValue)
+                            {
+                                <MudItem xs="12" md="6">
+                                    <MudTextField Label="Completed" Value="@_putAwayTask.CompletedDate?.ToString("MMMM dd, yyyy HH:mm")" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(_putAwayTask.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="0" Class="pa-4 mb-4">
+                            <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
+                            <MudDivider Class="mb-3" />
+                            <MudTextField Value="@_putAwayTask.Notes" ReadOnly="true" Variant="Variant.Filled" Lines="3" />
+                        </MudPaper>
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mb-3">
+                            <MudText Typo="Typo.h6">Put Away Task Items</MudText>
+                            @if (_putAwayTask.Status == "Created")
+                            {
+                                <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Variant="Variant.Filled" OnClick="AddItem">
+                                    Add Item
+                                </MudButton>
+                            }
+                        </MudStack>
+                        <MudDivider Class="mb-3" />
+                        
+                        @if (_putAwayTask.Items != null && _putAwayTask.Items.Any())
+                        {
+                            <MudTable Items="@_putAwayTask.Items" Hover="true" Dense="true" Striped="true">
+                                <HeaderContent>
+                                    <MudTh>Seq</MudTh>
+                                    <MudTh>Item</MudTh>
+                                    <MudTh>To Bin</MudTh>
+                                    <MudTh>To Put Away</MudTh>
+                                    <MudTh>Put Away</MudTh>
+                                    <MudTh>Status</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Seq">@context.SequenceNumber</MudTd>
+                                    <MudTd DataLabel="Item">@context.ItemId</MudTd>
+                                    <MudTd DataLabel="To Bin">@context.ToBinId</MudTd>
+                                    <MudTd DataLabel="To Put Away">@context.QuantityToPutAway</MudTd>
+                                    <MudTd DataLabel="Put Away">@context.QuantityPutAway</MudTd>
+                                    <MudTd DataLabel="Status">
+                                        <MudChip T="string" Size="Size.Small" Color="@GetItemStatusColor(context.Status ?? string.Empty)">@context.Status</MudChip>
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                        else
+                        {
+                            <MudAlert Severity="Severity.Info">No items in this put-away task yet. Add items to begin put-away operations.</MudAlert>
+                        }
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        }
+        else if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error">@_errorMessage</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

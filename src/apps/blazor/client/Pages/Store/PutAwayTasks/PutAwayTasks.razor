@@ -1,37 +1,113 @@
 @page "/store/put-away-tasks"
 
-<PageHeader Title="Put Away Tasks" Header="Put Away Tasks" SubHeader="Manage warehouse put-away operations for received goods." />
+<PageHeader Title="Put Away Tasks" Header="Put Away Tasks" SubHeader="Manage warehouse put-away operations for received goods with optimized put-away strategies." />
 
 <EntityTable @ref="_table" TEntity="PutAwayTaskResponse" TId="DefaultIdType" TRequest="PutAwayTaskViewModel" Context="@Context">
+    
+    <AdvancedSearchContent>
+        <MudSelect T="DefaultIdType?" Label="Warehouse" @bind-Value="SearchWarehouseId">
+            <MudSelectItem T="DefaultIdType?" Value="null">All Warehouses</MudSelectItem>
+            @foreach (var warehouse in _warehouses)
+            {
+                <MudSelectItem T="DefaultIdType?" Value="warehouse.Id">@warehouse.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Created")">Created</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Assigned")">Assigned</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("InProgress")">In Progress</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Completed")">Completed</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
+        </MudSelect>
+        <MudSelect T="string?" Label="Put Away Strategy" @bind-Value="SearchPutAwayStrategy">
+            <MudSelectItem T="string?" Value="null">All Strategies</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("FIFO")">FIFO</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("LIFO")">LIFO</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("NearestLocation")">Nearest Location</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Directed")">Directed</MudSelectItem>
+        </MudSelect>
+        <MudTextField T="string" Label="Assigned To" @bind-Value="SearchAssignedTo" />
+        <MudNumericField T="int?" Label="Min Priority" @bind-Value="SearchMinPriority" />
+        <MudNumericField T="int?" Label="Max Priority" @bind-Value="SearchMaxPriority" />
+        <MudDatePicker Label="Start Date From" Date="SearchStartDateFrom" DateChanged="value => SearchStartDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Start Date To" Date="SearchStartDateTo" DateChanged="value => SearchStartDateTo = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
     <ExtraActions Context="context">
-        <MudMenuItem OnClick="@(() => AssignTask(context.Id))">
+        <MudMenuItem OnClick="@(() => ViewTaskDetails(context.Id))">
             <div class="d-flex align-center">
-                <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" />
-                <span>Assign</span>
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
             </div>
         </MudMenuItem>
+        @if (context.Status == "Created")
+        {
+            <MudMenuItem OnClick="@(() => AssignTask(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" Color="Color.Info" />
+                    <span>Assign to Worker</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Assigned")
+        {
+            <MudMenuItem OnClick="@(() => StartPutAway(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Class="mr-2" Color="Color.Success" />
+                    <span>Start Put Away</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "InProgress")
+        {
+            <MudMenuItem OnClick="@(() => CompletePutAway(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Primary" />
+                    <span>Complete Put Away</span>
+                </div>
+            </MudMenuItem>
+        }
     </ExtraActions>
-
+    
     <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Task Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
+            </MudItem>
+        }
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.TaskNumber" For="@(() => context.TaskNumber)" Label="Task Number" />
+            <MudTextField @bind-Value="context.TaskNumber" For="@(() => context.TaskNumber)" Label="Task Number" Required="true" Variant="Variant.Filled" />
         </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <AutocompleteWarehouse @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)" Label="Warehouse" Required="true" />
+            <AutocompleteWarehouse @bind-Value="context.WarehouseId" 
+                                  For="@(() => context.WarehouseId)" 
+                                  Label="Warehouse" 
+                                  Variant="Variant.Filled"
+                                  Required="true" />
         </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSelect @bind-Value="context.PutAwayStrategy" For="@(() => context.PutAwayStrategy)" Label="Put Away Strategy">
-                <MudSelectItem Value="@("FIFO")">FIFO</MudSelectItem>
-                <MudSelectItem Value="@("LIFO")">LIFO</MudSelectItem>
-                <MudSelectItem Value="@("NearestLocation")">Nearest Location</MudSelectItem>
-                <MudSelectItem Value="@("Directed")">Directed</MudSelectItem>
+            <MudSelect T="string" Label="Put Away Strategy" @bind-Value="context.PutAwayStrategy" For="@(() => context.PutAwayStrategy)" Variant="Variant.Filled">
+                <MudSelectItem T="string" Value="@("FIFO")">FIFO</MudSelectItem>
+                <MudSelectItem T="string" Value="@("LIFO")">LIFO</MudSelectItem>
+                <MudSelectItem T="string" Value="@("NearestLocation")">Nearest Location</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Directed")">Directed</MudSelectItem>
             </MudSelect>
         </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" />
+            <MudNumericField T="int" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" HelperText="Higher number = higher priority" />
         </MudItem>
+
         <MudItem xs="12">
-            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" Counter="500" MaxLength="500" />
         </MudItem>
     </EditFormContent>
 </EntityTable>
