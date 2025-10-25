@@ -17,6 +17,7 @@
 14. **StockLevels** - Full CRUD with Reserve/Allocate/Release operations (Backend Complete with Event Handlers)
 
 ## Backend Implementation Complete ✅
+
 ### StockLevels Module
 - **CRUD Operations**: Create, Read, Update (location assignments), Delete
 - **Special Operations**: Reserve, Allocate, Release stock
@@ -30,8 +31,24 @@
 - **Validation**: Comprehensive validators for all commands
 - **Exception Handling**: StockLevelNotFoundException, InsufficientStockException, InvalidStockLevelOperationException
 
+### InventoryReservations Module
+- **CRUD Operations**: Create, Read, Delete, Release
+- **Special Operations**: Allocate, Cancel, MarkExpired (domain methods)
+- **Status Workflow**: Active → Allocated/Released/Cancelled/Expired
+- **Domain Events**: InventoryReservationCreated, InventoryReservationAllocated, InventoryReservationReleased, InventoryReservationCancelled, InventoryReservationExpired
+- **Event Handlers** (5 complete):
+  - InventoryReservationCreatedHandler - Creates audit trail for new reservations
+  - InventoryReservationReleasedHandler - Creates audit trail for releases
+  - InventoryReservationAllocatedHandler - Creates audit trail for allocations
+  - InventoryReservationCancelledHandler - Creates audit trail for cancellations
+  - InventoryReservationExpiredHandler - Creates audit trail for expirations
+- **Domain Methods**: Create, Allocate, Release, Cancel, MarkExpired, IsExpired, IsActive
+- **Search Filters**: Comprehensive reservation search with status, type, date ranges
+- **Validation**: Comprehensive validators for all commands
+- **Exception Handling**: InventoryReservationNotFoundException
+- **Transaction Tracking**: Complete audit trail with TXN-RSV/RREL/RALC/RCAN/REXP prefixes
+
 ## Pages to Create 📝
-1. **InventoryReservations** - Reservation management with Release operation
 2. **InventoryTransactions** - Transaction tracking with Approve operation
 3. **InventoryTransfers** - Transfer management with workflow (Approve, Mark In Transit, Complete, Cancel)
 4. **StockAdjustments** - Adjustment management with Approve operation
