@@ -4679,7 +4679,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Create a new put-away task
         /// </summary>
         /// <remarks>
-        /// Create a new put-away task
+        /// Creates a new put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4691,7 +4691,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Create a new put-away task
         /// </summary>
         /// <remarks>
-        /// Create a new put-away task
+        /// Creates a new put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4702,30 +4702,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Add an item to a put-away task
         /// </summary>
         /// <remarks>
-        /// Add an item to a put-away task
+        /// Adds an item to an existing put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemRequestDto body);
+        System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Add an item to a put-away task
         /// </summary>
         /// <remarks>
-        /// Add an item to a put-away task
+        /// Adds an item to an existing put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemRequestDto body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Assign a put-away task to a worker
         /// </summary>
         /// <remarks>
-        /// Assign a put-away task to a worker
+        /// Assigns a put-away task to a warehouse worker for execution.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4737,7 +4737,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Assign a put-away task to a worker
         /// </summary>
         /// <remarks>
-        /// Assign a put-away task to a worker
+        /// Assigns a put-away task to a warehouse worker for execution.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4748,53 +4748,53 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Start a put-away task
         /// </summary>
         /// <remarks>
-        /// Start a put-away task
+        /// Marks a put-away task as started and records the start time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id, StartPutAwayCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Start a put-away task
         /// </summary>
         /// <remarks>
-        /// Start a put-away task
+        /// Marks a put-away task as started and records the start time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id, StartPutAwayCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete a put-away task
         /// </summary>
         /// <remarks>
-        /// Complete a put-away task
+        /// Marks a put-away task as completed and records the completion time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id, CompletePutAwayCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Complete a put-away task
         /// </summary>
         /// <remarks>
-        /// Complete a put-away task
+        /// Marks a put-away task as completed and records the completion time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id, CompletePutAwayCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete a put-away task
         /// </summary>
         /// <remarks>
-        /// Delete a put-away task
+        /// Deletes a put-away task and all associated items.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4806,7 +4806,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete a put-away task
         /// </summary>
         /// <remarks>
-        /// Delete a put-away task
+        /// Deletes a put-away task and all associated items.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4817,7 +4817,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Get a put-away task by ID
         /// </summary>
         /// <remarks>
-        /// Get a put-away task by ID
+        /// Retrieves a specific put-away task with all items and details.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4829,7 +4829,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Get a put-away task by ID
         /// </summary>
         /// <remarks>
-        /// Get a put-away task by ID
+        /// Retrieves a specific put-away task with all items and details.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4840,7 +4840,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search put-away tasks
         /// </summary>
         /// <remarks>
-        /// Search put-away tasks with filters
+        /// Searches put-away tasks with filtering, sorting, and pagination.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -4852,7 +4852,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search put-away tasks
         /// </summary>
         /// <remarks>
-        /// Search put-away tasks with filters
+        /// Searches put-away tasks with filtering, sorting, and pagination.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28364,7 +28364,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Create a new put-away task
         /// </summary>
         /// <remarks>
-        /// Create a new put-away task
+        /// Creates a new put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28379,7 +28379,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Create a new put-away task
         /// </summary>
         /// <remarks>
-        /// Create a new put-away task
+        /// Creates a new put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28468,12 +28468,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Add an item to a put-away task
         /// </summary>
         /// <remarks>
-        /// Add an item to a put-away task
+        /// Adds an item to an existing put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemRequestDto body)
+        public virtual System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemCommand body)
         {
             return AddPutAwayTaskItemEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -28483,12 +28483,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Add an item to a put-away task
         /// </summary>
         /// <remarks>
-        /// Add an item to a put-away task
+        /// Adds an item to an existing put-away task for warehouse operations.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemRequestDto body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AddPutAwayTaskItemResponse> AddPutAwayTaskItemEndpointAsync(string version, System.Guid id, AddPutAwayTaskItemCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28577,7 +28577,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Assign a put-away task to a worker
         /// </summary>
         /// <remarks>
-        /// Assign a put-away task to a worker
+        /// Assigns a put-away task to a warehouse worker for execution.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28592,7 +28592,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Assign a put-away task to a worker
         /// </summary>
         /// <remarks>
-        /// Assign a put-away task to a worker
+        /// Assigns a put-away task to a warehouse worker for execution.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28686,14 +28686,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Start a put-away task
         /// </summary>
         /// <remarks>
-        /// Start a put-away task
+        /// Marks a put-away task as started and records the start time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id, StartPutAwayCommand body)
         {
-            return StartPutAwayEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return StartPutAwayEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -28701,12 +28701,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Start a put-away task
         /// </summary>
         /// <remarks>
-        /// Start a put-away task
+        /// Marks a put-away task as started and records the start time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StartPutAwayResponse> StartPutAwayEndpointAsync(string version, System.Guid id, StartPutAwayCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28714,13 +28714,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -28789,14 +28795,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Complete a put-away task
         /// </summary>
         /// <remarks>
-        /// Complete a put-away task
+        /// Marks a put-away task as completed and records the completion time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id, CompletePutAwayCommand body)
         {
-            return CompletePutAwayEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return CompletePutAwayEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -28804,12 +28810,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Complete a put-away task
         /// </summary>
         /// <remarks>
-        /// Complete a put-away task
+        /// Marks a put-away task as completed and records the completion time.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CompletePutAwayResponse> CompletePutAwayEndpointAsync(string version, System.Guid id, CompletePutAwayCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28817,13 +28823,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -28892,7 +28904,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete a put-away task
         /// </summary>
         /// <remarks>
-        /// Delete a put-away task
+        /// Deletes a put-away task and all associated items.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28907,7 +28919,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete a put-away task
         /// </summary>
         /// <remarks>
-        /// Delete a put-away task
+        /// Deletes a put-away task and all associated items.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28993,7 +29005,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Get a put-away task by ID
         /// </summary>
         /// <remarks>
-        /// Get a put-away task by ID
+        /// Retrieves a specific put-away task with all items and details.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -29008,7 +29020,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Get a put-away task by ID
         /// </summary>
         /// <remarks>
-        /// Get a put-away task by ID
+        /// Retrieves a specific put-away task with all items and details.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -29094,7 +29106,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search put-away tasks
         /// </summary>
         /// <remarks>
-        /// Search put-away tasks with filters
+        /// Searches put-away tasks with filtering, sorting, and pagination.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -29109,7 +29121,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search put-away tasks
         /// </summary>
         /// <remarks>
-        /// Search put-away tasks with filters
+        /// Searches put-away tasks with filtering, sorting, and pagination.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -37961,8 +37973,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddPutAwayTaskItemRequestDto
+    public partial class AddPutAwayTaskItemCommand
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("putAwayTaskId")]
+        public System.Guid PutAwayTaskId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("itemId")]
         public System.Guid ItemId { get; set; } = default!;
@@ -37976,8 +37991,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("serialNumberId")]
         public System.Guid? SerialNumberId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public int Quantity { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("quantityToPutAway")]
+        public int QuantityToPutAway { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sequenceNumber")]
+        public int SequenceNumber { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
@@ -39631,6 +39649,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("success")]
         public bool Success { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CompletePutAwayCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("putAwayTaskId")]
+        public System.Guid PutAwayTaskId { get; set; } = default!;
 
     }
 
@@ -46127,6 +46154,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("success")]
         public bool Success { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StartPutAwayCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("putAwayTaskId")]
+        public System.Guid PutAwayTaskId { get; set; } = default!;
 
     }
 

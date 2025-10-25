@@ -13,7 +13,7 @@ public sealed class AddPutAwayTaskItemValidator : AbstractValidator<AddPutAwayTa
         RuleFor(x => x.ToBinId)
             .NotEmpty().WithMessage("Destination bin ID is required");
 
-        RuleFor(x => x.Quantity)
+        RuleFor(x => x.QuantityToPutAway)
             .GreaterThan(0).WithMessage("Quantity must be positive");
 
         RuleFor(x => x.Notes)

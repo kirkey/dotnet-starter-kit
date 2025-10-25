@@ -111,7 +111,8 @@ public partial class CycleCounts : ComponentBase
         {
             try
             {
-                await Client.StartCycleCountEndpointAsync("1", id);
+                var command = new StartCycleCountCommand { Id = id };
+                await Client.StartCycleCountEndpointAsync("1", id, command);
                 Snackbar.Add("Cycle count started successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -134,7 +135,8 @@ public partial class CycleCounts : ComponentBase
         {
             try
             {
-                await Client.CompleteCycleCountEndpointAsync("1", id);
+                var command = new CompleteCycleCountCommand { Id = id };
+                await Client.CompleteCycleCountEndpointAsync("1", id, command);
                 Snackbar.Add("Cycle count completed successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -157,7 +159,10 @@ public partial class CycleCounts : ComponentBase
         {
             try
             {
-                await Client.ReconcileCycleCountEndpointAsync("1", id);
+                var command = new ReconcileCycleCountCommand { Id = id };
+                await Client.ReconcileCycleCountEndpointAsync("1", id, command);
+                await Client.ReconcileCycleCountEndpointAsync("1", id, command);
+                await Client.ReconcileCycleCountEndpointAsync("1", id, command);
                 Snackbar.Add("Cycle count reconciled successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }

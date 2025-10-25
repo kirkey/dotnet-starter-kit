@@ -130,7 +130,8 @@ public partial class PurchaseOrders
         {
             try
             {
-                await Client.SubmitPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
+                var command = new SubmitPurchaseOrderCommand { Id = id };
+                await Client.SubmitPurchaseOrderEndpointAsync("1", id, command).ConfigureAwait(false);
                 Snackbar.Add("Purchase order submitted successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
