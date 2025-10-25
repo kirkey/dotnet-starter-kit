@@ -54,6 +54,12 @@ public partial class UserRoles
 
         Console.WriteLine($"roles : {request.UserRoles.Count}");
 
+        if (string.IsNullOrEmpty(Id))
+        {
+            Snackbar.Add("User ID is required", Severity.Error);
+            return;
+        }
+
         await ApiHelper.ExecuteCallGuardedAsync(
                 () => UsersClient.AssignRolesToUserEndpointAsync(Id, request),
                 successMessage: "updated user roles");

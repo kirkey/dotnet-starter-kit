@@ -48,7 +48,7 @@ public partial class PickLists
 
     private async Task AssignPickList(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Assign Pick List",
             "Assign this pick list to a worker?",
             yesText: "Assign",

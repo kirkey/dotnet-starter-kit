@@ -48,7 +48,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Error loading dashboard data: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Error loading dashboard data: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -83,7 +83,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Error loading item metrics: {ex.Message}", Severity.Warning);
+            Snackbar.Add($"Error loading item metrics: {ex.Message}", Severity.Warning);
             _metrics.TotalItems = 0;
             _metrics.PerishableItemsCount = 0;
         }
@@ -146,7 +146,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Error loading purchase order metrics: {ex.Message}", Severity.Warning);
+            Snackbar.Add($"Error loading purchase order metrics: {ex.Message}", Severity.Warning);
             _metrics.PurchaseOrdersPending = 0;
             _metrics.PurchaseOrdersApproved = 0;
             _metrics.PurchaseOrdersCompleted = 0;
@@ -170,7 +170,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Error loading warehouse metrics: {ex.Message}", Severity.Warning);
+            Snackbar.Add($"Error loading warehouse metrics: {ex.Message}", Severity.Warning);
             _metrics.WarehousesCount = 0;
         }
     }
@@ -191,7 +191,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Error loading supplier metrics: {ex.Message}", Severity.Warning);
+            Snackbar.Add($"Error loading supplier metrics: {ex.Message}", Severity.Warning);
             _metrics.SuppliersCount = 0;
         }
     }
@@ -258,7 +258,7 @@ public partial class StoreDashboard
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Error loading stock levels: {ex.Message}", Severity.Warning);
+            Snackbar.Add($"Error loading stock levels: {ex.Message}", Severity.Warning);
             _metrics.LowStockItems = 0;
         }
     }

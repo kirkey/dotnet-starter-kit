@@ -52,7 +52,7 @@ public partial class PurchaseOrderDetailsDialog
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load purchase order: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load purchase order: {ex.Message}", Severity.Error);
         }
         finally
         {

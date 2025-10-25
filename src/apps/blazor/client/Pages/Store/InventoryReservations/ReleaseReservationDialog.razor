@@ -1,0 +1,92 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.KeyboardReturn" Class="mr-1" />
+            Release Reservation
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else if (_reservation != null)
+        {
+            <MudAlert Severity="Severity.Info" Class="mb-4">
+                Releasing this reservation will return <strong>@_reservation.ReservedQuantity</strong> units of 
+                <strong>@_reservation.ItemName</strong> to available stock in <strong>@_reservation.WarehouseName</strong>.
+            </MudAlert>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-3 mb-3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-2">Reservation Summary</MudText>
+                        <MudSimpleTable Dense="true" Hover="true">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Reservation #:</strong></td>
+                                    <td>@_reservation.ReservationNumber</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Item:</strong></td>
+                                    <td>@_reservation.ItemName</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Warehouse:</strong></td>
+                                    <td>@_reservation.WarehouseName</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quantity:</strong></td>
+                                    <td>@_reservation.ReservedQuantity</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Reserved On:</strong></td>
+                                    <td>@_reservation.ReservationDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                @if (_reservation.ReferenceId.HasValue)
+                                {
+                                    <tr>
+                                        <td><strong>Reference:</strong></td>
+                                        <td>@_reservation.ReferenceId</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_releaseReason" 
+                                  Label="Release Reason" 
+                                  Required="true"
+                                  RequiredError="Please provide a reason for releasing this reservation"
+                                  Lines="4"
+                                  MaxLength="500"
+                                  Counter="500"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"
+                                  HelperText="Explain why this reservation is being released (max 500 characters)" />
+                </MudItem>
+            </MudGrid>
+
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Class="mt-3">@_errorMessage</MudAlert>
+            }
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Filled">Cancel</MudButton>
+        <MudButton OnClick="Release" 
+                   Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   Disabled="@(_releasing || string.IsNullOrWhiteSpace(_releaseReason))">
+            @if (_releasing)
+            {
+                <MudProgressCircular Class="mr-2" Size="Size.Small" Indeterminate="true" />
+            }
+            Release Reservation
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

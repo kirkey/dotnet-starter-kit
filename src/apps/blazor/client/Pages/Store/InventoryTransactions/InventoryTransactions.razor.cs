@@ -52,7 +52,7 @@ public partial class InventoryTransactions
 
     private async Task ApproveTransaction(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Confirm Approval",
             "Are you sure you want to approve this transaction?",
             yesText: "Approve",

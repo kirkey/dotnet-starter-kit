@@ -79,7 +79,7 @@ public partial class ReceivingHistoryDialog
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load receiving history: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load receiving history: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -104,7 +104,7 @@ public partial class ReceivingHistoryDialog
             FullWidth = true
         };
 
-        var dialog = await MudBlazor.DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
+        var dialog = await DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
         var result = await dialog.Result;
 
         // Reload data if changes were made

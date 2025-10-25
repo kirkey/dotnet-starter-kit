@@ -44,7 +44,7 @@ public partial class CycleCountDetailsDialog
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load cycle count: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load cycle count: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -78,7 +78,7 @@ public partial class CycleCountDetailsDialog
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load item names: {ex.Message}", Severity.Warning);
+            Snackbar.Add($"Failed to load item names: {ex.Message}", Severity.Warning);
         }
     }
 
@@ -128,7 +128,7 @@ public partial class CycleCountDetailsDialog
             { x => x.CycleCountId, CycleCountId }
         };
 
-        var dialog = await MudBlazor.DialogService.ShowAsync<CycleCountAddItemDialog>("Add Item to Count", parameters);
+        var dialog = await DialogService.ShowAsync<CycleCountAddItemDialog>("Add Item to Count", parameters);
         var result = await dialog.Result;
 
         if (result is { Canceled: false })
@@ -148,7 +148,7 @@ public partial class CycleCountDetailsDialog
             { x => x.Item, item }
         };
 
-        var dialog = await MudBlazor.DialogService.ShowAsync<CycleCountRecordDialog>("Record Count", parameters);
+        var dialog = await DialogService.ShowAsync<CycleCountRecordDialog>("Record Count", parameters);
         var result = await dialog.Result;
 
         if (result is { Canceled: false })

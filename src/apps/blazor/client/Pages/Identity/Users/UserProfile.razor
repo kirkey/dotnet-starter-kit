@@ -123,7 +123,7 @@ public class CustomStringToBoolConverter : BoolConverter<string>
             }
         }
 
-        private bool? OnSet(string arg)
+        private bool? OnSet(string? arg)
         {
             if (arg == null)
                 return null;

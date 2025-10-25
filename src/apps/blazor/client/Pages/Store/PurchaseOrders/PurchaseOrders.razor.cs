@@ -83,7 +83,7 @@ public partial class PurchaseOrders
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load suppliers: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load suppliers: {ex.Message}", Severity.Error);
         }
     }
 
@@ -105,7 +105,7 @@ public partial class PurchaseOrders
             MaxWidth = MaxWidth.Large, 
         };
 
-        var dialog = await MudBlazor.DialogService.ShowAsync<PurchaseOrderDetailsDialog>("Purchase Order Details", parameters, options);
+        var dialog = await DialogService.ShowAsync<PurchaseOrderDetailsDialog>("Purchase Order Details", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled)
@@ -120,7 +120,7 @@ public partial class PurchaseOrders
     /// </summary>
     private async Task SubmitOrder(DefaultIdType id)
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Submit Purchase Order",
             "Are you sure you want to submit this purchase order for approval?",
             yesText: "Submit",
@@ -131,12 +131,12 @@ public partial class PurchaseOrders
             try
             {
                 await Client.SubmitPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
-                MudBlazor.Snackbar.Add("Purchase order submitted successfully", Severity.Success);
+                Snackbar.Add("Purchase order submitted successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to submit purchase order: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to submit purchase order: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -146,7 +146,7 @@ public partial class PurchaseOrders
     /// </summary>
     private async Task ApproveOrder(DefaultIdType id)
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Approve Purchase Order",
             "Are you sure you want to approve this purchase order?",
             yesText: "Approve",
@@ -158,12 +158,12 @@ public partial class PurchaseOrders
             {
                 var request = new ApprovePurchaseOrderRequest { ApprovalNotes = null };
                 await Client.ApprovePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
-                MudBlazor.Snackbar.Add("Purchase order approved successfully", Severity.Success);
+                Snackbar.Add("Purchase order approved successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to approve purchase order: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to approve purchase order: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -173,7 +173,7 @@ public partial class PurchaseOrders
     /// </summary>
     private async Task SendOrder(DefaultIdType id)
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Send Purchase Order",
             "Are you sure you want to send this purchase order to the supplier?",
             yesText: "Send",
@@ -185,12 +185,12 @@ public partial class PurchaseOrders
             {
                 var request = new SendPurchaseOrderRequest { DeliveryInstructions = null };
                 await Client.SendPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
-                MudBlazor.Snackbar.Add("Purchase order sent successfully", Severity.Success);
+                Snackbar.Add("Purchase order sent successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to send purchase order: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to send purchase order: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -200,7 +200,7 @@ public partial class PurchaseOrders
     /// </summary>
     private async Task ReceiveOrder(DefaultIdType id)
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Receive Purchase Order",
             "Are you sure you want to mark this purchase order as received?",
             yesText: "Receive",
@@ -212,12 +212,12 @@ public partial class PurchaseOrders
             {
                 var request = new ReceivePurchaseOrderRequest { ActualDeliveryDate = DateTime.Now, ReceiptNotes = null };
                 await Client.ReceivePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
-                MudBlazor.Snackbar.Add("Purchase order marked as received", Severity.Success);
+                Snackbar.Add("Purchase order marked as received", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to receive purchase order: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to receive purchase order: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -227,7 +227,7 @@ public partial class PurchaseOrders
     /// </summary>
     private async Task CancelOrder(DefaultIdType id)
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Cancel Purchase Order",
             "Are you sure you want to cancel this purchase order? This action cannot be undone.",
             yesText: "Cancel Order",
@@ -239,12 +239,12 @@ public partial class PurchaseOrders
             {
                 var request = new CancelPurchaseOrderRequest { CancellationReason = null };
                 await Client.CancelPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
-                MudBlazor.Snackbar.Add("Purchase order cancelled", Severity.Success);
+                Snackbar.Add("Purchase order cancelled", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to cancel purchase order: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to cancel purchase order: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -260,7 +260,7 @@ public partial class PurchaseOrders
     {
         try
         {
-            MudBlazor.Snackbar.Add("Generating PDF report...", Severity.Info);
+            Snackbar.Add("Generating PDF report...", Severity.Info);
             
             // Call the API endpoint to generate the PDF
             var fileResponse = await Client.GeneratePurchaseOrderPdfEndpointAsync("1", id).ConfigureAwait(false);
@@ -277,11 +277,11 @@ public partial class PurchaseOrders
             var base64 = Convert.ToBase64String(pdfBytes);
             await Js.InvokeVoidAsync("fshDownload.saveFile", fileName, base64);
             
-            MudBlazor.Snackbar.Add("PDF report downloaded successfully", Severity.Success);
+            Snackbar.Add("PDF report downloaded successfully", Severity.Success);
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Error downloading PDF: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Error downloading PDF: {ex.Message}", Severity.Error);
         }
     }
 }

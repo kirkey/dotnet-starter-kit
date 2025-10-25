@@ -49,7 +49,7 @@ public partial class PutAwayTasks
 
     private async Task AssignTask(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Assign Task",
             "Assign this put-away task to a worker?",
             yesText: "Assign",

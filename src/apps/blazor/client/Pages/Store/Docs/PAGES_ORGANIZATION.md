@@ -59,7 +59,12 @@ All Store pages have been organized into feature-based folders for better access
 - **Files**:
   - `InventoryReservations.razor` - Manage inventory reservations
   - `InventoryReservations.razor.cs`
+  - `ReservationDetailsDialog.razor` - View detailed reservation information
+  - `ReservationDetailsDialog.razor.cs`
+  - `ReleaseReservationDialog.razor` - Release active reservations
+  - `ReleaseReservationDialog.razor.cs`
 - **Route**: `/store/inventory-reservations`
+- **Features**: Prevent overselling, reservation tracking, release operations, advanced search filters
 
 ### 📊 Inventory Transactions
 - **Location**: `InventoryTransactions/`

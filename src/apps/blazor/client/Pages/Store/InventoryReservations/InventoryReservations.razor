@@ -1,13 +1,72 @@
 @page "/store/inventory-reservations"
 
-<PageHeader Title="Inventory Reservations" Header="Inventory Reservations" SubHeader="Manage inventory reservations to prevent overselling." />
+<PageHeader Title="Inventory Reservations" Header="Inventory Reservations" SubHeader="Manage inventory reservations to prevent overselling and support order fulfillment." />
 
 <EntityTable @ref="_table" TEntity="InventoryReservationResponse" TId="DefaultIdType" TRequest="InventoryReservationViewModel" Context="@Context">
+    
+    <AdvancedSearchContent>
+        <MudSelect T="DefaultIdType?" Label="Item" @bind-Value="SearchItemId">
+            <MudSelectItem T="DefaultIdType?" Value="null">All Items</MudSelectItem>
+            @foreach (var item in _items)
+            {
+                <MudSelectItem T="DefaultIdType?" Value="item.Id">@item.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect T="DefaultIdType?" Label="Warehouse" @bind-Value="SearchWarehouseId">
+            <MudSelectItem T="DefaultIdType?" Value="null">All Warehouses</MudSelectItem>
+            @foreach (var warehouse in _warehouses)
+            {
+                <MudSelectItem T="DefaultIdType?" Value="warehouse.Id">@warehouse.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Active")">Active</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Allocated")">Allocated</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Released")">Released</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Expired")">Expired</MudSelectItem>
+        </MudSelect>
+        <MudSelect T="string?" Label="Reservation Type" @bind-Value="SearchReservationType">
+            <MudSelectItem T="string?" Value="null">All Types</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Order")">Order</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Transfer")">Transfer</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Production")">Production</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Assembly")">Assembly</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Other")">Other</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="Reservation Date From" Date="SearchReservationDateFrom" DateChanged="value => SearchReservationDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Reservation Date To" Date="SearchReservationDateTo" DateChanged="value => SearchReservationDateTo = value" DateFormat="MMMM dd, yyyy" />
+        <MudSwitch T="bool?" @bind-Value="SearchIsExpired" Label="Show Expired Only" Color="Color.Warning" />
+        <MudSwitch T="bool?" @bind-Value="SearchIsActive" Label="Show Active Only" Color="Color.Success" />
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ViewReservationDetails(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
+            </div>
+        </MudMenuItem>
+        @if (context.Status == "Active" && !IsExpired(context.ExpirationDate))
+        {
+            <MudMenuItem OnClick="@(() => ReleaseReservation(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardReturn" Class="mr-2" Color="Color.Primary" />
+                    <span>Release Reservation</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+    
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Reservation Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
             </MudItem>
         }
 
@@ -36,7 +95,7 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSelect T="string" Label="Reservation Type" @bind-Value="context.ReservationType" For="@(() => context.ReservationType)" Variant="Variant.Filled">
+            <MudSelect T="string" Label="Reservation Type" @bind-Value="context.ReservationType" For="@(() => context.ReservationType)" Variant="Variant.Filled" Required="true">
                 <MudSelectItem T="string" Value="@("Order")">Order</MudSelectItem>
                 <MudSelectItem T="string" Value="@("Transfer")">Transfer</MudSelectItem>
                 <MudSelectItem T="string" Value="@("Production")">Production</MudSelectItem>
@@ -46,28 +105,14 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSelect T="string" Label="Status" @bind-Value="context.Status" For="@(() => context.Status)" Variant="Variant.Filled">
-                <MudSelectItem T="string" Value="@("Pending")">Pending</MudSelectItem>
-                <MudSelectItem T="string" Value="@("Active")">Active</MudSelectItem>
-                <MudSelectItem T="string" Value="@("Allocated")">Allocated</MudSelectItem>
-                <MudSelectItem T="string" Value="@("Released")">Released</MudSelectItem>
-                <MudSelectItem T="string" Value="@("Expired")">Expired</MudSelectItem>
-            </MudSelect>
-        </MudItem>
-
-        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Reference Number" For="@(() => context.ReferenceNumber)" @bind-Value="context.ReferenceNumber" />
         </MudItem>
 
-        <MudItem xs="12" md="4">
-            <MudDatePicker Label="Reservation Date" @bind-Date="context.ReservationDate" For="@(() => context.ReservationDate)" DateFormat="MMMM dd, yyyy" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Expiration Date" @bind-Date="context.ExpirationDate" For="@(() => context.ExpirationDate)" DateFormat="MMMM dd, yyyy" MinDate="DateTime.Today" />
         </MudItem>
 
-        <MudItem xs="12" md="4">
-            <MudDatePicker Label="Expiration Date" @bind-Date="context.ExpirationDate" For="@(() => context.ExpirationDate)" DateFormat="MMMM dd, yyyy" />
-        </MudItem>
-
-        <MudItem xs="12" md="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Reserved By" For="@(() => context.ReservedBy)" @bind-Value="context.ReservedBy" />
         </MudItem>
     </EditFormContent>

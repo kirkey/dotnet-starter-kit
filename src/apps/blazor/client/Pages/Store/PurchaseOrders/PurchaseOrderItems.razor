@@ -82,7 +82,7 @@
         var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Add Item", parameters);
         var result = await dialog.Result;
 
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             await LoadItemsAsync();
             await OnItemsChanged.InvokeAsync();
@@ -111,7 +111,7 @@
         var dialog = await DialogService.ShowAsync<PurchaseOrderItemDialog>("Edit Item", parameters);
         var result = await dialog.Result;
 
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             await LoadItemsAsync();
             await OnItemsChanged.InvokeAsync();
@@ -128,7 +128,7 @@
         var dialog = await DialogService.ShowAsync<DeleteConfirmation>("Delete Item", parameters);
         var result = await dialog.Result;
 
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             try
             {

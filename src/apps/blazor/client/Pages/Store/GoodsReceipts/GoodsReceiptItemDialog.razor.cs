@@ -46,12 +46,12 @@ public partial class GoodsReceiptItemDialog
             };
 
             await Client.AddGoodsReceiptItemEndpointAsync("1", GoodsReceiptId, command).ConfigureAwait(false);
-            MudBlazor.Snackbar.Add("Item added successfully", Severity.Success);
+            Snackbar.Add("Item added successfully", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to add item: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to add item: {ex.Message}", Severity.Error);
         }
     }
 

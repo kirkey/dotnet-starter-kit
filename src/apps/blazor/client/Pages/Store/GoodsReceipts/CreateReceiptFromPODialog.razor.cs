@@ -61,7 +61,7 @@ public partial class CreateReceiptFromPODialog
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load data: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load data: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -112,7 +112,7 @@ public partial class CreateReceiptFromPODialog
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load purchase order items: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load purchase order items: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -221,7 +221,7 @@ public partial class CreateReceiptFromPODialog
     {
         if (!CanCreateReceipt())
         {
-            MudBlazor.Snackbar.Add("Please fill in all required fields and select at least one item", Severity.Warning);
+            Snackbar.Add("Please fill in all required fields and select at least one item", Severity.Warning);
             return;
         }
 
@@ -260,12 +260,12 @@ public partial class CreateReceiptFromPODialog
                 }
             }
 
-            MudBlazor.Snackbar.Add($"Goods receipt {_receiptNumber} created successfully with {_selectedItemIds.Count} items", Severity.Success);
+            Snackbar.Add($"Goods receipt {_receiptNumber} created successfully with {_selectedItemIds.Count} items", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to create goods receipt: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to create goods receipt: {ex.Message}", Severity.Error);
         }
     }
 

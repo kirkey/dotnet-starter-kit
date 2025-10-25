@@ -77,7 +77,7 @@ public partial class GoodsReceipts
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load warehouses: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load warehouses: {ex.Message}", Severity.Error);
         }
     }
 
@@ -99,7 +99,7 @@ public partial class GoodsReceipts
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load purchase orders: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load purchase orders: {ex.Message}", Severity.Error);
         }
     }
 
@@ -121,10 +121,10 @@ public partial class GoodsReceipts
             MaxWidth = MaxWidth.Large, 
         };
 
-        var dialog = await MudBlazor.DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
+        var dialog = await DialogService.ShowAsync<GoodsReceiptDetailsDialog>("Goods Receipt Details", parameters, options);
         var result = await dialog.Result;
 
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             await _table.ReloadDataAsync();
         }
@@ -135,7 +135,7 @@ public partial class GoodsReceipts
     /// </summary>
     private async Task MarkReceived(DefaultIdType id)
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Mark as Received",
             "Are you sure you want to mark this goods receipt as received? This will update inventory quantities.",
             yesText: "Mark Received",
@@ -146,12 +146,12 @@ public partial class GoodsReceipts
             try
             {
                 await Client.MarkReceivedEndpointAsync("1", id).ConfigureAwait(false);
-                MudBlazor.Snackbar.Add("Goods receipt marked as received successfully", Severity.Success);
+                Snackbar.Add("Goods receipt marked as received successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to mark receipt as received: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to mark receipt as received: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -170,10 +170,10 @@ public partial class GoodsReceipts
             MaxWidth = MaxWidth.Large, 
         };
 
-        var dialog = await MudBlazor.DialogService.ShowAsync<CreateReceiptFromPODialog>("Create Receipt from Purchase Order", options);
+        var dialog = await DialogService.ShowAsync<CreateReceiptFromPODialog>("Create Receipt from Purchase Order", options);
         var result = await dialog.Result;
 
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             await _table.ReloadDataAsync();
         }
@@ -197,7 +197,7 @@ public partial class GoodsReceipts
             MaxWidth = MaxWidth.Large, 
         };
 
-        await MudBlazor.DialogService.ShowAsync<ReceivingHistoryDialog>("Receiving History", parameters, options);
+        DialogService.ShowAsync<ReceivingHistoryDialog>("Receiving History", parameters, options);
     }
 }
 

@@ -22,7 +22,7 @@
                                 <tr>
                                     <td style="font-weight: 500;">Status</td>
                                     <td>
-                                        <MudChip T="string" Color="@GetStatusColor(_cycleCount.Status)" Size="Size.Small">
+                                        <MudChip T="string" Color="@GetStatusColor(_cycleCount.Status ?? string.Empty)" Size="Size.Small">
                                             @_cycleCount.Status
                                         </MudChip>
                                     </td>

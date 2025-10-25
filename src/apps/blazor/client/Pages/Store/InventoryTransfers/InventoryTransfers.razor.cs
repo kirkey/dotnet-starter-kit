@@ -53,7 +53,7 @@ public partial class InventoryTransfers
 
     private async Task ApproveTransfer(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Confirm Approval",
             "Are you sure you want to approve this transfer?",
             yesText: "Approve",
@@ -69,7 +69,7 @@ public partial class InventoryTransfers
 
     private async Task MarkInTransit(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Mark In Transit",
             "Mark this transfer as in transit?",
             yesText: "Confirm",
@@ -85,7 +85,7 @@ public partial class InventoryTransfers
 
     private async Task CompleteTransfer(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Complete Transfer",
             "Mark this transfer as completed?",
             yesText: "Complete",
@@ -101,7 +101,7 @@ public partial class InventoryTransfers
 
     private async Task CancelTransfer(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Cancel Transfer",
             "Are you sure you want to cancel this transfer?",
             yesText: "Cancel Transfer",

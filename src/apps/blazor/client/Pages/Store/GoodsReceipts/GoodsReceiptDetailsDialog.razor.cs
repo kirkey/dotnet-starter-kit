@@ -46,7 +46,7 @@ public partial class GoodsReceiptDetailsDialog
         }
         catch (Exception ex)
         {
-            MudBlazor.Snackbar.Add($"Failed to load goods receipt: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load goods receipt: {ex.Message}", Severity.Error);
         }
         finally
         {
@@ -72,7 +72,7 @@ public partial class GoodsReceiptDetailsDialog
             FullWidth = true
         };
 
-        var dialog = await MudBlazor.DialogService.ShowAsync<GoodsReceiptItemDialog>("Add Receipt Item", parameters, options);
+        var dialog = await DialogService.ShowAsync<GoodsReceiptItemDialog>("Add Receipt Item", parameters, options);
         var result = await dialog.Result;
 
         if (result?.Canceled == false)
@@ -86,7 +86,7 @@ public partial class GoodsReceiptDetailsDialog
     /// </summary>
     private async Task RemoveItem(DefaultIdType itemId)
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Remove Item",
             "Are you sure you want to remove this item from the receipt?",
             yesText: "Remove",
@@ -98,13 +98,13 @@ public partial class GoodsReceiptDetailsDialog
             {
                 // Note: This would need a RemoveGoodsReceiptItem endpoint in the API
                 // For now, we'll show a message
-                MudBlazor.Snackbar.Add("Remove item functionality requires API endpoint implementation", Severity.Warning);
+                Snackbar.Add("Remove item functionality requires API endpoint implementation", Severity.Warning);
                 // await Client.RemoveGoodsReceiptItemEndpointAsync("1", GoodsReceiptId, itemId).ConfigureAwait(false);
                 // await LoadGoodsReceiptAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to remove item: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to remove item: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -114,7 +114,7 @@ public partial class GoodsReceiptDetailsDialog
     /// </summary>
     private async Task MarkReceived()
     {
-        var confirmed = await MudBlazor.DialogService.ShowMessageBox(
+        var confirmed = await DialogService.ShowMessageBox(
             "Mark as Received",
             "Are you sure you want to mark this receipt as received? This will update inventory quantities.",
             yesText: "Mark Received",
@@ -125,14 +125,14 @@ public partial class GoodsReceiptDetailsDialog
             try
             {
                 // Note: This endpoint may not exist yet - checking implementation docs
-                MudBlazor.Snackbar.Add("Mark as received functionality requires API endpoint implementation", Severity.Warning);
+                Snackbar.Add("Mark as received functionality requires API endpoint implementation", Severity.Warning);
                 // var request = new MarkReceivedCommand { GoodsReceiptId = GoodsReceiptId };
                 // await Client.MarkReceivedEndpointAsync("1", GoodsReceiptId, request).ConfigureAwait(false);
                 // await LoadGoodsReceiptAsync();
             }
             catch (Exception ex)
             {
-                MudBlazor.Snackbar.Add($"Failed to mark as received: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to mark as received: {ex.Message}", Severity.Error);
             }
         }
     }
@@ -154,7 +154,7 @@ public partial class GoodsReceiptDetailsDialog
             FullWidth = true
         };
 
-        await MudBlazor.DialogService.ShowAsync<PurchaseOrderDetailsDialog>("Purchase Order Details", parameters, options);
+        await DialogService.ShowAsync<PurchaseOrderDetailsDialog>("Purchase Order Details", parameters, options);
     }
 
     /// <summary>

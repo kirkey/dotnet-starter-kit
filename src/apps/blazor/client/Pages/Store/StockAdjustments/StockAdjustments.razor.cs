@@ -49,7 +49,7 @@ public partial class StockAdjustments
 
     private async Task ApproveAdjustment(DefaultIdType id)
     {
-        bool? result = await MudBlazor.DialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
             "Confirm Approval",
             "Are you sure you want to approve this adjustment?",
             yesText: "Approve",
