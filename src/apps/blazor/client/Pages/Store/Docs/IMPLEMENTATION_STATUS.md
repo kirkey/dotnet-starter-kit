@@ -78,8 +78,23 @@
 - **Transaction Tracking**: Complete audit trail with TXN-TRFCR/TRFAP/TRFIT/TRFOUT/TRFIN/TRFCN prefixes
 - **Special Feature**: Completion creates paired transactions (OUT at source, IN at destination)
 
+### StockAdjustments Module
+- **CRUD Operations**: Create, Read, Update, Delete
+- **Special Operations**: Approve
+- **Adjustment Types**: Physical Count, Damage, Loss, Found, Transfer, Other, Increase, Decrease, Write-Off
+- **Domain Events**: StockAdjustmentCreated, StockAdjustmentApproved, StockAdjustmentUpdated, StockAdjustmentCancelled, StockAdjustmentRejected
+- **Event Handlers** (2 complete):
+  - StockAdjustmentCreatedHandler - Creates audit trail with smart transaction routing
+  - StockAdjustmentApprovedHandler - Approves related transactions for consistency
+- **Domain Methods**: Create, Approve, Update, IsStockIncrease, IsStockDecrease, GetFinancialImpact
+- **Search Filters**: Comprehensive adjustment search with type, reason, date ranges, approval status
+- **Validation**: Comprehensive validators for all commands
+- **Exception Handling**: StockAdjustmentNotFoundException
+- **Transaction Tracking**: Smart routing (IN/OUT/ADJUSTMENT) based on adjustment type with TXN-ADJ prefix
+- **Special Feature**: Intelligent transaction type determination (Increase/Found→IN, Decrease/Damage/Loss/Write-Off→OUT)
+- **Financial Impact**: Tracks unit cost and total cost impact for accounting
+
 ## Pages to Create 📝
-4. **StockAdjustments** - Adjustment management with Approve operation
 5. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)
 6. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
 
