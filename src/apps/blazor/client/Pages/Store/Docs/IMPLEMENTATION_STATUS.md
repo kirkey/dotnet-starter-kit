@@ -48,8 +48,19 @@
 - **Exception Handling**: InventoryReservationNotFoundException
 - **Transaction Tracking**: Complete audit trail with TXN-RSV/RREL/RALC/RCAN/REXP prefixes
 
+### InventoryTransactions Module
+- **CRUD Operations**: Create, Read, Delete
+- **Special Operations**: Approve, Reject, UpdateNotes
+- **Domain Events**: InventoryTransactionCreated, InventoryTransactionApproved, InventoryTransactionRejected, InventoryTransactionNotesUpdated
+- **Purpose**: Audit trail records (created by event handlers from other modules)
+- **Domain Methods**: Create, Approve, Reject, UpdateNotes, IsStockIncrease, IsStockDecrease, IsAdjustment, IsTransfer, GetImpactOnStock
+- **Search Filters**: Comprehensive transaction search with type, reason, date ranges, approval status
+- **Validation**: Comprehensive validators for all commands
+- **Exception Handling**: InventoryTransactionNotFoundException
+- **Workflow**: Create → Approve/Reject → UpdateNotes (anytime)
+- **Note**: No event handlers (transactions ARE the audit trail, prevents circular dependencies)
+
 ## Pages to Create 📝
-2. **InventoryTransactions** - Transaction tracking with Approve operation
 3. **InventoryTransfers** - Transfer management with workflow (Approve, Mark In Transit, Complete, Cancel)
 4. **StockAdjustments** - Adjustment management with Approve operation
 5. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)

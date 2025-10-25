@@ -19,6 +19,8 @@ public static class InventoryTransactionsEndpoints
         // Version 1 endpoints
         transactionsGroup.MapCreateInventoryTransactionEndpoint();
         transactionsGroup.MapApproveInventoryTransactionEndpoint();
+        transactionsGroup.MapRejectInventoryTransactionEndpoint();
+        transactionsGroup.MapUpdateInventoryTransactionNotesEndpoint();
         transactionsGroup.MapDeleteInventoryTransactionEndpoint();
         transactionsGroup.MapGetInventoryTransactionEndpoint();
         transactionsGroup.MapSearchInventoryTransactionsEndpoint();
