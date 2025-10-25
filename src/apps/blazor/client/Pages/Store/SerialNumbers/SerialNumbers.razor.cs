@@ -33,18 +33,18 @@ public partial class SerialNumbers
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchSerialNumbersCommand>();
-                var result = await Blazor.Client.SearchSerialNumbersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchSerialNumbersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<SerialNumberResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateSerialNumberEndpointAsync("1", viewModel.Adapt<CreateSerialNumberCommand>()).ConfigureAwait(false);
+                await Client.CreateSerialNumberEndpointAsync("1", viewModel.Adapt<CreateSerialNumberCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateSerialNumberEndpointAsync("1", id, viewModel.Adapt<UpdateSerialNumberCommand>()).ConfigureAwait(false);
+                await Client.UpdateSerialNumberEndpointAsync("1", id, viewModel.Adapt<UpdateSerialNumberCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteSerialNumberEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteSerialNumberEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

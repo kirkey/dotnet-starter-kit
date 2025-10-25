@@ -35,14 +35,14 @@ public partial class PickLists
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchPickListsCommand>();
-                var result = await Blazor.Client.SearchPickListsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchPickListsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PickListResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreatePickListEndpointAsync("1", viewModel.Adapt<CreatePickListCommand>()).ConfigureAwait(false);
+                await Client.CreatePickListEndpointAsync("1", viewModel.Adapt<CreatePickListCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeletePickListEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeletePickListEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
@@ -57,7 +57,7 @@ public partial class PickLists
         if (result == true)
         {
             var command = new AssignPickListCommand();
-            await Blazor.Client.AssignPickListEndpointAsync("1", id, command);
+            await Client.AssignPickListEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

@@ -36,20 +36,20 @@ public partial class ItemSuppliers
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchItemSuppliersCommand>();
-                var result = await Blazor.Client.SearchItemSuppliersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchItemSuppliersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<ItemSupplierResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateItemSupplierEndpointAsync("1", viewModel.Adapt<CreateItemSupplierCommand>())
+                await Client.CreateItemSupplierEndpointAsync("1", viewModel.Adapt<CreateItemSupplierCommand>())
                     .ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateItemSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateItemSupplierCommand>())
+                await Client.UpdateItemSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateItemSupplierCommand>())
                     .ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteItemSupplierEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteItemSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }
 }
 

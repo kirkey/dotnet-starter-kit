@@ -39,14 +39,14 @@ public partial class InventoryTransactions
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchInventoryTransactionsCommand>();
-                var result = await Blazor.Client.SearchInventoryTransactionsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchInventoryTransactionsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<InventoryTransactionResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateInventoryTransactionEndpointAsync("1", viewModel.Adapt<CreateInventoryTransactionCommand>()).ConfigureAwait(false);
+                await Client.CreateInventoryTransactionEndpointAsync("1", viewModel.Adapt<CreateInventoryTransactionCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
@@ -61,7 +61,7 @@ public partial class InventoryTransactions
         if (result == true)
         {
             var command = new ApproveInventoryTransactionCommand();
-            await Blazor.Client.ApproveInventoryTransactionEndpointAsync("1", id, command);
+            await Client.ApproveInventoryTransactionEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

@@ -34,7 +34,7 @@ public partial class CycleCountDetailsDialog
         _loading = true;
         try
         {
-            _cycleCount = await Blazor.Client.GetCycleCountEndpointAsync("1", CycleCountId).ConfigureAwait(false);
+            _cycleCount = await Client.GetCycleCountEndpointAsync("1", CycleCountId).ConfigureAwait(false);
             
             // Load item names for display
             if (_cycleCount?.Items != null && _cycleCount.Items.Any())
@@ -67,7 +67,7 @@ public partial class CycleCountDetailsDialog
             {
                 try
                 {
-                    var item = await Blazor.Client.GetItemEndpointAsync("1", itemId).ConfigureAwait(false);
+                    var item = await Client.GetItemEndpointAsync("1", itemId).ConfigureAwait(false);
                     _itemNames[itemId] = item?.Name ?? "Unknown Item";
                 }
                 catch

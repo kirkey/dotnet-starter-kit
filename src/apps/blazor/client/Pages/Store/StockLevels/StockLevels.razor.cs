@@ -33,18 +33,18 @@ public partial class StockLevels
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchStockLevelsCommand>();
-                var result = await Blazor.Client.SearchStockLevelsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchStockLevelsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<StockLevelResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateStockLevelEndpointAsync("1", viewModel.Adapt<CreateStockLevelCommand>()).ConfigureAwait(false);
+                await Client.CreateStockLevelEndpointAsync("1", viewModel.Adapt<CreateStockLevelCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateStockLevelEndpointAsync("1", id, viewModel.Adapt<UpdateStockLevelCommand>()).ConfigureAwait(false);
+                await Client.UpdateStockLevelEndpointAsync("1", id, viewModel.Adapt<UpdateStockLevelCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteStockLevelEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteStockLevelEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

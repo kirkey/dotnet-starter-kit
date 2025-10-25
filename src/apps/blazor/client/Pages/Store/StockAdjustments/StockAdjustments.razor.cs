@@ -32,18 +32,18 @@ public partial class StockAdjustments
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchStockAdjustmentsCommand>();
-                var result = await Blazor.Client.SearchStockAdjustmentsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchStockAdjustmentsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<StockAdjustmentResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateStockAdjustmentEndpointAsync("1", viewModel.Adapt<CreateStockAdjustmentCommand>()).ConfigureAwait(false);
+                await Client.CreateStockAdjustmentEndpointAsync("1", viewModel.Adapt<CreateStockAdjustmentCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateStockAdjustmentEndpointAsync("1", id, viewModel.Adapt<UpdateStockAdjustmentCommand>()).ConfigureAwait(false);
+                await Client.UpdateStockAdjustmentEndpointAsync("1", id, viewModel.Adapt<UpdateStockAdjustmentCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteStockAdjustmentEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
@@ -58,7 +58,7 @@ public partial class StockAdjustments
         if (result == true)
         {
             var command = new ApproveStockAdjustmentCommand();
-            await Blazor.Client.ApproveStockAdjustmentEndpointAsync("1", id, command);
+            await Client.ApproveStockAdjustmentEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

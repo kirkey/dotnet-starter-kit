@@ -45,7 +45,7 @@ public partial class GoodsReceiptItemDialog
                 PurchaseOrderItemId = _model.PurchaseOrderItemId
             };
 
-            await Blazor.Client.AddGoodsReceiptItemEndpointAsync("1", GoodsReceiptId, command).ConfigureAwait(false);
+            await Client.AddGoodsReceiptItemEndpointAsync("1", GoodsReceiptId, command).ConfigureAwait(false);
             MudBlazor.Snackbar.Add("Item added successfully", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }

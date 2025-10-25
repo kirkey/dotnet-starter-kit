@@ -41,7 +41,7 @@ public partial class PurchaseOrders
                 command.Status = SearchStatus;
                 command.FromDate = SearchFromDate;
                 command.ToDate = SearchToDate;
-                var result = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PurchaseOrderResponse>>();
             },
             // getDetailsFunc: async id =>
@@ -51,13 +51,13 @@ public partial class PurchaseOrders
             // },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreatePurchaseOrderEndpointAsync("1", viewModel.Adapt<CreatePurchaseOrderCommand>()).ConfigureAwait(false);
+                await Client.CreatePurchaseOrderEndpointAsync("1", viewModel.Adapt<CreatePurchaseOrderCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdatePurchaseOrderEndpointAsync("1", id, viewModel.Adapt<UpdatePurchaseOrderCommand>()).ConfigureAwait(false);
+                await Client.UpdatePurchaseOrderEndpointAsync("1", id, viewModel.Adapt<UpdatePurchaseOrderCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeletePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeletePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false));
     }
 
     protected override async Task OnInitializedAsync()
@@ -78,7 +78,7 @@ public partial class PurchaseOrders
                 PageSize = 500,
                 OrderBy = ["Name"]
             };
-            var result = await Blazor.Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
+            var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
             _suppliers = result.Items?.ToList() ?? new List<SupplierResponse>();
         }
         catch (Exception ex)
@@ -130,7 +130,7 @@ public partial class PurchaseOrders
         {
             try
             {
-                await Blazor.Client.SubmitPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
+                await Client.SubmitPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Purchase order submitted successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -157,7 +157,7 @@ public partial class PurchaseOrders
             try
             {
                 var request = new ApprovePurchaseOrderRequest { ApprovalNotes = null };
-                await Blazor.Client.ApprovePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
+                await Client.ApprovePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Purchase order approved successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -184,7 +184,7 @@ public partial class PurchaseOrders
             try
             {
                 var request = new SendPurchaseOrderRequest { DeliveryInstructions = null };
-                await Blazor.Client.SendPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
+                await Client.SendPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Purchase order sent successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -211,7 +211,7 @@ public partial class PurchaseOrders
             try
             {
                 var request = new ReceivePurchaseOrderRequest { ActualDeliveryDate = DateTime.Now, ReceiptNotes = null };
-                await Blazor.Client.ReceivePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
+                await Client.ReceivePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Purchase order marked as received", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -238,7 +238,7 @@ public partial class PurchaseOrders
             try
             {
                 var request = new CancelPurchaseOrderRequest { CancellationReason = null };
-                await Blazor.Client.CancelPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
+                await Client.CancelPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Purchase order cancelled", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -263,7 +263,7 @@ public partial class PurchaseOrders
             MudBlazor.Snackbar.Add("Generating PDF report...", Severity.Info);
             
             // Call the API endpoint to generate the PDF
-            var fileResponse = await Blazor.Client.GeneratePurchaseOrderPdfEndpointAsync("1", id).ConfigureAwait(false);
+            var fileResponse = await Client.GeneratePurchaseOrderPdfEndpointAsync("1", id).ConfigureAwait(false);
             
             // Create filename with timestamp
             var fileName = $"PurchaseOrder_{id}_{DateTime.Now:yyyyMMddHHmmss}.pdf";

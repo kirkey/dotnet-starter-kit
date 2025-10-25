@@ -28,14 +28,14 @@ public partial class GoodsReceiptDetailsDialog
         _loading = true;
         try
         {
-            _goodsReceipt = await Blazor.Client.GetGoodsReceiptEndpointAsync("1", GoodsReceiptId).ConfigureAwait(false);
+            _goodsReceipt = await Client.GetGoodsReceiptEndpointAsync("1", GoodsReceiptId).ConfigureAwait(false);
             
             // Load purchase order number if linked
             if (_goodsReceipt?.PurchaseOrderId.HasValue == true)
             {
                 try
                 {
-                    var po = await Blazor.Client.GetPurchaseOrderEndpointAsync("1", _goodsReceipt.PurchaseOrderId.Value).ConfigureAwait(false);
+                    var po = await Client.GetPurchaseOrderEndpointAsync("1", _goodsReceipt.PurchaseOrderId.Value).ConfigureAwait(false);
                     _purchaseOrderNumber = po.OrderNumber;
                 }
                 catch

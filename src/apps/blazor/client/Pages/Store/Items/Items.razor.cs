@@ -38,18 +38,18 @@ public partial class Items
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchItemsCommand>();
-                var result = await Blazor.Client.SearchItemsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchItemsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<ItemResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateItemEndpointAsync("1", viewModel.Adapt<CreateItemCommand>()).ConfigureAwait(false);
+                await Client.CreateItemEndpointAsync("1", viewModel.Adapt<CreateItemCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateItemEndpointAsync("1", id, viewModel.Adapt<UpdateItemCommand>()).ConfigureAwait(false);
+                await Client.UpdateItemEndpointAsync("1", id, viewModel.Adapt<UpdateItemCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteItemEndpointAsync("1", id).ConfigureAwait(false),
+            deleteFunc: async id => await Client.DeleteItemEndpointAsync("1", id).ConfigureAwait(false),
             exportFunc: async filter =>
             {
                 var exportQuery = new ExportItemsQuery
@@ -66,7 +66,7 @@ public partial class Items
                     SheetName = "Items"
                 };
                 
-                var result = await Blazor.Client.ExportItemsEndpointAsync("1", exportQuery).ConfigureAwait(false);
+                var result = await Client.ExportItemsEndpointAsync("1", exportQuery).ConfigureAwait(false);
                 var stream = new MemoryStream(result.Data);
                 return new Components.EntityTable.FileResponse(stream);
             },
@@ -79,7 +79,7 @@ public partial class Items
                     ValidateStructure = true
                 };
                 
-                var result = await Blazor.Client.ImportItemsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.ImportItemsEndpointAsync("1", command).ConfigureAwait(false);
                 return result;
             });
         

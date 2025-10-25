@@ -36,7 +36,7 @@ public partial class PurchaseOrderItemDialog
                     Discount = Model.DiscountAmount > 0 ? Model.DiscountAmount : null
                 };
 
-                await Blazor.Client.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
+                await Client.AddPurchaseOrderItemEndpointAsync("1", PurchaseOrderId, command).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Item added successfully", Severity.Success);
             }
             else
@@ -47,7 +47,7 @@ public partial class PurchaseOrderItemDialog
                     Quantity = Model.Quantity
                 };
 
-                await Blazor.Client.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, Model.ItemId, quantityCommand).ConfigureAwait(false);
+                await Client.UpdatePurchaseOrderItemQuantityEndpointAsync("1", PurchaseOrderId, Model.ItemId, quantityCommand).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Item updated successfully", Severity.Success);
             }
 

@@ -43,14 +43,14 @@ public partial class GoodsReceipts
                 command.Status = SearchStatus;
                 command.ReceivedDateFrom = SearchReceivedDateFrom;
                 command.ReceivedDateTo = SearchReceivedDateTo;
-                var result = await Blazor.Client.SearchGoodsReceiptsEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchGoodsReceiptsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<GoodsReceiptResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateGoodsReceiptEndpointAsync("1", viewModel.Adapt<CreateGoodsReceiptCommand>()).ConfigureAwait(false);
+                await Client.CreateGoodsReceiptEndpointAsync("1", viewModel.Adapt<CreateGoodsReceiptCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteGoodsReceiptEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteGoodsReceiptEndpointAsync("1", id).ConfigureAwait(false));
     }
 
     protected override async Task OnInitializedAsync()
@@ -72,7 +72,7 @@ public partial class GoodsReceipts
                 PageSize = 500,
                 OrderBy = ["Name"]
             };
-            var result = await Blazor.Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
+            var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
             _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
         }
         catch (Exception ex)
@@ -94,7 +94,7 @@ public partial class GoodsReceipts
                 PageSize = 500,
                 OrderBy = ["OrderNumber"]
             };
-            var result = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
+            var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
             _purchaseOrders = result.Items?.Where(x => x.Status == "Sent" || x.Status == "PartiallyReceived").ToList() ?? new List<PurchaseOrderResponse>();
         }
         catch (Exception ex)
@@ -145,7 +145,7 @@ public partial class GoodsReceipts
         {
             try
             {
-                await Blazor.Client.MarkReceivedEndpointAsync("1", id).ConfigureAwait(false);
+                await Client.MarkReceivedEndpointAsync("1", id).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Goods receipt marked as received successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }

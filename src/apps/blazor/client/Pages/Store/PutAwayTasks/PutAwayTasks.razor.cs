@@ -36,14 +36,14 @@ public partial class PutAwayTasks
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchPutAwayTasksCommand>();
-                var result = await Blazor.Client.SearchPutAwayTasksEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchPutAwayTasksEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PutAwayTaskResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreatePutAwayTaskEndpointAsync("1", viewModel.Adapt<CreatePutAwayTaskCommand>()).ConfigureAwait(false);
+                await Client.CreatePutAwayTaskEndpointAsync("1", viewModel.Adapt<CreatePutAwayTaskCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeletePutAwayTaskEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeletePutAwayTaskEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
@@ -58,7 +58,7 @@ public partial class PutAwayTasks
         if (result == true)
         {
             var command = new AssignPutAwayTaskCommand();
-            await Blazor.Client.AssignPutAwayTaskEndpointAsync("1", id, command);
+            await Client.AssignPutAwayTaskEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

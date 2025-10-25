@@ -36,18 +36,18 @@ public partial class InventoryTransfers
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchInventoryTransfersCommand>();
-                var result = await Blazor.Client.SearchInventoryTransfersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchInventoryTransfersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<GetInventoryTransferListResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateInventoryTransferEndpointAsync("1", viewModel.Adapt<CreateInventoryTransferCommand>()).ConfigureAwait(false);
+                await Client.CreateInventoryTransferEndpointAsync("1", viewModel.Adapt<CreateInventoryTransferCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateInventoryTransferEndpointAsync("1", id, viewModel.Adapt<UpdateInventoryTransferCommand>()).ConfigureAwait(false);
+                await Client.UpdateInventoryTransferEndpointAsync("1", id, viewModel.Adapt<UpdateInventoryTransferCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteInventoryTransferEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteInventoryTransferEndpointAsync("1", id).ConfigureAwait(false));
         await Task.CompletedTask;
     }
 
@@ -62,7 +62,7 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new ApproveInventoryTransferCommand();
-            await Blazor.Client.ApproveInventoryTransferEndpointAsync("1", id, command);
+            await Client.ApproveInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }
@@ -78,7 +78,7 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new MarkInTransitInventoryTransferCommand();
-            await Blazor.Client.MarkInTransitInventoryTransferEndpointAsync("1", id, command);
+            await Client.MarkInTransitInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }
@@ -94,7 +94,7 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new CompleteInventoryTransferCommand();
-            await Blazor.Client.CompleteInventoryTransferEndpointAsync("1", id, command);
+            await Client.CompleteInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }
@@ -111,7 +111,7 @@ public partial class InventoryTransfers
         if (result == true)
         {
             var command = new CancelInventoryTransferCommand();
-            await Blazor.Client.CancelInventoryTransferEndpointAsync("1", id, command);
+            await Client.CancelInventoryTransferEndpointAsync("1", id, command);
             await _table.ReloadDataAsync();
         }
     }

@@ -34,18 +34,18 @@ public partial class LotNumbers
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchLotNumbersCommand>();
-                var result = await Blazor.Client.SearchLotNumbersEndpointAsync("1", command).ConfigureAwait(false);
+                var result = await Client.SearchLotNumbersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<LotNumberResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateLotNumberEndpointAsync("1", viewModel.Adapt<CreateLotNumberCommand>()).ConfigureAwait(false);
+                await Client.CreateLotNumberEndpointAsync("1", viewModel.Adapt<CreateLotNumberCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateLotNumberEndpointAsync("1", id, viewModel.Adapt<UpdateLotNumberCommand>()).ConfigureAwait(false);
+                await Client.UpdateLotNumberEndpointAsync("1", id, viewModel.Adapt<UpdateLotNumberCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Blazor.Client.DeleteLotNumberEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteLotNumberEndpointAsync("1", id).ConfigureAwait(false));
         
         await Task.CompletedTask;
     }

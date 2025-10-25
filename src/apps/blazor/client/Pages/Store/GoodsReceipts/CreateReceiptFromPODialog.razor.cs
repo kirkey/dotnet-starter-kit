@@ -44,7 +44,7 @@ public partial class CreateReceiptFromPODialog
                 PageSize = 100,
                 OrderBy = new[] { "OrderDate desc" }
             };
-            var poResult = await Blazor.Client.SearchPurchaseOrdersEndpointAsync("1", poCommand).ConfigureAwait(false);
+            var poResult = await Client.SearchPurchaseOrdersEndpointAsync("1", poCommand).ConfigureAwait(false);
             _purchaseOrders = poResult.Items?
                 .Where(x => x.Status == "Sent" || x.Status == "PartiallyReceived")
                 .ToList() ?? new List<PurchaseOrderResponse>();
@@ -56,7 +56,7 @@ public partial class CreateReceiptFromPODialog
                 PageSize = 500,
                 OrderBy = new[] { "Name" }
             };
-            var supplierResult = await Blazor.Client.SearchSuppliersEndpointAsync("1", supplierCommand).ConfigureAwait(false);
+            var supplierResult = await Client.SearchSuppliersEndpointAsync("1", supplierCommand).ConfigureAwait(false);
             _suppliers = supplierResult.Items?.ToList() ?? new List<SupplierResponse>();
         }
         catch (Exception ex)
@@ -79,7 +79,7 @@ public partial class CreateReceiptFromPODialog
         try
         {
             // Load PO items available for receiving
-            var result = await Blazor.Client.GetPurchaseOrderItemsForReceivingEndpointAsync("1", po.Id).ConfigureAwait(false);
+            var result = await Client.GetPurchaseOrderItemsForReceivingEndpointAsync("1", po.Id).ConfigureAwait(false);
             
             // Convert to PurchaseOrderItemResponse format for compatibility with existing UI
             _poItems = result.Items?
@@ -237,7 +237,7 @@ public partial class CreateReceiptFromPODialog
                 Notes = _notes
             };
 
-            var createResponse = await Blazor.Client.CreateGoodsReceiptEndpointAsync("1", createCommand).ConfigureAwait(false);
+            var createResponse = await Client.CreateGoodsReceiptEndpointAsync("1", createCommand).ConfigureAwait(false);
 
             // Add selected items to the receipt
             foreach (var itemId in _selectedItemIds)
@@ -256,7 +256,7 @@ public partial class CreateReceiptFromPODialog
                         PurchaseOrderItemId = itemId
                     };
 
-                    await Blazor.Client.AddGoodsReceiptItemEndpointAsync("1", createResponse.Id, addItemCommand).ConfigureAwait(false);
+                    await Client.AddGoodsReceiptItemEndpointAsync("1", createResponse.Id, addItemCommand).ConfigureAwait(false);
                 }
             }
 

@@ -43,16 +43,16 @@ public partial class CycleCounts
             searchFunc: async filter =>
             {
                 // Temporary: Simple search until API client includes SearchCycleCountsCommand
-                var result = await Blazor.Client.SearchCycleCountsEndpointAsync("1").ConfigureAwait(false);
+                var result = await Client.SearchCycleCountsEndpointAsync("1").ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<CycleCountResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Blazor.Client.CreateCycleCountEndpointAsync("1", viewModel.Adapt<CreateCycleCountCommand>()).ConfigureAwait(false);
+                await Client.CreateCycleCountEndpointAsync("1", viewModel.Adapt<CreateCycleCountCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Blazor.Client.UpdateCycleCountEndpointAsync("1", id, viewModel.Adapt<UpdateCycleCountCommand>()).ConfigureAwait(false);
+                await Client.UpdateCycleCountEndpointAsync("1", id, viewModel.Adapt<UpdateCycleCountCommand>()).ConfigureAwait(false);
             },
             deleteFunc: null); // Cycle counts should not be deleted, only cancelled
     }
@@ -75,7 +75,7 @@ public partial class CycleCounts
                 PageSize = 500,
                 OrderBy = ["Name"]
             };
-            var result = await Blazor.Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
+            var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
             _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
         }
         catch (Exception ex)
@@ -126,7 +126,7 @@ public partial class CycleCounts
         {
             try
             {
-                await Blazor.Client.StartCycleCountEndpointAsync("1", id).ConfigureAwait(false);
+                await Client.StartCycleCountEndpointAsync("1", id).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Cycle count started successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -152,7 +152,7 @@ public partial class CycleCounts
         {
             try
             {
-                await Blazor.Client.CompleteCycleCountEndpointAsync("1", id).ConfigureAwait(false);
+                await Client.CompleteCycleCountEndpointAsync("1", id).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Cycle count completed successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -187,7 +187,7 @@ public partial class CycleCounts
                     Id = id,
                     Reason = "Cancelled by user"
                 };
-                await Blazor.Client.CancelCycleCountEndpointAsync("1", id, command).ConfigureAwait(false);
+                await Client.CancelCycleCountEndpointAsync("1", id, command).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Cycle count cancelled successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -213,7 +213,7 @@ public partial class CycleCounts
         {
             try
             {
-                await Blazor.Client.ReconcileCycleCountEndpointAsync("1", id).ConfigureAwait(false);
+                await Client.ReconcileCycleCountEndpointAsync("1", id).ConfigureAwait(false);
                 MudBlazor.Snackbar.Add("Cycle count reconciled successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
