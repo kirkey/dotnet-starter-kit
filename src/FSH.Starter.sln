@@ -142,29 +142,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{BF936807-7
 		api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_PLAN.md = api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_PLAN.md
 		api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_SUMMARY.md = api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_SUMMARY.md
 		api\modules\Accounting\docs\ACCOUNTING_PAGES_IMPLEMENTATION_GUIDE.md = api\modules\Accounting\docs\ACCOUNTING_PAGES_IMPLEMENTATION_GUIDE.md
-		api\modules\Accounting\docs\RAZOR_PAGES_FIXES_SUMMARY.md = api\modules\Accounting\docs\RAZOR_PAGES_FIXES_SUMMARY.md
-		api\modules\Accounting\docs\CHECK_MANAGEMENT_IMPLEMENTATION.md = api\modules\Accounting\docs\CHECK_MANAGEMENT_IMPLEMENTATION.md
 		api\modules\Accounting\docs\VIEWMODEL_ANALYSIS.md = api\modules\Accounting\docs\VIEWMODEL_ANALYSIS.md
-		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_IMPLEMENTATION_COMPLETE.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_IMPLEMENTATION_COMPLETE.md
-		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_QUICK_REFERENCE.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_QUICK_REFERENCE.md
-		api\modules\Accounting\docs\CHECK_BANKID_QUICK_REFERENCE.md = api\modules\Accounting\docs\CHECK_BANKID_QUICK_REFERENCE.md
-		api\modules\Accounting\docs\CHECKVIEWMODEL_REFACTORING.md = api\modules\Accounting\docs\CHECKVIEWMODEL_REFACTORING.md
-		api\modules\Accounting\docs\BANK_MANAGEMENT_IMPLEMENTATION.md = api\modules\Accounting\docs\BANK_MANAGEMENT_IMPLEMENTATION.md
-		api\modules\Accounting\docs\CHECK_IMPLEMENTATION_FINAL_SUMMARY.md = api\modules\Accounting\docs\CHECK_IMPLEMENTATION_FINAL_SUMMARY.md
-		api\modules\Accounting\docs\CHECK_UPDATE_IMPLEMENTATION.md = api\modules\Accounting\docs\CHECK_UPDATE_IMPLEMENTATION.md
-		api\modules\Accounting\docs\README.md = api\modules\Accounting\docs\README.md
-		api\modules\Accounting\docs\CHECK_BUNDLE_REGISTRATION.md = api\modules\Accounting\docs\CHECK_BUNDLE_REGISTRATION.md
-		api\modules\Accounting\docs\CHECK_MANAGEMENT_VERIFICATION.md = api\modules\Accounting\docs\CHECK_MANAGEMENT_VERIFICATION.md
-		api\modules\Accounting\docs\CHECK_COMPLETE_IMPLEMENTATION_SUMMARY.md = api\modules\Accounting\docs\CHECK_COMPLETE_IMPLEMENTATION_SUMMARY.md
-		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_API_ENDPOINTS_COMPLETE.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_API_ENDPOINTS_COMPLETE.md
-		api\modules\Accounting\docs\CHECK_FILES_CHANGED_SUMMARY.md = api\modules\Accounting\docs\CHECK_FILES_CHANGED_SUMMARY.md
-		api\modules\Accounting\docs\CHECK_QUICK_START_FINAL.md = api\modules\Accounting\docs\CHECK_QUICK_START_FINAL.md
-		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_COMPLETE_IMPLEMENTATION.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_COMPLETE_IMPLEMENTATION.md
-		api\modules\Accounting\docs\ADVANCED_ACCOUNTING_ENTITIES_SUMMARY.md = api\modules\Accounting\docs\ADVANCED_ACCOUNTING_ENTITIES_SUMMARY.md
-		api\modules\Accounting\docs\CONFIGURATION_IMPLEMENTATION_COMPLETE.md = api\modules\Accounting\docs\CONFIGURATION_IMPLEMENTATION_COMPLETE.md
-		api\modules\Accounting\docs\CHECK_ENTITY_BANKID_UPDATE_SUMMARY.md = api\modules\Accounting\docs\CHECK_ENTITY_BANKID_UPDATE_SUMMARY.md
-		api\modules\Accounting\docs\CHECK_MANAGEMENT_BLAZOR_PAGE.md = api\modules\Accounting\docs\CHECK_MANAGEMENT_BLAZOR_PAGE.md
-		api\modules\Accounting\docs\CHECK_BANKID_AUTOPOPULATION_UPDATE.md = api\modules\Accounting\docs\CHECK_BANKID_AUTOPOPULATION_UPDATE.md
 	EndProjectSection
 EndProject
 Global
