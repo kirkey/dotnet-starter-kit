@@ -6,9 +6,14 @@ public static class DeactivateSupplierEndpoint
 {
     internal static RouteHandlerBuilder MapDeactivateSupplierEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        return endpoints.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, DeactivateSupplierCommand command, ISender sender) =>
         {
-            var response = await sender.Send(new DeactivateSupplierCommand(id)).ConfigureAwait(false);
+            if (id != command.Id)
+            {
+                return Results.BadRequest("Supplier ID mismatch");
+            }
+            
+            var response = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(nameof(DeactivateSupplierEndpoint))

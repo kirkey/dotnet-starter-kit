@@ -1,37 +1,121 @@
 @page "/store/pick-lists"
 
-<PageHeader Title="Pick Lists" Header="Pick Lists" SubHeader="Manage warehouse picking tasks for order fulfillment." />
+<PageHeader Title="Pick Lists" Header="Pick Lists" SubHeader="Manage warehouse picking tasks for order fulfillment with optimized pick paths." />
 
 <EntityTable @ref="_table" TEntity="PickListResponse" TId="DefaultIdType" TRequest="PickListViewModel" Context="@Context">
+    
+    <AdvancedSearchContent>
+        <MudSelect T="DefaultIdType?" Label="Warehouse" @bind-Value="SearchWarehouseId">
+            <MudSelectItem T="DefaultIdType?" Value="null">All Warehouses</MudSelectItem>
+            @foreach (var warehouse in _warehouses)
+            {
+                <MudSelectItem T="DefaultIdType?" Value="warehouse.Id">@warehouse.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Created")">Created</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Assigned")">Assigned</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("InProgress")">In Progress</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Completed")">Completed</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Cancelled")">Cancelled</MudSelectItem>
+        </MudSelect>
+        <MudSelect T="string?" Label="Picking Type" @bind-Value="SearchPickingType">
+            <MudSelectItem T="string?" Value="null">All Types</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Order")">Order</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Wave")">Wave</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Batch")">Batch</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Zone")">Zone</MudSelectItem>
+        </MudSelect>
+        <MudTextField T="string" Label="Assigned To" @bind-Value="SearchAssignedTo" />
+        <MudNumericField T="int?" Label="Min Priority" @bind-Value="SearchMinPriority" />
+        <MudNumericField T="int?" Label="Max Priority" @bind-Value="SearchMaxPriority" />
+        <MudDatePicker Label="Start Date From" Date="SearchStartDateFrom" DateChanged="value => SearchStartDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Start Date To" Date="SearchStartDateTo" DateChanged="value => SearchStartDateTo = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
     <ExtraActions Context="context">
-        <MudMenuItem OnClick="@(() => AssignPickList(context.Id))">
+        <MudMenuItem OnClick="@(() => ViewPickListDetails(context.Id))">
             <div class="d-flex align-center">
-                <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" />
-                <span>Assign</span>
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
             </div>
         </MudMenuItem>
+        @if (context.Status == "Created")
+        {
+            <MudMenuItem OnClick="@(() => AssignPickList(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" Color="Color.Info" />
+                    <span>Assign to Picker</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Assigned")
+        {
+            <MudMenuItem OnClick="@(() => StartPicking(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Class="mr-2" Color="Color.Success" />
+                    <span>Start Picking</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "InProgress")
+        {
+            <MudMenuItem OnClick="@(() => CompletePicking(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Primary" />
+                    <span>Complete Picking</span>
+                </div>
+            </MudMenuItem>
+        }
     </ExtraActions>
-
+    
     <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Pick List Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
+            </MudItem>
+        }
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.PickListNumber" For="@(() => context.PickListNumber)" Label="Pick List Number" />
+            <MudTextField @bind-Value="context.PickListNumber" For="@(() => context.PickListNumber)" Label="Pick List Number" Required="true" />
         </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <AutocompleteWarehouse @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)" Label="Warehouse" Required="true" />
+            <AutocompleteWarehouse @bind-Value="context.WarehouseId" 
+                                  For="@(() => context.WarehouseId)" 
+                                  Label="Warehouse" 
+                                  Variant="Variant.Filled"
+                                  Required="true" />
         </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSelect @bind-Value="context.PickingType" For="@(() => context.PickingType)" Label="Picking Type">
-                <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
-                <MudSelectItem Value="@("Wave")">Wave</MudSelectItem>
-                <MudSelectItem Value="@("Batch")">Batch</MudSelectItem>
-                <MudSelectItem Value="@("Zone")">Zone</MudSelectItem>
+            <MudSelect T="string" Label="Picking Type" @bind-Value="context.PickingType" For="@(() => context.PickingType)" Variant="Variant.Filled" Required="true">
+                <MudSelectItem T="string" Value="@("Order")">Order</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Wave")">Wave</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Batch")">Batch</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Zone")">Zone</MudSelectItem>
             </MudSelect>
         </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" />
+            <MudNumericField T="int" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" HelperText="Higher number = higher priority" />
         </MudItem>
+
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField @bind-Value="context.ReferenceNumber" For="@(() => context.ReferenceNumber)" Label="Reference Number" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.ExpectedCompletionDate" For="@(() => context.ExpectedCompletionDate)" Label="Expected Completion" DateFormat="MMMM dd, yyyy" MinDate="DateTime.Today" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" Counter="500" MaxLength="500" />
         </MudItem>
     </EditFormContent>
 </EntityTable>

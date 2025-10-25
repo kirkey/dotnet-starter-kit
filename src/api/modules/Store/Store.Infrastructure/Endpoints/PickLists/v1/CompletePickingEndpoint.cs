@@ -7,9 +7,13 @@ public static class CompletePickingEndpoint
     internal static RouteHandlerBuilder MapCompletePickingEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/complete", async (DefaultIdType id, ISender sender) =>
+            .MapPost("/{id:guid}/complete", async (DefaultIdType id, CompletePickingCommand request, ISender sender) =>
             {
-                var request = new CompletePickingCommand { PickListId = id };
+                if (id != request.PickListId)
+                {
+                    return Results.BadRequest("Pick list ID mismatch");
+                }
+                
                 var response = await sender.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })

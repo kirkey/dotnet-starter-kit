@@ -6,9 +6,14 @@ public static class CompleteCycleCountEndpoint
 {
     internal static RouteHandlerBuilder MapCompleteCycleCountEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/complete", async (DefaultIdType id, ISender sender) =>
+        return endpoints.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteCycleCountCommand command, ISender sender) =>
         {
-            var result = await sender.Send(new CompleteCycleCountCommand(id)).ConfigureAwait(false);
+            if (id != command.Id)
+            {
+                return Results.BadRequest("Cycle count ID mismatch");
+            }
+            
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(nameof(CompleteCycleCountEndpoint))

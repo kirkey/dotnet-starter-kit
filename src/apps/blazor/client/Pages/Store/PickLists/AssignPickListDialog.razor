@@ -1,0 +1,91 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-1" />
+            Assign Pick List
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else if (_pickList != null)
+        {
+            <MudAlert Severity="Severity.Info" Class="mb-4">
+                Assigning pick list <strong>@_pickList.PickListNumber</strong> with 
+                <strong>@_pickList.TotalLines</strong> items to a picker.
+            </MudAlert>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-3 mb-3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-2">Pick List Summary</MudText>
+                        <MudSimpleTable Dense="true" Hover="true">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Pick List #:</strong></td>
+                                    <td>@_pickList.PickListNumber</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Warehouse:</strong></td>
+                                    <td>@_pickList.WarehouseId</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Type:</strong></td>
+                                    <td>@_pickList.PickingType</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority:</strong></td>
+                                    <td>@_pickList.Priority</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Items:</strong></td>
+                                    <td>@_pickList.TotalLines</td>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(_pickList.ReferenceNumber))
+                                {
+                                    <tr>
+                                        <td><strong>Reference:</strong></td>
+                                        <td>@_pickList.ReferenceNumber</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_assignedTo" 
+                                  Label="Assign To (Picker Name)" 
+                                  Required="true"
+                                  RequiredError="Please specify who this pick list should be assigned to"
+                                  MaxLength="100"
+                                  Counter="100"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"
+                                  HelperText="Enter the name or ID of the picker (max 100 characters)" />
+                </MudItem>
+            </MudGrid>
+
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Class="mt-3">@_errorMessage</MudAlert>
+            }
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Filled">Cancel</MudButton>
+        <MudButton OnClick="Assign" 
+                   Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   Disabled="@(_assigning || string.IsNullOrWhiteSpace(_assignedTo))">
+            @if (_assigning)
+            {
+                <MudProgressCircular Class="mr-2" Size="Size.Small" Indeterminate="true" />
+            }
+            Assign Pick List
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

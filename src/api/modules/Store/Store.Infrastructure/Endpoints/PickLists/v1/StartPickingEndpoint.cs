@@ -7,9 +7,13 @@ public static class StartPickingEndpoint
     internal static RouteHandlerBuilder MapStartPickingEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/start", async (DefaultIdType id, ISender sender) =>
+            .MapPost("/{id:guid}/start", async (DefaultIdType id, StartPickingCommand request, ISender sender) =>
             {
-                var request = new StartPickingCommand { PickListId = id };
+                if (id != request.PickListId)
+                {
+                    return Results.BadRequest("Pick list ID mismatch");
+                }
+                
                 var response = await sender.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })

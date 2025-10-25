@@ -7,9 +7,13 @@ public static class MarkReceivedEndpoint
     internal static RouteHandlerBuilder MapMarkReceivedEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/mark-received", async (DefaultIdType id, ISender sender) =>
+            .MapPost("/{id:guid}/mark-received", async (DefaultIdType id, MarkReceivedCommand request, ISender sender) =>
             {
-                var request = new MarkReceivedCommand { GoodsReceiptId = id };
+                if (id != request.GoodsReceiptId)
+                {
+                    return Results.BadRequest("Goods receipt ID mismatch");
+                }
+                
                 var response = await sender.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })

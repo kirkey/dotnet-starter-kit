@@ -1878,7 +1878,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, StartCycleCountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1890,7 +1890,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, StartCycleCountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete a cycle count
@@ -1901,7 +1901,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, CompleteCycleCountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1913,7 +1913,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, CompleteCycleCountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Cancel a cycle count
@@ -1947,7 +1947,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, ReconcileCycleCountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1959,7 +1959,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, ReconcileCycleCountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add an item count to a cycle count
@@ -2430,7 +2430,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id, MarkReceivedCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2442,7 +2442,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id, MarkReceivedCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete a goods receipt
@@ -3833,7 +3833,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id, StartPickingCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3845,7 +3845,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id, StartPickingCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete picking
@@ -3856,7 +3856,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id, CompletePickingCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3868,7 +3868,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id, CompletePickingCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete a pick list
@@ -4523,7 +4523,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id, SubmitPurchaseOrderCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4535,7 +4535,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id, SubmitPurchaseOrderCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Approve a submitted purchase order
@@ -5707,7 +5707,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id, ActivateSupplierCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5719,7 +5719,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id, ActivateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Deactivate a supplier
@@ -5730,7 +5730,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id, DeactivateSupplierCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5742,7 +5742,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id, DeactivateSupplierCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a tax code
@@ -15301,9 +15301,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, StartCycleCountCommand body)
         {
-            return StartCycleCountEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return StartCycleCountEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -15316,7 +15316,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StartCycleCountResponse> StartCycleCountEndpointAsync(string version, System.Guid id, StartCycleCountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15324,13 +15324,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -15404,9 +15410,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, CompleteCycleCountCommand body)
         {
-            return CompleteCycleCountEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return CompleteCycleCountEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -15419,7 +15425,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CompleteCycleCountResponse> CompleteCycleCountEndpointAsync(string version, System.Guid id, CompleteCycleCountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15427,13 +15433,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -15636,9 +15648,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, ReconcileCycleCountCommand body)
         {
-            return ReconcileCycleCountEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return ReconcileCycleCountEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -15651,7 +15663,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ReconcileCycleCountResponse> ReconcileCycleCountEndpointAsync(string version, System.Guid id, ReconcileCycleCountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15659,13 +15671,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -17822,9 +17840,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id, MarkReceivedCommand body)
         {
-            return MarkReceivedEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return MarkReceivedEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -17837,7 +17855,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<MarkReceivedResponse> MarkReceivedEndpointAsync(string version, System.Guid id, MarkReceivedCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -17845,13 +17863,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -24471,9 +24495,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id, StartPickingCommand body)
         {
-            return StartPickingEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return StartPickingEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -24486,7 +24510,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StartPickingResponse> StartPickingEndpointAsync(string version, System.Guid id, StartPickingCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -24494,13 +24518,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -24574,9 +24604,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id, CompletePickingCommand body)
         {
-            return CompletePickingEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return CompletePickingEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -24589,7 +24619,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CompletePickingResponse> CompletePickingEndpointAsync(string version, System.Guid id, CompletePickingCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -24597,13 +24627,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -27570,9 +27606,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id, SubmitPurchaseOrderCommand body)
         {
-            return SubmitPurchaseOrderEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return SubmitPurchaseOrderEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -27585,7 +27621,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<SubmitPurchaseOrderResponse> SubmitPurchaseOrderEndpointAsync(string version, System.Guid id, SubmitPurchaseOrderCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -27593,13 +27629,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -33048,9 +33090,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id, ActivateSupplierCommand body)
         {
-            return ActivateSupplierEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return ActivateSupplierEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -33063,7 +33105,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ActivateSupplierResponse> ActivateSupplierEndpointAsync(string version, System.Guid id, ActivateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -33071,13 +33113,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -33151,9 +33199,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id, DeactivateSupplierCommand body)
         {
-            return DeactivateSupplierEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return DeactivateSupplierEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -33166,7 +33214,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<DeactivateSupplierResponse> DeactivateSupplierEndpointAsync(string version, System.Guid id, DeactivateSupplierCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -33174,13 +33222,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -37721,6 +37775,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ActivateSupplierCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ActivateSupplierResponse
     {
 
@@ -39515,6 +39578,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CompleteCycleCountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CompleteCycleCountResponse
     {
 
@@ -39541,6 +39613,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CompletePickingCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pickListId")]
+        public System.Guid PickListId { get; set; } = default!;
 
     }
 
@@ -41495,6 +41576,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DeactivateSupplierCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class DeactivateSupplierResponse
     {
 
@@ -43116,6 +43206,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class MarkReceivedCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("goodsReceiptId")]
+        public System.Guid GoodsReceiptId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class MarkReceivedResponse
     {
 
@@ -44042,6 +44141,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("recognizedDate")]
         public System.DateTime RecognizedDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconcileCycleCountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -45987,11 +46095,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StartCycleCountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class StartCycleCountResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class StartPickingCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("pickListId")]
+        public System.Guid PickListId { get; set; } = default!;
 
     }
 
@@ -46157,6 +46283,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
         public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SubmitPurchaseOrderCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = new System.Guid("00000000-0000-0000-0000-000000000000");
 
     }
 

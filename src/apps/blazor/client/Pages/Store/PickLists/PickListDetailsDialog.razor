@@ -1,0 +1,169 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" Class="mr-1" />
+            Pick List Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else if (_pickList != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">General Information</MudText>
+                        <MudDivider Class="mb-3" />
+                        
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudTextField Label="Pick List Number" Value="@_pickList.PickListNumber" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudChip T="string" Color="@GetStatusColor(_pickList.Status ?? string.Empty)" Size="Size.Medium">@_pickList.Status</MudChip>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField Label="Warehouse ID" Value="@_pickList.WarehouseId.ToString()" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField Label="Picking Type" Value="@_pickList.PickingType" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField Label="Priority" Value="@_pickList.Priority" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            @if (!string.IsNullOrEmpty(_pickList.AssignedTo))
+                            {
+                                <MudItem xs="12" md="6">
+                                    <MudTextField Label="Assigned To" Value="@_pickList.AssignedTo" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                            @if (!string.IsNullOrEmpty(_pickList.ReferenceNumber))
+                            {
+                                <MudItem xs="12" md="6">
+                                    <MudTextField Label="Reference Number" Value="@_pickList.ReferenceNumber" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">Progress</MudText>
+                        <MudDivider Class="mb-3" />
+                        
+                        <MudGrid>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField Label="Total Items" Value="@_pickList.TotalLines" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField Label="Picked Items" Value="@_pickList.PickedLines" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField Label="Completion" Value="@GetCompletionPercentage()" ReadOnly="true" Variant="Variant.Filled" />
+                            </MudItem>
+                        </MudGrid>
+                        
+                        @if (_pickList.TotalLines > 0)
+                        {
+                            <MudProgressLinear Color="Color.Success" Value="@GetCompletionValue()" Class="mt-3" Size="Size.Large" />
+                        }
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">Dates & Timeline</MudText>
+                        <MudDivider Class="mb-3" />
+                        
+                        <MudGrid>
+                            @if (_pickList.StartDate.HasValue)
+                            {
+                                <MudItem xs="12" md="4">
+                                    <MudTextField Label="Started" Value="@_pickList.StartDate?.ToString("MMMM dd, yyyy HH:mm")" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                            @if (_pickList.CompletedDate.HasValue)
+                            {
+                                <MudItem xs="12" md="4">
+                                    <MudTextField Label="Completed" Value="@_pickList.CompletedDate?.ToString("MMMM dd, yyyy HH:mm")" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                            @if (_pickList.ExpectedCompletionDate.HasValue)
+                            {
+                                <MudItem xs="12" md="4">
+                                    <MudTextField Label="Expected Completion" Value="@_pickList.ExpectedCompletionDate?.ToString("MMMM dd, yyyy")" ReadOnly="true" Variant="Variant.Filled" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(_pickList.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="0" Class="pa-4 mb-4">
+                            <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
+                            <MudDivider Class="mb-3" />
+                            <MudTextField Value="@_pickList.Notes" ReadOnly="true" Variant="Variant.Filled" Lines="3" />
+                        </MudPaper>
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mb-3">
+                            <MudText Typo="Typo.h6">Pick List Items</MudText>
+                            @if (_pickList.Status == "Created")
+                            {
+                                <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Variant="Variant.Filled" OnClick="AddItem">
+                                    Add Item
+                                </MudButton>
+                            }
+                        </MudStack>
+                        <MudDivider Class="mb-3" />
+                        
+                        @if (_pickList.Items != null && _pickList.Items.Any())
+                        {
+                            <MudTable Items="@_pickList.Items" Hover="true" Dense="true" Striped="true">
+                                <HeaderContent>
+                                    <MudTh>Seq</MudTh>
+                                    <MudTh>Item</MudTh>
+                                    <MudTh>Bin</MudTh>
+                                    <MudTh>To Pick</MudTh>
+                                    <MudTh>Picked</MudTh>
+                                    <MudTh>Status</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Seq">@context.SequenceNumber</MudTd>
+                                    <MudTd DataLabel="Item">@context.ItemId</MudTd>
+                                    <MudTd DataLabel="Bin">@(context.BinId?.ToString() ?? "N/A")</MudTd>
+                                    <MudTd DataLabel="To Pick">@context.QuantityToPick</MudTd>
+                                    <MudTd DataLabel="Picked">@context.QuantityPicked</MudTd>
+                                    <MudTd DataLabel="Status">
+                                        <MudChip T="string" Size="Size.Small" Color="@GetItemStatusColor(context.Status ?? string.Empty)">@context.Status</MudChip>
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                        else
+                        {
+                            <MudAlert Severity="Severity.Info">No items in this pick list yet. Add items to begin picking.</MudAlert>
+                        }
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        }
+        else if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error">@_errorMessage</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

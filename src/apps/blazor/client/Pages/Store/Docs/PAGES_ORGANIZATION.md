@@ -106,7 +106,14 @@ All Store pages have been organized into feature-based folders for better access
 - **Files**:
   - `PickLists.razor` - Manage warehouse pick lists
   - `PickLists.razor.cs`
+  - `PickListDetailsDialog.razor` - View pick list details and items
+  - `PickListDetailsDialog.razor.cs`
+  - `AssignPickListDialog.razor` - Assign pick lists to pickers
+  - `AssignPickListDialog.razor.cs`
+  - `AddPickListItemDialog.razor` - Add items to pick lists
+  - `AddPickListItemDialog.razor.cs`
 - **Route**: `/store/pick-lists`
+- **Features**: Workflow operations (assign, start, complete), item management, priority management, progress tracking, advanced search filters
 
 ### 🛒 Purchase Orders
 - **Location**: `PurchaseOrders/`

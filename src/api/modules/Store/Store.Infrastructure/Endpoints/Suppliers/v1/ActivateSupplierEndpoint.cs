@@ -6,9 +6,14 @@ public static class ActivateSupplierEndpoint
 {
     internal static RouteHandlerBuilder MapActivateSupplierEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        return endpoints.MapPost("/{id:guid}/activate", async (DefaultIdType id, ActivateSupplierCommand command, ISender sender) =>
             {
-                var response = await sender.Send(new ActivateSupplierCommand(id)).ConfigureAwait(false);
+                if (id != command.Id)
+                {
+                    return Results.BadRequest("Supplier ID mismatch");
+                }
+                
+                var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ActivateSupplierEndpoint))

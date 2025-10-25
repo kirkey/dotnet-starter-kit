@@ -145,7 +145,8 @@ public partial class GoodsReceipts
         {
             try
             {
-                await Client.MarkReceivedEndpointAsync("1", id).ConfigureAwait(false);
+                var command = new MarkReceivedCommand { GoodsReceiptId = id };
+                await Client.MarkReceivedEndpointAsync("1", id, command).ConfigureAwait(false);
                 Snackbar.Add("Goods receipt marked as received successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }

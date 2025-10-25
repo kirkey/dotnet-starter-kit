@@ -15,9 +15,13 @@ public static class SubmitPurchaseOrderEndpoint
     /// <returns>Route handler builder for submit purchase order endpoint</returns>
     internal static RouteHandlerBuilder MapSubmitPurchaseOrderEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id}/submit", async (DefaultIdType id, ISender mediator) =>
+        return endpoints.MapPost("/{id}/submit", async (DefaultIdType id, SubmitPurchaseOrderCommand command, ISender mediator) =>
         {
-            var command = new SubmitPurchaseOrderCommand(id);
+            if (id != command.Id)
+            {
+                return Results.BadRequest("Purchase order ID mismatch");
+            }
+            
             var response = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
