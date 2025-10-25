@@ -21,8 +21,12 @@ public sealed class UpdateStockLevelHandler(
             throw new StockLevelNotFoundException(request.Id);
         }
 
-        // Note: Quantity operations are handled by specific commands (Reserve, Allocate, etc.)
-        // This update only handles metadata changes like location, bin, lot, serial assignments
+        // Update location/bin/lot/serial assignments
+        stockLevel.UpdateLocationAssignments(
+            request.WarehouseLocationId,
+            request.BinId,
+            request.LotNumberId,
+            request.SerialNumberId);
         
         await repository.UpdateAsync(stockLevel, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

@@ -304,4 +304,48 @@ public sealed class StockLevel : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new StockLevelCounted { StockLevel = this, CountedQuantity = countedQuantity, Variance = variance });
         return this;
     }
+
+    /// <summary>
+    /// Updates the location, bin, lot, and serial assignments for this stock level.
+    /// Note: Quantity operations use specific methods (Reserve, Allocate, etc.).
+    /// </summary>
+    public StockLevel UpdateLocationAssignments(
+        DefaultIdType? warehouseLocationId,
+        DefaultIdType? binId,
+        DefaultIdType? lotNumberId,
+        DefaultIdType? serialNumberId)
+    {
+        bool isUpdated = false;
+
+        if (WarehouseLocationId != warehouseLocationId)
+        {
+            WarehouseLocationId = warehouseLocationId;
+            isUpdated = true;
+        }
+
+        if (BinId != binId)
+        {
+            BinId = binId;
+            isUpdated = true;
+        }
+
+        if (LotNumberId != lotNumberId)
+        {
+            LotNumberId = lotNumberId;
+            isUpdated = true;
+        }
+
+        if (SerialNumberId != serialNumberId)
+        {
+            SerialNumberId = serialNumberId;
+            isUpdated = true;
+        }
+
+        if (isUpdated)
+        {
+            QueueDomainEvent(new StockLevelUpdated { StockLevel = this, QuantityChange = 0, ChangeType = "LOCATION_UPDATE" });
+        }
+
+        return this;
+    }
 }
