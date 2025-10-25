@@ -10,19 +10,12 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryReservations.EventHandle
 /// ADJUSTMENT type transactions with reason "RESERVATION_EXPIRED". This tracks when reservations
 /// expire based on their expiration date and return inventory to available status.
 /// </remarks>
-public sealed class InventoryReservationExpiredHandler : INotificationHandler<InventoryReservationExpired>
+public sealed class InventoryReservationExpiredHandler(
+    ILogger<InventoryReservationExpiredHandler> logger,
+    [FromKeyedServices("store:inventory-transactions")]
+    IRepository<InventoryTransaction> transactionRepository)
+    : INotificationHandler<InventoryReservationExpired>
 {
-    private readonly ILogger<InventoryReservationExpiredHandler> _logger;
-    private readonly IRepository<InventoryTransaction> _transactionRepository;
-
-    public InventoryReservationExpiredHandler(
-        ILogger<InventoryReservationExpiredHandler> logger,
-        [FromKeyedServices("store:inventory-transactions")] IRepository<InventoryTransaction> transactionRepository)
-    {
-        _logger = logger;
-        _transactionRepository = transactionRepository;
-    }
-
     /// <summary>
     /// Handles the InventoryReservationExpired event by creating an inventory transaction record.
     /// </summary>
@@ -32,7 +25,7 @@ public sealed class InventoryReservationExpiredHandler : INotificationHandler<In
     {
         var reservation = notification.InventoryReservation;
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Processing inventory reservation expiration: {ReservationNumber} for Item {ItemId} at Warehouse {WarehouseId}: {Quantity} units",
             reservation.ReservationNumber,
             reservation.ItemId,
@@ -61,17 +54,17 @@ public sealed class InventoryReservationExpiredHandler : INotificationHandler<In
                 performedBy: "System",
                 isApproved: true);
 
-            await _transactionRepository.AddAsync(transaction, cancellationToken);
-            await _transactionRepository.SaveChangesAsync(cancellationToken);
+            await transactionRepository.AddAsync(transaction, cancellationToken);
+            await transactionRepository.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Created inventory transaction {TransactionNumber} for reservation expiration {ReservationNumber}",
                 transactionNumber,
                 reservation.ReservationNumber);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,
+            logger.LogError(ex,
                 "Failed to create inventory transaction for reservation expiration: {ReservationNumber}",
                 reservation.ReservationNumber);
             // Don't rethrow - event handlers should not break the main flow
@@ -87,7 +80,7 @@ public sealed class InventoryReservationExpiredHandler : INotificationHandler<In
         var prefix = $"TXN-REXP-{date:yyyyMMdd}";
         
         // Get count of transactions with this prefix
-        var count = await _transactionRepository.CountAsync(cancellationToken);
+        var count = await transactionRepository.CountAsync(cancellationToken);
         
         return $"{prefix}-{(count + 1):D6}";
     }

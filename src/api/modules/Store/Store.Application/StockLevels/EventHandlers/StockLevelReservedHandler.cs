@@ -10,21 +10,15 @@ namespace FSH.Starter.WebApi.Store.Application.StockLevels.EventHandlers;
 /// ADJUSTMENT type transactions with reason "RESERVED". This provides traceability
 /// for inventory allocation and helps with inventory reconciliation.
 /// </remarks>
-public sealed class StockLevelReservedHandler : INotificationHandler<StockLevelReserved>
+public sealed class StockLevelReservedHandler(
+    ILogger<StockLevelReservedHandler> logger,
+    [FromKeyedServices("store:inventory-transactions")]
+    IRepository<InventoryTransaction> transactionRepository,
+    [FromKeyedServices("store:stocklevels")]
+    IReadRepository<StockLevel> stockLevelRepository)
+    : INotificationHandler<StockLevelReserved>
 {
-    private readonly ILogger<StockLevelReservedHandler> _logger;
-    private readonly IRepository<InventoryTransaction> _transactionRepository;
-    private readonly IReadRepository<StockLevel> _stockLevelRepository;
-
-    public StockLevelReservedHandler(
-        ILogger<StockLevelReservedHandler> logger,
-        [FromKeyedServices("store:inventory-transactions")] IRepository<InventoryTransaction> transactionRepository,
-        [FromKeyedServices("store:stocklevels")] IReadRepository<StockLevel> stockLevelRepository)
-    {
-        _logger = logger;
-        _transactionRepository = transactionRepository;
-        _stockLevelRepository = stockLevelRepository;
-    }
+    private readonly IReadRepository<StockLevel> _stockLevelRepository = stockLevelRepository;
 
     /// <summary>
     /// Handles the StockLevelReserved event by creating an inventory transaction record.
@@ -35,7 +29,7 @@ public sealed class StockLevelReservedHandler : INotificationHandler<StockLevelR
     {
         var stockLevel = notification.StockLevel;
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Processing stock reservation for Item {ItemId} at Warehouse {WarehouseId}: {Quantity} units",
             stockLevel.ItemId,
             stockLevel.WarehouseId,
@@ -64,16 +58,16 @@ public sealed class StockLevelReservedHandler : INotificationHandler<StockLevelR
                 performedBy: null,
                 isApproved: true);
 
-            await _transactionRepository.AddAsync(transaction, cancellationToken);
-            await _transactionRepository.SaveChangesAsync(cancellationToken);
+            await transactionRepository.AddAsync(transaction, cancellationToken);
+            await transactionRepository.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Created inventory transaction {TransactionNumber} for stock reservation",
                 transactionNumber);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,
+            logger.LogError(ex,
                 "Failed to create inventory transaction for stock reservation: Item {ItemId}, Warehouse {WarehouseId}",
                 stockLevel.ItemId,
                 stockLevel.WarehouseId);
@@ -90,7 +84,7 @@ public sealed class StockLevelReservedHandler : INotificationHandler<StockLevelR
         var prefix = $"TXN-RES-{date:yyyyMMdd}";
         
         // Get count of transactions with this prefix
-        var count = await _transactionRepository.CountAsync(cancellationToken);
+        var count = await transactionRepository.CountAsync(cancellationToken);
         
         return $"{prefix}-{(count + 1):D6}";
     }

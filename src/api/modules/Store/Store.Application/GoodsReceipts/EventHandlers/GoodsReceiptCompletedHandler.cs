@@ -14,25 +14,16 @@ namespace FSH.Starter.WebApi.Store.Application.GoodsReceipts.EventHandlers;
 /// This handler ensures data consistency by wrapping all operations in a database transaction.
 /// If any step fails, the entire operation is rolled back to maintain data integrity.
 /// </remarks>
-public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsReceiptCompleted>
+public sealed class GoodsReceiptCompletedHandler(
+    ILogger<GoodsReceiptCompletedHandler> logger,
+    [FromKeyedServices("store:inventory-transactions")]
+    IRepository<InventoryTransaction> inventoryTransactionRepository,
+    [FromKeyedServices("store:stock-levels")]
+    IRepository<StockLevel> stockLevelRepository,
+    [FromKeyedServices("store:purchase-orders")]
+    IRepository<PurchaseOrder> purchaseOrderRepository)
+    : INotificationHandler<GoodsReceiptCompleted>
 {
-    private readonly ILogger<GoodsReceiptCompletedHandler> _logger;
-    private readonly IRepository<InventoryTransaction> _inventoryTransactionRepository;
-    private readonly IRepository<StockLevel> _stockLevelRepository;
-    private readonly IRepository<PurchaseOrder> _purchaseOrderRepository;
-
-    public GoodsReceiptCompletedHandler(
-        ILogger<GoodsReceiptCompletedHandler> logger,
-        [FromKeyedServices("store:inventory-transactions")] IRepository<InventoryTransaction> inventoryTransactionRepository,
-        [FromKeyedServices("store:stock-levels")] IRepository<StockLevel> stockLevelRepository,
-        [FromKeyedServices("store:purchase-orders")] IRepository<PurchaseOrder> purchaseOrderRepository)
-    {
-        _logger = logger;
-        _inventoryTransactionRepository = inventoryTransactionRepository;
-        _stockLevelRepository = stockLevelRepository;
-        _purchaseOrderRepository = purchaseOrderRepository;
-    }
-
     /// <summary>
     /// Handles the GoodsReceiptCompleted event by creating inventory transactions and updating stock levels.
     /// </summary>
@@ -42,7 +33,7 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
     {
         var goodsReceipt = notification.GoodsReceipt;
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Processing goods receipt completion: {ReceiptNumber} (ID: {ReceiptId})",
             goodsReceipt.ReceiptNumber,
             goodsReceipt.Id);
@@ -50,7 +41,7 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         // Validate goods receipt has items
         if (goodsReceipt.Items.Count == 0)
         {
-            _logger.LogWarning(
+            logger.LogWarning(
                 "Goods receipt {ReceiptNumber} has no items. Skipping inventory update.",
                 goodsReceipt.ReceiptNumber);
             return;
@@ -68,7 +59,7 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
             await UpdatePurchaseOrderStatus(goodsReceipt.PurchaseOrderId.Value, cancellationToken);
         }
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Successfully processed goods receipt completion: {ReceiptNumber}. Created {ItemCount} inventory transactions.",
             goodsReceipt.ReceiptNumber,
             goodsReceipt.Items.Count);
@@ -114,9 +105,9 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
             isApproved: true // Auto-approve goods receipt transactions
         );
 
-        await _inventoryTransactionRepository.AddAsync(inventoryTransaction, cancellationToken);
+        await inventoryTransactionRepository.AddAsync(inventoryTransaction, cancellationToken);
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Created inventory transaction {TransactionNumber} for item {ItemId}: +{Quantity} units",
             transactionNumber,
             item.ItemId,
@@ -140,7 +131,7 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         CancellationToken cancellationToken)
     {
         var spec = new StockLevelsByItemAndWarehouseSpec(itemId, warehouseId);
-        var stockLevels = await _stockLevelRepository.ListAsync(spec, cancellationToken);
+        var stockLevels = await stockLevelRepository.ListAsync(spec, cancellationToken);
         return stockLevels.Sum(sl => sl.QuantityOnHand);
     }
 
@@ -156,7 +147,7 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
     {
         // Find existing stock level or create new one
         var spec = new StockLevelsByItemWarehouseAndLocationSpec(itemId, warehouseId, warehouseLocationId);
-        var stockLevel = await _stockLevelRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var stockLevel = await stockLevelRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (stockLevel == null)
         {
@@ -171,9 +162,9 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
                 quantityOnHand: quantityReceived
             );
 
-            await _stockLevelRepository.AddAsync(stockLevel, cancellationToken);
+            await stockLevelRepository.AddAsync(stockLevel, cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Created new stock level for item {ItemId} at warehouse {WarehouseId}: {Quantity} units",
                 itemId,
                 warehouseId,
@@ -183,9 +174,9 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         {
             // Update existing stock level
             stockLevel.IncreaseQuantity(quantityReceived);
-            await _stockLevelRepository.UpdateAsync(stockLevel, cancellationToken);
+            await stockLevelRepository.UpdateAsync(stockLevel, cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Updated stock level for item {ItemId} at warehouse {WarehouseId}: +{Quantity} units (Total: {TotalQuantity})",
                 itemId,
                 warehouseId,
@@ -204,13 +195,13 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         CancellationToken cancellationToken)
     {
         // Find the purchase order that contains this item
-        var allPurchaseOrders = await _purchaseOrderRepository.ListAsync(cancellationToken);
+        var allPurchaseOrders = await purchaseOrderRepository.ListAsync(cancellationToken);
         var purchaseOrder = allPurchaseOrders
             .FirstOrDefault(po => po.Items.Any(item => item.Id == purchaseOrderItemId));
 
         if (purchaseOrder == null)
         {
-            _logger.LogWarning(
+            logger.LogWarning(
                 "Purchase order containing item {PurchaseOrderItemId} not found. Cannot update received quantity.",
                 purchaseOrderItemId);
             return;
@@ -218,18 +209,18 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
 
         // Load full PO with items
         var spec = new PurchaseOrderByIdWithItemsSpec(purchaseOrder.Id);
-        var fullPurchaseOrder = await _purchaseOrderRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var fullPurchaseOrder = await purchaseOrderRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (fullPurchaseOrder == null)
         {
-            _logger.LogWarning("Purchase order {PurchaseOrderId} not found.", purchaseOrder.Id);
+            logger.LogWarning("Purchase order {PurchaseOrderId} not found.", purchaseOrder.Id);
             return;
         }
 
         var purchaseOrderItem = fullPurchaseOrder.Items.FirstOrDefault(i => i.Id == purchaseOrderItemId);
         if (purchaseOrderItem == null)
         {
-            _logger.LogWarning(
+            logger.LogWarning(
                 "Purchase order item {PurchaseOrderItemId} not found in PO {PurchaseOrderId}.",
                 purchaseOrderItemId,
                 fullPurchaseOrder.Id);
@@ -240,9 +231,9 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         var newReceivedQuantity = purchaseOrderItem.ReceivedQuantity + quantityReceived;
         purchaseOrderItem.ReceiveQuantity(newReceivedQuantity);
 
-        await _purchaseOrderRepository.UpdateAsync(fullPurchaseOrder, cancellationToken);
+        await purchaseOrderRepository.UpdateAsync(fullPurchaseOrder, cancellationToken);
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Updated PO item {PurchaseOrderItemId}: Received {Quantity}/{OrderedQuantity} (Partial: {IsPartial})",
             purchaseOrderItemId,
             newReceivedQuantity,
@@ -258,11 +249,11 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         DefaultIdType purchaseOrderId,
         CancellationToken cancellationToken)
     {
-        var purchaseOrder = await _purchaseOrderRepository.GetByIdAsync(purchaseOrderId, cancellationToken);
+        var purchaseOrder = await purchaseOrderRepository.GetByIdAsync(purchaseOrderId, cancellationToken);
         
         if (purchaseOrder == null)
         {
-            _logger.LogWarning(
+            logger.LogWarning(
                 "Purchase order {PurchaseOrderId} not found. Cannot update status.",
                 purchaseOrderId);
             return;
@@ -281,9 +272,9 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         {
             // All items received - mark PO as complete
             purchaseOrder.UpdateDeliveryDate(DateTime.UtcNow);
-            await _purchaseOrderRepository.UpdateAsync(purchaseOrder, cancellationToken);
+            await purchaseOrderRepository.UpdateAsync(purchaseOrder, cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Purchase order {OrderNumber} fully received. Status updated to Received. All {ItemCount} items complete.",
                 purchaseOrder.OrderNumber,
                 purchaseOrder.Items.Count);
@@ -295,7 +286,7 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
             var totalReceived = purchaseOrder.Items.Sum(i => i.ReceivedQuantity);
             var percentageReceived = (decimal)totalReceived / totalOrdered * 100;
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Purchase order {OrderNumber} partially received: {ReceivedQty}/{OrderedQty} ({Percentage:F1}%). Waiting for remaining items.",
                 purchaseOrder.OrderNumber,
                 totalReceived,
@@ -314,7 +305,7 @@ public sealed class GoodsReceiptCompletedHandler : INotificationHandler<GoodsRec
         var prefix = $"TXN-{datePrefix}-";
 
         // Find the highest existing number for today
-        var existingTransactions = await _inventoryTransactionRepository.ListAsync(cancellationToken);
+        var existingTransactions = await inventoryTransactionRepository.ListAsync(cancellationToken);
         var todayTransactions = existingTransactions
             .Where(t => t.TransactionNumber.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             .Select(t => t.TransactionNumber)

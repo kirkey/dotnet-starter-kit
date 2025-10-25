@@ -10,19 +10,12 @@ namespace FSH.Starter.WebApi.Store.Application.StockLevels.EventHandlers;
 /// decreases, releases, and picks by creating appropriate inventory transactions.
 /// This provides complete traceability for all inventory movements.
 /// </remarks>
-public sealed class StockLevelUpdatedHandler : INotificationHandler<StockLevelUpdated>
+public sealed class StockLevelUpdatedHandler(
+    ILogger<StockLevelUpdatedHandler> logger,
+    [FromKeyedServices("store:inventory-transactions")]
+    IRepository<InventoryTransaction> transactionRepository)
+    : INotificationHandler<StockLevelUpdated>
 {
-    private readonly ILogger<StockLevelUpdatedHandler> _logger;
-    private readonly IRepository<InventoryTransaction> _transactionRepository;
-
-    public StockLevelUpdatedHandler(
-        ILogger<StockLevelUpdatedHandler> logger,
-        [FromKeyedServices("store:inventory-transactions")] IRepository<InventoryTransaction> transactionRepository)
-    {
-        _logger = logger;
-        _transactionRepository = transactionRepository;
-    }
-
     /// <summary>
     /// Handles the StockLevelUpdated event by creating an inventory transaction record.
     /// </summary>
@@ -36,13 +29,13 @@ public sealed class StockLevelUpdatedHandler : INotificationHandler<StockLevelUp
         // Only create transactions for actual quantity changes, not for location updates
         if (changeType == "LOCATION_UPDATE")
         {
-            _logger.LogDebug(
+            logger.LogDebug(
                 "Skipping transaction creation for location update on Stock Level {StockLevelId}",
                 stockLevel.Id);
             return;
         }
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Processing stock level update for Item {ItemId} at Warehouse {WarehouseId}: {ChangeType}, Change: {QuantityChange}",
             stockLevel.ItemId,
             stockLevel.WarehouseId,
@@ -72,17 +65,17 @@ public sealed class StockLevelUpdatedHandler : INotificationHandler<StockLevelUp
                 performedBy: null,
                 isApproved: true);
 
-            await _transactionRepository.AddAsync(transaction, cancellationToken);
-            await _transactionRepository.SaveChangesAsync(cancellationToken);
+            await transactionRepository.AddAsync(transaction, cancellationToken);
+            await transactionRepository.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Created inventory transaction {TransactionNumber} for stock level update: {ChangeType}",
                 transactionNumber,
                 changeType);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,
+            logger.LogError(ex,
                 "Failed to create inventory transaction for stock level update: Item {ItemId}, Warehouse {WarehouseId}, ChangeType {ChangeType}",
                 stockLevel.ItemId,
                 stockLevel.WarehouseId,
@@ -124,7 +117,7 @@ public sealed class StockLevelUpdatedHandler : INotificationHandler<StockLevelUp
         var prefix = $"TXN-{typePrefix}-{date:yyyyMMdd}";
         
         // Get count of transactions with this prefix
-        var count = await _transactionRepository.CountAsync(cancellationToken);
+        var count = await transactionRepository.CountAsync(cancellationToken);
         
         return $"{prefix}-{(count + 1):D6}";
     }

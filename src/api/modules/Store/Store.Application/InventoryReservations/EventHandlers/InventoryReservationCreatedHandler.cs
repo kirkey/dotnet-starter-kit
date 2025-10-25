@@ -10,19 +10,12 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryReservations.EventHandle
 /// ADJUSTMENT type transactions with reason "RESERVATION_CREATED". This provides
 /// traceability for inventory availability and helps with reconciliation.
 /// </remarks>
-public sealed class InventoryReservationCreatedHandler : INotificationHandler<InventoryReservationCreated>
+public sealed class InventoryReservationCreatedHandler(
+    ILogger<InventoryReservationCreatedHandler> logger,
+    [FromKeyedServices("store:inventory-transactions")]
+    IRepository<InventoryTransaction> transactionRepository)
+    : INotificationHandler<InventoryReservationCreated>
 {
-    private readonly ILogger<InventoryReservationCreatedHandler> _logger;
-    private readonly IRepository<InventoryTransaction> _transactionRepository;
-
-    public InventoryReservationCreatedHandler(
-        ILogger<InventoryReservationCreatedHandler> logger,
-        [FromKeyedServices("store:inventory-transactions")] IRepository<InventoryTransaction> transactionRepository)
-    {
-        _logger = logger;
-        _transactionRepository = transactionRepository;
-    }
-
     /// <summary>
     /// Handles the InventoryReservationCreated event by creating an inventory transaction record.
     /// </summary>
@@ -32,7 +25,7 @@ public sealed class InventoryReservationCreatedHandler : INotificationHandler<In
     {
         var reservation = notification.InventoryReservation;
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Processing inventory reservation creation: {ReservationNumber} for Item {ItemId} at Warehouse {WarehouseId}: {Quantity} units",
             reservation.ReservationNumber,
             reservation.ItemId,
@@ -61,17 +54,17 @@ public sealed class InventoryReservationCreatedHandler : INotificationHandler<In
                 performedBy: reservation.ReservedBy,
                 isApproved: true);
 
-            await _transactionRepository.AddAsync(transaction, cancellationToken);
-            await _transactionRepository.SaveChangesAsync(cancellationToken);
+            await transactionRepository.AddAsync(transaction, cancellationToken);
+            await transactionRepository.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Created inventory transaction {TransactionNumber} for reservation {ReservationNumber}",
                 transactionNumber,
                 reservation.ReservationNumber);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,
+            logger.LogError(ex,
                 "Failed to create inventory transaction for reservation: {ReservationNumber}",
                 reservation.ReservationNumber);
             // Don't rethrow - event handlers should not break the main flow
@@ -87,7 +80,7 @@ public sealed class InventoryReservationCreatedHandler : INotificationHandler<In
         var prefix = $"TXN-RSV-{date:yyyyMMdd}";
         
         // Get count of transactions with this prefix
-        var count = await _transactionRepository.CountAsync(cancellationToken);
+        var count = await transactionRepository.CountAsync(cancellationToken);
         
         return $"{prefix}-{(count + 1):D6}";
     }

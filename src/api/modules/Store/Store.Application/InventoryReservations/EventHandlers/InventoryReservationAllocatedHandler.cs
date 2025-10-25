@@ -10,19 +10,12 @@ namespace FSH.Starter.WebApi.Store.Application.InventoryReservations.EventHandle
 /// ADJUSTMENT type transactions with reason "RESERVATION_ALLOCATED". This tracks the
 /// transition from soft reservation to hard allocation.
 /// </remarks>
-public sealed class InventoryReservationAllocatedHandler : INotificationHandler<InventoryReservationAllocated>
+public sealed class InventoryReservationAllocatedHandler(
+    ILogger<InventoryReservationAllocatedHandler> logger,
+    [FromKeyedServices("store:inventory-transactions")]
+    IRepository<InventoryTransaction> transactionRepository)
+    : INotificationHandler<InventoryReservationAllocated>
 {
-    private readonly ILogger<InventoryReservationAllocatedHandler> _logger;
-    private readonly IRepository<InventoryTransaction> _transactionRepository;
-
-    public InventoryReservationAllocatedHandler(
-        ILogger<InventoryReservationAllocatedHandler> logger,
-        [FromKeyedServices("store:inventory-transactions")] IRepository<InventoryTransaction> transactionRepository)
-    {
-        _logger = logger;
-        _transactionRepository = transactionRepository;
-    }
-
     /// <summary>
     /// Handles the InventoryReservationAllocated event by creating an inventory transaction record.
     /// </summary>
@@ -32,7 +25,7 @@ public sealed class InventoryReservationAllocatedHandler : INotificationHandler<
     {
         var reservation = notification.InventoryReservation;
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Processing inventory reservation allocation: {ReservationNumber} for Item {ItemId} at Warehouse {WarehouseId}: {Quantity} units",
             reservation.ReservationNumber,
             reservation.ItemId,
@@ -61,17 +54,17 @@ public sealed class InventoryReservationAllocatedHandler : INotificationHandler<
                 performedBy: null,
                 isApproved: true);
 
-            await _transactionRepository.AddAsync(transaction, cancellationToken);
-            await _transactionRepository.SaveChangesAsync(cancellationToken);
+            await transactionRepository.AddAsync(transaction, cancellationToken);
+            await transactionRepository.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Created inventory transaction {TransactionNumber} for reservation allocation {ReservationNumber}",
                 transactionNumber,
                 reservation.ReservationNumber);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,
+            logger.LogError(ex,
                 "Failed to create inventory transaction for reservation allocation: {ReservationNumber}",
                 reservation.ReservationNumber);
             // Don't rethrow - event handlers should not break the main flow
@@ -87,7 +80,7 @@ public sealed class InventoryReservationAllocatedHandler : INotificationHandler<
         var prefix = $"TXN-RALC-{date:yyyyMMdd}";
         
         // Get count of transactions with this prefix
-        var count = await _transactionRepository.CountAsync(cancellationToken);
+        var count = await transactionRepository.CountAsync(cancellationToken);
         
         return $"{prefix}-{(count + 1):D6}";
     }
