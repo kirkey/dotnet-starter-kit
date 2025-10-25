@@ -60,8 +60,25 @@
 - **Workflow**: Create → Approve/Reject → UpdateNotes (anytime)
 - **Note**: No event handlers (transactions ARE the audit trail, prevents circular dependencies)
 
+### InventoryTransfers Module
+- **CRUD Operations**: Create, Read, Update, Delete
+- **Workflow Operations**: Approve, MarkInTransit, Complete, Cancel
+- **Status Workflow**: Pending → Approved → InTransit → Completed (or Cancelled at any stage before Completed)
+- **Domain Events**: InventoryTransferCreated, InventoryTransferApproved, InventoryTransferInTransit, InventoryTransferCompleted, InventoryTransferCancelled, InventoryTransferUpdated
+- **Event Handlers** (5 complete):
+  - InventoryTransferCreatedHandler - Creates audit trail for new transfers
+  - InventoryTransferApprovedHandler - Creates audit trail for approvals
+  - InventoryTransferInTransitHandler - Creates audit trail for shipments
+  - InventoryTransferCompletedHandler - Creates paired OUT/IN transactions (source & destination)
+  - InventoryTransferCancelledHandler - Creates audit trail for cancellations
+- **Domain Methods**: Create, AddItem, RemoveItem, UpdateItem, Approve, MarkInTransit, Complete, Cancel, SetTrackingNumber
+- **Search Filters**: Comprehensive transfer search with status, warehouses, date ranges
+- **Validation**: Comprehensive validators for all commands
+- **Exception Handling**: InventoryTransferNotFoundException, InventoryTransferCannotBeModifiedException, InvalidInventoryTransferStatusException
+- **Transaction Tracking**: Complete audit trail with TXN-TRFCR/TRFAP/TRFIT/TRFOUT/TRFIN/TRFCN prefixes
+- **Special Feature**: Completion creates paired transactions (OUT at source, IN at destination)
+
 ## Pages to Create 📝
-3. **InventoryTransfers** - Transfer management with workflow (Approve, Mark In Transit, Complete, Cancel)
 4. **StockAdjustments** - Adjustment management with Approve operation
 5. **PickLists** - Pick list management with workflow (Assign, Start, Complete, Cancel, Add Item)
 6. **PutAwayTasks** - Put-away task management with workflow (Assign, Start, Complete, Cancel)
