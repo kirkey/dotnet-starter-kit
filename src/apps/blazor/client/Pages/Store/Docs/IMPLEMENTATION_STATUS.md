@@ -130,6 +130,61 @@
 - **Progress Tracking**: Completion percentage, lines completed vs. total lines
 - **Integration**: Links to GoodsReceipts for received inventory
 
+### Warehouses Module (Master Data)
+- **CRUD Operations**: Create, Read, Update, Delete
+- **Special Operations**: AssignManager
+- **Domain Methods**: UpdateCapacityUsage, RecordInventoryCount, Activate, Deactivate, AssignManager, UpdateWarehouseType, UpdateCode, GetCapacityUtilizationPercentage, GetAvailableCapacity, IsNearCapacity
+- **Search Filters**: Comprehensive warehouse search
+- **Validation**: Comprehensive validators for all commands
+- **Note**: Master data entity - no event handlers needed (warehouses don't create inventory transactions, they are referenced by operational modules)
+
+## API Endpoints Status
+
+### ✅ All Store Endpoints Implemented (128 Total)
+
+**Master Data Modules (42 endpoints):**
+- Categories: 5 endpoints (CRUD)
+- Items: 5 endpoints (CRUD)
+- Suppliers: 5 endpoints (CRUD)
+- Warehouses: 6 endpoints (CRUD + AssignManager)
+- WarehouseLocations: 5 endpoints (CRUD)
+- Bins: 5 endpoints (CRUD)
+- LotNumbers: 5 endpoints (CRUD)
+- SerialNumbers: 5 endpoints (CRUD)
+- ItemSuppliers: 5 endpoints (CRUD)
+
+**Operational Modules (86 endpoints):**
+- PurchaseOrders: 11 endpoints (CRUD + Submit, Approve, Send, Receive, Cancel, PDF)
+- GoodsReceipts: 6 endpoints (CRUD + Complete)
+- StockLevels: 8 endpoints (CRUD + Reserve, Allocate, Release)
+- InventoryReservations: 5 endpoints (CRD + Release)
+- InventoryTransactions: 7 endpoints (CRD + Approve, Reject, UpdateNotes)
+- InventoryTransfers: 9 endpoints (CRUD + Approve, MarkInTransit, Complete, Cancel)
+- StockAdjustments: 6 endpoints (CRUD + Approve)
+- PickLists: 9 endpoints (CRUD + AddItem, Assign, Start, Complete)
+- PutAwayTasks: 8 endpoints (CRD + AddItem, Assign, Start, Complete)
+- CycleCounts: 9 endpoints (CRUD + Start, Complete, Cancel, Reconcile)
+
+**Event Handlers: 20 across 6 operational modules**
+- StockLevels: 3 handlers
+- InventoryReservations: 5 handlers
+- InventoryTransfers: 5 handlers
+- StockAdjustments: 2 handlers
+- PickLists: 3 handlers
+- PutAwayTasks: 2 handlers
+
+### NSwag Client Generation
+- **Configuration File**: `/apps/blazor/infrastructure/Api/nswag.json`
+- **Swagger URL**: `https://localhost:7000/swagger/v1/swagger.json`
+- **Output**: `Client.cs` with all Store API clients
+- **Operation Mode**: `MultipleClientsFromOperationId`
+
+**To Generate Client:**
+```bash
+cd apps/blazor/infrastructure/Api
+nswag run nswag.json
+```
+
 ## Warehouse Pages Status
 1. **Warehouses** - Exists, needs verification
 2. **WarehouseLocations** - Exists, needs verification
