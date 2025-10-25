@@ -661,11 +661,27 @@ internal sealed class StoreDbInitializer(
             var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
             if (cycleCounts.Count > 0 && items.Count > 0)
             {
+                // Load existing combinations to avoid duplicates
+                var existingCombinations = await context.CycleCountItems
+                    .Select(cci => new { cci.CycleCountId, cci.ItemId })
+                    .ToHashSetAsync(cancellationToken)
+                    .ConfigureAwait(false);
+
                 var ccItems = new List<CycleCountItem>();
-                for (var i = existingCCItems + 1; i <= 10; i++)
+                var attempts = 0;
+                var maxAttempts = 50; // Prevent infinite loops
+
+                for (var i = existingCCItems + 1; i <= 10 && attempts < maxAttempts; attempts++)
                 {
-                    var cc = cycleCounts[i % cycleCounts.Count];
-                    var item = items[i % items.Count];
+                    var cc = cycleCounts[attempts % cycleCounts.Count];
+                    var item = items[attempts % items.Count];
+                    
+                    // Skip if this combination already exists
+                    if (existingCombinations.Contains(new { CycleCountId = cc.Id, ItemId = item.Id }))
+                    {
+                        continue;
+                    }
+
                     var systemQty = 100 + (i * 10);
                     var countedQty = i % 3 == 0 ? systemQty - 2 : systemQty; // Introduce variance on every 3rd item
                     ccItems.Add(CycleCountItem.Create(
@@ -675,9 +691,17 @@ internal sealed class StoreDbInitializer(
                         countedQuantity: i % 2 == 0 ? countedQty : null, // Some items not yet counted
                         notes: i % 3 == 0 ? "Variance detected" : null
                     ));
+                    
+                    // Add to the set to avoid duplicates within this batch
+                    existingCombinations.Add(new { CycleCountId = cc.Id, ItemId = item.Id });
+                    i++;
                 }
-                await context.CycleCountItems.AddRangeAsync(ccItems, cancellationToken).ConfigureAwait(false);
-                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+                if (ccItems.Count > 0)
+                {
+                    await context.CycleCountItems.AddRangeAsync(ccItems, cancellationToken).ConfigureAwait(false);
+                    await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 

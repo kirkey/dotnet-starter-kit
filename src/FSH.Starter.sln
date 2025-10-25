@@ -74,12 +74,98 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.Infrastructure", "api\modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj", "{E6F0311A-A0BC-4562-9020-26269C85ED32}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Store", "Store", "{B9B7BDEB-BFA6-426D-B6A5-A2D7262084D7}"
+	ProjectSection(SolutionItems) = preProject
+		api\modules\Accounting\docs\VIEWMODEL_ANALYSIS.md = api\modules\Accounting\docs\VIEWMODEL_ANALYSIS.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Domain", "api\modules\Store\Store.Domain\Store.Domain.csproj", "{0E0FD069-1C12-4FCA-BD4E-093EB46F62CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Application", "api\modules\Store\Store.Application\Store.Application.csproj", "{ED4D19FC-6891-46E2-9F03-B10E016028A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Infrastructure", "api\modules\Store\Store.Infrastructure\Store.Infrastructure.csproj", "{B83A7F8E-D6BC-4327-BB82-93670BAF03F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8BEC47E0-E99F-45C2-8718-DE51745C095E}"
+	ProjectSection(SolutionItems) = preProject
+		api\modules\Store\docs\STORE_ENDPOINT_MAPPING_COMPLETE.md = api\modules\Store\docs\STORE_ENDPOINT_MAPPING_COMPLETE.md
+		api\modules\Store\docs\WIRING_VERIFICATION.md = api\modules\Store\docs\WIRING_VERIFICATION.md
+		api\modules\Store\docs\Store_PutAwayTask_Implementation_Complete.md = api\modules\Store\docs\Store_PutAwayTask_Implementation_Complete.md
+		api\modules\Store\docs\Store_GoodsReceipt_Implementation_Complete.md = api\modules\Store\docs\Store_GoodsReceipt_Implementation_Complete.md
+		api\modules\Store\docs\STORE_WAREHOUSE_PAGES_UPDATED.md = api\modules\Store\docs\STORE_WAREHOUSE_PAGES_UPDATED.md
+		api\modules\Store\docs\STORE_QUICK_REFERENCE.md = api\modules\Store\docs\STORE_QUICK_REFERENCE.md
+		api\modules\Store\docs\Store_Bin_Implementation_Complete.md = api\modules\Store\docs\Store_Bin_Implementation_Complete.md
+		api\modules\Store\docs\Store_InventoryReservation_Implementation_Complete.md = api\modules\Store\docs\Store_InventoryReservation_Implementation_Complete.md
+		api\modules\Store\docs\GOODS_RECEIPT_ANALYSIS.md = api\modules\Store\docs\GOODS_RECEIPT_ANALYSIS.md
+		api\modules\Store\docs\WAREHOUSE_ADDRESS_FIELD_DEVELOPER_GUIDE.md = api\modules\Store\docs\WAREHOUSE_ADDRESS_FIELD_DEVELOPER_GUIDE.md
+		api\modules\Store\docs\IMPLEMENTATION_COMPLETE.md = api\modules\Store\docs\IMPLEMENTATION_COMPLETE.md
+		api\modules\Store\docs\STORE_IMPORT_EXPORT_GUIDE.md = api\modules\Store\docs\STORE_IMPORT_EXPORT_GUIDE.md
+		api\modules\Store\docs\CYCLE_COUNT_REVIEW.md = api\modules\Store\docs\CYCLE_COUNT_REVIEW.md
+		api\modules\Store\docs\STORE_BLAZOR_FINAL_STATUS.md = api\modules\Store\docs\STORE_BLAZOR_FINAL_STATUS.md
+		api\modules\Store\docs\PURCHASE_ORDER_PDF_IMPLEMENTATION.md = api\modules\Store\docs\PURCHASE_ORDER_PDF_IMPLEMENTATION.md
+		api\modules\Store\docs\CYCLE_COUNT_BLAZOR_IMPLEMENTATION.md = api\modules\Store\docs\CYCLE_COUNT_BLAZOR_IMPLEMENTATION.md
+		api\modules\Store\docs\Store_LotNumber_Implementation_Complete.md = api\modules\Store\docs\Store_LotNumber_Implementation_Complete.md
+		api\modules\Store\docs\STORE_BLAZOR_PAGES_SUMMARY.md = api\modules\Store\docs\STORE_BLAZOR_PAGES_SUMMARY.md
+		api\modules\Store\docs\STORE_BLAZOR_QUICK_REFERENCE.md = api\modules\Store\docs\STORE_BLAZOR_QUICK_REFERENCE.md
+		api\modules\Store\docs\Store_ItemSupplier_Implementation_Complete.md = api\modules\Store\docs\Store_ItemSupplier_Implementation_Complete.md
+		api\modules\Store\docs\GOODS_RECEIPT_IMPLEMENTATION.md = api\modules\Store\docs\GOODS_RECEIPT_IMPLEMENTATION.md
+		api\modules\Store\docs\Store_Module_Implementation_Complete_Summary.md = api\modules\Store\docs\Store_Module_Implementation_Complete_Summary.md
+		api\modules\Store\docs\STORE_BLAZOR_FINAL_VERIFICATION.md = api\modules\Store\docs\STORE_BLAZOR_FINAL_VERIFICATION.md
+		api\modules\Store\docs\Store_Bin_Item_Implementation_Complete.md = api\modules\Store\docs\Store_Bin_Item_Implementation_Complete.md
+		api\modules\Store\docs\WAREHOUSE_REFACTORING_COMPLETE.md = api\modules\Store\docs\WAREHOUSE_REFACTORING_COMPLETE.md
+		api\modules\Store\docs\README.md = api\modules\Store\docs\README.md
+		api\modules\Store\docs\CYCLECOUNT_PATTERN_ALIGNMENT.md = api\modules\Store\docs\CYCLECOUNT_PATTERN_ALIGNMENT.md
+		api\modules\Store\docs\PARTIAL_RECEIVING_FLOW_DIAGRAM.md = api\modules\Store\docs\PARTIAL_RECEIVING_FLOW_DIAGRAM.md
+		api\modules\Store\docs\Store_SerialNumber_Implementation_Complete.md = api\modules\Store\docs\Store_SerialNumber_Implementation_Complete.md
+		api\modules\Store\docs\Store_Domain_Exceptions_Summary.md = api\modules\Store\docs\Store_Domain_Exceptions_Summary.md
+		api\modules\Store\docs\Store_PickList_Implementation_Complete.md = api\modules\Store\docs\Store_PickList_Implementation_Complete.md
+		api\modules\Store\docs\STORE_DASHBOARD_UPDATE_SUMMARY.md = api\modules\Store\docs\STORE_DASHBOARD_UPDATE_SUMMARY.md
+		api\modules\Store\docs\Store_StockLevel_Implementation_Complete.md = api\modules\Store\docs\Store_StockLevel_Implementation_Complete.md
+		api\modules\Store\docs\Store_Domain_Refactoring_Summary.md = api\modules\Store\docs\Store_Domain_Refactoring_Summary.md
+		api\modules\Store\docs\IMPORT_RESPONSE_UPDATES.md = api\modules\Store\docs\IMPORT_RESPONSE_UPDATES.md
+		api\modules\Store\docs\STORE_BLAZOR_IMPLEMENTATION_COMPLETE.md = api\modules\Store\docs\STORE_BLAZOR_IMPLEMENTATION_COMPLETE.md
+		api\modules\Store\docs\PARTIAL_RECEIVING_IMPLEMENTATION.md = api\modules\Store\docs\PARTIAL_RECEIVING_IMPLEMENTATION.md
+		api\modules\Store\docs\WAREHOUSE_REFACTORING_CHECKLIST.md = api\modules\Store\docs\WAREHOUSE_REFACTORING_CHECKLIST.md
+		api\modules\Store\docs\Store_Module_Refactoring_Tasks_1_2_3_Complete.md = api\modules\Store\docs\Store_Module_Refactoring_Tasks_1_2_3_Complete.md
+		api\modules\Store\docs\STORE_BLAZOR_API_ENDPOINT_MAPPING.md = api\modules\Store\docs\STORE_BLAZOR_API_ENDPOINT_MAPPING.md
+		api\modules\Store\docs\WAREHOUSE_REFACTORING_SUMMARY.md = api\modules\Store\docs\WAREHOUSE_REFACTORING_SUMMARY.md
+		api\modules\Store\docs\ENDPOINT_VERIFICATION_REPORT.md = api\modules\Store\docs\ENDPOINT_VERIFICATION_REPORT.md
+		api\modules\Store\docs\CYCLE_COUNT_QUICK_REFERENCE.md = api\modules\Store\docs\CYCLE_COUNT_QUICK_REFERENCE.md
+		api\modules\Store\docs\STORE_BLAZOR_EXECUTIVE_SUMMARY.md = api\modules\Store\docs\STORE_BLAZOR_EXECUTIVE_SUMMARY.md
+		api\modules\Store\docs\IMPORT_OPTIMIZATION_SUMMARY.md = api\modules\Store\docs\IMPORT_OPTIMIZATION_SUMMARY.md
+		api\modules\Store\docs\Store_InventoryTransaction_Implementation_Complete.md = api\modules\Store\docs\Store_InventoryTransaction_Implementation_Complete.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{BF936807-7392-4466-8396-E618511083F6}"
+	ProjectSection(SolutionItems) = preProject
+		api\modules\Accounting\docs\ACCOUNTING_APPLICATIONS_FINAL_SUMMARY.md = api\modules\Accounting\docs\ACCOUNTING_APPLICATIONS_FINAL_SUMMARY.md
+		api\modules\Accounting\docs\ACCOUNTING_APPLICATIONS_IMPLEMENTATION.md = api\modules\Accounting\docs\ACCOUNTING_APPLICATIONS_IMPLEMENTATION.md
+		api\modules\Accounting\docs\ACCOUNTING_CONFIGURATIONS_SUMMARY.md = api\modules\Accounting\docs\ACCOUNTING_CONFIGURATIONS_SUMMARY.md
+		api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_PLAN.md = api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_PLAN.md
+		api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_SUMMARY.md = api\modules\Accounting\docs\ACCOUNTING_PAGES_ENHANCEMENT_SUMMARY.md
+		api\modules\Accounting\docs\ACCOUNTING_PAGES_IMPLEMENTATION_GUIDE.md = api\modules\Accounting\docs\ACCOUNTING_PAGES_IMPLEMENTATION_GUIDE.md
+		api\modules\Accounting\docs\RAZOR_PAGES_FIXES_SUMMARY.md = api\modules\Accounting\docs\RAZOR_PAGES_FIXES_SUMMARY.md
+		api\modules\Accounting\docs\CHECK_MANAGEMENT_IMPLEMENTATION.md = api\modules\Accounting\docs\CHECK_MANAGEMENT_IMPLEMENTATION.md
+		api\modules\Accounting\docs\VIEWMODEL_ANALYSIS.md = api\modules\Accounting\docs\VIEWMODEL_ANALYSIS.md
+		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_IMPLEMENTATION_COMPLETE.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_IMPLEMENTATION_COMPLETE.md
+		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_QUICK_REFERENCE.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_QUICK_REFERENCE.md
+		api\modules\Accounting\docs\CHECK_BANKID_QUICK_REFERENCE.md = api\modules\Accounting\docs\CHECK_BANKID_QUICK_REFERENCE.md
+		api\modules\Accounting\docs\CHECKVIEWMODEL_REFACTORING.md = api\modules\Accounting\docs\CHECKVIEWMODEL_REFACTORING.md
+		api\modules\Accounting\docs\BANK_MANAGEMENT_IMPLEMENTATION.md = api\modules\Accounting\docs\BANK_MANAGEMENT_IMPLEMENTATION.md
+		api\modules\Accounting\docs\CHECK_IMPLEMENTATION_FINAL_SUMMARY.md = api\modules\Accounting\docs\CHECK_IMPLEMENTATION_FINAL_SUMMARY.md
+		api\modules\Accounting\docs\CHECK_UPDATE_IMPLEMENTATION.md = api\modules\Accounting\docs\CHECK_UPDATE_IMPLEMENTATION.md
+		api\modules\Accounting\docs\README.md = api\modules\Accounting\docs\README.md
+		api\modules\Accounting\docs\CHECK_BUNDLE_REGISTRATION.md = api\modules\Accounting\docs\CHECK_BUNDLE_REGISTRATION.md
+		api\modules\Accounting\docs\CHECK_MANAGEMENT_VERIFICATION.md = api\modules\Accounting\docs\CHECK_MANAGEMENT_VERIFICATION.md
+		api\modules\Accounting\docs\CHECK_COMPLETE_IMPLEMENTATION_SUMMARY.md = api\modules\Accounting\docs\CHECK_COMPLETE_IMPLEMENTATION_SUMMARY.md
+		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_API_ENDPOINTS_COMPLETE.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_API_ENDPOINTS_COMPLETE.md
+		api\modules\Accounting\docs\CHECK_FILES_CHANGED_SUMMARY.md = api\modules\Accounting\docs\CHECK_FILES_CHANGED_SUMMARY.md
+		api\modules\Accounting\docs\CHECK_QUICK_START_FINAL.md = api\modules\Accounting\docs\CHECK_QUICK_START_FINAL.md
+		api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_COMPLETE_IMPLEMENTATION.md = api\modules\Accounting\docs\DEBIT_CREDIT_MEMOS_COMPLETE_IMPLEMENTATION.md
+		api\modules\Accounting\docs\ADVANCED_ACCOUNTING_ENTITIES_SUMMARY.md = api\modules\Accounting\docs\ADVANCED_ACCOUNTING_ENTITIES_SUMMARY.md
+		api\modules\Accounting\docs\CONFIGURATION_IMPLEMENTATION_COMPLETE.md = api\modules\Accounting\docs\CONFIGURATION_IMPLEMENTATION_COMPLETE.md
+		api\modules\Accounting\docs\CHECK_ENTITY_BANKID_UPDATE_SUMMARY.md = api\modules\Accounting\docs\CHECK_ENTITY_BANKID_UPDATE_SUMMARY.md
+		api\modules\Accounting\docs\CHECK_MANAGEMENT_BLAZOR_PAGE.md = api\modules\Accounting\docs\CHECK_MANAGEMENT_BLAZOR_PAGE.md
+		api\modules\Accounting\docs\CHECK_BANKID_AUTOPOPULATION_UPDATE.md = api\modules\Accounting\docs\CHECK_BANKID_AUTOPOPULATION_UPDATE.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -390,6 +476,8 @@ Global
 		{0E0FD069-1C12-4FCA-BD4E-093EB46F62CA} = {B9B7BDEB-BFA6-426D-B6A5-A2D7262084D7}
 		{ED4D19FC-6891-46E2-9F03-B10E016028A5} = {B9B7BDEB-BFA6-426D-B6A5-A2D7262084D7}
 		{B83A7F8E-D6BC-4327-BB82-93670BAF03F1} = {B9B7BDEB-BFA6-426D-B6A5-A2D7262084D7}
+		{8BEC47E0-E99F-45C2-8718-DE51745C095E} = {B9B7BDEB-BFA6-426D-B6A5-A2D7262084D7}
+		{BF936807-7392-4466-8396-E618511083F6} = {FD5A41A0-5734-4CB0-9323-0CF49820D6F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA8248C2-3877-4AF7-8777-A17E7881E030}

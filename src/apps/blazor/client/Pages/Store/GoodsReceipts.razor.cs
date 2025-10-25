@@ -167,7 +167,7 @@ public partial class GoodsReceipts
             CloseButton = true,
             CloseOnEscapeKey = true,
             FullWidth = true,
-            MaxWidth = MaxWidth.ExtraLarge, 
+            MaxWidth = MaxWidth.Large, 
         };
 
         var dialog = await DialogService.ShowAsync<CreateReceiptFromPODialog>("Create Receipt from Purchase Order", options);
