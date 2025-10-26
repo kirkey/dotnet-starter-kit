@@ -131,6 +131,53 @@ else
             </MudItem>
         </MudGrid>
 
+        <!-- Tertiary KPI Row - Warehouse Operations -->
+        <MudGrid GutterSize="3" Class="mb-4">
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.Inbox" Color="Color.Primary" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Goods Receipts</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.GoodsReceiptsCount</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Total received</MudText>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.CompareArrows" Color="Color.Tertiary" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Transfers Pending</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.InventoryTransfersPending</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">In-transit items</MudText>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.Assignment" Color="Color.Info" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Active Pick Lists</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.ActivePickLists</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">In progress</MudText>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.Summarize" Color="Color.Secondary" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Cycle Counts</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.CycleCountsInProgress</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Active counts</MudText>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+
         <!-- Main Content Row -->
         <MudGrid GutterSize="3">
             <!-- Purchase Order Status (Donut Chart) -->
@@ -244,5 +291,183 @@ else
                 </MudItem>
             </MudGrid>
         }
+
+        <!-- Warehouse Operations Row -->
+        <MudGrid GutterSize="3" Class="mt-4">
+            <!-- Recent Goods Receipts -->
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Recent Goods Receipts</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" Color="Color.Primary" OnClick="@LoadDashboardDataAsync" />
+                    </div>
+                    
+                    @if (_goodsReceipts.Count > 0)
+                    {
+                        <div style="height: 380px; overflow-y: auto;">
+                            <MudTable Items="@_goodsReceipts" Dense="true" Hover="true" Striped="true" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Receipt #</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">PO #</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Warehouse</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Received Date</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Status</MudText></MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.ReceiptNumber</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.PurchaseOrderNumber</MudText></MudTd>
+                                    <MudTd><MudText Color="Color.Default">@context.WarehouseName</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.ReceivedDate</MudText></MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@(context.Status == "Completed" ? Color.Success : Color.Warning)"
+                                               Text="@context.Status" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-center align-center" style="height: 380px;">
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">No goods receipts yet</MudText>
+                        </div>
+                    }
+                </MudCard>
+            </MudItem>
+
+            <!-- Active Inventory Transfers -->
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Active Inventory Transfers</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" Color="Color.Primary" OnClick="@LoadDashboardDataAsync" />
+                    </div>
+                    
+                    @if (_inventoryTransfers.Count > 0)
+                    {
+                        <div style="height: 380px; overflow-y: auto;">
+                            <MudTable Items="@_inventoryTransfers" Dense="true" Hover="true" Striped="true" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Transfer #</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">From</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">To</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Items</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Status</MudText></MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.TransferNumber</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.FromWarehouse</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.ToWarehouse</MudText></MudTd>
+                                    <MudTd><MudText Color="Color.Default">@context.ItemCount</MudText></MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@GetTransferStatusColor(context.Status)"
+                                               Text="@context.Status" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-center align-center" style="height: 380px;">
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">No active transfers</MudText>
+                        </div>
+                    }
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Pick Lists and Put Away Tasks Row -->
+        <MudGrid GutterSize="3" Class="mt-4">
+            <!-- Active Pick Lists -->
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Active Pick Lists</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" Color="Color.Primary" OnClick="@LoadDashboardDataAsync" />
+                    </div>
+                    
+                    @if (_pickLists.Count > 0)
+                    {
+                        <div style="height: 380px; overflow-y: auto;">
+                            <MudTable Items="@_pickLists" Dense="true" Hover="true" Striped="true" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Pick List #</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Warehouse</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Assigned To</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Priority</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Status</MudText></MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.PickListNumber</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.WarehouseName</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.AssignedTo</MudText></MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@GetPriorityColor(context.Priority)"
+                                               Text="@context.Priority" />
+                                    </MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@GetPickListStatusColor(context.Status)"
+                                               Text="@context.Status" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-center align-center" style="height: 380px;">
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">No active pick lists</MudText>
+                        </div>
+                    }
+                </MudCard>
+            </MudItem>
+
+            <!-- Put Away Tasks -->
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Put Away Tasks</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" Color="Color.Primary" OnClick="@LoadDashboardDataAsync" />
+                    </div>
+                    
+                    @if (_putAwayTasks.Count > 0)
+                    {
+                        <div style="height: 380px; overflow-y: auto;">
+                            <MudTable Items="@_putAwayTasks" Dense="true" Hover="true" Striped="true" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Task #</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Warehouse</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Items</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Assigned To</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Status</MudText></MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.TaskNumber</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.WarehouseName</MudText></MudTd>
+                                    <MudTd><MudText Color="Color.Default">@context.ItemCount</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.AssignedTo</MudText></MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@GetPutAwayStatusColor(context.Status)"
+                                               Text="@context.Status" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-center align-center" style="height: 380px;">
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">No put away tasks</MudText>
+                        </div>
+                    }
+                </MudCard>
+            </MudItem>
+        </MudGrid>
     </MudContainer>
 }

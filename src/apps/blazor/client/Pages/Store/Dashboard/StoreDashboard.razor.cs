@@ -17,6 +17,18 @@ public partial class StoreDashboard
     /// <summary>Low stock items for the data table.</summary>
     private readonly List<StockItem> _stockItems = new();
 
+    /// <summary>Recent goods receipts list.</summary>
+    private readonly List<GoodsReceiptItem> _goodsReceipts = new();
+
+    /// <summary>Active inventory transfers list.</summary>
+    private readonly List<InventoryTransferItem> _inventoryTransfers = new();
+
+    /// <summary>Active pick lists.</summary>
+    private readonly List<PickListItem> _pickLists = new();
+
+    /// <summary>Active put away tasks.</summary>
+    private readonly List<PutAwayTaskItem> _putAwayTasks = new();
+
     /// <summary>
     /// Initialize the dashboard - load real data from API.
     /// </summary>
@@ -40,7 +52,12 @@ public partial class StoreDashboard
                 LoadPurchaseOrderMetricsAsync(),
                 LoadWarehouseMetricsAsync(),
                 LoadSupplierMetricsAsync(),
-                LoadStockLevelsAsync()
+                LoadStockLevelsAsync(),
+                LoadGoodsReceiptsAsync(),
+                LoadInventoryTransfersAsync(),
+                LoadPickListsAsync(),
+                LoadPutAwayTasksAsync(),
+                LoadCycleCountsAsync()
             );
 
             // Initialize chart data after metrics are loaded
@@ -207,8 +224,8 @@ public partial class StoreDashboard
             var itemsResult = await Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
             {
                 PageNumber = 1,
-                PageSize = 10,
-                OrderBy = new[] { "ReorderPoint desc" }
+                PageSize = 10
+                // No OrderBy - let specification use its built-in ordering (Name)
             });
 
             // Process items to find low stock
@@ -314,6 +331,245 @@ public partial class StoreDashboard
             };
         }
     }
+
+    /// <summary>
+    /// Load recent goods receipts.
+    /// </summary>
+    private async Task LoadGoodsReceiptsAsync()
+    {
+        try
+        {
+            var result = await Client.SearchGoodsReceiptsEndpointAsync("1", new SearchGoodsReceiptsCommand
+            {
+                PageNumber = 1,
+                PageSize = 10
+                // No OrderBy - let specification use its built-in ordering (ReceivedDate desc, ReceiptNumber)
+            });
+
+            _metrics.GoodsReceiptsCount = result.TotalCount;
+
+            _goodsReceipts.Clear();
+            if (result.Items != null)
+            {
+                foreach (var receipt in result.Items)
+                {
+                    _goodsReceipts.Add(new GoodsReceiptItem
+                    {
+                        ReceiptNumber = receipt.ReceiptNumber ?? "N/A",
+                        PurchaseOrderNumber = receipt.PurchaseOrderId?.ToString() ?? "N/A",
+                        WarehouseName = receipt.Name ?? "N/A",
+                        ReceivedDate = receipt.ReceivedDate.ToString("MM/dd/yyyy"),
+                        Status = receipt.Status ?? "Draft"
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading goods receipts: {ex.Message}", Severity.Warning);
+            _metrics.GoodsReceiptsCount = 0;
+        }
+    }
+
+    /// <summary>
+    /// Load active inventory transfers.
+    /// </summary>
+    private async Task LoadInventoryTransfersAsync()
+    {
+        try
+        {
+            // Get all transfers without status filter to avoid permission issues
+            var result = await Client.SearchInventoryTransfersEndpointAsync("1", new SearchInventoryTransfersCommand
+            {
+                PageNumber = 1,
+                PageSize = 10
+                // No OrderBy - let specification use its built-in ordering (TransferDate desc, TransferNumber)
+            });
+
+            _inventoryTransfers.Clear();
+            
+            // Filter for pending and in-transit on client side
+            var activeTransfers = result.Items?
+                .Where(t => t.Status == "Pending" || t.Status == "InTransit" || t.Status == "Approved")
+                .ToList() ?? new List<GetInventoryTransferListResponse>();
+
+            _metrics.InventoryTransfersPending = activeTransfers.Count;
+
+            foreach (var transfer in activeTransfers.Take(10))
+            {
+                _inventoryTransfers.Add(new InventoryTransferItem
+                {
+                    TransferNumber = transfer.TransferNumber ?? "N/A",
+                    FromWarehouse = transfer.FromWarehouseName ?? "N/A",
+                    ToWarehouse = transfer.ToWarehouseName ?? "N/A",
+                    ItemCount = 0, // Item count not available in list response
+                    Status = transfer.Status ?? "Pending"
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            // If unauthorized, silently set to 0 (user may not have permission)
+            if (ex.Message.Contains("403") || ex.Message.Contains("unauthorized"))
+            {
+                _metrics.InventoryTransfersPending = 0;
+            }
+            else
+            {
+                Snackbar.Add($"Error loading inventory transfers: {ex.Message}", Severity.Warning);
+                _metrics.InventoryTransfersPending = 0;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Load active pick lists.
+    /// </summary>
+    private async Task LoadPickListsAsync()
+    {
+        try
+        {
+            var result = await Client.SearchPickListsEndpointAsync("1", new SearchPickListsCommand
+            {
+                Status = "InProgress",
+                PageNumber = 1,
+                PageSize = 10
+                // No OrderBy - let specification use its built-in ordering (Priority desc, CreatedOn desc)
+            });
+
+            _metrics.ActivePickLists = result.TotalCount;
+
+            _pickLists.Clear();
+            if (result.Items != null)
+            {
+                foreach (var pickList in result.Items)
+                {
+                    _pickLists.Add(new PickListItem
+                    {
+                        PickListNumber = pickList.PickListNumber ?? "N/A",
+                        WarehouseName = pickList.Name ?? "N/A",
+                        AssignedTo = pickList.AssignedTo ?? "Unassigned",
+                        Priority = pickList.Priority switch
+                        {
+                            1 => "Low",
+                            2 => "Normal",
+                            3 => "High",
+                            _ => "Normal"
+                        },
+                        Status = pickList.Status ?? "Pending"
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading pick lists: {ex.Message}", Severity.Warning);
+            _metrics.ActivePickLists = 0;
+        }
+    }
+
+    /// <summary>
+    /// Load active put away tasks.
+    /// </summary>
+    private async Task LoadPutAwayTasksAsync()
+    {
+        try
+        {
+            var result = await Client.SearchPutAwayTasksEndpointAsync("1", new SearchPutAwayTasksCommand
+            {
+                PageNumber = 1,
+                PageSize = 10
+                // No OrderBy - let specification use its built-in ordering
+            });
+
+            _putAwayTasks.Clear();
+            if (result.Items != null)
+            {
+                foreach (var task in result.Items.Where(t => t.Status != "Completed"))
+                {
+                    _putAwayTasks.Add(new PutAwayTaskItem
+                    {
+                        TaskNumber = task.TaskNumber ?? "N/A",
+                        WarehouseName = task.Name ?? "N/A",
+                        ItemCount = task.TotalLines,
+                        AssignedTo = task.AssignedTo ?? "Unassigned",
+                        Status = task.Status ?? "Pending"
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading put away tasks: {ex.Message}", Severity.Warning);
+        }
+    }
+
+    /// <summary>
+    /// Load cycle counts in progress.
+    /// </summary>
+    private async Task LoadCycleCountsAsync()
+    {
+        try
+        {
+            var result = await Client.SearchCycleCountsEndpointAsync("1");
+
+            // Count only "InProgress" status cycle counts
+            _metrics.CycleCountsInProgress = result.Items?.Count(c => c.Status == "InProgress") ?? 0;
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading cycle counts: {ex.Message}", Severity.Warning);
+            _metrics.CycleCountsInProgress = 0;
+        }
+    }
+
+    /// <summary>
+    /// Get color for transfer status.
+    /// </summary>
+    private static Color GetTransferStatusColor(string status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Approved" => Color.Info,
+        "InTransit" => Color.Primary,
+        "Completed" => Color.Success,
+        "Cancelled" => Color.Error,
+        _ => Color.Default
+    };
+
+    /// <summary>
+    /// Get color for priority.
+    /// </summary>
+    private static Color GetPriorityColor(string priority) => priority switch
+    {
+        "High" => Color.Error,
+        "Medium" => Color.Warning,
+        "Normal" => Color.Info,
+        _ => Color.Default
+    };
+
+    /// <summary>
+    /// Get color for pick list status.
+    /// </summary>
+    private static Color GetPickListStatusColor(string status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "InProgress" => Color.Primary,
+        "Completed" => Color.Success,
+        "Cancelled" => Color.Error,
+        _ => Color.Default
+    };
+
+    /// <summary>
+    /// Get color for put away status.
+    /// </summary>
+    private static Color GetPutAwayStatusColor(string status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Assigned" => Color.Info,
+        "InProgress" => Color.Primary,
+        "Completed" => Color.Success,
+        _ => Color.Default
+    };
 }
 
 /// <summary>
@@ -347,6 +603,18 @@ internal sealed class StoreDashboardMetrics
 
     /// <summary>Total number of warehouses.</summary>
     public int WarehousesCount { get; set; }
+
+    /// <summary>Total number of goods receipts.</summary>
+    public int GoodsReceiptsCount { get; set; }
+
+    /// <summary>Number of pending inventory transfers.</summary>
+    public int InventoryTransfersPending { get; set; }
+
+    /// <summary>Number of active pick lists.</summary>
+    public int ActivePickLists { get; set; }
+
+    /// <summary>Number of cycle counts in progress.</summary>
+    public int CycleCountsInProgress { get; set; }
 }
 
 /// <summary>
@@ -417,3 +685,88 @@ internal sealed class StockItem
     /// <summary>Lead time for restocking.</summary>
     public string LeadTime { get; set; } = string.Empty;
 }
+
+/// <summary>
+/// Goods receipt item model for dashboard display.
+/// </summary>
+internal sealed class GoodsReceiptItem
+{
+    /// <summary>Receipt number.</summary>
+    public string ReceiptNumber { get; set; } = string.Empty;
+
+    /// <summary>Purchase order number.</summary>
+    public string PurchaseOrderNumber { get; set; } = string.Empty;
+
+    /// <summary>Warehouse name.</summary>
+    public string WarehouseName { get; set; } = string.Empty;
+
+    /// <summary>Received date.</summary>
+    public string ReceivedDate { get; set; } = string.Empty;
+
+    /// <summary>Receipt status.</summary>
+    public string Status { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Inventory transfer item model for dashboard display.
+/// </summary>
+internal sealed class InventoryTransferItem
+{
+    /// <summary>Transfer number.</summary>
+    public string TransferNumber { get; set; } = string.Empty;
+
+    /// <summary>Source warehouse name.</summary>
+    public string FromWarehouse { get; set; } = string.Empty;
+
+    /// <summary>Destination warehouse name.</summary>
+    public string ToWarehouse { get; set; } = string.Empty;
+
+    /// <summary>Number of items in transfer.</summary>
+    public int ItemCount { get; set; }
+
+    /// <summary>Transfer status.</summary>
+    public string Status { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Pick list item model for dashboard display.
+/// </summary>
+internal sealed class PickListItem
+{
+    /// <summary>Pick list number.</summary>
+    public string PickListNumber { get; set; } = string.Empty;
+
+    /// <summary>Warehouse name.</summary>
+    public string WarehouseName { get; set; } = string.Empty;
+
+    /// <summary>Assigned picker name.</summary>
+    public string AssignedTo { get; set; } = string.Empty;
+
+    /// <summary>Pick list priority.</summary>
+    public string Priority { get; set; } = string.Empty;
+
+    /// <summary>Pick list status.</summary>
+    public string Status { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Put away task item model for dashboard display.
+/// </summary>
+internal sealed class PutAwayTaskItem
+{
+    /// <summary>Task number.</summary>
+    public string TaskNumber { get; set; } = string.Empty;
+
+    /// <summary>Warehouse name.</summary>
+    public string WarehouseName { get; set; } = string.Empty;
+
+    /// <summary>Number of items to put away.</summary>
+    public int ItemCount { get; set; }
+
+    /// <summary>Assigned worker name.</summary>
+    public string AssignedTo { get; set; } = string.Empty;
+
+    /// <summary>Task status.</summary>
+    public string Status { get; set; } = string.Empty;
+}
+
