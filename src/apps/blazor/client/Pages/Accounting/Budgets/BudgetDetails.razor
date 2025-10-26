@@ -1,7 +1,16 @@
 @page "/accounting-budgetdetails/{budgetId:guid}"
 @namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets
 
-<PageHeader Title="Budget Details" Header="Budget Details" SubHeader="Manage Budget Details for the selected Budget." />
+<PageHeader Title="Budget Details" Header="Budget Details" SubHeader="Manage Budget Details for the selected Budget.">
+    <Actions>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Primary" 
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Href="/accounting-budgets">
+            Back to Budgets
+        </MudButton>
+    </Actions>
+</PageHeader>
 
 <EntityTable @ref="_table" TEntity="BudgetDetailResponse" TId="DefaultIdType" TRequest="BudgetDetailViewModel" Context="@Context">
     <EditFormContent Context="context">
