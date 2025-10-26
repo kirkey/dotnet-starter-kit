@@ -46,7 +46,8 @@ public partial class Warehouses
             {
                 await Client.UpdateWarehouseEndpointAsync("1", id, warehouse.Adapt<UpdateWarehouseCommand>());
             },
-            deleteFunc: async id => await Client.DeleteWarehouseEndpointAsync("1", id));
+            deleteFunc: async id => await Client.DeleteWarehouseEndpointAsync("1", id),
+            hasExtraActionsFunc: () => true);
 
         return Task.CompletedTask;
     }

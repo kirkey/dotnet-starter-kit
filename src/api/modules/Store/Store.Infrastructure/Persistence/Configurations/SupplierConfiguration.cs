@@ -37,18 +37,7 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
         builder.Property(x => x.Address)
             .IsRequired()
             .HasMaxLength(500);
-
-        builder.Property(x => x.City)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.Property(x => x.State)
-            .HasMaxLength(100);
-
-        builder.Property(x => x.Country)
-            .IsRequired()
-            .HasMaxLength(100);
-
+        
         builder.Property(x => x.PostalCode)
             .HasMaxLength(20);
 

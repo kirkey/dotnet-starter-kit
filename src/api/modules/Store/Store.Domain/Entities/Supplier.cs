@@ -48,23 +48,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// </summary>
     public string Address { get; private set; } = default!;
 
-    /// <summary>
-    /// City where supplier is located.
-    /// Example: "Portland". Max length: 100.
-    /// </summary>
-    public string City { get; private set; } = default!;
-
-    /// <summary>
-    /// State or region (optional).
-    /// Example: "OR". Max length: 100.
-    /// </summary>
-    public string? State { get; private set; }
-
-    /// <summary>
-    /// Country of the supplier.
-    /// Example: "US". Max length: 100.
-    /// </summary>
-    public string Country { get; private set; } = default!;
 
     /// <summary>
     /// Postal code (optional).
@@ -127,9 +110,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         string email,
         string phone,
         string address,
-        string city,
-        string? state,
-        string country,
         string? postalCode,
         string? website,
         decimal? creditLimit,
@@ -171,18 +151,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         if (address.Length > 500)
             throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
 
-        if (string.IsNullOrWhiteSpace(city))
-            throw new ArgumentException("City is required", nameof(city));
-        if (city.Length > 100)
-            throw new ArgumentException("City must not exceed 100 characters", nameof(city));
-
-        if (state is { Length: > 100 })
-            throw new ArgumentException("State must not exceed 100 characters", nameof(state));
-
-        if (string.IsNullOrWhiteSpace(country))
-            throw new ArgumentException("Country is required", nameof(country));
-        if (country.Length > 100)
-            throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
 
         if (postalCode is { Length: > 20 })
             throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
@@ -207,9 +175,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         Email = email;
         Phone = phone;
         Address = address;
-        City = city;
-        State = state;
-        Country = country;
         PostalCode = postalCode;
         Website = website;
         CreditLimit = creditLimit;
@@ -231,9 +196,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// <param name="email">The contact email for the supplier. Max length: 255.</param>
     /// <param name="phone">The contact phone number for the supplier. Max length: 50.</param>
     /// <param name="address">The address of the supplier. Max length: 500.</param>
-    /// <param name="city">The city where the supplier is located. Max length: 100.</param>
-    /// <param name="state">Optional state or region where the supplier is located. Max length: 100.</param>
-    /// <param name="country">The country where the supplier is located. Max length: 100.</param>
     /// <param name="postalCode">Optional postal code for the supplier. Max length: 20.</param>
     /// <param name="website">Optional website URL for the supplier. Max length: 255.</param>
     /// <param name="creditLimit">Optional credit limit for the supplier. Must be &gt;= 0 if specified.</param>
@@ -251,9 +213,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         string email,
         string phone,
         string address,
-        string city,
-        string? state,
-        string country,
         string? postalCode = null,
         string? website = null,
         decimal? creditLimit = null,
@@ -271,9 +230,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
             email,
             phone,
             address,
-            city,
-            state,
-            country,
             postalCode,
             website,
             creditLimit,
@@ -292,9 +248,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// <param name="email">New email for the supplier. Max length: 255.</param>
     /// <param name="phone">New phone number for the supplier. Max length: 50.</param>
     /// <param name="address">New address for the supplier. Max length: 500.</param>
-    /// <param name="city">New city for the supplier. Max length: 100.</param>
-    /// <param name="state">New state or region for the supplier. Max length: 100.</param>
-    /// <param name="country">New country for the supplier. Max length: 100.</param>
     /// <param name="postalCode">New postal code for the supplier. Max length: 20.</param>
     /// <param name="website">New website URL for the supplier. Max length: 255.</param>
     /// <param name="creditLimit">New credit limit for the supplier. Must be &gt;= 0 if specified.</param>
@@ -310,9 +263,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         string? email,
         string? phone,
         string? address,
-        string? city,
-        string? state,
-        string? country,
         string? postalCode,
         string? website,
         decimal? creditLimit,
@@ -361,27 +311,6 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         {
             if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
             Address = address;
-            isUpdated = true;
-        }
-
-        if (!string.IsNullOrWhiteSpace(city) && !string.Equals(City, city, StringComparison.OrdinalIgnoreCase))
-        {
-            if (city.Length > 100) throw new ArgumentException("City must not exceed 100 characters", nameof(city));
-            City = city;
-            isUpdated = true;
-        }
-
-        if (!string.Equals(State, state, StringComparison.OrdinalIgnoreCase))
-        {
-            if (state is { Length: > 100 }) throw new ArgumentException("State must not exceed 100 characters", nameof(state));
-            State = state;
-            isUpdated = true;
-        }
-
-        if (!string.IsNullOrWhiteSpace(country) && !string.Equals(Country, country, StringComparison.OrdinalIgnoreCase))
-        {
-            if (country.Length > 100) throw new ArgumentException("Country must not exceed 100 characters", nameof(country));
-            Country = country;
             isUpdated = true;
         }
 

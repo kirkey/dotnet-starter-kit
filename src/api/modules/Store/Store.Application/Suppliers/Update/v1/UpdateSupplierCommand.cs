@@ -52,23 +52,6 @@ public record UpdateSupplierCommand : IRequest<UpdateSupplierResponse>
     [DefaultValue("123 Industrial Blvd")]
     public string Address { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Gets or sets the city.
-    /// </summary>
-    [DefaultValue("Portland")]
-    public string City { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Gets or sets the state or region.
-    /// </summary>
-    [DefaultValue("OR")]
-    public string? State { get; set; }
-
-    /// <summary>
-    /// Gets or sets the country.
-    /// </summary>
-    [DefaultValue("United States")]
-    public string Country { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the postal code.

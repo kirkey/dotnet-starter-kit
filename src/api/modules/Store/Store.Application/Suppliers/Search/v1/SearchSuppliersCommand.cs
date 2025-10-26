@@ -16,14 +16,4 @@ public class SearchSuppliersCommand : PaginationFilter, IRequest<PagedList<Suppl
     /// Optional exact code filter.
     /// </summary>
     public string? Code { get; set; }
-
-    /// <summary>
-    /// Optional city filter.
-    /// </summary>
-    public string? City { get; set; }
-
-    /// <summary>
-    /// Optional country filter.
-    /// </summary>
-    public string? Country { get; set; }
 }

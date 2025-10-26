@@ -10,9 +10,6 @@ namespace FSH.Starter.WebApi.Store.Application.Suppliers.Create.v1;
 /// <param name="Email">Contact email. Required. Max length 255.</param>
 /// <param name="Phone">Contact phone. Required. Max length 50.</param>
 /// <param name="Address">Supplier address. Required. Max length 500.</param>
-/// <param name="City">Supplier city. Required. Max length 100.</param>
-/// <param name="State">Optional state/region. Max length 100.</param>
-/// <param name="Country">Supplier country. Required. Max length 100.</param>
 /// <param name="PostalCode">Optional postal code. Max length 20.</param>
 /// <param name="Website">Optional website URL. Max length 255.</param>
 /// <param name="CreditLimit">Optional credit limit. Must be >= 0 if specified.</param>
@@ -28,9 +25,6 @@ public sealed record CreateSupplierCommand(
     string Email,
     string Phone,
     string Address,
-    string City,
-    string? State,
-    string Country,
     string? PostalCode = null,
     string? Website = null,
     decimal? CreditLimit = null,

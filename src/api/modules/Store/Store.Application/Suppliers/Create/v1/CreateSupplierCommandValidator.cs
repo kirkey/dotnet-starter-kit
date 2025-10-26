@@ -52,13 +52,6 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
             .NotEmpty()
             .MaximumLength(500);
 
-        RuleFor(x => x.City)
-            .NotEmpty()
-            .MaximumLength(100);
-
-        RuleFor(x => x.Country)
-            .NotEmpty()
-            .MaximumLength(100);
 
         RuleFor(x => x.PostalCode)
             .MaximumLength(20)

@@ -1,6 +1,22 @@
 @page "/warehouse/locations"
 
-<PageHeader Title="Warehouse Locations" Header="Warehouse Locations" SubHeader="Manage specific storage locations within warehouses." />
+@if (_filterWarehouseId.HasValue)
+{
+    <PageHeader Title="Warehouse Locations" Header="Warehouse Locations" SubHeader="Manage storage locations for the selected warehouse.">
+        <Actions>
+            <MudButton Variant="Variant.Outlined" 
+                       Color="Color.Primary" 
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       OnClick="@(() => NavigationManager.NavigateTo("/warehouses"))">
+                Back to Warehouses
+            </MudButton>
+        </Actions>
+    </PageHeader>
+}
+else
+{
+    <PageHeader Title="Warehouse Locations" Header="Warehouse Locations" SubHeader="Manage specific storage locations within warehouses." />
+}
 
 <EntityTable TEntity="GetWarehouseLocationListResponse" TId="DefaultIdType" TRequest="WarehouseLocationViewModel" Context="@Context">
     <EditFormContent Context="context">

@@ -9,10 +9,21 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class WarehouseLocations
 {
+    [SupplyParameterFromQuery(Name = "warehouseId")]
+    public string? WarehouseIdQuery { get; set; }
+
+    private DefaultIdType? _filterWarehouseId;
+
     protected EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> Context { get; set; } = default!;
 
     protected override Task OnInitializedAsync()
     {
+        // Parse the warehouse ID from query parameter if provided
+        if (!string.IsNullOrEmpty(WarehouseIdQuery) && Guid.TryParse(WarehouseIdQuery, out var warehouseGuid))
+        {
+            _filterWarehouseId = warehouseGuid;
+        }
+
         Context = new EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel>(
             entityName: "Warehouse Location",
             entityNamePlural: "Warehouse Locations",
@@ -33,9 +44,25 @@ public partial class WarehouseLocations
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
+            getDefaultsFunc: async () =>
+            {
+                var viewModel = new WarehouseLocationViewModel();
+                // Pre-select the warehouse ID if filtering by warehouse
+                if (_filterWarehouseId.HasValue)
+                {
+                    viewModel.WarehouseId = _filterWarehouseId;
+                }
+                return await Task.FromResult(viewModel);
+            },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<SearchWarehouseLocationsCommand>();
+                
+                // Apply warehouse filter if specified
+                if (_filterWarehouseId.HasValue)
+                {
+                    paginationFilter.WarehouseId = _filterWarehouseId;
+                }
 
                 var result = await Client.SearchWarehouseLocationsEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<GetWarehouseLocationListResponse>>();

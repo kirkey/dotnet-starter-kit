@@ -24,8 +24,6 @@ public partial class Suppliers
                 new EntityField<SupplierResponse>(x => x.ContactPerson, "Contact", "ContactPerson"),
                 new EntityField<SupplierResponse>(x => x.Email, "Email", "Email"),
                 new EntityField<SupplierResponse>(x => x.Phone, "Phone", "Phone"),
-                new EntityField<SupplierResponse>(x => x.City, "City", "City"),
-                new EntityField<SupplierResponse>(x => x.Country, "Country", "Country"),
                 new EntityField<SupplierResponse>(x => x.IsActive, "Active", "IsActive", typeof(bool)),
                 new EntityField<SupplierResponse>(x => x.Rating, "Rating", "Rating", typeof(decimal))
             ],

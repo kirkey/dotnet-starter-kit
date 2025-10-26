@@ -1,8 +1,15 @@
 @page "/warehouses"
 
+
 <PageHeader Title="Warehouses" Header="Warehouses" SubHeader="Manage warehouse facilities and storage locations." />
 
 <EntityTable @ref="_table" TEntity="WarehouseResponse" TId="DefaultIdType" TRequest="WarehouseViewModel" Context="@Context">
+    <ExtraActions Context="warehouse">
+        <MudMenuItem Icon="@Icons.Material.Filled.LocationOn"
+                     OnClick="@(() => OnNavigateToLocations(warehouse.Id))">
+            Locations
+        </MudMenuItem>
+    </ExtraActions>
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
@@ -179,3 +186,11 @@
         }
     </EditFormContent>
 </EntityTable>
+
+@code {
+    private void OnNavigateToLocations(DefaultIdType warehouseId)
+    {
+        NavigationManager.NavigateTo($"/warehouse/locations?warehouseId={warehouseId}");
+    }
+}
+

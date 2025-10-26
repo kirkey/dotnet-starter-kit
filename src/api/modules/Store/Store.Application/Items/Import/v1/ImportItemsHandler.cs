@@ -146,7 +146,7 @@ public sealed class ImportItemsHandler(
         {
             logger.LogInformation("Inserting {Count} valid items in batches", validEntities.Count);
 
-            const int batchSize = 500;
+            const int batchSize = 1000;
             var batches = validEntities.Chunk(batchSize).ToList();
 
             for (int batchIndex = 0; batchIndex < batches.Count; batchIndex++)

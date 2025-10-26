@@ -11,9 +11,6 @@ namespace FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
 /// <param name="Email">Contact email address.</param>
 /// <param name="Phone">Contact phone number.</param>
 /// <param name="Address">Address.</param>
-/// <param name="City">City.</param>
-/// <param name="State">State or region.</param>
-/// <param name="Country">Country.</param>
 /// <param name="PostalCode">Postal/ZIP code.</param>
 /// <param name="Website">Website URL.</param>
 /// <param name="CreditLimit">Optional credit limit.</param>
@@ -30,9 +27,6 @@ public sealed record SupplierResponse(
     string Email,
     string Phone,
     string Address,
-    string City,
-    string? State,
-    string Country,
     string? PostalCode,
     string? Website,
     decimal? CreditLimit,
