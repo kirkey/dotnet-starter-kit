@@ -193,6 +193,8 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IReadRepository<GoodsReceipt>, StoreRepository<GoodsReceipt>>("store:goodsreceipts");
         builder.Services.AddKeyedScoped<IRepository<PickList>, StoreRepository<PickList>>("store:picklists");
         builder.Services.AddKeyedScoped<IReadRepository<PickList>, StoreRepository<PickList>>("store:picklists");
+        builder.Services.AddKeyedScoped<IRepository<PickListItem>, StoreRepository<PickListItem>>("store:picklistitems");
+        builder.Services.AddKeyedScoped<IReadRepository<PickListItem>, StoreRepository<PickListItem>>("store:picklistitems");
         builder.Services.AddKeyedScoped<IRepository<PutAwayTask>, StoreRepository<PutAwayTask>>("store:putawaytasks");
         builder.Services.AddKeyedScoped<IReadRepository<PutAwayTask>, StoreRepository<PutAwayTask>>("store:putawaytasks");
         builder.Services.AddKeyedScoped<IRepository<InventoryTransfer>, StoreRepository<InventoryTransfer>>("store:inventory-transfers");

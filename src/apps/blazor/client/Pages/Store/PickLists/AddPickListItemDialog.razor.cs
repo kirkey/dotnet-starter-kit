@@ -114,6 +114,7 @@ public partial class AddPickListItemDialog
                 ItemId = _selectedItem.Id,
                 BinId = _selectedBin?.Id,
                 QuantityToPick = _quantityToPick,
+                Notes = _notes
             };
 
             await Client.AddPickListItemEndpointAsync("1", PickListId, command).ConfigureAwait(false);

@@ -17,7 +17,7 @@ namespace Store.Domain.Entities;
 /// - Serial tracked items require serial number scanning
 /// - Lot tracked items require lot number verification
 /// </remarks>
-public sealed class PickListItem : AuditableEntity
+public sealed class PickListItem : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Parent pick list identifier.

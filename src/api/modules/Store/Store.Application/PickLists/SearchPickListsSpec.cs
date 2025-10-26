@@ -2,11 +2,19 @@ using FSH.Starter.WebApi.Store.Application.PickLists.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.PickLists;
 
-public sealed class SearchPickListsSpec : EntitiesByPaginationFilterSpec<PickList, PickListResponse>
+/// <summary>
+/// Specification for searching and filtering pick lists with pagination.
+/// </summary>
+public sealed class SearchPickListsSpec : EntitiesByPaginationFilterSpec<PickList>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchPickListsSpec"/> class.
+    /// </summary>
+    /// <param name="request">The search pick lists command with filter criteria.</param>
     public SearchPickListsSpec(SearchPickListsCommand request) : base(request)
     {
         Query
+            .Include(x => x.Warehouse)
             .OrderByDescending(x => x.Priority)
             .ThenByDescending(x => x.CreatedOn)
             .ThenBy(x => x.PickListNumber);

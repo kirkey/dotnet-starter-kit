@@ -30,7 +30,7 @@ public partial class PickLists
             fields:
             [
                 new EntityField<PickListResponse>(x => x.PickListNumber, "Pick List #", "PickListNumber"),
-                new EntityField<PickListResponse>(x => x.WarehouseId, "Warehouse", "WarehouseId", typeof(Guid)),
+                new EntityField<PickListResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
                 new EntityField<PickListResponse>(x => x.Status, "Status", "Status"),
                 new EntityField<PickListResponse>(x => x.PickingType, "Type", "PickingType"),
                 new EntityField<PickListResponse>(x => x.Priority, "Priority", "Priority", typeof(int)),

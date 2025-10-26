@@ -246,6 +246,31 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
         return this;
     }
 
+    /// <summary>
+    /// Increments the total lines count when an item is added externally.
+    /// Used when PickListItems are managed as separate aggregates.
+    /// </summary>
+    public PickList IncrementTotalLines()
+    {
+        TotalLines++;
+        QueueDomainEvent(new PickListUpdated { PickList = this });
+        return this;
+    }
+
+    /// <summary>
+    /// Decrements the total lines count when an item is removed externally.
+    /// Used when PickListItems are managed as separate aggregates.
+    /// </summary>
+    public PickList DecrementTotalLines()
+    {
+        if (TotalLines > 0)
+        {
+            TotalLines--;
+            QueueDomainEvent(new PickListUpdated { PickList = this });
+        }
+        return this;
+    }
+
     public decimal GetCompletionPercentage() =>
         TotalLines > 0 ? (decimal)CompletedLines / TotalLines * 100 : 0;
 }

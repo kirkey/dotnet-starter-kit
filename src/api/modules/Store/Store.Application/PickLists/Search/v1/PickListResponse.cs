@@ -1,5 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.PickLists.Search.v1;
 
+/// <summary>
+/// Response model for pick list in search/list results.
+/// </summary>
 public sealed record PickListResponse
 {
     public DefaultIdType Id { get; set; }
@@ -8,6 +11,7 @@ public sealed record PickListResponse
     public string? Notes { get; set; }
     public string PickListNumber { get; set; } = default!;
     public DefaultIdType WarehouseId { get; set; }
+    public string WarehouseName { get; set; } = default!;
     public string Status { get; set; } = default!;
     public string PickingType { get; set; } = default!;
     public int Priority { get; set; }

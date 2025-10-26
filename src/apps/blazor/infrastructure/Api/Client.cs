@@ -41087,15 +41087,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string? Address { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
         public string? PostalCode { get; set; } = default!;
 
@@ -42139,6 +42130,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
         public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = default!;
@@ -43503,8 +43497,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("itemId")]
         public System.Guid ItemId { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("itemName")]
+        public string? ItemName { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("binId")]
         public System.Guid? BinId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("binName")]
+        public string? BinName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("lotNumberId")]
         public System.Guid? LotNumberId { get; set; } = default!;
@@ -43553,6 +43553,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
         public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = default!;
@@ -45897,12 +45900,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("code")]
         public string? Code { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -46370,15 +46367,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string? Address { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
         public string? PostalCode { get; set; } = default!;
@@ -47825,15 +47813,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string? Address { get; set; } = "123 Industrial Blvd";
-
-        [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string? City { get; set; } = "Portland";
-
-        [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string? State { get; set; } = "OR";
-
-        [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string? Country { get; set; } = "United States";
 
         [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
         public string? PostalCode { get; set; } = "97201";

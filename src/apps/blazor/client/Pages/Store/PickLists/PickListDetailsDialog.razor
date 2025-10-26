@@ -26,7 +26,7 @@
                                 <MudChip T="string" Color="@GetStatusColor(_pickList.Status ?? string.Empty)" Size="Size.Medium">@_pickList.Status</MudChip>
                             </MudItem>
                             <MudItem xs="12" md="4">
-                                <MudTextField Label="Warehouse ID" Value="@_pickList.WarehouseId.ToString()" ReadOnly="true" Variant="Variant.Filled" />
+                                <MudTextField Label="Warehouse" Value="@_pickList.WarehouseName" ReadOnly="true" Variant="Variant.Filled" />
                             </MudItem>
                             <MudItem xs="12" md="4">
                                 <MudTextField Label="Picking Type" Value="@_pickList.PickingType" ReadOnly="true" Variant="Variant.Filled" />
@@ -139,8 +139,8 @@
                                 </HeaderContent>
                                 <RowTemplate>
                                     <MudTd DataLabel="Seq">@context.SequenceNumber</MudTd>
-                                    <MudTd DataLabel="Item">@context.ItemId</MudTd>
-                                    <MudTd DataLabel="Bin">@(context.BinId?.ToString() ?? "N/A")</MudTd>
+                                    <MudTd DataLabel="Item">@context.ItemName</MudTd>
+                                    <MudTd DataLabel="Bin">@(string.IsNullOrEmpty(context.BinName) ? "N/A" : context.BinName)</MudTd>
                                     <MudTd DataLabel="To Pick">@context.QuantityToPick</MudTd>
                                     <MudTd DataLabel="Picked">@context.QuantityPicked</MudTd>
                                     <MudTd DataLabel="Status">

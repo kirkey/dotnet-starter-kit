@@ -2,10 +2,20 @@ using Store.Domain.Exceptions.PickList;
 
 namespace FSH.Starter.WebApi.Store.Application.PickLists.Get.v1;
 
+/// <summary>
+/// Handler for getting a pick list by ID with all its details.
+/// </summary>
 public sealed class GetPickListHandler(
     [FromKeyedServices("store:picklists")] IReadRepository<PickList> repository)
     : IRequestHandler<GetPickListCommand, GetPickListResponse>
 {
+    /// <summary>
+    /// Handles the get pick list command.
+    /// </summary>
+    /// <param name="request">The get pick list command.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The pick list response with all details.</returns>
+    /// <exception cref="PickListNotFoundException">Thrown when the pick list is not found.</exception>
     public async Task<GetPickListResponse> Handle(GetPickListCommand request, CancellationToken cancellationToken)
     {
         var pickList = await repository.FirstOrDefaultAsync(
@@ -15,8 +25,11 @@ public sealed class GetPickListHandler(
         return new GetPickListResponse
         {
             Id = pickList.Id,
+            Name = pickList.Name,
+            Description = pickList.Description,
             PickListNumber = pickList.PickListNumber,
             WarehouseId = pickList.WarehouseId,
+            WarehouseName = pickList.Warehouse.Name,
             Status = pickList.Status,
             PickingType = pickList.PickingType,
             Priority = pickList.Priority,
@@ -33,7 +46,9 @@ public sealed class GetPickListHandler(
             {
                 Id = item.Id,
                 ItemId = item.ItemId,
+                ItemName = item.Item.Name,
                 BinId = item.BinId,
+                BinName = item.Bin?.Name ?? string.Empty,
                 LotNumberId = item.LotNumberId,
                 SerialNumberId = item.SerialNumberId,
                 QuantityToPick = item.QuantityToPick,
