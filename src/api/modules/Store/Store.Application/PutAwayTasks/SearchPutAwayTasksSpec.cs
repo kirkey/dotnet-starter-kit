@@ -15,6 +15,7 @@ public sealed class SearchPutAwayTasksSpec : EntitiesByPaginationFilterSpec<PutA
         : base(request)
     {
         Query
+            .Include(p => p.Warehouse)
             .Where(p => p.TaskNumber.Contains(request.TaskNumber!), !string.IsNullOrWhiteSpace(request.TaskNumber))
             .Where(p => p.WarehouseId == request.WarehouseId, request.WarehouseId.HasValue)
             .Where(p => p.GoodsReceiptId == request.GoodsReceiptId, request.GoodsReceiptId.HasValue)

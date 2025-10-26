@@ -7,6 +7,7 @@ public sealed record GetPutAwayTaskResponse
     public string? Description { get; set; }
     public string TaskNumber { get; set; } = default!;
     public DefaultIdType WarehouseId { get; set; }
+    public string WarehouseName { get; set; } = default!;
     public DefaultIdType? GoodsReceiptId { get; set; }
     public string Status { get; set; } = PutAwayTaskStatus.Created;
     public int Priority { get; set; } = PutAwayTaskPriority.Normal;
@@ -18,14 +19,16 @@ public sealed record GetPutAwayTaskResponse
     public int TotalLines { get; set; }
     public int CompletedLines { get; set; }
     public decimal CompletionPercentage { get; set; }
-    public List<PutAwayTaskItemDto> Items { get; set; } = new();
+    public IReadOnlyCollection<PutAwayTaskItemDto> Items { get; init; } = [];
 }
 
 public sealed record PutAwayTaskItemDto
 {
     public DefaultIdType Id { get; set; }
     public DefaultIdType ItemId { get; set; }
+    public string ItemName { get; set; } = default!;
     public DefaultIdType ToBinId { get; set; }
+    public string BinName { get; set; } = default!;
     public DefaultIdType? LotNumberId { get; set; }
     public DefaultIdType? SerialNumberId { get; set; }
     public int QuantityToPutAway { get; set; }
