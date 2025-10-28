@@ -18,14 +18,13 @@ SWAGGER_URL:=$(API_URL)$(SWAGGER_PATH)
 # Output path used by the config is relative to NSWAG_JSON directory:
 #   apps/blazor/infrastructure/Api/Client.cs
 
-.PHONY: help install-nswag dev-certs swagger-check gen-client gen-client-direct openapi-download api-run print-swagger-url clean-client nswag-version publish-all publish-api publish-blazor clean-all
+.PHONY: help install-nswag dev-certs swagger-check gen-client gen-client-direct openapi-download api-run print-swagger-url clean-client nswag-version publish-all publish-api publish-blazor create-deployment-packages clean-publish clean-all
 
 # Publish configuration
 PUBLISH_OUTPUT?=./publishfsh9
 API_PUBLISH_PATH=$(PUBLISH_OUTPUT)/api
 BLAZOR_PUBLISH_PATH=$(PUBLISH_OUTPUT)/blazor
 PUBLISH_CONFIG?=Release
-PUBLISH_RUNTIME?=win-x64
 
 help:
 	@echo "NSwag client generation targets:"
@@ -41,11 +40,13 @@ help:
 	@echo "  make clean-client         Remove the generated Client.cs file."
 	@echo "  make clean-all            Remove all bin and obj folders recursively."
 	@echo ""
-	@echo "Publish targets:"
-	@echo "  make publish-all          Publish both API and Blazor client for IIS deployment."
+	@echo "Publish targets (Windows Server IIS):"
+	@echo "  make publish-all          Publish both API and Blazor client + create ZIP packages."
 	@echo "  make publish-api          Publish API only to $(API_PUBLISH_PATH)."
 	@echo "  make publish-blazor       Publish Blazor client only to $(BLAZOR_PUBLISH_PATH)."
-	@echo "  Variables: PUBLISH_OUTPUT (default: ./publish), PUBLISH_CONFIG (default: Release), PUBLISH_RUNTIME (default: win-x64)"
+	@echo "  make create-deployment-packages  Create ZIP files from published output."
+	@echo "  make clean-publish        Remove the publish output folder."
+	@echo "  Variables: PUBLISH_OUTPUT (default: ./publishfsh9), PUBLISH_CONFIG (default: Release)"
 
 install-nswag:
 	dotnet tool update -g Nswag.ConsoleCore
@@ -114,10 +115,10 @@ clean-client:
 	rm -f apps/blazor/infrastructure/Api/Client.cs
 
 # ============================================================================
-# PUBLISH TARGETS FOR IIS DEPLOYMENT
+# PUBLISH TARGETS FOR IIS DEPLOYMENT (Windows Server)
 # ============================================================================
 
-publish-all: publish-api publish-blazor
+publish-all: publish-api publish-blazor create-deployment-packages
 	@echo ""
 	@echo "============================================"
 	@echo "✅ Both projects published successfully!"
@@ -125,23 +126,73 @@ publish-all: publish-api publish-blazor
 	@echo "API:           $(API_PUBLISH_PATH)"
 	@echo "Blazor Client: $(BLAZOR_PUBLISH_PATH)"
 	@echo ""
+	@echo "Deployment Packages:"
+	@echo "  $(PUBLISH_OUTPUT)/FSH.Starter.API.zip"
+	@echo "  $(PUBLISH_OUTPUT)/FSH.Starter.Blazor.zip"
+	@echo ""
 	@echo "Next steps for IIS deployment:"
-	@echo "1. Copy $(API_PUBLISH_PATH) to your IIS server"
-	@echo "2. Copy $(BLAZOR_PUBLISH_PATH) to your IIS server"
-	@echo "3. Create two IIS sites or configure as site + sub-application"
-	@echo "4. Update Blazor's appsettings.json with the API URL"
-	@echo "5. Configure CORS in API to allow Blazor client URL"
+	@echo "1. Transfer the ZIP files to your Windows Server"
+	@echo "2. Extract to appropriate IIS wwwroot folders"
+	@echo "3. Ensure .NET 9.0 Hosting Bundle is installed on IIS"
+	@echo "4. Install IIS URL Rewrite Module"
+	@echo "5. Update API's appsettings.Production.json with database settings"
+	@echo "6. Update Blazor's appsettings.json with API URL"
+	@echo "7. Configure CORS in API to allow Blazor client URL"
+	@echo "8. Create IIS Application Pool (.NET CLR Version: No Managed Code)"
+	@echo "9. Create IIS Sites for API and Blazor"
+	@echo "10. Restart IIS: iisreset"
 	@echo "============================================"
 
 publish-api:
-	@echo "Publishing API ($(PUBLISH_CONFIG)) to $(API_PUBLISH_PATH)..."
-	dotnet publish api/server/Server.csproj -c $(PUBLISH_CONFIG) -r $(PUBLISH_RUNTIME) -o $(API_PUBLISH_PATH) /p:PublishProfile=Default /p:PublishSingleFile=false /p:PublishReadyToRun=false /p:EnableCompressionInSingleFile=false /p:IncludeNativeLibrariesForSelfExtract=false /p:PublishTrimmed=false
-	@echo "✅ API published to $(API_PUBLISH_PATH)"
+	@echo "Publishing API for Windows Server IIS ($(PUBLISH_CONFIG))..."
+	@echo "Target: $(API_PUBLISH_PATH)"
+	@mkdir -p $(API_PUBLISH_PATH)
+	dotnet publish api/server/Server.csproj \
+		-c $(PUBLISH_CONFIG) \
+		-o $(API_PUBLISH_PATH) \
+		--no-self-contained \
+		/p:PublishProfile="" \
+		/p:EnableSdkContainerSupport=false \
+		/p:PublishSingleFile=false \
+		/p:PublishReadyToRun=false \
+		/p:PublishTrimmed=false
+	@echo "✅ API published successfully"
+	@echo "📁 Files: $(API_PUBLISH_PATH)"
 
 publish-blazor:
-	@echo "Publishing Blazor WebAssembly ($(PUBLISH_CONFIG)) to $(BLAZOR_PUBLISH_PATH)..."
-	dotnet publish apps/blazor/client/Client.csproj -c $(PUBLISH_CONFIG) -r $(PUBLISH_RUNTIME) -o $(BLAZOR_PUBLISH_PATH) /p:PublishSingleFile=false /p:PublishReadyToRun=false /p:EnableCompressionInSingleFile=false /p:IncludeNativeLibrariesForSelfExtract=false /p:PublishTrimmed=false
-	@echo "✅ Blazor client published to $(BLAZOR_PUBLISH_PATH)"
+	@echo "Publishing Blazor WebAssembly for IIS ($(PUBLISH_CONFIG))..."
+	@echo "Target: $(BLAZOR_PUBLISH_PATH)"
+	@mkdir -p $(BLAZOR_PUBLISH_PATH)
+	@# Publish to temp folder first
+	dotnet publish apps/blazor/client/Client.csproj \
+		-c $(PUBLISH_CONFIG) \
+		-o $(BLAZOR_PUBLISH_PATH)/temp
+	@# Extract wwwroot content (IIS needs only the static files)
+	@echo "Extracting wwwroot content for IIS..."
+	@if [ -d "$(BLAZOR_PUBLISH_PATH)/temp/wwwroot" ]; then \
+		cp -r $(BLAZOR_PUBLISH_PATH)/temp/wwwroot/* $(BLAZOR_PUBLISH_PATH)/ && \
+		rm -rf $(BLAZOR_PUBLISH_PATH)/temp && \
+		echo "✅ Blazor client published successfully"; \
+	else \
+		echo "❌ Error: wwwroot folder not found in publish output"; \
+		exit 1; \
+	fi
+	@echo "📁 Files: $(BLAZOR_PUBLISH_PATH)"
+
+create-deployment-packages:
+	@echo ""
+	@echo "Creating deployment packages (ZIP files)..."
+	@# Create API package
+	@cd $(API_PUBLISH_PATH) && zip -r -q ../FSH.Starter.API.zip . && cd - > /dev/null
+	@echo "✅ API package: $(PUBLISH_OUTPUT)/FSH.Starter.API.zip"
+	@# Create Blazor package
+	@cd $(BLAZOR_PUBLISH_PATH) && zip -r -q ../FSH.Starter.Blazor.zip . && cd - > /dev/null
+	@echo "✅ Blazor package: $(PUBLISH_OUTPUT)/FSH.Starter.Blazor.zip"
+
+clean-publish:
+	@echo "Cleaning publish output..."
+	@rm -rf $(PUBLISH_OUTPUT)
+	@echo "✅ Publish folder cleaned"
 
 # ============================================================================
 # CLEAN TARGETS

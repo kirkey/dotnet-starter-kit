@@ -11,6 +11,12 @@ public static class Extensions
     public static IServiceCollection ConfigureOpenApi(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
+        
+        // Register SwaggerOptions configuration
+        services.AddOptions<SwaggerOptions>()
+            .BindConfiguration(nameof(SwaggerOptions))
+            .ValidateDataAnnotations();
+        
         services.AddEndpointsApiExplorer();
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services
@@ -60,7 +66,13 @@ public static class Extensions
     public static WebApplication UseOpenApi(this WebApplication app)
     {
         ArgumentNullException.ThrowIfNull(app);
-        if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "docker")
+        
+        // Get SwaggerOptions from configuration
+        var swaggerOptions = app.Services.GetService<IOptions<SwaggerOptions>>()?.Value;
+        bool enableSwagger = swaggerOptions?.Enable ?? false;
+        
+        // Enable Swagger in Development/Docker environments, or when explicitly configured
+        if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "docker" || enableSwagger)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
