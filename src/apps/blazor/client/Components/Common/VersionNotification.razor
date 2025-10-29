@@ -1,0 +1,286 @@
+@using FSH.Starter.Blazor.Client.Services
+@using FSH.Starter.Blazor.Client.Components.Common
+@inject IVersionCheckService VersionCheckService
+@inject ILogger<VersionNotification> Logger
+@implements IDisposable
+@namespace FSH.Starter.Blazor.Client.Components.Common
+
+@if (_showNotification)
+{
+    <MudPaper Elevation="8" Class="version-notification-banner" Style="@GetNotificationStyle()">
+        <div class="d-flex align-center justify-space-between pa-4">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Update" Color="Color.Info" Class="mr-3" Size="Size.Large" />
+                <div>
+                    <MudText Typo="Typo.h6" Class="mb-1">
+                        <strong>New Version Available!</strong>
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="text-muted">
+                        A new version (@_serverVersion) is available. Update now to get the latest features and improvements.
+                    </MudText>
+                </div>
+            </div>
+            <div class="d-flex align-center gap-2">
+                <MudButton 
+                    Variant="Variant.Filled" 
+                    Color="Color.Primary" 
+                    OnClick="HandleUpdateClick"
+                    Disabled="_isUpdating"
+                    StartIcon="@Icons.Material.Filled.Refresh">
+                    @if (_isUpdating)
+                    {
+                        <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+                        <span>Updating...</span>
+                    }
+                    else
+                    {
+                        <span>Update Now</span>
+                    }
+                </MudButton>
+                <MudButton 
+                    Variant="Variant.Outlined" 
+                    Color="Color.Default" 
+                    OnClick="HandleLaterClick"
+                    Disabled="_isUpdating">
+                    Later
+                </MudButton>
+            </div>
+        </div>
+    </MudPaper>
+}
+
+@code {
+    /// <summary>
+    /// Interval in milliseconds for checking version updates (default: 5 minutes)
+    /// </summary>
+    [Parameter]
+    public int CheckIntervalMs { get; set; } = 300000; // 5 minutes
+
+    /// <summary>
+    /// Position of the notification banner
+    /// </summary>
+    [Parameter]
+    public NotificationPosition Position { get; set; } = NotificationPosition.Top;
+
+    /// <summary>
+    /// Whether to automatically check for updates on initialization
+    /// </summary>
+    [Parameter]
+    public bool AutoCheckOnInit { get; set; } = true;
+
+    private bool _showNotification;
+    private bool _isUpdating;
+    private string? _currentVersion;
+    private string? _serverVersion;
+    private Timer? _checkTimer;
+    private bool _disposed;
+
+    /// <summary>
+    /// Initializes the component and starts version checking
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            if (AutoCheckOnInit)
+            {
+                await InitializeVersionCheckingAsync();
+            }
+
+            // Start periodic checking
+            _checkTimer = new Timer(
+                CheckForUpdatesCallback,
+                null,
+                TimeSpan.FromMilliseconds(CheckIntervalMs),
+                TimeSpan.FromMilliseconds(CheckIntervalMs));
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error initializing version notification component");
+        }
+    }
+
+    /// <summary>
+    /// Timer callback for checking updates
+    /// </summary>
+    private void CheckForUpdatesCallback(object? state)
+    {
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await CheckForUpdatesAsync();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error in version check timer callback");
+            }
+        });
+    }
+
+    /// <summary>
+    /// Initializes version checking on component load
+    /// </summary>
+    private async Task InitializeVersionCheckingAsync()
+    {
+        try
+        {
+            var result = await VersionCheckService.InitializeVersionCheckAsync();
+
+            if (result.Success && result.IsNewVersion)
+            {
+                _currentVersion = result.CurrentVersion;
+                _serverVersion = result.ServerVersion;
+                _showNotification = true;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error during version check initialization");
+        }
+    }
+
+    /// <summary>
+    /// Checks for available updates
+    /// </summary>
+    private async Task CheckForUpdatesAsync()
+    {
+        if (_disposed || _showNotification)
+        {
+            return;
+        }
+
+        try
+        {
+            var result = await VersionCheckService.CheckForNewVersionAsync();
+
+            if (result.Success && result.IsNewVersion)
+            {
+                _currentVersion = result.CurrentVersion;
+                _serverVersion = result.ServerVersion;
+                _showNotification = true;
+                await InvokeAsync(StateHasChanged);
+
+                Logger.LogInformation(
+                    "New version detected: {CurrentVersion} -> {ServerVersion}",
+                    _currentVersion,
+                    _serverVersion);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error checking for version updates");
+        }
+    }
+
+    /// <summary>
+    /// Handles the update button click
+    /// </summary>
+    private async Task HandleUpdateClick()
+    {
+        try
+        {
+            _isUpdating = true;
+            StateHasChanged();
+
+            Logger.LogInformation("User initiated application update");
+
+            // Update stored version before reload
+            if (!string.IsNullOrEmpty(_serverVersion))
+            {
+                await VersionCheckService.UpdateStoredVersionAsync(_serverVersion);
+            }
+
+            // Small delay to show the updating state
+            await Task.Delay(500);
+
+            // Reload with cache clearing
+            await VersionCheckService.ReloadApplicationAsync(hardReload: true);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error during application update");
+            _isUpdating = false;
+            StateHasChanged();
+        }
+    }
+
+    /// <summary>
+    /// Handles the later button click
+    /// </summary>
+    private void HandleLaterClick()
+    {
+        Logger.LogInformation("User deferred application update");
+        _showNotification = false;
+        StateHasChanged();
+
+        // Show again after check interval
+    }
+
+    /// <summary>
+    /// Gets the CSS style for notification position
+    /// </summary>
+    private string GetNotificationStyle()
+    {
+        var baseStyle = "position: fixed; left: 0; right: 0; z-index: 9999; max-width: 100%; animation: slideIn 0.3s ease-out;";
+        
+        return Position switch
+        {
+            NotificationPosition.Top => baseStyle + " top: 0;",
+            NotificationPosition.Bottom => baseStyle + " bottom: 0;",
+            _ => baseStyle + " top: 0;"
+        };
+    }
+
+    /// <summary>
+    /// Disposes resources used by the component
+    /// </summary>
+    public void Dispose()
+    {
+        if (!_disposed)
+        {
+            _disposed = true;
+            _checkTimer?.Dispose();
+            _checkTimer = null;
+        }
+    }
+}
+
+@* CSS Styles *@
+<style>
+    .version-notification-banner {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .version-notification-banner .mud-icon {
+        color: white !important;
+    }
+
+    .version-notification-banner .text-muted {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .version-notification-banner .mud-button {
+        text-transform: none;
+        font-weight: 500;
+    }
+
+    @@keyframes slideIn {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .gap-2 {
+        gap: 8px;
+    }
+</style>
+

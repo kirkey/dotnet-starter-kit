@@ -22,4 +22,7 @@ builder.Services.AddScoped<ApiHelper>();
 // Register dynamic navigation menu service
 builder.Services.AddSingleton<IMenuService, MenuService>();
 
+// Register version check service for application updates
+builder.Services.AddScoped<IVersionCheckService, VersionCheckService>();
+
 await builder.Build().RunAsync().ConfigureAwait(false);
