@@ -1,14 +1,23 @@
 ﻿namespace FSH.Starter.Blazor.Client.Pages.Todos;
 
+/// <summary>
+/// Todos page component for managing todo items.
+/// </summary>
 public partial class Todos
 {
-    [Inject]
-    
-
+    /// <summary>
+    /// The entity table context for managing todos with server-side operations.
+    /// </summary>
     protected EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel> Context { get; set; } = default!;
 
+    /// <summary>
+    /// Reference to the EntityTable component for todos.
+    /// </summary>
     private EntityTable<GetTodoResponse, DefaultIdType, TodoViewModel> _table = default!;
 
+    /// <summary>
+    /// Initializes the component and sets up the entity table context with CRUD operations.
+    /// </summary>
     protected override void OnInitialized() =>
         Context = new EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel>(
             entityName: "Todos",
@@ -41,4 +50,7 @@ public partial class Todos
             deleteFunc: async id => await Client.DeleteTodoEndpointAsync("1", id));
 }
 
+/// <summary>
+/// View model for todo operations, extending the update command.
+/// </summary>
 public partial class TodoViewModel : UpdateTodoCommand;
