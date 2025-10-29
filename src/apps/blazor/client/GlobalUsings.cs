@@ -4,6 +4,7 @@ global using FSH.Starter.Blazor.Client.Components;
 global using FSH.Starter.Blazor.Client.Components.Common;
 global using FSH.Starter.Blazor.Client.Components.Dialogs;
 global using FSH.Starter.Blazor.Client.Components.EntityTable;
+global using FSH.Starter.Blazor.Client.Services;
 global using FSH.Starter.Blazor.Infrastructure.Api;
 global using FSH.Starter.Blazor.Infrastructure.Auth;
 global using FSH.Starter.Blazor.Infrastructure.Connectivity;

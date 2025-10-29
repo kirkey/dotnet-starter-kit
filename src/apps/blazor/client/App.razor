@@ -26,8 +26,11 @@
         <ErrorContent>
             <MudPaper Class="pa-6" Elevation="3">
                 <MudText Typo="Typo.h5" Color="Color.Error">An unexpected error occurred.</MudText>
-                <MudButton OnClick="()=>Navigation.NavigateTo(Navigation.Uri, forceLoad:true)" StartIcon="@Icons.Material.Filled.Refresh">Reload</MudButton>
+                <MudButton OnClick="@(() => Navigation.NavigateTo(Navigation.Uri, forceLoad: true))" StartIcon="@Icons.Material.Filled.Refresh">Reload</MudButton>
             </MudPaper>
         </ErrorContent>
     </ErrorBoundary>
+    
+    @* Global error notification component *@
+    <ErrorNotification />
 </CascadingAuthenticationState>
