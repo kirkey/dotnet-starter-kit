@@ -45,4 +45,34 @@
     <Folder Include="Files\" />
     <Folder Include="Files\images\Category\" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\deploy\api\web.config" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\web.config" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\web.config" />
+    <_ContentIncludedByDefault Remove="publish\api\web.config" />
+    <_ContentIncludedByDefault Remove="publish\api\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="publish\api\appsettings.json" />
+    <_ContentIncludedByDefault Remove="publish\api\appsettings.Production.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\appsettings.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\appsettings.Production.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\appsettings.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\appsettings.Production.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\deploy\api\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\deploy\api\appsettings.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\deploy\api\appsettings.Production.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\deploy\api\FSH.Starter.WebApi.Host.deps.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\deploy\api\FSH.Starter.WebApi.Host.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\deploy\api\FSH.Starter.WebApi.Host.staticwebassets.endpoints.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\FSH.Starter.WebApi.Host.deps.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\FSH.Starter.WebApi.Host.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\deploy\api\FSH.Starter.WebApi.Host.staticwebassets.endpoints.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\FSH.Starter.WebApi.Host.deps.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\FSH.Starter.WebApi.Host.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="publish\api\deploy\api\FSH.Starter.WebApi.Host.staticwebassets.endpoints.json" />
+    <_ContentIncludedByDefault Remove="publish\api\FSH.Starter.WebApi.Host.deps.json" />
+    <_ContentIncludedByDefault Remove="publish\api\FSH.Starter.WebApi.Host.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="publish\api\FSH.Starter.WebApi.Host.staticwebassets.endpoints.json" />
+  </ItemGroup>
 </Project>

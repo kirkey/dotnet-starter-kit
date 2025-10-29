@@ -4,6 +4,7 @@
     <AssemblyName>FSH.Starter.WebApi.Migrations.PostgreSQL</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\modules\Messaging\Messaging.csproj" />
     <ProjectReference Include="..\..\modules\Store\Store.Application\Store.Application.csproj" />
     <ProjectReference Include="..\..\modules\Store\Store.Domain\Store.Domain.csproj" />
     <ProjectReference Include="..\..\modules\Store\Store.Infrastructure\Store.Infrastructure.csproj" />
