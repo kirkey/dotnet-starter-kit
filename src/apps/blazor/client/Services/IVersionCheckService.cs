@@ -1,5 +1,3 @@
-using Microsoft.JSInterop;
-
 namespace FSH.Starter.Blazor.Client.Services;
 
 /// <summary>

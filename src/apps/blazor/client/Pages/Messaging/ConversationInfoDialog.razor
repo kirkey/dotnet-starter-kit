@@ -1,0 +1,95 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            @if (Conversation != null)
+            {
+                <MudStack Spacing="2">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                        <MudAvatar Color="Color.Primary" Size="Size.Large">
+                            @GetInitials()
+                        </MudAvatar>
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.h6">@GetTitle()</MudText>
+                            <MudText Typo="Typo.caption">@Conversation.ConversationType</MudText>
+                        </MudStack>
+                    </MudStack>
+
+                    @if (!string.IsNullOrWhiteSpace(Conversation.Description))
+                    {
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.subtitle2">Description</MudText>
+                            <MudText Typo="Typo.body2">@Conversation.Description</MudText>
+                        </MudStack>
+                    }
+
+                    <MudDivider />
+
+                    <MudStack Spacing="1">
+                        <MudText Typo="Typo.subtitle2">Members (@Conversation.Members.Count(m => m.IsActive))</MudText>
+                        @foreach (var member in Conversation.Members.Where(m => m.IsActive))
+                        {
+                            <MudCard Class="pa-2">
+                                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                    <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                                        <MudAvatar Color="Color.Secondary" Size="Size.Small">
+                                            @GetMemberInitials(member.UserId)
+                                        </MudAvatar>
+                                        <MudStack Spacing="0">
+                                            <MudText Typo="Typo.body2">User @member.UserId</MudText>
+                                            <MudText Typo="Typo.caption">@member.Role • Joined @member.JoinedAt.ToString("MMM dd, yyyy")</MudText>
+                                        </MudStack>
+                                    </MudStack>
+                                    @if (member.Role == "admin")
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Primary">Admin</MudChip>
+                                    }
+                                </MudStack>
+                            </MudCard>
+                        }
+                    </MudStack>
+
+                    <MudDivider />
+
+                    <MudStack Spacing="1">
+                        <MudText Typo="Typo.caption">Created: @Conversation.CreatedOn.ToString("MMM dd, yyyy 'at' hh:mm tt")</MudText>
+                        @if (Conversation.LastMessageAt.HasValue)
+                        {
+                            <MudText Typo="Typo.caption">Last message: @Conversation.LastMessageAt.Value.ToString("MMM dd, yyyy 'at' hh:mm tt")</MudText>
+                        }
+                    </MudStack>
+                </MudStack>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Close">
+            Close
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public GetConversationResponse? Conversation { get; set; }
+
+    private string GetTitle() =>
+        Conversation?.ConversationType == "group"
+            ? Conversation.Title ?? "Group Chat"
+            : "Direct Message";
+
+    private string GetInitials()
+    {
+        var title = GetTitle();
+        var words = title.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return words.Length > 1 ? $"{words[0][0]}{words[1][0]}" : title[..Math.Min(2, title.Length)];
+    }
+
+    private string GetMemberInitials(DefaultIdType userId)
+    {
+        var name = $"User {userId}";
+        return name[..Math.Min(2, name.Length)];
+    }
+
+    private void Close() => MudDialog.Close();
+}
+

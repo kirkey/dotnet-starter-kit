@@ -1,0 +1,85 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudSelect @bind-Value="_conversationType" Label="Conversation Type" Variant="Variant.Outlined">
+                <MudSelectItem Value="@("direct")">Direct Message</MudSelectItem>
+                <MudSelectItem Value="@("group")">Group Chat</MudSelectItem>
+            </MudSelect>
+
+            @if (_conversationType == "group")
+            {
+                <MudTextField @bind-Value="_title" Label="Group Name" Variant="Variant.Outlined" Required />
+                <MudTextField @bind-Value="_description" Label="Description" Variant="Variant.Outlined" Lines="3" />
+            }
+
+            <MudText Typo="Typo.subtitle2">Select Members</MudText>
+            
+            @if (OnlineUsers != null && OnlineUsers.Any())
+            {
+                <MudStack Spacing="1" Style="max-height: 300px; overflow-y: auto;">
+                    @foreach (var user in OnlineUsers)
+                    {
+                        <MudCheckBox T="bool" bind-Value="@(_selectedUserIds.Contains(user.Id))"
+                                     ValueChanged="@((bool value) => ToggleUser(user.Id, value))"
+                                     Label="@user.Name"
+                                     Color="Color.Primary" />
+                    }
+                </MudStack>
+            }
+            else
+            {
+                <MudText Color="Color.Default">No users available</MudText>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Create" Disabled="@(!IsValid())">
+            Create
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public List<UserDto>? OnlineUsers { get; set; }
+
+    private string _conversationType = "direct";
+    private string _title = string.Empty;
+    private string _description = string.Empty;
+    private HashSet<DefaultIdType> _selectedUserIds = new();
+
+    private void ToggleUser(DefaultIdType userId, bool isChecked)
+    {
+        if (isChecked)
+            _selectedUserIds.Add(userId);
+        else
+            _selectedUserIds.Remove(userId);
+    }
+
+    private bool IsValid()
+    {
+        if (_conversationType == "direct")
+            return _selectedUserIds.Count == 1;
+
+        return !string.IsNullOrWhiteSpace(_title) && _selectedUserIds.Count > 0;
+    }
+
+    private void Create()
+    {
+        var command = new CreateConversationCommand
+        {
+            ConversationType = _conversationType,
+            Title = _conversationType == "group" ? _title : null,
+            Description = _conversationType == "group" ? _description : null,
+            MemberIds = _selectedUserIds.ToList()
+        };
+
+        MudDialog.Close(DialogResult.Ok(command));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

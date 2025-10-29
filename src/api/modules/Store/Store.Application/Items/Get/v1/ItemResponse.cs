@@ -30,5 +30,6 @@ public sealed record ItemResponse(
     DefaultIdType SupplierId,
     string UnitOfMeasure,
     string? Notes,
+    string? ImageUrl,
     DateTimeOffset CreatedOn,
     DefaultIdType CreatedBy);

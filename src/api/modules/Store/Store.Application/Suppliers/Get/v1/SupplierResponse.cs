@@ -33,4 +33,5 @@ public sealed record SupplierResponse(
     int PaymentTermsDays,
     bool IsActive,
     decimal Rating,
-    string? Notes);
+    string? Notes,
+    string? ImageUrl);

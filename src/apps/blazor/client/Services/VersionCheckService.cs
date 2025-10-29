@@ -1,4 +1,3 @@
-using Microsoft.JSInterop;
 using System.Text.Json;
 
 namespace FSH.Starter.Blazor.Client.Services;

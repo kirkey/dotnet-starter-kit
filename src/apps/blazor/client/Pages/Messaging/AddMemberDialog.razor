@@ -1,0 +1,49 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle2">Select a user to add:</MudText>
+            
+            <MudSelect @bind-Value="_selectedUserId" Label="User" Variant="Variant.Outlined" Required>
+                @if (_availableUsers != null)
+                {
+                    @foreach (var user in _availableUsers)
+                    {
+                        <MudSelectItem Value="@user.Id">@user.Name</MudSelectItem>
+                    }
+                }
+            </MudSelect>
+
+            <MudSelect @bind-Value="_role" Label="Role" Variant="Variant.Outlined">
+                <MudSelectItem Value="@("member")">Member</MudSelectItem>
+                <MudSelectItem Value="@("admin")">Admin</MudSelectItem>
+            </MudSelect>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Add" Disabled="@(_selectedUserId == DefaultIdType.Empty)">
+            Add
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public DefaultIdType ConversationId { get; set; }
+    [Parameter] public List<DefaultIdType>? ExistingMembers { get; set; }
+
+    private DefaultIdType _selectedUserId = DefaultIdType.Empty;
+    private string _role = "member";
+    private List<UserDto>? _availableUsers;
+
+    protected override void OnInitialized()
+    {
+        // TODO: Load available users from identity service
+        // For now, mock some users excluding existing members
+        _availableUsers = new List<UserDto>();
+    }
+
+    private void Add() => MudDialog.Close(DialogResult.Ok(_selectedUserId));
+    private void Cancel() => MudDialog.Cancel();
+}
+

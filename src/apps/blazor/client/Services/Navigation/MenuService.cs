@@ -167,6 +167,15 @@ public class MenuService : IMenuService
                 
                 new MenuSectionItemModel
                 {
+                    Title = "Messaging",
+                    Icon = Icons.Material.Filled.Chat,
+                    Href = "/messaging",
+                    Action = FshActions.View,
+                    Resource = FshResources.Messaging
+                },
+                
+                new MenuSectionItemModel
+                {
                     Title = "Analytics",
                     Icon = Icons.Material.Filled.Analytics,
                     Href = "/analytics",
