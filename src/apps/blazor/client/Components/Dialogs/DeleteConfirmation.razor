@@ -10,7 +10,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton DropShadow="false" StartIcon="@Icons.Material.Filled.Cancel" OnClick="Cancel">Cancel</MudButton>
-            <MudButton DropShadow="false" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" Variant="Variant.Filled" OnClick="Submit">Confirm</MudButton>
+            <MudButton DropShadow="false" StartIcon="@Icons.Material.Filled.Delete" Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -18,8 +18,23 @@
     [CascadingParameter]
     IMudDialogInstance MudDialog { get; set; } = default!;
 
+    /// <summary>
+    /// The content text to display in the dialog body.
+    /// </summary>
     [Parameter]
     public string? ContentText { get; set; }
+
+    /// <summary>
+    /// The text to display on the confirmation button. Defaults to "Confirm".
+    /// </summary>
+    [Parameter]
+    public string ButtonText { get; set; } = "Confirm";
+
+    /// <summary>
+    /// The color of the confirmation button. Defaults to Color.Error.
+    /// </summary>
+    [Parameter]
+    public Color Color { get; set; } = Color.Error;
 
     void Submit()
     {
