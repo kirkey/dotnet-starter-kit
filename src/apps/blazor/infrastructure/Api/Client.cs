@@ -48382,9 +48382,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("itemId")]
         public System.Guid ItemId { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("itemName")]
+        public string? ItemName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
         public System.Guid WarehouseId { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("warehouseLocationId")]
         public System.Guid? WarehouseLocationId { get; set; } = default!;

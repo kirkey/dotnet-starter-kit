@@ -13,8 +13,8 @@ public partial class StockLevels
             entityResource: FshResources.Store,
             fields:
             [
-                new EntityField<StockLevelResponse>(x => x.ItemId, "Item", "ItemId"),
-                new EntityField<StockLevelResponse>(x => x.WarehouseId, "Warehouse", "WarehouseId"),
+                new EntityField<StockLevelResponse>(x => x.ItemName, "Item", "ItemName"),
+                new EntityField<StockLevelResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
                 new EntityField<StockLevelResponse>(x => x.QuantityOnHand, "On Hand", "QuantityOnHand", typeof(int)),
                 new EntityField<StockLevelResponse>(x => x.QuantityAvailable, "Available", "QuantityAvailable", typeof(int)),
                 new EntityField<StockLevelResponse>(x => x.QuantityReserved, "Reserved", "QuantityReserved", typeof(int)),
@@ -54,7 +54,9 @@ public class StockLevelViewModel
 {
     public DefaultIdType Id { get; set; }
     public DefaultIdType ItemId { get; set; }
+    public string ItemName { get; set; } = string.Empty;
     public DefaultIdType WarehouseId { get; set; }
+    public string WarehouseName { get; set; } = string.Empty;
     public DefaultIdType? WarehouseLocationId { get; set; }
     public DefaultIdType? BinId { get; set; }
     public DefaultIdType? LotNumberId { get; set; }

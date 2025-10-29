@@ -9,6 +9,9 @@ public sealed class GetStockLevelByIdSpec : Specification<StockLevel, StockLevel
 {
     public GetStockLevelByIdSpec(DefaultIdType id)
     {
-        Query.Where(s => s.Id == id);
+        Query
+            .Where(s => s.Id == id)
+            .Include(s => s.Item)
+            .Include(s => s.Warehouse);
     }
 }

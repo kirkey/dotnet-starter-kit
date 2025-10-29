@@ -11,6 +11,8 @@ public sealed class SearchStockLevelsSpec : EntitiesByPaginationFilterSpec<Stock
         : base(request)
     {
         Query
+            .Include(s => s.Item)
+            .Include(s => s.Warehouse)
             .Where(s => s.ItemId == request.ItemId, request.ItemId.HasValue)
             .Where(s => s.WarehouseId == request.WarehouseId, request.WarehouseId.HasValue)
             .Where(s => s.WarehouseLocationId == request.WarehouseLocationId, request.WarehouseLocationId.HasValue)
