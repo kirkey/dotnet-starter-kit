@@ -8,6 +8,7 @@ using FSH.Starter.WebApi.Messaging.Features.Conversations.Get;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.GetList;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.RemoveMember;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.Update;
+using FSH.Starter.WebApi.Messaging.Features.Conversations.MarkAsRead;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Create;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Delete;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Get;
@@ -38,6 +39,7 @@ public static class MessagingModule
             conversationsGroup.MapAddMemberEndpoint();
             conversationsGroup.MapRemoveMemberEndpoint();
             conversationsGroup.MapAssignAdminEndpoint();
+            conversationsGroup.MapMarkAsReadEndpoint();
 
             var messagesGroup = app.MapGroup("messages").WithTags("messages");
             messagesGroup.MapCreateMessageEndpoint();
