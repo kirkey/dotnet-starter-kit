@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Storage.File.Features;
+
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Update.v1;
 
 /// <summary>
@@ -94,5 +96,16 @@ public record UpdateSupplierCommand : IRequest<UpdateSupplierResponse>
     /// </summary>
     [DefaultValue(null)]
     public string? Notes { get; set; }
+
+    /// <summary>
+    /// Gets or sets the image URL for the supplier logo.
+    /// </summary>
+    [DefaultValue(null)]
+    public string? ImageUrl { get; set; }
+
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image is uploaded to storage and ImageUrl is set from the saved file name.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
 }
 

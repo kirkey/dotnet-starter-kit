@@ -37,4 +37,8 @@
    <ItemGroup>
      <_ContentIncludedByDefault Remove="Pages\App\Settings.razor" />
    </ItemGroup>
+
+   <ItemGroup>
+     <Compile Remove="Pages\Store\Items\ItemResponseExtension.cs" />
+   </ItemGroup>
  </Project>

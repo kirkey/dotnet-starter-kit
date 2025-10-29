@@ -103,8 +103,27 @@
         <MudItem xs="12">
             <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" />
         </MudItem>
+
+        <!-- Image Management -->
+        <MudItem xs="12">
+            <ImageUploader CurrentImageUrl="@context.ImageUrl"
+                          CurrentImageUrlChanged="@(url => context.ImageUrl = url)"
+                          UploadedImage="@context.Image"
+                          UploadedImageChanged="@(img => context.Image = img)"
+                          AltText="Item image"
+                          UploadLabel="Upload Item Image" />
+        </MudItem>
     </EditFormContent>
 </EntityTable>
 
-
-
+@code {
+    private RenderFragment<ItemResponse> TemplateImage => dto => __builder =>
+    {
+        <MudItem Class="d-flex justify-center align-center">
+            @if (dto.ImageUrl is not null)
+            {
+                <MudImage Src="@(string.IsNullOrEmpty(dto.ImageUrl) ? string.Empty : ImageUrlService.GetAbsoluteUrl(dto.ImageUrl))" Height="100"/>
+            }
+        </MudItem>
+    };
+}

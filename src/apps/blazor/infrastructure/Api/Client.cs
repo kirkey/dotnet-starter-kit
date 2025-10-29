@@ -3782,7 +3782,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Add item to pick list
         /// </summary>
         /// <remarks>
-        /// Adds an item to an existing pick list.
+        /// Adds an item to an existing pick list. The pick list must be in 'Created' status. Creates PickListItem as a separate aggregate.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -3794,7 +3794,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Add item to pick list
         /// </summary>
         /// <remarks>
-        /// Adds an item to an existing pick list.
+        /// Adds an item to an existing pick list. The pick list must be in 'Created' status. Creates PickListItem as a separate aggregate.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -24272,7 +24272,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Add item to pick list
         /// </summary>
         /// <remarks>
-        /// Adds an item to an existing pick list.
+        /// Adds an item to an existing pick list. The pick list must be in 'Created' status. Creates PickListItem as a separate aggregate.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -24287,7 +24287,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Add item to pick list
         /// </summary>
         /// <remarks>
-        /// Adds an item to an existing pick list.
+        /// Adds an item to an existing pick list. The pick list must be in 'Created' status. Creates PickListItem as a separate aggregate.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -24356,6 +24356,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -40484,6 +40504,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -41107,6 +41133,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
 
     }
 
@@ -42212,6 +42244,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
         public System.Guid WarehouseId { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("goodsReceiptId")]
         public System.Guid? GoodsReceiptId { get; set; } = default!;
 
@@ -42914,6 +42949,8 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ItemResponse
     {
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
@@ -44013,8 +44050,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("itemId")]
         public System.Guid ItemId { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("itemName")]
+        public string? ItemName { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("toBinId")]
         public System.Guid ToBinId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("binName")]
+        public string? BinName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("lotNumberId")]
         public System.Guid? LotNumberId { get; set; } = default!;
@@ -44060,6 +44103,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("warehouseId")]
         public System.Guid WarehouseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("warehouseName")]
+        public string? WarehouseName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("goodsReceiptId")]
         public System.Guid? GoodsReceiptId { get; set; } = default!;
@@ -46355,6 +46401,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
         public string? Code { get; set; } = default!;
+        
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
         public string? ContactPerson { get; set; } = default!;
@@ -47280,6 +47329,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -47834,6 +47889,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageUrl")]
+        public string? ImageUrl { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public FileUploadCommand Image { get; set; } = default!;
 
     }
 

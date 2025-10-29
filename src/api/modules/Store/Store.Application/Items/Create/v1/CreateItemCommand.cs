@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Storage.File.Features;
+
 namespace FSH.Starter.WebApi.Store.Application.Items.Create.v1;
 
 public sealed record CreateItemCommand(
@@ -28,5 +30,12 @@ public sealed record CreateItemCommand(
     [property: DefaultValue(null)] decimal? Width = null,
     [property: DefaultValue(null)] decimal? Height = null,
     [property: DefaultValue(null)] string? DimensionUnit = null,
-    [property: DefaultValue(null)] string? Notes = null
-) : IRequest<CreateItemResponse>;
+    [property: DefaultValue(null)] string? Notes = null,
+    [property: DefaultValue(null)] string? ImageUrl = null
+) : IRequest<CreateItemResponse>
+{
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image is uploaded to storage and ImageUrl is set from the saved file name.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
+}

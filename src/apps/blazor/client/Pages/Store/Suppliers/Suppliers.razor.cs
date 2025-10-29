@@ -1,3 +1,5 @@
+using FSH.Starter.Blazor.Client.Services;
+
 namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers;
 
 /// <summary>
@@ -6,7 +8,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers;
 /// </summary>
 public partial class Suppliers
 {
-    
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
 
     protected EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> Context { get; set; } = default!;
     private EntityTable<SupplierResponse, DefaultIdType, SupplierViewModel> _table = default!;
@@ -19,13 +21,14 @@ public partial class Suppliers
             entityResource: FshResources.Store,
             fields:
             [
-                new EntityField<SupplierResponse>(x => x.Code, "Code", "Code"),
-                new EntityField<SupplierResponse>(x => x.Name, "Name", "Name"),
-                new EntityField<SupplierResponse>(x => x.ContactPerson, "Contact", "ContactPerson"),
-                new EntityField<SupplierResponse>(x => x.Email, "Email", "Email"),
-                new EntityField<SupplierResponse>(x => x.Phone, "Phone", "Phone"),
-                new EntityField<SupplierResponse>(x => x.IsActive, "Active", "IsActive", typeof(bool)),
-                new EntityField<SupplierResponse>(x => x.Rating, "Rating", "Rating", typeof(decimal))
+                new EntityField<SupplierResponse>(response => response.ImageUrl, "Image", "ImageUrl", Template: TemplateImage),
+                new EntityField<SupplierResponse>(response => response.Code, "Code", "Code"),
+                new EntityField<SupplierResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<SupplierResponse>(response => response.ContactPerson, "Contact", "ContactPerson"),
+                new EntityField<SupplierResponse>(response => response.Email, "Email", "Email"),
+                new EntityField<SupplierResponse>(response => response.Phone, "Phone", "Phone"),
+                new EntityField<SupplierResponse>(response => response.IsActive, "Active", "IsActive", typeof(bool)),
+                new EntityField<SupplierResponse>(response => response.Rating, "Rating", "Rating", typeof(decimal))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id ?? DefaultIdType.Empty,
@@ -42,19 +45,27 @@ public partial class Suppliers
             },
             createFunc: async viewModel =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await Client.CreateSupplierEndpointAsync("1", viewModel.Adapt<CreateSupplierCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }
 }
 
-/// <summary>
-/// ViewModel for Supplier add/edit operations.
-/// Inherits from UpdateSupplierCommand to ensure proper mapping with the API.
-/// Includes contact info, address, payment terms, status, and notes.
-/// </summary>
-public partial class SupplierViewModel : UpdateSupplierCommand;

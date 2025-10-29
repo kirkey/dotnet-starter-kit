@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Storage.File.Features;
+
 namespace FSH.Starter.WebApi.Store.Application.Items.Update.v1;
 
 /// <summary>
@@ -181,5 +183,16 @@ public record UpdateItemCommand : IRequest<UpdateItemResponse>
     /// </summary>
     [DefaultValue(null)]
     public string? Notes { get; set; }
+
+    /// <summary>
+    /// Gets or sets the image URL for the item.
+    /// </summary>
+    [DefaultValue(null)]
+    public string? ImageUrl { get; set; }
+
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image is uploaded to storage and ImageUrl is set from the saved file name.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
 }
 

@@ -1,3 +1,5 @@
+using FSH.Starter.Blazor.Client.Services;
+
 namespace FSH.Starter.Blazor.Client.Pages.Store.Items;
 
 /// <summary>
@@ -6,6 +8,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Items;
 /// </summary>
 public partial class Items
 {
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+
     protected EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = default!;
     private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = default!;
 
@@ -17,15 +21,16 @@ public partial class Items
             entityResource: FshResources.Store,
             fields:
             [
-                new EntityField<ItemResponse>(x => x.Sku, "SKU", "SKU"),
-                new EntityField<ItemResponse>(x => x.Barcode, "Barcode", "Barcode"),
-                new EntityField<ItemResponse>(x => x.Name, "Name", "Name"),
-                new EntityField<ItemResponse>(x => x.Brand, "Brand", "Brand"),
-                new EntityField<ItemResponse>(x => x.UnitPrice, "Price", "UnitPrice", typeof(decimal)),
-                new EntityField<ItemResponse>(x => x.Cost, "Cost", "Cost", typeof(decimal)),
-                new EntityField<ItemResponse>(x => x.MinimumStock, "Min Stock", "MinimumStock", typeof(int)),
-                new EntityField<ItemResponse>(x => x.ReorderPoint, "Reorder", "ReorderPoint", typeof(int)),
-                new EntityField<ItemResponse>(x => x.IsPerishable, "Perishable", "IsPerishable", typeof(bool)),
+                new EntityField<ItemResponse>(response => response.ImageUrl, "Image", "ImageUrl", Template: TemplateImage),
+                new EntityField<ItemResponse>(response => response.Sku, "SKU", "SKU"),
+                new EntityField<ItemResponse>(response => response.Barcode, "Barcode", "Barcode"),
+                new EntityField<ItemResponse>(response => response.Name, "Name", "Name"),
+                new EntityField<ItemResponse>(response => response.Brand, "Brand", "Brand"),
+                new EntityField<ItemResponse>(response => response.UnitPrice, "Price", "UnitPrice", typeof(decimal)),
+                new EntityField<ItemResponse>(response => response.Cost, "Cost", "Cost", typeof(decimal)),
+                new EntityField<ItemResponse>(response => response.MinimumStock, "Min Stock", "MinimumStock", typeof(int)),
+                new EntityField<ItemResponse>(response => response.ReorderPoint, "Reorder", "ReorderPoint", typeof(int)),
+                new EntityField<ItemResponse>(response => response.IsPerishable, "Perishable", "IsPerishable", typeof(bool)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
@@ -43,10 +48,24 @@ public partial class Items
             },
             createFunc: async viewModel =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await Client.CreateItemEndpointAsync("1", viewModel.Adapt<CreateItemCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
+                viewModel.Image = new FileUploadCommand
+                {
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
                 await Client.UpdateItemEndpointAsync("1", id, viewModel.Adapt<UpdateItemCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteItemEndpointAsync("1", id).ConfigureAwait(false),
@@ -87,8 +106,3 @@ public partial class Items
     }
 }
 
-/// <summary>
-/// ViewModel used by the Items page for add/edit operations.
-/// Inherits from UpdateItemCommand to ensure proper mapping with the API.
-/// </summary>
-public partial class ItemViewModel : UpdateItemCommand;

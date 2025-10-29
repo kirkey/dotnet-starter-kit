@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Storage.File.Features;
+
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Create.v1;
 
 /// <summary>
@@ -17,6 +19,7 @@ namespace FSH.Starter.WebApi.Store.Application.Suppliers.Create.v1;
 /// <param name="IsActive">Whether the supplier is active. Default true.</param>
 /// <param name="Rating">Initial rating between 0 and 5. Default 0.</param>
 /// <param name="Notes">Optional notes up to 2000 characters.</param>
+/// <param name="ImageUrl">Optional image URL for the supplier logo.</param>
 public sealed record CreateSupplierCommand(
     string Name,
     string? Description,
@@ -31,4 +34,11 @@ public sealed record CreateSupplierCommand(
     int PaymentTermsDays = 30,
     bool IsActive = true,
     decimal Rating = 0,
-    string? Notes = null) : IRequest<CreateSupplierResponse>;
+    string? Notes = null,
+    string? ImageUrl = null) : IRequest<CreateSupplierResponse>
+{
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image is uploaded to storage and ImageUrl is set from the saved file name.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
+}
