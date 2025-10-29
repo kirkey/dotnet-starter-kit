@@ -19,9 +19,6 @@ builder.Services.AddScoped<ImageUrlService>();
 // Register ApiHelper for guarded API call execution
 builder.Services.AddScoped<ApiHelper>();
 
-// Register global error service for application-wide error handling
-builder.Services.AddSingleton<GlobalErrorService>();
-
 // Register dynamic navigation menu service
 builder.Services.AddSingleton<IMenuService, MenuService>();
 

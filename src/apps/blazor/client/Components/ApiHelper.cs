@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Components;
 /// Helper service for executing API calls with proper error handling and user notifications.
 /// Handles API exceptions and provides consistent error messaging throughout the application.
 /// </summary>
-public class ApiHelper(ISnackbar snackbar, NavigationManager navigationManager, GlobalErrorService errorService)
+public class ApiHelper(ISnackbar snackbar, NavigationManager navigationManager)
 {
     public async Task<T?> ExecuteCallGuardedAsync<T>(
         Func<Task<T>> call,
@@ -37,7 +37,6 @@ public class ApiHelper(ISnackbar snackbar, NavigationManager navigationManager, 
                 _ => ex.Message
             };
             snackbar.Add(message, Severity.Error);
-            errorService.ShowError(ex);
         }
 
         return default;
@@ -63,7 +62,6 @@ public class ApiHelper(ISnackbar snackbar, NavigationManager navigationManager, 
         catch (ApiException ex)
         {
             snackbar.Add(ex.Message, Severity.Error);
-            errorService.ShowError(ex);
         }
 
         return false;
