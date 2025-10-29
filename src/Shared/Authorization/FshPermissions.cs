@@ -86,6 +86,13 @@ public static class FshPermissions
         new("Delete Warehouse", FshActions.Delete, FshResources.Warehouse),
         new("Import Warehouse", FshActions.Import, FshResources.Warehouse),
         new("Export Warehouse", FshActions.Export, FshResources.Warehouse),
+
+        //Messaging
+        new("View Messaging", FshActions.View, FshResources.Messaging, IsBasic: true),
+        new("Search Messaging", FshActions.Search, FshResources.Messaging, IsBasic: true),
+        new("Create Messaging", FshActions.Create, FshResources.Messaging),
+        new("Update Messaging", FshActions.Update, FshResources.Messaging),
+        new("Delete Messaging", FshActions.Delete, FshResources.Messaging),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);

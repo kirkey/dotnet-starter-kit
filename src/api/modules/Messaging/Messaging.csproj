@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FSH.Starter.WebApi.Messaging</RootNamespace>
+    <AssemblyName>FSH.Starter.WebApi.Messaging</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\framework\Core\Core.csproj" />
+    <ProjectReference Include="..\..\framework\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\aspire\service-defaults\ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>

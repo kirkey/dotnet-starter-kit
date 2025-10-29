@@ -13,6 +13,7 @@ public static class Extensions
             typeof(TodoModule).Assembly,
             typeof(AccountingMetadata).Assembly,
             typeof(StoreMetadata).Assembly,
+            typeof(MessagingModule).Assembly,
         };
 
         //register validators
@@ -27,12 +28,14 @@ public static class Extensions
         builder.RegisterTodoServices();
         builder.RegisterAccountingServices();
         builder.RegisterStoreServices();
+        builder.RegisterMessagingServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
+            config.WithModule<MessagingModule.Endpoints>();
         });
 
         return builder;
@@ -47,6 +50,7 @@ public static class Extensions
         app.UseTodoModule();
         app.UseAccountingModule();
         app.UseStoreModule();
+        app.UseMessagingModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()

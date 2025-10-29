@@ -8,4 +8,5 @@ public static class SchemaNames
     public const string Todo = "todo";
     public const string Accounting = "accounting";
     public const string Store = "store";
+    public const string Messaging = "messaging";
 }
