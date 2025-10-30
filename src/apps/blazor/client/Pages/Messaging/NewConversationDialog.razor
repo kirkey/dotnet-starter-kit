@@ -16,15 +16,23 @@
 
             <MudText Typo="Typo.subtitle2">Select Members</MudText>
             
-            @if (OnlineUsers != null && OnlineUsers.Any())
+            @if (AllUsers != null && AllUsers.Any())
             {
                 <MudStack Spacing="1" Style="max-height: 300px; overflow-y: auto;">
-                    @foreach (var user in OnlineUsers)
+                    @foreach (var user in AllUsers)
                     {
-                        <MudCheckBox T="bool" bind-Value="@(_selectedUserIds.Contains(user.Id))"
-                                     ValueChanged="@((bool value) => ToggleUser(user.Id, value))"
-                                     Label="@user.Name"
-                                     Color="Color.Primary" />
+                        var isOnline = OnlineUserIds?.Contains(user.Id.ToString()) ?? false;
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                            <MudCheckBox T="bool" bind-Value="@(_selectedUserIds.Contains(user.Id))"
+                                         ValueChanged="@((bool value) => ToggleUser(user.Id, value))"
+                                         Label="@user.Name"
+                                         Color="Color.Primary" />
+                            <MudChip T="string" Size="Size.Small" 
+                                     Color="@(isOnline ? Color.Success : Color.Default)"
+                                     Icon="@(isOnline ? Icons.Material.Filled.Circle : Icons.Material.Outlined.Circle)">
+                                @(isOnline ? "Online" : "Offline")
+                            </MudChip>
+                        </MudStack>
                     }
                 </MudStack>
             }
@@ -44,7 +52,8 @@
 
 @code {
     [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
-    [Parameter] public List<UserDto>? OnlineUsers { get; set; }
+    [Parameter] public List<UserDto>? AllUsers { get; set; }
+    [Parameter] public HashSet<string>? OnlineUserIds { get; set; }
 
     private string _conversationType = "direct";
     private string _title = string.Empty;
@@ -82,4 +91,3 @@
 
     private void Cancel() => MudDialog.Cancel();
 }
-

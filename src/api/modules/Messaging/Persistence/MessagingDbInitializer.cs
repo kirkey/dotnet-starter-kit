@@ -1,5 +1,3 @@
-using FSH.Framework.Infrastructure.Persistence;
-using Microsoft.Extensions.Logging;
 namespace FSH.Starter.WebApi.Messaging.Persistence;
 /// <summary>
 /// Database initializer for the Messaging module.

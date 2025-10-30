@@ -7,6 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Messaging;
 public partial class Messaging : IDisposable
 {
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
+    [Inject] private IClient UsersClient { get; set; } = default!;
     
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
@@ -16,7 +17,8 @@ public partial class Messaging : IDisposable
     private ConversationDto? _selectedConversation;
     private GetConversationResponse? _conversationDetails;
     private List<MessageDto>? _messages;
-    private List<UserDto>? _onlineUsers;
+    private List<UserDto>? _allUsers;
+    private HashSet<string> _onlineUserIds = new();
     private DefaultIdType? _currentUserId;
     private string _newMessage = string.Empty;
     private string _searchConversation = string.Empty;
@@ -111,9 +113,17 @@ public partial class Messaging : IDisposable
             // Scroll to bottom
             await ScrollToBottomAsync();
         }
+        catch (ApiException ex) when (ex.StatusCode == 403)
+        {
+            Snackbar.Add("You don't have permission to access this conversation. You may have been removed from it.", Severity.Warning);
+            _selectedConversation = null;
+            // Reload conversation list to remove inaccessible conversations
+            await LoadConversationsAsync();
+        }
         catch (Exception ex)
         {
             Snackbar.Add($"Error loading conversation: {ex.Message}", Severity.Error);
+            _selectedConversation = null;
         }
     }
 
@@ -167,7 +177,8 @@ public partial class Messaging : IDisposable
     {
         var parameters = new DialogParameters
         {
-            { nameof(NewConversationDialog.OnlineUsers), _onlineUsers }
+            { nameof(NewConversationDialog.AllUsers), _allUsers },
+            { nameof(NewConversationDialog.OnlineUserIds), _onlineUserIds }
         };
 
         var options = new DialogOptions
@@ -190,6 +201,12 @@ public partial class Messaging : IDisposable
     {
         try
         {
+            // Ensure current user is always included in the member list
+            if (_currentUserId.HasValue && !command.MemberIds.Contains(_currentUserId.Value))
+            {
+                command.MemberIds.Add(_currentUserId.Value);
+            }
+            
             var response = await Client.CreateConversationEndpointAsync("1", command);
             Snackbar.Add("Conversation created successfully!", Severity.Success);
 
@@ -325,13 +342,29 @@ public partial class Messaging : IDisposable
     {
         try
         {
-            // TODO: Implement online users endpoint
-            // For now, mock some users
-            _onlineUsers = new List<UserDto>();
+            // Load all users from the system
+            var allUsers = await UsersClient.GetUsersListEndpointAsync();
+            _allUsers = allUsers?
+                .Where(u => u.Id != _currentUserId)
+                .Select(u => new UserDto { Id = u.Id, Name = u.UserName ?? u.Email ?? "Unknown" })
+                .ToList() ?? new List<UserDto>();
+            
+            // Get online user IDs from the API
+            try
+            {
+                var onlineResponse = await Client.GetOnlineUsersEndpointAsync("1");
+                _onlineUserIds = onlineResponse?.UserIds?.ToHashSet() ?? new HashSet<string>();
+            }
+            catch
+            {
+                // If online users endpoint fails, continue with empty set
+                _onlineUserIds = new HashSet<string>();
+            }
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading online users: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Error loading users: {ex.Message}", Severity.Error);
+            _allUsers = new List<UserDto>();
         }
     }
 
@@ -340,7 +373,9 @@ public partial class Messaging : IDisposable
         var parameters = new DialogParameters
         {
             { nameof(AddMemberDialog.ConversationId), _selectedConversation!.Id },
-            { nameof(AddMemberDialog.ExistingMembers), _conversationDetails?.Members?.Select(m => m.UserId).ToList() }
+            { nameof(AddMemberDialog.ExistingMembers), _conversationDetails?.Members?.Select(m => m.UserId).ToList() },
+            { nameof(AddMemberDialog.AllUsers), _allUsers },
+            { nameof(AddMemberDialog.OnlineUserIds), _onlineUserIds }
         };
 
         var dialog = await DialogService.ShowAsync<AddMemberDialog>("Add Member", parameters);

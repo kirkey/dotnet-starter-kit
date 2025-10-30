@@ -14,6 +14,7 @@ global using FSH.Starter.Blazor.Infrastructure.Caching;
 global using FSH.Starter.Blazor.Infrastructure.Connectivity;
 global using FSH.Starter.Blazor.Infrastructure.Exporting;
 global using FSH.Starter.Blazor.Infrastructure.Localization;
+global using FSH.Starter.Blazor.Infrastructure.Messaging;
 global using FSH.Starter.Blazor.Infrastructure.Notifications;
 global using FSH.Starter.Blazor.Infrastructure.Palette;
 global using FSH.Starter.Blazor.Infrastructure.Preferences;

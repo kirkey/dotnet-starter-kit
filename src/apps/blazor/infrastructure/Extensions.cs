@@ -36,6 +36,7 @@ public static class Extensions
         services.AddScoped<IExportService, ExportService>();
         services.AddSingleton<IClientCryptoService, ClientCryptoService>();
         services.AddScoped<ILocalizationService, LocalizationService>();
+        services.AddScoped<IMessagingHubService, MessagingHubService>();
         return services;
 
     }

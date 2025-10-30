@@ -90,7 +90,7 @@ public static class FshPermissions
         //Messaging
         new("View Messaging", FshActions.View, FshResources.Messaging, IsBasic: true),
         new("Search Messaging", FshActions.Search, FshResources.Messaging, IsBasic: true),
-        new("Create Messaging", FshActions.Create, FshResources.Messaging),
+        new("Create Messaging", FshActions.Create, FshResources.Messaging, IsBasic: true),
         new("Update Messaging", FshActions.Update, FshResources.Messaging),
         new("Delete Messaging", FshActions.Delete, FshResources.Messaging),
     ];

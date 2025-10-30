@@ -14,6 +14,7 @@ using FSH.Starter.WebApi.Messaging.Features.Messages.Delete;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Get;
 using FSH.Starter.WebApi.Messaging.Features.Messages.GetList;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Update;
+using FSH.Starter.WebApi.Messaging.Features.OnlineUsers;
 
 namespace FSH.Starter.WebApi.Messaging;
 
@@ -46,6 +47,9 @@ public static class MessagingModule
             messagesGroup.MapGetMessageEndpoint();
             messagesGroup.MapGetMessageListEndpoint();
             messagesGroup.MapUpdateMessageEndpoint();
+
+            var usersGroup = app.MapGroup("messaging").WithTags("messaging");
+            usersGroup.MapGetOnlineUsersEndpoint();
             messagesGroup.MapDeleteMessageEndpoint();
         }
     }
@@ -82,6 +86,9 @@ public static class MessagingModule
     /// <returns>The web application for chaining.</returns>
     public static WebApplication UseMessagingModule(this WebApplication app)
     {
+        // Map SignalR hub
+        app.MapHub<Hubs.MessagingHub>("/hubs/messaging");
+        
         return app;
     }
 }

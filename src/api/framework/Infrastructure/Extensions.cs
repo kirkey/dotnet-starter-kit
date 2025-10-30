@@ -13,6 +13,7 @@ using FSH.Framework.Infrastructure.Mail;
 using FSH.Framework.Infrastructure.OpenApi;
 using FSH.Framework.Infrastructure.RateLimit;
 using FSH.Framework.Infrastructure.SecurityHeaders;
+using FSH.Framework.Infrastructure.SignalR;
 using FSH.Framework.Infrastructure.Storage;
 using FSH.Framework.Infrastructure.Tenant.Endpoints;
 using FSH.Starter.Aspire.ServiceDefaults;
@@ -35,6 +36,7 @@ public static class Extensions
         builder.Services.ConfigureOpenApi();
         builder.Services.ConfigureJobs(builder.Configuration);
         builder.Services.ConfigureMailing();
+        builder.Services.AddSignalRInfrastructure(builder.Configuration);
         builder.Services.ConfigureCaching(builder.Configuration);
         builder.Services.AddExceptionHandler<CustomExceptionHandler>();
         builder.Services.AddProblemDetails();

@@ -1,6 +1,8 @@
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.File;
 using FSH.Framework.Core.Storage.File.Features;
+using FSH.Starter.WebApi.Messaging.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FSH.Starter.WebApi.Messaging.Features.Messages.Create;
 
@@ -13,7 +15,8 @@ public sealed class CreateMessageHandler(
     [FromKeyedServices("messaging")] IRepository<Message> messageRepository,
     [FromKeyedServices("messaging")] IRepository<Conversation> conversationRepository,
     IStorageService storageService,
-    ICurrentUser currentUser)
+    ICurrentUser currentUser,
+    IHubContext<MessagingHub> hubContext)
     : IRequestHandler<CreateMessageCommand, CreateMessageResponse>
 {
     public async Task<CreateMessageResponse> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
@@ -77,6 +80,34 @@ public sealed class CreateMessageHandler(
         await conversationRepository.UpdateAsync(conversation, cancellationToken).ConfigureAwait(false);
 
         await messageRepository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+        // Broadcast message to all participants via SignalR
+        var participantIds = conversation.Members
+            .Where(m => m.IsActive && m.UserId != currentUserId)
+            .Select(m => m.UserId.ToString())
+            .ToList();
+
+        if (participantIds.Any())
+        {
+            var messageDto = new
+            {
+                Id = message.Id,
+                ConversationId = message.ConversationId,
+                SenderId = message.SenderId,
+                Content = message.Content,
+                MessageType = message.MessageType,
+                SentAt = message.SentAt,
+                IsEdited = message.IsEdited,
+                AttachmentCount = message.Attachments.Count
+            };
+
+            foreach (var participantId in participantIds)
+            {
+                await hubContext.Clients.User(participantId)
+                    .SendAsync("ReceiveMessage", request.ConversationId.ToString(), messageDto, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+        }
 
         logger.LogInformation("message {MessageId} created in conversation {ConversationId} by user {UserId}", 
             message.Id, request.ConversationId, currentUserId);

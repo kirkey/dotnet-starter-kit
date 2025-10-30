@@ -272,21 +272,24 @@
                 }
                 else
                 {
-                    <!-- Online Users List -->
-                    @if (_onlineUsers != null)
+                    <!-- All Users List with Online/Offline Status -->
+                    @if (_allUsers != null)
                     {
-                        @foreach (var user in _onlineUsers)
+                        @foreach (var user in _allUsers)
                         {
+                            var isOnline = _onlineUserIds.Contains(user.Id.ToString());
                             <MudCard Class="pa-2 cursor-pointer" @onclick="@(() => StartDirectConversation(user))">
                                 <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
-                                    <MudBadge Color="Color.Success" Overlap="true" Dot="true">
+                                    <MudBadge Color="@(isOnline ? Color.Success : Color.Default)" Overlap="true" Dot="true">
                                         <MudAvatar Color="Color.Secondary" Size="Size.Small">
                                             @GetUserInitials(user.Id)
                                         </MudAvatar>
                                     </MudBadge>
                                     <MudStack Spacing="0">
                                         <MudText Typo="Typo.body2">@user.Name</MudText>
-                                        <MudText Typo="Typo.caption" Color="Color.Success">Online</MudText>
+                                        <MudText Typo="Typo.caption" Color="@(isOnline ? Color.Success : Color.Default)">
+                                            @(isOnline ? "Online" : "Offline")
+                                        </MudText>
                                     </MudStack>
                                 </MudStack>
                             </MudCard>

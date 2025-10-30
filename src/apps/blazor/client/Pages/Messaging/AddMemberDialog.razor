@@ -8,7 +8,17 @@
                 {
                     @foreach (var user in _availableUsers)
                     {
-                        <MudSelectItem Value="@user.Id">@user.Name</MudSelectItem>
+                        var isOnline = OnlineUserIds?.Contains(user.Id.ToString()) ?? false;
+                        <MudSelectItem Value="@user.Id">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText>@user.Name</MudText>
+                                <MudChip T="string" Size="Size.Small" 
+                                         Color="@(isOnline ? Color.Success : Color.Default)"
+                                         Icon="@(isOnline ? Icons.Material.Filled.Circle : Icons.Material.Outlined.Circle)">
+                                    @(isOnline ? "Online" : "Offline")
+                                </MudChip>
+                            </MudStack>
+                        </MudSelectItem>
                     }
                 }
             </MudSelect>
@@ -31,6 +41,8 @@
     [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
     [Parameter] public DefaultIdType ConversationId { get; set; }
     [Parameter] public List<DefaultIdType>? ExistingMembers { get; set; }
+    [Parameter] public List<UserDto>? AllUsers { get; set; }
+    [Parameter] public HashSet<string>? OnlineUserIds { get; set; }
 
     private DefaultIdType _selectedUserId = DefaultIdType.Empty;
     private string _role = "member";
@@ -38,9 +50,10 @@
 
     protected override void OnInitialized()
     {
-        // TODO: Load available users from identity service
-        // For now, mock some users excluding existing members
-        _availableUsers = new List<UserDto>();
+        // Filter out existing members from all users
+        _availableUsers = AllUsers?
+            .Where(u => ExistingMembers == null || !ExistingMembers.Contains(u.Id))
+            .ToList() ?? new List<UserDto>();
     }
 
     private void Add() => MudDialog.Close(DialogResult.Ok(_selectedUserId));
