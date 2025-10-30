@@ -80,7 +80,8 @@ public static class MessagingModule
     /// <returns>The web application for chaining.</returns>
     public static WebApplication UseMessagingModule(this WebApplication app)
     {
-        // Map SignalR hub
+        // Map SignalR hubs
+        app.MapHub<Framework.Infrastructure.SignalR.ConnectionHub>("/hubs/connection");
         app.MapHub<Hubs.MessagingHub>("/hubs/messaging");
         
         return app;

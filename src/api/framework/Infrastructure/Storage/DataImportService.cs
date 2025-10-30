@@ -1,4 +1,3 @@
-using System.Globalization;
 using FSH.Framework.Core.Storage.File.Features;
 
 namespace FSH.Framework.Infrastructure.Storage;

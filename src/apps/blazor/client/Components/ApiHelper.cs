@@ -1,6 +1,4 @@
-﻿using FSH.Starter.Blazor.Client.Services;
-
-namespace FSH.Starter.Blazor.Client.Components;
+﻿namespace FSH.Starter.Blazor.Client.Components;
 
 /// <summary>
 /// Helper service for executing API calls with proper error handling and user notifications.

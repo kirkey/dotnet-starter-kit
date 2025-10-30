@@ -1,4 +1,6 @@
-﻿<MudAppBar Color="Color.Surface" Elevation="0">
+﻿@using FSH.Starter.Blazor.Client.Components.Connectivity
+<MessagingConnection>
+<MudAppBar Color="Color.Surface" Elevation="0">
     <MudTooltip Text="Toggle Drawer">
         <MudIconButton Icon="@Icons.Material.Rounded.Notes" Color="Color.Inherit" Edge="Edge.Start"
             OnClick="@((e) => DrawerToggle())" />
@@ -10,7 +12,9 @@
     <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
         <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary"
             Href="https://opencollective.com/fullstackhero" Target="_blank" StartIcon="@Icons.Material.Filled.Favorite">
-            Sponsor</MudButton>
+            Sponsor
+        </MudButton>
+        <MessagingConnectionStatus />
         <MudToggleIconButton @bind-Toggled="@_isDarkMode" Icon="@Icons.Material.Filled.WbSunny"
                              Color="@Color.Warning" title="off" Class="d-flex ml-auto" ToggledIcon="@Icons.Material.Filled.DarkMode"
                              ToggledColor="@Color.Surface" toggledTitle="on" style="left:8px!important" @onclick="@ToggleDarkMode" />
@@ -40,6 +44,7 @@
             <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Inherit"
                 Href="https://opencollective.com/fullstackhero" Target="_blank" />
         </MudTooltip>
+        <MessagingConnectionStatus />
         <MudMenu Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.CenterRight">
             <div class="px-2">
                 <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"
@@ -99,3 +104,4 @@
         </MudScrollToTop>
     </MudContainer>
 </MudMainContent>
+</MessagingConnection>

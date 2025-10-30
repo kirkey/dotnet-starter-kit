@@ -1,0 +1,74 @@
+@using FSH.Starter.Blazor.Infrastructure.Notifications
+@using MediatR.Courier
+@inject ICourier Courier
+
+@*
+    Displays the SignalR messaging connection status indicator.
+    Shows connected, connecting, or disconnected state with appropriate icon and color.
+*@
+<MudTooltip Arrow Text="@TooltipText">
+    <MudIconButton Icon="@Icon" Color="@IconColor"/>
+</MudTooltip>
+
+@code {
+    private string TooltipText { get; set; } = "No Connection";
+    private string Icon { get; set; } = Icons.Material.Filled.SignalWifi0Bar;
+    private Color IconColor { get; set; } = Color.Error;
+
+    /// <summary>
+    /// Gets or sets the cascading messaging connection.
+    /// </summary>
+    [CascadingParameter]
+    private MessagingConnection? MessagingConnection { get; set; }
+
+    /// <inheritdoc/>
+    protected override void OnInitialized()
+    {
+        if (MessagingConnection is not null)
+        {
+            SetConnectionState(MessagingConnection.ConnectionState, MessagingConnection.ConnectionId);
+
+            // Subscribe to connection state changes
+            Courier.SubscribeWeak<NotificationWrapper<ConnectionStateChanged>>(wrapper =>
+            {
+                SetConnectionState(wrapper.Notification.State, wrapper.Notification.Message);
+                StateHasChanged();
+            });
+        }
+    }
+
+    /// <summary>
+    /// Updates the visual state based on connection status.
+    /// </summary>
+    /// <param name="state">The connection state.</param>
+    /// <param name="message">The status message or connection ID.</param>
+    private void SetConnectionState(ConnectionState state, string? message)
+    {
+        switch (state)
+        {
+            case ConnectionState.Connected:
+                TooltipText = $"Connected to Messaging Server (ID: {message})";
+                Icon = Icons.Material.Filled.SignalWifiStatusbar4Bar;
+                IconColor = Color.Success;
+                break;
+
+            case ConnectionState.Connecting:
+                TooltipText = $"Connecting to server... ({message})";
+                Icon = Icons.Material.Filled.SignalWifiStatusbarConnectedNoInternet4;
+                IconColor = Color.Warning;
+                break;
+
+            case ConnectionState.Disconnected:
+                TooltipText = $"Disconnected from server ({message})";
+                Icon = Icons.Material.Filled.SignalWifiOff;
+                IconColor = Color.Error;
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
+
+        StateHasChanged();
+    }
+}
+

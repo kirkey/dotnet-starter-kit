@@ -1,5 +1,4 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Notifications;
-using MediatR.Courier;
+﻿using MediatR.Courier;
 
 namespace FSH.Starter.Blazor.Client.Components.Common;
 

@@ -1,5 +1,3 @@
-using FSH.Starter.Blazor.Infrastructure.Notifications;
-
 namespace FSH.Starter.Blazor.Client.Components.ThemeManager;
 
 public partial class TableCustomizationPanel

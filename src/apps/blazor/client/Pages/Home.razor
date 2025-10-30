@@ -1,82 +1,372 @@
 ﻿@page "/"
 @using System.Security.Claims
 
-<MudContainer>
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    <!-- Hero Section -->
     <MudGrid>
-        <MudItem xs="12" sm="12" md="12">
-            <div class="d-flex justify-center mt-4">
-                 <img src="full-stack-hero-logo.png" Style="height:250px" />
-            </div>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="12">
-            <MudText Align="Align.Center" Typo="Typo.h2">The best way to start a fullstack .NET 9 Web App.</MudText>
+        <MudItem xs="12">
+            <MudPaper Elevation="0" Class="pa-8" Style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px;">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="12" md="8">
+                        <MudText Align="Align.Center" Typo="Typo.h2" Style="color: white; font-weight: 600; margin-bottom: 16px;">
+                            Grocery Store & Warehouse Management System
+                        </MudText>
+                        <MudText Align="Align.Center" Typo="Typo.h6" Style="color: rgba(255,255,255,0.9); margin-bottom: 24px;">
+                            Streamline your inventory operations with our comprehensive warehouse and store management platform
+                        </MudText>
+                        <MudText Align="Align.Center" Typo="Typo.body1" Style="color: rgba(255,255,255,0.85);">
+                            Built with .NET 9 • Blazor WebAssembly • MudBlazor • CQRS Architecture
+                        </MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="12">
-            <MudText Align="Align.Center" Typo="Typo.h5" Class="smaller">fullstackhero's</MudText>
-            <MudText Align="Align.Center" Typo="Typo.h4">.NET 9 Starter Kit</MudText>            
-        </MudItem>
-
-        <MudItem xs="12" sm="12" md="12">
-            <MudText Align="Align.Center">
-                Built with the goodness of <MudLink Href="https://www.mudblazor.com" Target="_blank">MudBlazor</MudLink> Component Library
+        <!-- Key Features Section -->
+        <MudItem xs="12" Class="mt-6">
+            <MudText Typo="Typo.h4" Align="Align.Center" GutterBottom="true" Style="font-weight: 600; margin-bottom: 32px;">
+                Core Features & Capabilities
             </MudText>
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="12">
-           <div class="mud-typography-align-center">
-                <MudButton DropShadow="false" Variant="Variant.Filled" Color="Color.Primary" Href="https://fullstackhero.net/basics/getting-started/" Target="_blank" StartIcon="@Icons.Material.Filled.Rocket">Get Started</MudButton>
-                <MudButton DropShadow="false" Variant="Variant.Outlined" Style="margin-left:5px" Color="Color.Default" Href="https://github.com/fullstackhero/dotnet-starter-kit/" Target="_blank" StartIcon="@Icons.Custom.Brands.GitHub">Star on GitHub</MudButton>
-            </div>
+        <!-- Feature Cards Row 1 -->
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCardContent>
+                    <div class="d-flex align-center mb-3">
+                        <MudIcon Icon="@Icons.Material.Filled.Inventory" Color="Color.Primary" Size="Size.Large" Class="mr-3"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;">Inventory Management</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2" Color="Color.Default">
+                        Real-time inventory tracking with automated reorder points, lot number tracking, serial number management, and stock level monitoring across multiple warehouses.
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
         </MudItem>
-        <MudItem xs="12" sm="12" md="12">
-             <MudText Align="Align.Center">Version 2.0</MudText>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCardContent>
+                    <div class="d-flex align-center mb-3">
+                        <MudIcon Icon="@Icons.Material.Filled.Warehouse" Color="Color.Secondary" Size="Size.Large" Class="mr-3"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;">Warehouse Operations</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2" Color="Color.Default">
+                        Multi-warehouse support with capacity management, location tracking, goods receipt processing, and put-away task automation for optimal storage efficiency.
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
         </MudItem>
-        <MudItem xs="12" sm="12" md="12">
-            <MudExpansionPanels>
-                <MudExpansionPanel Class="mud-table-outlined" Text="Getting Started" MaxHeight="150">
-                    In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference.
-                    <MudButton Variant="Variant.Text" DropShadow="false" Color="Color.Secondary" Href="https://fullstackhero.net/blazor-wasm-boilerplate/general/getting-started" Target="_blank">Read The Guide</MudButton>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCardContent>
+                    <div class="d-flex align-center mb-3">
+                        <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Color="Color.Tertiary" Size="Size.Large" Class="mr-3"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;">Purchase Order Management</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2" Color="Color.Default">
+                        Complete purchase order lifecycle from creation to partial receiving, with supplier management, cost tracking, and automatic inventory updates upon receipt.
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <!-- Feature Cards Row 2 -->
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCardContent>
+                    <div class="d-flex align-center mb-3">
+                        <MudIcon Icon="@Icons.Material.Filled.AssignmentTurnedIn" Color="Color.Success" Size="Size.Large" Class="mr-3"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;">Pick List & Fulfillment</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2" Color="Color.Default">
+                        Optimize order fulfillment with intelligent pick list generation, barcode scanning support, and real-time picking status updates for faster order processing.
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCardContent>
+                    <div class="d-flex align-center mb-3">
+                        <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Info" Size="Size.Large" Class="mr-3"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;">Cycle Counts & Audits</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2" Color="Color.Default">
+                        Maintain inventory accuracy with scheduled cycle counts, variance tracking, and automated adjustments to ensure data integrity and operational excellence.
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCardContent>
+                    <div class="d-flex align-center mb-3">
+                        <MudIcon Icon="@Icons.Material.Filled.ImportExport" Color="Color.Warning" Size="Size.Large" Class="mr-3"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;">Import & Export</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2" Color="Color.Default">
+                        Bulk import items via Excel, export data for reporting, and generate PDF documents for purchase orders and warehouse documentation.
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <!-- Benefits Section -->
+        <MudItem xs="12" Class="mt-8">
+            <MudText Typo="Typo.h4" Align="Align.Center" GutterBottom="true" Style="font-weight: 600; margin-bottom: 32px;">
+                Why Choose Our System?
+            </MudText>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
+                    <MudIcon Icon="@Icons.Material.Filled.Speed" Class="mr-2" Color="Color.Primary"/>
+                    Enhanced Efficiency
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Automated inventory updates and real-time stock tracking
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Streamlined receiving and put-away processes
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Intelligent reorder point notifications
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Barcode scanning for faster operations
+                    </MudListItem>
+                </MudList>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
+                    <MudIcon Icon="@Icons.Material.Filled.Security" Class="mr-2" Color="Color.Secondary"/>
+                    Enterprise-Grade Security
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Role-based access control with granular permissions
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Multi-tenant architecture for data isolation
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Complete audit trail for all transactions
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Secure authentication and authorization
+                    </MudListItem>
+                </MudList>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
+                    <MudIcon Icon="@Icons.Material.Filled.Insights" Class="mr-2" Color="Color.Tertiary"/>
+                    Data-Driven Insights
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Real-time inventory valuation and reporting
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Stock movement tracking and analytics
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Supplier performance monitoring
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Warehouse capacity and utilization metrics
+                    </MudListItem>
+                </MudList>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
+                    <MudIcon Icon="@Icons.Material.Filled.DeviceHub" Class="mr-2" Color="Color.Info"/>
+                    Modern Technology Stack
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Built on .NET 9 with Blazor WebAssembly
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        CQRS and Clean Architecture patterns
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Responsive UI with MudBlazor components
+                    </MudListItem>
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        Scalable and maintainable codebase
+                    </MudListItem>
+                </MudList>
+            </MudPaper>
+        </MudItem>
+
+        <!-- Quick Access Section -->
+        <MudItem xs="12" Class="mt-8">
+            <MudPaper Elevation="4" Class="pa-6" Style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 12px;">
+                <MudText Typo="Typo.h5" Align="Align.Center" GutterBottom="true" Style="font-weight: 600; margin-bottom: 24px;">
+                    Get Started Today
+                </MudText>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true" 
+                                   Variant="Variant.Filled" 
+                                   Color="Color.Primary" 
+                                   Size="Size.Large"
+                                   StartIcon="@Icons.Material.Filled.Dashboard"
+                                   Href="/store/dashboard">
+                            Store Dashboard
+                        </MudButton>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true" 
+                                   Variant="Variant.Filled" 
+                                   Color="Color.Secondary" 
+                                   Size="Size.Large"
+                                   StartIcon="@Icons.Material.Filled.Inventory2"
+                                   Href="/store/items">
+                            Manage Items
+                        </MudButton>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true" 
+                                   Variant="Variant.Filled" 
+                                   Color="Color.Tertiary" 
+                                   Size="Size.Large"
+                                   StartIcon="@Icons.Material.Filled.LocalShipping"
+                                   Href="/store/purchase-orders">
+                            Purchase Orders
+                        </MudButton>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true" 
+                                   Variant="Variant.Filled" 
+                                   Color="Color.Info" 
+                                   Size="Size.Large"
+                                   StartIcon="@Icons.Material.Filled.Warehouse"
+                                   Href="/store/warehouses">
+                            Warehouses
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+
+        <!-- System Information Panels -->
+        <MudItem xs="12" Class="mt-6">
+            <MudExpansionPanels MultiExpansion="true">
+                <MudExpansionPanel Style="border-radius: 8px;" Class="mb-2">
+                    <TitleContent>
+                        <div class="d-flex align-center">
+                            <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-3" Color="Color.Primary"/>
+                            <MudText Typo="Typo.h6">System Modules Overview</MudText>
+                        </div>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.subtitle1" Style="font-weight: 600;" GutterBottom="true">Inventory Management</MudText>
+                                <MudText Typo="Typo.body2" Class="mb-4">
+                                    Items, Categories, Stock Levels, Lot Numbers, Serial Numbers, Inventory Transactions, Stock Adjustments, Cycle Counts
+                                </MudText>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.subtitle1" Style="font-weight: 600;" GutterBottom="true">Warehouse Operations</MudText>
+                                <MudText Typo="Typo.body2" Class="mb-4">
+                                    Warehouses, Warehouse Locations, Bins, Goods Receipt, Put-Away Tasks, Inventory Transfers, Capacity Management
+                                </MudText>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.subtitle1" Style="font-weight: 600;" GutterBottom="true">Procurement</MudText>
+                                <MudText Typo="Typo.body2" Class="mb-4">
+                                    Purchase Orders, Suppliers, Item-Supplier Relationships, Partial Receiving, PDF Generation, Cost Tracking
+                                </MudText>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.subtitle1" Style="font-weight: 600;" GutterBottom="true">Order Fulfillment</MudText>
+                                <MudText Typo="Typo.body2" Class="mb-4">
+                                    Pick Lists, Inventory Reservations, Order Status Tracking, Barcode Scanning Integration
+                                </MudText>
+                            </MudItem>
+                        </MudGrid>
+                    </ChildContent>
                 </MudExpansionPanel>
-                <MudExpansionPanel Class="mud-table-outlined" Text="Important Links" MaxHeight="500">
-                    <MudList T="string">
-                        <MudListItem Text="Github Repository : Do Not Forget to Leave a Star ;)" Href="https://github.com/fullstackhero/dotnet-starter-kit/" />
-                        <MudListItem Text="Quick Start Guide" Href="https://fullstackhero.net/blazor-wasm-boilerplate/general/getting-started" />
-                    </MudList>
+
+                <MudExpansionPanel Style="border-radius: 8px;" Class="mb-2">
+                    <TitleContent>
+                        <div class="d-flex align-center">
+                            <MudIcon Icon="@Icons.Material.Filled.EmojiObjects" Class="mr-3" Color="Color.Success"/>
+                            <MudText Typo="Typo.h6">Best Practices & Tips</MudText>
+                        </div>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudList T="string">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.FiberManualRecord" IconColor="Color.Success">
+                                <strong>Set Reorder Points:</strong> Configure minimum stock levels and reorder points for all items to prevent stockouts
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.FiberManualRecord" IconColor="Color.Success">
+                                <strong>Regular Cycle Counts:</strong> Schedule periodic cycle counts to maintain inventory accuracy
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.FiberManualRecord" IconColor="Color.Success">
+                                <strong>Organize Locations:</strong> Use clear naming conventions for warehouse locations and bins
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.FiberManualRecord" IconColor="Color.Success">
+                                <strong>Track Perishables:</strong> Enable lot number tracking for items with expiration dates
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.FiberManualRecord" IconColor="Color.Success">
+                                <strong>Monitor Capacity:</strong> Keep warehouse capacity utilization within optimal ranges
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.FiberManualRecord" IconColor="Color.Success">
+                                <strong>Use Barcodes:</strong> Implement barcode scanning for faster and more accurate operations
+                            </MudListItem>
+                        </MudList>
+                    </ChildContent>
                 </MudExpansionPanel>
-                <MudExpansionPanel Class="mud-table-outlined" Text="Learning Resources" MaxHeight="1000">
-                    Here are few articles that should help you get started with Blazor.
-                    <MudList T="string">
-                        <MudListItem Text="Blazor For Beginners – Getting Started With Blazor" Href="https://codewithmukesh.com/blog/getting-started-with-blazor/" />
-                        <MudListItem Text="Onion Architecture In ASP.NET Core With CQRS – Detailed" Href="https://codewithmukesh.com/blog/onion-architecture-in-aspnet-core/" />
-                        <MudListItem Text="How To Implement Blazor CRUD Using Entity Framework Core?" Href="https://codewithmukesh.com/blog/blazor-crud-with-entity-framework-core/" />
-                        <MudListItem Text="Custom Authentication In Blazor WebAssembly – Detailed" Href="https://codewithmukesh.com/blog/authentication-in-blazor-webassembly/" />
-                        <MudListItem Text="Implementing Blazor CRUD Using Mudblazor Component Library In .NET 5" Href="https://codewithmukesh.com/blog/blazor-crud-using-mudblazor/" />
-                        <MudListItem Text="Exploring Blazor Project Structure" Href="https://codewithmukesh.com/blog/exploring-blazor-project-structure/" />
-                        <MudListItem Text="Building A Chat Application With Blazor, Identity, And SignalR" Href="https://codewithmukesh.com/blog/realtime-chat-application-with-blazor/" />
-                    </MudList>
-                </MudExpansionPanel>
-                <MudExpansionPanel Class="mud-table-outlined" Text="User Claims">
-                    Application Claims of the currently logged in user
-                     <MudList T="string" Dense="true">
-                @if (Claims is not null)
+
+                @if (Claims is not null && Claims.Any())
                 {
-                    @foreach (var claim in Claims)
-                    {
-                        <MudListItem>
-                            <MudChip>
-                                @claim.Type
-                            </MudChip>
-                            @claim.Value
-                        </MudListItem>
-                    }
+                    <MudExpansionPanel Style="border-radius: 8px;" Class="mb-2">
+                        <TitleContent>
+                            <div class="d-flex align-center">
+                                <MudIcon Icon="@Icons.Material.Filled.AccountCircle" Class="mr-3" Color="Color.Info"/>
+                                <MudText Typo="Typo.h6">Your User Information</MudText>
+                            </div>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudText Typo="Typo.body2" Class="mb-3">Application claims of the currently logged in user</MudText>
+                            <MudList T="string" Dense="true">
+                                @foreach (var claim in Claims)
+                                {
+                                    <MudListItem>
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Primary">@claim.Type</MudChip>
+                                        <MudText Typo="Typo.body2" Class="ml-3">@claim.Value</MudText>
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        </ChildContent>
+                    </MudExpansionPanel>
                 }
-            </MudList>
-                </MudExpansionPanel>
             </MudExpansionPanels>
         </MudItem>
-        <MudItem  xs="12" sm="12" md="12">
-            <MudAlert Style="margin-top:10px;justify-content:center" Severity="Severity.Info"><MudLink Href="https://github.com/fullstackhero/blazor-wasm-boilerplate">Liked this Boilerplate? Star us on Github!</MudLink></MudAlert>
+
+        <!-- Footer Info -->
+        <MudItem xs="12" Class="mt-6">
+            <MudText Align="Align.Center" Typo="Typo.body2" Color="Color.Default">
+                Powered by <strong>.NET 9</strong> | Built with <MudLink Href="https://www.mudblazor.com" Target="_blank" Color="Color.Primary">MudBlazor</MudLink> | Version 2.0
+            </MudText>
         </MudItem>
     </MudGrid>
 </MudContainer>

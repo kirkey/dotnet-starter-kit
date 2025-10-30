@@ -11,15 +11,6 @@ public interface IMessagingHubService : IAsyncDisposable
     /// </summary>
     event Func<string, object, Task>? OnMessageReceived;
 
-    /// <summary>
-    /// Event triggered when a user comes online.
-    /// </summary>
-    event Func<string, Task>? OnUserOnline;
-
-    /// <summary>
-    /// Event triggered when a user goes offline.
-    /// </summary>
-    event Func<string, Task>? OnUserOffline;
 
     /// <summary>
     /// Event triggered when a user is typing.
@@ -35,6 +26,7 @@ public interface IMessagingHubService : IAsyncDisposable
     /// Gets whether the hub connection is currently active.
     /// </summary>
     bool IsConnected { get; }
+
 
     /// <summary>
     /// Starts the SignalR connection to the messaging hub.
@@ -61,9 +53,4 @@ public interface IMessagingHubService : IAsyncDisposable
     /// <param name="messageId">The message identifier.</param>
     /// <param name="participantIds">List of participant user IDs.</param>
     Task SendMessageReadNotificationAsync(string conversationId, string messageId, List<string> participantIds);
-
-    /// <summary>
-    /// Gets the list of currently online users.
-    /// </summary>
-    Task<IEnumerable<string>> GetOnlineUsersAsync();
 }

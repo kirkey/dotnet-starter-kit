@@ -11,7 +11,7 @@ public class ClientCryptoService : IClientCryptoService
     public string Encrypt(string plain)
     {
         if (string.IsNullOrEmpty(plain)) return plain;
-        var bytes = System.Text.Encoding.UTF8.GetBytes(plain);
+        var bytes = Encoding.UTF8.GetBytes(plain);
         Array.Reverse(bytes);
         return Convert.ToBase64String(bytes);
     }
@@ -23,7 +23,7 @@ public class ClientCryptoService : IClientCryptoService
         {
             var bytes = Convert.FromBase64String(cipher);
             Array.Reverse(bytes);
-            return System.Text.Encoding.UTF8.GetString(bytes);
+            return Encoding.UTF8.GetString(bytes);
         }
         catch { return cipher; }
     }

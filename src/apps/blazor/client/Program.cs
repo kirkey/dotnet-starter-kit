@@ -1,4 +1,3 @@
-using FSH.Starter.Blazor.Client.Services;
 using FSH.Starter.Blazor.Client.Services.Navigation;
 using FSH.Starter.Blazor.Infrastructure;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

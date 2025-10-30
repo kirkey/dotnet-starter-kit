@@ -9,7 +9,7 @@ public class ExportService : IExportService
     {
         var props = typeof(T).GetProperties();
         using var ms = new MemoryStream();
-        using var sw = new StreamWriter(ms, System.Text.Encoding.UTF8, leaveOpen:true);
+        using var sw = new StreamWriter(ms, Encoding.UTF8, leaveOpen:true);
         sw.WriteLine(string.Join(',', props.Select(p=>Quote(p.Name))));
         foreach (var r in rows)
         {

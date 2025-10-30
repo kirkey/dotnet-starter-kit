@@ -6,7 +6,8 @@ namespace FSH.Starter.WebApi.Messaging.Hubs;
 
 /// <summary>
 /// SignalR hub for real-time messaging functionality.
-/// Handles message sending, online status tracking, and typing indicators.
+/// Handles message sending, typing indicators, and read receipts for conversations.
+/// Note: Connection tracking is handled by the separate ConnectionHub.
 /// </summary>
 [Authorize]
 public class MessagingHub : Hub
@@ -17,7 +18,7 @@ public class MessagingHub : Hub
     /// <summary>
     /// Initializes a new instance of the <see cref="MessagingHub"/> class.
     /// </summary>
-    /// <param name="connectionTracker">The connection tracker service.</param>
+    /// <param name="connectionTracker">The connection tracker service for looking up user connections.</param>
     /// <param name="logger">The logger instance.</param>
     public MessagingHub(
         IConnectionTracker connectionTracker,
@@ -29,19 +30,13 @@ public class MessagingHub : Hub
 
     /// <summary>
     /// Called when a client connects to the hub.
-    /// Tracks the connection and notifies other users of online status.
     /// </summary>
     public override async Task OnConnectedAsync()
     {
         var userId = Context.UserIdentifier;
         if (!string.IsNullOrEmpty(userId))
         {
-            await _connectionTracker.AddConnectionAsync(userId, Context.ConnectionId);
-            
-            // Notify all clients about user online status
-            await Clients.Others.SendAsync("UserOnline", userId);
-            
-            _logger.LogInformation("User {UserId} connected with connection {ConnectionId}", userId, Context.ConnectionId);
+            _logger.LogInformation("User {UserId} connected to messaging hub with connection {ConnectionId}", userId, Context.ConnectionId);
         }
 
         await base.OnConnectedAsync();
@@ -49,24 +44,13 @@ public class MessagingHub : Hub
 
     /// <summary>
     /// Called when a client disconnects from the hub.
-    /// Removes the connection and notifies other users if the user has no more active connections.
     /// </summary>
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var userId = Context.UserIdentifier;
         if (!string.IsNullOrEmpty(userId))
         {
-            await _connectionTracker.RemoveConnectionAsync(userId, Context.ConnectionId);
-            
-            // Check if user still has other active connections
-            var isStillOnline = await _connectionTracker.IsUserOnlineAsync(userId);
-            if (!isStillOnline)
-            {
-                // Notify all clients that user is offline
-                await Clients.Others.SendAsync("UserOffline", userId);
-            }
-            
-            _logger.LogInformation("User {UserId} disconnected from connection {ConnectionId}", userId, Context.ConnectionId);
+            _logger.LogInformation("User {UserId} disconnected from messaging hub connection {ConnectionId}", userId, Context.ConnectionId);
         }
 
         await base.OnDisconnectedAsync(exception);
@@ -152,15 +136,6 @@ public class MessagingHub : Hub
                 await Clients.Clients(connections).SendAsync("MessageRead", conversationId, messageId, userId);
             }
         }
-    }
-
-    /// <summary>
-    /// Gets the list of currently online users.
-    /// </summary>
-    /// <returns>A list of online user IDs.</returns>
-    public async Task<IEnumerable<string>> GetOnlineUsers()
-    {
-        return await _connectionTracker.GetOnlineUsersAsync();
     }
 }
 
