@@ -3,15 +3,12 @@ using FSH.Framework.Infrastructure.Persistence;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.AddMember;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.AssignAdmin;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.Create;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.Delete;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.Get;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.GetList;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.RemoveMember;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.Update;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.MarkAsRead;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Create;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Delete;
-using FSH.Starter.WebApi.Messaging.Features.Messages.Get;
 using FSH.Starter.WebApi.Messaging.Features.Messages.GetList;
 using FSH.Starter.WebApi.Messaging.Features.Messages.Update;
 using FSH.Starter.WebApi.Messaging.Features.OnlineUsers;
@@ -35,8 +32,6 @@ public static class MessagingModule
             conversationsGroup.MapCreateConversationEndpoint();
             conversationsGroup.MapGetConversationEndpoint();
             conversationsGroup.MapGetConversationListEndpoint();
-            conversationsGroup.MapUpdateConversationEndpoint();
-            conversationsGroup.MapDeleteConversationEndpoint();
             conversationsGroup.MapAddMemberEndpoint();
             conversationsGroup.MapRemoveMemberEndpoint();
             conversationsGroup.MapAssignAdminEndpoint();
@@ -44,13 +39,12 @@ public static class MessagingModule
 
             var messagesGroup = app.MapGroup("messages").WithTags("messages");
             messagesGroup.MapCreateMessageEndpoint();
-            messagesGroup.MapGetMessageEndpoint();
             messagesGroup.MapGetMessageListEndpoint();
             messagesGroup.MapUpdateMessageEndpoint();
+            messagesGroup.MapDeleteMessageEndpoint();
 
             var usersGroup = app.MapGroup("messaging").WithTags("messaging");
             usersGroup.MapGetOnlineUsersEndpoint();
-            messagesGroup.MapDeleteMessageEndpoint();
         }
     }
 

@@ -265,13 +265,23 @@ public partial class Messaging : IDisposable
             { "Content", message.Content }
         };
 
-        var dialog = await DialogService.ShowAsync<EditMessageDialog>("Edit Message", parameters);
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<EditMessageDialog>("Edit Message", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled && result.Data is string newContent)
         {
             try
             {
+                // Show loading indicator
+                var loadingSnackbar = Snackbar.Add("Updating message...", Severity.Info);
+                
                 var command = new UpdateMessageCommand
                 {
                     Id = message.Id,
@@ -279,43 +289,78 @@ public partial class Messaging : IDisposable
                 };
 
                 await Client.UpdateMessageEndpointAsync("1", message.Id, command);
-                Snackbar.Add("Message updated successfully!", Severity.Success);
+                
+                // Close loading indicator
+                Snackbar.Remove(loadingSnackbar);
+                Snackbar.Add("Message updated successfully!", Severity.Success, config =>
+                {
+                    config.Icon = Icons.Material.Filled.CheckCircle;
+                });
 
                 if (_selectedConversation != null)
                 {
-                    await LoadMessagesAsync(_selectedConversation.Id);
+                    await LoadMessagesAsync(_selectedConversation.Id, silent: true);
                 }
             }
             catch (Exception ex)
             {
-                Snackbar.Add($"Error updating message: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to update message: {ex.Message}", Severity.Error, config =>
+                {
+                    config.Icon = Icons.Material.Filled.Error;
+                });
             }
         }
     }
 
     private async Task DeleteMessage(MessageDto message)
     {
-        bool? confirm = await DialogService.ShowMessageBox(
-            "Delete Message",
-            "Are you sure you want to delete this message?",
-            yesText: "Delete",
-            cancelText: "Cancel");
+        var messagePreview = message.Content.Length > 50 
+            ? message.Content.Substring(0, 50) + "..." 
+            : message.Content;
+        
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small
+        };
 
-        if (confirm == true)
+        var parameters = new DialogParameters
+        {
+            { "ContentText", $"Are you sure you want to delete this message?\n\n\"{messagePreview}\"\n\nThis action cannot be undone." },
+            { "ButtonText", "Delete" },
+            { "Color", Color.Error }
+        };
+
+        var dialog = await DialogService.ShowAsync<ConfirmDialog>("Delete Message", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
         {
             try
             {
+                // Show loading indicator
+                var loadingSnackbar = Snackbar.Add("Deleting message...", Severity.Info);
+                
                 await Client.DeleteMessageEndpointAsync("1", message.Id);
-                Snackbar.Add("Message deleted successfully!", Severity.Success);
+                
+                // Close loading indicator
+                Snackbar.Remove(loadingSnackbar);
+                Snackbar.Add("Message deleted successfully!", Severity.Success, config =>
+                {
+                    config.Icon = Icons.Material.Filled.CheckCircle;
+                });
 
                 if (_selectedConversation != null)
                 {
-                    await LoadMessagesAsync(_selectedConversation.Id);
+                    await LoadMessagesAsync(_selectedConversation.Id, silent: true);
                 }
             }
             catch (Exception ex)
             {
-                Snackbar.Add($"Error deleting message: {ex.Message}", Severity.Error);
+                Snackbar.Add($"Failed to delete message: {ex.Message}", Severity.Error, config =>
+                {
+                    config.Icon = Icons.Material.Filled.Error;
+                });
             }
         }
     }

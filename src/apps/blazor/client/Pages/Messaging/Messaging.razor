@@ -131,44 +131,55 @@
                         @foreach (var message in _messages)
                         {
                             var isCurrentUser = message.SenderId == _currentUserId;
-                            <MudChatBubble Position="@(isCurrentUser ? Position.End : Position.Start)"
-                                           Color="@(isCurrentUser ? Color.Primary : Color.Default)"
-                                           Elevation="2"
-                                           Class="mb-3">
-                                <MudStack Spacing="1">
-                                    @if (!isCurrentUser)
-                                    {
-                                        <MudText Typo="Typo.caption" Color="Color.Primary" Style="font-weight: 500;">
-                                            @GetSenderName(message.SenderId)
-                                        </MudText>
-                                    }
-                                    <MudText Typo="Typo.body2">
-                                        @message.Content
-                                    </MudText>
-                                    @if (message.AttachmentCount > 0)
-                                    {
-                                        <MudChip T="object" Size="Size.Small" Icon="@Icons.Material.Filled.AttachFile">
-                                            @message.AttachmentCount @(message.AttachmentCount == 1 ? "file" : "files")
-                                        </MudChip>
-                                    }
-                                    <MudStack Row Spacing="2" AlignItems="AlignItems.Center">
-                                        <MudText Typo="Typo.caption" Color="Color.Default">
-                                            @FormatDateTime(message.SentAt)
-                                        </MudText>
-                                        @if (message.IsEdited)
+                            <div class="message-wrapper" style="display: flex; justify-content: @(isCurrentUser ? "flex-end" : "flex-start"); margin-bottom: 12px;">
+                                <MudChatBubble Position="@(isCurrentUser ? Position.End : Position.Start)"
+                                               Color="@(isCurrentUser ? Color.Primary : Color.Default)"
+                                               Elevation="2"
+                                               Style="max-width: 70%; position: relative;">
+                                    <MudStack Spacing="1">
+                                        @if (!isCurrentUser)
                                         {
-                                            <MudText Typo="Typo.caption" Color="Color.Default">(edited)</MudText>
+                                            <MudText Typo="Typo.caption" Color="Color.Primary" Style="font-weight: 600;">
+                                                @GetSenderName(message.SenderId)
+                                            </MudText>
                                         }
-                                        @if (isCurrentUser)
+                                        <MudText Typo="Typo.body2" Style="word-wrap: break-word; white-space: pre-wrap;">
+                                            @message.Content
+                                        </MudText>
+                                        @if (message.AttachmentCount > 0)
                                         {
-                                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" 
-                                                           OnClick="@(() => EditMessage(message))" />
-                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error"
-                                                           OnClick="@(() => DeleteMessage(message))" />
+                                            <MudChip T="object" Size="Size.Small" Icon="@Icons.Material.Filled.AttachFile" Color="Color.Info">
+                                                @message.AttachmentCount @(message.AttachmentCount == 1 ? "file" : "files")
+                                            </MudChip>
                                         }
+                                        <MudStack Row Spacing="1" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                            <MudStack Row Spacing="1" AlignItems="AlignItems.Center">
+                                                <MudText Typo="Typo.caption" Color="Color.Default" Style="font-size: 0.7rem;">
+                                                    @FormatDateTime(message.SentAt)
+                                                </MudText>
+                                                @if (message.IsEdited)
+                                                {
+                                                    <MudChip T="string" Size="Size.Small" Variant="Variant.Text" Color="Color.Default" Style="height: 20px;">
+                                                        edited
+                                                    </MudChip>
+                                                }
+                                            </MudStack>
+                                            @if (isCurrentUser)
+                                            {
+                                                <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Dense="true" 
+                                                         AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                                                    <MudMenuItem Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditMessage(message))">
+                                                        Edit Message
+                                                    </MudMenuItem>
+                                                    <MudMenuItem Icon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteMessage(message))">
+                                                        <MudText Color="Color.Error">Delete Message</MudText>
+                                                    </MudMenuItem>
+                                                </MudMenu>
+                                            }
+                                        </MudStack>
                                     </MudStack>
-                                </MudStack>
-                            </MudChatBubble>
+                                </MudChatBubble>
+                            </div>
                         }
                     }
                     <div @ref="_messagesEndRef"></div>
@@ -327,6 +338,26 @@
     
     .mud-chat-bubble {
         max-width: 70%;
+        transition: all 0.2s ease;
+    }
+    
+    .message-wrapper:hover .mud-chat-bubble {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    }
+    
+    .message-wrapper {
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
 

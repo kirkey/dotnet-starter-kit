@@ -1,16 +1,40 @@
 <MudDialog>
     <DialogContent>
-        <MudTextField @bind-Value="_content" 
-                      Label="Message" 
-                      Variant="Variant.Outlined" 
-                      Lines="5"
-                      AutoFocus
-                      Required />
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.body2" Color="Color.Default">
+                Edit your message. Press Ctrl+Enter to save or Esc to cancel.
+            </MudText>
+            
+            <MudTextField @bind-Value="_content" 
+                          Label="Message" 
+                          Variant="Variant.Outlined" 
+                          Lines="5"
+                          MaxLines="10"
+                          AutoGrow
+                          AutoFocus
+                          Counter="@_maxLength"
+                          MaxLength="@_maxLength"
+                          HelperText="@GetCharacterCountText()"
+                          Required
+                          OnKeyDown="@HandleKeyDown"
+                          Immediate="true" />
+            
+            @if (!string.IsNullOrWhiteSpace(_validationError))
+            {
+                <MudAlert Severity="Severity.Error" Dense="true">@_validationError</MudAlert>
+            }
+        </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Save" Disabled="@string.IsNullOrWhiteSpace(_content)">
-            Save
+        <MudButton OnClick="Cancel" StartIcon="@Icons.Material.Filled.Close">
+            Cancel
+        </MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="Save" 
+                   Disabled="@(!IsValid())"
+                   StartIcon="@Icons.Material.Filled.Save">
+            Save Changes
         </MudButton>
     </DialogActions>
 </MudDialog>
@@ -20,13 +44,59 @@
     [Parameter] public string Content { get; set; } = string.Empty;
 
     private string _content = string.Empty;
+    private string _validationError = string.Empty;
+    private const int _maxLength = 5000;
 
     protected override void OnInitialized()
     {
         _content = Content;
     }
 
-    private void Save() => MudDialog.Close(DialogResult.Ok(_content));
+    private bool IsValid()
+    {
+        _validationError = string.Empty;
+        
+        if (string.IsNullOrWhiteSpace(_content))
+        {
+            _validationError = "Message cannot be empty.";
+            return false;
+        }
+        
+        if (_content.Length > _maxLength)
+        {
+            _validationError = $"Message cannot exceed {_maxLength} characters.";
+            return false;
+        }
+        
+        if (_content.Trim() == Content.Trim())
+        {
+            _validationError = "No changes detected.";
+            return false;
+        }
+        
+        return true;
+    }
+
+    private string GetCharacterCountText()
+    {
+        var remaining = _maxLength - _content.Length;
+        return remaining < 100 ? $"{remaining} characters remaining" : string.Empty;
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && e.CtrlKey)
+        {
+            if (IsValid())
+                Save();
+        }
+        else if (e.Key == "Escape")
+        {
+            Cancel();
+        }
+    }
+
+    private void Save() => MudDialog.Close(DialogResult.Ok(_content.Trim()));
     private void Cancel() => MudDialog.Cancel();
 }
 
