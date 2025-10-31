@@ -4,6 +4,7 @@ using Accounting.Infrastructure.Endpoints.AccountingPeriods;
 using Accounting.Infrastructure.Endpoints.Accruals;
 using Accounting.Infrastructure.Endpoints.Banks;
 using Accounting.Infrastructure.Endpoints.BankReconciliations;
+using Accounting.Infrastructure.Endpoints.Bills;
 using Accounting.Infrastructure.Endpoints.Billing;
 using Accounting.Infrastructure.Endpoints.BudgetDetails;
 using Accounting.Infrastructure.Endpoints.Budgets;
@@ -70,6 +71,7 @@ public static class AccountingModule
         accountingGroup.MapAccrualsEndpoints();
         accountingGroup.MapBanksEndpoints();
         accountingGroup.MapBankReconciliationsEndpoints();
+        accountingGroup.MapBillsEndpoints();
         accountingGroup.MapBillingEndpoints();
         accountingGroup.MapBudgetDetailsEndpoints();
         accountingGroup.MapBudgetsEndpoints();
@@ -202,6 +204,22 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<CreditMemo>, AccountingRepository<CreditMemo>>();
         builder.Services.AddScoped<IRepository<DebitMemo>, AccountingRepository<DebitMemo>>();
         builder.Services.AddScoped<IReadRepository<DebitMemo>, AccountingRepository<DebitMemo>>();
+        builder.Services.AddScoped<IRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>();
+        builder.Services.AddScoped<IReadRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>();
+        builder.Services.AddScoped<IRepository<PrepaidExpense>, AccountingRepository<PrepaidExpense>>();
+        builder.Services.AddScoped<IReadRepository<PrepaidExpense>, AccountingRepository<PrepaidExpense>>();
+        builder.Services.AddScoped<IRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>();
+        builder.Services.AddScoped<IReadRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>();
+        builder.Services.AddScoped<IRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>();
+        builder.Services.AddScoped<IReadRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>();
+        builder.Services.AddScoped<IRepository<Customer>, AccountingRepository<Customer>>();
+        builder.Services.AddScoped<IReadRepository<Customer>, AccountingRepository<Customer>>();
+        builder.Services.AddScoped<IRepository<Bill>, AccountingRepository<Bill>>();
+        builder.Services.AddScoped<IReadRepository<Bill>, AccountingRepository<Bill>>();
+        builder.Services.AddScoped<IRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>();
+        builder.Services.AddScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>();
+        builder.Services.AddScoped<IRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>();
+        builder.Services.AddScoped<IReadRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>();
         
         // Billing service
         builder.Services.AddScoped<Application.Billing.IBillingService, Application.Billing.BillingService>();
@@ -333,6 +351,62 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Bank>, AccountingRepository<Bank>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Bank>, AccountingRepository<Bank>>("accounting:banks");
         builder.Services.AddKeyedScoped<IReadRepository<Bank>, AccountingRepository<Bank>>("accounting:banks");
+        
+        // Register newly added entity repositories with keyed services
+        builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
+        builder.Services.AddKeyedScoped<IReadRepository<Customer>, AccountingRepository<Customer>>("accounting:customers");
+        
+        builder.Services.AddKeyedScoped<IRepository<Bill>, AccountingRepository<Bill>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<Bill>, AccountingRepository<Bill>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<Bill>, AccountingRepository<Bill>>("accounting:bills");
+        builder.Services.AddKeyedScoped<IReadRepository<Bill>, AccountingRepository<Bill>>("accounting:bills");
+        
+        builder.Services.AddKeyedScoped<IRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting:fiscalperiodcloses");
+        builder.Services.AddKeyedScoped<IReadRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting:fiscalperiodcloses");
+        
+        builder.Services.AddKeyedScoped<IRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting:araccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting:araccounts");
+        
+        builder.Services.AddKeyedScoped<IRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>("accounting:apaccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>("accounting:apaccounts");
+        
+        builder.Services.AddKeyedScoped<IRepository<PrepaidExpense>, AccountingRepository<PrepaidExpense>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<PrepaidExpense>, AccountingRepository<PrepaidExpense>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<PrepaidExpense>, AccountingRepository<PrepaidExpense>>("accounting:prepaidexpenses");
+        builder.Services.AddKeyedScoped<IReadRepository<PrepaidExpense>, AccountingRepository<PrepaidExpense>>("accounting:prepaidexpenses");
+        
+        builder.Services.AddKeyedScoped<IRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>("accounting:intercompanytransactions");
+        builder.Services.AddKeyedScoped<IReadRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>("accounting:intercompanytransactions");
+        
+        builder.Services.AddKeyedScoped<IRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting:retainedearnings");
+        builder.Services.AddKeyedScoped<IReadRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting:retainedearnings");
+        
+        builder.Services.AddKeyedScoped<IRepository<WriteOff>, AccountingRepository<WriteOff>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<WriteOff>, AccountingRepository<WriteOff>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<WriteOff>, AccountingRepository<WriteOff>>("accounting:writeoffs");
+        builder.Services.AddKeyedScoped<IReadRepository<WriteOff>, AccountingRepository<WriteOff>>("accounting:writeoffs");
+        
+        builder.Services.AddKeyedScoped<IRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costcenters");
+        builder.Services.AddKeyedScoped<IReadRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costcenters");
+        
+        builder.Services.AddKeyedScoped<IRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting:purchaseorders");
+        builder.Services.AddKeyedScoped<IReadRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting:purchaseorders");
 
         return builder;
     }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20251016081744_InitialAccountingDb")]
+    [Migration("20251031091503_InitialAccountingDb")]
     partial class InitialAccountingDb
     {
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("accounting")
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -97,10 +97,292 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EndDate");
+
+                    b.HasIndex("IsClosed");
+
+                    b.HasIndex("StartDate");
+
                     b.HasIndex("FiscalYear", "PeriodType")
                         .IsUnique();
 
+                    b.HasIndex("StartDate", "EndDate");
+
                     b.ToTable("AccountingPeriods", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.AccountsPayableAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Current0to30")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("CurrentBalance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("Days31to60")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("Days61to90")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("DaysPayableOutstanding")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("GeneralLedgerAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsReconciled")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("LastReconciliationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("Over90Days")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("ReconciliationVariance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<int>("VendorCount")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("YearToDateDiscountsLost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("YearToDateDiscountsTaken")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("YearToDatePayments")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountNumber")
+                        .IsUnique();
+
+                    b.HasIndex("GeneralLedgerAccountId");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("IsReconciled");
+
+                    b.HasIndex("PeriodId");
+
+                    b.ToTable("AccountsPayableAccounts", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.AccountsReceivableAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<decimal>("AllowanceForDoubtfulAccounts")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("BadDebtPercentage")
+                        .HasPrecision(5, 4)
+                        .HasColumnType("numeric(5,4)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Current0to30")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("CurrentBalance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<int>("CustomerCount")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Days31to60")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("Days61to90")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("DaysSalesOutstanding")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("GeneralLedgerAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsReconciled")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("LastReconciliationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<decimal>("NetReceivables")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("Over90Days")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("ReconciliationVariance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("YearToDateCollections")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("YearToDateWriteOffs")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountNumber")
+                        .IsUnique();
+
+                    b.HasIndex("GeneralLedgerAccountId");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("IsReconciled");
+
+                    b.HasIndex("PeriodId");
+
+                    b.ToTable("AccountsReceivableAccounts", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.Accrual", b =>
@@ -215,7 +497,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(128)
@@ -242,11 +524,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(32)
@@ -384,7 +666,172 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BankAccountId");
+
+                    b.HasIndex("IsReconciled");
+
+                    b.HasIndex("ReconciliationDate");
+
+                    b.HasIndex("Status");
+
                     b.ToTable("BankReconciliations", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.Bill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ApprovalDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime>("BillDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("BillNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime?>("DiscountDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ExpenseAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsVoid")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("PaidAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime?>("PaidDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PaymentReference")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PaymentTerms")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("PurchaseOrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("RejectionReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<decimal>("ShippingAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<decimal>("SubtotalAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("VendorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("VendorInvoiceNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BillDate");
+
+                    b.HasIndex("BillNumber")
+                        .IsUnique();
+
+                    b.HasIndex("DueDate");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("Bills", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.Budget", b =>
@@ -473,6 +920,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("numeric(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BudgetType");
+
+                    b.HasIndex("FiscalYear");
+
+                    b.HasIndex("PeriodId");
+
+                    b.HasIndex("Status");
 
                     b.HasIndex("Name", "PeriodId")
                         .IsUnique();
@@ -659,6 +1114,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasIndex("AccountCode")
                         .IsUnique();
+
+                    b.HasIndex("AccountType");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("ParentCode");
+
+                    b.HasIndex("UsoaCategory");
 
                     b.ToTable("ChartOfAccounts", "accounting");
                 });
@@ -1011,6 +1474,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("Code")
                         .IsUnique();
 
+                    b.HasIndex("CostCenterType");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("ParentCostCenterId");
+
                     b.ToTable("CostCenters", "accounting");
                 });
 
@@ -1122,10 +1593,189 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsApplied");
+
+                    b.HasIndex("MemoDate");
+
                     b.HasIndex("MemoNumber")
                         .IsUnique();
 
+                    b.HasIndex("OriginalDocumentId");
+
+                    b.HasIndex("ReferenceId");
+
+                    b.HasIndex("Status");
+
                     b.ToTable("CreditMemos", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("AccountOpenDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("BillingAddress")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("ContactName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("CreditLimit")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("CurrentBalance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("CustomerNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("CustomerType")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<Guid?>("DefaultRateScheduleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("DiscountPercentage")
+                        .HasPrecision(5, 4)
+                        .HasColumnType("numeric(5,4)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Fax")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsOnCreditHold")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("LastPaymentAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime?>("LastPaymentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("LastTransactionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("PaymentTerms")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid?>("ReceivableAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SalesRepresentative")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("ShippingAddress")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<bool>("TaxExempt")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("TaxId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerName");
+
+                    b.HasIndex("CustomerNumber")
+                        .IsUnique();
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("Customers", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.DebitMemo", b =>
@@ -1232,8 +1882,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsApplied");
+
+                    b.HasIndex("MemoDate");
+
                     b.HasIndex("MemoNumber")
                         .IsUnique();
+
+                    b.HasIndex("OriginalDocumentId");
+
+                    b.HasIndex("ReferenceId");
+
+                    b.HasIndex("Status");
 
                     b.ToTable("DebitMemos", "accounting");
                 });
@@ -1394,6 +2054,174 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("DepreciationMethods", "accounting");
                 });
 
+            modelBuilder.Entity("Accounting.Domain.Entities.FiscalPeriodClose", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("APReconciliationComplete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("ARReconciliationComplete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("AccrualsPosted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("AllJournalsPosted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("BankReconciliationsComplete")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CloseInitiatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CloseNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("CloseType")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<string>("CompletedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("CompletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal?>("FinalNetIncome")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<bool>("FixedAssetDepreciationPosted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("InitiatedBy")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<bool>("IntercompanyReconciled")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("InventoryReconciliationComplete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsComplete")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<bool>("NetIncomeTransferred")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime>("PeriodEndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("PeriodStartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("PrepaidExpensesAmortized")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ReopenReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ReopenedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("ReopenedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("RequiredTasksComplete")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<int>("TasksCompleted")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TasksRemaining")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("TrialBalanceBalanced")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("TrialBalanceGenerated")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("TrialBalanceId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CloseNumber")
+                        .IsUnique();
+
+                    b.HasIndex("CloseType");
+
+                    b.HasIndex("PeriodId");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("FiscalPeriodCloses", "accounting");
+                });
+
             modelBuilder.Entity("Accounting.Domain.Entities.FixedAsset", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1534,6 +2362,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccumulatedDepreciationAccountId");
+
+                    b.HasIndex("DepreciationExpenseAccountId");
+
+                    b.HasIndex("DepreciationMethodId");
+
+                    b.HasIndex("IsDisposed");
+
+                    b.HasIndex("PurchaseDate");
+
                     b.ToTable("FixedAssets", "accounting");
                 });
 
@@ -1616,6 +2454,314 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasKey("Id");
 
                     b.ToTable("GeneralLedgers", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.InterCompanyTransaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("EliminationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FromAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FromEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FromEntityName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<Guid?>("FromJournalEntryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsEliminated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsReconciled")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("MatchingTransactionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ReconciledBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("ReconciliationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReferenceNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("RequiresElimination")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("SettlementDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<Guid>("ToAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ToEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ToEntityName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<Guid?>("ToJournalEntryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TransactionNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromEntityId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("ToEntityId");
+
+                    b.HasIndex("TransactionNumber")
+                        .IsUnique();
+
+                    b.ToTable("InterCompanyTransactions", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.InterconnectionAgreement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AgreementNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("AgreementStatus")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<decimal?>("AnnualGenerationLimit")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("CurrentCreditBalance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("DepositAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime>("EffectiveDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("ExcessGenerationRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("numeric(18,6)");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("GenerationType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("InstalledCapacityKW")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<decimal>("InterconnectionFee")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("InverterManufacturer")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("InverterModel")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastInspectionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("LifetimeGeneration")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("MemberId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("MonthlyServiceCharge")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<decimal>("NetMeteringRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("numeric(18,6)");
+
+                    b.Property<DateTime?>("NextInspectionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<int?>("NumberOfPanels")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PanelManufacturer")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("PanelModel")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("TerminationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TerminationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<decimal>("YearToDateGeneration")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgreementNumber")
+                        .IsUnique();
+
+                    b.HasIndex("AgreementStatus");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("InterconnectionAgreements", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.InventoryItem", b =>
@@ -1937,10 +3083,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Date");
+
+                    b.HasIndex("IsPosted");
+
+                    b.HasIndex("PeriodId");
+
                     b.HasIndex("PostingBatchId");
 
                     b.HasIndex("ReferenceNumber")
                         .IsUnique();
+
+                    b.HasIndex("Source");
 
                     b.ToTable("JournalEntries", "accounting");
                 });
@@ -2338,6 +3492,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ExpenseAccountCode");
+
+                    b.HasIndex("Name");
+
                     b.HasIndex("PayeeCode")
                         .IsUnique();
 
@@ -2561,6 +3719,311 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.ToTable("PostingBatches", "accounting");
                 });
 
+            modelBuilder.Entity("Accounting.Domain.Entities.PowerPurchaseAgreement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ActivationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("ContractCapacityMW")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<string>("ContractNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ContractType")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<string>("CounterpartyName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("DemandChargePerKW")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("EnergyPricePerKWh")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("numeric(18,6)");
+
+                    b.Property<string>("EnergySource")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<decimal?>("EscalationRate")
+                        .HasPrecision(5, 4)
+                        .HasColumnType("numeric(5,4)");
+
+                    b.Property<Guid?>("ExpenseAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("HasPriceEscalation")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IncludesRenewableCredits")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsTakeOrPay")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("LifetimeCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("LifetimeEnergyKWh")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal?>("MaximumPurchaseKWh")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal?>("MinimumPurchaseKWh")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("MonthlySettlementAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<DateTime?>("NextEscalationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SettlementFrequency")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<DateTime?>("TerminationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TerminationReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid?>("VendorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("YearToDateCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("YearToDateEnergyKWh")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractNumber")
+                        .IsUnique();
+
+                    b.HasIndex("EndDate");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("PowerPurchaseAgreements", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.PrepaidExpense", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AmortizationSchedule")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<decimal>("AmortizedAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("CostCenterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ExpenseAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsFullyAmortized")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastAmortizationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<DateTime?>("NextAmortizationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("PaymentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PrepaidAssetAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PrepaidNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<decimal>("RemainingAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("VendorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("VendorName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpenseAccountId");
+
+                    b.HasIndex("NextAmortizationDate");
+
+                    b.HasIndex("PrepaidAssetAccountId");
+
+                    b.HasIndex("PrepaidNumber")
+                        .IsUnique();
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("PrepaidExpenses", "accounting");
+                });
+
             modelBuilder.Entity("Accounting.Domain.Entities.Project", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2644,6 +4107,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("character varying(16)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EndDate");
+
+                    b.HasIndex("StartDate");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("StartDate", "EndDate");
 
                     b.ToTable("Projects", "accounting");
                 });
@@ -2735,6 +4206,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EntryDate");
 
                     b.HasIndex("ProjectId");
 
@@ -2870,8 +4343,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CostCenterId");
+
+                    b.HasIndex("OrderDate");
+
                     b.HasIndex("OrderNumber")
                         .IsUnique();
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("RequesterId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VendorId");
 
                     b.ToTable("PurchaseOrders", "accounting");
                 });
@@ -3094,6 +4579,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreditAccountId");
+
+                    b.HasIndex("DebitAccountId");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("NextRunDate");
+
+                    b.HasIndex("PostingBatchId");
+
+                    b.HasIndex("Status");
+
                     b.HasIndex("TemplateCode")
                         .IsUnique();
 
@@ -3262,6 +4759,130 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("PeriodStartDate", "PeriodEndDate");
 
                     b.ToTable("RegulatoryReports", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.RetainedEarnings", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("ApproprietedAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("CapitalContributions")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("ClosedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("ClosedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("ClosingBalance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<int>("DistributionCount")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Distributions")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<int>("FiscalYear")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("FiscalYearEndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("FiscalYearStartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastDistributionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<decimal>("NetIncome")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("OpeningBalance")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("OtherEquityChanges")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("RetainedEarningsAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<decimal>("UnappropriatedAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FiscalYear")
+                        .IsUnique();
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("RetainedEarnings", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.SecurityDeposit", b =>
@@ -3435,7 +5056,146 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("Code")
                         .IsUnique();
 
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("TaxCollectedAccountId");
+
+                    b.HasIndex("TaxPaidAccountId");
+
+                    b.HasIndex("TaxType");
+
                     b.ToTable("TaxCodes", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.TrialBalance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("AccountCount")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("FinalizedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("FinalizedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("GeneratedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IncludeZeroBalances")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsBalanced")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2048)
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("OutOfBalanceAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime>("PeriodEndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PeriodId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("PeriodStartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<decimal>("TotalAssets")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TotalCredits")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TotalDebits")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TotalEquity")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TotalExpenses")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TotalLiabilities")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("TotalRevenue")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("TrialBalanceNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PeriodId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("TrialBalanceNumber")
+                        .IsUnique();
+
+                    b.ToTable("TrialBalances", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.Vendor", b =>
@@ -3528,6 +5288,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("character varying(64)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ExpenseAccountCode");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("VendorCode")
+                        .IsUnique();
 
                     b.ToTable("Vendors", "accounting");
                 });
@@ -3650,10 +5417,70 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ExpenseAccountId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("JournalEntryId");
+
+                    b.HasIndex("ReceivableAccountId");
+
                     b.HasIndex("ReferenceNumber")
                         .IsUnique();
 
+                    b.HasIndex("Status");
+
+                    b.HasIndex("WriteOffDate");
+
                     b.ToTable("WriteOffs", "accounting");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.Bill", b =>
+                {
+                    b.OwnsMany("Accounting.Domain.Entities.BillLineItem", "LineItems", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid?>("AccountId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("BillId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Description")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.Property<decimal>("LineTotal")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)");
+
+                            b1.Property<decimal>("Quantity")
+                                .HasPrecision(18, 4)
+                                .HasColumnType("numeric(18,4)");
+
+                            b1.Property<decimal>("UnitPrice")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("BillId");
+
+                            b1.ToTable("BillLineItems", "accounting");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BillId");
+                        });
+
+                    b.Navigation("LineItems");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.BudgetDetail", b =>
@@ -3672,6 +5499,89 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasForeignKey("FixedAssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.FiscalPeriodClose", b =>
+                {
+                    b.OwnsMany("Accounting.Domain.Entities.CloseTaskItem", "Tasks", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<DateTime?>("CompletedDate")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<Guid>("FiscalPeriodCloseId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<bool>("IsComplete")
+                                .HasColumnType("boolean");
+
+                            b1.Property<bool>("IsRequired")
+                                .HasColumnType("boolean");
+
+                            b1.Property<string>("TaskName")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("character varying(256)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("FiscalPeriodCloseId");
+
+                            b1.ToTable("FiscalPeriodCloseTasks", "accounting");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FiscalPeriodCloseId");
+                        });
+
+                    b.OwnsMany("Accounting.Domain.Entities.CloseValidationIssue", "ValidationIssues", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("FiscalPeriodCloseId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<bool>("IsResolved")
+                                .HasColumnType("boolean");
+
+                            b1.Property<string>("IssueDescription")
+                                .IsRequired()
+                                .HasMaxLength(1000)
+                                .HasColumnType("character varying(1000)");
+
+                            b1.Property<string>("Resolution")
+                                .HasMaxLength(2000)
+                                .HasColumnType("character varying(2000)");
+
+                            b1.Property<DateTime?>("ResolvedDate")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("Severity")
+                                .IsRequired()
+                                .HasMaxLength(32)
+                                .HasColumnType("character varying(32)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("FiscalPeriodCloseId");
+
+                            b1.ToTable("FiscalPeriodCloseValidationIssues", "accounting");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FiscalPeriodCloseId");
+                        });
+
+                    b.Navigation("Tasks");
+
+                    b.Navigation("ValidationIssues");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.InvoiceLineItem", b =>
@@ -3743,6 +5653,46 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Accounting.Domain.Entities.PrepaidExpense", b =>
+                {
+                    b.OwnsMany("Accounting.Domain.Entities.PrepaidAmortizationEntry", "AmortizationHistory", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<decimal>("AmortizationAmount")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)");
+
+                            b1.Property<Guid?>("JournalEntryId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("PostingDate")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<Guid>("PrepaidExpenseId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("RemainingBalance")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("PrepaidExpenseId");
+
+                            b1.ToTable("PrepaidAmortizationEntries", "accounting");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PrepaidExpenseId");
+                        });
+
+                    b.Navigation("AmortizationHistory");
+                });
+
             modelBuilder.Entity("Accounting.Domain.Entities.ProjectCostEntry", b =>
                 {
                     b.HasOne("Accounting.Domain.Entities.Project", null)
@@ -3759,6 +5709,55 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasForeignKey("RateScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Entities.TrialBalance", b =>
+                {
+                    b.OwnsMany("Accounting.Domain.Entities.TrialBalanceLineItem", "LineItems", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("AccountCode")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("AccountName")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("character varying(256)");
+
+                            b1.Property<string>("AccountType")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<decimal>("CreditBalance")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)");
+
+                            b1.Property<decimal>("DebitBalance")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)");
+
+                            b1.Property<Guid>("TrialBalanceId")
+                                .HasColumnType("uuid");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("TrialBalanceId");
+
+                            b1.ToTable("TrialBalanceLineItems", "accounting");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TrialBalanceId");
+                        });
+
+                    b.Navigation("LineItems");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.Budget", b =>

@@ -54,6 +54,14 @@ public sealed class AccountingDbContext(
     public DbSet<CostCenter> CostCenters { get; set; } = null!;
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; } = null!;
     public DbSet<WriteOff> WriteOffs { get; set; } = null!;
+    public DbSet<Customer> Customers { get; set; } = null!;
+    public DbSet<Bill> Bills { get; set; } = null!;
+    public DbSet<FiscalPeriodClose> FiscalPeriodCloses { get; set; } = null!;
+    public DbSet<AccountsReceivableAccount> AccountsReceivableAccounts { get; set; } = null!;
+    public DbSet<AccountsPayableAccount> AccountsPayableAccounts { get; set; } = null!;
+    public DbSet<PrepaidExpense> PrepaidExpenses { get; set; } = null!;
+    public DbSet<InterCompanyTransaction> InterCompanyTransactions { get; set; } = null!;
+    public DbSet<RetainedEarnings> RetainedEarnings { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
