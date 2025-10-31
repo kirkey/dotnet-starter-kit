@@ -52,7 +52,6 @@ public sealed class AccountingDbContext(
     public DbSet<RecurringJournalEntry> RecurringJournalEntries { get; set; } = null!;
     public DbSet<TaxCode> TaxCodes { get; set; } = null!;
     public DbSet<CostCenter> CostCenters { get; set; } = null!;
-    public DbSet<PurchaseOrder> PurchaseOrders { get; set; } = null!;
     public DbSet<WriteOff> WriteOffs { get; set; } = null!;
     public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<Bill> Bills { get; set; } = null!;

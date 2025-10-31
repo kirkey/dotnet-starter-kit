@@ -816,32 +816,7 @@ internal sealed class AccountingDbInitializer(
                 logger.LogInformation("[{Tenant}] seeded {Count} RecurringJournalEntries", context.TenantInfo!.Identifier, recurringEntries.Count);
             }
         }
-
-        // Seed PurchaseOrders (10 records)
-        if (!await context.PurchaseOrders.AnyAsync(cancellationToken).ConfigureAwait(false))
-        {
-            var vendors = await context.Vendors.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
-            var costCenters = await context.CostCenters.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
-            var projects = await context.Projects.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
-            
-            if (vendors.Count > 0)
-            {
-                var purchaseOrders = new List<PurchaseOrder>();
-                for (int i = 0; i < Math.Min(10, vendors.Count); i++)
-                {
-                    var vendor = vendors[i];
-                    var costCenter = costCenters.Count > 0 ? costCenters[i % costCenters.Count].Id : (DefaultIdType?)null;
-                    var project = projects.Count > 0 ? projects[i % projects.Count].Id : (DefaultIdType?)null;
-                    
-                    purchaseOrders.Add(PurchaseOrder.Create($"PO-{2000 + i}", DateTime.UtcNow.Date.AddDays(-i * 5), vendor.Id, vendor.Name, null, $"Requester {i + 1}", costCenter, project, DateTime.UtcNow.Date.AddDays(30), $"Delivery Address {i + 1}", "Net 30", $"REF-{1000 + i}", $"Seeded purchase order {i + 1}"));
-                }
-
-                await context.PurchaseOrders.AddRangeAsync(purchaseOrders, cancellationToken).ConfigureAwait(false);
-                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-                logger.LogInformation("[{Tenant}] seeded {Count} PurchaseOrders", context.TenantInfo!.Identifier, purchaseOrders.Count);
-            }
-        }
-
+        
         // Seed ProjectCostEntries (10 records)
         if (!await context.ProjectCostEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
         {

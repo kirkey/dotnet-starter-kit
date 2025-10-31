@@ -39,7 +39,6 @@ using Accounting.Infrastructure.Endpoints.AccountsPayableAccounts;
 using Accounting.Infrastructure.Endpoints.PrepaidExpenses;
 using Accounting.Infrastructure.Endpoints.CostCenters;
 using Accounting.Infrastructure.Endpoints.InterCompanyTransactions;
-using Accounting.Infrastructure.Endpoints.PurchaseOrders;
 using Accounting.Infrastructure.Endpoints.WriteOffs;
 using Accounting.Infrastructure.Endpoints.RetainedEarnings;
 using Accounting.Infrastructure.Import;
@@ -108,7 +107,6 @@ public static class AccountingModule
         accountingGroup.MapPrepaidExpensesEndpoints();
         accountingGroup.MapCostCentersEndpoints();
         accountingGroup.MapInterCompanyTransactionsEndpoints();
-        accountingGroup.MapPurchaseOrdersEndpoints();
         accountingGroup.MapWriteOffsEndpoints();
         accountingGroup.MapRetainedEarningsEndpoints();
 
@@ -196,8 +194,6 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<TaxCode>, AccountingRepository<TaxCode>>();
         builder.Services.AddScoped<IRepository<CostCenter>, AccountingRepository<CostCenter>>();
         builder.Services.AddScoped<IReadRepository<CostCenter>, AccountingRepository<CostCenter>>();
-        builder.Services.AddScoped<IRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>();
-        builder.Services.AddScoped<IReadRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>();
         builder.Services.AddScoped<IRepository<WriteOff>, AccountingRepository<WriteOff>>();
         builder.Services.AddScoped<IReadRepository<WriteOff>, AccountingRepository<WriteOff>>();
         builder.Services.AddScoped<IRepository<CreditMemo>, AccountingRepository<CreditMemo>>();
@@ -403,11 +399,6 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costcenters");
         builder.Services.AddKeyedScoped<IReadRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costcenters");
         
-        builder.Services.AddKeyedScoped<IRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting");
-        builder.Services.AddKeyedScoped<IReadRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting");
-        builder.Services.AddKeyedScoped<IRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting:purchaseorders");
-        builder.Services.AddKeyedScoped<IReadRepository<PurchaseOrder>, AccountingRepository<PurchaseOrder>>("accounting:purchaseorders");
-
         return builder;
     }
 

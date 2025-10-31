@@ -342,3 +342,14 @@ public enum WriteOffStatus
     Posted,
     Reversed
 }
+
+/// <summary>
+/// Approval status for write-offs requiring authorization.
+/// </summary>
+public enum ApprovalStatus
+{
+    Pending,
+    Approved,
+    Rejected
+}
+
