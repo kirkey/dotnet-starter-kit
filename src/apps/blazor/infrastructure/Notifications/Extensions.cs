@@ -1,4 +1,7 @@
-﻿namespace FSH.Starter.Blazor.Infrastructure.Notifications;
+﻿using System;
+using System.Linq;
+
+namespace FSH.Starter.Blazor.Infrastructure.Notifications;
 internal static class Extensions
 {
     public static IServiceCollection AddNotifications(this IServiceCollection services)
