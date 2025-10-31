@@ -30,7 +30,7 @@ public sealed class CannotModifyPaidInvoiceException(DefaultIdType id) : Forbidd
 /// <summary>
 /// Exception thrown when trying to pay more than the outstanding balance.
 /// </summary>
-public sealed class PaymentExceedsOutstandingBalanceException(decimal outstandingBalance, decimal paymentAmount) 
+public sealed class InvoicePaymentExceedsBalanceException(decimal outstandingBalance, decimal paymentAmount) 
     : ForbiddenException($"payment amount {paymentAmount:C} exceeds outstanding balance {outstandingBalance:C}");
 
 /// <summary>

@@ -18,7 +18,6 @@ public class InterCompanyTransactionConfiguration : IEntityTypeConfiguration<Int
         builder.Property(x => x.Status).IsRequired().HasMaxLength(32);
         builder.Property(x => x.ReferenceNumber).HasMaxLength(100);
         builder.Property(x => x.ReconciledBy).HasMaxLength(256);
-        builder.Property(x => x.TerminationReason).HasMaxLength(1000);
         builder.Property(x => x.Description).HasMaxLength(2048);
         builder.Property(x => x.Notes).HasMaxLength(2048);
         

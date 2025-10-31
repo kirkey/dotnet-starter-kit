@@ -15,7 +15,7 @@ public sealed class WriteOffNotApprovedException(DefaultIdType id)
 public sealed class InvalidWriteOffStatusException(string message) 
     : ForbiddenException(message);
 
-public sealed class InvalidWriteOffAmountException(string message) 
+public sealed class WriteOffAmountException(string message) 
     : BadRequestException(message);
 
 public sealed class WriteOffRecoveryExceedsAmountException(DefaultIdType id) 

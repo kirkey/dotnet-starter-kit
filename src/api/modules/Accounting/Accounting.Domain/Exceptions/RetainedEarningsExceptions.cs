@@ -20,7 +20,7 @@ public sealed class DuplicateFiscalYearException(int fiscalYear) : ConflictExcep
 /// <summary>
 /// Exception thrown when fiscal year is out of valid range.
 /// </summary>
-public sealed class InvalidFiscalYearException(int minYear, int maxYear) : ForbiddenException($"fiscal year must be between {minYear} and {maxYear}");
+public sealed class RetainedEarningsFiscalYearRangeException(int minYear, int maxYear) : ForbiddenException($"fiscal year must be between {minYear} and {maxYear}");
 
 /// <summary>
 /// Exception thrown when fiscal year end date is not after start date.

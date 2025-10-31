@@ -20,3 +20,7 @@ public sealed class InvalidCostCenterBudgetException(string message)
 
 public sealed class CostCenterCodeAlreadyExistsException(string code) 
     : ForbiddenException($"Cost center with code {code} already exists");
+
+public sealed class InvalidCostCenterTypeException(string costCenterType) 
+    : BadRequestException($"Invalid cost center type: {costCenterType}. Must be one of: Department, Division, BusinessUnit, Project, Location, Other");
+

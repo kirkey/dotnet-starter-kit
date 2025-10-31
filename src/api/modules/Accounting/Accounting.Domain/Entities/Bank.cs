@@ -51,11 +51,6 @@ public class Bank : AuditableEntity, IAggregateRoot
     /// </summary>
     public string BankCode { get; private set; } = string.Empty;
 
-    /// <summary>
-    /// Bank or financial institution name.
-    /// Example: "Chase Bank", "Bank of America", "Wells Fargo".
-    /// </summary>
-    public string Name { get; private set; } = string.Empty;
 
     /// <summary>
     /// ABA routing number for domestic wire transfers and ACH transactions.
@@ -100,18 +95,6 @@ public class Bank : AuditableEntity, IAggregateRoot
     /// Example: "https://www.chase.com", "https://www.bankofamerica.com".
     /// </summary>
     public string? Website { get; private set; }
-
-    /// <summary>
-    /// Optional detailed description of the bank or banking relationship.
-    /// Example: "Primary banking institution for operations", "Payroll bank account".
-    /// </summary>
-    public string? Description { get; private set; }
-
-    /// <summary>
-    /// Optional additional notes or comments about the bank.
-    /// Example: "Monthly service fee: $25", "Minimum balance requirement: $10,000".
-    /// </summary>
-    public string? Notes { get; private set; }
 
     /// <summary>
     /// Whether the bank is active and can be used for bank account operations. Default: true.
