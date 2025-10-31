@@ -53,5 +53,11 @@ public class CostCenterConfiguration : IEntityTypeConfiguration<CostCenter>
 
         builder.Property(x => x.Notes)
             .HasMaxLength(2048);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.ParentCostCenterId);
+        builder.HasIndex(x => x.ManagerId);
+        builder.HasIndex(x => x.IsActive);
+        builder.HasIndex(x => x.CostCenterType);
     }
 }

@@ -41,6 +41,12 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.Property(x => x.ImageUrl)
             .HasMaxLength(512);
 
+        // Indexes for query optimization
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.StartDate);
+        builder.HasIndex(x => x.EndDate);
+        builder.HasIndex(x => new { x.StartDate, x.EndDate });
+
         // One-to-many relationship to ProjectCost entries
         builder
             .HasMany(p => p.CostingEntries)

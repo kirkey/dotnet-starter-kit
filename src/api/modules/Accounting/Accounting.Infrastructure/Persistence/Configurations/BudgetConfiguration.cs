@@ -64,5 +64,11 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
         navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
 
         // Note: Property-level configuration for BudgetDetail is handled in BudgetDetailConfiguration
+
+        // Indexes for query optimization
+        builder.HasIndex(x => x.PeriodId);
+        builder.HasIndex(x => x.FiscalYear);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.BudgetType);
     }
 }

@@ -15,5 +15,10 @@ public class VendorConfiguration : IEntityTypeConfiguration<Vendor>
         builder.Property(x => x.Description).HasMaxLength(1024);
         builder.Property(x => x.Notes).HasMaxLength(1024);
         builder.Property(x => x.PhoneNumber).HasMaxLength(32);
+
+        // Indexes for query optimization
+        builder.HasIndex(x => x.VendorCode).IsUnique();
+        builder.HasIndex(x => x.Name);
+        builder.HasIndex(x => x.ExpenseAccountCode);
     }
 }

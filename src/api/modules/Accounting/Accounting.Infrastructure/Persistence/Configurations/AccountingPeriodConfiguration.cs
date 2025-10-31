@@ -39,5 +39,11 @@ public class AccountingPeriodConfiguration : IEntityTypeConfiguration<Accounting
 
         builder.Property(x => x.IsAdjustmentPeriod)
             .IsRequired();
+
+        // Indexes for query optimization
+        builder.HasIndex(x => x.IsClosed);
+        builder.HasIndex(x => x.StartDate);
+        builder.HasIndex(x => x.EndDate);
+        builder.HasIndex(x => new { x.StartDate, x.EndDate });
     }
 }

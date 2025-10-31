@@ -68,5 +68,13 @@ public class RecurringJournalEntryConfiguration : IEntityTypeConfiguration<Recur
 
         builder.Property(x => x.Notes)
             .HasMaxLength(2048);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.DebitAccountId);
+        builder.HasIndex(x => x.CreditAccountId);
+        builder.HasIndex(x => x.PostingBatchId);
+        builder.HasIndex(x => x.NextRunDate);
+        builder.HasIndex(x => x.IsActive);
+        builder.HasIndex(x => x.Status);
     }
 }

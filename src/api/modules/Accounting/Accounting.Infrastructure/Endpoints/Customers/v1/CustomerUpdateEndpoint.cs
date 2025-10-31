@@ -15,7 +15,7 @@ public static class CustomerUpdateEndpoint
         return endpoints
             .MapPut("/{id}", async (DefaultIdType id, CustomerUpdateCommand command, ISender mediator) =>
             {
-                if (id != command.CustomerId)
+                if (id != command.Id)
                     return Results.BadRequest("ID mismatch");
 
                 await mediator.Send(command).ConfigureAwait(false);

@@ -51,5 +51,12 @@ public class FixedAssetConfiguration : IEntityTypeConfiguration<FixedAsset>
 
         builder.Property(x => x.DisposalAmount)
             .HasPrecision(18, 2);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.DepreciationMethodId);
+        builder.HasIndex(x => x.AccumulatedDepreciationAccountId);
+        builder.HasIndex(x => x.DepreciationExpenseAccountId);
+        builder.HasIndex(x => x.IsDisposed);
+        builder.HasIndex(x => x.PurchaseDate);
     }
 }

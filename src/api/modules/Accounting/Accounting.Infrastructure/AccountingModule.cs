@@ -18,6 +18,7 @@ using Accounting.Infrastructure.Endpoints.FinancialStatements;
 using Accounting.Infrastructure.Endpoints.GeneralLedger;
 using Accounting.Infrastructure.Endpoints.Inventory;
 using Accounting.Infrastructure.Endpoints.Invoice;
+using Accounting.Infrastructure.Endpoints.JournalEntries;
 using Accounting.Infrastructure.Endpoints.Member;
 using Accounting.Infrastructure.Endpoints.Meter;
 using Accounting.Infrastructure.Endpoints.Patronage;
@@ -82,6 +83,7 @@ public static class AccountingModule
         accountingGroup.MapFinancialStatementsEndpoints();
         accountingGroup.MapGeneralLedgerEndpoints();
         accountingGroup.MapInventoryEndpoints();
+        accountingGroup.MapJournalEntriesEndpoints();
         accountingGroup.MapInvoiceEndpoints();
         accountingGroup.MapMemberEndpoints();
         accountingGroup.MapMeterEndpoints();

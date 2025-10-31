@@ -74,5 +74,14 @@ public class WriteOffConfiguration : IEntityTypeConfiguration<WriteOff>
 
         builder.Property(x => x.Notes)
             .HasMaxLength(2048);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.CustomerId);
+        builder.HasIndex(x => x.InvoiceId);
+        builder.HasIndex(x => x.ReceivableAccountId);
+        builder.HasIndex(x => x.ExpenseAccountId);
+        builder.HasIndex(x => x.JournalEntryId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.WriteOffDate);
     }
 }

@@ -57,5 +57,11 @@ public class TaxCodeConfiguration : IEntityTypeConfiguration<TaxCode>
 
         builder.Property(x => x.Description)
             .HasMaxLength(2048);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.TaxCollectedAccountId);
+        builder.HasIndex(x => x.TaxPaidAccountId);
+        builder.HasIndex(x => x.IsActive);
+        builder.HasIndex(x => x.TaxType);
     }
 }

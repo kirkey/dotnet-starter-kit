@@ -22,5 +22,9 @@ public class PayeeConfiguration : IEntityTypeConfiguration<Payee>
         
         builder.Property(x => x.ExpenseAccountName)
             .HasMaxLength(64);
+
+        // Indexes for query optimization
+        builder.HasIndex(x => x.Name);
+        builder.HasIndex(x => x.ExpenseAccountCode);
     }
 }

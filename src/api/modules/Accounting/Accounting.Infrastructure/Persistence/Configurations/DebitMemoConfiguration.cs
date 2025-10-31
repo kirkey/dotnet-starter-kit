@@ -64,5 +64,12 @@ public class DebitMemoConfiguration : IEntityTypeConfiguration<DebitMemo>
 
         builder.Property(x => x.Notes)
             .HasMaxLength(2048);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.ReferenceId);
+        builder.HasIndex(x => x.OriginalDocumentId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.MemoDate);
+        builder.HasIndex(x => x.IsApplied);
     }
 }

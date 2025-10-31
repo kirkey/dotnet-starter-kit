@@ -26,6 +26,11 @@ public class PrepaidExpenseConfiguration : IEntityTypeConfiguration<PrepaidExpen
         builder.HasIndex(x => x.Status);
         builder.HasIndex(x => x.NextAmortizationDate);
         
+        // Indexes for foreign keys
+        builder.HasIndex(x => x.PrepaidAssetAccountId);
+        builder.HasIndex(x => x.ExpenseAccountId);
+        builder.HasIndex(x => x.VendorId);
+        
         builder.OwnsMany(x => x.AmortizationHistory, entry =>
         {
             entry.ToTable("PrepaidAmortizationEntries", SchemaNames.Accounting);

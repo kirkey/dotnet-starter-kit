@@ -68,5 +68,11 @@ public class BankReconciliationConfiguration : IEntityTypeConfiguration<BankReco
 
         builder.Property(x => x.Description)
             .HasMaxLength(2048);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.BankAccountId);
+        builder.HasIndex(x => x.ReconciliationDate);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.IsReconciled);
     }
 }

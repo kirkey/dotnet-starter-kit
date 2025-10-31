@@ -29,6 +29,9 @@ public class AccountsPayableAccountConfiguration : IEntityTypeConfiguration<Acco
         
         builder.HasIndex(x => x.AccountNumber).IsUnique();
         builder.HasIndex(x => x.IsActive);
+        builder.HasIndex(x => x.GeneralLedgerAccountId);
+        builder.HasIndex(x => x.PeriodId);
+        builder.HasIndex(x => x.IsReconciled);
     }
 }
 

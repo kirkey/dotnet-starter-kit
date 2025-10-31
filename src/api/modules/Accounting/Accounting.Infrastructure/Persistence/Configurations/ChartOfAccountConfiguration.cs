@@ -49,5 +49,11 @@ public class ChartOfAccountConfiguration : IEntityTypeConfiguration<ChartOfAccou
 
         builder.Property(x => x.Notes)
             .HasMaxLength(2048);
+
+        // Indexes for query optimization and foreign keys
+        builder.HasIndex(x => x.ParentCode);
+        builder.HasIndex(x => x.AccountType);
+        builder.HasIndex(x => x.IsActive);
+        builder.HasIndex(x => x.UsoaCategory);
     }
 }

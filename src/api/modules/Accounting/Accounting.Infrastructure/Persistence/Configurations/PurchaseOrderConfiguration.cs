@@ -82,5 +82,13 @@ public class PurchaseOrderConfiguration : IEntityTypeConfiguration<PurchaseOrder
 
         builder.Property(x => x.Notes)
             .HasMaxLength(2048);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.VendorId);
+        builder.HasIndex(x => x.RequesterId);
+        builder.HasIndex(x => x.CostCenterId);
+        builder.HasIndex(x => x.ProjectId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.OrderDate);
     }
 }

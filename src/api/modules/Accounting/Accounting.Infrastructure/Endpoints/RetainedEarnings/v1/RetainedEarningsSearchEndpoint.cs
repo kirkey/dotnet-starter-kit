@@ -1,5 +1,5 @@
 using Accounting.Application.RetainedEarnings.Responses;
-using Accounting.Application.RetainedEarnings.Search.v1.Accounting.Application.RetainedEarnings.Search.v1;
+using Accounting.Application.RetainedEarnings.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.RetainedEarnings.v1;
 

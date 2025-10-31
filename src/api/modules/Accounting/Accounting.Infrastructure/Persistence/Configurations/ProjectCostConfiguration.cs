@@ -12,5 +12,9 @@ public class ProjectCostEntryConfiguration : IEntityTypeConfiguration<ProjectCos
         builder.Property(pc => pc.Description).HasMaxLength(512).IsRequired();
         builder.Property(pc => pc.Amount).HasPrecision(18, 2).IsRequired();
         builder.Property(pc => pc.Category).HasMaxLength(100);
+
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(pc => pc.ProjectId);
+        builder.HasIndex(pc => pc.EntryDate);
     }
 }

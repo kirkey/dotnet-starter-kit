@@ -30,6 +30,12 @@ public class JournalEntryConfiguration : IEntityTypeConfiguration<JournalEntry>
             .HasPrecision(18, 2)
             .IsRequired();
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.PeriodId);
+        builder.HasIndex(x => x.Date);
+        builder.HasIndex(x => x.IsPosted);
+        builder.HasIndex(x => x.Source);
+
         // Configure owned entity for JournalEntryLines
         builder.OwnsMany(x => x.Lines, jel =>
         {
