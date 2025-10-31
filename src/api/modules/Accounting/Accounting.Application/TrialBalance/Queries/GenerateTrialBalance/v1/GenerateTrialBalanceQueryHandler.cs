@@ -1,5 +1,4 @@
 using Accounting.Application.GeneralLedgers.Specifications;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
 

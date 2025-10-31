@@ -1,5 +1,4 @@
 using Accounting.Application.RecurringJournalEntries.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.RecurringJournalEntries.Search.v1;
 

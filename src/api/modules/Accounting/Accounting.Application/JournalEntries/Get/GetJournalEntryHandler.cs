@@ -1,6 +1,5 @@
 using Accounting.Application.JournalEntries.Responses;
 using Accounting.Application.JournalEntries.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.JournalEntries.Get;
 

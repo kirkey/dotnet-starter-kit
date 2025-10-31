@@ -10,12 +10,13 @@ public static class FixedAssetCreateEndpoint
             .MapPost("/", async (CreateFixedAssetCommand request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
-                return Results.Ok(response);
+                return Results.Created($"/accounting/fixed-assets/{response.Id}", response);
             })
             .WithName(nameof(FixedAssetCreateEndpoint))
             .WithSummary("create a fixed asset")
             .WithDescription("create a fixed asset")
-            .Produces<CreateFixedAssetResponse>()
+            .Produces<CreateFixedAssetResponse>(StatusCodes.Status201Created)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }

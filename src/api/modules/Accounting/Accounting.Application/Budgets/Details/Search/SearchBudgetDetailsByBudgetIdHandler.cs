@@ -1,6 +1,5 @@
 using Accounting.Application.Budgets.Details.Responses;
 using Accounting.Application.Budgets.Details.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Budgets.Details.Search;
 

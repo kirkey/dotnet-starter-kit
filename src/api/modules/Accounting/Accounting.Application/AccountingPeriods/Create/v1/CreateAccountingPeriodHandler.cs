@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.AccountingPeriods.Create.v1;
 
 using Exceptions;

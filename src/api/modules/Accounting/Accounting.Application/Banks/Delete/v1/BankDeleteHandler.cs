@@ -1,5 +1,4 @@
 using Accounting.Application.Banks.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Banks.Delete.v1;
 

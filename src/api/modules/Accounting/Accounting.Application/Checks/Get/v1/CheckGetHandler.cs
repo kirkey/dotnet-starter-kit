@@ -1,6 +1,5 @@
 using Accounting.Application.Checks.Exceptions;
 using Accounting.Application.Checks.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Checks.Get.v1;
 

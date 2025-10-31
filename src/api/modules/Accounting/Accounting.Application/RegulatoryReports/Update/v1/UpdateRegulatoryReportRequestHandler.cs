@@ -1,5 +1,4 @@
 using Accounting.Application.RegulatoryReports.Queries;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.RegulatoryReports.Update.v1;
 

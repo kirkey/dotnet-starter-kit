@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.TaxCodes.Create.v1;
 
 public sealed class CreateTaxCodeHandler(

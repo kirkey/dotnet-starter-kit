@@ -1,5 +1,4 @@
 using Accounting.Application.ChartOfAccounts.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
 

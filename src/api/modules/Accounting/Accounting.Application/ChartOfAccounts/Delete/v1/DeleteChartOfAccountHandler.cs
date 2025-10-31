@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.ChartOfAccounts.Delete.v1;
 public class DeleteChartOfAccountHandler(
     ILogger<DeleteChartOfAccountHandler> logger,

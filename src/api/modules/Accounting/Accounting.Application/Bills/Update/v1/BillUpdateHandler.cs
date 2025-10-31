@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.Bills.Update.v1;
 
 /// <summary>

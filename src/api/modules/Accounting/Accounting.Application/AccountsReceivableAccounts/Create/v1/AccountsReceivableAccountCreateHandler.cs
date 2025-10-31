@@ -1,5 +1,4 @@
 using Accounting.Application.AccountsReceivableAccounts.Queries;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.AccountsReceivableAccounts.Create.v1;
 

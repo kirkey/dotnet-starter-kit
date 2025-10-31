@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.Budgets.Details.Delete;
 
 public sealed class DeleteBudgetDetailHandler(

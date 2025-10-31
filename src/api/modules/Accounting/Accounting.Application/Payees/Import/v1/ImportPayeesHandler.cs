@@ -1,5 +1,4 @@
 using Accounting.Application.Payees.Specs;
-using Accounting.Domain.Entities;
 using FSH.Framework.Core.Storage.Commands;
 
 namespace Accounting.Application.Payees.Import.v1;

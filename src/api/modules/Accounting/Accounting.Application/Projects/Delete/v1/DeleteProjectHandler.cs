@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.Projects.Delete.v1;
 
 /// <summary>

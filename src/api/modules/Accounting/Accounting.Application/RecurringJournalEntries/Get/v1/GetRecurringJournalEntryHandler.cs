@@ -1,6 +1,5 @@
 using Accounting.Application.RecurringJournalEntries.Responses;
 using Accounting.Application.RecurringJournalEntries.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.RecurringJournalEntries.Get.v1;
 

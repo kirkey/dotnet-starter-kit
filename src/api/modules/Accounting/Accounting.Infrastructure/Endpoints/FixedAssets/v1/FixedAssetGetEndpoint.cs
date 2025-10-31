@@ -17,6 +17,7 @@ public static class FixedAssetGetEndpoint
             .WithSummary("get a fixed asset by id")
             .WithDescription("get a fixed asset by id")
             .Produces<FixedAssetResponse>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

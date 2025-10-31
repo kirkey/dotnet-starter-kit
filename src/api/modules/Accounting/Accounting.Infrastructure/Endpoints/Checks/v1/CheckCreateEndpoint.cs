@@ -19,7 +19,7 @@ public static class CheckCreateEndpoint
             .MapPost("/", async (CheckCreateCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Ok(response);
+                return Results.Created($"/accounting/checks/{response.Id}", response);
             })
             .WithName(nameof(CheckCreateEndpoint))
             .WithSummary("Register a new check")

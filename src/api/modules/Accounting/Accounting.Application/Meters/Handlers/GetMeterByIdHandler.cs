@@ -1,6 +1,5 @@
 using Accounting.Application.Meters.Queries;
 using Accounting.Application.Meters.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Meters.Handlers;
 

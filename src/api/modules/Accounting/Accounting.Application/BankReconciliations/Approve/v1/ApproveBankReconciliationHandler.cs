@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.BankReconciliations.Approve.v1;
 
 public sealed class ApproveBankReconciliationHandler(

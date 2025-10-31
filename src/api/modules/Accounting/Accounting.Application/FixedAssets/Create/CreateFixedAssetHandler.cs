@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.FixedAssets.Create;
 
 public sealed class CreateFixedAssetHandler(

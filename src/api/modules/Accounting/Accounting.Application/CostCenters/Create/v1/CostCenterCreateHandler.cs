@@ -1,5 +1,4 @@
 using Accounting.Application.CostCenters.Queries;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.CostCenters.Create.v1;
 

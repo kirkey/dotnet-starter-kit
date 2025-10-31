@@ -1,6 +1,5 @@
 using Accounting.Application.DebitMemos.Responses;
 using Accounting.Application.DebitMemos.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.DebitMemos.Get;
 

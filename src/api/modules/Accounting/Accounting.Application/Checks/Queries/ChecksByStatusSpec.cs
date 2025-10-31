@@ -1,6 +1,4 @@
 
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.Checks.Queries;
 
 /// <summary>

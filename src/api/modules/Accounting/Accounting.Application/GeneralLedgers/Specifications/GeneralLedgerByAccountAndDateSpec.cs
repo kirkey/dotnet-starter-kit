@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.GeneralLedgers.Specifications;
 
 public class GeneralLedgerByAccountAndDateSpec : Specification<GeneralLedger>

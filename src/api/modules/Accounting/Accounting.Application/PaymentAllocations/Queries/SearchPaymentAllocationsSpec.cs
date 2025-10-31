@@ -1,5 +1,4 @@
 using Accounting.Application.PaymentAllocations.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.PaymentAllocations.Queries;
 

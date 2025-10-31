@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.RecurringJournalEntries.Suspend.v1;
 
 public sealed class SuspendRecurringJournalEntryHandler(

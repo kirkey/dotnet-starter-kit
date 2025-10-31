@@ -1,6 +1,5 @@
 using Accounting.Application.Accruals.Responses;
 using Accounting.Application.Accruals.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Accruals.Search;
 

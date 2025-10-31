@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.Checks.Search.v1;
 
 /// <summary>

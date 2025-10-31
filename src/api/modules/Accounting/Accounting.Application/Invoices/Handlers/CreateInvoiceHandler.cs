@@ -1,5 +1,4 @@
 using Accounting.Application.Invoices.Commands;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Invoices.Handlers;
 

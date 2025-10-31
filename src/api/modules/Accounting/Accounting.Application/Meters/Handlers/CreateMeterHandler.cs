@@ -1,5 +1,4 @@
 using Accounting.Application.Meters.Commands;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Meters.Handlers;
 

@@ -1,5 +1,4 @@
 using Accounting.Application.Bills.Queries;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Bills.Create.v1;
 

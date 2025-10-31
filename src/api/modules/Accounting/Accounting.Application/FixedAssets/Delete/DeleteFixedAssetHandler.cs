@@ -1,4 +1,3 @@
-using Accounting.Domain.Entities;
 using FixedAssetAlreadyDisposedException = Accounting.Application.FixedAssets.Exceptions.FixedAssetAlreadyDisposedException;
 using FixedAssetNotFoundException = Accounting.Application.FixedAssets.Exceptions.FixedAssetNotFoundException;
 

@@ -1,6 +1,5 @@
 using Accounting.Application.FixedAssets.Responses;
 using Accounting.Application.FixedAssets.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.FixedAssets.Get;
 

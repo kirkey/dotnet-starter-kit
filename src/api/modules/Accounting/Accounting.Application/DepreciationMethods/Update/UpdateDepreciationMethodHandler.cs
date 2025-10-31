@@ -1,6 +1,5 @@
 using Accounting.Application.DepreciationMethods.Exceptions;
 using Accounting.Application.DepreciationMethods.Queries;
-using Accounting.Domain.Entities;
 using DepreciationMethodNotFoundException = Accounting.Application.DepreciationMethods.Exceptions.DepreciationMethodNotFoundException;
 
 namespace Accounting.Application.DepreciationMethods.Update;

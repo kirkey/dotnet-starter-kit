@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.JournalEntries.Delete;
 
 public sealed class DeleteJournalEntryHandler(

@@ -1,5 +1,4 @@
 using Accounting.Application.ChartOfAccounts.Specs;
-using Accounting.Domain.Entities;
 using FSH.Framework.Core.Storage.Commands;
 
 namespace Accounting.Application.ChartOfAccounts.Import.v1;

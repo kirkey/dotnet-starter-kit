@@ -10,12 +10,13 @@ public static class AccrualCreateEndpoint
             .MapPost("/", async (CreateAccrualCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Ok(response);
+                return Results.Created($"/accounting/accruals/{response.Id}", response);
             })
             .WithName(nameof(AccrualCreateEndpoint))
             .WithSummary("Create an accrual")
             .WithDescription("Creates a new accrual entry")
-            .Produces<CreateAccrualResponse>()
+            .Produces<CreateAccrualResponse>(StatusCodes.Status201Created)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);
     }

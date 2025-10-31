@@ -1,5 +1,4 @@
 using Accounting.Application.Banks.Get.v1;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Banks.Search.v1;
 

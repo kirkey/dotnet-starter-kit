@@ -1,5 +1,4 @@
 using Accounting.Application.Budgets.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Budgets.Search;
 

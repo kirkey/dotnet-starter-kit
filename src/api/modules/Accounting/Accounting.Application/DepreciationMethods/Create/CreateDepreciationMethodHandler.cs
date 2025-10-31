@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.DepreciationMethods.Create;
 
 public sealed class CreateDepreciationMethodHandler(

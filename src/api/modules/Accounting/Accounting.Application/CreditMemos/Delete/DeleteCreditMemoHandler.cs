@@ -1,5 +1,4 @@
 using Accounting.Domain.Constants;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.CreditMemos.Delete;
 

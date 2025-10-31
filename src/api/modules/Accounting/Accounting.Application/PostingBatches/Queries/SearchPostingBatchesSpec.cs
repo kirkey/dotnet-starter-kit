@@ -1,5 +1,4 @@
 using Accounting.Application.PostingBatches.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.PostingBatches.Queries;
 

@@ -1,5 +1,4 @@
 using Accounting.Application.PrepaidExpenses.Queries;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.PrepaidExpenses.Create.v1;
 

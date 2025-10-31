@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.Accruals.Create;
 
 public sealed class CreateAccrualHandler(

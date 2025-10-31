@@ -1,5 +1,4 @@
 using Accounting.Application.BankReconciliations.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.BankReconciliations.Specs;
 

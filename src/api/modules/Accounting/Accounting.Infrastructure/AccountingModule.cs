@@ -30,6 +30,16 @@ using Accounting.Infrastructure.Endpoints.Projects.Costing;
 using Accounting.Infrastructure.Endpoints.RecurringJournalEntries;
 using Accounting.Infrastructure.Endpoints.TaxCodes;
 using Accounting.Infrastructure.Endpoints.TrialBalance;
+using Accounting.Infrastructure.Endpoints.Customers;
+using Accounting.Infrastructure.Endpoints.FiscalPeriodCloses;
+using Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts;
+using Accounting.Infrastructure.Endpoints.AccountsPayableAccounts;
+using Accounting.Infrastructure.Endpoints.PrepaidExpenses;
+using Accounting.Infrastructure.Endpoints.CostCenters;
+using Accounting.Infrastructure.Endpoints.InterCompanyTransactions;
+using Accounting.Infrastructure.Endpoints.PurchaseOrders;
+using Accounting.Infrastructure.Endpoints.WriteOffs;
+using Accounting.Infrastructure.Endpoints.RetainedEarnings;
 using Accounting.Infrastructure.Import;
 using Accounting.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
@@ -85,6 +95,18 @@ public static class AccountingModule
         accountingGroup.MapRecurringJournalEntriesEndpoints();
         accountingGroup.MapTaxCodesEndpoints();
         accountingGroup.MapTrialBalanceEndpoints();
+        
+        // New endpoint mappings for implemented entities
+        accountingGroup.MapCustomersEndpoints();
+        accountingGroup.MapFiscalPeriodClosesEndpoints();
+        accountingGroup.MapAccountsReceivableAccountsEndpoints();
+        accountingGroup.MapAccountsPayableAccountsEndpoints();
+        accountingGroup.MapPrepaidExpensesEndpoints();
+        accountingGroup.MapCostCentersEndpoints();
+        accountingGroup.MapInterCompanyTransactionsEndpoints();
+        accountingGroup.MapPurchaseOrdersEndpoints();
+        accountingGroup.MapWriteOffsEndpoints();
+        accountingGroup.MapRetainedEarningsEndpoints();
 
         return app;
     }

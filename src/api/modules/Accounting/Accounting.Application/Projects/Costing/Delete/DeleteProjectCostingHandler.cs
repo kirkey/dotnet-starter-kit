@@ -1,5 +1,4 @@
 using Accounting.Application.Projects.Costing.Exceptions;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Projects.Costing.Delete;
 

@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.GeneralLedgers.Commands.PostJournalEntry.v1;
 
 using Domain.Exceptions;

@@ -17,6 +17,7 @@ public static class AccrualGetEndpoint
             .WithSummary("Get an accrual by ID")
             .WithDescription("Gets the details of an accrual by its ID")
             .Produces<AccrualResponse>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

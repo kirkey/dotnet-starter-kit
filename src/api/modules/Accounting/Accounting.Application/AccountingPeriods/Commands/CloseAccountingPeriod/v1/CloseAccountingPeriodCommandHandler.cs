@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.AccountingPeriods.Commands.CloseAccountingPeriod.v1;
 
 /// <summary>

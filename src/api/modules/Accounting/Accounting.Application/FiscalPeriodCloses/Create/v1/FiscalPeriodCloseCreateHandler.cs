@@ -1,5 +1,4 @@
 using Accounting.Application.FiscalPeriodCloses.Queries;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.FiscalPeriodCloses.Create.v1;
 

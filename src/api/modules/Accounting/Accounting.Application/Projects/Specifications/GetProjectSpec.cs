@@ -1,5 +1,4 @@
 using Accounting.Application.Projects.Get.v1;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Projects.Specifications;
 

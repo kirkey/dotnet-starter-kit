@@ -1,5 +1,3 @@
-using Accounting.Domain.Entities;
-
 namespace Accounting.Application.Vendors.Get.v1;
 public sealed class VendorGetHandler(
     [FromKeyedServices("accounting:vendors")] IReadRepository<Vendor> repository,

@@ -1,5 +1,4 @@
 using Accounting.Application.Customers.Queries;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Customers.Create.v1;
 

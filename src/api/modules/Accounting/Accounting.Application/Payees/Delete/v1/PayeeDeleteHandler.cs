@@ -1,6 +1,4 @@
-﻿using Accounting.Domain.Entities;
-
-namespace Accounting.Application.Payees.Delete.v1;
+﻿namespace Accounting.Application.Payees.Delete.v1;
 
 /// <summary>
 /// Handler for deleting payee entities from the accounting system.

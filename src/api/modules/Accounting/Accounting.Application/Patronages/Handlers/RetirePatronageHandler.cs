@@ -1,5 +1,4 @@
 using Accounting.Application.Patronages.Commands;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Patronages.Handlers;
 

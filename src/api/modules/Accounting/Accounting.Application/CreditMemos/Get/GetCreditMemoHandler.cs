@@ -1,6 +1,5 @@
 using Accounting.Application.CreditMemos.Responses;
 using Accounting.Application.CreditMemos.Specs;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.CreditMemos.Get;
 

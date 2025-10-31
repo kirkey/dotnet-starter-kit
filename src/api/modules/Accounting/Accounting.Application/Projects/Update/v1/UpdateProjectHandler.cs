@@ -1,5 +1,4 @@
 using Accounting.Application.Projects.Queries;
-using Accounting.Domain.Entities;
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.File;
 

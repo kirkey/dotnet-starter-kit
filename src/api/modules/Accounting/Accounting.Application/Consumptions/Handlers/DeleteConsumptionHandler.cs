@@ -1,5 +1,4 @@
 using Accounting.Application.Consumptions.Commands;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.Consumptions.Handlers;
 

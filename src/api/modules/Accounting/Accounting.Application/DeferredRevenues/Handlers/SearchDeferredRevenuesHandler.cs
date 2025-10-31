@@ -1,6 +1,5 @@
 using Accounting.Application.DeferredRevenues.Queries;
 using Accounting.Application.DeferredRevenues.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.DeferredRevenues.Handlers;
 

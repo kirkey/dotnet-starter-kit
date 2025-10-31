@@ -1,5 +1,4 @@
 using Accounting.Application.TaxCodes.Responses;
-using Accounting.Domain.Entities;
 
 namespace Accounting.Application.TaxCodes.Specs;
 
