@@ -44,6 +44,14 @@ public class PutAwayTaskItemConfiguration : IEntityTypeConfiguration<PutAwayTask
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
+        // Indexes for foreign keys
+        builder.HasIndex(x => x.PutAwayTaskId);
+        builder.HasIndex(x => x.ItemId);
+        builder.HasIndex(x => x.ToBinId);
+        builder.HasIndex(x => x.LotNumberId);
+        builder.HasIndex(x => x.SerialNumberId);
+        builder.HasIndex(x => x.Status);
+
         builder.ToTable("PutAwayTaskItems", SchemaNames.Store);
     }
 }

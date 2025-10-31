@@ -70,6 +70,11 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
             .HasForeignKey(x => x.SupplierId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.CategoryId);
+        builder.HasIndex(x => x.SupplierId);
+        builder.HasIndex(x => x.Name);
+
         builder.ToTable("Items", SchemaNames.Store);
     }
 }

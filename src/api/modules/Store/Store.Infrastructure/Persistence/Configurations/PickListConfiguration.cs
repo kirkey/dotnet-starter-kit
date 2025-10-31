@@ -40,6 +40,12 @@ public class PickListConfiguration : IEntityTypeConfiguration<PickList>
             .HasForeignKey(x => x.PickListId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.WarehouseId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.PickingType);
+        builder.HasIndex(x => x.Priority);
+
         builder.ToTable("PickLists", SchemaNames.Store);
     }
 }

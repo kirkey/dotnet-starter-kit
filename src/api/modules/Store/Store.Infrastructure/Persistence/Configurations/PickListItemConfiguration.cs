@@ -44,6 +44,14 @@ public class PickListItemConfiguration : IEntityTypeConfiguration<PickListItem>
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
+        // Indexes for foreign keys
+        builder.HasIndex(x => x.PickListId);
+        builder.HasIndex(x => x.ItemId);
+        builder.HasIndex(x => x.BinId);
+        builder.HasIndex(x => x.LotNumberId);
+        builder.HasIndex(x => x.SerialNumberId);
+        builder.HasIndex(x => x.Status);
+
         builder.ToTable("PickListItems", SchemaNames.Store);
     }
 }

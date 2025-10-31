@@ -68,6 +68,13 @@ public class StockAdjustmentConfiguration : IEntityTypeConfiguration<StockAdjust
             .HasForeignKey(x => x.WarehouseLocationId)
             .OnDelete(DeleteBehavior.SetNull);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.ItemId);
+        builder.HasIndex(x => x.WarehouseId);
+        builder.HasIndex(x => x.WarehouseLocationId);
+        builder.HasIndex(x => x.AdjustmentType);
+        builder.HasIndex(x => x.AdjustmentDate);
+
         builder.ToTable("StockAdjustments", SchemaNames.Store);
     }
 }

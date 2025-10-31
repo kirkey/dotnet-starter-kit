@@ -35,6 +35,10 @@ public class InventoryTransferItemConfiguration : IEntityTypeConfiguration<Inven
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Indexes for foreign keys
+        builder.HasIndex(x => x.InventoryTransferId);
+        builder.HasIndex(x => x.ItemId);
+
         builder.ToTable("InventoryTransferItems", SchemaNames.Store);
     }
 }

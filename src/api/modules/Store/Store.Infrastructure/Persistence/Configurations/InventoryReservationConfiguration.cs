@@ -60,6 +60,17 @@ public class InventoryReservationConfiguration : IEntityTypeConfiguration<Invent
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.ItemId);
+        builder.HasIndex(x => x.WarehouseId);
+        builder.HasIndex(x => x.LotNumberId);
+        builder.HasIndex(x => x.WarehouseLocationId);
+        builder.HasIndex(x => x.BinId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.ReservationType);
+        builder.HasIndex(x => x.ReservationDate);
+        builder.HasIndex(x => x.ExpirationDate);
+
         builder.ToTable("InventoryReservations", SchemaNames.Store);
     }
 }

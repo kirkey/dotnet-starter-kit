@@ -61,6 +61,14 @@ public class InventoryTransactionConfiguration : IEntityTypeConfiguration<Invent
             .HasForeignKey(x => x.PurchaseOrderId)
             .OnDelete(DeleteBehavior.SetNull);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.ItemId);
+        builder.HasIndex(x => x.WarehouseId);
+        builder.HasIndex(x => x.WarehouseLocationId);
+        builder.HasIndex(x => x.PurchaseOrderId);
+        builder.HasIndex(x => x.TransactionDate);
+        builder.HasIndex(x => x.TransactionType);
+
         builder.ToTable("InventoryTransactions", SchemaNames.Store);
     }
 }

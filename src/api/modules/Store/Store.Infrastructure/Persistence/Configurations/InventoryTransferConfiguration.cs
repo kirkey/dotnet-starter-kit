@@ -65,6 +65,15 @@ public class InventoryTransferConfiguration : IEntityTypeConfiguration<Inventory
             .HasForeignKey(x => x.ToLocationId)
             .OnDelete(DeleteBehavior.SetNull);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.FromWarehouseId);
+        builder.HasIndex(x => x.ToWarehouseId);
+        builder.HasIndex(x => x.FromLocationId);
+        builder.HasIndex(x => x.ToLocationId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.TransferType);
+        builder.HasIndex(x => x.TransferDate);
+
         builder.ToTable("InventoryTransfers", SchemaNames.Store);
     }
 }

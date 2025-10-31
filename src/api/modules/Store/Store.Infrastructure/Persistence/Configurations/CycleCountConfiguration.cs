@@ -57,6 +57,13 @@ public class CycleCountConfiguration : IEntityTypeConfiguration<CycleCount>
             .FindNavigation(nameof(CycleCount.Items))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.WarehouseId);
+        builder.HasIndex(x => x.WarehouseLocationId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.CountType);
+        builder.HasIndex(x => x.ScheduledDate);
+
         builder.ToTable("CycleCounts", SchemaNames.Store);
     }
 }

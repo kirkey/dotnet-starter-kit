@@ -48,6 +48,12 @@ public class PurchaseOrderConfiguration : IEntityTypeConfiguration<PurchaseOrder
             .HasForeignKey(x => x.SupplierId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.SupplierId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.OrderDate);
+        builder.HasIndex(x => x.ExpectedDeliveryDate);
+
         builder.ToTable("PurchaseOrders", SchemaNames.Store);
     }
 }
