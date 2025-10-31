@@ -3,6 +3,9 @@ namespace Accounting.Domain.Exceptions;
 public sealed class PurchaseOrderNotFoundException(DefaultIdType id) 
     : NotFoundException($"Purchase order with id {id} not found");
 
+public sealed class DuplicatePurchaseOrderNumberException(string orderNumber) 
+    : ConflictException($"Purchase order with number {orderNumber} already exists");
+
 public sealed class PurchaseOrderCannotBeModifiedException(DefaultIdType id) 
     : ForbiddenException($"Purchase order {id} has been approved and cannot be modified");
 

@@ -1,4 +1,5 @@
 global using Accounting.Domain;
+global using Accounting.Domain.Entities;
 global using Accounting.Domain.Exceptions;
 global using Ardalis.Specification;
 global using FluentValidation;
