@@ -17,50 +17,211 @@ internal sealed class AccountingDbInitializer(
 
     public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        // Seed Chart of Accounts (expanded)
+        // Seed Chart of Accounts - Comprehensive Electric Utility Company
         if (!await context.ChartOfAccounts.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var accounts = new List<ChartOfAccount>
             {
-                // Top-level control accounts
-                ChartOfAccount.Create("1000", "Assets", "Asset", "General", null, "1", 0m, true, "Debit", true, null, "Assets control account"),
-                ChartOfAccount.Create("2000", "Liabilities", "Liability", "General", null, "2", 0m, true, "Credit", true, null, "Liabilities control account"),
-                ChartOfAccount.Create("3000", "Equity", "Equity", "General", null, "3", 0m, true, "Credit", true, null, "Equity control account"),
-                ChartOfAccount.Create("4000", "Revenue", "Revenue", "Sales", null, "4", 0m, true, "Credit", true, null, "Revenue control account"),
-                ChartOfAccount.Create("5000", "Expenses", "Expense", "Administrative", null, "5", 0m, true, "Debit", true, null, "Expenses control account"),
+                // ============================================
+                // ASSETS (1000-1999)
+                // ============================================
+                
+                // Header Account
+                ChartOfAccount.Create("1000", "ASSETS", "Asset", "General", null, "1", 0m, true, "Debit", true, null, "Total Assets"),
 
-                // Common asset accounts
-                ChartOfAccount.Create("1010", "Cash on Hand", "Asset", "General", null, "1.1", 0m, false, "Debit", true, null, "Cash account"),
-                ChartOfAccount.Create("1020", "Bank - Checking", "Asset", "General", null, "1.2", 0m, false, "Debit", true, null, "Bank checking account"),
-                ChartOfAccount.Create("1100", "Accounts Receivable", "Asset", "Customer Service", null, "1.3", 0m, false, "Debit", true, null, "Accounts receivable"),
+                // Current Assets (1100-1299)
+                ChartOfAccount.Create("1100", "Cash and Cash Equivalents", "Asset", "General", null, "1.1", 0m, false, "Debit", true, null, "Cash and cash equivalents"),
+                ChartOfAccount.Create("1110", "Petty Cash", "Asset", "General", null, "1.1.1", 0m, false, "Debit", true, null, "Petty cash fund"),
+                ChartOfAccount.Create("1120", "Bank - Operating Account", "Asset", "General", null, "1.1.2", 0m, false, "Debit", true, null, "Primary operating account"),
+                ChartOfAccount.Create("1130", "Bank - Payroll Account", "Asset", "General", null, "1.1.3", 0m, false, "Debit", true, null, "Payroll account"),
+                ChartOfAccount.Create("1140", "Bank - Money Market", "Asset", "General", null, "1.1.4", 0m, false, "Debit", true, null, "Money market account"),
+                ChartOfAccount.Create("1150", "Short-term Investments", "Asset", "General", null, "1.1.5", 0m, false, "Debit", true, null, "Short-term investments"),
 
-                // Common liability accounts
-                ChartOfAccount.Create("2010", "Accounts Payable", "Liability", "General", null, "2.1", 0m, false, "Credit", true, null, "Accounts payable"),
-                ChartOfAccount.Create("2020", "Accrued Expenses", "Liability", "General", null, "2.2", 0m, false, "Credit", true, null, "Accrued expenses"),
+                ChartOfAccount.Create("1200", "Accounts Receivable", "Asset", "Customer Service", null, "1.2", 0m, false, "Debit", true, null, "Accounts receivable"),
+                ChartOfAccount.Create("1210", "Accounts Receivable - Residential", "Asset", "Customer Service", null, "1.2.1", 0m, false, "Debit", true, null, "Residential customer receivables"),
+                ChartOfAccount.Create("1220", "Accounts Receivable - Commercial", "Asset", "Customer Service", null, "1.2.2", 0m, false, "Debit", true, null, "Commercial customer receivables"),
+                ChartOfAccount.Create("1230", "Accounts Receivable - Industrial", "Asset", "Customer Service", null, "1.2.3", 0m, false, "Debit", true, null, "Industrial customer receivables"),
+                ChartOfAccount.Create("1240", "Allowance for Doubtful Accounts", "Asset", "Customer Service", null, "1.2.4", 0m, false, "Credit", true, null, "Bad debt allowance"),
+                ChartOfAccount.Create("1250", "Unbilled Revenue", "Asset", "Customer Service", null, "1.2.5", 0m, false, "Debit", true, null, "Electricity delivered but not yet billed"),
 
-                // Equity
-                ChartOfAccount.Create("3010", "Owner's Equity", "Equity", "General", null, "3.1", 0m, false, "Credit", true, null, "Owner's equity"),
+                ChartOfAccount.Create("1300", "Inventory", "Asset", "Inventory", null, "1.3", 0m, false, "Debit", true, null, "Inventory"),
+                ChartOfAccount.Create("1310", "Materials and Supplies", "Asset", "Inventory", null, "1.3.1", 0m, false, "Debit", true, null, "Maintenance materials"),
+                ChartOfAccount.Create("1320", "Fuel Inventory - Coal", "Asset", "Inventory", null, "1.3.2", 0m, false, "Debit", true, null, "Coal fuel inventory"),
+                ChartOfAccount.Create("1330", "Fuel Inventory - Natural Gas", "Asset", "Inventory", null, "1.3.3", 0m, false, "Debit", true, null, "Natural gas fuel inventory"),
+                ChartOfAccount.Create("1340", "Spare Parts Inventory", "Asset", "Inventory", null, "1.3.4", 0m, false, "Debit", true, null, "Equipment spare parts"),
 
-                // Revenue
-                ChartOfAccount.Create("4010", "Service Revenue", "Revenue", "Sales", null, "4.1", 0m, false, "Credit", true, null, "Service revenue"),
+                ChartOfAccount.Create("1400", "Prepaid Expenses", "Asset", "General", null, "1.4", 0m, false, "Debit", true, null, "Prepaid expenses"),
+                ChartOfAccount.Create("1410", "Prepaid Insurance", "Asset", "General", null, "1.4.1", 0m, false, "Debit", true, null, "Prepaid insurance"),
+                ChartOfAccount.Create("1420", "Prepaid Rent", "Asset", "General", null, "1.4.2", 0m, false, "Debit", true, null, "Prepaid rent"),
 
-                // Expenses
-                ChartOfAccount.Create("5010", "Salaries Expense", "Expense", "Administrative", null, "5.1", 0m, false, "Debit", true, null, "Salaries and wages"),
-                ChartOfAccount.Create("5020", "Rent Expense", "Expense", "Administrative", null, "5.2", 0m, false, "Debit", true, null, "Office rent"),
+                // Property, Plant & Equipment (1500-1799)
+                ChartOfAccount.Create("1500", "Electric Plant in Service", "Asset", "Operations", null, "1.5", 0m, false, "Debit", true, null, "Utility plant in service"),
+                ChartOfAccount.Create("1510", "Generation Plant", "Asset", "Production", null, "1.5.1", 0m, false, "Debit", true, null, "Power generation facilities"),
+                ChartOfAccount.Create("1520", "Transmission Plant", "Asset", "Transmission", null, "1.5.2", 0m, false, "Debit", true, null, "Transmission lines and substations"),
+                ChartOfAccount.Create("1530", "Distribution Plant", "Asset", "Distribution", null, "1.5.3", 0m, false, "Debit", true, null, "Distribution system"),
+                ChartOfAccount.Create("1540", "General Plant", "Asset", "General", null, "1.5.4", 0m, false, "Debit", true, null, "Administrative buildings and equipment"),
 
-                // Additional expense / operational accounts for richer testing
-                ChartOfAccount.Create("5030", "Utilities Expense", "Expense", "Operations", null, "5.3", 0m, false, "Debit", true, null, "Utilities"),
-                ChartOfAccount.Create("5040", "Maintenance Expense", "Expense", "Operations", null, "5.4", 0m, false, "Debit", true, null, "Maintenance"),
-                ChartOfAccount.Create("5050", "Insurance Expense", "Expense", "Administrative", null, "5.5", 0m, false, "Debit", true, null, "Insurance"),
+                ChartOfAccount.Create("1600", "Accumulated Depreciation", "Asset", "Operations", null, "1.6", 0m, false, "Credit", true, null, "Accumulated depreciation"),
+                ChartOfAccount.Create("1610", "Accumulated Depreciation - Generation", "Asset", "Production", null, "1.6.1", 0m, false, "Credit", true, null, "Generation plant depreciation"),
+                ChartOfAccount.Create("1620", "Accumulated Depreciation - Transmission", "Asset", "Transmission", null, "1.6.2", 0m, false, "Credit", true, null, "Transmission plant depreciation"),
+                ChartOfAccount.Create("1630", "Accumulated Depreciation - Distribution", "Asset", "Distribution", null, "1.6.3", 0m, false, "Credit", true, null, "Distribution plant depreciation"),
+                ChartOfAccount.Create("1640", "Accumulated Depreciation - General", "Asset", "General", null, "1.6.4", 0m, false, "Credit", true, null, "General plant depreciation"),
 
-                // Cost of goods sold / inventory
-                ChartOfAccount.Create("5100", "Cost of Goods Sold", "Expense", "COGS", null, "5.10", 0m, false, "Debit", true, null, "COGS"),
-                ChartOfAccount.Create("1200", "Inventory Asset", "Asset", "Inventory", null, "1.4", 0m, false, "Debit", true, null, "Inventory asset"),
+                ChartOfAccount.Create("1700", "Construction Work in Progress", "Asset", "Operations", null, "1.7", 0m, false, "Debit", true, null, "Projects under construction"),
+
+                // Other Assets (1800-1899)
+                ChartOfAccount.Create("1800", "Other Assets", "Asset", "General", null, "1.8", 0m, false, "Debit", true, null, "Other long-term assets"),
+                ChartOfAccount.Create("1810", "Regulatory Assets", "Asset", "General", null, "1.8.1", 0m, false, "Debit", true, null, "Deferred costs recoverable from customers"),
+                ChartOfAccount.Create("1820", "Deferred Tax Assets", "Asset", "General", null, "1.8.2", 0m, false, "Debit", true, null, "Deferred income tax assets"),
+                ChartOfAccount.Create("1830", "Long-term Investments", "Asset", "General", null, "1.8.3", 0m, false, "Debit", true, null, "Long-term investments"),
+
+                // ============================================
+                // LIABILITIES (2000-2999)
+                // ============================================
+                
+                // Header Account
+                ChartOfAccount.Create("2000", "LIABILITIES", "Liability", "General", null, "2", 0m, true, "Credit", true, null, "Total Liabilities"),
+
+                // Current Liabilities (2100-2299)
+                ChartOfAccount.Create("2100", "Accounts Payable", "Liability", "General", null, "2.1", 0m, false, "Credit", true, null, "Accounts payable"),
+                ChartOfAccount.Create("2110", "Accounts Payable - Trade", "Liability", "General", null, "2.1.1", 0m, false, "Credit", true, null, "Trade payables"),
+                ChartOfAccount.Create("2120", "Accounts Payable - Fuel", "Liability", "General", null, "2.1.2", 0m, false, "Credit", true, null, "Fuel purchase payables"),
+
+                ChartOfAccount.Create("2200", "Accrued Liabilities", "Liability", "General", null, "2.2", 0m, false, "Credit", true, null, "Accrued expenses"),
+                ChartOfAccount.Create("2210", "Accrued Payroll", "Liability", "General", null, "2.2.1", 0m, false, "Credit", true, null, "Accrued wages and salaries"),
+                ChartOfAccount.Create("2220", "Accrued Taxes", "Liability", "General", null, "2.2.2", 0m, false, "Credit", true, null, "Accrued tax liabilities"),
+                ChartOfAccount.Create("2230", "Accrued Interest", "Liability", "General", null, "2.2.3", 0m, false, "Credit", true, null, "Accrued interest payable"),
+
+                ChartOfAccount.Create("2300", "Customer Deposits", "Liability", "Customer Service", null, "2.3", 0m, false, "Credit", true, null, "Customer security deposits"),
+                ChartOfAccount.Create("2310", "Customer Deposits - Residential", "Liability", "Customer Service", null, "2.3.1", 0m, false, "Credit", true, null, "Residential deposits"),
+                ChartOfAccount.Create("2320", "Customer Deposits - Commercial", "Liability", "Customer Service", null, "2.3.2", 0m, false, "Credit", true, null, "Commercial deposits"),
+
+                ChartOfAccount.Create("2400", "Current Portion of Long-term Debt", "Liability", "General", null, "2.4", 0m, false, "Credit", true, null, "Current portion of long-term debt"),
+
+                // Long-term Liabilities (2500-2799)
+                ChartOfAccount.Create("2500", "Long-term Debt", "Liability", "General", null, "2.5", 0m, false, "Credit", true, null, "Long-term debt"),
+                ChartOfAccount.Create("2510", "Bonds Payable", "Liability", "General", null, "2.5.1", 0m, false, "Credit", true, null, "Revenue bonds"),
+                ChartOfAccount.Create("2520", "Notes Payable - Long-term", "Liability", "General", null, "2.5.2", 0m, false, "Credit", true, null, "Long-term notes"),
+                ChartOfAccount.Create("2530", "Capital Lease Obligations", "Liability", "General", null, "2.5.3", 0m, false, "Credit", true, null, "Capital lease liabilities"),
+
+                ChartOfAccount.Create("2600", "Deferred Credits", "Liability", "General", null, "2.6", 0m, false, "Credit", true, null, "Deferred credits"),
+                ChartOfAccount.Create("2610", "Regulatory Liabilities", "Liability", "General", null, "2.6.1", 0m, false, "Credit", true, null, "Deferred credits refundable to customers"),
+                ChartOfAccount.Create("2620", "Deferred Tax Liabilities", "Liability", "General", null, "2.6.2", 0m, false, "Credit", true, null, "Deferred income tax liabilities"),
+                ChartOfAccount.Create("2630", "Asset Retirement Obligations", "Liability", "General", null, "2.6.3", 0m, false, "Credit", true, null, "Legal obligations for asset retirement"),
+
+                // ============================================
+                // EQUITY (3000-3999)
+                // ============================================
+                
+                // Header Account
+                ChartOfAccount.Create("3000", "EQUITY", "Equity", "General", null, "3", 0m, true, "Credit", true, null, "Total Equity"),
+
+                ChartOfAccount.Create("3100", "Member Equity", "Equity", "General", null, "3.1", 0m, false, "Credit", true, null, "Member equity capital"),
+                ChartOfAccount.Create("3110", "Common Stock", "Equity", "General", null, "3.1.1", 0m, false, "Credit", true, null, "Common stock"),
+                ChartOfAccount.Create("3120", "Patronage Capital", "Equity", "General", null, "3.1.2", 0m, false, "Credit", true, null, "Allocated patronage capital"),
+                ChartOfAccount.Create("3130", "Retained Earnings", "Equity", "General", null, "3.1.3", 0m, false, "Credit", true, null, "Retained earnings"),
+                ChartOfAccount.Create("3140", "Current Year Earnings", "Equity", "General", null, "3.1.4", 0m, false, "Credit", true, null, "Current year net income"),
+
+                // ============================================
+                // REVENUE (4000-4999)
+                // ============================================
+                
+                // Header Account
+                ChartOfAccount.Create("4000", "OPERATING REVENUE", "Revenue", "Sales", null, "4", 0m, true, "Credit", true, null, "Total Operating Revenue"),
+
+                // Electric Operating Revenue (4100-4499)
+                ChartOfAccount.Create("4100", "Residential Sales", "Revenue", "Sales", null, "4.1", 0m, false, "Credit", true, null, "Residential electricity sales"),
+                ChartOfAccount.Create("4110", "Residential - Energy Charges", "Revenue", "Sales", null, "4.1.1", 0m, false, "Credit", true, null, "Residential energy charges"),
+                ChartOfAccount.Create("4120", "Residential - Customer Charges", "Revenue", "Sales", null, "4.1.2", 0m, false, "Credit", true, null, "Residential customer charges"),
+
+                ChartOfAccount.Create("4200", "Commercial Sales", "Revenue", "Sales", null, "4.2", 0m, false, "Credit", true, null, "Commercial electricity sales"),
+                ChartOfAccount.Create("4210", "Commercial - Energy Charges", "Revenue", "Sales", null, "4.2.1", 0m, false, "Credit", true, null, "Commercial energy charges"),
+                ChartOfAccount.Create("4220", "Commercial - Demand Charges", "Revenue", "Sales", null, "4.2.2", 0m, false, "Credit", true, null, "Commercial demand charges"),
+
+                ChartOfAccount.Create("4300", "Industrial Sales", "Revenue", "Sales", null, "4.3", 0m, false, "Credit", true, null, "Industrial electricity sales"),
+                ChartOfAccount.Create("4310", "Industrial - Energy Charges", "Revenue", "Sales", null, "4.3.1", 0m, false, "Credit", true, null, "Industrial energy charges"),
+                ChartOfAccount.Create("4320", "Industrial - Demand Charges", "Revenue", "Sales", null, "4.3.2", 0m, false, "Credit", true, null, "Industrial demand charges"),
+
+                ChartOfAccount.Create("4400", "Other Electric Revenue", "Revenue", "Sales", null, "4.4", 0m, false, "Credit", true, null, "Other electric revenue"),
+                ChartOfAccount.Create("4410", "Late Payment Charges", "Revenue", "Sales", null, "4.4.1", 0m, false, "Credit", true, null, "Late payment fees"),
+                ChartOfAccount.Create("4420", "Reconnection Fees", "Revenue", "Sales", null, "4.4.2", 0m, false, "Credit", true, null, "Service reconnection fees"),
+                ChartOfAccount.Create("4430", "Meter Testing Fees", "Revenue", "Sales", null, "4.4.3", 0m, false, "Credit", true, null, "Meter testing and service fees"),
+
+                // Non-Operating Revenue (4500-4999)
+                ChartOfAccount.Create("4500", "Other Revenue", "Revenue", "Sales", null, "4.5", 0m, false, "Credit", true, null, "Non-operating revenue"),
+                ChartOfAccount.Create("4510", "Investment Income", "Revenue", "Sales", null, "4.5.1", 0m, false, "Credit", true, null, "Interest and dividend income"),
+                ChartOfAccount.Create("4520", "Gain on Sale of Assets", "Revenue", "Sales", null, "4.5.2", 0m, false, "Credit", true, null, "Gains from asset sales"),
+                ChartOfAccount.Create("4530", "Miscellaneous Revenue", "Revenue", "Sales", null, "4.5.3", 0m, false, "Credit", true, null, "Other miscellaneous income"),
+
+                // ============================================
+                // EXPENSES (5000-9999)
+                // ============================================
+                
+                // Header Account
+                ChartOfAccount.Create("5000", "OPERATING EXPENSES", "Expense", "Operations", null, "5", 0m, true, "Debit", true, null, "Total Operating Expenses"),
+
+                // Power Production Expenses (5100-5299)
+                ChartOfAccount.Create("5100", "Power Production - Fuel", "Expense", "Operations", null, "5.1", 0m, false, "Debit", true, null, "Fuel costs for generation"),
+                ChartOfAccount.Create("5110", "Fuel - Coal", "Expense", "Operations", null, "5.1.1", 0m, false, "Debit", true, null, "Coal fuel expense"),
+                ChartOfAccount.Create("5120", "Fuel - Natural Gas", "Expense", "Operations", null, "5.1.2", 0m, false, "Debit", true, null, "Natural gas fuel expense"),
+                ChartOfAccount.Create("5130", "Fuel - Oil", "Expense", "Operations", null, "5.1.3", 0m, false, "Debit", true, null, "Oil fuel expense"),
+
+                ChartOfAccount.Create("5200", "Power Production - Operations", "Expense", "Operations", null, "5.2", 0m, false, "Debit", true, null, "Generation operations"),
+                ChartOfAccount.Create("5210", "Generation Labor", "Expense", "Operations", null, "5.2.1", 0m, false, "Debit", true, null, "Generation plant labor"),
+                ChartOfAccount.Create("5220", "Generation Maintenance", "Expense", "Operations", null, "5.2.2", 0m, false, "Debit", true, null, "Generation maintenance"),
+
+                // Power Purchased (5300-5399)
+                ChartOfAccount.Create("5300", "Purchased Power", "Expense", "Operations", null, "5.3", 0m, false, "Debit", true, null, "Electricity purchased from others"),
+                ChartOfAccount.Create("5310", "Purchased Power - Base Load", "Expense", "Operations", null, "5.3.1", 0m, false, "Debit", true, null, "Base load power purchases"),
+                ChartOfAccount.Create("5320", "Purchased Power - Peak Load", "Expense", "Operations", null, "5.3.2", 0m, false, "Debit", true, null, "Peak load power purchases"),
+
+                // Transmission Expenses (5400-5499)
+                ChartOfAccount.Create("5400", "Transmission Expenses", "Expense", "Operations", null, "5.4", 0m, false, "Debit", true, null, "Transmission system operations"),
+                ChartOfAccount.Create("5410", "Transmission Labor", "Expense", "Operations", null, "5.4.1", 0m, false, "Debit", true, null, "Transmission operations labor"),
+                ChartOfAccount.Create("5420", "Transmission Maintenance", "Expense", "Operations", null, "5.4.2", 0m, false, "Debit", true, null, "Transmission system maintenance"),
+
+                // Distribution Expenses (5500-5699)
+                ChartOfAccount.Create("5500", "Distribution Expenses", "Expense", "Operations", null, "5.5", 0m, false, "Debit", true, null, "Distribution system operations"),
+                ChartOfAccount.Create("5510", "Distribution Labor", "Expense", "Operations", null, "5.5.1", 0m, false, "Debit", true, null, "Distribution operations labor"),
+                ChartOfAccount.Create("5520", "Distribution Maintenance", "Expense", "Operations", null, "5.5.2", 0m, false, "Debit", true, null, "Distribution system maintenance"),
+                ChartOfAccount.Create("5530", "Meter Reading", "Expense", "Operations", null, "5.5.3", 0m, false, "Debit", true, null, "Meter reading expenses"),
+
+                // Customer Service Expenses (5700-5899)
+                ChartOfAccount.Create("5700", "Customer Service Expenses", "Expense", "Customer Service", null, "5.7", 0m, false, "Debit", true, null, "Customer service and billing"),
+                ChartOfAccount.Create("5710", "Customer Service Labor", "Expense", "Customer Service", null, "5.7.1", 0m, false, "Debit", true, null, "Customer service labor"),
+                ChartOfAccount.Create("5720", "Billing Expenses", "Expense", "Customer Service", null, "5.7.2", 0m, false, "Debit", true, null, "Billing and collection"),
+                ChartOfAccount.Create("5730", "Uncollectible Accounts", "Expense", "Customer Service", null, "5.7.3", 0m, false, "Debit", true, null, "Bad debt expense"),
+
+                // Administrative & General Expenses (6000-6999)
+                ChartOfAccount.Create("6000", "Administrative & General", "Expense", "Administrative", null, "6", 0m, false, "Debit", true, null, "Administrative expenses"),
+                ChartOfAccount.Create("6100", "Administrative Salaries", "Expense", "Administrative", null, "6.1", 0m, false, "Debit", true, null, "Administrative and executive salaries"),
+                ChartOfAccount.Create("6200", "Office Expenses", "Expense", "Administrative", null, "6.2", 0m, false, "Debit", true, null, "Office supplies and expenses"),
+                ChartOfAccount.Create("6300", "Professional Services", "Expense", "Administrative", null, "6.3", 0m, false, "Debit", true, null, "Legal and consulting fees"),
+                ChartOfAccount.Create("6400", "Insurance", "Expense", "Administrative", null, "6.4", 0m, false, "Debit", true, null, "Insurance expenses"),
+                ChartOfAccount.Create("6500", "Employee Benefits", "Expense", "Administrative", null, "6.5", 0m, false, "Debit", true, null, "Health insurance and benefits"),
+                ChartOfAccount.Create("6600", "Regulatory Expenses", "Expense", "Administrative", null, "6.6", 0m, false, "Debit", true, null, "Regulatory compliance costs"),
+
+                // Depreciation & Amortization (7000-7999)
+                ChartOfAccount.Create("7000", "Depreciation & Amortization", "Expense", "Administrative", null, "7", 0m, false, "Debit", true, null, "Depreciation expense"),
+                ChartOfAccount.Create("7100", "Depreciation - Generation", "Expense", "Production", null, "7.1", 0m, false, "Debit", true, null, "Generation plant depreciation"),
+                ChartOfAccount.Create("7200", "Depreciation - Transmission", "Expense", "Transmission", null, "7.2", 0m, false, "Debit", true, null, "Transmission depreciation"),
+                ChartOfAccount.Create("7300", "Depreciation - Distribution", "Expense", "Distribution", null, "7.3", 0m, false, "Debit", true, null, "Distribution depreciation"),
+                ChartOfAccount.Create("7400", "Depreciation - General", "Expense", "General", null, "7.4", 0m, false, "Debit", true, null, "General plant depreciation"),
+
+                // Taxes (8000-8999)
+                ChartOfAccount.Create("8000", "Taxes Other Than Income", "Expense", "Administrative", null, "8", 0m, false, "Debit", true, null, "Property and other taxes"),
+                ChartOfAccount.Create("8100", "Property Taxes", "Expense", "Administrative", null, "8.1", 0m, false, "Debit", true, null, "Property tax expense"),
+                ChartOfAccount.Create("8200", "Payroll Taxes", "Expense", "Administrative", null, "8.2", 0m, false, "Debit", true, null, "Employer payroll taxes"),
+
+                // Interest Expense (9000-9999)
+                ChartOfAccount.Create("9000", "Interest Expense", "Expense", "Administrative", null, "9", 0m, false, "Debit", true, null, "Interest on long-term debt"),
+                ChartOfAccount.Create("9100", "Interest on Bonds", "Expense", "Administrative", null, "9.1", 0m, false, "Debit", true, null, "Interest expense on bonds"),
+                ChartOfAccount.Create("9200", "Interest on Notes", "Expense", "Administrative", null, "9.2", 0m, false, "Debit", true, null, "Interest expense on notes"),
             };
 
             await context.ChartOfAccounts.AddRangeAsync(accounts, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            logger.LogInformation("[{Tenant}] seeded Chart of Accounts with {Count} records", context.TenantInfo!.Identifier, accounts.Count);
+            logger.LogInformation("[{Tenant}] seeded comprehensive Electric Utility Chart of Accounts with {Count} records", context.TenantInfo!.Identifier, accounts.Count);
         }
 
         // Seed Accounting Periods and multiple Budgets + BudgetDetails
@@ -95,19 +256,20 @@ internal sealed class AccountingDbInitializer(
 
                 // Operating budget details
                 var op = budgetsToSeed[0];
-                if (acctDict.TryGetValue("1010", out var id1010)) details.Add(BudgetDetail.Create(op.Id, id1010, 150000m, "Cash reserve"));
-                if (acctDict.TryGetValue("5010", out var id5010)) details.Add(BudgetDetail.Create(op.Id, id5010, 80000m, "Salaries"));
-                if (acctDict.TryGetValue("5030", out var id5030)) details.Add(BudgetDetail.Create(op.Id, id5030, 20000m, "Utilities"));
+                if (acctDict.TryGetValue("1120", out var id1120)) details.Add(BudgetDetail.Create(op.Id, id1120, 500000m, "Operating account reserve"));
+                if (acctDict.TryGetValue("5100", out var id5100)) details.Add(BudgetDetail.Create(op.Id, id5100, 2500000m, "Fuel costs"));
+                if (acctDict.TryGetValue("5510", out var id5510)) details.Add(BudgetDetail.Create(op.Id, id5510, 800000m, "Distribution labor"));
+                if (acctDict.TryGetValue("6100", out var id6100)) details.Add(BudgetDetail.Create(op.Id, id6100, 1200000m, "Administrative salaries"));
 
                 // Capital budget details
                 var cap = budgetsToSeed[1];
-                if (acctDict.TryGetValue("1200", out var id1200)) details.Add(BudgetDetail.Create(cap.Id, id1200, 250000m, "New equipment"));
-                if (acctDict.TryGetValue("5020", out var id5020)) details.Add(BudgetDetail.Create(cap.Id, id5020, 50000m, "Project rent"));
+                if (acctDict.TryGetValue("1530", out var id1530)) details.Add(BudgetDetail.Create(cap.Id, id1530, 5000000m, "Distribution plant upgrades"));
+                if (acctDict.TryGetValue("1700", out var id1700)) details.Add(BudgetDetail.Create(cap.Id, id1700, 3000000m, "Construction projects"));
 
                 // Cash flow budget details
                 var cf = budgetsToSeed[2];
-                if (acctDict.TryGetValue("1020", out var id1020)) details.Add(BudgetDetail.Create(cf.Id, id1020, 100000m, "Bank cash planned"));
-                if (acctDict.TryGetValue("4010", out var id4010)) details.Add(BudgetDetail.Create(cf.Id, id4010, 200000m, "Projected revenue"));
+                if (acctDict.TryGetValue("1120", out var id1120cf)) details.Add(BudgetDetail.Create(cf.Id, id1120cf, 1000000m, "Operating account cash"));
+                if (acctDict.TryGetValue("4100", out var id4100)) details.Add(BudgetDetail.Create(cf.Id, id4100, 8000000m, "Residential sales revenue"));
 
                 if (details.Count > 0)
                 {
@@ -147,10 +309,14 @@ internal sealed class AccountingDbInitializer(
         if (!await context.Vendors.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var vendors = new List<Vendor>();
+            var expenseAccounts = new[] { "5100", "5200", "5300", "5400", "5500", "6100", "6200", "6300", "6400", "6500" };
+            var expenseNames = new[] { "Fuel", "Generation Operations", "Purchased Power", "Transmission", "Distribution", "Admin Salaries", "Office Expenses", "Professional Services", "Insurance", "Employee Benefits" };
             for (int i = 1; i <= 10; i++)
             {
                 var num = $"VEND-{1000 + i}";
-                vendors.Add(Vendor.Create(num, $"Vendor {i}", $"{i} Supplier Rd", null, $"Vendor Contact {i}", $"vendor{i}@example.com", "Net 30", "5010", "Salaries Expense", null, $"+15557{654321 + i}", $"Seeded vendor {i}"));
+                var accountCode = expenseAccounts[(i - 1) % expenseAccounts.Length];
+                var accountName = expenseNames[(i - 1) % expenseNames.Length];
+                vendors.Add(Vendor.Create(num, $"Vendor {i}", $"{i} Supplier Rd", null, $"Vendor Contact {i}", $"vendor{i}@example.com", "Net 30", accountCode, accountName, null, $"+15557{654321 + i}", $"Seeded vendor {i}"));
             }
 
             await context.Vendors.AddRangeAsync(vendors, cancellationToken).ConfigureAwait(false);
@@ -162,9 +328,13 @@ internal sealed class AccountingDbInitializer(
         if (!await context.Payees.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var payees = new List<Payee>();
+            var payeeExpenseAccounts = new[] { "5210", "5410", "5510", "5710", "6100", "6200", "6300", "6400", "6500", "8200" };
+            var payeeExpenseNames = new[] { "Generation Labor", "Transmission Labor", "Distribution Labor", "Customer Service Labor", "Admin Salaries", "Office Expenses", "Professional Services", "Insurance", "Employee Benefits", "Payroll Taxes" };
             for (int i = 1; i <= 10; i++)
             {
-                payees.Add(Payee.Create($"PAY-{1000 + i}", $"Payee {i}", $"{i} Payee Ave", "5010", "Salaries Expense", null, $"Seeded payee {i}", null));
+                var accountCode = payeeExpenseAccounts[(i - 1) % payeeExpenseAccounts.Length];
+                var accountName = payeeExpenseNames[(i - 1) % payeeExpenseNames.Length];
+                payees.Add(Payee.Create($"PAY-{1000 + i}", $"Payee {i}", $"{i} Payee Ave", accountCode, accountName, null, $"Seeded payee {i}", null));
             }
 
             await context.Payees.AddRangeAsync(payees, cancellationToken).ConfigureAwait(false);
@@ -292,7 +462,7 @@ internal sealed class AccountingDbInitializer(
                  await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
  
                  // payment
-                 var payment = Payment.Create($"PAY-{2000 + i}", member.Id, DateTime.UtcNow.Date, invoice.GetOutstandingAmount(), "Cash", null, "1020", $"Seeded payment {i}");
+                 var payment = Payment.Create($"PAY-{2000 + i}", member.Id, DateTime.UtcNow.Date, invoice.GetOutstandingAmount(), "Cash", null, "1120", $"Seeded payment {i}");
                  payment = payment.AllocateToInvoice(invoice.Id, invoice.GetOutstandingAmount());
                  await context.Payments.AddAsync(payment, cancellationToken).ConfigureAwait(false);
                  await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -305,8 +475,8 @@ internal sealed class AccountingDbInitializer(
         if (!await context.FixedAssets.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var firstDepr = await context.DepreciationMethods.FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
-            var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1010", cancellationToken).ConfigureAwait(false);
-            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
+            var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1120", cancellationToken).ConfigureAwait(false);
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "7400", cancellationToken).ConfigureAwait(false);
             if (firstDepr != null && cashAccount != null && expenseAccount != null)
             {
                 var assets = new List<FixedAsset>
@@ -333,19 +503,19 @@ internal sealed class AccountingDbInitializer(
         if (!await context.JournalEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var period = await context.AccountingPeriods.OrderByDescending(p => p.FiscalYear).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
-            var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1010", cancellationToken).ConfigureAwait(false);
-            var revenueAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "4010", cancellationToken).ConfigureAwait(false);
+            var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1120", cancellationToken).ConfigureAwait(false);
+            var revenueAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "4110", cancellationToken).ConfigureAwait(false);
             if (period != null && cashAccount != null && revenueAccount != null)
             {
-                var je = JournalEntry.Create(DateTime.UtcNow, "JE-1000", "Seed sales journal entry", "Seeding", period.Id);
-                je = je.AddLine(cashAccount.Id, 110m, 0m, "Cash sale");
-                je = je.AddLine(revenueAccount.Id, 0m, 110m, "Sales revenue");
+                var je = JournalEntry.Create(DateTime.UtcNow, "JE-1000", "Seed residential energy sales journal entry", "Seeding", period.Id);
+                je = je.AddLine(cashAccount.Id, 25000m, 0m, "Cash from residential energy sales");
+                je = je.AddLine(revenueAccount.Id, 0m, 25000m, "Residential energy revenue");
                 je = je.Post();
                 await context.JournalEntries.AddAsync(je, cancellationToken).ConfigureAwait(false);
 
                 // Create corresponding GeneralLedger entries
-                var gl1 = GeneralLedger.Create(je.Id, cashAccount.Id, 110m, 0m, "General", DateTime.UtcNow, "Seeding", "JE-1000", period.Id, "Seeded GL debit");
-                var gl2 = GeneralLedger.Create(je.Id, revenueAccount.Id, 0m, 110m, "General", DateTime.UtcNow, "Seeding", "JE-1000", period.Id, "Seeded GL credit");
+                var gl1 = GeneralLedger.Create(je.Id, cashAccount.Id, 25000m, 0m, "General", DateTime.UtcNow, "Seeding", "JE-1000", period.Id, "Cash receipt from residential energy sales");
+                var gl2 = GeneralLedger.Create(je.Id, revenueAccount.Id, 0m, 25000m, "General", DateTime.UtcNow, "Seeding", "JE-1000", period.Id, "Residential energy revenue recognition");
                 await context.GeneralLedgers.AddRangeAsync(new[] { gl1, gl2 }, cancellationToken).ConfigureAwait(false);
 
                 // Add a draft PostingBatch containing the journal entry (batch remains draft)
@@ -493,8 +663,8 @@ internal sealed class AccountingDbInitializer(
         // Seed TaxCodes (10 records)
         if (!await context.TaxCodes.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
-            var revenueAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "4010", cancellationToken).ConfigureAwait(false);
-            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
+            var revenueAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "4110", cancellationToken).ConfigureAwait(false);
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "8100", cancellationToken).ConfigureAwait(false);
             if (revenueAccount != null && expenseAccount != null)
             {
                 var taxCodes = new List<TaxCode>
@@ -542,8 +712,8 @@ internal sealed class AccountingDbInitializer(
         // Seed WriteOffs (10 records)
         if (!await context.WriteOffs.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
-            var receivableAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1100", cancellationToken).ConfigureAwait(false);
-            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
+            var receivableAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1210", cancellationToken).ConfigureAwait(false);
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5730", cancellationToken).ConfigureAwait(false);
             var members = await context.Members.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
             
             if (receivableAccount != null && expenseAccount != null && members.Count > 0)
@@ -602,7 +772,7 @@ internal sealed class AccountingDbInitializer(
         // Seed BankReconciliations (10 records)
         if (!await context.BankReconciliations.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
-            var bankAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1020", cancellationToken).ConfigureAwait(false);
+            var bankAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1120", cancellationToken).ConfigureAwait(false);
             if (bankAccount != null)
             {
                 var reconciliations = new List<BankReconciliation>();
@@ -622,8 +792,8 @@ internal sealed class AccountingDbInitializer(
         // Seed RecurringJournalEntries (10 records)
         if (!await context.RecurringJournalEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
-            var debitAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5020", cancellationToken).ConfigureAwait(false);
-            var creditAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1020", cancellationToken).ConfigureAwait(false);
+            var debitAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5200", cancellationToken).ConfigureAwait(false);
+            var creditAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1120", cancellationToken).ConfigureAwait(false);
             
             if (debitAccount != null && creditAccount != null)
             {
@@ -676,7 +846,7 @@ internal sealed class AccountingDbInitializer(
         if (!await context.ProjectCostEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var projects = await context.Projects.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
-            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5010", cancellationToken).ConfigureAwait(false);
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "6100", cancellationToken).ConfigureAwait(false);
             
             if (projects.Count > 0 && expenseAccount != null)
             {
