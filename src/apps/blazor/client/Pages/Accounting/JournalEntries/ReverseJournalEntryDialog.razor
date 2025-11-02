@@ -1,5 +1,3 @@
-@using FSH.Starter.WebApi.Accounting.JournalEntries
-
 <MudDialog>
     <DialogContent>
         <MudForm @ref="_form" @bind-IsValid="@_isValid">
@@ -42,26 +40,63 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
-    [Inject] private IAccountingClient AccountingClient { get; set; } = default!;
-    [Inject] private ISnackbar Snackbar { get; set; } = default!;
+    /// <summary>
+    /// MudDialog instance for closing the dialog.
+    /// </summary>
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
 
-    [Parameter] public DefaultIdType JournalEntryId { get; set; }
+    /// <summary>
+    /// The journal entry ID to reverse.
+    /// </summary>
+    [Parameter]
+    public DefaultIdType JournalEntryId { get; set; }
 
+    /// <summary>
+    /// Form reference for validation.
+    /// </summary>
     private MudForm _form = default!;
+
+    /// <summary>
+    /// Form validation state.
+    /// </summary>
     private bool _isValid;
+
+    /// <summary>
+    /// Date for the new reversing entry.
+    /// </summary>
     private DateTime? _reversalDate = DateTime.Today;
+
+    /// <summary>
+    /// Reason for reversing the entry.
+    /// </summary>
     private string _reversalReason = string.Empty;
 
+    /// <summary>
+    /// Cancels the dialog without making changes.
+    /// </summary>
     private void Cancel() => MudDialog.Cancel();
 
+    /// <summary>
+    /// Submits the reversal request and closes the dialog.
+    /// </summary>
     private async Task Submit()
     {
+        if (!_reversalDate.HasValue)
+        {
+            Snackbar.Add("Reversal date is required", Severity.Warning);
+            return;
+        }
+
         try
         {
-            var request = new ReverseJournalEntryRequest(_reversalDate!.Value, _reversalReason);
-            var response = await AccountingClient.ReverseJournalEntryAsync(JournalEntryId, request);
-            
+            var request = new ReverseJournalEntryRequest
+            {
+                ReversalDate = _reversalDate.Value,
+                ReversalReason = _reversalReason
+            };
+            var response = await Client.JournalEntryReverseEndpointAsync("1", JournalEntryId, request);
+
             Snackbar.Add($"Journal entry reversed successfully. New entry ID: {response.ReversingEntryId}", Severity.Success);
             MudDialog.Close(DialogResult.Ok(response.ReversingEntryId));
         }
@@ -71,4 +106,6 @@
         }
     }
 }
+
+
 

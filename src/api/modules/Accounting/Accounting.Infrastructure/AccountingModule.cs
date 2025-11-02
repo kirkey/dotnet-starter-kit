@@ -39,6 +39,7 @@ using Accounting.Infrastructure.Endpoints.AccountsPayableAccounts;
 using Accounting.Infrastructure.Endpoints.PrepaidExpenses;
 using Accounting.Infrastructure.Endpoints.CostCenters;
 using Accounting.Infrastructure.Endpoints.InterCompanyTransactions;
+using Accounting.Infrastructure.Endpoints.JournalEntryLines;
 using Accounting.Infrastructure.Endpoints.WriteOffs;
 using Accounting.Infrastructure.Endpoints.RetainedEarnings;
 using Accounting.Infrastructure.Import;
@@ -85,6 +86,7 @@ public static class AccountingModule
         accountingGroup.MapGeneralLedgerEndpoints();
         accountingGroup.MapInventoryEndpoints();
         accountingGroup.MapJournalEntriesEndpoints();
+        accountingGroup.MapJournalEntryLinesEndpoints();
         accountingGroup.MapInvoiceEndpoints();
         accountingGroup.MapMemberEndpoints();
         accountingGroup.MapMeterEndpoints();
@@ -302,6 +304,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Invoice>, AccountingRepository<Invoice>>("accounting:invoices");
         builder.Services.AddKeyedScoped<IRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journals");
         builder.Services.AddKeyedScoped<IReadRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journals");
+        builder.Services.AddKeyedScoped<IRepository<JournalEntryLine>, AccountingRepository<JournalEntryLine>>("accounting:journal-lines");
+        builder.Services.AddKeyedScoped<IReadRepository<JournalEntryLine>, AccountingRepository<JournalEntryLine>>("accounting:journal-lines");
         builder.Services.AddKeyedScoped<IRepository<Member>, AccountingRepository<Member>>("accounting:members");
         builder.Services.AddKeyedScoped<IReadRepository<Member>, AccountingRepository<Member>>("accounting:members");
         builder.Services.AddKeyedScoped<IRepository<Meter>, AccountingRepository<Meter>>("accounting:meters");

@@ -56,13 +56,6 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public decimal OriginalAmount { get; private set; }
     
-    private readonly List<JournalEntryLine> _lines = new();
-    /// <summary>
-    /// The debit/credit lines that make up this journal entry.
-    /// Must be balanced (total debits = total credits) before posting.
-    /// </summary>
-    public IReadOnlyCollection<JournalEntryLine> Lines => _lines.AsReadOnly();
-    
     /// <summary>
     /// Approval state: Pending, Approved, or Rejected.
     /// Default: "Pending". Must be approved before posting to GL.
@@ -167,30 +160,12 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Add a debit or credit line to the entry; denied if posted.
-    /// </summary>
-    public JournalEntry AddLine(DefaultIdType accountId, decimal debitAmount, decimal creditAmount, string? description = null)
-    {
-        if (IsPosted)
-            throw new JournalEntryCannotBeModifiedException(Id);
-
-        var line = JournalEntryLine.Create(Id, accountId, debitAmount, creditAmount, description);
-        _lines.Add(line);
-        
-        QueueDomainEvent(new JournalEntryLineAdded(Id, line.Id, accountId, debitAmount, creditAmount));
-        return this;
-    }
-
-    /// <summary>
-    /// Post the journal entry after verifying it is balanced (total debits equal total credits).
+    /// Post the journal entry. Caller must verify balance before calling.
     /// </summary>
     public JournalEntry Post()
     {
         if (IsPosted)
             throw new JournalEntryAlreadyPostedException(Id);
-
-        if (!IsBalanced())
-            throw new JournalEntryNotBalancedException(Id);
 
         IsPosted = true;
         QueueDomainEvent(new JournalEntryPosted(Id, Date));
@@ -233,94 +208,5 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         ApprovedBy = rejectedBy;
         ApprovedDate = DateTime.UtcNow;
         QueueDomainEvent(new JournalEntryRejected(Id, ApprovedBy, ApprovedDate.Value));
-    }
-
-    private bool IsBalanced()
-    {
-        var totalDebits = _lines.Sum(l => l.DebitAmount);
-        var totalCredits = _lines.Sum(l => l.CreditAmount);
-        return Math.Abs(totalDebits - totalCredits) < 0.01m;
-    }
-}
-
-/// <summary>
-/// A line in a journal entry representing either a debit or credit to an account.
-/// </summary>
-public class JournalEntryLine : BaseEntity
-{
-    /// <summary>
-    /// Parent journal entry identifier.
-    /// </summary>
-    public DefaultIdType JournalEntryId { get; private set; }
-
-    /// <summary>
-    /// Account identifier to be debited or credited.
-    /// </summary>
-    public DefaultIdType AccountId { get; private set; }
-
-    /// <summary>
-    /// Debit amount; either this or <see cref="CreditAmount"/> must be set, but not both.
-    /// </summary>
-    public decimal DebitAmount { get; private set; }
-
-    /// <summary>
-    /// Credit amount; either this or <see cref="DebitAmount"/> must be set, but not both.
-    /// </summary>
-    public decimal CreditAmount { get; private set; }
-
-    /// <summary>
-    /// Optional description for this line.
-    /// </summary>
-    public string? Description { get; private set; }
-
-    private JournalEntryLine(DefaultIdType journalEntryId, DefaultIdType accountId, 
-        decimal debitAmount, decimal creditAmount, string? description = null)
-    {
-        JournalEntryId = journalEntryId;
-        AccountId = accountId;
-        DebitAmount = debitAmount;
-        CreditAmount = creditAmount;
-        Description = description?.Trim();
-    }
-
-    /// <summary>
-    /// Create a line with validation: amounts must be non-negative and one-sided (debit XOR credit).
-    /// </summary>
-    public static JournalEntryLine Create(DefaultIdType journalEntryId, DefaultIdType accountId,
-        decimal debitAmount, decimal creditAmount, string? description = null)
-    {
-        if (debitAmount < 0 || creditAmount < 0)
-            throw new InvalidJournalEntryLineAmountException();
-
-        if (debitAmount > 0 && creditAmount > 0)
-            throw new InvalidJournalEntryLineAmountException();
-
-        if (debitAmount == 0 && creditAmount == 0)
-            throw new InvalidJournalEntryLineAmountException();
-
-        return new JournalEntryLine(journalEntryId, accountId, debitAmount, creditAmount, description);
-    }
-
-    /// <summary>
-    /// Update the line amounts and/or description.
-    /// </summary>
-    public JournalEntryLine Update(decimal? debitAmount, decimal? creditAmount, string? description)
-    {
-        if (debitAmount.HasValue && DebitAmount != debitAmount.Value)
-        {
-            DebitAmount = debitAmount.Value;
-        }
-
-        if (creditAmount.HasValue && CreditAmount != creditAmount.Value)
-        {
-            CreditAmount = creditAmount.Value;
-        }
-
-        if (description != Description)
-        {
-            Description = description?.Trim();
-        }
-
-        return this;
     }
 }

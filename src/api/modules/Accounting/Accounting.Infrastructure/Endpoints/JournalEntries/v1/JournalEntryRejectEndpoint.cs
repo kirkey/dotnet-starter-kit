@@ -1,4 +1,3 @@
-using Accounting.Application.JournalEntries.Create;
 using Accounting.Application.JournalEntries.Reject;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;

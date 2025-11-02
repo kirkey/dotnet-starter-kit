@@ -1,4 +1,5 @@
 @page "/accounting/journal-entries"
+@using FSH.Starter.Blazor.Client.Pages.Accounting.JournalEntries.Components
 
 <PageHeader Title="Journal Entries" Header="Journal Entries" SubHeader="Manage double-entry journal entries for general ledger posting." />
 
@@ -147,11 +148,11 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4">
-            <AutocompleteAccountingPeriod @bind-Value="context.PeriodId"
-                                         For="@(() => context.PeriodId)"
-                                         Label="Accounting Period"
-                                         Variant="Variant.Filled"
-                                         ReadOnly="@context.IsPosted" />
+            <AutocompleteAccountingPeriodId @bind-Value="context.PeriodId"
+                                            For="@(() => context.PeriodId)"
+                                           Label="Accounting Period"
+                                           Variant="Variant.Filled"
+                                           ReadOnly="@context.IsPosted" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4">

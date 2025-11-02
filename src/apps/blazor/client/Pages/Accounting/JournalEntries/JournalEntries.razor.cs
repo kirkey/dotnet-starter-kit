@@ -1,9 +1,3 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
-using FSH.Starter.Blazor.Client.Shared;
-using FSH.Starter.WebApi.Accounting.JournalEntries;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.JournalEntries;
 
 /// <summary>
@@ -11,20 +5,49 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.JournalEntries;
 /// </summary>
 public partial class JournalEntries
 {
-    [Inject] private IAccountingClient AccountingClient { get; set; } = default!;
-
+    /// <summary>
+    /// The entity table context for managing journal entries with server-side operations.
+    /// </summary>
     protected EntityServerTableContext<JournalEntryResponse, DefaultIdType, JournalEntryViewModel> Context { get; set; } = default!;
 
+    /// <summary>
+    /// Reference to the EntityTable component for journal entries.
+    /// </summary>
     private EntityTable<JournalEntryResponse, DefaultIdType, JournalEntryViewModel> _table = default!;
 
-    // Search filters
+    /// <summary>
+    /// Search filter for reference number.
+    /// </summary>
     private string? ReferenceNumber { get; set; }
+
+    /// <summary>
+    /// Search filter for source system.
+    /// </summary>
     private string? Source { get; set; }
+
+    /// <summary>
+    /// Search filter for date range start.
+    /// </summary>
     private DateTime? FromDate { get; set; }
+
+    /// <summary>
+    /// Search filter for date range end.
+    /// </summary>
     private DateTime? ToDate { get; set; }
+
+    /// <summary>
+    /// Search filter for posted status.
+    /// </summary>
     private bool? IsPosted { get; set; }
+
+    /// <summary>
+    /// Search filter for approval status.
+    /// </summary>
     private string? ApprovalStatus { get; set; }
 
+    /// <summary>
+    /// Dialog options for modal dialogs.
+    /// </summary>
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
     /// <summary>
@@ -44,6 +67,9 @@ public partial class JournalEntries
     private static Severity GetBalanceSeverity(JournalEntryViewModel model) =>
         model.IsBalanced ? Severity.Success : Severity.Warning;
 
+    /// <summary>
+    /// Initializes the component and sets up the entity table context with CRUD operations.
+    /// </summary>
     protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<JournalEntryResponse, DefaultIdType, JournalEntryViewModel>(
@@ -52,98 +78,95 @@ public partial class JournalEntries
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<JournalEntryResponse>(r => r.Date, "Date", "Date", typeof(DateTime)),
-                new EntityField<JournalEntryResponse>(r => r.ReferenceNumber, "Reference", "ReferenceNumber"),
-                new EntityField<JournalEntryResponse>(r => r.Source, "Source", "Source"),
-                new EntityField<JournalEntryResponse>(r => r.TotalDebits, "Debits", "TotalDebits", typeof(decimal)),
-                new EntityField<JournalEntryResponse>(r => r.TotalCredits, "Credits", "TotalCredits", typeof(decimal)),
-                new EntityField<JournalEntryResponse>(r => r.ApprovalStatus, "Approval", "ApprovalStatus"),
-                new EntityField<JournalEntryResponse>(r => r.IsPosted, "Posted", "IsPosted", typeof(bool)),
+                new EntityField<JournalEntryResponse>(response => response.Date, "Date", "Date", typeof(DateTime)),
+                new EntityField<JournalEntryResponse>(response => response.ReferenceNumber, "Reference", "ReferenceNumber"),
+                new EntityField<JournalEntryResponse>(response => response.Source, "Source", "Source"),
+                new EntityField<JournalEntryResponse>(response => response.TotalDebits, "Debits", "TotalDebits", typeof(decimal)),
+                new EntityField<JournalEntryResponse>(response => response.TotalCredits, "Credits", "TotalCredits", typeof(decimal)),
+                new EntityField<JournalEntryResponse>(response => response.ApprovalStatus, "Approval", "ApprovalStatus"),
+                new EntityField<JournalEntryResponse>(response => response.IsPosted, "Posted", "IsPosted", typeof(bool)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var searchQuery = new SearchJournalEntriesQuery
-                {
-                    PageNumber = filter.PageNumber,
-                    PageSize = filter.PageSize,
-                    OrderBy = filter.OrderBy,
-                    Keyword = filter.Keyword,
-                    ReferenceNumber = ReferenceNumber,
-                    Source = Source,
-                    FromDate = FromDate,
-                    ToDate = ToDate,
-                    IsPosted = IsPosted,
-                    ApprovalStatus = ApprovalStatus
-                };
+                var searchQuery = filter.Adapt<SearchJournalEntriesQuery>();
+                searchQuery.ReferenceNumber = ReferenceNumber;
+                searchQuery.Source = Source;
+                searchQuery.FromDate = FromDate;
+                searchQuery.ToDate = ToDate;
+                searchQuery.IsPosted = IsPosted;
+                searchQuery.ApprovalStatus = ApprovalStatus;
 
-                var result = await AccountingClient.SearchJournalEntriesAsync(searchQuery);
+                var result = await Client.JournalEntrySearchEndpointAsync("1", searchQuery);
                 return result.Adapt<PaginationResponse<JournalEntryResponse>>();
             },
-            createFunc: async model =>
+            createFunc: async viewModel =>
             {
-                if (!model.IsBalanced)
+                if (!viewModel.IsBalanced)
                 {
                     Snackbar.Add("Journal entry must be balanced before saving.", Severity.Error);
                     return;
                 }
 
-                var command = new CreateJournalEntryCommand(
-                    model.Date.GetValueOrDefault(DateTime.Today),
-                    model.ReferenceNumber,
-                    model.Source,
-                    model.Description,
-                    model.Lines.Select(l => new JournalEntryLineDto(
-                        l.AccountId,
-                        l.DebitAmount,
-                        l.CreditAmount,
-                        l.Description
-                    )).ToList(),
-                    model.PeriodId,
-                    model.OriginalAmount,
-                    model.Notes
-                );
+                var command = new CreateJournalEntryCommand
+                {
+                    Date = viewModel.Date.GetValueOrDefault(DateTime.Today),
+                    ReferenceNumber = viewModel.ReferenceNumber,
+                    Source = viewModel.Source,
+                    Description = viewModel.Description,
+                    Lines = viewModel.Lines.Select(l => new JournalEntryLineDto
+                    {
+                        AccountId = l.AccountId,
+                        DebitAmount = l.DebitAmount,
+                        CreditAmount = l.CreditAmount,
+                        Description = l.Description
+                    }).ToList(),
+                    PeriodId = viewModel.PeriodId,
+                    OriginalAmount = viewModel.OriginalAmount,
+                    Notes = viewModel.Notes
+                };
 
-                await AccountingClient.CreateJournalEntryAsync(command);
+                await Client.JournalEntryCreateEndpointAsync("1", command);
                 Snackbar.Add("Journal Entry created successfully", Severity.Success);
             },
-            updateFunc: async (id, model) =>
+            updateFunc: async (id, viewModel) =>
             {
-                if (!model.IsBalanced)
+                if (!viewModel.IsBalanced)
                 {
                     Snackbar.Add("Journal entry must be balanced before saving.", Severity.Error);
                     return;
                 }
 
-                if (model.IsPosted)
+                if (viewModel.IsPosted)
                 {
                     Snackbar.Add("Cannot update a posted journal entry. Use reverse instead.", Severity.Error);
                     return;
                 }
 
-                var command = new UpdateJournalEntryCommand(
-                    id,
-                    model.ReferenceNumber,
-                    model.Date,
-                    model.Source,
-                    model.PeriodId,
-                    model.OriginalAmount,
-                    model.Description,
-                    model.Notes
-                );
+                var command = new UpdateJournalEntryCommand
+                {
+                    Id = id,
+                    ReferenceNumber = viewModel.ReferenceNumber,
+                    Date = viewModel.Date,
+                    Source = viewModel.Source,
+                    PeriodId = viewModel.PeriodId,
+                    OriginalAmount = viewModel.OriginalAmount,
+                    Description = viewModel.Description,
+                    Notes = viewModel.Notes
+                };
 
-                await AccountingClient.UpdateJournalEntryAsync(id, command);
+                await Client.JournalEntryUpdateEndpointAsync("1", id, command);
                 Snackbar.Add("Journal Entry updated successfully", Severity.Success);
             },
             deleteFunc: async id =>
             {
-                await AccountingClient.DeleteJournalEntryAsync(id);
+                await Client.JournalEntryDeleteEndpointAsync("1", id);
                 Snackbar.Add("Journal Entry deleted successfully", Severity.Success);
             },
             getDetailsFunc: async id =>
             {
-                var entry = await AccountingClient.GetJournalEntryAsync(id);
+                var entry = await Client.JournalEntryGetEndpointAsync("1", id);
                 return MapToViewModel(entry);
             },
             getDefaultsFunc: () => Task.FromResult(new JournalEntryViewModel
@@ -165,17 +188,17 @@ public partial class JournalEntries
         {
             Id = response.Id,
             Date = response.Date,
-            ReferenceNumber = response.ReferenceNumber,
-            Source = response.Source,
-            Description = response.Description,
+            ReferenceNumber = response.ReferenceNumber ?? string.Empty,
+            Source = response.Source ?? "ManualEntry",
+            Description = response.Description ?? string.Empty,
             PeriodId = response.PeriodId,
             OriginalAmount = response.OriginalAmount,
             Notes = response.Notes,
             IsPosted = response.IsPosted,
-            ApprovalStatus = response.ApprovalStatus,
+            ApprovalStatus = response.ApprovalStatus ?? "Pending",
             ApprovedBy = response.ApprovedBy,
             ApprovedDate = response.ApprovedDate,
-            Lines = response.Lines.Select(l => new JournalEntryLineViewModel
+            Lines = response.Lines?.Select(l => new JournalEntryLineViewModel
             {
                 Id = l.Id,
                 AccountId = l.AccountId,
@@ -183,8 +206,8 @@ public partial class JournalEntries
                 AccountName = string.Empty,
                 DebitAmount = l.DebitAmount,
                 CreditAmount = l.CreditAmount,
-                Description = l.Description
-            }).ToList()
+                Description = l.Memo // Note: API uses 'Memo' but UI uses 'Description'
+            }).ToList() ?? new List<JournalEntryLineViewModel>()
         };
     }
 
@@ -202,7 +225,7 @@ public partial class JournalEntries
         {
             try
             {
-                await AccountingClient.PostJournalEntryAsync(id);
+                await Client.JournalEntryPostEndpointAsync("1", id);
                 Snackbar.Add("Journal entry posted successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -226,10 +249,13 @@ public partial class JournalEntries
         var dialog = await DialogService.ShowAsync<ReverseJournalEntryDialog>(
             "Reverse Journal Entry", parameters, _dialogOptions);
 
-        var result = await dialog.Result;
-        if (!result.Canceled)
+        if (dialog != null)
         {
-            await _table.ReloadDataAsync();
+            var result = await dialog.Result;
+            if (!result.Canceled)
+            {
+                await _table.ReloadDataAsync();
+            }
         }
     }
 
@@ -247,8 +273,11 @@ public partial class JournalEntries
         {
             try
             {
-                var request = new ApproveJournalEntryRequest("CurrentUser"); // TODO: Get actual user
-                await AccountingClient.ApproveJournalEntryAsync(id, request);
+                var request = new ApproveJournalEntryRequest
+                {
+                    ApprovedBy = "CurrentUser" // TODO: Get actual user
+                };
+                await Client.JournalEntryApproveEndpointAsync("1", id, request);
                 Snackbar.Add("Journal entry approved successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -272,10 +301,13 @@ public partial class JournalEntries
         var dialog = await DialogService.ShowAsync<RejectJournalEntryDialog>(
             "Reject Journal Entry", parameters, _dialogOptions);
 
-        var result = await dialog.Result;
-        if (!result.Canceled)
+        if (dialog != null)
         {
-            await _table.ReloadDataAsync();
+            var result = await dialog.Result;
+            if (!result.Canceled)
+            {
+                await _table.ReloadDataAsync();
+            }
         }
     }
 }

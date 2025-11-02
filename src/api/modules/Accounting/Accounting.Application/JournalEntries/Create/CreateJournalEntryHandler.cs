@@ -16,17 +16,9 @@ public sealed class CreateJournalEntryHandler(
             request.PeriodId,
             request.OriginalAmount);
 
-        // Add lines if provided
-        if (request.Lines is { Count: > 0 })
-        {
-            foreach (var line in request.Lines)
-            {
-                journalEntry.AddLine(line.AccountId, line.DebitAmount, line.CreditAmount, line.Description);
-            }
-        }
 
-        await repository.AddAsync(journalEntry, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
+        await repository.AddAsync(journalEntry, cancellationToken).ConfigureAwait(false);
+        await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return new CreateJournalEntryResponse(journalEntry.Id);
     }
