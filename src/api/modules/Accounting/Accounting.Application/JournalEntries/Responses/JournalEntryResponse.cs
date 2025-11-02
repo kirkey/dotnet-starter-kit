@@ -2,7 +2,7 @@ namespace Accounting.Application.JournalEntries.Responses;
 
 /// <summary>
 /// Response model representing a journal entry.
-/// Contains the main journal entry information including date, reference, and posting status.
+/// Contains the main journal entry information including date, reference, posting status, and approval information.
 /// </summary>
 public class JournalEntryResponse : BaseDto
 {
@@ -35,4 +35,44 @@ public class JournalEntryResponse : BaseDto
     /// Original transaction amount before any adjustments.
     /// </summary>
     public decimal OriginalAmount { get; set; }
+    
+    /// <summary>
+    /// Approval status: Pending, Approved, or Rejected.
+    /// </summary>
+    public string ApprovalStatus { get; set; } = "Pending";
+    
+    /// <summary>
+    /// User who approved or rejected the journal entry.
+    /// </summary>
+    public string? ApprovedBy { get; set; }
+    
+    /// <summary>
+    /// Date and time when the entry was approved or rejected.
+    /// </summary>
+    public DateTime? ApprovedDate { get; set; }
+    
+    /// <summary>
+    /// Collection of journal entry line items (debits and credits).
+    /// </summary>
+    public List<JournalEntryLineResponse> Lines { get; set; } = new();
+    
+    /// <summary>
+    /// Calculated total of all debit amounts.
+    /// </summary>
+    public decimal TotalDebits => Lines.Sum(l => l.DebitAmount);
+    
+    /// <summary>
+    /// Calculated total of all credit amounts.
+    /// </summary>
+    public decimal TotalCredits => Lines.Sum(l => l.CreditAmount);
+    
+    /// <summary>
+    /// Difference between debits and credits (should be zero for balanced entries).
+    /// </summary>
+    public decimal Difference => TotalDebits - TotalCredits;
+    
+    /// <summary>
+    /// Indicates whether the entry is balanced (debits = credits within tolerance).
+    /// </summary>
+    public bool IsBalanced => Math.Abs(Difference) < 0.01m;
 }

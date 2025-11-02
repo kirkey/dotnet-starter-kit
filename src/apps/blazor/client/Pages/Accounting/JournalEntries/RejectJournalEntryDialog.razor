@@ -1,0 +1,63 @@
+@using FSH.Starter.WebApi.Accounting.JournalEntries
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" @bind-IsValid="@_isValid">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        Rejecting this journal entry will prevent it from being posted to the general ledger.
+                    </MudAlert>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_rejectionReason"
+                                 Label="Rejection Reason"
+                                 Placeholder="Enter reason for rejecting this entry"
+                                 Variant="Variant.Filled"
+                                 Lines="3"
+                                 MaxLength="500"
+                                 Counter="500"
+                                 HelperText="Optional - provide reason for rejection" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="Submit">
+            Reject Entry
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
+    [Inject] private IAccountingClient AccountingClient { get; set; } = default!;
+    [Inject] private ISnackbar Snackbar { get; set; } = default!;
+
+    [Parameter] public DefaultIdType JournalEntryId { get; set; }
+
+    private MudForm _form = default!;
+    private bool _isValid;
+    private string _rejectionReason = string.Empty;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        try
+        {
+            var request = new RejectJournalEntryRequest("CurrentUser", _rejectionReason); // TODO: Get actual user
+            await AccountingClient.RejectJournalEntryAsync(JournalEntryId, request);
+            
+            Snackbar.Add("Journal entry rejected", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error rejecting journal entry: {ex.Message}", Severity.Error);
+        }
+    }
+}
+

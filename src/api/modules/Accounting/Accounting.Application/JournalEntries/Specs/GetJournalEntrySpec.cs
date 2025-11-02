@@ -4,7 +4,7 @@ namespace Accounting.Application.JournalEntries.Specs;
 
 /// <summary>
 /// Specification to retrieve a journal entry by ID projected to <see cref="JournalEntryResponse"/>.
-/// Performs database-level projection for optimal performance.
+/// Performs database-level projection for optimal performance including journal entry lines.
 /// </summary>
 public sealed class GetJournalEntrySpec : Specification<JournalEntry, JournalEntryResponse>
 {

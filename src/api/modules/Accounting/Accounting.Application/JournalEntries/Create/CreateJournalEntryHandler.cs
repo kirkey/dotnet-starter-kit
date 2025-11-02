@@ -21,7 +21,7 @@ public sealed class CreateJournalEntryHandler(
         {
             foreach (var line in request.Lines)
             {
-                journalEntry.AddLine(line.AccountId, line.DebitAmount, line.CreditAmount, line.Memo);
+                journalEntry.AddLine(line.AccountId, line.DebitAmount, line.CreditAmount, line.Description);
             }
         }
 

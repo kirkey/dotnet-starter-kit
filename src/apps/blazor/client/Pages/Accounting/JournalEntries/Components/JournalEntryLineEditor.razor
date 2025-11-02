@@ -1,0 +1,91 @@
+@using FSH.Starter.Blazor.Client.Components.Autocomplete
+
+<MudTable Items="@Lines" Dense="true" Hover="true" Elevation="0" Class="mb-3">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Entry Lines</MudText>
+        <MudSpacer />
+        <MudButton StartIcon="@Icons.Material.Filled.Add"
+                   Color="Color.Primary"
+                   Size="Size.Small"
+                   OnClick="AddLine">
+            Add Line
+        </MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Account</MudTh>
+        <MudTh Style="text-align:right; width:150px;">Debit</MudTh>
+        <MudTh Style="text-align:right; width:150px;">Credit</MudTh>
+        <MudTh Style="width:250px;">Description</MudTh>
+        <MudTh Style="width:80px;">Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate Context="line">
+        <MudTd DataLabel="Account">
+            <AutocompleteChartOfAccountCode @bind-Value="line.AccountCode"
+                                           Label=""
+                                           TextFormat="CodeName"
+                                           Variant="Variant.Outlined"
+                                           Margin="Margin.Dense"
+                                           OnValueChanged="@((string code) => OnAccountChanged(line, code))"
+                                           Required="true" />
+        </MudTd>
+        <MudTd DataLabel="Debit" Style="text-align:right">
+            <MudNumericField @bind-Value="line.DebitAmount"
+                            Format="N2"
+                            Variant="Variant.Outlined"
+                            Margin="Margin.Dense"
+                            Disabled="@(line.CreditAmount > 0)"
+                            Min="0"
+                            Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudTd>
+        <MudTd DataLabel="Credit" Style="text-align:right">
+            <MudNumericField @bind-Value="line.CreditAmount"
+                            Format="N2"
+                            Variant="Variant.Outlined"
+                            Margin="Margin.Dense"
+                            Disabled="@(line.DebitAmount > 0)"
+                            Min="0"
+                            Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudTd>
+        <MudTd DataLabel="Description">
+            <MudTextField @bind-Value="line.Description"
+                         Variant="Variant.Outlined"
+                         Margin="Margin.Dense"
+                         MaxLength="200" />
+        </MudTd>
+        <MudTd DataLabel="Actions">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                          Color="Color.Error"
+                          Size="Size.Small"
+                          OnClick="@(() => RemoveLine(line))" />
+        </MudTd>
+    </RowTemplate>
+    <FooterContent>
+        <MudTd colspan="1"><strong>TOTALS</strong></MudTd>
+        <MudTd Style="text-align:right"><strong>@TotalDebits.ToString("C")</strong></MudTd>
+        <MudTd Style="text-align:right"><strong>@TotalCredits.ToString("C")</strong></MudTd>
+        <MudTd colspan="2">
+            @if (IsBalanced)
+            {
+                <MudChip Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.CheckCircle">
+                    Balanced
+                </MudChip>
+            }
+            else
+            {
+                <MudChip Color="Color.Warning" Size="Size.Small" Icon="@Icons.Material.Filled.Warning">
+                    Out of Balance: @Difference.ToString("C")
+                </MudChip>
+            }
+        </MudTd>
+    </FooterContent>
+</MudTable>
+
+@if (Lines.Count == 0)
+{
+    <MudAlert Severity="Severity.Info" Dense="true">
+        Click "Add Line" to start creating journal entry lines. Each entry requires at least 2 balanced lines (debits = credits).
+    </MudAlert>
+}
+

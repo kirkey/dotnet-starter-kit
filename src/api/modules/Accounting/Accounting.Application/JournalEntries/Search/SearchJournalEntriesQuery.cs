@@ -32,4 +32,14 @@ public sealed class SearchJournalEntriesQuery : PaginationFilter, IRequest<Paged
     /// Filter by posted state. When null, do not filter by posted state.
     /// </summary>
     public bool? IsPosted { get; set; }
+    
+    /// <summary>
+    /// Filter by approval status: Pending, Approved, or Rejected.
+    /// </summary>
+    public string? ApprovalStatus { get; set; }
+    
+    /// <summary>
+    /// Filter by accounting period identifier.
+    /// </summary>
+    public DefaultIdType? PeriodId { get; set; }
 }

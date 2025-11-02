@@ -1,0 +1,74 @@
+@using FSH.Starter.WebApi.Accounting.JournalEntries
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" @bind-IsValid="@_isValid">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning" Dense="true">
+                        This will create a new reversing journal entry with opposite debit/credit amounts.
+                        The original entry will remain posted but marked as reversed.
+                    </MudAlert>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDatePicker @bind-Date="_reversalDate"
+                                  Label="Reversal Date"
+                                  DateFormat="MM/dd/yyyy"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  HelperText="Date for the new reversing entry" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_reversalReason"
+                                 Label="Reversal Reason"
+                                 Placeholder="Enter reason for reversing this entry"
+                                 Variant="Variant.Filled"
+                                 Lines="3"
+                                 Required="true"
+                                 MaxLength="500"
+                                 Counter="500" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit" Disabled="@(!_isValid)">
+            Reverse Entry
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
+    [Inject] private IAccountingClient AccountingClient { get; set; } = default!;
+    [Inject] private ISnackbar Snackbar { get; set; } = default!;
+
+    [Parameter] public DefaultIdType JournalEntryId { get; set; }
+
+    private MudForm _form = default!;
+    private bool _isValid;
+    private DateTime? _reversalDate = DateTime.Today;
+    private string _reversalReason = string.Empty;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        try
+        {
+            var request = new ReverseJournalEntryRequest(_reversalDate!.Value, _reversalReason);
+            var response = await AccountingClient.ReverseJournalEntryAsync(JournalEntryId, request);
+            
+            Snackbar.Add($"Journal entry reversed successfully. New entry ID: {response.ReversingEntryId}", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(response.ReversingEntryId));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error reversing journal entry: {ex.Message}", Severity.Error);
+        }
+    }
+}
+

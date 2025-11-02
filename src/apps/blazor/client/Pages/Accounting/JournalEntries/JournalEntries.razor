@@ -1,0 +1,245 @@
+@page "/accounting/journal-entries"
+
+<PageHeader Title="Journal Entries" Header="Journal Entries" SubHeader="Manage double-entry journal entries for general ledger posting." />
+
+<EntityTable @ref="_table" TEntity="JournalEntryResponse" TId="DefaultIdType" TRequest="JournalEntryViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@ReferenceNumber"
+                          Label="Reference Number"
+                          Placeholder="Search by reference"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@Source"
+                          Label="Source"
+                          Placeholder="Search by source"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Source" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@ApprovalStatus"
+                       Label="Approval Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("Rejected")">Rejected</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@FromDate"
+                           Label="Date From"
+                           DateFormat="MM/dd/yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@ToDate"
+                           Label="Date To"
+                           DateFormat="MM/dd/yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@IsPosted"
+                       Label="Posted Entries Only"
+                       Color="Color.Primary"
+                       ThreeState="true" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entry">
+        @if (entry.ApprovalStatus == "Pending")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnApprove(entry.Id))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnReject(entry.Id))">
+                Reject
+            </MudMenuItem>
+        }
+        @if (entry.ApprovalStatus == "Approved" && !entry.IsPosted)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PostAdd" OnClick="@(() => OnPost(entry.Id))">
+                Post to GL
+            </MudMenuItem>
+        }
+        @if (entry.IsPosted)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Replay" OnClick="@(() => OnReverse(entry.Id))">
+                Reverse Entry
+            </MudMenuItem>
+        }
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Entry ID" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudChip T="object" Color="@GetStatusColor(context.ApprovalStatus)" Size="Size.Large">
+                    @context.ApprovalStatus
+                </MudChip>
+                @if (context.IsPosted)
+                {
+                    <MudChip T="object" Color="Color.Success" Size="Size.Large" Icon="@Icons.Material.Filled.CheckCircle">
+                        Posted
+                    </MudChip>
+                }
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.Date"
+                           For="@(() => context.Date)"
+                           Label="Entry Date"
+                           DateFormat="MM/dd/yyyy"
+                           Variant="Variant.Filled"
+                           Required="true"
+                           ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ReferenceNumber"
+                          For="@(() => context.ReferenceNumber)"
+                          Label="Reference Number"
+                          Placeholder="e.g., JE-2025-001"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.Source"
+                       For="@(() => context.Source)"
+                       Label="Source"
+                       Variant="Variant.Filled"
+                       Required="true"
+                       Disabled="@context.IsPosted">
+                <MudSelectItem Value="@("ManualEntry")">Manual Entry</MudSelectItem>
+                <MudSelectItem Value="@("InvoicePost")">Invoice Post</MudSelectItem>
+                <MudSelectItem Value="@("BillPost")">Bill Post</MudSelectItem>
+                <MudSelectItem Value="@("PaymentProcessing")">Payment Processing</MudSelectItem>
+                <MudSelectItem Value="@("CheckClearing")">Check Clearing</MudSelectItem>
+                <MudSelectItem Value="@("BankReconciliation")">Bank Reconciliation</MudSelectItem>
+                <MudSelectItem Value="@("PeriodClose")">Period Close</MudSelectItem>
+                <MudSelectItem Value="@("Depreciation")">Depreciation</MudSelectItem>
+                <MudSelectItem Value="@("AdjustingEntry")">Adjusting Entry</MudSelectItem>
+                <MudSelectItem Value="@("CorrectingEntry")">Correcting Entry</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Placeholder="Describe the purpose of this entry"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          Required="true"
+                          ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteAccountingPeriod @bind-Value="context.PeriodId"
+                                         For="@(() => context.PeriodId)"
+                                         Label="Accounting Period"
+                                         Variant="Variant.Filled"
+                                         ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.OriginalAmount"
+                             For="@(() => context.OriginalAmount)"
+                             Label="Original Amount"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                             ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        @if (!context.IsPosted)
+        {
+            <MudItem xs="12">
+                <MudDivider />
+                <MudText Typo="Typo.h6" Class="my-3">Journal Entry Lines</MudText>
+            </MudItem>
+
+            <MudItem xs="12">
+                <JournalEntryLineEditor @bind-Lines="context.Lines" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudAlert Severity="@GetBalanceSeverity(context)" Dense="true" Class="my-3">
+                    <div class="d-flex justify-space-between align-center">
+                        <div>
+                            <strong>Total Debits:</strong> @context.TotalDebits.ToString("C") &nbsp;&nbsp;
+                            <strong>Total Credits:</strong> @context.TotalCredits.ToString("C") &nbsp;&nbsp;
+                            <strong>Difference:</strong> @context.Difference.ToString("C")
+                        </div>
+                        <div>
+                            @if (context.IsBalanced)
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
+                                <span>Balanced</span>
+                            }
+                            else
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Warning" />
+                                <span>Out of Balance</span>
+                            }
+                        </div>
+                    </div>
+                </MudAlert>
+            </MudItem>
+        }
+        else
+        {
+            <MudItem xs="12">
+                <MudDivider />
+                <MudText Typo="Typo.h6" Class="my-3">Journal Entry Lines (Read-Only)</MudText>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTable Items="@context.Lines" Dense="true" Hover="true" Elevation="0">
+                    <HeaderContent>
+                        <MudTh>Account</MudTh>
+                        <MudTh Style="text-align:right">Debit</MudTh>
+                        <MudTh Style="text-align:right">Credit</MudTh>
+                        <MudTh>Description</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd>@context.AccountCode - @context.AccountName</MudTd>
+                        <MudTd Style="text-align:right">@(context.DebitAmount > 0 ? context.DebitAmount.ToString("C") : "")</MudTd>
+                        <MudTd Style="text-align:right">@(context.CreditAmount > 0 ? context.CreditAmount.ToString("C") : "")</MudTd>
+                        <MudTd>@context.Description</MudTd>
+                    </RowTemplate>
+                    <FooterContent>
+                        <MudTd><strong>TOTALS</strong></MudTd>
+                        <MudTd Style="text-align:right"><strong>@context.TotalDebits.ToString("C")</strong></MudTd>
+                        <MudTd Style="text-align:right"><strong>@context.TotalCredits.ToString("C")</strong></MudTd>
+                        <MudTd></MudTd>
+                    </FooterContent>
+                </MudTable>
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Placeholder="Additional notes..."
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          ReadOnly="@context.IsPosted" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

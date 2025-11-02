@@ -19,6 +19,17 @@ public static class JournalEntriesEndpoints
         // Version 1 endpoints - Query operations
         journalEntriesGroup.MapJournalEntryGetEndpoint();
         journalEntriesGroup.MapJournalEntrySearchEndpoint();
+        
+        // Version 1 endpoints - Command operations
+        journalEntriesGroup.MapJournalEntryCreateEndpoint();
+        journalEntriesGroup.MapJournalEntryUpdateEndpoint();
+        journalEntriesGroup.MapJournalEntryDeleteEndpoint();
+        
+        // Version 1 endpoints - Workflow operations
+        journalEntriesGroup.MapJournalEntryPostEndpoint();
+        journalEntriesGroup.MapJournalEntryReverseEndpoint();
+        journalEntriesGroup.MapJournalEntryApproveEndpoint();
+        journalEntriesGroup.MapJournalEntryRejectEndpoint();
 
         return app;
     }
