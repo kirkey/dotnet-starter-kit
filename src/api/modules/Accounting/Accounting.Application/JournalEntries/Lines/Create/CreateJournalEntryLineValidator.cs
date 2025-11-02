@@ -3,7 +3,7 @@ namespace Accounting.Application.JournalEntries.Lines.Create;
 /// <summary>
 /// Validator for CreateJournalEntryLineCommand.
 /// </summary>
-public sealed class CreateJournalEntryLineValidator : CustomValidator<CreateJournalEntryLineCommand>
+public sealed class CreateJournalEntryLineValidator : AbstractValidator<CreateJournalEntryLineCommand>
 {
     public CreateJournalEntryLineValidator()
     {

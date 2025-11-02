@@ -6,7 +6,9 @@ namespace Accounting.Application.JournalEntries.Reverse;
 /// </summary>
 public sealed class ReverseJournalEntryHandler(
     ILogger<ReverseJournalEntryHandler> logger,
-    [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
+    [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository,
+    [FromKeyedServices("accounting:journal-lines")] IReadRepository<JournalEntryLine> journalLineReadRepo,
+    [FromKeyedServices("accounting:journal-lines")] IRepository<JournalEntryLine> journalLineRepo)
     : IRequestHandler<ReverseJournalEntryCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(ReverseJournalEntryCommand request, CancellationToken cancellationToken)
@@ -34,20 +36,30 @@ public sealed class ReverseJournalEntryHandler(
             originalEntry.PeriodId,
             originalEntry.OriginalAmount);
 
-        // Add reversed lines (swap debits and credits)
-        foreach (var line in originalEntry.Lines)
+        await repository.AddAsync(reversingEntry, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+
+        // Get original lines and create reversed lines (swap debits and credits)
+        var spec = new Lines.Specs.JournalEntryLinesByJournalEntryIdSpec(originalEntry.Id);
+        var originalLines = await journalLineReadRepo.ListAsync(spec, cancellationToken);
+        
+        foreach (var line in originalLines)
         {
-            reversingEntry.AddLine(
+            var reversedLine = JournalEntryLine.Create(
+                reversingEntry.Id,
                 line.AccountId,
                 line.CreditAmount,  // Swap: credit becomes debit
                 line.DebitAmount,   // Swap: debit becomes credit
-                $"Reversal of: {line.Description}");
+                $"Reversal of: {line.Memo}",
+                line.Reference);
+            await journalLineRepo.AddAsync(reversedLine, cancellationToken);
         }
+        
+        await journalLineRepo.SaveChangesAsync(cancellationToken);
 
         // Post the reversing entry automatically
         reversingEntry.Post();
-
-        await repository.AddAsync(reversingEntry, cancellationToken);
+        await repository.UpdateAsync(reversingEntry, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
         // Queue the reversal event on the original entry

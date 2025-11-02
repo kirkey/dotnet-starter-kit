@@ -5,7 +5,8 @@ namespace Accounting.Application.Patronages.Handlers;
 public sealed class RetirePatronageHandler(
     [FromKeyedServices("accounting:patronagecapitals")] IRepository<PatronageCapital> patronageRepo,
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> accountRepo,
-    [FromKeyedServices("accounting:postingbatches")] IRepository<PostingBatch> postingBatchRepo)
+    [FromKeyedServices("accounting:postingbatches")] IRepository<PostingBatch> postingBatchRepo,
+    [FromKeyedServices("accounting:journal-lines")] IRepository<JournalEntryLine> journalLineRepo)
     : IRequestHandler<RetirePatronageCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(RetirePatronageCommand request, CancellationToken cancellationToken)
@@ -29,10 +30,6 @@ public sealed class RetirePatronageHandler(
         if (equityAccount != null && cashAccount != null)
         {
             var je = JournalEntry.Create(request.RetirementDate, $"RET-{patronage.Id}", request.Description ?? "Patronage retirement", "Patronage", null, request.Amount);
-            // Debit Equity (to reduce equity)
-            je.AddLine(equityAccount.Id, request.Amount, 0m, $"Retire patronage {patronage.Id}");
-            // Credit Cash
-            je.AddLine(cashAccount.Id, 0m, request.Amount, $"Pay patronage {patronage.Id}");
 
             var batchNumber = $"RET-{DateTime.UtcNow:yyyyMMddHHmmss}-{DefaultIdType.NewGuid().ToString().Substring(0,6)}";
             var batch = PostingBatch.Create(batchNumber, DateTime.UtcNow, description: $"Patronage retirement {patronage.Id}", periodId: null);
@@ -40,6 +37,17 @@ public sealed class RetirePatronageHandler(
 
             await postingBatchRepo.AddAsync(batch, cancellationToken);
             await postingBatchRepo.SaveChangesAsync(cancellationToken);
+            
+            // Create journal entry lines separately (new pattern)
+            // Debit Equity (to reduce equity)
+            var equityLine = JournalEntryLine.Create(je.Id, equityAccount.Id, request.Amount, 0m, $"Retire patronage {patronage.Id}");
+            await journalLineRepo.AddAsync(equityLine, cancellationToken);
+            
+            // Credit Cash
+            var cashLine = JournalEntryLine.Create(je.Id, cashAccount.Id, 0m, request.Amount, $"Pay patronage {patronage.Id}");
+            await journalLineRepo.AddAsync(cashLine, cancellationToken);
+            
+            await journalLineRepo.SaveChangesAsync(cancellationToken);
         }
 
         await patronageRepo.SaveChangesAsync(cancellationToken);

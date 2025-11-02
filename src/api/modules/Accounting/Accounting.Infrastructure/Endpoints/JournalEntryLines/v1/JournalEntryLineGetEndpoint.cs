@@ -1,6 +1,5 @@
 using Accounting.Application.JournalEntries.Lines.Get;
 using Accounting.Application.JournalEntries.Lines.Responses;
-using Accounting.Application.JournalEntries.Lines.Specs.Accounting.Application.JournalEntries.Lines.Get;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntryLines.v1;
 

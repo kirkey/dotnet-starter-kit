@@ -3,7 +3,7 @@ namespace Accounting.Application.JournalEntries.Lines.Update;
 /// <summary>
 /// Validator for UpdateJournalEntryLineCommand.
 /// </summary>
-public sealed class UpdateJournalEntryLineValidator : CustomValidator<UpdateJournalEntryLineCommand>
+public sealed class UpdateJournalEntryLineValidator : AbstractValidator<UpdateJournalEntryLineCommand>
 {
     public UpdateJournalEntryLineValidator()
     {

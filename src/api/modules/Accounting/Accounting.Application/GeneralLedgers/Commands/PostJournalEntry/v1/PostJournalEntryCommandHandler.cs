@@ -6,6 +6,8 @@ public sealed class PostJournalEntryCommandHandler(
     ILogger<PostJournalEntryCommandHandler> logger,
     [FromKeyedServices("accounting:journalentries")]
     IRepository<JournalEntry> journalRepository,
+    [FromKeyedServices("accounting:journal-lines")]
+    IReadRepository<JournalEntryLine> journalLineRepository,
     [FromKeyedServices("accounting:generalledger")]
     IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")]
@@ -29,11 +31,15 @@ public sealed class PostJournalEntryCommandHandler(
             throw new JournalEntryAlreadyPostedException(journalEntry.Id);
         }
 
+        // Get all lines for this journal entry
+        var spec = new JournalEntries.Lines.Specs.JournalEntryLinesByJournalEntryIdSpec(journalEntry.Id);
+        var lines = await journalLineRepository.ListAsync(spec, cancellationToken);
+
         // Validate balances if required
         if (request.ValidateBalances)
         {
-            var totalDebits = journalEntry.Lines.Sum(l => l.DebitAmount);
-            var totalCredits = journalEntry.Lines.Sum(l => l.CreditAmount);
+            var totalDebits = lines.Sum(l => l.DebitAmount);
+            var totalCredits = lines.Sum(l => l.CreditAmount);
             if (totalDebits != totalCredits)
             {
                 throw new JournalEntryUnbalancedException($"Journal entry {journalEntry.ReferenceNumber} is unbalanced. Debits: {totalDebits}, Credits: {totalCredits}");
@@ -41,7 +47,7 @@ public sealed class PostJournalEntryCommandHandler(
         }
 
         // Create general ledger entries
-        foreach (var line in journalEntry.Lines)
+        foreach (var line in lines)
         {
             var account = await accountRepository.GetByIdAsync(line.AccountId, cancellationToken);
             var usoaClass = account?.UsoaCategory ?? "General";
@@ -52,7 +58,7 @@ public sealed class PostJournalEntryCommandHandler(
                 line.CreditAmount,
                 usoaClass,
                 request.PostingDate,
-                line.Description,
+                line.Memo,
                 request.PostingReference ?? journalEntry.ReferenceNumber
             );
             await ledgerRepository.AddAsync(ledgerEntry, cancellationToken);

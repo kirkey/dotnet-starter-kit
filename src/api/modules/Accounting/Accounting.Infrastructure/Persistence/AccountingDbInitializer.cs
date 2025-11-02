@@ -508,10 +508,17 @@ internal sealed class AccountingDbInitializer(
             if (period != null && cashAccount != null && revenueAccount != null)
             {
                 var je = JournalEntry.Create(DateTime.UtcNow, "JE-1000", "Seed residential energy sales journal entry", "Seeding", period.Id);
-                je = je.AddLine(cashAccount.Id, 25000m, 0m, "Cash from residential energy sales");
-                je = je.AddLine(revenueAccount.Id, 0m, 25000m, "Residential energy revenue");
-                je = je.Post();
                 await context.JournalEntries.AddAsync(je, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                // Create journal entry lines separately
+                var cashLine = JournalEntryLine.Create(je.Id, cashAccount.Id, 25000m, 0m, "Cash from residential energy sales");
+                var revenueLine = JournalEntryLine.Create(je.Id, revenueAccount.Id, 0m, 25000m, "Residential energy revenue");
+                await context.JournalEntryLines.AddRangeAsync(new[] { cashLine, revenueLine }, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                je = je.Post();
+                context.JournalEntries.Update(je);
 
                 // Create corresponding GeneralLedger entries
                 var gl1 = GeneralLedger.Create(je.Id, cashAccount.Id, 25000m, 0m, "General", DateTime.UtcNow, "Seeding", "JE-1000", period.Id, "Cash receipt from residential energy sales");

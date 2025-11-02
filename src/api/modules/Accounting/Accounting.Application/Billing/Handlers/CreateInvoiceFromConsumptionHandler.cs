@@ -9,7 +9,8 @@ public sealed class CreateInvoiceFromConsumptionHandler(
     [FromKeyedServices("accounting:rateschedules")] IReadRepository<RateSchedule> rateRepo,
     [FromKeyedServices("accounting:invoices")] IRepository<Invoice> invoiceRepo,
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> accountRepo,
-    [FromKeyedServices("accounting:postingbatches")] IRepository<PostingBatch> postingBatchRepo
+    [FromKeyedServices("accounting:postingbatches")] IRepository<PostingBatch> postingBatchRepo,
+    [FromKeyedServices("accounting:journal-lines")] IRepository<JournalEntryLine> journalLineRepo
 ) : IRequestHandler<CreateInvoiceFromConsumptionCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(CreateInvoiceFromConsumptionCommand request, CancellationToken cancellationToken)
@@ -80,17 +81,24 @@ public sealed class CreateInvoiceFromConsumptionHandler(
         else
         {
             var je = JournalEntry.Create(request.InvoiceDate, invoice.InvoiceNumber, invoice.Description ?? "Invoice Posting", "Billing", null, invoice.TotalAmount);
-            // Debit AR
-            je.AddLine(arAccount.Id, invoice.TotalAmount, 0m, $"AR for {invoice.InvoiceNumber}");
-            // Credit Revenue
-            je.AddLine(revenueAccount.Id, 0m, invoice.TotalAmount, $"Revenue for {invoice.InvoiceNumber}");
-
+            
             var batchNumber = $"BATCH-{DateTime.UtcNow:yyyyMMddHHmmss}-{DefaultIdType.NewGuid().ToString().Substring(0,6)}";
             var batch = PostingBatch.Create(batchNumber, DateTime.UtcNow, description: $"Invoice posting for {invoice.InvoiceNumber}", periodId: null);
             batch.AddJournalEntry(je);
 
             await postingBatchRepo.AddAsync(batch, cancellationToken);
             await postingBatchRepo.SaveChangesAsync(cancellationToken);
+            
+            // Create journal entry lines separately (new pattern)
+            // Debit AR
+            var arLine = JournalEntryLine.Create(je.Id, arAccount.Id, invoice.TotalAmount, 0m, $"AR for {invoice.InvoiceNumber}");
+            await journalLineRepo.AddAsync(arLine, cancellationToken);
+            
+            // Credit Revenue
+            var revenueLine = JournalEntryLine.Create(je.Id, revenueAccount.Id, 0m, invoice.TotalAmount, $"Revenue for {invoice.InvoiceNumber}");
+            await journalLineRepo.AddAsync(revenueLine, cancellationToken);
+            
+            await journalLineRepo.SaveChangesAsync(cancellationToken);
         }
 
         return invoice.Id;

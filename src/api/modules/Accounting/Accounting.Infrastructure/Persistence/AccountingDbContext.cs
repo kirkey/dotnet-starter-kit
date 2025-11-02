@@ -24,6 +24,7 @@ public sealed class AccountingDbContext(
     public DbSet<GeneralLedger> GeneralLedgers { get; set; } = null!;
     public DbSet<Invoice> Invoices { get; set; } = null!;
     public DbSet<JournalEntry> JournalEntries { get; set; } = null!;
+    public DbSet<JournalEntryLine> JournalEntryLines { get; set; } = null!;
     public DbSet<Member> Members { get; set; } = null!;
     public DbSet<Meter> Meters { get; set; } = null!;
     public DbSet<Payee> Payees { get; set; } = null!;
