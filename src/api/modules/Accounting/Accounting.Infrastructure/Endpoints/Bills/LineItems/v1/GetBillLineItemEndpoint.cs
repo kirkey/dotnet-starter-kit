@@ -12,6 +12,7 @@ public static class GetBillLineItemEndpoint
     {
         return endpoints
             .MapGet("/{billId:guid}/line-items/{lineItemId:guid}", async (
+                DefaultIdType billId,
                 DefaultIdType lineItemId,
                 ISender mediator) =>
             {
@@ -28,4 +29,3 @@ public static class GetBillLineItemEndpoint
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }
-

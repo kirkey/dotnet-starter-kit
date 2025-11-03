@@ -25,4 +25,3 @@ public static class GetBillEndpoint
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }
-
