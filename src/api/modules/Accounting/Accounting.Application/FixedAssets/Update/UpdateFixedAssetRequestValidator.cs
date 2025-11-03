@@ -38,5 +38,33 @@ public class UpdateFixedAssetRequestValidator : AbstractValidator<UpdateFixedAss
         RuleFor(x => x.Notes)
             .MaximumLength(1000)
             .When(x => !string.IsNullOrEmpty(x.Notes));
+
+        RuleFor(x => x.GpsCoordinates)
+            .MaximumLength(100)
+            .When(x => !string.IsNullOrEmpty(x.GpsCoordinates));
+
+        RuleFor(x => x.SubstationName)
+            .MaximumLength(200)
+            .When(x => !string.IsNullOrEmpty(x.SubstationName));
+
+        RuleFor(x => x.RegulatoryClassification)
+            .MaximumLength(200)
+            .When(x => !string.IsNullOrEmpty(x.RegulatoryClassification));
+
+        RuleFor(x => x.VoltageRating)
+            .GreaterThan(0)
+            .When(x => x.VoltageRating.HasValue);
+
+        RuleFor(x => x.Capacity)
+            .GreaterThan(0)
+            .When(x => x.Capacity.HasValue);
+
+        RuleFor(x => x.Manufacturer)
+            .MaximumLength(200)
+            .When(x => !string.IsNullOrEmpty(x.Manufacturer));
+
+        RuleFor(x => x.ModelNumber)
+            .MaximumLength(100)
+            .When(x => !string.IsNullOrEmpty(x.ModelNumber));
     }
 }

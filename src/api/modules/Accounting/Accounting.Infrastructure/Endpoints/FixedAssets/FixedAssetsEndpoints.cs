@@ -17,6 +17,9 @@ public static class FixedAssetsEndpoints
             .WithDescription("Endpoints for managing fixed assets");
 
         // Version 1 endpoints
+        fixedAssetsGroup.MapFixedAssetCreateEndpoint();
+        fixedAssetsGroup.MapFixedAssetGetEndpoint();
+        fixedAssetsGroup.MapFixedAssetUpdateEndpoint();
         fixedAssetsGroup.MapFixedAssetDeleteEndpoint();
         fixedAssetsGroup.MapFixedAssetSearchEndpoint();
 

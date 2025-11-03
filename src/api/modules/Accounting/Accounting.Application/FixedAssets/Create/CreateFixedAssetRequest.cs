@@ -16,6 +16,15 @@ public sealed record CreateFixedAssetCommand(
     string? SerialNumber = null,
     string? Location = null,
     string? Department = null,
+    string? GpsCoordinates = null,
+    string? SubstationName = null,
+    DefaultIdType? AssetUsoaId = null,
+    string? RegulatoryClassification = null,
+    decimal? VoltageRating = null,
+    decimal? Capacity = null,
+    string? Manufacturer = null,
+    string? ModelNumber = null,
+    bool RequiresUsoaReporting = true,
     string? Description = null,
     string? Notes = null
 ) : IRequest<CreateFixedAssetResponse>;

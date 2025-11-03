@@ -5,6 +5,8 @@ namespace Accounting.Application.FixedAssets.Responses;
 /// Contains comprehensive asset information including purchase details, depreciation, and disposal status.
 /// </summary>
 public class FixedAssetResponse(
+    string assetName,
+    string assetType,
     DateTime purchaseDate,
     decimal purchasePrice,
     int serviceLife,
@@ -19,12 +21,34 @@ public class FixedAssetResponse(
     bool isDisposed,
     DateTime? disposalDate,
     decimal? disposalAmount,
-    string? description) : BaseDto
+    string? gpsCoordinates,
+    string? substationName,
+    DefaultIdType? assetUsoaId,
+    string? regulatoryClassification,
+    decimal? voltageRating,
+    decimal? capacity,
+    string? manufacturer,
+    string? modelNumber,
+    DateTime? lastMaintenanceDate,
+    DateTime? nextMaintenanceDate,
+    bool requiresUsoaReporting,
+    string? description,
+    string? notes) : BaseDto
 {
     /// <summary>
     /// Unique identifier for the fixed asset.
     /// </summary>
     public new DefaultIdType Id { get; set; }
+
+    /// <summary>
+    /// Human-readable name of the asset.
+    /// </summary>
+    public string AssetName { get; set; } = assetName;
+
+    /// <summary>
+    /// Asset category such as Transformer, Transmission Line, Power Plant, Vehicle.
+    /// </summary>
+    public string AssetType { get; set; } = assetType;
 
     /// <summary>
     /// Date when the asset was purchased.
@@ -97,7 +121,67 @@ public class FixedAssetResponse(
     public decimal? DisposalAmount { get; set; } = disposalAmount;
 
     /// <summary>
+    /// Geographic coordinates in "lat,lng" format.
+    /// </summary>
+    public string? GpsCoordinates { get; set; } = gpsCoordinates;
+
+    /// <summary>
+    /// Substation name where the asset is located.
+    /// </summary>
+    public string? SubstationName { get; set; } = substationName;
+
+    /// <summary>
+    /// Link to USOA account classification for the asset.
+    /// </summary>
+    public DefaultIdType? AssetUsoaId { get; set; } = assetUsoaId;
+
+    /// <summary>
+    /// Regulatory classification such as FERC category text.
+    /// </summary>
+    public string? RegulatoryClassification { get; set; } = regulatoryClassification;
+
+    /// <summary>
+    /// Voltage rating for electrical equipment.
+    /// </summary>
+    public decimal? VoltageRating { get; set; } = voltageRating;
+
+    /// <summary>
+    /// Capacity (e.g., MW for generators, MVA for transformers).
+    /// </summary>
+    public decimal? Capacity { get; set; } = capacity;
+
+    /// <summary>
+    /// Manufacturer name.
+    /// </summary>
+    public string? Manufacturer { get; set; } = manufacturer;
+
+    /// <summary>
+    /// Manufacturer model number.
+    /// </summary>
+    public string? ModelNumber { get; set; } = modelNumber;
+
+    /// <summary>
+    /// Date of the last maintenance performed.
+    /// </summary>
+    public DateTime? LastMaintenanceDate { get; set; } = lastMaintenanceDate;
+
+    /// <summary>
+    /// Scheduled date for the next maintenance activity.
+    /// </summary>
+    public DateTime? NextMaintenanceDate { get; set; } = nextMaintenanceDate;
+
+    /// <summary>
+    /// Whether this asset requires USOA reporting in regulatory filings.
+    /// </summary>
+    public bool RequiresUsoaReporting { get; set; } = requiresUsoaReporting;
+
+    /// <summary>
     /// Description or additional details about the asset.
     /// </summary>
     public string? Description { get; set; } = description;
+
+    /// <summary>
+    /// Additional notes about the asset.
+    /// </summary>
+    public string? Notes { get; set; } = notes;
 }

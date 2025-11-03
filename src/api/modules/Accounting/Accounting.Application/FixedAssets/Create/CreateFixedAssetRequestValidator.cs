@@ -54,5 +54,28 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
 
         RuleFor(x => x.Notes)
             .MaximumLength(1024);
+
+        RuleFor(x => x.GpsCoordinates)
+            .MaximumLength(100);
+
+        RuleFor(x => x.SubstationName)
+            .MaximumLength(200);
+
+        RuleFor(x => x.RegulatoryClassification)
+            .MaximumLength(200);
+
+        RuleFor(x => x.VoltageRating)
+            .GreaterThan(0)
+            .When(x => x.VoltageRating.HasValue);
+
+        RuleFor(x => x.Capacity)
+            .GreaterThan(0)
+            .When(x => x.Capacity.HasValue);
+
+        RuleFor(x => x.Manufacturer)
+            .MaximumLength(200);
+
+        RuleFor(x => x.ModelNumber)
+            .MaximumLength(100);
     }
 }

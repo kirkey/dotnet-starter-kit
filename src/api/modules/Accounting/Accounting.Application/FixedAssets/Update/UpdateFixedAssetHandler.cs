@@ -13,9 +13,21 @@ public sealed class UpdateFixedAssetHandler(
         var asset = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (asset == null) throw new FixedAssetNotFoundException(request.Id);
 
-        asset.Update(request.AssetName, request.Location, request.Department,
-                    request.SerialNumber, null, null, null, null, null,
-                    null, null, false, request.Description, request.Notes);
+        asset.Update(
+            request.AssetName,
+            request.Location,
+            request.Department,
+            request.SerialNumber,
+            request.GpsCoordinates,
+            request.SubstationName,
+            request.RegulatoryClassification,
+            request.VoltageRating,
+            request.Capacity,
+            request.Manufacturer,
+            request.ModelNumber,
+            request.RequiresUsoaReporting,
+            request.Description,
+            request.Notes);
 
         await repository.UpdateAsync(asset, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
