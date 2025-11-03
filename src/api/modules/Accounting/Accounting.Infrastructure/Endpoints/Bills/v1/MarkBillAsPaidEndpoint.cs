@@ -14,7 +14,7 @@ public static class MarkBillAsPaidEndpoint
     internal static RouteHandlerBuilder MapMarkBillAsPaidEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/mark-paid", async (Guid id, MarkBillAsPaidRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}/mark-paid", async (DefaultIdType id, MarkBillAsPaidRequest request, ISender mediator) =>
             {
                 var command = new MarkBillAsPaidCommand(id, request.PaidDate);
                 var response = await mediator.Send(command).ConfigureAwait(false);
@@ -23,7 +23,7 @@ public static class MarkBillAsPaidEndpoint
             .WithName(nameof(MarkBillAsPaidEndpoint))
             .WithSummary("Mark bill as paid")
             .WithDescription("Marks a bill as paid with the payment date.")
-            .Produces<MarkBillAsPaidResponse>(StatusCodes.Status200OK)
+            .Produces<MarkBillAsPaidResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Bills.MarkPaid")

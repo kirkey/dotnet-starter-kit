@@ -14,7 +14,7 @@ public static class VoidBillEndpoint
     internal static RouteHandlerBuilder MapVoidBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/void", async (Guid id, VoidBillRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}/void", async (DefaultIdType id, VoidBillRequest request, ISender mediator) =>
             {
                 var command = new VoidBillCommand(id, request.Reason);
                 var response = await mediator.Send(command).ConfigureAwait(false);
@@ -23,7 +23,7 @@ public static class VoidBillEndpoint
             .WithName(nameof(VoidBillEndpoint))
             .WithSummary("Void a bill")
             .WithDescription("Voids a bill with a reason.")
-            .Produces<VoidBillResponse>(StatusCodes.Status200OK)
+            .Produces<VoidBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Bills.Void")

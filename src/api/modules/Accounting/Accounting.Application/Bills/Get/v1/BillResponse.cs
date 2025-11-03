@@ -131,23 +131,94 @@ public sealed record BillResponse
 /// </summary>
 public sealed record BillLineItemResponse
 {
+    /// <summary>
+    /// The unique identifier of the line item.
+    /// </summary>
     public DefaultIdType Id { get; init; }
+
+    /// <summary>
+    /// The unique identifier of the bill.
+    /// </summary>
     public DefaultIdType BillId { get; init; }
+
+    /// <summary>
+    /// Sequential line number.
+    /// </summary>
     public int LineNumber { get; init; }
+
+    /// <summary>
+    /// Description of the line item.
+    /// </summary>
     public string Description { get; init; } = string.Empty;
+
+    /// <summary>
+    /// Quantity of items or units.
+    /// </summary>
     public decimal Quantity { get; init; }
+
+    /// <summary>
+    /// Unit price per item.
+    /// </summary>
     public decimal UnitPrice { get; init; }
+
+    /// <summary>
+    /// Total amount (Quantity * UnitPrice).
+    /// </summary>
     public decimal Amount { get; init; }
+
+    /// <summary>
+    /// Chart of account to which this line item is posted.
+    /// </summary>
     public DefaultIdType ChartOfAccountId { get; init; }
+
+    /// <summary>
+    /// Code of the chart of account.
+    /// </summary>
     public string? ChartOfAccountCode { get; init; }
+
+    /// <summary>
+    /// Name of the chart of account.
+    /// </summary>
     public string? ChartOfAccountName { get; init; }
+
+    /// <summary>
+    /// Optional tax code identifier.
+    /// </summary>
     public DefaultIdType? TaxCodeId { get; init; }
+
+    /// <summary>
+    /// Name of the tax code.
+    /// </summary>
     public string? TaxCodeName { get; init; }
+
+    /// <summary>
+    /// Tax amount applied to this line item.
+    /// </summary>
     public decimal TaxAmount { get; init; }
+
+    /// <summary>
+    /// Optional project identifier.
+    /// </summary>
     public DefaultIdType? ProjectId { get; init; }
+
+    /// <summary>
+    /// Name of the project.
+    /// </summary>
     public string? ProjectName { get; init; }
+
+    /// <summary>
+    /// Optional cost center identifier.
+    /// </summary>
     public DefaultIdType? CostCenterId { get; init; }
+
+    /// <summary>
+    /// Name of the cost center.
+    /// </summary>
     public string? CostCenterName { get; init; }
+
+    /// <summary>
+    /// Optional notes for this line item.
+    /// </summary>
     public string? Notes { get; init; }
 }
 

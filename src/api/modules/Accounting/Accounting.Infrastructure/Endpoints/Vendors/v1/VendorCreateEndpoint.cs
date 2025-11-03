@@ -15,6 +15,7 @@ public static class VendorCreateEndpoint
             .WithName(nameof(VendorCreateEndpoint))
             .WithSummary("create a vendor")
             .WithDescription("create a vendor")
+            .WithTags("Vendors")
             .Produces<VendorCreateResponse>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);

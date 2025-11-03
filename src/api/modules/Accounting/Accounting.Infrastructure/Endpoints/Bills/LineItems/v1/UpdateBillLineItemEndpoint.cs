@@ -30,6 +30,7 @@ public static class UpdateBillLineItemEndpoint
             .WithName(nameof(UpdateBillLineItemEndpoint))
             .WithSummary("Update a bill line item")
             .WithDescription("Updates an existing line item and recalculates the bill total.")
+            .WithTags("Bill Line Items")
             .Produces<UpdateBillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

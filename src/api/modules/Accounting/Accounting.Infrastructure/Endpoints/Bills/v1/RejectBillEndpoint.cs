@@ -14,7 +14,7 @@ public static class RejectBillEndpoint
     internal static RouteHandlerBuilder MapRejectBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/reject", async (Guid id, RejectBillRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}/reject", async (DefaultIdType id, RejectBillRequest request, ISender mediator) =>
             {
                 var command = new RejectBillCommand(id, request.RejectedBy, request.Reason);
                 var response = await mediator.Send(command).ConfigureAwait(false);
@@ -23,7 +23,7 @@ public static class RejectBillEndpoint
             .WithName(nameof(RejectBillEndpoint))
             .WithSummary("Reject a bill")
             .WithDescription("Rejects a bill with a reason.")
-            .Produces<RejectBillResponse>(StatusCodes.Status200OK)
+            .Produces<RejectBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Bills.Reject")

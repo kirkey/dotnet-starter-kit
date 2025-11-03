@@ -15,6 +15,7 @@ public static class CreditMemoCreateEndpoint
             .WithName(nameof(CreditMemoCreateEndpoint))
             .WithSummary("Create a credit memo")
             .WithDescription("Create a new credit memo for receivable/payable adjustments")
+            .WithTags("Credit Memos")
             .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);

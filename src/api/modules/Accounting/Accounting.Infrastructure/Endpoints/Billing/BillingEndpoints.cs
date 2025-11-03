@@ -13,7 +13,6 @@ public static class BillingEndpoints
     internal static IEndpointRouteBuilder MapBillingEndpoints(this IEndpointRouteBuilder app)
     {
         var billingGroup = app.MapGroup("/billing")
-            .WithTags("Billing")
             .WithDescription("Endpoints for managing billing operations");
 
         // Version 1 endpoints

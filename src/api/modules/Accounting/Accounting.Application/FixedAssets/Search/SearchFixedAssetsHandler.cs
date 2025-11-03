@@ -2,6 +2,9 @@ using Accounting.Application.FixedAssets.Responses;
 
 namespace Accounting.Application.FixedAssets.Search;
 
+/// <summary>
+/// Handler for searching fixed assets with filters and pagination.
+/// </summary>
 public sealed class SearchFixedAssetsHandler(
     [FromKeyedServices("accounting:fixedassets")] IReadRepository<FixedAsset> repository)
     : IRequestHandler<SearchFixedAssetsRequest, PagedList<FixedAssetResponse>>
@@ -14,27 +17,7 @@ public sealed class SearchFixedAssetsHandler(
         var list = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var responses = list.Select(entity => new FixedAssetResponse(
-                entity.PurchaseDate,
-                entity.PurchasePrice,
-                entity.ServiceLife,
-                entity.DepreciationMethodId,
-                entity.SalvageValue,
-                entity.CurrentBookValue,
-                entity.AccumulatedDepreciationAccountId,
-                entity.DepreciationExpenseAccountId,
-                entity.SerialNumber,
-                entity.Location,
-                entity.Department,
-                entity.IsDisposed,
-                entity.DisposalDate,
-                entity.DisposalAmount,
-                entity.Description)
-            {
-                Id = entity.Id
-                // Note: FixedAssetResponse sets core financial fields via constructor; additional metadata (AssetName, AssetType, Notes)
-                // can be included in the response class if needed — keep mapping minimal and stable.
-            }).ToList();
+        var responses = list.Adapt<List<FixedAssetResponse>>();
 
         return new PagedList<FixedAssetResponse>(responses, request.PageNumber, request.PageSize, totalCount);
     }

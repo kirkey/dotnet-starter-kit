@@ -17,7 +17,7 @@ public static class CheckUpdateEndpoint
     internal static RouteHandlerBuilder MapCheckUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (Guid id, CheckUpdateCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, CheckUpdateCommand command, ISender mediator) =>
             {
                 if (id != command.CheckId)
                 {

@@ -23,6 +23,7 @@ public static class AddBillLineItemEndpoint
             .WithName(nameof(AddBillLineItemEndpoint))
             .WithSummary("Add a line item to a bill")
             .WithDescription("Adds a new line item to an existing bill and recalculates the total.")
+            .WithTags("Bill Line Items")
             .Produces<AddBillLineItemResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

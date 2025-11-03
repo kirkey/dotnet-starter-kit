@@ -966,8 +966,7 @@ internal sealed class AccountingDbInitializer(
                         $"Seeded bill {i + 1} from {vendor.Name}", // description
                         null, // periodId
                         "Net 30", // paymentTerms
-                        $"PO-{1000 + i}", // purchaseOrderNumber
-                        null); // notes
+                        $"PO-{1000 + i}"); // notes
 
                     bills.Add(bill);
                 }

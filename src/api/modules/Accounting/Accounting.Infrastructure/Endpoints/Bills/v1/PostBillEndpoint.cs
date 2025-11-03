@@ -14,7 +14,7 @@ public static class PostBillEndpoint
     internal static RouteHandlerBuilder MapPostBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/post", async (Guid id, ISender mediator) =>
+            .MapPut("/{id:guid}/post", async (DefaultIdType id, ISender mediator) =>
             {
                 var command = new PostBillCommand(id);
                 var response = await mediator.Send(command).ConfigureAwait(false);
@@ -23,7 +23,7 @@ public static class PostBillEndpoint
             .WithName(nameof(PostBillEndpoint))
             .WithSummary("Post a bill to GL")
             .WithDescription("Posts an approved bill to the general ledger.")
-            .Produces<PostBillResponse>(StatusCodes.Status200OK)
+            .Produces<PostBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Bills.Post")

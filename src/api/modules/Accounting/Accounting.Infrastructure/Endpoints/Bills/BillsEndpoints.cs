@@ -14,7 +14,6 @@ public static class BillsEndpoints
     internal static IEndpointRouteBuilder MapBillsEndpoints(this IEndpointRouteBuilder app)
     {
         var billsGroup = app.MapGroup("/bills")
-            .WithTags("Bills")
             .WithDescription("Endpoints for managing vendor bills");
 
         // Bill CRUD endpoints
@@ -37,7 +36,7 @@ public static class BillsEndpoints
         billsGroup.MapDeleteBillLineItemEndpoint();
         billsGroup.MapGetBillLineItemEndpoint();
         billsGroup.MapGetBillLineItemsEndpoint();
-        
+
         return app;
     }
 }

@@ -23,6 +23,7 @@ public static class DeleteBillLineItemEndpoint
             .WithName(nameof(DeleteBillLineItemEndpoint))
             .WithSummary("Delete a bill line item")
             .WithDescription("Deletes a line item and recalculates the bill total.")
+            .WithTags("Bill Line Items")
             .Produces<DeleteBillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

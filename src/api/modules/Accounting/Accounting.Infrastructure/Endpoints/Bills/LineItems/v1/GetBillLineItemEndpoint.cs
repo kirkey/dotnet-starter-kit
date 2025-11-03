@@ -21,6 +21,7 @@ public static class GetBillLineItemEndpoint
             .WithName(nameof(GetBillLineItemEndpoint))
             .WithSummary("Get bill line item by ID")
             .WithDescription("Retrieves a specific line item by its identifier.")
+            .WithTags("Bill Line Items")
             .Produces<BillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Bills.View")

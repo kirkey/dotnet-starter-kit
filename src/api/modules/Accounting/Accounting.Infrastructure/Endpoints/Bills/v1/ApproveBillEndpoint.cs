@@ -14,7 +14,7 @@ public static class ApproveBillEndpoint
     internal static RouteHandlerBuilder MapApproveBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/approve", async (Guid id, ApproveBillRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}/approve", async (DefaultIdType id, ApproveBillRequest request, ISender mediator) =>
             {
                 var command = new ApproveBillCommand(id, request.ApprovedBy);
                 var response = await mediator.Send(command).ConfigureAwait(false);
@@ -23,7 +23,7 @@ public static class ApproveBillEndpoint
             .WithName(nameof(ApproveBillEndpoint))
             .WithSummary("Approve a bill")
             .WithDescription("Approves a bill for payment processing.")
-            .Produces<ApproveBillResponse>(StatusCodes.Status200OK)
+            .Produces<ApproveBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Bills.Approve")

@@ -16,7 +16,7 @@ public static class CheckGetEndpoint
     internal static RouteHandlerBuilder MapCheckGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new CheckGetQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);
