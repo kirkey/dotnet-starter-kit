@@ -42,6 +42,11 @@ using Accounting.Infrastructure.Endpoints.InterCompanyTransactions;
 using Accounting.Infrastructure.Endpoints.JournalEntryLines;
 using Accounting.Infrastructure.Endpoints.WriteOffs;
 using Accounting.Infrastructure.Endpoints.RetainedEarnings;
+using Accounting.Infrastructure.Endpoints.FixedAssets;
+using Accounting.Infrastructure.Endpoints.RegulatoryReports;
+using Accounting.Infrastructure.Endpoints.AccountReconciliation;
+using Accounting.Infrastructure.Endpoints.Vendors;
+using Accounting.Infrastructure.Endpoints.SecurityDeposits;
 using Accounting.Infrastructure.Import;
 using Accounting.Infrastructure.Persistence;
 using FSH.Framework.Infrastructure.Persistence;
@@ -111,6 +116,11 @@ public static class AccountingModule
         accountingGroup.MapInterCompanyTransactionsEndpoints();
         accountingGroup.MapWriteOffsEndpoints();
         accountingGroup.MapRetainedEarningsEndpoints();
+        accountingGroup.MapFixedAssetsEndpoints();
+        accountingGroup.MapRegulatoryReportsEndpoints();
+        accountingGroup.MapAccountReconciliationEndpoints();
+        accountingGroup.MapVendorsEndpoints();
+        accountingGroup.MapSecurityDepositsEndpoints();
 
         return app;
     }
@@ -218,6 +228,12 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>();
         builder.Services.AddScoped<IRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>();
         builder.Services.AddScoped<IReadRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>();
+        builder.Services.AddScoped<IRepository<JournalEntryLine>, AccountingRepository<JournalEntryLine>>();
+        builder.Services.AddScoped<IReadRepository<JournalEntryLine>, AccountingRepository<JournalEntryLine>>();
+        builder.Services.AddScoped<IRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>();
+        builder.Services.AddScoped<IReadRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>();
+        builder.Services.AddScoped<IRepository<InventoryItem>, AccountingRepository<InventoryItem>>();
+        builder.Services.AddScoped<IReadRepository<InventoryItem>, AccountingRepository<InventoryItem>>();
         
         // Billing service
         builder.Services.AddScoped<Application.Billing.IBillingService, Application.Billing.BillingService>();
@@ -402,6 +418,11 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costcenters");
         builder.Services.AddKeyedScoped<IReadRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costcenters");
+        
+        builder.Services.AddKeyedScoped<IRepository<InventoryItem>, AccountingRepository<InventoryItem>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<InventoryItem>, AccountingRepository<InventoryItem>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<InventoryItem>, AccountingRepository<InventoryItem>>("accounting:inventory");
+        builder.Services.AddKeyedScoped<IReadRepository<InventoryItem>, AccountingRepository<InventoryItem>>("accounting:inventory");
         
         return builder;
     }

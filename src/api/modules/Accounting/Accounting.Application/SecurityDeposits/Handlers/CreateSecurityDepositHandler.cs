@@ -2,19 +2,38 @@ using Accounting.Application.SecurityDeposits.Commands;
 
 namespace Accounting.Application.SecurityDeposits.Handlers;
 
-public class CreateSecurityDepositHandler(IRepository<SecurityDeposit> repository)
-    : IRequestHandler<CreateSecurityDepositCommand, DefaultIdType>
+/// <summary>
+/// Handler for creating a new security deposit.
+/// </summary>
+public sealed class CreateSecurityDepositHandler(
+    ILogger<CreateSecurityDepositHandler> logger,
+    [FromKeyedServices("accounting")] IRepository<SecurityDeposit> repository)
+    : IRequestHandler<CreateSecurityDepositCommand, CreateSecurityDepositResponse>
 {
-    public async Task<DefaultIdType> Handle(CreateSecurityDepositCommand request, CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the creation of a new security deposit.
+    /// </summary>
+    /// <param name="request">The create security deposit command.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The response containing the created security deposit ID.</returns>
+    public async Task<CreateSecurityDepositResponse> Handle(
+        CreateSecurityDepositCommand request,
+        CancellationToken cancellationToken)
     {
-        var sd = SecurityDeposit.Create(
+        ArgumentNullException.ThrowIfNull(request);
+
+        var deposit = SecurityDeposit.Create(
             request.MemberId,
             request.Amount,
             request.DepositDate,
-            request.Notes);
+            notes: request.Notes);
 
-        await repository.AddAsync(sd, cancellationToken);
+        await repository.AddAsync(deposit, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
-        return sd.Id;
+
+        logger.LogInformation("Security deposit created for member {MemberId}: {DepositId}", 
+            request.MemberId, deposit.Id);
+        
+        return new CreateSecurityDepositResponse(deposit.Id);
     }
 }
