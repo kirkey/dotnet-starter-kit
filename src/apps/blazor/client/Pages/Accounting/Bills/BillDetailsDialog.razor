@@ -150,19 +150,44 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    /// <summary>
+    /// Cascading dialog instance from MudBlazor.
+    /// </summary>
+    [CascadingParameter] 
+    IMudDialogInstance MudDialog { get; set; } = default!;
     
-    [Parameter] public DefaultIdType BillId { get; set; }
+    /// <summary>
+    /// Bill identifier to display.
+    /// </summary>
+    [Parameter] 
+    public DefaultIdType BillId { get; set; }
 
+    /// <summary>
+    /// The bill response data.
+    /// </summary>
     private BillResponse? _bill;
+
+    /// <summary>
+    /// Vendor name for display.
+    /// </summary>
     private string? _vendorName;
+
+    /// <summary>
+    /// Loading state indicator.
+    /// </summary>
     private bool _loading = true;
 
+    /// <summary>
+    /// Initializes the component and loads bill data.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         await LoadBillAsync();
     }
 
+    /// <summary>
+    /// Loads bill details and vendor information from the API.
+    /// </summary>
     private async Task LoadBillAsync()
     {
         _loading = true;
@@ -194,6 +219,9 @@
         }
     }
 
+    /// <summary>
+    /// Handles line items changes by reloading bill to get updated totals.
+    /// </summary>
     private async Task HandleItemsChanged()
     {
         // Reload bill to get updated totals
@@ -201,10 +229,17 @@
         StateHasChanged();
     }
 
+    /// <summary>
+    /// Closes the dialog.
+    /// </summary>
     private void Close()
     {
         MudDialog.Close();
     }
+
+    /// <summary>
+    /// Gets the status color based on bill status.
+    /// </summary>
 
     private static Color GetStatusColor(string? status) => status switch
     {

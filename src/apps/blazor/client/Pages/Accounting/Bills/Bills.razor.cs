@@ -1,39 +1,118 @@
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Bills;
 
+/// <summary>
+/// Bills page for managing vendor bills and accounts payable.
+/// </summary>
 public partial class Bills
 {
+    /// <summary>
+    /// The entity table context for managing bills with server-side operations.
+    /// </summary>
     protected EntityServerTableContext<BillSearchResponse, DefaultIdType, BillViewModel> Context { get; set; } = default!;
 
+    /// <summary>
+    /// Reference to the EntityTable component for bills.
+    /// </summary>
     private EntityTable<BillSearchResponse, DefaultIdType, BillViewModel> _table = default!;
 
-    // Search filters
+    /// <summary>
+    /// Search filter for bill number.
+    /// </summary>
     private string? BillNumber { get; set; }
+
+    /// <summary>
+    /// Search filter for vendor name.
+    /// </summary>
     private string? VendorName { get; set; }
+
+    /// <summary>
+    /// Search filter for bill status.
+    /// </summary>
     private string? Status { get; set; }
+
+    /// <summary>
+    /// Search filter for approval status.
+    /// </summary>
     private string? ApprovalStatus { get; set; }
+
+    /// <summary>
+    /// Search filter for bill date range start.
+    /// </summary>
     private DateTime? BillDateFrom { get; set; }
+
+    /// <summary>
+    /// Search filter for bill date range end.
+    /// </summary>
     private DateTime? BillDateTo { get; set; }
+
+    /// <summary>
+    /// Search filter for due date range start.
+    /// </summary>
     private DateTime? DueDateFrom { get; set; }
+
+    /// <summary>
+    /// Search filter for due date range end.
+    /// </summary>
     private DateTime? DueDateTo { get; set; }
+
+    /// <summary>
+    /// Search filter for posted status.
+    /// </summary>
     private bool IsPosted { get; set; }
+
+    /// <summary>
+    /// Search filter for paid status.
+    /// </summary>
     private bool IsPaid { get; set; }
 
-    // Dialog visibility flags
+    /// <summary>
+    /// Dialog visibility flag for approve bill dialog.
+    /// </summary>
     private bool _approveDialogVisible;
+
+    /// <summary>
+    /// Dialog visibility flag for reject bill dialog.
+    /// </summary>
     private bool _rejectDialogVisible;
+
+    /// <summary>
+    /// Dialog visibility flag for mark as paid dialog.
+    /// </summary>
     private bool _markAsPaidDialogVisible;
+
+    /// <summary>
+    /// Dialog visibility flag for void bill dialog.
+    /// </summary>
     private bool _voidDialogVisible;
 
-    // Dialog options
+    /// <summary>
+    /// Dialog options for modal dialogs.
+    /// </summary>
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
-    // Command objects for dialogs
+    /// <summary>
+    /// Command for approving a bill.
+    /// </summary>
     private ApproveBillCommand _approveCommand = new() { BillId = DefaultIdType.Empty, ApprovedBy = string.Empty };
+
+    /// <summary>
+    /// Command for rejecting a bill.
+    /// </summary>
     private RejectBillCommand _rejectCommand = new() { BillId = DefaultIdType.Empty, RejectedBy = string.Empty, Reason = string.Empty };
+
+    /// <summary>
+    /// Command for marking a bill as paid.
+    /// </summary>
     private MarkBillAsPaidCommand _markAsPaidCommand = new() { BillId = DefaultIdType.Empty, PaidDate = DateTime.UtcNow };
+
+    /// <summary>
+    /// Command for voiding a bill.
+    /// </summary>
     private VoidBillCommand _voidCommand = new() { BillId = DefaultIdType.Empty, Reason = string.Empty };
 
-    // Get status color for badges
+    /// <summary>
+    /// Gets the status color based on bill status.
+    /// </summary>
     private static Color GetStatusColor(string? status) => status switch
     {
         "Draft" => Color.Default,
@@ -46,6 +125,15 @@ public partial class Bills
         _ => Color.Default
     };
 
+    /// <summary>
+    /// Gets the severity for total amount indicator.
+    /// </summary>
+    private static Severity GetTotalSeverity(BillViewModel model) =>
+        model.LineItems.Count > 0 ? Severity.Success : Severity.Warning;
+
+    /// <summary>
+    /// Initializes the component and sets up the entity table context with CRUD operations.
+    /// </summary>
     protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<BillSearchResponse, DefaultIdType, BillViewModel>(
@@ -91,6 +179,12 @@ public partial class Bills
             },
             createFunc: async bill =>
             {
+                if (bill.LineItems.Count == 0)
+                {
+                    Snackbar.Add("At least one line item is required.", Severity.Error);
+                    return;
+                }
+
                 var createCommand = new BillCreateCommand
                 {
                     BillNumber = bill.BillNumber,
@@ -102,7 +196,7 @@ public partial class Bills
                     PaymentTerms = bill.PaymentTerms,
                     PurchaseOrderNumber = bill.PurchaseOrderNumber,
                     Notes = bill.Notes,
-                    LineItems = bill.LineItems?.Select(li => new BillLineItemDto
+                    LineItems = bill.LineItems.Select(li => new BillLineItemDto
                     {
                         LineNumber = li.LineNumber,
                         Description = li.Description,
@@ -118,9 +212,22 @@ public partial class Bills
                     }).ToList()
                 };
                 await Client.BillCreateEndpointAsync("1", createCommand);
+                Snackbar.Add("Bill created successfully", Severity.Success);
             },
             updateFunc: async (id, bill) =>
             {
+                if (bill.IsPosted)
+                {
+                    Snackbar.Add("Cannot update a posted bill.", Severity.Error);
+                    return;
+                }
+
+                if (bill.IsPaid)
+                {
+                    Snackbar.Add("Cannot update a paid bill.", Severity.Error);
+                    return;
+                }
+
                 var updateCommand = new BillUpdateCommand
                 {
                     BillId = id,
@@ -134,16 +241,48 @@ public partial class Bills
                     Notes = bill.Notes
                 };
                 await Client.BillUpdateEndpointAsync("1", id, updateCommand);
+                Snackbar.Add("Bill updated successfully", Severity.Success);
             },
             deleteFunc: async id =>
             {
                 await Client.DeleteBillEndpointAsync("1", id);
+                Snackbar.Add("Bill deleted successfully", Severity.Success);
             },
             getDetailsFunc: async id =>
             {
                 var response = await Client.GetBillEndpointAsync("1", id);
-                return response.Adapt<BillViewModel>();
+                var lineItems = await Client.GetBillLineItemsEndpointAsync("1", id);
+                
+                var viewModel = response.Adapt<BillViewModel>();
+                viewModel.LineItems = lineItems.Select(li => new BillLineItemViewModel
+                {
+                    Id = li.Id,
+                    BillId = id,
+                    LineNumber = li.LineNumber,
+                    Description = li.Description ?? string.Empty,
+                    Quantity = li.Quantity,
+                    UnitPrice = li.UnitPrice,
+                    Amount = li.Amount,
+                    ChartOfAccountId = li.ChartOfAccountId,
+                    ChartOfAccountCode = li.ChartOfAccountCode,
+                    ChartOfAccountName = li.ChartOfAccountName,
+                    TaxCodeId = li.TaxCodeId,
+                    TaxAmount = li.TaxAmount,
+                    ProjectId = li.ProjectId,
+                    CostCenterId = li.CostCenterId,
+                    Notes = li.Notes
+                }).ToList();
+                
+                return viewModel;
             },
+            getDefaultsFunc: () => Task.FromResult(new BillViewModel
+            {
+                BillDate = DateTime.Today,
+                DueDate = DateTime.Today.AddDays(30),
+                Status = "Draft",
+                ApprovalStatus = "Pending",
+                LineItems = new List<BillLineItemViewModel>()
+            }),
             hasExtraActionsFunc: () => true);
 
         return Task.CompletedTask;
@@ -188,7 +327,7 @@ public partial class Bills
         {
             var command = new MarkBillAsPaidRequest
             {
-                PaidDate = _markAsPaidCommand.PaidDate
+                PaidDate = _markAsPaidCommand.PaidDate ?? DateTime.Today
             };
             await Client.MarkBillAsPaidEndpointAsync("1", _markAsPaidCommand.BillId, command);
             Snackbar.Add("Bill marked as paid", Severity.Success);
@@ -229,7 +368,7 @@ public partial class Bills
         {
             var command = new MarkBillAsPaidRequest
             {
-                PaidDate = _markAsPaidCommand.PaidDate
+                PaidDate = _markAsPaidCommand.PaidDate ?? DateTime.Today
             };
             await Client.MarkBillAsPaidEndpointAsync("1", _markAsPaidCommand.BillId, command);
             Snackbar.Add("Bill marked as paid", Severity.Success);
@@ -253,7 +392,7 @@ public partial class Bills
     {
         try
         {
-            var command = new FSH.Starter.Blazor.Infrastructure.Api.VoidBillRequest
+            var command = new VoidBillRequest
             {
                 Reason = _voidCommand.Reason
             };
@@ -353,7 +492,7 @@ public sealed class RejectBillCommand
 public sealed class MarkBillAsPaidCommand
 {
     public DefaultIdType BillId { get; set; }
-    public DateTime PaidDate { get; set; }
+    public DateTime? PaidDate { get; set; }
 }
 
 public sealed class VoidBillCommand

@@ -119,9 +119,19 @@ public class BillViewModel
     public List<BillLineItemViewModel> LineItems { get; set; } = new();
 
     /// <summary>
-    /// Calculated total from line items.
+    /// Subtotal amount (sum of all line amounts excluding tax).
     /// </summary>
-    public decimal CalculatedTotal => LineItems.Sum(l => l.Amount);
+    public decimal SubtotalAmount => LineItems.Sum(l => l.Amount);
+
+    /// <summary>
+    /// Total tax amount across all line items.
+    /// </summary>
+    public decimal TotalTaxAmount => LineItems.Sum(l => l.TaxAmount);
+
+    /// <summary>
+    /// Calculated total from line items (subtotal + tax).
+    /// </summary>
+    public decimal CalculatedTotal => SubtotalAmount + TotalTaxAmount;
 }
 
 /// <summary>

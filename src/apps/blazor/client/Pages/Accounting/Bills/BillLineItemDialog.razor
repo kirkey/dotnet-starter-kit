@@ -31,24 +31,24 @@
 
                 <MudItem xs="12" sm="4">
                     <MudNumericField T="decimal" @bind-Value="Model.Quantity"
+                                     @bind-Value:after="@OnQuantityChanged"
                                      Label="Quantity"
                                      For="@(() => Model.Quantity)"
                                      Required="true"
                                      Min="0.0001m"
                                      Format="N4"
-                                     Variant="Variant.Filled"
-                                     ValueChanged="@OnQuantityOrPriceChanged" />
+                                     Variant="Variant.Filled" />
                 </MudItem>
 
                 <MudItem xs="12" sm="4">
                     <MudNumericField T="decimal" @bind-Value="Model.UnitPrice"
+                                     @bind-Value:after="@OnUnitPriceChanged"
                                      Label="Unit Price"
                                      For="@(() => Model.UnitPrice)"
                                      Required="true"
                                      Min="0"
                                      Format="N2"
-                                     Variant="Variant.Filled"
-                                     ValueChanged="@OnQuantityOrPriceChanged" />
+                                     Variant="Variant.Filled" />
                 </MudItem>
 
                 <MudItem xs="12" sm="6">
@@ -90,23 +90,56 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    /// <summary>
+    /// Cascading dialog instance from MudBlazor.
+    /// </summary>
+    [CascadingParameter] 
+    IMudDialogInstance MudDialog { get; set; } = default!;
     
-    [Parameter] public DefaultIdType BillId { get; set; }
-    [Parameter] public BillLineItemViewModel Model { get; set; } = new();
+    /// <summary>
+    /// Bill identifier for the line item.
+    /// </summary>
+    [Parameter] 
+    public DefaultIdType BillId { get; set; }
 
+    /// <summary>
+    /// The line item view model to edit or create.
+    /// </summary>
+    [Parameter] 
+    public BillLineItemViewModel Model { get; set; } = new();
+
+    /// <summary>
+    /// Reference to the MudForm for validation.
+    /// </summary>
     private MudForm _form = default!;
 
-    private void OnQuantityOrPriceChanged(decimal value)
+    /// <summary>
+    /// Handles quantity changes and recalculates the amount.
+    /// </summary>
+    private void OnQuantityChanged()
     {
         Model.CalculateAmount();
     }
 
+    /// <summary>
+    /// Handles unit price changes and recalculates the amount.
+    /// </summary>
+    private void OnUnitPriceChanged()
+    {
+        Model.CalculateAmount();
+    }
+
+    /// <summary>
+    /// Cancels the dialog without saving changes.
+    /// </summary>
     private void Cancel()
     {
         MudDialog.Cancel();
     }
 
+    /// <summary>
+    /// Validates and saves the line item (creates or updates).
+    /// </summary>
     private async Task SaveAsync()
     {
         await _form.Validate();
@@ -122,7 +155,7 @@
             if (Model.Id == default)
             {
                 // Add new line item
-                var command = new FSH.Starter.Blazor.Infrastructure.Api.AddBillLineItemCommand
+                var command = new AddBillLineItemCommand
                 {
                     BillId = BillId,
                     LineNumber = Model.LineNumber,
@@ -143,7 +176,7 @@
             else
             {
                 // Update existing line item
-                var command = new FSH.Starter.Blazor.Infrastructure.Api.UpdateBillLineItemCommand
+                var command = new UpdateBillLineItemCommand
                 {
                     LineItemId = Model.Id.Value,
                     BillId = BillId,

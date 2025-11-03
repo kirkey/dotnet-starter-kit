@@ -1,4 +1,5 @@
 @page "/accounting/bills"
+@using FSH.Starter.Blazor.Client.Pages.Accounting.Bills.Components
 
 <PageHeader Title="Bill Management" Header="Bill Management" SubHeader="Manage vendor bills, track payables, and process payments." />
 
@@ -170,7 +171,6 @@
 
         <MudItem xs="12" sm="6" md="4">
             <MudDatePicker @bind-Date="context.BillDate"
-                           For="@(() => context.BillDate)"
                            DateFormat="MMMM dd, yyyy"
                            Label="Bill Date"
                            Variant="Variant.Filled"
@@ -179,7 +179,6 @@
 
         <MudItem xs="12" sm="6" md="4">
             <MudDatePicker @bind-Date="context.DueDate"
-                           For="@(() => context.DueDate)"
                            DateFormat="MMMM dd, yyyy"
                            Label="Due Date"
                            Variant="Variant.Filled"
@@ -235,16 +234,59 @@
                           Variant="Variant.Filled" />
         </MudItem>
 
-        @if (!Context.AddEditModal.IsCreate && context.Id != default)
+        @if (!context.IsPosted && !context.IsPaid)
         {
             <MudItem xs="12">
-                <MudDivider Class="my-4" />
-                <MudButton StartIcon="@Icons.Material.Filled.ListAlt" 
+                <MudDivider />
+                <MudText Typo="Typo.h6" Class="my-3">Bill Line Items</MudText>
+            </MudItem>
+
+            <MudItem xs="12">
+                <BillLineEditor @bind-Lines="context.LineItems" 
+                                IsReadOnly="@(context.IsPosted || context.IsPaid)" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudAlert Severity="@GetTotalSeverity(context)" Dense="true" Class="my-3">
+                    <div class="d-flex justify-space-between align-center">
+                        <div>
+                            <strong>Line Items:</strong> @context.LineItems.Count &nbsp;&nbsp;
+                            <strong>Subtotal:</strong> @context.SubtotalAmount.ToString("C2") &nbsp;&nbsp;
+                            <strong>Tax:</strong> @context.TotalTaxAmount.ToString("C2") &nbsp;&nbsp;
+                            <strong>Total:</strong> @context.CalculatedTotal.ToString("C2")
+                        </div>
+                        <div>
+                            @if (context.LineItems.Count > 0)
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
+                                <span>Valid</span>
+                            }
+                            else
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Warning" />
+                                <span>Add line items</span>
+                            }
+                        </div>
+                    </div>
+                </MudAlert>
+            </MudItem>
+        }
+        else
+        {
+            <MudItem xs="12">
+                <MudDivider />
+                <MudText Typo="Typo.h6" Class="my-3">Bill Line Items (Read-Only)</MudText>
+                <MudText Typo="Typo.body2" Class="mb-3">
+                    Bill has been @(context.IsPosted ? "posted to GL" : "marked as paid"). Line items cannot be modified.
+                </MudText>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudButton StartIcon="@Icons.Material.Filled.Visibility" 
                            Color="Color.Info" 
                            OnClick="@(() => ViewBillDetails(context.Id!.Value))" 
-                           Variant="Variant.Filled"
-                           FullWidth="false">
-                    Manage Line Items
+                           Variant="Variant.Filled">
+                    View Line Items
                 </MudButton>
             </MudItem>
         }

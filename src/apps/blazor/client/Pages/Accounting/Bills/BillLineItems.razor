@@ -57,14 +57,43 @@
 </MudTable>
 
 @code {
-    [Parameter] public DefaultIdType BillId { get; set; }
-    [Parameter] public bool IsPosted { get; set; }
-    [Parameter] public bool IsPaid { get; set; }
-    [Parameter] public EventCallback OnItemsChanged { get; set; }
+    /// <summary>
+    /// Bill identifier for which to display line items.
+    /// </summary>
+    [Parameter] 
+    public DefaultIdType BillId { get; set; }
 
+    /// <summary>
+    /// Indicates whether the bill is posted (read-only mode).
+    /// </summary>
+    [Parameter] 
+    public bool IsPosted { get; set; }
+
+    /// <summary>
+    /// Indicates whether the bill is paid (read-only mode).
+    /// </summary>
+    [Parameter] 
+    public bool IsPaid { get; set; }
+
+    /// <summary>
+    /// Event callback when line items are changed.
+    /// </summary>
+    [Parameter] 
+    public EventCallback OnItemsChanged { get; set; }
+
+    /// <summary>
+    /// List of bill line items.
+    /// </summary>
     private List<BillLineItemResponse> _items = new();
+
+    /// <summary>
+    /// Loading state indicator.
+    /// </summary>
     private bool _loading;
 
+    /// <summary>
+    /// Called when parameters are set. Loads line items when BillId changes.
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         if (BillId != default)
@@ -73,6 +102,9 @@
         }
     }
 
+    /// <summary>
+    /// Loads line items from the API for the current bill.
+    /// </summary>
     private async Task LoadItemsAsync()
     {
         _loading = true;
@@ -92,6 +124,9 @@
         }
     }
 
+    /// <summary>
+    /// Opens the dialog to add a new line item to the bill.
+    /// </summary>
     private async Task AddItemAsync()
     {
         var model = new BillLineItemViewModel
@@ -117,6 +152,9 @@
         }
     }
 
+    /// <summary>
+    /// Opens the dialog to edit an existing line item.
+    /// </summary>
     private async Task EditItemAsync(BillLineItemResponse item)
     {
         var model = new BillLineItemViewModel
@@ -152,6 +190,9 @@
         }
     }
 
+    /// <summary>
+    /// Deletes a line item after confirmation from the user.
+    /// </summary>
     private async Task DeleteItemAsync(DefaultIdType itemId)
     {
         var parameters = new DialogParameters<DeleteConfirmation>
