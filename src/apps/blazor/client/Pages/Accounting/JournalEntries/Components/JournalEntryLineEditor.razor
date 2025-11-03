@@ -19,11 +19,10 @@
     <RowTemplate Context="line">
         <MudTd DataLabel="Account">
             <AutocompleteChartOfAccountId @bind-Value="line.AccountId"
+                                          For="@(()=>line.AccountId)"
                                          Label=""
-                                         TextFormat="CodeName"
                                          Variant="Variant.Outlined"
                                          Margin="Margin.Dense"
-                                         SelectedItemChanged="@((account) => OnAccountSelected(line, account))"
                                          Required="true" />
         </MudTd>
         <MudTd DataLabel="Debit" Style="text-align:right">

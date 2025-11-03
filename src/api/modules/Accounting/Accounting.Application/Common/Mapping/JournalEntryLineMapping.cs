@@ -1,18 +1,17 @@
 using Accounting.Application.JournalEntries.Lines.Responses;
 
-namespace Accounting.Application.JournalEntries.Mapster;
+namespace Accounting.Application.Common.Mapping;
 
 /// <summary>
-/// Mapster configuration for Journal Entry and Journal Entry Line mappings.
+/// Mapster configuration for mapping JournalEntryLine entity to JournalEntryLineResponse.
+/// Maps Account navigation property fields to response properties.
 /// </summary>
-public class JournalEntryMappingConfig : IRegister
+public class JournalEntryLineMapping : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        // Map JournalEntryLine to JournalEntryLineResponse with Account details
         config.NewConfig<JournalEntryLine, JournalEntryLineResponse>()
             .Map(dest => dest.AccountCode, src => src.Account != null ? src.Account.AccountCode : null)
             .Map(dest => dest.AccountName, src => src.Account != null ? src.Account.AccountName : null);
     }
 }
-

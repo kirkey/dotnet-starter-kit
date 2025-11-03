@@ -78,7 +78,7 @@ public partial class JournalEntries
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<JournalEntryResponse>(response => response.Date, "Date", "Date", typeof(DateTime)),
+                new EntityField<JournalEntryResponse>(response => response.Date, "Date", "Date", typeof(DateOnly)),
                 new EntityField<JournalEntryResponse>(response => response.ReferenceNumber, "Reference", "ReferenceNumber"),
                 new EntityField<JournalEntryResponse>(response => response.Source, "Source", "Source"),
                 new EntityField<JournalEntryResponse>(response => response.TotalDebits, "Debits", "TotalDebits", typeof(decimal)),
