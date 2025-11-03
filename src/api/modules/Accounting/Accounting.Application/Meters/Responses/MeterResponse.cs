@@ -14,22 +14,22 @@ public class MeterResponse
     /// <summary>
     /// Unique meter number for identification and reference.
     /// </summary>
-    public string MeterNumber { get; set; } = default!;
+    public string MeterNumber { get; set; } = null!;
     
     /// <summary>
     /// Type of meter (e.g., "Electric", "Water", "Gas").
     /// </summary>
-    public string MeterType { get; set; } = default!;
+    public string MeterType { get; set; } = null!;
     
     /// <summary>
     /// Manufacturer of the meter.
     /// </summary>
-    public string Manufacturer { get; set; } = default!;
+    public string Manufacturer { get; set; } = null!;
     
     /// <summary>
     /// Model number of the meter.
     /// </summary>
-    public string ModelNumber { get; set; } = default!;
+    public string ModelNumber { get; set; } = null!;
     
     /// <summary>
     /// Serial number of the meter for identification.
@@ -59,7 +59,7 @@ public class MeterResponse
     /// <summary>
     /// Current operational status of the meter (e.g., "Active", "Inactive", "Faulty").
     /// </summary>
-    public string Status { get; set; } = default!;
+    public string Status { get; set; } = null!;
     
     /// <summary>
     /// Physical location or address where the meter is installed.

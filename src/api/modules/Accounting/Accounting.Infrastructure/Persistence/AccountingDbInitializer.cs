@@ -436,39 +436,151 @@ internal sealed class AccountingDbInitializer(
         if (!await context.Members.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var members = new List<Member>();
-            // Local collections not needed; entities are added directly to the DbContext
- 
-             for (int i = 1; i <= 10; i++)
-             {
-                 var memberNumber = $"MEM-{1000 + i}";
-                 var member = Member.Create(memberNumber, $"Member {i}", $"{i} Electric Ave", DateTime.UtcNow.Date.AddYears(-1), $"PO Box {i}", $"+1555000{i:D4}", "Active", null, $"member{i}@example.com", $"+1555000{i:D4}", $"Contact {i}", "Residential", null, $"Seeded member {i}");
-                 members.Add(member);
-                 await context.Members.AddAsync(member, cancellationToken).ConfigureAwait(false);
-                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
- 
-                 // create meter
-                 var meter = Meter.Create($"MTR-{1000 + i}", "Smart Meter", "AcmeMeters", $"SM-{1000 + i}", DateTime.UtcNow.Date, 1m, $"SN-{1000 + i}", "Location", null, member.Id, true, "AMR", null, null, $"Seeded meter {i}");
-                 await context.Meters.AddAsync(meter, cancellationToken).ConfigureAwait(false);
-                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
- 
-                 // consumption
-                 var consumption = Consumption.Create(meter.Id, DateTime.UtcNow.Date, 1000m + i * 100m, 900m + i * 90m, DateTime.UtcNow.ToString("yyyy-MM"), "Actual", 1m, "AMR", $"Seeded consumption {i}");
-                 await context.Consumption.AddAsync(consumption, cancellationToken).ConfigureAwait(false);
-                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
- 
-                 // invoice
-                 var invoice = Invoice.Create($"INV-{1000 + i}", member.Id, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddDays(30), consumption.Id, 100m + i, 10m, 5m, 0m, 100m + i, DateTime.UtcNow.ToString("MMMM yyyy"), null, null, null, null, null, $"Seeded invoice {i}");
-                 await context.Invoices.AddAsync(invoice, cancellationToken).ConfigureAwait(false);
-                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
- 
-                 // payment
-                 var payment = Payment.Create($"PAY-{2000 + i}", member.Id, DateTime.UtcNow.Date, invoice.GetOutstandingAmount(), "Cash", null, "1120", $"Seeded payment {i}");
-                 payment = payment.AllocateToInvoice(invoice.Id, invoice.GetOutstandingAmount());
-                 await context.Payments.AddAsync(payment, cancellationToken).ConfigureAwait(false);
-                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-             }
+            var meters = new List<Meter>();
+            var consumptions = new List<Consumption>();
+            var invoices = new List<Invoice>();
+            var payments = new List<Payment>();
 
-             logger.LogInformation("[{Tenant}] seeded {Count} Members with meters, consumptions, invoices and payments", context.TenantInfo!.Identifier, members.Count);
+            for (int i = 1; i <= 10; i++)
+            {
+                var memberNumber = $"MEM-{1000 + i}";
+                var member = Member.Create(
+                    memberNumber, 
+                    $"Member {i}", 
+                    $"{i} Electric Ave", 
+                    DateTime.UtcNow.Date.AddYears(-1), 
+                    $"PO Box {i}", 
+                    $"+1555000{i:D4}", 
+                    "Active", 
+                    null, 
+                    $"member{i}@example.com", 
+                    $"+1555000{i:D4}", 
+                    $"Contact {i}", 
+                    "Residential", 
+                    null, 
+                    $"Seeded member {i}");
+                members.Add(member);
+            }
+
+            await context.Members.AddRangeAsync(members, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            // Create meters, consumptions, invoices, and payments after members are saved
+            for (int i = 0; i < members.Count; i++)
+            {
+                var member = members[i];
+                var meterIndex = i + 1;
+
+                // Create meter
+                var meter = Meter.Create(
+                    $"MTR-{1000 + meterIndex}", 
+                    "Smart Meter", 
+                    "AcmeMeters", 
+                    $"SM-{1000 + meterIndex}", 
+                    DateTime.UtcNow.Date, 
+                    1m, 
+                    $"SN-{1000 + meterIndex}", 
+                    "Location", 
+                    null, 
+                    member.Id, 
+                    true, 
+                    "AMR", 
+                    null, 
+                    null, 
+                    $"Seeded meter {meterIndex}");
+                meters.Add(meter);
+            }
+
+            await context.Meters.AddRangeAsync(meters, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            // Create consumptions and invoices
+            for (int i = 0; i < meters.Count; i++)
+            {
+                var meter = meters[i];
+                var index = i + 1;
+
+                // Create consumption
+                var consumption = Consumption.Create(
+                    meter.Id, 
+                    DateTime.UtcNow.Date, 
+                    1000m + index * 100m, 
+                    900m + index * 90m, 
+                    DateTime.UtcNow.ToString("yyyy-MM"), 
+                    "Actual", 
+                    1m, 
+                    "AMR", 
+                    $"Seeded consumption {index}");
+                consumptions.Add(consumption);
+            }
+
+            await context.Consumption.AddRangeAsync(consumptions, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            // Create invoices
+            for (int i = 0; i < consumptions.Count; i++)
+            {
+                var consumption = consumptions[i];
+                var member = members[i];
+                var index = i + 1;
+
+                // Create invoice
+                var invoice = Invoice.Create(
+                    $"INV-{1000 + index}", 
+                    member.Id, 
+                    DateTime.UtcNow.Date, 
+                    DateTime.UtcNow.Date.AddDays(30), 
+                    consumption.Id, 
+                    100m + index, 
+                    10m, 
+                    5m, 
+                    0m, 
+                    100m + index, 
+                    DateTime.UtcNow.ToString("MMMM yyyy"), 
+                    null, 
+                    null, 
+                    null, 
+                    null, 
+                    null, 
+                    $"Seeded invoice {index}");
+                invoices.Add(invoice);
+            }
+
+            await context.Invoices.AddRangeAsync(invoices, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            // Create payments
+            for (int i = 0; i < invoices.Count; i++)
+            {
+                var invoice = invoices[i];
+                var member = members[i];
+                var index = i + 1;
+
+                // Create payment
+                var payment = Payment.Create(
+                    $"PAY-{2000 + index}", 
+                    member.Id, 
+                    DateTime.UtcNow.Date, 
+                    invoice.GetOutstandingAmount(), 
+                    "Cash", 
+                    null, 
+                    "1120", 
+                    $"Seeded payment {index}");
+                payment = payment.AllocateToInvoice(invoice.Id, invoice.GetOutstandingAmount());
+                payments.Add(payment);
+            }
+
+            await context.Payments.AddRangeAsync(payments, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            logger.LogInformation(
+                "[{Tenant}] seeded {Count} Members with {Meters} meters, {Consumptions} consumptions, {Invoices} invoices, and {Payments} payments", 
+                context.TenantInfo!.Identifier, 
+                members.Count, 
+                meters.Count, 
+                consumptions.Count, 
+                invoices.Count, 
+                payments.Count);
         }
 
         // Seed Fixed Assets (10 records)
@@ -824,26 +936,7 @@ internal sealed class AccountingDbInitializer(
             }
         }
         
-        // Seed ProjectCostEntries (10 records)
-        if (!await context.ProjectCostEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
-        {
-            var projects = await context.Projects.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
-            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "6100", cancellationToken).ConfigureAwait(false);
-            
-            if (projects.Count > 0 && expenseAccount != null)
-            {
-                var projectCostEntries = new List<ProjectCostEntry>();
-                for (int i = 0; i < Math.Min(10, projects.Count); i++)
-                {
-                    var project = projects[i];
-                    projectCostEntries.Add(ProjectCostEntry.Create(project.Id, DateTime.UtcNow.Date.AddDays(-i * 3), 1500m + i * 250m, $"Project cost entry {i + 1}", expenseAccount.Id, "Labor", null, "CC-001", $"WO-{1000 + i}", true, $"Vendor {i + 1}", $"INV-{2000 + i}"));
-                }
 
-                await context.ProjectCostEntries.AddRangeAsync(projectCostEntries, cancellationToken).ConfigureAwait(false);
-                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-                logger.LogInformation("[{Tenant}] seeded {Count} ProjectCostEntries", context.TenantInfo!.Identifier, projectCostEntries.Count);
-            }
-        }
 
         // Seed Bills with BillLineItems (10 bills with 2-3 line items each)
         if (!await context.Bills.AnyAsync(cancellationToken).ConfigureAwait(false))
@@ -854,10 +947,11 @@ internal sealed class AccountingDbInitializer(
                 .Take(10)
                 .ToListAsync(cancellationToken)
                 .ConfigureAwait(false);
-
+            
             if (vendors.Count > 0 && expenseAccounts.Count > 0)
             {
                 var bills = new List<Bill>();
+                
                 for (int i = 0; i < Math.Min(10, vendors.Count); i++)
                 {
                     var vendor = vendors[i];
@@ -865,41 +959,23 @@ internal sealed class AccountingDbInitializer(
                     var dueDate = billDate.AddDays(30);
                     
                     var bill = Bill.Create(
-                        $"BILL-{2000 + i}",
-                        vendor.Id,
-                        $"VND-INV-{1000 + i}",
-                        billDate,
-                        dueDate,
-                        0m, // subtotal - will be calculated from line items
-                        0m, // tax
-                        0m, // shipping
-                        "Net 30",
-                        0m, // discount
-                        null, // discount date
-                        null, // PO id
-                        null, // expense account
-                        null, // period
-                        $"Seeded bill {i + 1} from {vendor.Name}",
-                        null);
-
-                    // Add 2-3 line items per bill
-                    var lineItemCount = (i % 2) + 2; // 2 or 3 line items
-                    for (int j = 0; j < lineItemCount; j++)
-                    {
-                        var account = expenseAccounts[(i + j) % expenseAccounts.Count];
-                        bill.AddLineItem(
-                            $"Line item {j + 1} for bill {i + 1}",
-                            j + 1, // quantity
-                            1000m + (i * 100m) + (j * 50m), // unit price
-                            account.Id);
-                    }
+                        $"BILL-{2000 + i}", // billNumber
+                        vendor.Id, // vendorId
+                        billDate, // billDate
+                        dueDate, // dueDate
+                        $"Seeded bill {i + 1} from {vendor.Name}", // description
+                        null, // periodId
+                        "Net 30", // paymentTerms
+                        $"PO-{1000 + i}", // purchaseOrderNumber
+                        null); // notes
 
                     bills.Add(bill);
                 }
 
                 await context.Bills.AddRangeAsync(bills, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-                logger.LogInformation("[{Tenant}] seeded {Count} Bills with line items", context.TenantInfo!.Identifier, bills.Count);
+                
+                logger.LogInformation("[{Tenant}] seeded {Count} Bills", context.TenantInfo!.Identifier, bills.Count);
             }
         }
 
@@ -977,8 +1053,7 @@ internal sealed class AccountingDbInitializer(
                         null, // defaultRateScheduleId
                         null, // receivableAccountId
                         null, // salesRepresentative
-                        $"Seeded customer {i}", // description
-                        null)); // notes
+                        $"Seeded customer {i}")); // notes
                 }
 
                 await context.Customers.AddRangeAsync(customers, cancellationToken).ConfigureAwait(false);
@@ -1095,8 +1170,7 @@ internal sealed class AccountingDbInitializer(
                     fiscalStart, // fiscalYearStartDate
                     fiscalEnd, // fiscalYearEndDate
                     null, // retainedEarningsAccountId
-                    $"Retained earnings for fiscal year {year}", // description
-                    null); // notes
+                    $"Retained earnings for fiscal year {year}"); // notes
                 
                 // Update with net income, distributions, and adjustments
                 retainedEarning = retainedEarning.UpdateNetIncome(netIncome);
@@ -1138,8 +1212,7 @@ internal sealed class AccountingDbInitializer(
                     periodStart, // periodStartDate
                     periodEnd, // periodEndDate
                     "System Admin", // initiatedBy
-                    $"Period close for {periodStart:MMMM yyyy}", // description
-                    null)); // notes
+                    $"Period close for {periodStart:MMMM yyyy}")); // notes
             }
 
             await context.FiscalPeriodCloses.AddRangeAsync(fiscalPeriodCloses, cancellationToken).ConfigureAwait(false);
@@ -1168,8 +1241,7 @@ internal sealed class AccountingDbInitializer(
                         vendor.Name, // accountName
                         apAccount.Id, // generalLedgerAccountId
                         null, // periodId
-                        $"AP account for vendor {vendor.Name}", // description
-                        null); // notes
+                        $"AP account for vendor {vendor.Name}"); // notes
                     
                     // Update balance with aging distribution
                     apAccountEntity = apAccountEntity.UpdateBalance(
@@ -1207,8 +1279,7 @@ internal sealed class AccountingDbInitializer(
                         member.Name, // accountName
                         arAccount.Id, // generalLedgerAccountId
                         null, // periodId
-                        $"AR account for member {member.Name}", // description
-                        null); // notes
+                        $"AR account for member {member.Name}"); // notes
                     
                     // Update balance with aging distribution
                     arAccountEntity = arAccountEntity.UpdateBalance(
@@ -1225,6 +1296,37 @@ internal sealed class AccountingDbInitializer(
                 logger.LogInformation("[{Tenant}] seeded {Count} AccountsReceivableAccounts", context.TenantInfo!.Identifier, arAccounts.Count);
             }
         }
+
+        // Seed PaymentAllocations (link payments to invoices)
+        if (!await context.PaymentAllocations.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var payments = await context.Payments.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var invoices = await context.Invoices.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            
+            if (payments.Count > 0 && invoices.Count > 0)
+            {
+                var paymentAllocations = new List<PaymentAllocation>();
+                
+                for (int i = 0; i < Math.Min(payments.Count, invoices.Count); i++)
+                {
+                    var payment = payments[i];
+                    var invoice = invoices[i];
+                    
+                    var allocation = PaymentAllocation.Create(
+                        payment.Id, // paymentId
+                        invoice.Id, // invoiceId
+                        payment.Amount * 0.8m, // amount (80% of payment)
+                        $"Payment allocation {i + 1}"); // notes
+                    
+                    paymentAllocations.Add(allocation);
+                }
+
+                await context.PaymentAllocations.AddRangeAsync(paymentAllocations, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} PaymentAllocations", context.TenantInfo!.Identifier, paymentAllocations.Count);
+            }
+        }
+
 
         logger.LogInformation("[{Tenant}] completed seeding all accounting entities", context.TenantInfo!.Identifier);
     }

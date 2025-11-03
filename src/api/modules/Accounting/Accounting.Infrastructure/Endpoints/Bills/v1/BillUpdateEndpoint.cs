@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.Update.v1;
+using Asp.Versioning;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -15,7 +16,7 @@ public static class BillUpdateEndpoint
         return endpoints
             .MapPut("/{id:guid}", async (DefaultIdType id, BillUpdateCommand command, ISender mediator) =>
             {
-                if (id != command.Id)
+                if (id != command.BillId)
                 {
                     return Results.BadRequest("Route ID does not match command ID");
                 }
@@ -26,11 +27,11 @@ public static class BillUpdateEndpoint
             .WithName(nameof(BillUpdateEndpoint))
             .WithSummary("Update an existing bill")
             .WithDescription("Updates an existing bill in the accounts payable system with validation.")
-            .Produces<DefaultIdType>()
+            .Produces<UpdateBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
-            .MapToApiVersion(1);
+            .RequirePermission("Permissions.Bills.Edit")
+            .MapToApiVersion(new ApiVersion(1, 0));
     }
 }
 

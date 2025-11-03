@@ -2,9 +2,9 @@ namespace Accounting.Application.Members.Commands;
 
 public class CreateMemberCommand : IRequest<DefaultIdType>
 {
-    public string MemberNumber { get; set; } = default!;
-    public string MemberName { get; set; } = default!;
-    public string ServiceAddress { get; set; } = default!;
+    public string MemberNumber { get; set; } = null!;
+    public string MemberName { get; set; } = null!;
+    public string ServiceAddress { get; set; } = null!;
     public DateTime MembershipDate { get; set; }
     public string? MailingAddress { get; set; }
     public string? ContactInfo { get; set; }

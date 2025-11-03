@@ -2,7 +2,7 @@ namespace Accounting.Application.ChartOfAccounts.Update.v1;
 
 public class UpdateChartOfAccountCommand : BaseRequest, IRequest<DefaultIdType>
 {
-    public string AccountCode { get; set; } = default!;
+    public string AccountCode { get; set; } = null!;
     public string? AccountName { get; set; }
     public string? AccountType { get; set; }
     public string? UsoaCategory { get; set; }

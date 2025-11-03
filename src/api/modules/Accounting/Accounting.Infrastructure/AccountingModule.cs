@@ -381,6 +381,11 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IRepository<Bill>, AccountingRepository<Bill>>("accounting:bills");
         builder.Services.AddKeyedScoped<IReadRepository<Bill>, AccountingRepository<Bill>>("accounting:bills");
         
+        builder.Services.AddKeyedScoped<IRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting:billlineitems");
+        builder.Services.AddKeyedScoped<IReadRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting:billlineitems");
+        
         builder.Services.AddKeyedScoped<IRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting:fiscalperiodcloses");

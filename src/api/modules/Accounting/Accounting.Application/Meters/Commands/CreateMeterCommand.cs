@@ -2,10 +2,10 @@ namespace Accounting.Application.Meters.Commands;
 
 public class CreateMeterCommand : IRequest<DefaultIdType>
 {
-    public string MeterNumber { get; set; } = default!;
-    public string MeterType { get; set; } = default!;
-    public string Manufacturer { get; set; } = default!;
-    public string ModelNumber { get; set; } = default!;
+    public string MeterNumber { get; set; } = null!;
+    public string MeterType { get; set; } = null!;
+    public string Manufacturer { get; set; } = null!;
+    public string ModelNumber { get; set; } = null!;
     public DateTime InstallationDate { get; set; }
     public decimal Multiplier { get; set; } = 1m;
     public string? SerialNumber { get; set; }

@@ -14,7 +14,7 @@ public class DeferredRevenueResponse
     /// <summary>
     /// Unique deferred revenue number for reference and tracking.
     /// </summary>
-    public string DeferredRevenueNumber { get; set; } = default!;
+    public string DeferredRevenueNumber { get; set; } = null!;
     
     /// <summary>
     /// Date when the revenue should be recognized.
@@ -29,7 +29,7 @@ public class DeferredRevenueResponse
     /// <summary>
     /// Description explaining the nature of the deferred revenue.
     /// </summary>
-    public string Description { get; set; } = default!;
+    public string Description { get; set; } = null!;
     
     /// <summary>
     /// Indicates whether this deferred revenue has been recognized.

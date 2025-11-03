@@ -2,7 +2,7 @@ namespace Accounting.Application.Invoices.Commands;
 
 public class CreateInvoiceCommand : IRequest<DefaultIdType>
 {
-    public string InvoiceNumber { get; set; } = default!;
+    public string InvoiceNumber { get; set; } = null!;
     public DefaultIdType MemberId { get; set; }
     public DateTime InvoiceDate { get; set; }
     public DateTime DueDate { get; set; }
@@ -12,7 +12,7 @@ public class CreateInvoiceCommand : IRequest<DefaultIdType>
     public decimal TaxAmount { get; set; }
     public decimal OtherCharges { get; set; }
     public decimal KWhUsed { get; set; }
-    public string BillingPeriod { get; set; } = default!;
+    public string BillingPeriod { get; set; } = null!;
     public decimal? LateFee { get; set; }
     public decimal? ReconnectionFee { get; set; }
     public decimal? DepositAmount { get; set; }

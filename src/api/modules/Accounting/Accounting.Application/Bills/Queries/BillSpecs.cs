@@ -1,72 +1,50 @@
 namespace Accounting.Application.Bills.Queries;
 
 /// <summary>
-/// Specification to find bill by bill number.
-/// </summary>
-public class BillByNumberSpec : Specification<Bill>
-{
-    public BillByNumberSpec(string billNumber)
-    {
-        Query.Where(b => b.BillNumber == billNumber);
-    }
-}
-
-/// <summary>
-/// Specification to find bill by ID with related data.
-/// </summary>
-public class BillByIdSpec : Specification<Bill>
-{
-    public BillByIdSpec(DefaultIdType id)
-    {
-        Query.Where(b => b.Id == id);
-    }
-}
-
-/// <summary>
 /// Specification for searching bills with filters.
 /// </summary>
-public class BillSearchSpec : Specification<Bill>
+public sealed class SearchBillsSpec : Specification<Bill>
 {
-    public BillSearchSpec(
+    public SearchBillsSpec(
+        string? keyword = null,
         string? billNumber = null,
         DefaultIdType? vendorId = null,
         string? status = null,
-        DateTime? fromDate = null,
-        DateTime? toDate = null,
-        bool? isOverdue = null)
+        string? approvalStatus = null,
+        DateTime? billDateFrom = null,
+        DateTime? billDateTo = null,
+        DateTime? dueDateFrom = null,
+        DateTime? dueDateTo = null,
+        bool? isPosted = null,
+        bool? isPaid = null,
+        DefaultIdType? periodId = null)
     {
-        if (!string.IsNullOrWhiteSpace(billNumber))
-        {
-            Query.Where(b => b.BillNumber.Contains(billNumber));
-        }
-
-        if (vendorId.HasValue)
-        {
-            Query.Where(b => b.VendorId == vendorId.Value);
-        }
-
-        if (!string.IsNullOrWhiteSpace(status))
-        {
-            Query.Where(b => b.Status == status);
-        }
-
-        if (fromDate.HasValue)
-        {
-            Query.Where(b => b.BillDate >= fromDate.Value);
-        }
-
-        if (toDate.HasValue)
-        {
-            Query.Where(b => b.BillDate <= toDate.Value);
-        }
-
-        if (isOverdue.HasValue && isOverdue.Value)
-        {
-            var today = DateTime.UtcNow.Date;
-            Query.Where(b => b.DueDate < today && b.Status != "Paid" && b.Status != "Void");
-        }
-
-        Query.OrderByDescending(b => b.BillDate);
+        Query
+            .Where(b => !string.IsNullOrWhiteSpace(keyword)
+                ? b.BillNumber.Contains(keyword) || (b.Description != null && b.Description.Contains(keyword))
+                : true)
+            .Where(b => !string.IsNullOrWhiteSpace(billNumber) && b.BillNumber.Contains(billNumber), !string.IsNullOrWhiteSpace(billNumber))
+            .Where(b => vendorId.HasValue && b.VendorId == vendorId.Value, vendorId.HasValue)
+            .Where(b => !string.IsNullOrWhiteSpace(status) && b.Status == status, !string.IsNullOrWhiteSpace(status))
+            .Where(b => !string.IsNullOrWhiteSpace(approvalStatus) && b.ApprovalStatus == approvalStatus, !string.IsNullOrWhiteSpace(approvalStatus))
+            .Where(b => billDateFrom.HasValue && b.BillDate >= billDateFrom.Value, billDateFrom.HasValue)
+            .Where(b => billDateTo.HasValue && b.BillDate <= billDateTo.Value, billDateTo.HasValue)
+            .Where(b => dueDateFrom.HasValue && b.DueDate >= dueDateFrom.Value, dueDateFrom.HasValue)
+            .Where(b => dueDateTo.HasValue && b.DueDate <= dueDateTo.Value, dueDateTo.HasValue)
+            .Where(b => isPosted.HasValue && b.IsPosted == isPosted.Value, isPosted.HasValue)
+            .Where(b => isPaid.HasValue && b.IsPaid == isPaid.Value, isPaid.HasValue)
+            .Where(b => periodId.HasValue && b.PeriodId == periodId.Value, periodId.HasValue);
     }
 }
 
+/// <summary>
+/// Specification for getting a bill by ID with line items.
+/// </summary>
+public sealed class GetBillByIdSpec : Specification<Bill>, ISingleResultSpecification<Bill>
+{
+    public GetBillByIdSpec(DefaultIdType billId)
+    {
+        Query
+            .Where(b => b.Id == billId);
+    }
+}

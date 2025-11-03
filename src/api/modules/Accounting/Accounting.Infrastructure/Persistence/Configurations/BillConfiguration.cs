@@ -1,94 +1,115 @@
 namespace Accounting.Infrastructure.Persistence.Configurations;
 
 /// <summary>
-/// Entity Framework Core configuration for Bill entity.
+/// Entity configuration for Bill entity.
+/// Defines database schema, constraints, indexes, and relationships.
 /// </summary>
 public class BillConfiguration : IEntityTypeConfiguration<Bill>
 {
     public void Configure(EntityTypeBuilder<Bill> builder)
     {
-        builder.ToTable("Bills", SchemaNames.Accounting);
-        
+        builder.ToTable("Bills", "accounting");
+
         builder.HasKey(x => x.Id);
-        
+
         builder.Property(x => x.BillNumber)
             .IsRequired()
             .HasMaxLength(50);
-        
-        builder.Property(x => x.VendorInvoiceNumber)
+
+        builder.Property(x => x.VendorId)
+            .IsRequired();
+
+        builder.Property(x => x.BillDate)
+            .IsRequired();
+
+        builder.Property(x => x.DueDate)
+            .IsRequired();
+
+        builder.Property(x => x.TotalAmount)
             .IsRequired()
-            .HasMaxLength(100);
-        
-        builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(256);
-        
+            .HasPrecision(18, 2);
+
         builder.Property(x => x.Status)
             .IsRequired()
-            .HasMaxLength(32);
-        
-        builder.Property(x => x.PaymentTerms)
-            .HasMaxLength(100);
-        
-        builder.Property(x => x.PaymentMethod)
-            .HasMaxLength(50);
-        
-        builder.Property(x => x.PaymentReference)
-            .HasMaxLength(50);
-        
+            .HasMaxLength(20);
+
+        builder.Property(x => x.IsPosted)
+            .IsRequired()
+            .HasDefaultValue(false);
+
+        builder.Property(x => x.IsPaid)
+            .IsRequired()
+            .HasDefaultValue(false);
+
+        builder.Property(x => x.PaidDate)
+            .IsRequired(false);
+
+        builder.Property(x => x.ApprovalStatus)
+            .IsRequired()
+            .HasMaxLength(20);
+
         builder.Property(x => x.ApprovedBy)
             .HasMaxLength(256);
-        
-        builder.Property(x => x.RejectionReason)
-            .HasMaxLength(1000);
-        
-        builder.Property(x => x.Description)
-            .HasMaxLength(2048);
-        
+
+        builder.Property(x => x.ApprovedDate)
+            .IsRequired(false);
+
+        builder.Property(x => x.PeriodId)
+            .IsRequired(false);
+
+        builder.Property(x => x.PaymentTerms)
+            .HasMaxLength(100);
+
+        builder.Property(x => x.PurchaseOrderNumber)
+            .HasMaxLength(50);
+
         builder.Property(x => x.Notes)
-            .HasMaxLength(2048);
-        
-        builder.Property(x => x.TotalAmount)
-            .HasPrecision(18, 2);
-        
-        builder.Property(x => x.PaidAmount)
-            .HasPrecision(18, 2);
-        
-        builder.Property(x => x.SubtotalAmount)
-            .HasPrecision(18, 2);
-        
-        builder.Property(x => x.TaxAmount)
-            .HasPrecision(18, 2);
-        
-        builder.Property(x => x.ShippingAmount)
-            .HasPrecision(18, 2);
-        
-        builder.Property(x => x.DiscountAmount)
-            .HasPrecision(18, 2);
-        
-        // Indexes
+            .HasMaxLength(2000);
+
+        builder.Property(x => x.Description)
+            .HasMaxLength(500);
+
+        // Indexes for performance
         builder.HasIndex(x => x.BillNumber)
-            .IsUnique();
-        
-        builder.HasIndex(x => x.VendorId);
-        
-        builder.HasIndex(x => x.BillDate);
-        
-        builder.HasIndex(x => x.DueDate);
-        
-        builder.HasIndex(x => x.Status);
-        
-        // Configure relationship to line items (one-to-many)
+            .IsUnique()
+            .HasDatabaseName("IX_Bills_BillNumber");
+
+        builder.HasIndex(x => x.VendorId)
+            .HasDatabaseName("IX_Bills_VendorId");
+
+        builder.HasIndex(x => x.BillDate)
+            .HasDatabaseName("IX_Bills_BillDate");
+
+        builder.HasIndex(x => x.DueDate)
+            .HasDatabaseName("IX_Bills_DueDate");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_Bills_Status");
+
+        builder.HasIndex(x => x.IsPosted)
+            .HasDatabaseName("IX_Bills_IsPosted");
+
+        builder.HasIndex(x => x.IsPaid)
+            .HasDatabaseName("IX_Bills_IsPaid");
+
+        builder.HasIndex(x => x.ApprovalStatus)
+            .HasDatabaseName("IX_Bills_ApprovalStatus");
+
+        builder.HasIndex(x => x.PeriodId)
+            .HasDatabaseName("IX_Bills_PeriodId");
+
+        // Composite indexes for common queries
+        builder.HasIndex(x => new { x.VendorId, x.BillDate })
+            .HasDatabaseName("IX_Bills_VendorId_BillDate");
+
+        builder.HasIndex(x => new { x.Status, x.DueDate })
+            .HasDatabaseName("IX_Bills_Status_DueDate");
+
+        // Configure one-to-many relationship with BillLineItems
         builder.HasMany(x => x.LineItems)
             .WithOne()
             .HasForeignKey(li => li.BillId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        // Ensure EF uses the backing field for change tracking
-        var navigation = builder.Metadata.FindNavigation(nameof(Bill.LineItems));
-        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
-
-        // Note: Property-level configuration for BillLineItem is handled in BillLineItemConfiguration
     }
 }
 

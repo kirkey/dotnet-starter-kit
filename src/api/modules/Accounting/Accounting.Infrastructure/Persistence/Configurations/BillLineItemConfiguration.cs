@@ -2,63 +2,78 @@ namespace Accounting.Infrastructure.Persistence.Configurations;
 
 /// <summary>
 /// Entity configuration for BillLineItem entity.
-/// Maps properties, keys, indexes and relationships for bill line items.
+/// Defines database schema, constraints, indexes, and relationships.
 /// </summary>
 public class BillLineItemConfiguration : IEntityTypeConfiguration<BillLineItem>
 {
     public void Configure(EntityTypeBuilder<BillLineItem> builder)
     {
-        builder.ToTable("BillLineItems", schema: SchemaNames.Accounting);
+        builder.ToTable("BillLineItems", "accounting");
 
         builder.HasKey(x => x.Id);
 
-        // Foreign key to Bill
         builder.Property(x => x.BillId)
             .IsRequired();
 
-        // Description
+        builder.Property(x => x.LineNumber)
+            .IsRequired();
+
         builder.Property(x => x.Description)
             .IsRequired()
             .HasMaxLength(500);
 
-        // Quantity
         builder.Property(x => x.Quantity)
-            .HasPrecision(18, 4)
-            .IsRequired();
+            .IsRequired()
+            .HasPrecision(18, 4);
 
-        // Unit price
         builder.Property(x => x.UnitPrice)
-            .HasPrecision(18, 2)
+            .IsRequired()
+            .HasPrecision(18, 4);
+
+        builder.Property(x => x.Amount)
+            .IsRequired()
+            .HasPrecision(18, 2);
+
+        builder.Property(x => x.ChartOfAccountId)
             .IsRequired();
 
-        // Line total
-        builder.Property(x => x.LineTotal)
+        builder.Property(x => x.TaxCodeId)
+            .IsRequired(false);
+
+        builder.Property(x => x.TaxAmount)
+            .IsRequired()
             .HasPrecision(18, 2)
-            .IsRequired();
+            .HasDefaultValue(0);
 
-        // Optional account coding
-        builder.Property(x => x.AccountId);
+        builder.Property(x => x.ProjectId)
+            .IsRequired(false);
 
-        // Indexes for query optimization
-        
-        // Index on BillId for foreign key lookups (one-to-many queries)
+        builder.Property(x => x.CostCenterId)
+            .IsRequired(false);
+
+        builder.Property(x => x.Notes)
+            .HasMaxLength(1000);
+
+        // Indexes for performance
         builder.HasIndex(x => x.BillId)
             .HasDatabaseName("IX_BillLineItems_BillId");
 
-        // Index on AccountId for expense analysis queries
-        builder.HasIndex(x => x.AccountId)
-            .HasDatabaseName("IX_BillLineItems_AccountId");
+        builder.HasIndex(x => x.ChartOfAccountId)
+            .HasDatabaseName("IX_BillLineItems_ChartOfAccountId");
 
-        // Composite index for reporting by bill and account
-        builder.HasIndex(x => new { x.BillId, x.AccountId })
-            .HasDatabaseName("IX_BillLineItems_Bill_Account");
+        builder.HasIndex(x => x.TaxCodeId)
+            .HasDatabaseName("IX_BillLineItems_TaxCodeId");
 
-        // Relationship to Bill (configured from BillConfiguration as well)
-        // This ensures the foreign key relationship is properly established
-        builder.HasOne<Bill>()
-            .WithMany(b => b.LineItems)
-            .HasForeignKey(x => x.BillId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasIndex(x => x.ProjectId)
+            .HasDatabaseName("IX_BillLineItems_ProjectId");
+
+        builder.HasIndex(x => x.CostCenterId)
+            .HasDatabaseName("IX_BillLineItems_CostCenterId");
+
+        // Composite index for bill line ordering
+        builder.HasIndex(x => new { x.BillId, x.LineNumber })
+            .IsUnique()
+            .HasDatabaseName("IX_BillLineItems_BillId_LineNumber");
     }
 }
 

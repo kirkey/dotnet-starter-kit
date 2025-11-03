@@ -1,34 +1,38 @@
 namespace Accounting.Application.Bills.Update.v1;
 
 /// <summary>
-/// Handler for updating a bill.
+/// Handler for updating an existing bill.
 /// </summary>
 public sealed class BillUpdateHandler(
-    ILogger<BillUpdateHandler> logger,
-    [FromKeyedServices("accounting")] IRepository<Bill> repository)
-    : IRequestHandler<BillUpdateCommand, DefaultIdType>
+    [FromKeyedServices("accounting:bills")] IRepository<Bill> repository,
+    ILogger<BillUpdateHandler> logger)
+    : IRequestHandler<BillUpdateCommand, UpdateBillResponse>
 {
-    public async Task<DefaultIdType> Handle(BillUpdateCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateBillResponse> Handle(BillUpdateCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var bill = await repository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new BillByIdNotFoundException(request.Id);
+        logger.LogInformation("Updating bill {BillId}", request.BillId);
+
+        var bill = await repository.GetByIdAsync(request.BillId, cancellationToken).ConfigureAwait(false)
+            ?? throw new BillNotFoundException(request.BillId);
 
         bill.Update(
-            dueDate: request.DueDate,
-            subtotalAmount: request.SubtotalAmount,
-            taxAmount: request.TaxAmount,
-            shippingAmount: request.ShippingAmount,
-            paymentTerms: request.PaymentTerms,
-            description: request.Description,
-            notes: request.Notes);
+            request.BillNumber,
+            request.BillDate,
+            request.DueDate,
+            request.Description,
+            request.PeriodId,
+            request.PaymentTerms,
+            request.PurchaseOrderNumber,
+            request.Notes);
 
-        await repository.UpdateAsync(bill, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
+        await repository.UpdateAsync(bill, cancellationToken).ConfigureAwait(false);
+        await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Bill updated {BillId} - {BillNumber}", bill.Id, bill.BillNumber);
-        return bill.Id;
+        logger.LogInformation("Bill {BillId} updated successfully", request.BillId);
+
+        return new UpdateBillResponse(bill.Id);
     }
 }
 

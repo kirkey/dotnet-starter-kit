@@ -14,17 +14,17 @@ public class MemberResponse
     /// <summary>
     /// Unique member number for identification and reference.
     /// </summary>
-    public string MemberNumber { get; set; } = default!;
+    public string MemberNumber { get; set; } = null!;
     
     /// <summary>
     /// Full name of the member.
     /// </summary>
-    public string MemberName { get; set; } = default!;
+    public string MemberName { get; set; } = null!;
     
     /// <summary>
     /// Address where service is provided.
     /// </summary>
-    public string ServiceAddress { get; set; } = default!;
+    public string ServiceAddress { get; set; } = null!;
     
     /// <summary>
     /// Mailing address for correspondence (if different from service address).
@@ -39,7 +39,7 @@ public class MemberResponse
     /// <summary>
     /// Current status of the member account (e.g., "Active", "Suspended", "Inactive").
     /// </summary>
-    public string AccountStatus { get; set; } = default!;
+    public string AccountStatus { get; set; } = null!;
     
     /// <summary>
     /// Identifier for the meter associated with this member.

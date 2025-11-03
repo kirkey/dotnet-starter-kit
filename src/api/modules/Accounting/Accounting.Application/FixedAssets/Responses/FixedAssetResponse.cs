@@ -174,14 +174,4 @@ public class FixedAssetResponse(
     /// Whether this asset requires USOA reporting in regulatory filings.
     /// </summary>
     public bool RequiresUsoaReporting { get; set; } = requiresUsoaReporting;
-
-    /// <summary>
-    /// Description or additional details about the asset.
-    /// </summary>
-    public string? Description { get; set; } = description;
-
-    /// <summary>
-    /// Additional notes about the asset.
-    /// </summary>
-    public string? Notes { get; set; } = notes;
 }

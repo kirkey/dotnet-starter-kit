@@ -1,84 +1,112 @@
-// Bill Exceptions
-
 namespace Accounting.Domain.Exceptions;
 
 /// <summary>
-/// Exception thrown when a bill is not found by ID.
+/// Exception thrown when a bill is not found.
 /// </summary>
-public sealed class BillByIdNotFoundException(DefaultIdType id) : NotFoundException($"bill with id {id} not found");
+public sealed class BillNotFoundException : NotFoundException
+{
+    public BillNotFoundException(DefaultIdType billId)
+        : base($"Bill with ID '{billId}' was not found.")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when a bill is not found by bill number.
+/// Exception thrown when attempting to modify a bill that cannot be modified.
 /// </summary>
-public sealed class BillByNumberNotFoundException(string billNumber) : NotFoundException($"bill with number {billNumber} not found");
+public sealed class BillCannotBeModifiedException : BadRequestException
+{
+    public BillCannotBeModifiedException(DefaultIdType billId, string reason)
+        : base($"Bill '{billId}' cannot be modified: {reason}")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when trying to create a bill with a duplicate bill number.
+/// Exception thrown when attempting to post a bill that is already posted.
 /// </summary>
-public sealed class DuplicateBillNumberException(string billNumber) : ConflictException($"bill with number {billNumber} already exists");
+public sealed class BillAlreadyPostedException : BadRequestException
+{
+    public BillAlreadyPostedException(DefaultIdType billId)
+        : base($"Bill '{billId}' is already posted to the general ledger.")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when trying to modify an approved bill.
+/// Exception thrown when attempting to approve a bill that is already approved.
 /// </summary>
-public sealed class CannotModifyApprovedBillException(DefaultIdType id) : ForbiddenException($"cannot modify approved bill with id {id}");
+public sealed class BillAlreadyApprovedException : BadRequestException
+{
+    public BillAlreadyApprovedException(DefaultIdType billId)
+        : base($"Bill '{billId}' is already approved.")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when trying to modify a paid bill.
+/// Exception thrown when attempting to post a bill that is not approved.
 /// </summary>
-public sealed class CannotModifyPaidBillException(DefaultIdType id) : ForbiddenException($"cannot modify paid bill with id {id}");
+public sealed class BillNotApprovedException : BadRequestException
+{
+    public BillNotApprovedException(DefaultIdType billId)
+        : base($"Bill '{billId}' must be approved before it can be posted.")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when trying to void a bill with payments applied.
+/// Exception thrown when attempting to mark a bill as paid that is not posted.
 /// </summary>
-public sealed class CannotVoidBillWithPaymentsException(DefaultIdType id) : ForbiddenException($"cannot void bill with id {id} that has payments applied");
+public sealed class BillNotPostedException : BadRequestException
+{
+    public BillNotPostedException(DefaultIdType billId)
+        : base($"Bill '{billId}' must be posted before it can be marked as paid.")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when payment amount exceeds outstanding balance.
+/// Exception thrown when attempting to pay a bill that is already paid.
 /// </summary>
-public sealed class PaymentExceedsOutstandingBalanceException(decimal paymentAmount, decimal outstandingAmount) : ForbiddenException($"payment amount {paymentAmount:N2} exceeds outstanding balance {outstandingAmount:N2}");
+public sealed class BillAlreadyPaidException : BadRequestException
+{
+    public BillAlreadyPaidException(DefaultIdType billId)
+        : base($"Bill '{billId}' is already marked as paid.")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when trying to submit bill without line items.
+/// Exception thrown when a bill has an invalid amount.
 /// </summary>
-public sealed class CannotSubmitBillWithoutLineItemsException() : ForbiddenException("cannot submit bill with no line items");
+public sealed class BillInvalidAmountException : BadRequestException
+{
+    public BillInvalidAmountException(DefaultIdType billId, string reason)
+        : base($"Bill '{billId}' has an invalid amount: {reason}")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when trying to approve bill that is not pending approval.
+/// Exception thrown when a bill line item is not found.
 /// </summary>
-public sealed class CannotApproveBillNotPendingApprovalException(DefaultIdType id) : ForbiddenException($"cannot approve bill with id {id} that is not pending approval");
+public sealed class BillLineItemNotFoundException : NotFoundException
+{
+    public BillLineItemNotFoundException(DefaultIdType lineItemId)
+        : base($"Bill line item with ID '{lineItemId}' was not found.")
+    {
+    }
+}
 
 /// <summary>
-/// Exception thrown when trying to reject bill that is not pending approval.
+/// Exception thrown when attempting to add a line item to a bill that cannot be modified.
 /// </summary>
-public sealed class CannotRejectBillNotPendingApprovalException(DefaultIdType id) : ForbiddenException($"cannot reject bill with id {id} that is not pending approval");
-
-/// <summary>
-/// Exception thrown when trying to apply payment to unapproved bill.
-/// </summary>
-public sealed class CannotApplyPaymentToUnapprovedBillException(DefaultIdType id) : ForbiddenException($"cannot apply payment to unapproved bill with id {id}");
-
-/// <summary>
-/// Exception thrown when trying to revert approval on bill with payments.
-/// </summary>
-public sealed class CannotRevertApprovalWithPaymentsException(DefaultIdType id) : ForbiddenException($"cannot revert approval on bill with id {id} that has payments applied");
-
-/// <summary>
-/// Exception thrown when bill is not approved.
-/// </summary>
-public sealed class BillNotApprovedException(DefaultIdType id) : ForbiddenException($"bill with id {id} is not approved");
-
-/// <summary>
-/// Exception thrown when due date is before bill date.
-/// </summary>
-public sealed class DueDateBeforeBillDateException() : ForbiddenException("due date must be on or after bill date");
-
-/// <summary>
-/// Exception thrown when bill amounts are negative.
-/// </summary>
-public sealed class BillAmountCannotBeNegativeException(string fieldName) : ForbiddenException($"{fieldName} cannot be negative");
-
-/// <summary>
-/// Exception thrown when line item quantity or price is invalid.
-/// </summary>
-public sealed class InvalidBillLineItemException(string message) : ForbiddenException(message);
+public sealed class BillLineItemCannotBeAddedException : BadRequestException
+{
+    public BillLineItemCannotBeAddedException(DefaultIdType billId)
+        : base($"Cannot add line items to bill '{billId}' because it is posted or paid.")
+    {
+    }
+}
 

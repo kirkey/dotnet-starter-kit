@@ -14,7 +14,7 @@ public class InvoiceResponse
     /// <summary>
     /// Unique invoice number for reference and tracking.
     /// </summary>
-    public string InvoiceNumber { get; set; } = default!;
+    public string InvoiceNumber { get; set; } = null!;
     
     /// <summary>
     /// Member or customer identifier associated with this invoice.
@@ -44,7 +44,7 @@ public class InvoiceResponse
     /// <summary>
     /// Current status of the invoice (e.g., "Pending", "Paid", "Overdue").
     /// </summary>
-    public string Status { get; set; } = default!;
+    public string Status { get; set; } = null!;
     
     /// <summary>
     /// Reference to the consumption record for utility billing.
@@ -79,7 +79,7 @@ public class InvoiceResponse
     /// <summary>
     /// Billing period description (e.g., "Jan 2024", "Q1 2024").
     /// </summary>
-    public string BillingPeriod { get; set; } = default!;
+    public string BillingPeriod { get; set; } = null!;
     
     /// <summary>
     /// Date when the invoice was paid (if applicable).

@@ -1,49 +1,72 @@
-using Accounting.Application.Bills.Queries;
-
 namespace Accounting.Application.Bills.Create.v1;
 
 /// <summary>
-/// Handler for creating a new bill.
+/// Handler for creating a new bill with line items.
 /// </summary>
 public sealed class BillCreateHandler(
-    ILogger<BillCreateHandler> logger,
-    [FromKeyedServices("accounting")] IRepository<Bill> repository)
+    [FromKeyedServices("accounting:bills")] IRepository<Bill> billRepository,
+    [FromKeyedServices("accounting:billlineitems")] IRepository<BillLineItem> lineItemRepository,
+    ILogger<BillCreateHandler> logger)
     : IRequestHandler<BillCreateCommand, BillCreateResponse>
 {
     public async Task<BillCreateResponse> Handle(BillCreateCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Check for duplicate bill number
-        var existingByNumber = await repository.FirstOrDefaultAsync(
-            new BillByNumberSpec(request.BillNumber), cancellationToken);
-        if (existingByNumber != null)
+        logger.LogInformation(
+            "Creating bill {BillNumber} for vendor {VendorId} with {LineCount} line items",
+            request.BillNumber, request.VendorId, request.LineItems?.Count ?? 0);
+
+        // Create the bill
+        var bill = Bill.Create(
+            request.BillNumber,
+            request.VendorId,
+            request.BillDate,
+            request.DueDate,
+            request.Description,
+            request.PeriodId,
+            request.PaymentTerms,
+            request.PurchaseOrderNumber,
+            request.Notes);
+
+        await billRepository.AddAsync(bill, cancellationToken).ConfigureAwait(false);
+
+        // Create line items if provided
+        if (request.LineItems != null && request.LineItems.Count > 0)
         {
-            throw new DuplicateBillNumberException(request.BillNumber);
+            decimal totalAmount = 0;
+
+            foreach (var lineDto in request.LineItems)
+            {
+                var lineItem = BillLineItem.Create(
+                    bill.Id,
+                    lineDto.LineNumber,
+                    lineDto.Description,
+                    lineDto.Quantity,
+                    lineDto.UnitPrice,
+                    lineDto.Amount,
+                    lineDto.ChartOfAccountId,
+                    lineDto.TaxCodeId,
+                    lineDto.TaxAmount,
+                    lineDto.ProjectId,
+                    lineDto.CostCenterId,
+                    lineDto.Notes);
+
+                await lineItemRepository.AddAsync(lineItem, cancellationToken).ConfigureAwait(false);
+                totalAmount += lineDto.Amount;
+            }
+
+            // Update bill total amount
+            bill.UpdateTotalAmount(totalAmount);
+            await billRepository.UpdateAsync(bill, cancellationToken).ConfigureAwait(false);
         }
 
-        var bill = Bill.Create(
-            billNumber: request.BillNumber,
-            vendorId: request.VendorId,
-            vendorInvoiceNumber: request.VendorInvoiceNumber,
-            billDate: request.BillDate,
-            dueDate: request.DueDate,
-            subtotalAmount: request.SubtotalAmount,
-            taxAmount: request.TaxAmount,
-            shippingAmount: request.ShippingAmount,
-            paymentTerms: request.PaymentTerms,
-            discountAmount: request.DiscountAmount,
-            discountDate: request.DiscountDate,
-            purchaseOrderId: request.PurchaseOrderId,
-            expenseAccountId: request.ExpenseAccountId,
-            periodId: request.PeriodId,
-            description: request.Description,
-            notes: request.Notes);
+        await billRepository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-        await repository.AddAsync(bill, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
+        logger.LogInformation(
+            "Bill {BillNumber} created successfully with ID {BillId}",
+            request.BillNumber, bill.Id);
 
-        logger.LogInformation("Bill created {BillId} - {BillNumber}", bill.Id, bill.BillNumber);
         return new BillCreateResponse(bill.Id);
     }
 }

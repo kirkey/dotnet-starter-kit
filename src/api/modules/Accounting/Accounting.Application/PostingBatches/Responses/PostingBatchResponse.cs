@@ -14,7 +14,7 @@ public class PostingBatchResponse
     /// <summary>
     /// Unique batch number for reference and tracking.
     /// </summary>
-    public string BatchNumber { get; set; } = default!;
+    public string BatchNumber { get; set; } = null!;
     
     /// <summary>
     /// Date when the batch was created or processed.
@@ -24,7 +24,7 @@ public class PostingBatchResponse
     /// <summary>
     /// Current status of the batch (e.g., "Draft", "Posted", "Approved").
     /// </summary>
-    public string Status { get; set; } = default!;
+    public string Status { get; set; } = null!;
     
     /// <summary>
     /// Description or purpose of the posting batch.
@@ -39,7 +39,7 @@ public class PostingBatchResponse
     /// <summary>
     /// Approval status of the batch (e.g., "Pending", "Approved", "Rejected").
     /// </summary>
-    public string ApprovalStatus { get; set; } = default!;
+    public string ApprovalStatus { get; set; } = null!;
     
     /// <summary>
     /// Name of the person who approved the batch.

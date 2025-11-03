@@ -1,0 +1,220 @@
+@page "/accounting/bills"
+
+<PageHeader Title="Bill Management" Header="Bill Management" SubHeader="Manage vendor bills, track payables, and process payments." />
+
+<EntityTable @ref="_table" TEntity="BillSearchResponse" TId="DefaultIdType" TRequest="BillViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@BillNumber"
+                          Label="Bill Number"
+                          Placeholder="Search by bill number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@VendorName"
+                          Label="Vendor Name"
+                          Placeholder="Search by vendor"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Business" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@Status"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@("Submitted")">Submitted</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@("Posted")">Posted</MudSelectItem>
+                <MudSelectItem Value="@("Paid")">Paid</MudSelectItem>
+                <MudSelectItem Value="@("Void")">Void</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@ApprovalStatus"
+                       Label="Approval Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("Rejected")">Rejected</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@BillDateFrom"
+                           Label="Bill Date From"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@BillDateTo"
+                           Label="Bill Date To"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@DueDateFrom"
+                           Label="Due Date From"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@DueDateTo"
+                           Label="Due Date To"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@IsPosted"
+                       Label="Posted Only"
+                       Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@IsPaid"
+                       Label="Paid Only"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="bill">
+        @if (bill.Status == "Draft" || bill.Status == "Submitted")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Check" OnClick="@(() => OnApproveBill(bill.Id))">
+                Approve Bill
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnRejectBill(bill.Id))">
+                Reject Bill
+            </MudMenuItem>
+        }
+        @if (bill.Status == "Approved" && !bill.IsPosted)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PostAdd" OnClick="@(() => OnPostBill(bill.Id))">
+                Post to GL
+            </MudMenuItem>
+        }
+        @if (bill.IsPosted && !bill.IsPaid)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Payment" OnClick="@(() => OnMarkAsPaid(bill.Id))">
+                Mark as Paid
+            </MudMenuItem>
+        }
+        @if (!bill.IsPaid)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => OnVoidBill(bill.Id))">
+                Void Bill
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => OnPrintBill(bill.Id))">
+            Print Bill
+        </MudMenuItem>
+    </ExtraActions>
+
+    <ActionsContent>
+        <MudChip T="string" 
+                 Color="@GetStatusColor(context.Status)" 
+                 Size="Size.Small">
+            @context.Status
+        </MudChip>
+        @if (context.IsPosted)
+        {
+            <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.CheckCircle">
+                Posted
+            </MudChip>
+        }
+        @if (context.IsPaid)
+        {
+            <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.Paid">
+                Paid
+            </MudChip>
+        }
+    </ActionsContent>
+</EntityTable>
+
+@* Dialog for approving bill *@
+<MudDialog @bind-IsVisible="_approveDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Check" Class="mr-3" /> Approve Bill
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_approveCommand.ApprovedBy"
+                      Label="Approved By"
+                      Required="true"
+                      Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _approveDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitApproveBill">Approve</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Dialog for rejecting bill *@
+<MudDialog @bind-IsVisible="_rejectDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-3" /> Reject Bill
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_rejectCommand.RejectedBy"
+                      Label="Rejected By"
+                      Required="true"
+                      Variant="Variant.Outlined" />
+        <MudTextField @bind-Value="_rejectCommand.Reason"
+                      Label="Rejection Reason"
+                      Required="true"
+                      Lines="3"
+                      Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _rejectDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="SubmitRejectBill">Reject</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Dialog for marking as paid *@
+<MudDialog @bind-IsVisible="_markAsPaidDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Payment" Class="mr-3" /> Mark Bill as Paid
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDatePicker @bind-Date="_markAsPaidCommand.PaidDate"
+                       Label="Payment Date"
+                       Required="true"
+                       Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _markAsPaidDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="SubmitMarkAsPaid">Mark as Paid</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Dialog for voiding bill *@
+<MudDialog @bind-IsVisible="_voidDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Block" Class="mr-3" /> Void Bill
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_voidCommand.Reason"
+                      Label="Void Reason"
+                      Required="true"
+                      Lines="3"
+                      Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _voidDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="SubmitVoidBill">Void Bill</MudButton>
+    </DialogActions>
+</MudDialog>
+

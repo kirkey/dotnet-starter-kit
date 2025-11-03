@@ -1,4 +1,3 @@
-using Accounting.Application.Customers.Queries;
 using Accounting.Application.Customers.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.Customers.v1;

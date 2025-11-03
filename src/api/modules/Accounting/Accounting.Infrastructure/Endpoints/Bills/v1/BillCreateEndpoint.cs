@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.Create.v1;
+using Asp.Versioning;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -16,7 +17,7 @@ public static class BillCreateEndpoint
             .MapPost("/", async (BillCreateCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Created($"/accounting/bills/{response.Id}", response);
+                return Results.Created($"/accounting/bills/{response.BillId}", response);
             })
             .WithName(nameof(BillCreateEndpoint))
             .WithSummary("Create a new bill")
@@ -24,8 +25,8 @@ public static class BillCreateEndpoint
             .Produces<BillCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Create")
-            .MapToApiVersion(1);
+            .RequirePermission("Permissions.Bills.Create")
+            .MapToApiVersion(new ApiVersion(1, 0));
     }
 }
 

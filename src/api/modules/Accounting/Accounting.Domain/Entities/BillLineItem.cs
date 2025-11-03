@@ -1,86 +1,134 @@
 namespace Accounting.Domain.Entities;
 
 /// <summary>
-/// Represents a single line item within a vendor bill for detailed expense tracking and account coding.
+/// Represents a single line item within a vendor bill, detailing individual charges or expenses.
 /// </summary>
 /// <remarks>
 /// Use cases:
-/// - Track individual items or services on a vendor bill with quantity and pricing.
-/// - Support account-level expense coding for GL posting and reporting.
-/// - Enable detailed expense analysis by line item.
-/// - Facilitate 3-way matching with purchase orders and receipts.
-/// - Support line-level modifications before bill approval.
-/// - Track line-level audit trail for compliance and dispute resolution.
+/// - Detail specific goods or services on a vendor bill.
+/// - Assign line items to different expense accounts or cost centers.
+/// - Track quantity, unit price, and extended amounts.
+/// - Support tax calculations and project/department allocations.
 /// 
 /// Default values:
-/// - BillId: required reference to parent bill
-/// - Description: required item/service description (max 500 chars)
-/// - Quantity: required positive decimal (example: 10.0 units, 2.5 hours)
-/// - UnitPrice: required non-negative decimal (example: 50.00 per unit)
-/// - LineTotal: calculated (Quantity × UnitPrice)
-/// - AccountId: optional GL account for expense coding
+/// - Quantity: 1
+/// - UnitPrice: 0
+/// - Amount: 0 (calculated as Quantity * UnitPrice)
 /// 
 /// Business rules:
-/// - Description cannot be empty and max 500 characters
-/// - Quantity must be positive
-/// - UnitPrice cannot be negative
-/// - LineTotal is automatically calculated
-/// - Cannot modify line items after bill is approved
-/// - AccountId should reference valid ChartOfAccount
-/// - Updates recalculate LineTotal automatically
+/// - Must be associated with a Bill (BillId is required).
+/// - Description is required and cannot exceed 500 characters.
+/// - Quantity must be positive (> 0).
+/// - UnitPrice and Amount can be zero but not negative.
+/// - Chart of Account ID is required for GL posting.
+/// - Amount is typically calculated as Quantity * UnitPrice.
 /// </remarks>
+/// <seealso cref="Accounting.Domain.Entities.Bill"/>
 public class BillLineItem : AuditableEntity, IAggregateRoot
 {
     private const int MaxDescriptionLength = 500;
 
     /// <summary>
-    /// Parent bill identifier.
-    /// Links to the Bill entity that owns this line item.
+    /// Parent bill identifier - REQUIRED.
+    /// Reference to the bill that contains this line item.
     /// </summary>
     public DefaultIdType BillId { get; private set; }
 
     /// <summary>
-    /// Description of the item or service.
-    /// Example: "Office supplies - Paper reams", "Consulting services - Project X".
-    /// Max length: 500 characters. Required field.
+    /// Line number for ordering and display.
+    /// Example: 1, 2, 3. Used for maintaining line item sequence.
     /// </summary>
-    public new string Description { get; private set; } = string.Empty;
+    public int LineNumber { get; private set; }
 
     /// <summary>
-    /// Quantity of items or hours of service.
-    /// Example: 10.0 for 10 units, 2.5 for 2.5 hours. Must be positive.
+    /// Description of the goods or services.
+    /// Example: "Office Supplies - Paper Reams", "Consulting Services - October".
+    /// </summary>
+    public new string Description { get; private set; }
+
+    /// <summary>
+    /// Quantity of items or units.
+    /// Example: 10 (for 10 units), 1 (for a single service). Must be positive.
+    /// Default: 1.
     /// </summary>
     public decimal Quantity { get; private set; }
 
     /// <summary>
-    /// Price per unit or hourly rate.
-    /// Example: 50.00 for $50 per unit. Cannot be negative.
+    /// Price per unit.
+    /// Example: 25.50 per unit, 1500.00 per service. Can be zero but not negative.
+    /// Default: 0.
     /// </summary>
     public decimal UnitPrice { get; private set; }
 
     /// <summary>
-    /// Total line amount (Quantity × UnitPrice).
-    /// Example: 500.00 for 10 units at $50 each.
-    /// Automatically calculated and updated when quantity or price changes.
+    /// Extended line amount.
+    /// Typically calculated as Quantity * UnitPrice. Can include discounts or adjustments.
     /// </summary>
-    public decimal LineTotal { get; private set; }
+    public decimal Amount { get; private set; }
 
     /// <summary>
-    /// Optional general ledger account identifier for expense coding.
-    /// Links to ChartOfAccount entity if specified.
-    /// Example: AccountId for "Supplies Expense" or "Professional Services".
+    /// Chart of account identifier for general ledger posting.
+    /// Example: links to expense account like "Office Supplies" or "Professional Fees".
+    /// REQUIRED for GL integration.
     /// </summary>
-    public DefaultIdType? AccountId { get; private set; }
+    public DefaultIdType ChartOfAccountId { get; private set; }
 
-    // EF Core constructor
+    /// <summary>
+    /// Optional tax code identifier for tax calculations.
+    /// Example: links to sales tax, VAT, or other tax codes.
+    /// </summary>
+    public DefaultIdType? TaxCodeId { get; private set; }
+
+    /// <summary>
+    /// Tax amount for this line item.
+    /// Example: 2.50 for sales tax. Default: 0.
+    /// </summary>
+    public decimal TaxAmount { get; private set; }
+
+    /// <summary>
+    /// Optional project identifier for project costing.
+    /// Example: links to capital project or job costing.
+    /// </summary>
+    public DefaultIdType? ProjectId { get; private set; }
+
+    /// <summary>
+    /// Optional cost center or department identifier.
+    /// Example: links to department for expense allocation.
+    /// </summary>
+    public DefaultIdType? CostCenterId { get; private set; }
+
+    /// <summary>
+    /// Additional notes for this line item.
+    /// Example: "Approved by manager", "Price includes shipping".
+    /// </summary>
+    public string? Notes { get; private set; }
+
+    // EF Core parameterless constructor
     private BillLineItem()
     {
+        Description = string.Empty;
     }
 
-    private BillLineItem(DefaultIdType billId, string description, decimal quantity, decimal unitPrice, DefaultIdType? accountId)
+    // Private constructor with required parameters
+    private BillLineItem(
+        DefaultIdType billId,
+        int lineNumber,
+        string description,
+        decimal quantity,
+        decimal unitPrice,
+        decimal amount,
+        DefaultIdType chartOfAccountId,
+        DefaultIdType? taxCodeId = null,
+        decimal taxAmount = 0,
+        DefaultIdType? projectId = null,
+        DefaultIdType? costCenterId = null,
+        string? notes = null)
     {
         if (billId == default)
-            throw new ArgumentException("BillId is required", nameof(billId));
+            throw new ArgumentException("Bill ID is required", nameof(billId));
+
+        if (lineNumber <= 0)
+            throw new ArgumentException("Line number must be positive", nameof(lineNumber));
 
         if (string.IsNullOrWhiteSpace(description))
             throw new ArgumentException("Description is required", nameof(description));
@@ -95,41 +143,89 @@ public class BillLineItem : AuditableEntity, IAggregateRoot
         if (unitPrice < 0)
             throw new ArgumentException("Unit price cannot be negative", nameof(unitPrice));
 
+        if (amount < 0)
+            throw new ArgumentException("Amount cannot be negative", nameof(amount));
+
+        if (chartOfAccountId == default)
+            throw new ArgumentException("Chart of Account ID is required", nameof(chartOfAccountId));
+
+        if (taxAmount < 0)
+            throw new ArgumentException("Tax amount cannot be negative", nameof(taxAmount));
+
         BillId = billId;
+        LineNumber = lineNumber;
         Description = desc;
         Quantity = quantity;
         UnitPrice = unitPrice;
-        LineTotal = quantity * unitPrice;
-        AccountId = accountId;
+        Amount = amount;
+        ChartOfAccountId = chartOfAccountId;
+        TaxCodeId = taxCodeId;
+        TaxAmount = taxAmount;
+        ProjectId = projectId;
+        CostCenterId = costCenterId;
+        Notes = notes?.Trim();
     }
 
     /// <summary>
-    /// Factory method to create a new bill line item with validation.
+    /// Factory method to create a new bill line item.
     /// </summary>
-    /// <param name="billId">Parent bill identifier (required)</param>
-    /// <param name="description">Item description (required, max 500 chars)</param>
-    /// <param name="quantity">Quantity (must be positive)</param>
-    /// <param name="unitPrice">Unit price (cannot be negative)</param>
-    /// <param name="accountId">Optional GL account identifier</param>
-    /// <returns>New BillLineItem instance</returns>
-    /// <exception cref="ArgumentException">Thrown if validation fails</exception>
-    public static BillLineItem Create(DefaultIdType billId, string description, decimal quantity, decimal unitPrice, DefaultIdType? accountId = null)
+    /// <param name="billId">Parent bill identifier.</param>
+    /// <param name="lineNumber">Line number for ordering.</param>
+    /// <param name="description">Description of goods/services.</param>
+    /// <param name="quantity">Quantity of items.</param>
+    /// <param name="unitPrice">Price per unit.</param>
+    /// <param name="amount">Extended line amount.</param>
+    /// <param name="chartOfAccountId">GL account for posting.</param>
+    /// <param name="taxCodeId">Optional tax code.</param>
+    /// <param name="taxAmount">Optional tax amount.</param>
+    /// <param name="projectId">Optional project reference.</param>
+    /// <param name="costCenterId">Optional cost center reference.</param>
+    /// <param name="notes">Optional notes.</param>
+    /// <returns>New BillLineItem instance.</returns>
+    public static BillLineItem Create(
+        DefaultIdType billId,
+        int lineNumber,
+        string description,
+        decimal quantity,
+        decimal unitPrice,
+        decimal amount,
+        DefaultIdType chartOfAccountId,
+        DefaultIdType? taxCodeId = null,
+        decimal taxAmount = 0,
+        DefaultIdType? projectId = null,
+        DefaultIdType? costCenterId = null,
+        string? notes = null)
     {
-        return new BillLineItem(billId, description, quantity, unitPrice, accountId);
+        return new BillLineItem(
+            billId, lineNumber, description, quantity, unitPrice, amount,
+            chartOfAccountId, taxCodeId, taxAmount, projectId, costCenterId, notes);
     }
 
     /// <summary>
-    /// Update line item details. Recalculates line total if quantity or price changes.
+    /// Update line item properties.
     /// </summary>
-    /// <param name="description">Updated description (optional)</param>
-    /// <param name="quantity">Updated quantity (optional, must be positive)</param>
-    /// <param name="unitPrice">Updated unit price (optional, cannot be negative)</param>
-    /// <param name="accountId">Updated account ID (optional)</param>
-    /// <returns>This instance for fluent chaining</returns>
-    /// <exception cref="ArgumentException">Thrown if validation fails</exception>
-    public BillLineItem Update(string? description, decimal? quantity, decimal? unitPrice, DefaultIdType? accountId)
+    public BillLineItem Update(
+        int? lineNumber,
+        string? description,
+        decimal? quantity,
+        decimal? unitPrice,
+        decimal? amount,
+        DefaultIdType? chartOfAccountId,
+        DefaultIdType? taxCodeId,
+        decimal? taxAmount,
+        DefaultIdType? projectId,
+        DefaultIdType? costCenterId,
+        string? notes)
     {
         bool isUpdated = false;
+
+        if (lineNumber.HasValue && LineNumber != lineNumber.Value)
+        {
+            if (lineNumber.Value <= 0)
+                throw new ArgumentException("Line number must be positive");
+            LineNumber = lineNumber.Value;
+            isUpdated = true;
+        }
 
         if (!string.IsNullOrWhiteSpace(description) && Description != description)
         {
@@ -156,18 +252,63 @@ public class BillLineItem : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (accountId != AccountId)
+        if (amount.HasValue && Amount != amount.Value)
         {
-            AccountId = accountId;
+            if (amount.Value < 0)
+                throw new ArgumentException("Amount cannot be negative");
+            Amount = amount.Value;
             isUpdated = true;
         }
 
-        // Recalculate line total if quantity or price changed
-        if (isUpdated)
+        if (chartOfAccountId.HasValue && ChartOfAccountId != chartOfAccountId.Value)
         {
-            LineTotal = Quantity * UnitPrice;
+            if (chartOfAccountId.Value == default)
+                throw new ArgumentException("Chart of Account ID is required");
+            ChartOfAccountId = chartOfAccountId.Value;
+            isUpdated = true;
         }
 
+        if (taxCodeId != TaxCodeId)
+        {
+            TaxCodeId = taxCodeId;
+            isUpdated = true;
+        }
+
+        if (taxAmount.HasValue && TaxAmount != taxAmount.Value)
+        {
+            if (taxAmount.Value < 0)
+                throw new ArgumentException("Tax amount cannot be negative");
+            TaxAmount = taxAmount.Value;
+            isUpdated = true;
+        }
+
+        if (projectId != ProjectId)
+        {
+            ProjectId = projectId;
+            isUpdated = true;
+        }
+
+        if (costCenterId != CostCenterId)
+        {
+            CostCenterId = costCenterId;
+            isUpdated = true;
+        }
+
+        if (notes != Notes)
+        {
+            Notes = notes?.Trim();
+            isUpdated = true;
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Recalculate the line amount based on quantity and unit price.
+    /// </summary>
+    public BillLineItem RecalculateAmount()
+    {
+        Amount = Quantity * UnitPrice;
         return this;
     }
 }
