@@ -23,6 +23,7 @@ public sealed class AccountingDbContext(
     public DbSet<FixedAsset> FixedAssets { get; set; } = null!;
     public DbSet<GeneralLedger> GeneralLedgers { get; set; } = null!;
     public DbSet<Invoice> Invoices { get; set; } = null!;
+    public DbSet<InvoiceLineItem> InvoiceLineItems { get; set; } = null!;
     public DbSet<JournalEntry> JournalEntries { get; set; } = null!;
     public DbSet<JournalEntryLine> JournalEntryLines { get; set; } = null!;
     public DbSet<Member> Members { get; set; } = null!;
@@ -56,6 +57,7 @@ public sealed class AccountingDbContext(
     public DbSet<WriteOff> WriteOffs { get; set; } = null!;
     public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<Bill> Bills { get; set; } = null!;
+    public DbSet<BillLineItem> BillLineItems { get; set; } = null!;
     public DbSet<FiscalPeriodClose> FiscalPeriodCloses { get; set; } = null!;
     public DbSet<AccountsReceivableAccount> AccountsReceivableAccounts { get; set; } = null!;
     public DbSet<AccountsPayableAccount> AccountsPayableAccounts { get; set; } = null!;

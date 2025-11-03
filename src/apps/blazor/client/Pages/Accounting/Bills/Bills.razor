@@ -83,6 +83,10 @@
     </AdvancedSearchContent>
 
     <ExtraActions Context="bill">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewBillDetails(bill.Id))">
+            View Details
+        </MudMenuItem>
+        <MudDivider />
         @if (bill.Status == "Draft" || bill.Status == "Submitted")
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Check" OnClick="@(() => OnApproveBill(bill.Id))">
@@ -115,25 +119,136 @@
         </MudMenuItem>
     </ExtraActions>
 
-    <ActionsContent>
+    <ActionsContent Context="bill">
         <MudChip T="string" 
-                 Color="@GetStatusColor(context.Status)" 
+                 Color="@GetStatusColor(bill.Status)" 
                  Size="Size.Small">
-            @context.Status
+            @bill.Status
         </MudChip>
-        @if (context.IsPosted)
+        @if (bill.IsPosted)
         {
             <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.CheckCircle">
                 Posted
             </MudChip>
         }
-        @if (context.IsPaid)
+        @if (bill.IsPaid)
         {
             <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.Paid">
                 Paid
             </MudChip>
         }
     </ActionsContent>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Bill Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.BillNumber"
+                          For="@(() => context.BillNumber)"
+                          Label="Bill Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Vendor's invoice number" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <AutocompleteVendorId @bind-Value="context.VendorId"
+                                  For="@(() => context.VendorId)"
+                                  Label="Vendor"
+                                  TextFormat="CodeName"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.BillDate"
+                           For="@(() => context.BillDate)"
+                           DateFormat="MMMM dd, yyyy"
+                           Label="Bill Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.DueDate"
+                           For="@(() => context.DueDate)"
+                           DateFormat="MMMM dd, yyyy"
+                           Label="Due Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteAccountingPeriodId @bind-Value="context.PeriodId"
+                                            For="@(() => context.PeriodId)"
+                                            Label="Accounting Period"
+                                            Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PaymentTerms"
+                          For="@(() => context.PaymentTerms)"
+                          Label="Payment Terms"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., Net 30, 2/10 Net 30" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PurchaseOrderNumber"
+                          For="@(() => context.PurchaseOrderNumber)"
+                          Label="Purchase Order Number"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudNumericField T="decimal" @bind-Value="context.TotalAmount"
+                                 Label="Total Amount"
+                                 ReadOnly
+                                 Format="C2"
+                                 Variant="Variant.Filled" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Lines="2"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Lines="3"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate && context.Id != default)
+        {
+            <MudItem xs="12">
+                <MudDivider Class="my-4" />
+                <MudButton StartIcon="@Icons.Material.Filled.ListAlt" 
+                           Color="Color.Info" 
+                           OnClick="@(() => ViewBillDetails(context.Id!.Value))" 
+                           Variant="Variant.Filled"
+                           FullWidth="false">
+                    Manage Line Items
+                </MudButton>
+            </MudItem>
+        }
+    </EditFormContent>
 </EntityTable>
 
 @* Dialog for approving bill *@

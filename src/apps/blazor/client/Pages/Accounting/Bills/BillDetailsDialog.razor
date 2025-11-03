@@ -1,0 +1,221 @@
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
+            @if (_loading)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+            else if (_bill != null)
+            {
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h5" Class="mb-4">Bill Details</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%; font-weight: 500;">Bill Number</td>
+                                    <td><strong>@_bill.BillNumber</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Status</td>
+                                    <td>
+                                        <MudChip T="string" Color="@GetStatusColor(_bill.Status)" Size="Size.Small">
+                                            @_bill.Status
+                                        </MudChip>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Vendor</td>
+                                    <td><strong>@_vendorName</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Bill Date</td>
+                                    <td>@_bill.BillDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Due Date</td>
+                                    <td>@_bill.DueDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                                @if (_bill.PaidDate.HasValue)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Paid Date</td>
+                                        <td>@_bill.PaidDate?.ToString("MMMM dd, yyyy")</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="font-weight: 500;">Total Amount</td>
+                                    <td><strong>@_bill.TotalAmount.ToString("C2")</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Approval Status</td>
+                                    <td>@_bill.ApprovalStatus</td>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(_bill.ApprovedBy))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Approved By</td>
+                                        <td>@_bill.ApprovedBy</td>
+                                    </tr>
+                                }
+                                @if (_bill.ApprovedDate.HasValue)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Approved Date</td>
+                                        <td>@_bill.ApprovedDate?.ToString("MMMM dd, yyyy")</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_bill.PaymentTerms))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Payment Terms</td>
+                                        <td>@_bill.PaymentTerms</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_bill.PurchaseOrderNumber))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Purchase Order</td>
+                                        <td>@_bill.PurchaseOrderNumber</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_bill.Description))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Description</td>
+                                        <td>@_bill.Description</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_bill.Notes))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Notes</td>
+                                        <td>@_bill.Notes</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="font-weight: 500;">Posted</td>
+                                    <td>
+                                        @if (_bill.IsPosted)
+                                        {
+                                            <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.CheckCircle">
+                                                Yes
+                                            </MudChip>
+                                        }
+                                        else
+                                        {
+                                            <MudChip T="string" Color="Color.Default" Size="Size.Small">No</MudChip>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Paid</td>
+                                    <td>
+                                        @if (_bill.IsPaid)
+                                        {
+                                            <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.Paid">
+                                                Yes
+                                            </MudChip>
+                                        }
+                                        else
+                                        {
+                                            <MudChip T="string" Color="Color.Default" Size="Size.Small">No</MudChip>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem Class="pa-2" xs="12">
+                        <BillLineItems BillId="@BillId" 
+                                       IsPosted="@_bill.IsPosted" 
+                                       IsPaid="@_bill.IsPaid"
+                                       OnItemsChanged="@HandleItemsChanged" />
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    
+    [Parameter] public DefaultIdType BillId { get; set; }
+
+    private BillResponse? _bill;
+    private string? _vendorName;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBillAsync();
+    }
+
+    private async Task LoadBillAsync()
+    {
+        _loading = true;
+        try
+        {
+            _bill = await Client.GetBillEndpointAsync("1", BillId).ConfigureAwait(false);
+            
+            // Load vendor name
+            if (_bill?.VendorId != null)
+            {
+                try
+                {
+                    var vendor = await Client.VendorGetEndpointAsync("1", _bill.VendorId).ConfigureAwait(false);
+                    _vendorName = vendor?.Name;
+                }
+                catch
+                {
+                    _vendorName = "Unknown Vendor";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load bill: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task HandleItemsChanged()
+    {
+        // Reload bill to get updated totals
+        await LoadBillAsync();
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        MudDialog.Close();
+    }
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Draft" => Color.Default,
+        "Submitted" => Color.Info,
+        "Approved" => Color.Success,
+        "Rejected" => Color.Error,
+        "Posted" => Color.Primary,
+        "Paid" => Color.Success,
+        "Void" => Color.Warning,
+        _ => Color.Default
+    };
+}
+

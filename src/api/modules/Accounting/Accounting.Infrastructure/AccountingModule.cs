@@ -227,6 +227,10 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<Customer>, AccountingRepository<Customer>>();
         builder.Services.AddScoped<IRepository<Bill>, AccountingRepository<Bill>>();
         builder.Services.AddScoped<IReadRepository<Bill>, AccountingRepository<Bill>>();
+        builder.Services.AddScoped<IRepository<BillLineItem>, AccountingRepository<BillLineItem>>();
+        builder.Services.AddScoped<IReadRepository<BillLineItem>, AccountingRepository<BillLineItem>>();
+        builder.Services.AddScoped<IRepository<InvoiceLineItem>, AccountingRepository<InvoiceLineItem>>();
+        builder.Services.AddScoped<IReadRepository<InvoiceLineItem>, AccountingRepository<InvoiceLineItem>>();
         builder.Services.AddScoped<IRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>();
         builder.Services.AddScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>();
         builder.Services.AddScoped<IRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>();
@@ -386,6 +390,11 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting:billlineitems");
         builder.Services.AddKeyedScoped<IReadRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting:billlineitems");
+        
+        builder.Services.AddKeyedScoped<IRepository<InvoiceLineItem>, AccountingRepository<InvoiceLineItem>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<InvoiceLineItem>, AccountingRepository<InvoiceLineItem>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<InvoiceLineItem>, AccountingRepository<InvoiceLineItem>>("accounting:invoicelineitems");
+        builder.Services.AddKeyedScoped<IReadRepository<InvoiceLineItem>, AccountingRepository<InvoiceLineItem>>("accounting:invoicelineitems");
         
         builder.Services.AddKeyedScoped<IRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<FiscalPeriodClose>, AccountingRepository<FiscalPeriodClose>>("accounting");

@@ -1,0 +1,181 @@
+<MudTable Items="@_items" Dense="true" Hover="true" Loading="@_loading" Class="mt-4">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Bill Line Items</MudText>
+        <MudSpacer />
+        @if (BillId != default && !IsPosted && !IsPaid)
+        {
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@AddItemAsync" Variant="Variant.Filled">
+                Add Line Item
+            </MudButton>
+        }
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Line #</MudTh>
+        <MudTh>Description</MudTh>
+        <MudTh>Account</MudTh>
+        <MudTh Style="text-align: right">Quantity</MudTh>
+        <MudTh Style="text-align: right">Unit Price</MudTh>
+        <MudTh Style="text-align: right">Amount</MudTh>
+        <MudTh Style="text-align: right">Tax</MudTh>
+        <MudTh>Notes</MudTh>
+        @if (!IsPosted && !IsPaid)
+        {
+            <MudTh Style="text-align: center">Actions</MudTh>
+        }
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Line #">@context.LineNumber</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+        <MudTd DataLabel="Account">
+            @if (!string.IsNullOrEmpty(context.ChartOfAccountCode))
+            {
+                <span>@context.ChartOfAccountCode - @context.ChartOfAccountName</span>
+            }
+        </MudTd>
+        <MudTd DataLabel="Quantity" Style="text-align: right">@context.Quantity.ToString("N4")</MudTd>
+        <MudTd DataLabel="Unit Price" Style="text-align: right">@context.UnitPrice.ToString("C2")</MudTd>
+        <MudTd DataLabel="Amount" Style="text-align: right">@context.Amount.ToString("C2")</MudTd>
+        <MudTd DataLabel="Tax" Style="text-align: right">@context.TaxAmount.ToString("C2")</MudTd>
+        <MudTd DataLabel="Notes">@context.Notes</MudTd>
+        @if (!IsPosted && !IsPaid)
+        {
+            <MudTd DataLabel="Actions" Style="text-align: center">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => EditItemAsync(context))" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteItemAsync(context.Id))" />
+            </MudTd>
+        }
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No line items added yet</MudText>
+    </NoRecordsContent>
+    <FooterContent>
+        <MudTd colspan="5" Style="text-align: right; font-weight: bold;">Total:</MudTd>
+        <MudTd Style="text-align: right; font-weight: bold;">@_items.Sum(x => x.Amount).ToString("C2")</MudTd>
+        <MudTd Style="text-align: right; font-weight: bold;">@_items.Sum(x => x.TaxAmount).ToString("C2")</MudTd>
+        <MudTd colspan="2"></MudTd>
+    </FooterContent>
+</MudTable>
+
+@code {
+    [Parameter] public DefaultIdType BillId { get; set; }
+    [Parameter] public bool IsPosted { get; set; }
+    [Parameter] public bool IsPaid { get; set; }
+    [Parameter] public EventCallback OnItemsChanged { get; set; }
+
+    private List<BillLineItemResponse> _items = new();
+    private bool _loading;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (BillId != default)
+        {
+            await LoadItemsAsync();
+        }
+    }
+
+    private async Task LoadItemsAsync()
+    {
+        _loading = true;
+        try
+        {
+            var result = await Client.GetBillLineItemsEndpointAsync("1", BillId).ConfigureAwait(false);
+            _items = result.ToList();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load line items: {ex.Message}", Severity.Error);
+            _items = new();
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task AddItemAsync()
+    {
+        var model = new BillLineItemViewModel
+        {
+            BillId = BillId,
+            LineNumber = _items.Count > 0 ? _items.Max(x => x.LineNumber) + 1 : 1,
+            Quantity = 1
+        };
+
+        var parameters = new DialogParameters<BillLineItemDialog>
+        {
+            { x => x.BillId, BillId },
+            { x => x.Model, model }
+        };
+
+        var dialog = await DialogService.ShowAsync<BillLineItemDialog>("Add Line Item", parameters);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            await LoadItemsAsync();
+            await OnItemsChanged.InvokeAsync();
+        }
+    }
+
+    private async Task EditItemAsync(BillLineItemResponse item)
+    {
+        var model = new BillLineItemViewModel
+        {
+            Id = item.Id,
+            BillId = BillId,
+            LineNumber = item.LineNumber,
+            Description = item.Description ?? string.Empty,
+            Quantity = item.Quantity,
+            UnitPrice = item.UnitPrice,
+            Amount = item.Amount,
+            ChartOfAccountId = item.ChartOfAccountId,
+            TaxCodeId = item.TaxCodeId,
+            TaxAmount = item.TaxAmount,
+            ProjectId = item.ProjectId,
+            CostCenterId = item.CostCenterId,
+            Notes = item.Notes
+        };
+
+        var parameters = new DialogParameters<BillLineItemDialog>
+        {
+            { x => x.BillId, BillId },
+            { x => x.Model, model }
+        };
+
+        var dialog = await DialogService.ShowAsync<BillLineItemDialog>("Edit Line Item", parameters);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            await LoadItemsAsync();
+            await OnItemsChanged.InvokeAsync();
+        }
+    }
+
+    private async Task DeleteItemAsync(DefaultIdType itemId)
+    {
+        var parameters = new DialogParameters<DeleteConfirmation>
+        {
+            { x => x.ContentText, "Are you sure you want to delete this line item?" }
+        };
+
+        var dialog = await DialogService.ShowAsync<DeleteConfirmation>("Delete Line Item", parameters);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            try
+            {
+                await Client.DeleteBillLineItemEndpointAsync("1", BillId, itemId).ConfigureAwait(false);
+                Snackbar.Add("Line item deleted successfully", Severity.Success);
+                await LoadItemsAsync();
+                await OnItemsChanged.InvokeAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to delete line item: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+}
+

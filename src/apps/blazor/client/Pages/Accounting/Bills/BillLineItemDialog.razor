@@ -1,0 +1,174 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" Model="@Model">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Model.Description"
+                                  Label="Description"
+                                  For="@(() => Model.Description)"
+                                  Required="true"
+                                  Lines="2"
+                                  Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <AutocompleteChartOfAccountId @bind-Value="Model.ChartOfAccountId"
+                                                   For="@(() => Model.ChartOfAccountId)"
+                                                   Label="Chart of Account"
+                                                   TextFormat="CodeName"
+                                                   Variant="Variant.Filled"
+                                                   Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Model.LineNumber"
+                                     Label="Line Number"
+                                     For="@(() => Model.LineNumber)"
+                                     Required="true"
+                                     Min="1"
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="decimal" @bind-Value="Model.Quantity"
+                                     Label="Quantity"
+                                     For="@(() => Model.Quantity)"
+                                     Required="true"
+                                     Min="0.0001m"
+                                     Format="N4"
+                                     Variant="Variant.Filled"
+                                     ValueChanged="@OnQuantityOrPriceChanged" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="decimal" @bind-Value="Model.UnitPrice"
+                                     Label="Unit Price"
+                                     For="@(() => Model.UnitPrice)"
+                                     Required="true"
+                                     Min="0"
+                                     Format="N2"
+                                     Variant="Variant.Filled"
+                                     ValueChanged="@OnQuantityOrPriceChanged" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="decimal" @bind-Value="Model.Amount"
+                                     Label="Line Amount"
+                                     For="@(() => Model.Amount)"
+                                     Required="true"
+                                     Min="0"
+                                     Format="N2"
+                                     Variant="Variant.Filled"
+                                     ReadOnly="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="decimal" @bind-Value="Model.TaxAmount"
+                                     Label="Tax Amount"
+                                     For="@(() => Model.TaxAmount)"
+                                     Min="0"
+                                     Format="N2"
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Model.Notes"
+                                  Label="Notes"
+                                  For="@(() => Model.Notes)"
+                                  Lines="3"
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="SaveAsync" Variant="Variant.Filled">
+            @(Model.Id == default ? "Add" : "Update")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    
+    [Parameter] public DefaultIdType BillId { get; set; }
+    [Parameter] public BillLineItemViewModel Model { get; set; } = new();
+
+    private MudForm _form = default!;
+
+    private void OnQuantityOrPriceChanged(decimal value)
+    {
+        Model.CalculateAmount();
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task SaveAsync()
+    {
+        await _form.Validate();
+        
+        if (!_form.IsValid)
+        {
+            Snackbar.Add("Please fix validation errors", Severity.Error);
+            return;
+        }
+
+        try
+        {
+            if (Model.Id == default)
+            {
+                // Add new line item
+                var command = new FSH.Starter.Blazor.Infrastructure.Api.AddBillLineItemCommand
+                {
+                    BillId = BillId,
+                    LineNumber = Model.LineNumber,
+                    Description = Model.Description,
+                    Quantity = Model.Quantity,
+                    UnitPrice = Model.UnitPrice,
+                    Amount = Model.Amount,
+                    ChartOfAccountId = Model.ChartOfAccountId!.Value,
+                    TaxCodeId = Model.TaxCodeId,
+                    TaxAmount = Model.TaxAmount,
+                    ProjectId = Model.ProjectId,
+                    CostCenterId = Model.CostCenterId,
+                    Notes = Model.Notes
+                };
+                await Client.AddBillLineItemEndpointAsync("1", BillId, command);
+                Snackbar.Add("Line item added successfully", Severity.Success);
+            }
+            else
+            {
+                // Update existing line item
+                var command = new FSH.Starter.Blazor.Infrastructure.Api.UpdateBillLineItemCommand
+                {
+                    LineItemId = Model.Id.Value,
+                    BillId = BillId,
+                    LineNumber = Model.LineNumber,
+                    Description = Model.Description,
+                    Quantity = Model.Quantity,
+                    UnitPrice = Model.UnitPrice,
+                    Amount = Model.Amount,
+                    ChartOfAccountId = Model.ChartOfAccountId!.Value,
+                    TaxCodeId = Model.TaxCodeId,
+                    TaxAmount = Model.TaxAmount,
+                    ProjectId = Model.ProjectId,
+                    CostCenterId = Model.CostCenterId,
+                    Notes = Model.Notes
+                };
+                await Client.UpdateBillLineItemEndpointAsync("1", BillId, Model.Id.Value, command);
+                Snackbar.Add("Line item updated successfully", Severity.Success);
+            }
+
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to save line item: {ex.Message}", Severity.Error);
+        }
+    }
+}
+
