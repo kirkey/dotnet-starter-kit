@@ -1,0 +1,151 @@
+@page "/accounting/customers"
+
+<PageHeader Title="Customers" Header="Customers" SubHeader="Manage Customer Accounts and Billing Information." />
+
+<EntityTable @ref="_table" TEntity="CustomerSearchResponse" TId="DefaultIdType" TRequest="CustomerViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.CustomerNumber"
+                          For="@(() => context.CustomerNumber)"
+                          Label="Customer Number"
+                          Variant="Variant.Filled"
+                          HelperText="Unique customer identifier (e.g., CUST-2025-001)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.CustomerName"
+                          For="@(() => context.CustomerName)"
+                          Label="Customer Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.CustomerType"
+                       For="@(() => context.CustomerType)"
+                       Label="Customer Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Individual")">Individual</MudSelectItem>
+                <MudSelectItem Value="@("Business")">Business</MudSelectItem>
+                <MudSelectItem Value="@("Government")">Government</MudSelectItem>
+                <MudSelectItem Value="@("NonProfit")">Non-Profit</MudSelectItem>
+                <MudSelectItem Value="@("Wholesale")">Wholesale</MudSelectItem>
+                <MudSelectItem Value="@("Retail")">Retail</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.BillingAddress"
+                          For="@(() => context.BillingAddress)"
+                          Label="Billing Address"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Primary billing address for invoices" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.ShippingAddress"
+                          For="@(() => context.ShippingAddress)"
+                          Label="Shipping Address"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Leave blank if same as billing address" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Email" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Phone"
+                          For="@(() => context.Phone)"
+                          Label="Phone"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.TaxId"
+                          For="@(() => context.TaxId)"
+                          Label="Tax ID"
+                          Variant="Variant.Filled"
+                          HelperText="EIN, SSN, or VAT number" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ContactName"
+                          For="@(() => context.ContactName)"
+                          Label="Contact Person"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ContactEmail"
+                          For="@(() => context.ContactEmail)"
+                          Label="Contact Email"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Email" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ContactPhone"
+                          For="@(() => context.ContactPhone)"
+                          Label="Contact Phone"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.CreditLimit"
+                          For="@(() => context.CreditLimit)"
+                          Label="Credit Limit"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Number"
+                          HelperText="Maximum credit allowed (0 for cash only)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PaymentTerms"
+                          For="@(() => context.PaymentTerms)"
+                          Label="Payment Terms"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., Net 30, Net 60, 2/10 Net 30" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.DiscountPercentage"
+                          For="@(() => context.DiscountPercentage)"
+                          Label="Discount %"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Number"
+                          HelperText="Discount percentage (0-100)" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.SalesRepresentative"
+                          For="@(() => context.SalesRepresentative)"
+                          Label="Sales Representative"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudSwitch @bind-Value="context.TaxExempt"
+                       For="@(() => context.TaxExempt)"
+                       Label="Tax Exempt"
+                       Color="Color.Primary" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

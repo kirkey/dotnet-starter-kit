@@ -2284,27 +2284,27 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<CustomerDetailsDto> CustomerGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Search customers
+        /// Search customers with pagination
         /// </summary>
         /// <remarks>
-        /// Searches and lists customers with optional filters.
+        /// Searches and lists customers with optional filters and pagination support.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CustomerDto>> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body);
+        System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Search customers
+        /// Search customers with pagination
         /// </summary>
         /// <remarks>
-        /// Searches and lists customers with optional filters.
+        /// Searches and lists customers with optional filters and pagination support.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CustomerDto>> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new cycle count
@@ -18947,30 +18947,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Search customers
+        /// Search customers with pagination
         /// </summary>
         /// <remarks>
-        /// Searches and lists customers with optional filters.
+        /// Searches and lists customers with optional filters and pagination support.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CustomerDto>> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body)
+        public virtual System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body)
         {
             return CustomerSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Search customers
+        /// Search customers with pagination
         /// </summary>
         /// <remarks>
-        /// Searches and lists customers with optional filters.
+        /// Searches and lists customers with optional filters and pagination support.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CustomerDto>> CustomerSearchEndpointAsync(string version, SearchCustomersRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -19023,7 +19023,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<CustomerDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomerSearchResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -51796,7 +51796,52 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CustomerDto
+    public partial class CustomerSearchQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerNumber")]
+        public string? CustomerNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerName")]
+        public string? CustomerName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
+        public string? CustomerType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool? IsActive { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isOnCreditHold")]
+        public bool? IsOnCreditHold { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxExempt")]
+        public bool? TaxExempt { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomerSearchResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -51811,8 +51856,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("customerType")]
         public string? CustomerType { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phone")]
+        public string? Phone { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("billingAddress")]
+        public string? BillingAddress { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("creditLimit")]
         public decimal CreditLimit { get; set; } = default!;
@@ -51823,17 +51874,53 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("availableCredit")]
         public decimal AvailableCredit { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxExempt")]
+        public bool TaxExempt { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paymentTerms")]
+        public string? PaymentTerms { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("isActive")]
         public bool IsActive { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("isOnCreditHold")]
         public bool IsOnCreditHold { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string? Phone { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomerSearchResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CustomerSearchResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
@@ -56401,27 +56488,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("hasUnappliedAmount")]
         public bool? HasUnappliedAmount { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchCustomersRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerNumber")]
-        public string? CustomerNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerName")]
-        public string? CustomerName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerType")]
-        public string? CustomerType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string? Status { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; } = default!;
 
     }
 
