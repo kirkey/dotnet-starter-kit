@@ -20,9 +20,10 @@
         <MudTd DataLabel="Account">
             <AutocompleteChartOfAccountId @bind-Value="line.AccountId"
                                           For="@(()=>line.AccountId)"
-                                         Label=""
-                                         Variant="Variant.Outlined"
-                                         Margin="Margin.Dense"
+                                          Label=""
+                                          Variant="Variant.Outlined"
+                                          Margin="Margin.Dense"
+                                          TextFormat="CodeName"
                                          Required="true" />
         </MudTd>
         <MudTd DataLabel="Debit" Style="text-align:right">

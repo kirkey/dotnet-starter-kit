@@ -1,0 +1,133 @@
+@page "/accounting/tax-codes"
+
+<PageHeader Title="Tax Codes" Header="Tax Codes" SubHeader="Manage Tax Rates and Configuration." />
+
+<EntityTable @ref="_table" TEntity="TaxCodeResponse" TId="DefaultIdType" TRequest="TaxCodeViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Tax Code"
+                          Variant="Variant.Filled"
+                          HelperText="Unique code (e.g., VAT-STD, SALES-CA)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.TaxType"
+                       For="@(() => context.TaxType)"
+                       Label="Tax Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("SalesTax")">Sales Tax</MudSelectItem>
+                <MudSelectItem Value="@("VAT")">VAT</MudSelectItem>
+                <MudSelectItem Value="@("GST")">GST</MudSelectItem>
+                <MudSelectItem Value="@("UseTax")">Use Tax</MudSelectItem>
+                <MudSelectItem Value="@("Excise")">Excise</MudSelectItem>
+                <MudSelectItem Value="@("Withholding")">Withholding</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Rate"
+                          For="@(() => context.Rate)"
+                          Label="Tax Rate (%)"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Number"
+                          HelperText="Enter as percentage (e.g., 8.25 for 8.25%)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Jurisdiction"
+                          For="@(() => context.Jurisdiction)"
+                          Label="Jurisdiction"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., California, UK, Ontario" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="context.IsCompound"
+                       For="@(() => context.IsCompound)"
+                       Label="Compound Tax"
+                       Color="Color.Primary"
+                       HelperText="Tax calculated on subtotal + other taxes" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudDatePicker @bind-Date="context.EffectiveDate"
+                           For="@(() => context.EffectiveDate)"
+                           Label="Effective Date"
+                           Variant="Variant.Filled"
+                           HelperText="When this rate becomes active" />
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudDatePicker @bind-Date="context.ExpiryDate"
+                           For="@(() => context.ExpiryDate)"
+                           Label="Expiry Date"
+                           Variant="Variant.Filled"
+                           HelperText="Optional - leave blank for indefinite" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteChartOfAccountId @bind-Value="context.TaxCollectedAccountId"
+                                            For="@(() => context.TaxCollectedAccountId)"
+                                            Label="Tax Collected Account"
+                                            TextFormat="CodeName"
+                                            Variant="Variant.Filled"
+                                            HelperText="Liability account for tax collected" />
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <AutocompleteChartOfAccountId @bind-Value="context.TaxPaidAccountId"
+                                            For="@(() => context.TaxPaidAccountId)"
+                                            Label="Tax Paid Account (Optional)"
+                                            TextFormat="CodeName"
+                                            Variant="Variant.Filled"
+                                            HelperText="Expense account for tax paid on purchases" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.TaxAuthority"
+                          For="@(() => context.TaxAuthority)"
+                          Label="Tax Authority"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., IRS, HMRC, CRA" />
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.TaxRegistrationNumber"
+                          For="@(() => context.TaxRegistrationNumber)"
+                          Label="Tax Registration Number"
+                          Variant="Variant.Filled"
+                          HelperText="Registration ID with tax authority" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.ReportingCategory"
+                          For="@(() => context.ReportingCategory)"
+                          Label="Reporting Category"
+                          Variant="Variant.Filled"
+                          HelperText="For tax reporting classification" />
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudSwitch @bind-Value="context.IsActive"
+                       For="@(() => context.IsActive)"
+                       Label="Active"
+                       Color="Color.Primary" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
