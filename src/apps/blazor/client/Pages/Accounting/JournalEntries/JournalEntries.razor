@@ -216,11 +216,11 @@
                         <MudTh Style="text-align:right">Credit</MudTh>
                         <MudTh>Description</MudTh>
                     </HeaderContent>
-                    <RowTemplate>
-                        <MudTd>@context.AccountCode - @context.AccountName</MudTd>
-                        <MudTd Style="text-align:right">@(context.DebitAmount > 0 ? context.DebitAmount.ToString("C") : "")</MudTd>
-                        <MudTd Style="text-align:right">@(context.CreditAmount > 0 ? context.CreditAmount.ToString("C") : "")</MudTd>
-                        <MudTd>@context.Description</MudTd>
+                    <RowTemplate Context="line">
+                        <MudTd>@line.AccountCode - @line.AccountName</MudTd>
+                        <MudTd Style="text-align:right">@(line.DebitAmount > 0 ? line.DebitAmount.ToString("C") : "")</MudTd>
+                        <MudTd Style="text-align:right">@(line.CreditAmount > 0 ? line.CreditAmount.ToString("C") : "")</MudTd>
+                        <MudTd>@line.Description</MudTd>
                     </RowTemplate>
                     <FooterContent>
                         <MudTd><strong>TOTALS</strong></MudTd>

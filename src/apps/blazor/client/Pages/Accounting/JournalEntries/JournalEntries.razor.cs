@@ -164,11 +164,11 @@ public partial class JournalEntries
                 await Client.JournalEntryDeleteEndpointAsync("1", id);
                 Snackbar.Add("Journal Entry deleted successfully", Severity.Success);
             },
-            getDetailsFunc: async id =>
-            {
-                var entry = await Client.JournalEntryGetEndpointAsync("1", id);
-                return MapToViewModel(entry);
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var entry = await Client.JournalEntryGetEndpointAsync("1", id);
+            //     return MapToViewModel(entry);
+            // },
             getDefaultsFunc: () => Task.FromResult(new JournalEntryViewModel
             {
                 Date = DateTime.Today,

@@ -4,9 +4,9 @@
 /// Autocomplete component for selecting an Accounting Period by its identifier.
 /// - Fetches a single AccountingPeriod by id when needed.
 /// - Searches AccountingPeriods by name/description/notes and caches results in-memory.
-/// - Returns Ids (DefaultIdType) as value while showing the human-friendly Name.
+/// - Returns nullable Ids (DefaultIdType?) as value while showing the human-friendly Name.
 /// </summary>
-public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodResponse, IClient, DefaultIdType>
+public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodResponse, IClient, DefaultIdType?>
 {
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
     private Dictionary<DefaultIdType, AccountingPeriodResponse> _cache = new();
@@ -16,13 +16,13 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
     /// <summary>
     /// Gets a single AccountingPeriod item by identifier.
     /// </summary>
-    protected override async Task<AccountingPeriodResponse?> GetItem(DefaultIdType id)
+    protected override async Task<AccountingPeriodResponse?> GetItem(DefaultIdType? id)
     {
-        if (id == default) return null;
-        if (_cache.TryGetValue(id, out var cached)) return cached;
+        if (!id.HasValue || id.Value == default) return null;
+        if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.AccountingPeriodGetEndpointAsync("1", id))
+                () => Client.AccountingPeriodGetEndpointAsync("1", id.Value))
             .ConfigureAwait(false);
 
         if (dto is not null && dto.Id != default) _cache[dto.Id] = dto;
@@ -33,7 +33,7 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
     /// <summary>
     /// Returns the first page of accounting periods matching the search text (by Id list).
     /// </summary>
-    protected override async Task<IEnumerable<DefaultIdType>> SearchText(string? value, CancellationToken token)
+    protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
         var request = new SearchAccountingPeriodsQuery
         {
@@ -60,14 +60,14 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
                 _cache[it.Id] = it;
         }
 
-        return _cache.Keys;
+        return _cache.Keys.Cast<DefaultIdType?>();
     }
 
     /// <summary>
     /// Display text for an Id value (shows the cached Name when available).
     /// </summary>
-    protected override string GetTextValue(DefaultIdType id)
+    protected override string GetTextValue(DefaultIdType? id)
     {
-        return (id != default && _cache.TryGetValue(id, out var dto)) ? dto.Name ?? string.Empty : string.Empty;
+        return (id.HasValue && id.Value != default && _cache.TryGetValue(id.Value, out var dto)) ? dto.Name ?? string.Empty : string.Empty;
     }
 }

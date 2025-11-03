@@ -55,7 +55,7 @@ public class BudgetViewModel
     public string? Name { get; set; }
 
     // Fields from CreateBudgetRequest / BudgetDto
-    public DefaultIdType PeriodId { get; set; }
+    public DefaultIdType? PeriodId { get; set; }
     public string? PeriodName { get; set; }
     public int FiscalYear { get; set; }
     public string? BudgetType { get; set; }

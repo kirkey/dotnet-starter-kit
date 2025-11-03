@@ -42,7 +42,7 @@ public class JournalEntryViewModel
     /// <summary>
     /// Optional accounting period identifier.
     /// </summary>
-    public DefaultIdType PeriodId { get; set; }
+    public DefaultIdType? PeriodId { get; set; }
 
     /// <summary>
     /// Original transaction amount for reference.
