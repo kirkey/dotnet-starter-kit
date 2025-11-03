@@ -8,7 +8,7 @@ public class ProjectCostingViewModel
     public decimal Amount { get; set; }
     public string? Description { get; set; }
     public string? Category { get; set; }
-    public DefaultIdType AccountId { get; set; }
+    public DefaultIdType? AccountId { get; set; }
     public string? AccountName { get; set; }
     public DefaultIdType? JournalEntryId { get; set; }
     public string? CostCenter { get; set; }

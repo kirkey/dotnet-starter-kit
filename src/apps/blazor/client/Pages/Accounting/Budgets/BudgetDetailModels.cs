@@ -42,7 +42,7 @@ public class BudgetDetailViewModel
 {
     public DefaultIdType Id { get; set; }
     public DefaultIdType BudgetId { get; set; }
-    public DefaultIdType AccountId { get; set; }
+    public DefaultIdType? AccountId { get; set; }
     public decimal BudgetedAmount { get; set; }
     public decimal ActualAmount { get; set; }
     public string? Description { get; set; }
