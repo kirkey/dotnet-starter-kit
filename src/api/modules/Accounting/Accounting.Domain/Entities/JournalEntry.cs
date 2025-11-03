@@ -74,9 +74,18 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public DateTime? ApprovedDate { get; private set; }
 
+    private readonly List<JournalEntryLine> _lines = new();
+    /// <summary>
+    /// Collection of journal entry lines, each representing a debit or credit to a specific account.
+    /// </summary>
+    public IReadOnlyCollection<JournalEntryLine> Lines => _lines.AsReadOnly();
+
     private JournalEntry()
     {
         // EF Core requires a parameterless constructor for entity instantiation
+        ReferenceNumber = string.Empty;
+        Source = string.Empty;
+        ApprovalStatus = "Pending";
     }
 
     private JournalEntry(DateTime date, string referenceNumber, string description, string source,

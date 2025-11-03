@@ -398,12 +398,12 @@ public class Invoice : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Append an additional line item to the invoice and update total.
     /// </summary>
-    public Invoice AddLineItem(string description, decimal quantity, decimal unitPrice, string? accountCode = null)
+    public Invoice AddLineItem(string description, decimal quantity, decimal unitPrice, DefaultIdType? accountId = null)
     {
         if (Status == "Paid")
             throw new ArgumentException("Cannot modify paid invoice");
 
-        var lineItem = InvoiceLineItem.Create(Id, description, quantity, unitPrice, accountCode);
+        var lineItem = InvoiceLineItem.Create(Id, description, quantity, unitPrice, accountId);
         _lineItems.Add(lineItem);
 
         TotalAmount = CalculateTotalAmount();
@@ -420,67 +420,3 @@ public class Invoice : AuditableEntity, IAggregateRoot
     }
 }
 
-/// <summary>
-/// A single line item on an invoice with quantity and pricing.
-/// </summary>
-public class InvoiceLineItem : BaseEntity
-{
-    /// <summary>
-    /// Parent invoice identifier.
-    /// </summary>
-    public DefaultIdType InvoiceId { get; private set; }
-
-    /// <summary>
-    /// Description of the charge.
-    /// </summary>
-    public string Description { get; private set; }
-
-    /// <summary>
-    /// Quantity associated with this line item; must be positive.
-    /// </summary>
-    public decimal Quantity { get; private set; }
-
-    /// <summary>
-    /// Unit price to multiply by <see cref="Quantity"/>.
-    /// </summary>
-    public decimal UnitPrice { get; private set; }
-
-    /// <summary>
-    /// Calculated total price (Quantity * UnitPrice).
-    /// </summary>
-    public decimal TotalPrice { get; private set; }
-
-    /// <summary>
-    /// Optional revenue account code for this line.
-    /// </summary>
-    public string? AccountCode { get; private set; }
-
-    private InvoiceLineItem(DefaultIdType invoiceId, string description,
-        decimal quantity, decimal unitPrice, string? accountCode = null)
-    {
-        InvoiceId = invoiceId;
-        Description = description.Trim();
-        Quantity = quantity;
-        UnitPrice = unitPrice;
-        TotalPrice = quantity * unitPrice;
-        AccountCode = accountCode?.Trim();
-    }
-
-    /// <summary>
-    /// Create a validated line item with positive quantity and non-negative unit price.
-    /// </summary>
-    public static InvoiceLineItem Create(DefaultIdType invoiceId, string description,
-        decimal quantity, decimal unitPrice, string? accountCode = null)
-    {
-        if (string.IsNullOrWhiteSpace(description))
-            throw new ArgumentException("Description cannot be empty");
-
-        if (quantity <= 0)
-            throw new ArgumentException("Quantity must be positive");
-
-        if (unitPrice < 0)
-            throw new ArgumentException("Unit price cannot be negative");
-
-        return new InvoiceLineItem(invoiceId, description, quantity, unitPrice, accountCode);
-    }
-}

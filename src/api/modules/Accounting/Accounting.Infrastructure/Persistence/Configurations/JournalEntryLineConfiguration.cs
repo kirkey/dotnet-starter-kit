@@ -40,12 +40,11 @@ public class JournalEntryLineConfiguration : IEntityTypeConfiguration<JournalEnt
         builder.HasIndex(x => x.AccountId);
         builder.HasIndex(x => x.Reference);
 
-        // Foreign key relationship to JournalEntry
-        // Note: No navigation property on JournalEntry as it's now a separate aggregate
-        builder.HasOne<JournalEntry>()
-            .WithMany()
-            .HasForeignKey(x => x.JournalEntryId)
-            .OnDelete(DeleteBehavior.Cascade);
+        // Composite index for querying lines by entry and account
+        builder.HasIndex(x => new { x.JournalEntryId, x.AccountId })
+            .HasDatabaseName("IX_JournalEntryLines_Entry_Account");
+
+        // Note: Relationship to JournalEntry is configured from JournalEntryConfiguration.HasMany(...).WithOne()
     }
 }
 

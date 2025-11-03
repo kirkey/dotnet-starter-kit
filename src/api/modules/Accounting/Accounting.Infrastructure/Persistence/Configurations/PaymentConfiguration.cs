@@ -61,26 +61,17 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             .HasMaxLength(2000)
             .HasComment("Additional notes");
 
-        // Configure owned collection for allocations
-        builder.OwnsMany(p => p.Allocations, a =>
-        {
-            a.ToTable("PaymentAllocations", SchemaNames.Accounting);
-            a.WithOwner().HasForeignKey(nameof(PaymentAllocation.PaymentId));
-            a.HasKey(nameof(PaymentAllocation.Id));
-            
-            a.Property(pa => pa.InvoiceId)
-                .IsRequired()
-                .HasComment("Target invoice identifier");
-            
-            a.Property(pa => pa.Amount)
-                .IsRequired()
-                .HasPrecision(16, 2)
-                .HasComment("Allocation amount applied to the invoice");
-                
-            a.Property(pa => pa.Notes)
-                .HasMaxLength(500)
-                .HasComment("Allocation notes");
-        });
+        // Configure relationship to allocations (one-to-many)
+        builder.HasMany(p => p.Allocations)
+            .WithOne()
+            .HasForeignKey(a => a.PaymentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Ensure EF uses the backing field for change tracking
+        var navigation = builder.Metadata.FindNavigation(nameof(Payment.Allocations));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        // Note: Property-level configuration for PaymentAllocation is handled in PaymentAllocationConfiguration
 
         // Indexes for performance
         builder.HasIndex(p => p.PaymentNumber)

@@ -78,27 +78,17 @@ public class BillConfiguration : IEntityTypeConfiguration<Bill>
         
         builder.HasIndex(x => x.Status);
         
-        // Owned collection for line items
-        builder.OwnsMany(x => x.LineItems, lineItem =>
-        {
-            lineItem.ToTable("BillLineItems", SchemaNames.Accounting);
-            lineItem.WithOwner().HasForeignKey("BillId");
-            lineItem.Property<int>("Id");
-            lineItem.HasKey("Id");
-            
-            lineItem.Property(li => li.Description)
-                .IsRequired()
-                .HasMaxLength(500);
-            
-            lineItem.Property(li => li.Quantity)
-                .HasPrecision(18, 4);
-            
-            lineItem.Property(li => li.UnitPrice)
-                .HasPrecision(18, 2);
-            
-            lineItem.Property(li => li.LineTotal)
-                .HasPrecision(18, 2);
-        });
+        // Configure relationship to line items (one-to-many)
+        builder.HasMany(x => x.LineItems)
+            .WithOne()
+            .HasForeignKey(li => li.BillId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Ensure EF uses the backing field for change tracking
+        var navigation = builder.Metadata.FindNavigation(nameof(Bill.LineItems));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        // Note: Property-level configuration for BillLineItem is handled in BillLineItemConfiguration
     }
 }
 

@@ -43,6 +43,18 @@ public class JournalEntryConfiguration : IEntityTypeConfiguration<JournalEntry>
 
         builder.Property(x => x.ApprovedDate);
 
+        // Configure relationship to journal entry lines (one-to-many)
+        builder.HasMany(x => x.Lines)
+            .WithOne()
+            .HasForeignKey(l => l.JournalEntryId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Ensure EF uses the backing field for change tracking
+        var navigation = builder.Metadata.FindNavigation(nameof(JournalEntry.Lines));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        // Note: Property-level configuration for JournalEntryLine is handled in JournalEntryLineConfiguration
+
         // Indexes for foreign keys and query optimization
         builder.HasIndex(x => x.PeriodId);
         builder.HasIndex(x => x.Date);

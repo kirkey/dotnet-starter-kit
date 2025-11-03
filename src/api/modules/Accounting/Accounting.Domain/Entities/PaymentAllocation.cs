@@ -66,4 +66,32 @@ public class PaymentAllocation : AuditableEntity, IAggregateRoot
         if (amount <= 0) throw new ArgumentException("Allocation amount must be positive.");
         return new PaymentAllocation(paymentId, invoiceId, amount, notes);
     }
+
+    /// <summary>
+    /// Update allocation amount and/or notes. Amount must remain positive.
+    /// </summary>
+    /// <param name="amount">Updated allocation amount (optional, must be positive)</param>
+    /// <param name="notes">Updated notes (optional)</param>
+    /// <returns>This instance for fluent chaining</returns>
+    /// <exception cref="ArgumentException">Thrown if validation fails</exception>
+    public PaymentAllocation Update(decimal? amount, string? notes)
+    {
+        bool isUpdated = false;
+
+        if (amount.HasValue && Amount != amount.Value)
+        {
+            if (amount.Value <= 0)
+                throw new ArgumentException("Allocation amount must be positive");
+            Amount = amount.Value;
+            isUpdated = true;
+        }
+
+        if (notes != Notes)
+        {
+            Notes = notes;
+            isUpdated = true;
+        }
+
+        return this;
+    }
 }

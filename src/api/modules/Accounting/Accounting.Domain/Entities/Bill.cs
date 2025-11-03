@@ -521,7 +521,7 @@ public class Bill : AuditableEntity, IAggregateRoot
         if (unitPrice < 0)
             throw new ArgumentException("Unit price cannot be negative", nameof(unitPrice));
 
-        var lineItem = BillLineItem.Create(description, quantity, unitPrice, accountId);
+        var lineItem = BillLineItem.Create(Id, description, quantity, unitPrice, accountId);
         _lineItems.Add(lineItem);
 
         // Recalculate subtotal
@@ -574,67 +574,4 @@ public class Bill : AuditableEntity, IAggregateRoot
     public bool IsDiscountAvailable => DiscountDate.HasValue && DateTime.UtcNow.Date <= DiscountDate.Value.Date && PaidAmount == 0;
 }
 
-/// <summary>
-/// Represents a line item on a bill.
-/// </summary>
-public class BillLineItem
-{
-    /// <summary>
-    /// Description of the item or service.
-    /// Example: "Office supplies", "Consulting services". Max length: 500.
-    /// </summary>
-    public string Description { get; private set; } = string.Empty;
-
-    /// <summary>
-    /// Quantity of items.
-    /// Example: 10.0 for 10 units, 2.5 for 2.5 hours. Must be positive.
-    /// </summary>
-    public decimal Quantity { get; private set; }
-
-    /// <summary>
-    /// Price per unit.
-    /// Example: 50.00 for $50 per unit. Cannot be negative.
-    /// </summary>
-    public decimal UnitPrice { get; private set; }
-
-    /// <summary>
-    /// Total line amount (Quantity × UnitPrice).
-    /// Example: 500.00 for 10 units at $50 each.
-    /// </summary>
-    public decimal LineTotal { get; private set; }
-
-    /// <summary>
-    /// Optional GL account for expense coding.
-    /// Links to ChartOfAccount entity if specified.
-    /// </summary>
-    public DefaultIdType? AccountId { get; private set; }
-
-    private BillLineItem()
-    {
-        // EF Core constructor
-    }
-
-    private BillLineItem(string description, decimal quantity, decimal unitPrice, DefaultIdType? accountId)
-    {
-        if (string.IsNullOrWhiteSpace(description))
-            throw new ArgumentException("Description is required", nameof(description));
-
-        if (quantity <= 0)
-            throw new ArgumentException("Quantity must be positive", nameof(quantity));
-
-        if (unitPrice < 0)
-            throw new ArgumentException("Unit price cannot be negative", nameof(unitPrice));
-
-        Description = description.Trim();
-        Quantity = quantity;
-        UnitPrice = unitPrice;
-        LineTotal = quantity * unitPrice;
-        AccountId = accountId;
-    }
-
-    public static BillLineItem Create(string description, decimal quantity, decimal unitPrice, DefaultIdType? accountId = null)
-    {
-        return new BillLineItem(description, quantity, unitPrice, accountId);
-    }
-}
 
