@@ -19,12 +19,6 @@ public partial class Bills
     /// Search filter for bill number.
     /// </summary>
     private string? BillNumber { get; set; }
-
-    /// <summary>
-    /// Search filter for vendor name.
-    /// </summary>
-    private string? VendorName { get; set; }
-
     /// <summary>
     /// Search filter for bill status.
     /// </summary>
@@ -325,18 +319,19 @@ public partial class Bills
     {
         try
         {
-            var command = new MarkBillAsPaidRequest
+            var command = new RejectBillRequest
             {
-                PaidDate = _markAsPaidCommand.PaidDate ?? DateTime.Today
+                RejectedBy = _rejectCommand.RejectedBy,
+                Reason = _rejectCommand.Reason
             };
-            await Client.MarkBillAsPaidEndpointAsync("1", _markAsPaidCommand.BillId, command);
-            Snackbar.Add("Bill marked as paid", Severity.Success);
-            _markAsPaidDialogVisible = false;
+            await Client.RejectBillEndpointAsync("1", _rejectCommand.BillId, command);
+            Snackbar.Add("Bill rejected successfully", Severity.Success);
+            _rejectDialogVisible = false;
             await _table.ReloadDataAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error marking bill as paid: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Error rejecting bill: {ex.Message}", Severity.Error);
         }
     }
 
@@ -407,8 +402,10 @@ public partial class Bills
         }
     }
 
-    // Print Bill
-    private void OnPrintBill(DefaultIdType _)
+    /// <summary>
+    /// Prints the bill (placeholder for future implementation).
+    /// </summary>
+    private void OnPrintBill(DefaultIdType billId)
     {
         Snackbar.Add("Print functionality not yet implemented", Severity.Info);
     }
