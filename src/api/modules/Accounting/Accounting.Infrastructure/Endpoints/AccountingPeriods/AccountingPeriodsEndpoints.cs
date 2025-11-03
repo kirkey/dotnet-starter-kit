@@ -12,7 +12,7 @@ public static class AccountingPeriodsEndpoints
     /// </summary>
     internal static IEndpointRouteBuilder MapAccountingPeriodsEndpoints(this IEndpointRouteBuilder app)
     {
-        var accountingPeriodsGroup = app.MapGroup("/accounting-periods")
+        var accountingPeriodsGroup = app.MapGroup("/accounting/periods")
             .WithTags("Accounting-Periods")
             .WithDescription("Endpoints for managing accounting periods");
 

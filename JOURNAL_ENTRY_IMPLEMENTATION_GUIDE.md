@@ -46,7 +46,7 @@ This document provides comprehensive guidance for implementing the **Journal Ent
 - API: Full CQRS
 
 ✅ **Accounting Periods** - For period assignment
-- Page: `/accounting-periods`
+- Page: `/accounting/periods`
 - API: Full CQRS
 - Used to control posting windows
 

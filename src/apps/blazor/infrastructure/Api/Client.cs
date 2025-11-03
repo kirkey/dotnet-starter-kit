@@ -8497,10 +8497,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/accounting-periods"
+                    // Operation Path: "api/v{version}/accounting/accounting/periods"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/accounting-periods");
+                    urlBuilder_.Append("/accounting/accounting/periods");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -8604,10 +8604,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/accounting-periods/{id}"
+                    // Operation Path: "api/v{version}/accounting/accounting/periods/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/accounting-periods/");
+                    urlBuilder_.Append("/accounting/accounting/periods/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -8704,10 +8704,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/accounting-periods/{id}"
+                    // Operation Path: "api/v{version}/accounting/accounting/periods/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/accounting-periods/");
+                    urlBuilder_.Append("/accounting/accounting/periods/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -8800,10 +8800,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/accounting-periods/{id}"
+                    // Operation Path: "api/v{version}/accounting/accounting/periods/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/accounting-periods/");
+                    urlBuilder_.Append("/accounting/accounting/periods/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -8905,10 +8905,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/accounting-periods/search"
+                    // Operation Path: "api/v{version}/accounting/accounting/periods/search"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/accounting-periods/search");
+                    urlBuilder_.Append("/accounting/accounting/periods/search");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 

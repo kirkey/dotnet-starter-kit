@@ -27,12 +27,12 @@ Generated: November 2, 2025
 These features have complete implementation including domain, API endpoints, and UI pages:
 
 ### ✅ Accounting Periods
-- **Page**: `/accounting-periods`
+- **Page**: `/accounting/periods`
 - **API**: Full CQRS (Create, Read, Update, Delete, Search)
 - **Status**: ✅ Complete
 
 ### ✅ Accruals
-- **Page**: `/accounting-accruals`
+- **Page**: `/accounting/accruals`
 - **API**: Full CQRS with Reverse operation
 - **Status**: ✅ Complete
 
@@ -42,7 +42,7 @@ These features have complete implementation including domain, API endpoints, and
 - **Status**: ✅ Complete
 
 ### ✅ Budgets & Budget Details
-- **Page**: `/accounting-budgets` and `/accounting-budgetdetails/{budgetId}`
+- **Page**: `/accounting/budgets` and `/accounting-budgetdetails/{budgetId}`
 - **API**: Full CQRS with status management
 - **Status**: ✅ Complete
 
