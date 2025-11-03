@@ -7,7 +7,7 @@ namespace Accounting.Application.SecurityDeposits.Handlers;
 /// </summary>
 public sealed class CreateSecurityDepositHandler(
     ILogger<CreateSecurityDepositHandler> logger,
-    [FromKeyedServices("accounting")] IRepository<SecurityDeposit> repository)
+    IRepository<SecurityDeposit> repository)
     : IRequestHandler<CreateSecurityDepositCommand, CreateSecurityDepositResponse>
 {
     /// <summary>
