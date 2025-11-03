@@ -126,7 +126,7 @@ public class JournalEntryLineViewModel
     /// Chart of account identifier.
     /// </summary>
     [Required(ErrorMessage = "Account is required")]
-    public DefaultIdType AccountId { get; set; }
+    public DefaultIdType? AccountId { get; set; }
 
     /// <summary>
     /// Account code for display purposes.

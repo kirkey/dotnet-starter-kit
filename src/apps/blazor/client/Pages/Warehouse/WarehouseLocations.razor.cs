@@ -19,7 +19,7 @@ public partial class WarehouseLocations
     protected override Task OnInitializedAsync()
     {
         // Parse the warehouse ID from query parameter if provided
-        if (!string.IsNullOrEmpty(WarehouseIdQuery) && Guid.TryParse(WarehouseIdQuery, out var warehouseGuid))
+        if (!string.IsNullOrEmpty(WarehouseIdQuery) && DefaultIdType.TryParse(WarehouseIdQuery, out var warehouseGuid))
         {
             _filterWarehouseId = warehouseGuid;
         }

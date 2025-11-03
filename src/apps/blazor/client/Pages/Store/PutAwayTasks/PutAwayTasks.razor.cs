@@ -30,7 +30,7 @@ public partial class PutAwayTasks
             fields:
             [
                 new EntityField<PutAwayTaskResponse>(x => x.TaskNumber, "Task #", "TaskNumber"),
-                new EntityField<PutAwayTaskResponse>(x => x.WarehouseId, "Warehouse", "WarehouseId", typeof(Guid)),
+                new EntityField<PutAwayTaskResponse>(x => x.WarehouseId, "Warehouse", "WarehouseId", typeof(DefaultIdType)),
                 new EntityField<PutAwayTaskResponse>(x => x.Status, "Status", "Status"),
                 new EntityField<PutAwayTaskResponse>(x => x.Priority, "Priority", "Priority", typeof(int)),
                 new EntityField<PutAwayTaskResponse>(x => x.AssignedTo, "Assigned To", "AssignedTo"),

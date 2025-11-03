@@ -65,7 +65,7 @@ public class HangfireCustomBasicAuthenticationFilter(ILogger<HangfireCustomBasic
 
     private static BasicAuthenticationTokens ExtractAuthenticationTokens(AuthenticationHeaderValue authValues)
     {
-        string? parameter = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(authValues.Parameter!));
+        string? parameter = Encoding.UTF8.GetString(Convert.FromBase64String(authValues.Parameter!));
         string[]? parts = parameter.Split(':');
         return new BasicAuthenticationTokens(parts);
     }

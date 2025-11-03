@@ -1,6 +1,4 @@
-﻿using MediatR.Courier;
-
-namespace FSH.Starter.Blazor.Client.Components.Common;
+﻿namespace FSH.Starter.Blazor.Client.Components.Common;
 
 public class FshTable<T> : MudTable<T>
 {

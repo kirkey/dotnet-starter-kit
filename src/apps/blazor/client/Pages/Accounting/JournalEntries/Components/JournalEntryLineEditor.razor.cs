@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.JournalEntries.Components;
 
 /// <summary>
@@ -59,12 +57,22 @@ public partial class JournalEntryLineEditor
     }
 
     /// <summary>
-    /// Handles account selection change.
+    /// Handles account selection, capturing the full account details.
     /// </summary>
-    private async Task OnAccountChanged(JournalEntryLineViewModel line, string accountCode)
+    private async Task OnAccountSelected(JournalEntryLineViewModel line, ChartOfAccountResponse? account)
     {
-        line.AccountCode = accountCode;
-        // TODO: Load account details (ID and Name) from the autocomplete
+        if (account != null)
+        {
+            line.AccountCode = account.AccountCode ?? string.Empty;
+            line.AccountName = account.Name ?? string.Empty;
+        }
+        else
+        {
+            // Clear account details if no account is selected
+            line.AccountCode = string.Empty;
+            line.AccountName = string.Empty;
+        }
+        
         await LinesChanged.InvokeAsync(Lines);
     }
 }

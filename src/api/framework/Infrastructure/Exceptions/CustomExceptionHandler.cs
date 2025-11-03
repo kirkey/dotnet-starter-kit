@@ -13,23 +13,42 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IE
 
         switch (exception)
         {
-            case FluentValidation.ValidationException fluentException:
+            case ValidationException fluentException:
                 {
-                    problemDetails.Detail = "one or more validation errors occurred";
+                    problemDetails.Status = StatusCodes.Status400BadRequest;
+                    problemDetails.Detail = "One or more validation errors occurred";
                     problemDetails.Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1";
+                    problemDetails.Title = "Validation Error";
                     httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                    List<string> validationErrors = [];
-                    foreach (var error in fluentException.Errors)
+                    httpContext.Response.ContentType = "application/problem+json";
+                    
+                    // Group errors by property name for better readability
+                    var errorsDictionary = fluentException.Errors
+                        .GroupBy(x => x.PropertyName)
+                        .ToDictionary(
+                            g => g.Key,
+                            g => g.Select(x => x.ErrorMessage).ToArray()
+                        );
+                    
+                    problemDetails.Extensions.Add("errors", errorsDictionary);
+                    
+                    // Log validation errors for debugging
+                    if (errorsDictionary.Count > 0)
                     {
-                        validationErrors.Add(error.ErrorMessage);
+                        foreach ((string? property, string[] errors) in errorsDictionary)
+                        {
+                            logger.LogWarning("Validation Error - {Property}: {Errors}", property, string.Join(", ", errors));
+                        }
                     }
-                    problemDetails.Extensions.Add("errors", validationErrors);
                     break;
                 }
             case FshException e:
                 {
                     httpContext.Response.StatusCode = (int)e.StatusCode;
+                    httpContext.Response.ContentType = "application/problem+json";
+                    problemDetails.Status = (int)e.StatusCode;
                     problemDetails.Detail = e.Message;
+                    problemDetails.Title = "Application Error";
                     if (e.ErrorMessages.Any())
                     {
                         problemDetails.Extensions.Add("errors", e.ErrorMessages);
@@ -38,6 +57,10 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IE
                     break;
                 }
             default:
+                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                httpContext.Response.ContentType = "application/problem+json";
+                problemDetails.Status = StatusCodes.Status500InternalServerError;
+                problemDetails.Title = "Internal Server Error";
                 problemDetails.Detail = exception.Message;
                 break;
         }

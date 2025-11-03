@@ -35,13 +35,13 @@
         <MudItem xs="12" sm="6" md="4">
             <MudDatePicker @bind-Date="@FromDate"
                            Label="Date From"
-                           DateFormat="MM/dd/yyyy"
+                           DateFormat="MMMM dd, yyyy"
                            Variant="Variant.Outlined" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <MudDatePicker @bind-Date="@ToDate"
                            Label="Date To"
-                           DateFormat="MM/dd/yyyy"
+                           DateFormat="MMMM dd, yyyy"
                            Variant="Variant.Outlined" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
@@ -102,7 +102,7 @@
             <MudDatePicker @bind-Date="context.Date"
                            For="@(() => context.Date)"
                            Label="Entry Date"
-                           DateFormat="MM/dd/yyyy"
+                           DateFormat="MMMM dd, yyyy"
                            Variant="Variant.Filled"
                            Required="true"
                            ReadOnly="@context.IsPosted" />

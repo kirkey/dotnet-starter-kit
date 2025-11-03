@@ -117,7 +117,7 @@ public partial class JournalEntries
                     Description = viewModel.Description,
                     Lines = [.. viewModel.Lines.Select(l => new JournalEntryLineDto
                     {
-                        AccountId = l.AccountId,
+                        AccountId = (DefaultIdType)l.AccountId!,
                         DebitAmount = l.DebitAmount,
                         CreditAmount = l.CreditAmount,
                         Description = l.Description
