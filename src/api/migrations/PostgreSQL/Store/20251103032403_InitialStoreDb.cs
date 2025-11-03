@@ -58,6 +58,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ReceiptNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     PurchaseOrderId = table.Column<Guid>(type: "uuid", nullable: true),
+                    WarehouseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    WarehouseLocationId = table.Column<Guid>(type: "uuid", nullable: true),
                     ReceivedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
@@ -90,9 +92,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Phone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    City = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    State = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     PostalCode = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     Website = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     CreditLimit = table.Column<decimal>(type: "numeric(18,2)", precision: 16, scale: 2, nullable: true),
@@ -163,8 +162,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     GoodsReceiptId = table.Column<Guid>(type: "uuid", nullable: false),
                     ItemId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    PurchaseOrderItemId = table.Column<Guid>(type: "uuid", nullable: true),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
+                    UnitCost = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
                     Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
@@ -1387,6 +1388,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CycleCountItems_CycleCount_Item",
+                schema: "store",
+                table: "CycleCountItems",
+                columns: new[] { "CycleCountId", "ItemId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CycleCountItems_CycleCountId",
                 schema: "store",
                 table: "CycleCountItems",
@@ -1404,6 +1412,42 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 table: "CycleCounts",
                 column: "CountNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CycleCounts_CountType",
+                schema: "store",
+                table: "CycleCounts",
+                column: "CountType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CycleCounts_ScheduledDate",
+                schema: "store",
+                table: "CycleCounts",
+                column: "ScheduledDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CycleCounts_Status",
+                schema: "store",
+                table: "CycleCounts",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CycleCounts_Status_ScheduledDate",
+                schema: "store",
+                table: "CycleCounts",
+                columns: new[] { "Status", "ScheduledDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CycleCounts_Warehouse_ScheduledDate",
+                schema: "store",
+                table: "CycleCounts",
+                columns: new[] { "WarehouseId", "ScheduledDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CycleCounts_Warehouse_Status",
+                schema: "store",
+                table: "CycleCounts",
+                columns: new[] { "WarehouseId", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CycleCounts_WarehouseId",
@@ -1430,6 +1474,24 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceiptItems_PurchaseOrderItemId",
+                schema: "store",
+                table: "GoodsReceiptItems",
+                column: "PurchaseOrderItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceiptItems_Receipt_Item",
+                schema: "store",
+                table: "GoodsReceiptItems",
+                columns: new[] { "GoodsReceiptId", "ItemId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceipts_PurchaseOrderId",
+                schema: "store",
+                table: "GoodsReceipts",
+                column: "PurchaseOrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GoodsReceipts_ReceiptNumber",
                 schema: "store",
                 table: "GoodsReceipts",
@@ -1437,10 +1499,46 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceipts_ReceivedDate",
+                schema: "store",
+                table: "GoodsReceipts",
+                column: "ReceivedDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceipts_Status",
+                schema: "store",
+                table: "GoodsReceipts",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceipts_Status_ReceivedDate",
+                schema: "store",
+                table: "GoodsReceipts",
+                columns: new[] { "Status", "ReceivedDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceipts_Warehouse_ReceivedDate",
+                schema: "store",
+                table: "GoodsReceipts",
+                columns: new[] { "WarehouseId", "ReceivedDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoodsReceipts_WarehouseId",
+                schema: "store",
+                table: "GoodsReceipts",
+                column: "WarehouseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryReservations_BinId",
                 schema: "store",
                 table: "InventoryReservations",
                 column: "BinId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryReservations_ExpirationDate",
+                schema: "store",
+                table: "InventoryReservations",
+                column: "ExpirationDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryReservations_ItemId",
@@ -1455,11 +1553,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "LotNumberId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InventoryReservations_ReservationDate",
+                schema: "store",
+                table: "InventoryReservations",
+                column: "ReservationDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryReservations_ReservationNumber",
                 schema: "store",
                 table: "InventoryReservations",
                 column: "ReservationNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryReservations_ReservationType",
+                schema: "store",
+                table: "InventoryReservations",
+                column: "ReservationType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryReservations_Status",
+                schema: "store",
+                table: "InventoryReservations",
+                column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryReservations_WarehouseId",
@@ -1486,11 +1602,23 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "PurchaseOrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransactions_TransactionDate",
+                schema: "store",
+                table: "InventoryTransactions",
+                column: "TransactionDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryTransactions_TransactionNumber",
                 schema: "store",
                 table: "InventoryTransactions",
                 column: "TransactionNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransactions_TransactionType",
+                schema: "store",
+                table: "InventoryTransactions",
+                column: "TransactionType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryTransactions_WarehouseId",
@@ -1517,10 +1645,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransferItems_Transfer_Item",
+                schema: "store",
+                table: "InventoryTransferItems",
+                columns: new[] { "InventoryTransferId", "ItemId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryTransfers_FromLocationId",
                 schema: "store",
                 table: "InventoryTransfers",
                 column: "FromLocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransfers_FromWarehouse_ToWarehouse",
+                schema: "store",
+                table: "InventoryTransfers",
+                columns: new[] { "FromWarehouseId", "ToWarehouseId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransfers_FromWarehouse_TransferDate",
+                schema: "store",
+                table: "InventoryTransfers",
+                columns: new[] { "FromWarehouseId", "TransferDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryTransfers_FromWarehouseId",
@@ -1529,10 +1676,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "FromWarehouseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransfers_Status",
+                schema: "store",
+                table: "InventoryTransfers",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransfers_Status_TransferDate",
+                schema: "store",
+                table: "InventoryTransfers",
+                columns: new[] { "Status", "TransferDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryTransfers_ToLocationId",
                 schema: "store",
                 table: "InventoryTransfers",
                 column: "ToLocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransfers_ToWarehouse_TransferDate",
+                schema: "store",
+                table: "InventoryTransfers",
+                columns: new[] { "ToWarehouseId", "TransferDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryTransfers_ToWarehouseId",
@@ -1541,11 +1706,23 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "ToWarehouseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransfers_TransferDate",
+                schema: "store",
+                table: "InventoryTransfers",
+                column: "TransferDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryTransfers_TransferNumber",
                 schema: "store",
                 table: "InventoryTransfers",
                 column: "TransferNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryTransfers_TransferType",
+                schema: "store",
+                table: "InventoryTransfers",
+                column: "TransferType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_Barcode",
@@ -1565,6 +1742,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 schema: "store",
                 table: "Items",
                 column: "CategoryId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_Name",
+                schema: "store",
+                table: "Items",
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_Sku",
@@ -1618,6 +1801,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PickListItems_Bin_Status",
+                schema: "store",
+                table: "PickListItems",
+                columns: new[] { "BinId", "Status" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PickListItems_BinId",
                 schema: "store",
                 table: "PickListItems",
@@ -1636,6 +1825,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "LotNumberId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PickListItems_PickList_Item",
+                schema: "store",
+                table: "PickListItems",
+                columns: new[] { "PickListId", "ItemId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PickListItems_PickListId",
                 schema: "store",
                 table: "PickListItems",
@@ -1648,11 +1843,59 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "SerialNumberId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PickListItems_Status",
+                schema: "store",
+                table: "PickListItems",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickLists_AssignedTo",
+                schema: "store",
+                table: "PickLists",
+                column: "AssignedTo");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickLists_AssignedTo_Status",
+                schema: "store",
+                table: "PickLists",
+                columns: new[] { "AssignedTo", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickLists_PickingType",
+                schema: "store",
+                table: "PickLists",
+                column: "PickingType");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PickLists_PickListNumber",
                 schema: "store",
                 table: "PickLists",
                 column: "PickListNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickLists_Priority",
+                schema: "store",
+                table: "PickLists",
+                column: "Priority");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickLists_Status",
+                schema: "store",
+                table: "PickLists",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickLists_Status_Priority",
+                schema: "store",
+                table: "PickLists",
+                columns: new[] { "Status", "Priority" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickLists_Warehouse_Status",
+                schema: "store",
+                table: "PickLists",
+                columns: new[] { "WarehouseId", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PickLists_WarehouseId",
@@ -1667,10 +1910,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrderItems_PurchaseOrder_Item",
+                schema: "store",
+                table: "PurchaseOrderItems",
+                columns: new[] { "PurchaseOrderId", "ItemId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrderItems_PurchaseOrderId",
                 schema: "store",
                 table: "PurchaseOrderItems",
                 column: "PurchaseOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_ExpectedDeliveryDate",
+                schema: "store",
+                table: "PurchaseOrders",
+                column: "ExpectedDeliveryDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_OrderDate",
+                schema: "store",
+                table: "PurchaseOrders",
+                column: "OrderDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrders_OrderNumber",
@@ -1678,6 +1940,30 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 table: "PurchaseOrders",
                 column: "OrderNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_Status",
+                schema: "store",
+                table: "PurchaseOrders",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_Status_OrderDate",
+                schema: "store",
+                table: "PurchaseOrders",
+                columns: new[] { "Status", "OrderDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_Supplier_OrderDate",
+                schema: "store",
+                table: "PurchaseOrders",
+                columns: new[] { "SupplierId", "OrderDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_Supplier_Status",
+                schema: "store",
+                table: "PurchaseOrders",
+                columns: new[] { "SupplierId", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrders_SupplierId",
@@ -1710,10 +1996,40 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "SerialNumberId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTaskItems_Status",
+                schema: "store",
+                table: "PutAwayTaskItems",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTaskItems_Task_Item",
+                schema: "store",
+                table: "PutAwayTaskItems",
+                columns: new[] { "PutAwayTaskId", "ItemId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTaskItems_ToBin_Status",
+                schema: "store",
+                table: "PutAwayTaskItems",
+                columns: new[] { "ToBinId", "Status" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PutAwayTaskItems_ToBinId",
                 schema: "store",
                 table: "PutAwayTaskItems",
                 column: "ToBinId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTasks_AssignedTo",
+                schema: "store",
+                table: "PutAwayTasks",
+                column: "AssignedTo");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTasks_AssignedTo_Status",
+                schema: "store",
+                table: "PutAwayTasks",
+                columns: new[] { "AssignedTo", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PutAwayTasks_GoodsReceiptId",
@@ -1722,11 +2038,41 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "GoodsReceiptId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTasks_Priority",
+                schema: "store",
+                table: "PutAwayTasks",
+                column: "Priority");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTasks_PutAwayStrategy",
+                schema: "store",
+                table: "PutAwayTasks",
+                column: "PutAwayStrategy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTasks_Status",
+                schema: "store",
+                table: "PutAwayTasks",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTasks_Status_Priority",
+                schema: "store",
+                table: "PutAwayTasks",
+                columns: new[] { "Status", "Priority" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PutAwayTasks_TaskNumber",
                 schema: "store",
                 table: "PutAwayTasks",
                 column: "TaskNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PutAwayTasks_Warehouse_Status",
+                schema: "store",
+                table: "PutAwayTasks",
+                columns: new[] { "WarehouseId", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PutAwayTasks_WarehouseId",
@@ -1772,11 +2118,23 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                 column: "WarehouseLocationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StockAdjustments_AdjustmentDate",
+                schema: "store",
+                table: "StockAdjustments",
+                column: "AdjustmentDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StockAdjustments_AdjustmentNumber",
                 schema: "store",
                 table: "StockAdjustments",
                 column: "AdjustmentNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockAdjustments_AdjustmentType",
+                schema: "store",
+                table: "StockAdjustments",
+                column: "AdjustmentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockAdjustments_ItemId",

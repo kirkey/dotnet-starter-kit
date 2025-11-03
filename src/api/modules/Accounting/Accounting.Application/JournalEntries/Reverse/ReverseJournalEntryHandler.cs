@@ -7,7 +7,6 @@ namespace Accounting.Application.JournalEntries.Reverse;
 public sealed class ReverseJournalEntryHandler(
     ILogger<ReverseJournalEntryHandler> logger,
     [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository,
-    [FromKeyedServices("accounting:journal-lines")] IReadRepository<JournalEntryLine> journalLineReadRepo,
     [FromKeyedServices("accounting:journal-lines")] IRepository<JournalEntryLine> journalLineRepo)
     : IRequestHandler<ReverseJournalEntryCommand, DefaultIdType>
 {
@@ -15,7 +14,9 @@ public sealed class ReverseJournalEntryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var originalEntry = await repository.GetByIdAsync(request.JournalEntryId, cancellationToken);
+        // Use spec to load entry with lines in one query
+        var spec = new Specs.GetJournalEntryWithLinesSpec(request.JournalEntryId);
+        var originalEntry = await ((IReadRepository<JournalEntry>)repository).FirstOrDefaultAsync(spec, cancellationToken);
         
         if (originalEntry == null)
         {
@@ -39,11 +40,8 @@ public sealed class ReverseJournalEntryHandler(
         await repository.AddAsync(reversingEntry, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
-        // Get original lines and create reversed lines (swap debits and credits)
-        var spec = new Lines.Specs.JournalEntryLinesByJournalEntryIdSpec(originalEntry.Id);
-        var originalLines = await journalLineReadRepo.ListAsync(spec, cancellationToken);
-        
-        foreach (var line in originalLines)
+        // Create reversed lines (swap debits and credits) from the loaded lines
+        foreach (var line in originalEntry.Lines)
         {
             var reversedLine = JournalEntryLine.Create(
                 reversingEntry.Id,

@@ -14,6 +14,7 @@ public static class JournalEntryLineCreateEndpoint
             })
             .WithName(nameof(JournalEntryLineCreateEndpoint))
             .WithSummary("create journal entry line")
+            .WithDescription("creates a new journal entry line")
             .Produces<DefaultIdType>()
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);

@@ -1,3 +1,5 @@
+using Accounting.Application.JournalEntries.Lines.Responses;
+
 namespace Accounting.Application.JournalEntries.Responses;
 
 /// <summary>

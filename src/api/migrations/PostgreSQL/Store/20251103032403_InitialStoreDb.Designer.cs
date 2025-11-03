@@ -12,8 +12,8 @@ using Store.Infrastructure.Persistence;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20251025012650_GoodsRecceipt")]
-    partial class GoodsRecceipt
+    [Migration("20251103032403_InitialStoreDb")]
+    partial class InitialStoreDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("store")
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -289,9 +289,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.HasIndex("CountNumber")
                         .IsUnique();
 
-                    b.HasIndex("WarehouseId");
+                    b.HasIndex("CountType")
+                        .HasDatabaseName("IX_CycleCounts_CountType");
 
-                    b.HasIndex("WarehouseLocationId");
+                    b.HasIndex("ScheduledDate")
+                        .HasDatabaseName("IX_CycleCounts_ScheduledDate");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_CycleCounts_Status");
+
+                    b.HasIndex("WarehouseId")
+                        .HasDatabaseName("IX_CycleCounts_WarehouseId");
+
+                    b.HasIndex("WarehouseLocationId")
+                        .HasDatabaseName("IX_CycleCounts_WarehouseLocationId");
+
+                    b.HasIndex("Status", "ScheduledDate")
+                        .HasDatabaseName("IX_CycleCounts_Status_ScheduledDate");
+
+                    b.HasIndex("WarehouseId", "ScheduledDate")
+                        .HasDatabaseName("IX_CycleCounts_Warehouse_ScheduledDate");
+
+                    b.HasIndex("WarehouseId", "Status")
+                        .HasDatabaseName("IX_CycleCounts_Warehouse_Status");
 
                     b.ToTable("CycleCounts", "store");
                 });
@@ -374,10 +394,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("CycleCountId")
+                        .HasDatabaseName("IX_CycleCountItems_CycleCountId");
+
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("IX_CycleCountItems_ItemId");
 
                     b.HasIndex("CycleCountId", "ItemId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_CycleCountItems_CycleCount_Item");
 
                     b.ToTable("CycleCountItems", "store");
                 });
@@ -452,12 +477,26 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PurchaseOrderId");
+                    b.HasIndex("PurchaseOrderId")
+                        .HasDatabaseName("IX_GoodsReceipts_PurchaseOrderId");
 
                     b.HasIndex("ReceiptNumber")
                         .IsUnique();
 
-                    b.HasIndex("WarehouseId");
+                    b.HasIndex("ReceivedDate")
+                        .HasDatabaseName("IX_GoodsReceipts_ReceivedDate");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_GoodsReceipts_Status");
+
+                    b.HasIndex("WarehouseId")
+                        .HasDatabaseName("IX_GoodsReceipts_WarehouseId");
+
+                    b.HasIndex("Status", "ReceivedDate")
+                        .HasDatabaseName("IX_GoodsReceipts_Status_ReceivedDate");
+
+                    b.HasIndex("WarehouseId", "ReceivedDate")
+                        .HasDatabaseName("IX_GoodsReceipts_Warehouse_ReceivedDate");
 
                     b.ToTable("GoodsReceipts", "store");
                 });
@@ -527,11 +566,17 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GoodsReceiptId");
+                    b.HasIndex("GoodsReceiptId")
+                        .HasDatabaseName("IX_GoodsReceiptItems_GoodsReceiptId");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("IX_GoodsReceiptItems_ItemId");
 
-                    b.HasIndex("PurchaseOrderItemId");
+                    b.HasIndex("PurchaseOrderItemId")
+                        .HasDatabaseName("IX_GoodsReceiptItems_PurchaseOrderItemId");
+
+                    b.HasIndex("GoodsReceiptId", "ItemId")
+                        .HasDatabaseName("IX_GoodsReceiptItems_Receipt_Item");
 
                     b.ToTable("GoodsReceiptItems", "store");
                 });
@@ -638,12 +683,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasIndex("BinId");
 
+                    b.HasIndex("ExpirationDate");
+
                     b.HasIndex("ItemId");
 
                     b.HasIndex("LotNumberId");
 
+                    b.HasIndex("ReservationDate");
+
                     b.HasIndex("ReservationNumber")
                         .IsUnique();
+
+                    b.HasIndex("ReservationType");
+
+                    b.HasIndex("Status");
 
                     b.HasIndex("WarehouseId");
 
@@ -770,8 +823,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasIndex("PurchaseOrderId");
 
+                    b.HasIndex("TransactionDate");
+
                     b.HasIndex("TransactionNumber")
                         .IsUnique();
+
+                    b.HasIndex("TransactionType");
 
                     b.HasIndex("WarehouseId");
 
@@ -896,16 +953,41 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromLocationId");
+                    b.HasIndex("FromLocationId")
+                        .HasDatabaseName("IX_InventoryTransfers_FromLocationId");
 
-                    b.HasIndex("FromWarehouseId");
+                    b.HasIndex("FromWarehouseId")
+                        .HasDatabaseName("IX_InventoryTransfers_FromWarehouseId");
 
-                    b.HasIndex("ToLocationId");
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_InventoryTransfers_Status");
 
-                    b.HasIndex("ToWarehouseId");
+                    b.HasIndex("ToLocationId")
+                        .HasDatabaseName("IX_InventoryTransfers_ToLocationId");
+
+                    b.HasIndex("ToWarehouseId")
+                        .HasDatabaseName("IX_InventoryTransfers_ToWarehouseId");
+
+                    b.HasIndex("TransferDate")
+                        .HasDatabaseName("IX_InventoryTransfers_TransferDate");
 
                     b.HasIndex("TransferNumber")
                         .IsUnique();
+
+                    b.HasIndex("TransferType")
+                        .HasDatabaseName("IX_InventoryTransfers_TransferType");
+
+                    b.HasIndex("FromWarehouseId", "ToWarehouseId")
+                        .HasDatabaseName("IX_InventoryTransfers_FromWarehouse_ToWarehouse");
+
+                    b.HasIndex("FromWarehouseId", "TransferDate")
+                        .HasDatabaseName("IX_InventoryTransfers_FromWarehouse_TransferDate");
+
+                    b.HasIndex("Status", "TransferDate")
+                        .HasDatabaseName("IX_InventoryTransfers_Status_TransferDate");
+
+                    b.HasIndex("ToWarehouseId", "TransferDate")
+                        .HasDatabaseName("IX_InventoryTransfers_ToWarehouse_TransferDate");
 
                     b.ToTable("InventoryTransfers", "store");
                 });
@@ -975,9 +1057,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InventoryTransferId");
+                    b.HasIndex("InventoryTransferId")
+                        .HasDatabaseName("IX_InventoryTransferItems_InventoryTransferId");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("IX_InventoryTransferItems_ItemId");
+
+                    b.HasIndex("InventoryTransferId", "ItemId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_InventoryTransferItems_Transfer_Item");
 
                     b.ToTable("InventoryTransferItems", "store");
                 });
@@ -1136,6 +1224,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CategoryId1");
+
+                    b.HasIndex("Name");
 
                     b.HasIndex("Sku")
                         .IsUnique();
@@ -1421,10 +1511,32 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AssignedTo")
+                        .HasDatabaseName("IX_PickLists_AssignedTo");
+
                     b.HasIndex("PickListNumber")
                         .IsUnique();
 
-                    b.HasIndex("WarehouseId");
+                    b.HasIndex("PickingType")
+                        .HasDatabaseName("IX_PickLists_PickingType");
+
+                    b.HasIndex("Priority")
+                        .HasDatabaseName("IX_PickLists_Priority");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_PickLists_Status");
+
+                    b.HasIndex("WarehouseId")
+                        .HasDatabaseName("IX_PickLists_WarehouseId");
+
+                    b.HasIndex("AssignedTo", "Status")
+                        .HasDatabaseName("IX_PickLists_AssignedTo_Status");
+
+                    b.HasIndex("Status", "Priority")
+                        .HasDatabaseName("IX_PickLists_Status_Priority");
+
+                    b.HasIndex("WarehouseId", "Status")
+                        .HasDatabaseName("IX_PickLists_Warehouse_Status");
 
                     b.ToTable("PickLists", "store");
                 });
@@ -1509,15 +1621,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BinId");
+                    b.HasIndex("BinId")
+                        .HasDatabaseName("IX_PickListItems_BinId");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("IX_PickListItems_ItemId");
 
-                    b.HasIndex("LotNumberId");
+                    b.HasIndex("LotNumberId")
+                        .HasDatabaseName("IX_PickListItems_LotNumberId");
 
-                    b.HasIndex("PickListId");
+                    b.HasIndex("PickListId")
+                        .HasDatabaseName("IX_PickListItems_PickListId");
 
-                    b.HasIndex("SerialNumberId");
+                    b.HasIndex("SerialNumberId")
+                        .HasDatabaseName("IX_PickListItems_SerialNumberId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_PickListItems_Status");
+
+                    b.HasIndex("BinId", "Status")
+                        .HasDatabaseName("IX_PickListItems_Bin_Status");
+
+                    b.HasIndex("PickListId", "ItemId")
+                        .HasDatabaseName("IX_PickListItems_PickList_Item");
 
                     b.ToTable("PickListItems", "store");
                 });
@@ -1628,10 +1754,25 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ExpectedDeliveryDate");
+
+                    b.HasIndex("OrderDate");
+
                     b.HasIndex("OrderNumber")
                         .IsUnique();
 
+                    b.HasIndex("Status");
+
                     b.HasIndex("SupplierId");
+
+                    b.HasIndex("Status", "OrderDate")
+                        .HasDatabaseName("IX_PurchaseOrders_Status_OrderDate");
+
+                    b.HasIndex("SupplierId", "OrderDate")
+                        .HasDatabaseName("IX_PurchaseOrders_Supplier_OrderDate");
+
+                    b.HasIndex("SupplierId", "Status")
+                        .HasDatabaseName("IX_PurchaseOrders_Supplier_Status");
 
                     b.ToTable("PurchaseOrders", "store");
                 });
@@ -1711,9 +1852,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("IX_PurchaseOrderItems_ItemId");
 
-                    b.HasIndex("PurchaseOrderId");
+                    b.HasIndex("PurchaseOrderId")
+                        .HasDatabaseName("IX_PurchaseOrderItems_PurchaseOrderId");
+
+                    b.HasIndex("PurchaseOrderId", "ItemId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_PurchaseOrderItems_PurchaseOrder_Item");
 
                     b.ToTable("PurchaseOrderItems", "store");
                 });
@@ -1805,12 +1952,35 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GoodsReceiptId");
+                    b.HasIndex("AssignedTo")
+                        .HasDatabaseName("IX_PutAwayTasks_AssignedTo");
+
+                    b.HasIndex("GoodsReceiptId")
+                        .HasDatabaseName("IX_PutAwayTasks_GoodsReceiptId");
+
+                    b.HasIndex("Priority")
+                        .HasDatabaseName("IX_PutAwayTasks_Priority");
+
+                    b.HasIndex("PutAwayStrategy")
+                        .HasDatabaseName("IX_PutAwayTasks_PutAwayStrategy");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_PutAwayTasks_Status");
 
                     b.HasIndex("TaskNumber")
                         .IsUnique();
 
-                    b.HasIndex("WarehouseId");
+                    b.HasIndex("WarehouseId")
+                        .HasDatabaseName("IX_PutAwayTasks_WarehouseId");
+
+                    b.HasIndex("AssignedTo", "Status")
+                        .HasDatabaseName("IX_PutAwayTasks_AssignedTo_Status");
+
+                    b.HasIndex("Status", "Priority")
+                        .HasDatabaseName("IX_PutAwayTasks_Status_Priority");
+
+                    b.HasIndex("WarehouseId", "Status")
+                        .HasDatabaseName("IX_PutAwayTasks_Warehouse_Status");
 
                     b.ToTable("PutAwayTasks", "store");
                 });
@@ -1895,15 +2065,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("IX_PutAwayTaskItems_ItemId");
 
-                    b.HasIndex("LotNumberId");
+                    b.HasIndex("LotNumberId")
+                        .HasDatabaseName("IX_PutAwayTaskItems_LotNumberId");
 
-                    b.HasIndex("PutAwayTaskId");
+                    b.HasIndex("PutAwayTaskId")
+                        .HasDatabaseName("IX_PutAwayTaskItems_PutAwayTaskId");
 
-                    b.HasIndex("SerialNumberId");
+                    b.HasIndex("SerialNumberId")
+                        .HasDatabaseName("IX_PutAwayTaskItems_SerialNumberId");
 
-                    b.HasIndex("ToBinId");
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_PutAwayTaskItems_Status");
+
+                    b.HasIndex("ToBinId")
+                        .HasDatabaseName("IX_PutAwayTaskItems_ToBinId");
+
+                    b.HasIndex("PutAwayTaskId", "ItemId")
+                        .HasDatabaseName("IX_PutAwayTaskItems_Task_Item");
+
+                    b.HasIndex("ToBinId", "Status")
+                        .HasDatabaseName("IX_PutAwayTaskItems_ToBin_Status");
 
                     b.ToTable("PutAwayTaskItems", "store");
                 });
@@ -2131,8 +2315,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdjustmentDate");
+
                     b.HasIndex("AdjustmentNumber")
                         .IsUnique();
+
+                    b.HasIndex("AdjustmentType");
 
                     b.HasIndex("ItemId");
 
@@ -2254,22 +2442,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("ContactPerson")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Country")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -2344,10 +2522,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Store
                     b.Property<decimal>("Rating")
                         .HasPrecision(16, 2)
                         .HasColumnType("decimal(3,2)");
-
-                    b.Property<string>("State")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Website")
                         .HasMaxLength(255)

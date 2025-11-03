@@ -53,6 +53,9 @@
     </AdvancedSearchContent>
 
     <ExtraActions Context="entry">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => OnViewDetails(entry.Id))">
+            View Details
+        </MudMenuItem>
         @if (entry.ApprovalStatus == "Pending")
         {
             <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnApprove(entry.Id))">

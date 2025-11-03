@@ -5,4 +5,6 @@ Refer to the existing Catalog and Todo Projects for code structure, patterns and
 Add documentation for each Entity, fields, methods, functions and classes.
 Only use string as enums.
 
+Refer or review the md files if there are any related to the feature or functionality being implemented.
+
 Do not add builder.HasCheckConstraint on database configuration.

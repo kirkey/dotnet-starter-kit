@@ -32,6 +32,11 @@ public class JournalEntryLine : AuditableEntity, IAggregateRoot
     public DefaultIdType AccountId { get; private set; }
 
     /// <summary>
+    /// Navigation property to the Chart of Account (for queries/includes only).
+    /// </summary>
+    public ChartOfAccount? Account { get; private set; }
+
+    /// <summary>
     /// Debit amount for this line. Either debit or credit should be non-zero, not both.
     /// Example: 1000.00 for a $1,000 debit to an expense account.
     /// </summary>

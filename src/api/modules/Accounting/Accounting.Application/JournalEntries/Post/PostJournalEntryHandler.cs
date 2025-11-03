@@ -1,5 +1,3 @@
-using Accounting.Application.JournalEntries.Lines.Specs;
-
 namespace Accounting.Application.JournalEntries.Post;
 
 
@@ -9,32 +7,24 @@ namespace Accounting.Application.JournalEntries.Post;
 /// </summary>
 public sealed class PostJournalEntryHandler(
     ILogger<PostJournalEntryHandler> logger,
-    [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository,
-    [FromKeyedServices("accounting:journal-lines")] IReadRepository<JournalEntryLine> lineRepository)
+    [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
     : IRequestHandler<PostJournalEntryCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(PostJournalEntryCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var journalEntry = await repository.GetByIdAsync(request.JournalEntryId, cancellationToken);
+        // Use a spec that includes Lines to ensure they are loaded
+        var spec = new Specs.GetJournalEntryWithLinesSpec(request.JournalEntryId);
+        var journalEntry = await ((IReadRepository<JournalEntry>)repository).FirstOrDefaultAsync(spec, cancellationToken);
         
         if (journalEntry == null)
         {
             throw new JournalEntryNotFoundException(request.JournalEntryId);
         }
 
-        // Get all lines for this journal entry and validate balance
-        var spec = new JournalEntryLinesByJournalEntryIdSpec(request.JournalEntryId);
-        var lines = await lineRepository.ListAsync(spec, cancellationToken);
-
-        var totalDebits = lines.Sum(l => l.DebitAmount);
-        var totalCredits = lines.Sum(l => l.CreditAmount);
-
-        if (Math.Abs(totalDebits - totalCredits) >= 0.01m)
-        {
-            throw new JournalEntryNotBalancedException(request.JournalEntryId);
-        }
+        // Validate that the entry is balanced using domain logic
+        journalEntry.ValidateBalance();
 
         // Post the journal entry
         journalEntry.Post();

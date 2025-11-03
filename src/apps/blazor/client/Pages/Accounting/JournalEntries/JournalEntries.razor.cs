@@ -115,13 +115,13 @@ public partial class JournalEntries
                     ReferenceNumber = viewModel.ReferenceNumber,
                     Source = viewModel.Source,
                     Description = viewModel.Description,
-                    Lines = viewModel.Lines.Select(l => new JournalEntryLineDto
+                    Lines = [.. viewModel.Lines.Select(l => new JournalEntryLineDto
                     {
                         AccountId = l.AccountId,
                         DebitAmount = l.DebitAmount,
                         CreditAmount = l.CreditAmount,
                         Description = l.Description
-                    }).ToList(),
+                    })],
                     PeriodId = viewModel.PeriodId,
                     OriginalAmount = viewModel.OriginalAmount,
                     Notes = viewModel.Notes
@@ -286,6 +286,27 @@ public partial class JournalEntries
                 Snackbar.Add($"Error approving journal entry: {ex.Message}", Severity.Error);
             }
         }
+    }
+
+    /// <summary>
+    /// Opens the details dialog for a journal entry.
+    /// </summary>
+    private async Task OnViewDetails(DefaultIdType id)
+    {
+        var parameters = new DialogParameters
+        {
+            { nameof(JournalEntryDetailsDialog.JournalEntryId), id }
+        };
+
+        var options = new DialogOptions 
+        { 
+            CloseOnEscapeKey = true, 
+            MaxWidth = MaxWidth.Large, 
+            FullWidth = true 
+        };
+
+        await DialogService.ShowAsync<JournalEntryDetailsDialog>(
+            "Journal Entry Details", parameters, options);
     }
 
     /// <summary>

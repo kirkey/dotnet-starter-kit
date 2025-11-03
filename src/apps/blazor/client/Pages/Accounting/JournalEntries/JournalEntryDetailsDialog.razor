@@ -1,0 +1,230 @@
+@using FSH.Starter.Blazor.Client.Pages.Accounting.JournalEntries
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Receipt" Class="mr-3" />
+            Journal Entry Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else if (_entry != null)
+        {
+            <MudGrid>
+                <!-- Header Section -->
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <div class="d-flex justify-space-between align-center mb-2">
+                            <MudText Typo="Typo.h5">@_entry.ReferenceNumber</MudText>
+                            <div>
+                                <MudChip T="object" Color="@GetStatusColor(_entry.ApprovalStatus)" Size="Size.Large">
+                                    @_entry.ApprovalStatus
+                                </MudChip>
+                                @if (_entry.IsPosted)
+                                {
+                                    <MudChip T="object" Color="Color.Success" Size="Size.Large" Icon="@Icons.Material.Filled.CheckCircle">
+                                        Posted
+                                    </MudChip>
+                                }
+                            </div>
+                        </div>
+                        <MudDivider Class="my-3" />
+                        <MudText Typo="Typo.body1">@_entry.Description</MudText>
+                    </MudPaper>
+                </MudItem>
+
+                <!-- Details Grid -->
+                <MudItem xs="12" sm="6" md="4">
+                    <MudField Label="Date" Variant="Variant.Text">
+                        @_entry.Date.ToString("MMM dd, yyyy")
+                    </MudField>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudField Label="Source" Variant="Variant.Text">
+                        @_entry.Source
+                    </MudField>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudField Label="Original Amount" Variant="Variant.Text">
+                        @_entry.OriginalAmount.ToString("C")
+                    </MudField>
+                </MudItem>
+
+                @if (_entry.ApprovedBy != null)
+                {
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudField Label="Approved/Rejected By" Variant="Variant.Text">
+                            @_entry.ApprovedBy
+                        </MudField>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudField Label="Approval Date" Variant="Variant.Text">
+                            @_entry.ApprovedDate?.ToString("MMM dd, yyyy hh:mm tt")
+                        </MudField>
+                    </MudItem>
+                }
+
+                <!-- Lines Section -->
+                <MudItem xs="12">
+                    <MudDivider Class="my-4" />
+                    <MudText Typo="Typo.h6" Class="mb-3">Journal Entry Lines</MudText>
+                    <MudTable Items="@_entry.Lines" Dense="true" Hover="true" Elevation="0" Class="mb-3">
+                        <HeaderContent>
+                            <MudTh>Account Code</MudTh>
+                            <MudTh>Account Name</MudTh>
+                            <MudTh Style="text-align:right">Debit</MudTh>
+                            <MudTh Style="text-align:right">Credit</MudTh>
+                            <MudTh>Memo</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Account Code">@context.AccountCode</MudTd>
+                            <MudTd DataLabel="Account Name">@context.AccountName</MudTd>
+                            <MudTd DataLabel="Debit" Style="text-align:right">
+                                @if (context.DebitAmount > 0)
+                                {
+                                    <strong>@context.DebitAmount.ToString("N2")</strong>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Credit" Style="text-align:right">
+                                @if (context.CreditAmount > 0)
+                                {
+                                    <strong>@context.CreditAmount.ToString("N2")</strong>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Memo">@context.Memo</MudTd>
+                        </RowTemplate>
+                        <FooterContent>
+                            <MudTd colspan="2"><strong>TOTALS</strong></MudTd>
+                            <MudTd Style="text-align:right"><strong>@_entry.TotalDebits.ToString("N2")</strong></MudTd>
+                            <MudTd Style="text-align:right"><strong>@_entry.TotalCredits.ToString("N2")</strong></MudTd>
+                            <MudTd>
+                                @if (_entry.IsBalanced)
+                                {
+                                    <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.CheckCircle">
+                                        Balanced
+                                    </MudChip>
+                                }
+                                else
+                                {
+                                    <MudChip T="string" Color="Color.Error" Size="Size.Small" Icon="@Icons.Material.Filled.Warning">
+                                        Unbalanced: @_entry.Difference.ToString("C")
+                                    </MudChip>
+                                }
+                            </MudTd>
+                        </FooterContent>
+                    </MudTable>
+                </MudItem>
+
+                <!-- Audit Info -->
+                <MudItem xs="12">
+                    <MudDivider Class="my-4" />
+                    <MudText Typo="Typo.subtitle2" Color="Color.Secondary">Audit Information</MudText>
+                    <MudSimpleTable Dense="true" Hover="true" Class="mt-2">
+                        <tbody>
+                            <tr>
+                                <td><strong>Created By:</strong></td>
+                                <td>@_entry.CreatedBy</td>
+                                <td><strong>Created On:</strong></td>
+                                <td>@_entry.CreatedOn.ToString("MMM dd, yyyy hh:mm tt")</td>
+                            </tr>
+                            @if (_entry.LastModifiedBy != null)
+                            {
+                                <tr>
+                                    <td><strong>Modified By:</strong></td>
+                                    <td>@_entry.LastModifiedBy</td>
+                                    <td><strong>Modified On:</strong></td>
+                                    <td>@_entry.LastModifiedOn.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Failed to load journal entry details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    /// <summary>
+    /// MudDialog instance for closing the dialog.
+    /// </summary>
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    /// <summary>
+    /// The journal entry ID to display.
+    /// </summary>
+    [Parameter]
+    public DefaultIdType JournalEntryId { get; set; }
+
+
+    private bool _loading = true;
+    private JournalEntryResponse? _entry;
+
+    /// <summary>
+    /// Loads the journal entry details on initialization.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadEntry();
+    }
+
+    /// <summary>
+    /// Loads the journal entry from the API.
+    /// </summary>
+    private async Task LoadEntry()
+    {
+        try
+        {
+            _loading = true;
+            _entry = await Client.JournalEntryGetEndpointAsync("1", JournalEntryId);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading journal entry: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    /// <summary>
+    /// Gets the status color based on approval status.
+    /// </summary>
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Approved" => Color.Info,
+        "Rejected" => Color.Error,
+        _ => Color.Default
+    };
+
+    /// <summary>
+    /// Closes the dialog.
+    /// </summary>
+    private void Close() => MudDialog.Close();
+}
+

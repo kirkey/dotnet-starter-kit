@@ -11,6 +11,8 @@ public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<Jo
     public SearchJournalEntriesSpec(SearchJournalEntriesQuery request) : base(request)
     {
         Query
+            .Include(e => e.Lines)
+                .ThenInclude(l => l.Account)
             .OrderByDescending(e => e.Date, !request.HasOrderBy())
             .Where(e => e.ReferenceNumber!.Contains(request.ReferenceNumber!), !string.IsNullOrEmpty(request.ReferenceNumber))
             .Where(e => e.Source!.Contains(request.Source!), !string.IsNullOrEmpty(request.Source))

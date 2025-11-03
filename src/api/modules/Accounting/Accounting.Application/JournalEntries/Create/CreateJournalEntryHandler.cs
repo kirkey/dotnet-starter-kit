@@ -16,6 +16,19 @@ public sealed class CreateJournalEntryHandler(
             request.PeriodId,
             request.OriginalAmount);
 
+        // Add lines to the journal entry (validation ensures Lines is not null and has at least 2 items)
+        if (request.Lines != null)
+        {
+            foreach (var lineDto in request.Lines)
+            {
+                journalEntry.AddLine(
+                    lineDto.AccountId,
+                    lineDto.DebitAmount,
+                    lineDto.CreditAmount,
+                    lineDto.Description,
+                    lineDto.Reference);
+            }
+        }
 
         await repository.AddAsync(journalEntry, cancellationToken).ConfigureAwait(false);
         await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

@@ -495,23 +495,51 @@ internal sealed class StoreDbInitializer(
             if (purchaseOrders.Count > 0 && items.Count > 0)
             {
                 var poItems = new List<PurchaseOrderItem>();
-                for (var i = existingPOItems + 1; i <= 10; i++)
+                var uniquePairs = new HashSet<(DefaultIdType, DefaultIdType)>();
+                
+                // Get existing pairs to avoid duplicates
+                var existingPairs = await context.PurchaseOrderItems
+                    .Select(x => new { x.PurchaseOrderId, x.ItemId })
+                    .ToListAsync(cancellationToken)
+                    .ConfigureAwait(false);
+                
+                foreach (var pair in existingPairs)
                 {
-                    var po = purchaseOrders[i % purchaseOrders.Count];
-                    var item = items[i % items.Count];
-                    var qty = 20 + (i * 5);
-                    var unitPrice = 10m + i;
-                    poItems.Add(PurchaseOrderItem.Create(
-                        purchaseOrderId: po.Id,
-                        itemId: item.Id,
-                        quantity: qty,
-                        unitPrice: unitPrice,
-                        discountAmount: i % 3 == 0 ? 10m : 0m,
-                        notes: i % 2 == 0 ? "Bulk order discount applied" : null
-                    ));
+                    uniquePairs.Add((pair.PurchaseOrderId, pair.ItemId));
                 }
-                await context.PurchaseOrderItems.AddRangeAsync(poItems, cancellationToken).ConfigureAwait(false);
-                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                int itemsNeeded = 10 - existingPOItems;
+                int itemCount = 0;
+                for (var poIdx = 0; poIdx < purchaseOrders.Count && itemCount < itemsNeeded; poIdx++)
+                {
+                    for (var itemIdx = 0; itemIdx < items.Count && itemCount < itemsNeeded; itemIdx++)
+                    {
+                        var po = purchaseOrders[poIdx];
+                        var item = items[itemIdx];
+                        var pair = (po.Id, item.Id);
+                        
+                        if (uniquePairs.Add(pair))
+                        {
+                            var qty = 20 + ((existingPOItems + itemCount + 1) * 5);
+                            var unitPrice = 10m + (existingPOItems + itemCount + 1);
+                            poItems.Add(PurchaseOrderItem.Create(
+                                purchaseOrderId: po.Id,
+                                itemId: item.Id,
+                                quantity: qty,
+                                unitPrice: unitPrice,
+                                discountAmount: (existingPOItems + itemCount + 1) % 3 == 0 ? 10m : 0m,
+                                notes: (existingPOItems + itemCount + 1) % 2 == 0 ? "Bulk order discount applied" : null
+                            ));
+                            itemCount++;
+                        }
+                    }
+                }
+                
+                if (poItems.Count > 0)
+                {
+                    await context.PurchaseOrderItems.AddRangeAsync(poItems, cancellationToken).ConfigureAwait(false);
+                    await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 
@@ -658,42 +686,46 @@ internal sealed class StoreDbInitializer(
             var items = await context.Items.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
             if (cycleCounts.Count > 0 && items.Count > 0)
             {
-                // Load existing combinations to avoid duplicates
-                var existingCombinations = await context.CycleCountItems
-                    .Select(cci => new { cci.CycleCountId, cci.ItemId })
-                    .ToHashSetAsync(cancellationToken)
-                    .ConfigureAwait(false);
-
                 var ccItems = new List<CycleCountItem>();
-                var attempts = 0;
-                var maxAttempts = 50; // Prevent infinite loops
-
-                for (var i = existingCCItems + 1; i <= 10 && attempts < maxAttempts; attempts++)
+                var uniquePairs = new HashSet<(DefaultIdType, DefaultIdType)>();
+                
+                // Get existing pairs to avoid duplicates
+                var existingPairs = await context.CycleCountItems
+                    .Select(x => new { x.CycleCountId, x.ItemId })
+                    .ToListAsync(cancellationToken)
+                    .ConfigureAwait(false);
+                
+                foreach (var pair in existingPairs)
                 {
-                    var cc = cycleCounts[attempts % cycleCounts.Count];
-                    var item = items[attempts % items.Count];
-                    
-                    // Skip if this combination already exists
-                    if (existingCombinations.Contains(new { CycleCountId = cc.Id, ItemId = item.Id }))
-                    {
-                        continue;
-                    }
-
-                    var systemQty = 100 + (i * 10);
-                    var countedQty = i % 3 == 0 ? systemQty - 2 : systemQty; // Introduce variance on every 3rd item
-                    ccItems.Add(CycleCountItem.Create(
-                        cycleCountId: cc.Id,
-                        itemId: item.Id,
-                        systemQuantity: systemQty,
-                        countedQuantity: i % 2 == 0 ? countedQty : null, // Some items not yet counted
-                        notes: i % 3 == 0 ? "Variance detected" : null
-                    ));
-                    
-                    // Add to the set to avoid duplicates within this batch
-                    existingCombinations.Add(new { CycleCountId = cc.Id, ItemId = item.Id });
-                    i++;
+                    uniquePairs.Add((pair.CycleCountId, pair.ItemId));
                 }
-
+                
+                int itemsNeeded = 10 - existingCCItems;
+                int itemCount = 0;
+                for (var ccIdx = 0; ccIdx < cycleCounts.Count && itemCount < itemsNeeded; ccIdx++)
+                {
+                    for (var itemIdx = 0; itemIdx < items.Count && itemCount < itemsNeeded; itemIdx++)
+                    {
+                        var cc = cycleCounts[ccIdx];
+                        var item = items[itemIdx];
+                        var pair = (cc.Id, item.Id);
+                        
+                        if (uniquePairs.Add(pair))
+                        {
+                            var systemQty = 100 + ((existingCCItems + itemCount + 1) * 10);
+                            var countedQty = (existingCCItems + itemCount + 1) % 3 == 0 ? systemQty - 2 : systemQty;
+                            ccItems.Add(CycleCountItem.Create(
+                                cycleCountId: cc.Id,
+                                itemId: item.Id,
+                                systemQuantity: systemQty,
+                                countedQuantity: (existingCCItems + itemCount + 1) % 2 == 0 ? countedQty : null,
+                                notes: (existingCCItems + itemCount + 1) % 3 == 0 ? "Variance detected" : null
+                            ));
+                            itemCount++;
+                        }
+                    }
+                }
+                
                 if (ccItems.Count > 0)
                 {
                     await context.CycleCountItems.AddRangeAsync(ccItems, cancellationToken).ConfigureAwait(false);
@@ -749,19 +781,47 @@ internal sealed class StoreDbInitializer(
             if (transfers.Count > 0 && items.Count > 0)
             {
                 var transferItems = new List<InventoryTransferItem>();
-                for (var i = existingTransferItems + 1; i <= 10; i++)
+                var uniquePairs = new HashSet<(DefaultIdType, DefaultIdType)>();
+                
+                // Get existing pairs to avoid duplicates
+                var existingPairs = await context.InventoryTransferItems
+                    .Select(x => new { x.InventoryTransferId, x.ItemId })
+                    .ToListAsync(cancellationToken)
+                    .ConfigureAwait(false);
+                
+                foreach (var pair in existingPairs)
                 {
-                    var transfer = transfers[i % transfers.Count];
-                    var item = items[i % items.Count];
-                    transferItems.Add(InventoryTransferItem.Create(
-                        inventoryTransferId: transfer.Id,
-                        itemId: item.Id,
-                        quantity: 10 + (i * 2),
-                        unitPrice: 12m + i
-                    ));
+                    uniquePairs.Add((pair.InventoryTransferId, pair.ItemId));
                 }
-                await context.InventoryTransferItems.AddRangeAsync(transferItems, cancellationToken).ConfigureAwait(false);
-                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                int itemsNeeded = 10 - existingTransferItems;
+                int itemCount = 0;
+                for (var tIdx = 0; tIdx < transfers.Count && itemCount < itemsNeeded; tIdx++)
+                {
+                    for (var itemIdx = 0; itemIdx < items.Count && itemCount < itemsNeeded; itemIdx++)
+                    {
+                        var transfer = transfers[tIdx];
+                        var item = items[itemIdx];
+                        var pair = (transfer.Id, item.Id);
+                        
+                        if (uniquePairs.Add(pair))
+                        {
+                            transferItems.Add(InventoryTransferItem.Create(
+                                inventoryTransferId: transfer.Id,
+                                itemId: item.Id,
+                                quantity: 10 + ((existingTransferItems + itemCount + 1) * 2),
+                                unitPrice: 12m + (existingTransferItems + itemCount + 1)
+                            ));
+                            itemCount++;
+                        }
+                    }
+                }
+                
+                if (transferItems.Count > 0)
+                {
+                    await context.InventoryTransferItems.AddRangeAsync(transferItems, cancellationToken).ConfigureAwait(false);
+                    await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 

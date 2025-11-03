@@ -21,6 +21,16 @@ public sealed record JournalEntryLineResponse
     public DefaultIdType AccountId { get; init; }
 
     /// <summary>
+    /// The account code for display purposes.
+    /// </summary>
+    public string? AccountCode { get; init; }
+
+    /// <summary>
+    /// The account name for display purposes.
+    /// </summary>
+    public string? AccountName { get; init; }
+
+    /// <summary>
     /// Debit amount for this line.
     /// </summary>
     public decimal DebitAmount { get; init; }

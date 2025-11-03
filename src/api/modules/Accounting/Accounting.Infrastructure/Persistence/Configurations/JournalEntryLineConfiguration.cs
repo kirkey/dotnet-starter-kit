@@ -35,6 +35,12 @@ public class JournalEntryLineConfiguration : IEntityTypeConfiguration<JournalEnt
         builder.Property(x => x.Reference)
             .HasMaxLength(100);
 
+        // Configure relationship to ChartOfAccount
+        builder.HasOne(x => x.Account)
+            .WithMany()
+            .HasForeignKey(x => x.AccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         // Indexes for foreign keys and query optimization
         builder.HasIndex(x => x.JournalEntryId);
         builder.HasIndex(x => x.AccountId);

@@ -218,4 +218,54 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         ApprovedDate = DateTime.UtcNow;
         QueueDomainEvent(new JournalEntryRejected(Id, ApprovedBy, ApprovedDate.Value));
     }
+
+    /// <summary>
+    /// Add a line to the journal entry.
+    /// </summary>
+    /// <param name="accountId">The chart of account identifier.</param>
+    /// <param name="debitAmount">The debit amount.</param>
+    /// <param name="creditAmount">The credit amount.</param>
+    /// <param name="description">Optional line description.</param>
+    /// <param name="reference">Optional line reference.</param>
+    public void AddLine(DefaultIdType accountId, decimal debitAmount, decimal creditAmount, string? description = null, string? reference = null)
+    {
+        if (IsPosted)
+            throw new JournalEntryCannotBeModifiedException(Id);
+
+        var line = JournalEntryLine.Create(Id, accountId, debitAmount, creditAmount, description, reference);
+        _lines.Add(line);
+    }
+
+    /// <summary>
+    /// Calculate the total debit amount from all lines.
+    /// </summary>
+    public decimal GetTotalDebits() => Lines.Sum(l => l.DebitAmount);
+
+    /// <summary>
+    /// Calculate the total credit amount from all lines.
+    /// </summary>
+    public decimal GetTotalCredits() => Lines.Sum(l => l.CreditAmount);
+
+    /// <summary>
+    /// Calculate the difference between debits and credits.
+    /// </summary>
+    public decimal GetDifference() => GetTotalDebits() - GetTotalCredits();
+
+    /// <summary>
+    /// Check if the journal entry is balanced (debits = credits within tolerance).
+    /// </summary>
+    /// <param name="tolerance">The tolerance for rounding errors (default 0.01).</param>
+    public bool IsBalanced(decimal tolerance = 0.01m) => Math.Abs(GetDifference()) < tolerance;
+
+    /// <summary>
+    /// Validates that the journal entry is balanced, throws exception if not.
+    /// </summary>
+    /// <exception cref="JournalEntryNotBalancedException">Thrown when entry is not balanced.</exception>
+    public void ValidateBalance()
+    {
+        if (!IsBalanced())
+        {
+            throw new JournalEntryNotBalancedException(Id);
+        }
+    }
 }

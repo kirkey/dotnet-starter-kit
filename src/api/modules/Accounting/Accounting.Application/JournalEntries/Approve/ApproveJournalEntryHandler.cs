@@ -12,7 +12,9 @@ public sealed class ApproveJournalEntryHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var journalEntry = await repository.GetByIdAsync(request.JournalEntryId, cancellationToken);
+        // Use spec to load entry with lines for balance validation
+        var spec = new Specs.GetJournalEntryWithLinesSpec(request.JournalEntryId);
+        var journalEntry = await ((IReadRepository<JournalEntry>)repository).FirstOrDefaultAsync(spec, cancellationToken);
         
         if (journalEntry == null)
         {
@@ -23,6 +25,9 @@ public sealed class ApproveJournalEntryHandler(
         {
             throw new ArgumentException("ApprovedBy is required for journal entry approval.");
         }
+
+        // Validate that the entry is balanced before approving
+        journalEntry.ValidateBalance();
 
         journalEntry.Approve(request.ApprovedBy);
 

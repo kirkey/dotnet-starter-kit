@@ -14,7 +14,10 @@ public sealed class GetJournalEntrySpec : Specification<JournalEntry, JournalEnt
     /// <param name="id">The unique identifier of the journal entry to retrieve.</param>
     public GetJournalEntrySpec(DefaultIdType id)
     {
-        Query.Where(j => j.Id == id);
+        Query
+            .Where(j => j.Id == id)
+            .Include(j => j.Lines)
+                .ThenInclude(l => l.Account);
     }
 }
 

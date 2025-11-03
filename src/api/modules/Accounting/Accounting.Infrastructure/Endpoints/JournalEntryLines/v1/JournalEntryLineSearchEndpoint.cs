@@ -15,6 +15,7 @@ public static class JournalEntryLineSearchEndpoint
             })
             .WithName(nameof(JournalEntryLineSearchEndpoint))
             .WithSummary("list journal entry lines by journal entry id")
+            .WithDescription("retrieves all journal entry lines for a specific journal entry")
             .Produces<List<JournalEntryLineResponse>>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
