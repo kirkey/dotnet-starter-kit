@@ -19,6 +19,7 @@ public static class TaxCodesEndpoints
         // Version 1 endpoints
         taxCodesGroup.MapTaxCodeCreateEndpoint();
         taxCodesGroup.MapTaxCodeGetEndpoint();
+        taxCodesGroup.MapTaxCodeUpdateEndpoint();
         taxCodesGroup.MapTaxCodeDeleteEndpoint();
         taxCodesGroup.MapTaxCodeSearchEndpoint();
 

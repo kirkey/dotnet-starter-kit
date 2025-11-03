@@ -23,7 +23,7 @@ public partial class TaxCodes
                 new EntityField<TaxCodeResponse>(dto => dto.Code, "Code", "Code"),
                 new EntityField<TaxCodeResponse>(dto => dto.Name, "Name", "Name"),
                 new EntityField<TaxCodeResponse>(dto => dto.TaxType, "Tax Type", "TaxType"),
-                new EntityField<TaxCodeResponse>(dto => dto.Rate, "Rate %", "Rate"),
+                new EntityField<TaxCodeResponse>(dto => dto.Rate * 100m, "Rate %", "Rate"),
                 new EntityField<TaxCodeResponse>(dto => dto.Jurisdiction, "Jurisdiction", "Jurisdiction"),
                 new EntityField<TaxCodeResponse>(dto => dto.IsCompound, "Compound", "IsCompound", typeof(bool)),
                 new EntityField<TaxCodeResponse>(dto => dto.EffectiveDate, "Effective Date", "EffectiveDate", typeof(DateOnly)),
@@ -41,15 +41,34 @@ public partial class TaxCodes
             idFunc: dto => dto.Id,
             createFunc: async viewModel =>
             {
-                await Client.TaxCodeCreateEndpointAsync("1", viewModel.Adapt<CreateTaxCodeCommand>());
+                var command = viewModel.Adapt<CreateTaxCodeCommand>();
+                // Convert percentage to decimal (e.g., 8.25 -> 0.0825)
+                command.Rate = viewModel.Rate / 100m;
+                await Client.TaxCodeCreateEndpointAsync("1", command);
             },
-            updateFunc: null, // Tax codes typically shouldn't be updated once in use
-            deleteFunc: async id => await Client.TaxCodeDeleteEndpointAsync("1", id),
-            getDetailsFunc: async id =>
+            updateFunc: async (id, viewModel) =>
             {
-                var details = await Client.TaxCodeGetEndpointAsync("1", id);
-                return details.Adapt<TaxCodeViewModel>();
+                var command = new UpdateTaxCodeCommand
+                {
+                    Id = id,
+                    Name = viewModel.Name,
+                    Jurisdiction = viewModel.Jurisdiction,
+                    TaxAuthority = viewModel.TaxAuthority,
+                    TaxRegistrationNumber = viewModel.TaxRegistrationNumber,
+                    ReportingCategory = viewModel.ReportingCategory,
+                    Description = viewModel.Description
+                };
+                await Client.TaxCodeUpdateEndpointAsync("1", id, command);
             },
+            deleteFunc: async id => await Client.TaxCodeDeleteEndpointAsync("1", id),
+            // getDetailsFunc: async id =>
+            // {
+            //     var details = await Client.TaxCodeGetEndpointAsync("1", id);
+            //     var viewModel = details.Adapt<TaxCodeViewModel>();
+            //     // Convert decimal to percentage for display (e.g., 0.0825 -> 8.25)
+            //     viewModel.Rate = details.Rate * 100m;
+            //     return viewModel;
+            // },
             entityName: "Tax Code",
             entityNamePlural: "Tax Codes",
             entityResource: FshResources.Accounting);

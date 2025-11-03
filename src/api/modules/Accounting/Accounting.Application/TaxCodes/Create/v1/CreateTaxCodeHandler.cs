@@ -28,6 +28,12 @@ public sealed class CreateTaxCodeHandler(
             reportingCategory: command.ReportingCategory,
             description: command.Description);
 
+        // Apply IsActive if it's false (defaults to true in entity)
+        if (!command.IsActive)
+        {
+            taxCode.Deactivate();
+        }
+
         await repository.AddAsync(taxCode, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
