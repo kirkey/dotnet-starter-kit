@@ -26,7 +26,7 @@ public sealed class InvalidPatronageCapitalAmountException() : ForbiddenExceptio
 /// Exception thrown when trying to retire more than the available capital.
 /// </summary>
 public sealed class InsufficientPatronageCapitalException(decimal availableAmount, decimal requestedAmount) 
-    : ForbiddenException($"cannot retire {requestedAmount:C}. Only {availableAmount:C} available for retirement");
+    : ForbiddenException($"cannot retire {requestedAmount:N2}. Only {availableAmount:N2} available for retirement");
 
 /// <summary>
 /// Exception thrown when the fiscal year is invalid.

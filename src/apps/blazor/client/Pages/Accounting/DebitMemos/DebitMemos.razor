@@ -94,8 +94,8 @@
                     <MudChip T="string" Color="@GetApprovalStatusColor(context.ApprovalStatus)" Text="@context.ApprovalStatus" />
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudText Typo="Typo.body2">Applied: @context.AppliedAmount.ToString("C")</MudText>
-                    <MudText Typo="Typo.body2">Unapplied: @context.UnappliedAmount.ToString("C")</MudText>
+                    <MudText Typo="Typo.body2">Applied: @context.AppliedAmount.ToString("N2")</MudText>
+                    <MudText Typo="Typo.body2">Unapplied: @context.UnappliedAmount.ToString("N2")</MudText>
                 </MudItem>
                 @if (context.ApprovedBy != null)
                 {

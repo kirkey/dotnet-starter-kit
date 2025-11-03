@@ -235,7 +235,7 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
         
         if (Math.Abs(AdjustedBalance - expectedBalance) > tolerance)
             throw new ReconciliationBalanceMismatchException(
-                $"Adjusted balance {AdjustedBalance:C} does not match expected balance {expectedBalance:C}");
+                $"Adjusted balance {AdjustedBalance:N2} does not match expected balance {expectedBalance:N2}");
 
         Status = ReconciliationStatus.Completed;
         ReconciledDate = DateTime.UtcNow;

@@ -80,5 +80,5 @@ public sealed class TransactionNotDisputedException(DefaultIdType id) : Forbidde
 /// <summary>
 /// Exception thrown when matching transaction amounts don't match.
 /// </summary>
-public sealed class InterCompanyAmountMismatchException(decimal amount1, decimal amount2) : ConflictException($"inter-company transaction amounts do not match: {amount1:C} vs {amount2:C}");
+public sealed class InterCompanyAmountMismatchException(decimal amount1, decimal amount2) : ConflictException($"inter-company transaction amounts do not match: {amount1:N2} vs {amount2:N2}");
 

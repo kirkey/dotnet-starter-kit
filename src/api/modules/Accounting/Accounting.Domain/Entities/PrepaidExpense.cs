@@ -325,7 +325,7 @@ public class PrepaidExpense : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Amortization amount must be positive", nameof(amortizationAmount));
 
         if (amortizationAmount > RemainingAmount)
-            throw new ArgumentException($"Amortization amount {amortizationAmount:C} exceeds remaining balance {RemainingAmount:C}");
+            throw new ArgumentException($"Amortization amount {amortizationAmount:N2} exceeds remaining balance {RemainingAmount:N2}");
 
         AmortizedAmount += amortizationAmount;
         RemainingAmount = TotalAmount - AmortizedAmount;

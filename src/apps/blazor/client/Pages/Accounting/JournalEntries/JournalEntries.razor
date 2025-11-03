@@ -161,8 +161,6 @@
                              Label="Original Amount"
                              Format="N2"
                              Variant="Variant.Filled"
-                             Adornment="Adornment.Start"
-                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
                              ReadOnly="@context.IsPosted" />
         </MudItem>
 
@@ -181,9 +179,9 @@
                 <MudAlert Severity="@GetBalanceSeverity(context)" Dense="true" Class="my-3">
                     <div class="d-flex justify-space-between align-center">
                         <div>
-                            <strong>Total Debits:</strong> @context.TotalDebits.ToString("C") &nbsp;&nbsp;
-                            <strong>Total Credits:</strong> @context.TotalCredits.ToString("C") &nbsp;&nbsp;
-                            <strong>Difference:</strong> @context.Difference.ToString("C")
+                            <strong>Total Debits:</strong> @context.TotalDebits.ToString("N2") &nbsp;&nbsp;
+                            <strong>Total Credits:</strong> @context.TotalCredits.ToString("N2") &nbsp;&nbsp;
+                            <strong>Difference:</strong> @context.Difference.ToString("N2")
                         </div>
                         <div>
                             @if (context.IsBalanced)
@@ -218,14 +216,14 @@
                     </HeaderContent>
                     <RowTemplate Context="line">
                         <MudTd>@line.AccountCode - @line.AccountName</MudTd>
-                        <MudTd Style="text-align:right">@(line.DebitAmount > 0 ? line.DebitAmount.ToString("C") : "")</MudTd>
-                        <MudTd Style="text-align:right">@(line.CreditAmount > 0 ? line.CreditAmount.ToString("C") : "")</MudTd>
+                        <MudTd Style="text-align:right">@(line.DebitAmount > 0 ? line.DebitAmount.ToString("N2") : "")</MudTd>
+                        <MudTd Style="text-align:right">@(line.CreditAmount > 0 ? line.CreditAmount.ToString("N2") : "")</MudTd>
                         <MudTd>@line.Description</MudTd>
                     </RowTemplate>
                     <FooterContent>
                         <MudTd><strong>TOTALS</strong></MudTd>
-                        <MudTd Style="text-align:right"><strong>@context.TotalDebits.ToString("C")</strong></MudTd>
-                        <MudTd Style="text-align:right"><strong>@context.TotalCredits.ToString("C")</strong></MudTd>
+                        <MudTd Style="text-align:right"><strong>@context.TotalDebits.ToString("N2")</strong></MudTd>
+                        <MudTd Style="text-align:right"><strong>@context.TotalCredits.ToString("N2")</strong></MudTd>
                         <MudTd></MudTd>
                     </FooterContent>
                 </MudTable>

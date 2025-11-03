@@ -36,7 +36,7 @@ public sealed class CreditMemoNotApprovedException(DefaultIdType id)
 /// Exception thrown when the amount to apply or refund exceeds the unapplied balance.
 /// </summary>
 public sealed class CreditMemoInsufficientBalanceException(DefaultIdType id, decimal requested, decimal available)
-    : ForbiddenException($"credit memo with id {id} has insufficient balance. Requested: {requested:C}, Available: {available:C}");
+    : ForbiddenException($"credit memo with id {id} has insufficient balance. Requested: {requested:N2}, Available: {available:N2}");
 
 /// <summary>
 /// Exception thrown when the credit memo amount is invalid.

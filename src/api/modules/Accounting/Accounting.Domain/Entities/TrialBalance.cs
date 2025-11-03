@@ -138,12 +138,12 @@ public class TrialBalance : AuditableEntity, IAggregateRoot
             throw new InvalidOperationException("Trial balance is already finalized");
 
         if (!IsBalanced)
-            throw new InvalidOperationException($"Cannot finalize unbalanced trial balance (out of balance by {OutOfBalanceAmount:C})");
+            throw new InvalidOperationException($"Cannot finalize unbalanced trial balance (out of balance by {OutOfBalanceAmount:N2})");
 
         // Verify accounting equation
         var accountingEquationBalance = TotalAssets - (TotalLiabilities + TotalEquity);
         if (Math.Abs(accountingEquationBalance) > 0.01m)
-            throw new InvalidOperationException($"Accounting equation does not balance: Assets ({TotalAssets:C}) ≠ Liabilities ({TotalLiabilities:C}) + Equity ({TotalEquity:C})");
+            throw new InvalidOperationException($"Accounting equation does not balance: Assets ({TotalAssets:N2}) ≠ Liabilities ({TotalLiabilities:N2}) + Equity ({TotalEquity:N2})");
 
         Status = "Finalized";
         FinalizedDate = DateTime.UtcNow;

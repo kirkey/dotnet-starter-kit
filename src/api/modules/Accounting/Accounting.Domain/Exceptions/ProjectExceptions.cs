@@ -61,7 +61,7 @@ public class ProjectNotFoundException(DefaultIdType projectId)
 /// Exception thrown when project cost amount exceeds budget without authorization.
 /// </summary>
 public class ProjectCostExceedsBudgetException(decimal budgetAmount, decimal totalCost) : BadRequestException(
-    $"Project total cost ({totalCost:C}) exceeds approved budget ({budgetAmount:C}) without authorization.");
+    $"Project total cost ({totalCost:N2}) exceeds approved budget ({budgetAmount:N2}) without authorization.");
 
 /// <summary>
 /// Exception thrown when attempting to complete a project that is already completed.
@@ -134,4 +134,4 @@ public class JobCostingEntryNotFoundException(DefaultIdType entryId)
 /// </summary>
 public class ProjectBudgetExceededException(decimal addedAmount, decimal budgetAmount, decimal currentCost)
     : BadRequestException(
-        $"Adding amount {addedAmount:C} would exceed project budget {budgetAmount:C}. Current cost is {currentCost:C}.");
+        $"Adding amount {addedAmount:N2} would exceed project budget {budgetAmount:N2}. Current cost is {currentCost:N2}.");

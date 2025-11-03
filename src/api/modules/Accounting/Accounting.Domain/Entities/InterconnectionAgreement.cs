@@ -433,7 +433,7 @@ public class InterconnectionAgreement : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Credit amount must be positive", nameof(creditAmount));
 
         if (creditAmount > CurrentCreditBalance)
-            throw new InvalidOperationException($"Credit amount {creditAmount:C} exceeds available balance {CurrentCreditBalance:C}");
+            throw new InvalidOperationException($"Credit amount {creditAmount:N2} exceeds available balance {CurrentCreditBalance:N2}");
 
         CurrentCreditBalance -= creditAmount;
 

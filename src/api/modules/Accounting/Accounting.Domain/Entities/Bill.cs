@@ -469,7 +469,7 @@ public class Bill : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Payment amount must be positive", nameof(amount));
 
         if (amount > OutstandingAmount)
-            throw new ArgumentException($"Payment amount {amount:C} exceeds outstanding balance {OutstandingAmount:C}");
+            throw new ArgumentException($"Payment amount {amount:N2} exceeds outstanding balance {OutstandingAmount:N2}");
 
         PaidAmount += amount;
         Status = PaidAmount >= TotalAmount ? "Paid" : "PartiallyPaid";

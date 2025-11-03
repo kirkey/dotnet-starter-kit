@@ -10,9 +10,9 @@ public sealed class DuplicateTrialBalanceNumberException(string trialBalanceNumb
 
 public sealed class CannotModifyFinalizedTrialBalanceException(DefaultIdType id) : ForbiddenException($"cannot modify finalized trial balance with id {id}");
 
-public sealed class CannotFinalizeUnbalancedTrialBalanceException(decimal outOfBalanceAmount) : ForbiddenException($"cannot finalize trial balance that is out of balance by {outOfBalanceAmount:C}");
+public sealed class CannotFinalizeUnbalancedTrialBalanceException(decimal outOfBalanceAmount) : ForbiddenException($"cannot finalize trial balance that is out of balance by {outOfBalanceAmount:N2}");
 
-public sealed class AccountingEquationDoesNotBalanceException(decimal assets, decimal liabilities, decimal equity) : ForbiddenException($"accounting equation does not balance: Assets ({assets:C}) ≠ Liabilities ({liabilities:C}) + Equity ({equity:C})");
+public sealed class AccountingEquationDoesNotBalanceException(decimal assets, decimal liabilities, decimal equity) : ForbiddenException($"accounting equation does not balance: Assets ({assets:N2}) ≠ Liabilities ({liabilities:N2}) + Equity ({equity:N2})");
 
 public sealed class TrialBalanceAlreadyFinalizedException(DefaultIdType id) : ForbiddenException($"trial balance with id {id} is already finalized");
 

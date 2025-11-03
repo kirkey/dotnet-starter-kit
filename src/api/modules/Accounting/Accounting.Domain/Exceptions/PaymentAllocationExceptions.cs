@@ -11,7 +11,7 @@ public sealed class PaymentAllocationByIdNotFoundException(DefaultIdType id) : N
 /// Exception thrown when trying to allocate more than the available payment amount.
 /// </summary>
 public sealed class InsufficientPaymentAmountException(decimal availableAmount, decimal requestedAmount) 
-    : ForbiddenException($"cannot allocate {requestedAmount:C}. Only {availableAmount:C} available");
+    : ForbiddenException($"cannot allocate {requestedAmount:N2}. Only {availableAmount:N2} available");
 
 /// <summary>
 /// Exception thrown when a payment allocation amount is invalid (negative or zero).
@@ -32,7 +32,7 @@ public sealed class CannotModifyAllocationOfProcessedPaymentException(DefaultIdT
 /// Exception thrown when trying to allocate more than the invoice outstanding balance.
 /// </summary>
 public sealed class AllocationExceedsInvoiceBalanceException(decimal invoiceBalance, decimal allocationAmount) 
-    : ForbiddenException($"allocation amount {allocationAmount:C} exceeds invoice outstanding balance {invoiceBalance:C}");
+    : ForbiddenException($"allocation amount {allocationAmount:N2} exceeds invoice outstanding balance {invoiceBalance:N2}");
 
 /// <summary>
 /// Exception thrown when the payment and invoice belong to different customers.

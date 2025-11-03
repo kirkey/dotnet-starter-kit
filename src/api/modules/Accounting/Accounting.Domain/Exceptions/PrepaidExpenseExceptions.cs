@@ -36,7 +36,7 @@ public sealed class CannotModifyFullyAmortizedPrepaidException(DefaultIdType id)
 /// Exception thrown when amortization amount exceeds remaining balance.
 /// </summary>
 public sealed class AmortizationExceedsRemainingBalanceException(decimal amortizationAmount, decimal remainingBalance) 
-    : ForbiddenException($"amortization amount {amortizationAmount:C} exceeds remaining balance {remainingBalance:C}");
+    : ForbiddenException($"amortization amount {amortizationAmount:N2} exceeds remaining balance {remainingBalance:N2}");
 
 /// <summary>
 /// Exception thrown when trying to amortize a fully amortized prepaid.

@@ -35,7 +35,7 @@ public sealed class CannotRecordGenerationForInactiveAgreementException(DefaultI
 /// <summary>
 /// Exception thrown when credit amount exceeds available balance.
 /// </summary>
-public sealed class CreditExceedsAvailableBalanceException(decimal creditAmount, decimal availableBalance) : ForbiddenException($"credit amount {creditAmount:C} exceeds available balance {availableBalance:C}");
+public sealed class CreditExceedsAvailableBalanceException(decimal creditAmount, decimal availableBalance) : ForbiddenException($"credit amount {creditAmount:N2} exceeds available balance {availableBalance:N2}");
 
 /// <summary>
 /// Exception thrown when installed capacity is not positive.

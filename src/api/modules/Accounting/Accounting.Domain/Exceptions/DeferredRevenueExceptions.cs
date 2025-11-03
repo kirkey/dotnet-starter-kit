@@ -26,7 +26,7 @@ public sealed class InvalidDeferredRevenueAmountException() : ForbiddenException
 /// Exception thrown when trying to recognize more than the available deferred amount.
 /// </summary>
 public sealed class InsufficientDeferredRevenueException(decimal availableAmount, decimal requestedAmount) 
-    : ForbiddenException($"cannot recognize {requestedAmount:C}. Only {availableAmount:C} available");
+    : ForbiddenException($"cannot recognize {requestedAmount:N2}. Only {availableAmount:N2} available");
 
 /// <summary>
 /// Exception thrown when trying to modify fully recognized deferred revenue.

@@ -35,7 +35,7 @@ public sealed class CannotVoidBillWithPaymentsException(DefaultIdType id) : Forb
 /// <summary>
 /// Exception thrown when payment amount exceeds outstanding balance.
 /// </summary>
-public sealed class PaymentExceedsOutstandingBalanceException(decimal paymentAmount, decimal outstandingAmount) : ForbiddenException($"payment amount {paymentAmount:C} exceeds outstanding balance {outstandingAmount:C}");
+public sealed class PaymentExceedsOutstandingBalanceException(decimal paymentAmount, decimal outstandingAmount) : ForbiddenException($"payment amount {paymentAmount:N2} exceeds outstanding balance {outstandingAmount:N2}");
 
 /// <summary>
 /// Exception thrown when trying to submit bill without line items.

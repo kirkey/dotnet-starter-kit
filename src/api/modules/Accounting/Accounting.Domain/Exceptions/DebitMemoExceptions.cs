@@ -34,7 +34,7 @@ public sealed class DebitMemoNotApprovedException(DefaultIdType id)
 /// Exception thrown when the amount to apply exceeds the unapplied balance.
 /// </summary>
 public sealed class DebitMemoInsufficientBalanceException(DefaultIdType id, decimal requested, decimal available)
-    : ForbiddenException($"debit memo with id {id} has insufficient balance. Requested: {requested:C}, Available: {available:C}");
+    : ForbiddenException($"debit memo with id {id} has insufficient balance. Requested: {requested:N2}, Available: {available:N2}");
 
 /// <summary>
 /// Exception thrown when the debit memo amount is invalid.

@@ -26,7 +26,7 @@ public sealed class CannotModifyPostedBatchException(DefaultIdType id) : Forbidd
 /// Exception thrown when a posting batch is out of balance.
 /// </summary>
 public sealed class PostingBatchOutOfBalanceException(decimal debitTotal, decimal creditTotal) 
-    : ForbiddenException($"posting batch is out of balance. Debits: {debitTotal:C}, Credits: {creditTotal:C}");
+    : ForbiddenException($"posting batch is out of balance. Debits: {debitTotal:N2}, Credits: {creditTotal:N2}");
 
 /// <summary>
 /// Exception thrown when trying to post an empty batch.

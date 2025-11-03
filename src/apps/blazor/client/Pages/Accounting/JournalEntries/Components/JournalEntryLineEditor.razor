@@ -61,8 +61,8 @@
     </RowTemplate>
     <FooterContent>
         <MudTd colspan="1"><strong>TOTALS</strong></MudTd>
-        <MudTd Style="text-align:right"><strong>@TotalDebits.ToString("C")</strong></MudTd>
-        <MudTd Style="text-align:right"><strong>@TotalCredits.ToString("C")</strong></MudTd>
+        <MudTd Style="text-align:right"><strong>@TotalDebits.ToString("N2")</strong></MudTd>
+        <MudTd Style="text-align:right"><strong>@TotalCredits.ToString("N2")</strong></MudTd>
         <MudTd colspan="2">
             @if (IsBalanced)
             {

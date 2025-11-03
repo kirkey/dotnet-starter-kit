@@ -321,7 +321,7 @@ public class RetainedEarnings : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Appropriation purpose is required", nameof(purpose));
 
         if (amount > UnappropriatedAmount)
-            throw new InvalidOperationException($"Appropriation amount {amount:C} exceeds unappropriated balance {UnappropriatedAmount:C}");
+            throw new InvalidOperationException($"Appropriation amount {amount:N2} exceeds unappropriated balance {UnappropriatedAmount:N2}");
 
         ApproprietedAmount += amount;
         UnappropriatedAmount = ClosingBalance - ApproprietedAmount;
@@ -342,7 +342,7 @@ public class RetainedEarnings : AuditableEntity, IAggregateRoot
             throw new ArgumentException("Release amount must be positive", nameof(amount));
 
         if (amount > ApproprietedAmount)
-            throw new InvalidOperationException($"Release amount {amount:C} exceeds appropriated balance {ApproprietedAmount:C}");
+            throw new InvalidOperationException($"Release amount {amount:N2} exceeds appropriated balance {ApproprietedAmount:N2}");
 
         ApproprietedAmount -= amount;
         UnappropriatedAmount = ClosingBalance - ApproprietedAmount;
