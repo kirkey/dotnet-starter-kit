@@ -110,10 +110,12 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     /// </summary>
     public DateTime? ApprovalDate { get; private set; }
 
+    private readonly List<InventoryTransferItem> _items = new();
     /// <summary>
-    /// Collection of items included in the transfer.
+    /// Collection of items included in the transfer with quantities and tracking information.
+    /// Read-only to enforce proper aggregate management.
     /// </summary>
-    public ICollection<InventoryTransferItem> Items { get; private set; } = new List<InventoryTransferItem>();
+    public IReadOnlyCollection<InventoryTransferItem> Items => _items.AsReadOnly();
 
     /// <summary>
     /// The source warehouse for this transfer.
@@ -261,7 +263,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
             throw new Store.Domain.Exceptions.InventoryTransferItem.DuplicateInventoryTransferItemException(Id, itemId);
 
         var item = InventoryTransferItem.Create(Id, itemId, quantity, unitPrice);
-        Items.Add(item);
+        _items.Add(item);
         RecalculateTotal();
 
         // Raise a specific domain event for item addition
@@ -278,7 +280,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
         var item = Items.FirstOrDefault(i => i.Id == itemId);
         if (item != null)
         {
-            Items.Remove(item);
+            _items.Remove(item);
             RecalculateTotal();
         }
         return this;

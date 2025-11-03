@@ -44,13 +44,32 @@ public class PickListItemConfiguration : IEntityTypeConfiguration<PickListItem>
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
-        // Indexes for foreign keys
-        builder.HasIndex(x => x.PickListId);
-        builder.HasIndex(x => x.ItemId);
-        builder.HasIndex(x => x.BinId);
-        builder.HasIndex(x => x.LotNumberId);
-        builder.HasIndex(x => x.SerialNumberId);
-        builder.HasIndex(x => x.Status);
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.PickListId)
+            .HasDatabaseName("IX_PickListItems_PickListId");
+
+        builder.HasIndex(x => x.ItemId)
+            .HasDatabaseName("IX_PickListItems_ItemId");
+
+        builder.HasIndex(x => x.BinId)
+            .HasDatabaseName("IX_PickListItems_BinId");
+
+        builder.HasIndex(x => x.LotNumberId)
+            .HasDatabaseName("IX_PickListItems_LotNumberId");
+
+        builder.HasIndex(x => x.SerialNumberId)
+            .HasDatabaseName("IX_PickListItems_SerialNumberId");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_PickListItems_Status");
+
+        // Composite index for picklist+item reporting
+        builder.HasIndex(x => new { x.PickListId, x.ItemId })
+            .HasDatabaseName("IX_PickListItems_PickList_Item");
+
+        // Composite index for bin location queries
+        builder.HasIndex(x => new { x.BinId, x.Status })
+            .HasDatabaseName("IX_PickListItems_Bin_Status");
 
         builder.ToTable("PickListItems", SchemaNames.Store);
     }

@@ -31,9 +31,21 @@ public class GoodsReceiptItemConfiguration : IEntityTypeConfiguration<GoodsRecei
         builder.Property(x => x.PurchaseOrderItemId)
             .IsRequired(false); // Optional link for partial receiving
 
-        builder.HasIndex(x => x.GoodsReceiptId);
-        builder.HasIndex(x => x.ItemId);
-        builder.HasIndex(x => x.PurchaseOrderItemId);
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.GoodsReceiptId)
+            .HasDatabaseName("IX_GoodsReceiptItems_GoodsReceiptId");
+
+        builder.HasIndex(x => x.ItemId)
+            .HasDatabaseName("IX_GoodsReceiptItems_ItemId");
+
+        builder.HasIndex(x => x.PurchaseOrderItemId)
+            .HasDatabaseName("IX_GoodsReceiptItems_PurchaseOrderItemId");
+
+        // Composite index for receipt+item reporting
+        builder.HasIndex(x => new { x.GoodsReceiptId, x.ItemId })
+            .HasDatabaseName("IX_GoodsReceiptItems_Receipt_Item");
+
+        builder.ToTable("GoodsReceiptItems", SchemaNames.Store);
     }
 }
 

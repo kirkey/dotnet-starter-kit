@@ -33,13 +33,37 @@ public class GoodsReceiptConfiguration : IEntityTypeConfiguration<GoodsReceipt>
 
         // Notes property is inherited from AuditableEntity and configured in base class
 
-        builder.HasIndex(x => x.WarehouseId);
-        builder.HasIndex(x => x.PurchaseOrderId);
-
+        // Configure relationship to items (one-to-many)
         builder.HasMany(x => x.Items)
             .WithOne()
             .HasForeignKey("GoodsReceiptId")
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Ensure EF uses the backing field for change tracking
+        var navigation = builder.Metadata.FindNavigation(nameof(GoodsReceipt.Items));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        // Indexes for query optimization
+        builder.HasIndex(x => x.WarehouseId)
+            .HasDatabaseName("IX_GoodsReceipts_WarehouseId");
+
+        builder.HasIndex(x => x.PurchaseOrderId)
+            .HasDatabaseName("IX_GoodsReceipts_PurchaseOrderId");
+
+        builder.HasIndex(x => x.ReceivedDate)
+            .HasDatabaseName("IX_GoodsReceipts_ReceivedDate");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_GoodsReceipts_Status");
+
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.WarehouseId, x.ReceivedDate })
+            .HasDatabaseName("IX_GoodsReceipts_Warehouse_ReceivedDate");
+
+        builder.HasIndex(x => new { x.Status, x.ReceivedDate })
+            .HasDatabaseName("IX_GoodsReceipts_Status_ReceivedDate");
+
+        builder.ToTable("GoodsReceipts", SchemaNames.Store);
     }
 }
 

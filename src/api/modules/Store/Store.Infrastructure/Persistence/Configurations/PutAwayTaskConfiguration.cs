@@ -46,12 +46,38 @@ public class PutAwayTaskConfiguration : IEntityTypeConfiguration<PutAwayTask>
             .HasForeignKey(x => x.PutAwayTaskId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        // Ensure EF uses the backing field for change tracking
+        var navigation = builder.Metadata.FindNavigation(nameof(PutAwayTask.Items));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         // Indexes for foreign keys and query optimization
-        builder.HasIndex(x => x.WarehouseId);
-        builder.HasIndex(x => x.GoodsReceiptId);
-        builder.HasIndex(x => x.Status);
-        builder.HasIndex(x => x.PutAwayStrategy);
-        builder.HasIndex(x => x.Priority);
+        builder.HasIndex(x => x.WarehouseId)
+            .HasDatabaseName("IX_PutAwayTasks_WarehouseId");
+
+        builder.HasIndex(x => x.GoodsReceiptId)
+            .HasDatabaseName("IX_PutAwayTasks_GoodsReceiptId");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_PutAwayTasks_Status");
+
+        builder.HasIndex(x => x.PutAwayStrategy)
+            .HasDatabaseName("IX_PutAwayTasks_PutAwayStrategy");
+
+        builder.HasIndex(x => x.Priority)
+            .HasDatabaseName("IX_PutAwayTasks_Priority");
+
+        builder.HasIndex(x => x.AssignedTo)
+            .HasDatabaseName("IX_PutAwayTasks_AssignedTo");
+
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.WarehouseId, x.Status })
+            .HasDatabaseName("IX_PutAwayTasks_Warehouse_Status");
+
+        builder.HasIndex(x => new { x.Status, x.Priority })
+            .HasDatabaseName("IX_PutAwayTasks_Status_Priority");
+
+        builder.HasIndex(x => new { x.AssignedTo, x.Status })
+            .HasDatabaseName("IX_PutAwayTasks_AssignedTo_Status");
 
         builder.ToTable("PutAwayTasks", SchemaNames.Store);
     }

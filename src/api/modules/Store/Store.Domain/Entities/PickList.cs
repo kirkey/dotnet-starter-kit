@@ -114,10 +114,12 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
     /// </summary>
     public Warehouse Warehouse { get; private set; } = default!;
 
+    private readonly List<PickListItem> _items = new();
     /// <summary>
-    /// Pick list items to be picked.
+    /// Collection of pick list items, each representing an item to be picked from a warehouse location.
+    /// Read-only to enforce proper aggregate management.
     /// </summary>
-    public ICollection<PickListItem> Items { get; private set; } = new List<PickListItem>();
+    public IReadOnlyCollection<PickListItem> Items => _items.AsReadOnly();
 
     private PickList() { }
 
@@ -186,7 +188,7 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
         if (Status != "Created") throw new InvalidOperationException("Cannot add items to pick list after it has been assigned");
 
         var pickListItem = PickListItem.Create(Id, itemId, binId, lotNumberId, serialNumberId, quantityToPick, notes);
-        Items.Add(pickListItem);
+        _items.Add(pickListItem);
         TotalLines++;
 
         QueueDomainEvent(new PickListItemAdded { PickList = this, Item = pickListItem });

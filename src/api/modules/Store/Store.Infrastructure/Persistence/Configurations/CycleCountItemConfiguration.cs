@@ -22,9 +22,17 @@ public class CycleCountItemConfiguration : IEntityTypeConfiguration<CycleCountIt
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Indexes for query optimization
+        builder.HasIndex(x => x.CycleCountId)
+            .HasDatabaseName("IX_CycleCountItems_CycleCountId");
+
+        builder.HasIndex(x => x.ItemId)
+            .HasDatabaseName("IX_CycleCountItems_ItemId");
+
         // Ensure an item can only appear once per cycle count
         builder.HasIndex(x => new { x.CycleCountId, x.ItemId })
-            .IsUnique();
+            .IsUnique()
+            .HasDatabaseName("IX_CycleCountItems_CycleCount_Item");
 
         builder.ToTable("CycleCountItems", SchemaNames.Store);
     }

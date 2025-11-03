@@ -52,7 +52,12 @@ public sealed class GoodsReceipt : AuditableEntity, IAggregateRoot
     /// </summary>
     public string Status { get; private set; } = "Open"; // Open, Received, Cancelled
 
-    public ICollection<GoodsReceiptItem> Items { get; private set; } = new List<GoodsReceiptItem>();
+    private readonly List<GoodsReceiptItem> _items = new();
+    /// <summary>
+    /// Collection of goods receipt items, each representing a quantity received for a specific item.
+    /// Read-only to enforce proper aggregate management.
+    /// </summary>
+    public IReadOnlyCollection<GoodsReceiptItem> Items => _items.AsReadOnly();
 
     private GoodsReceipt() { }
 
@@ -112,7 +117,7 @@ public sealed class GoodsReceipt : AuditableEntity, IAggregateRoot
         if (quantity <= 0) throw new ArgumentException("Quantity must be positive", nameof(quantity));
         if (unitCost < 0) throw new ArgumentException("UnitCost cannot be negative", nameof(unitCost));
         var item = GoodsReceiptItem.Create(Id, itemId, name, quantity, unitCost, purchaseOrderItemId);
-        Items.Add(item);
+        _items.Add(item);
         QueueDomainEvent(new GoodsReceiptItemAdded { GoodsReceipt = this, Item = item });
         return this;
     }

@@ -44,13 +44,32 @@ public class PutAwayTaskItemConfiguration : IEntityTypeConfiguration<PutAwayTask
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
-        // Indexes for foreign keys
-        builder.HasIndex(x => x.PutAwayTaskId);
-        builder.HasIndex(x => x.ItemId);
-        builder.HasIndex(x => x.ToBinId);
-        builder.HasIndex(x => x.LotNumberId);
-        builder.HasIndex(x => x.SerialNumberId);
-        builder.HasIndex(x => x.Status);
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.PutAwayTaskId)
+            .HasDatabaseName("IX_PutAwayTaskItems_PutAwayTaskId");
+
+        builder.HasIndex(x => x.ItemId)
+            .HasDatabaseName("IX_PutAwayTaskItems_ItemId");
+
+        builder.HasIndex(x => x.ToBinId)
+            .HasDatabaseName("IX_PutAwayTaskItems_ToBinId");
+
+        builder.HasIndex(x => x.LotNumberId)
+            .HasDatabaseName("IX_PutAwayTaskItems_LotNumberId");
+
+        builder.HasIndex(x => x.SerialNumberId)
+            .HasDatabaseName("IX_PutAwayTaskItems_SerialNumberId");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_PutAwayTaskItems_Status");
+
+        // Composite index for task+item reporting
+        builder.HasIndex(x => new { x.PutAwayTaskId, x.ItemId })
+            .HasDatabaseName("IX_PutAwayTaskItems_Task_Item");
+
+        // Composite index for bin location queries
+        builder.HasIndex(x => new { x.ToBinId, x.Status })
+            .HasDatabaseName("IX_PutAwayTaskItems_ToBin_Status");
 
         builder.ToTable("PutAwayTaskItems", SchemaNames.Store);
     }

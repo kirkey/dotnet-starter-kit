@@ -35,9 +35,17 @@ public class InventoryTransferItemConfiguration : IEntityTypeConfiguration<Inven
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Indexes for foreign keys
-        builder.HasIndex(x => x.InventoryTransferId);
-        builder.HasIndex(x => x.ItemId);
+        // Indexes for foreign keys and query optimization
+        builder.HasIndex(x => x.InventoryTransferId)
+            .HasDatabaseName("IX_InventoryTransferItems_InventoryTransferId");
+
+        builder.HasIndex(x => x.ItemId)
+            .HasDatabaseName("IX_InventoryTransferItems_ItemId");
+
+        // Composite index for unique constraint: one line per transfer+item
+        builder.HasIndex(x => new { x.InventoryTransferId, x.ItemId })
+            .IsUnique()
+            .HasDatabaseName("IX_InventoryTransferItems_Transfer_Item");
 
         builder.ToTable("InventoryTransferItems", SchemaNames.Store);
     }

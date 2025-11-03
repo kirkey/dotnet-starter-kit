@@ -45,8 +45,16 @@ public class PurchaseOrderItemConfiguration : IEntityTypeConfiguration<PurchaseO
             .OnDelete(DeleteBehavior.Restrict);
 
         // Indexes for foreign keys
-        builder.HasIndex(x => x.PurchaseOrderId);
-        builder.HasIndex(x => x.ItemId);
+        builder.HasIndex(x => x.PurchaseOrderId)
+            .HasDatabaseName("IX_PurchaseOrderItems_PurchaseOrderId");
+
+        builder.HasIndex(x => x.ItemId)
+            .HasDatabaseName("IX_PurchaseOrderItems_ItemId");
+
+        // Composite index for unique constraint: one line per PO+Item combination
+        builder.HasIndex(x => new { x.PurchaseOrderId, x.ItemId })
+            .IsUnique()
+            .HasDatabaseName("IX_PurchaseOrderItems_PurchaseOrder_Item");
 
         builder.ToTable("PurchaseOrderItems", SchemaNames.Store);
     }

@@ -96,7 +96,13 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     public bool IsUrgent { get; private set; }
     
     public Supplier Supplier { get; private set; } = default!;
-    public ICollection<PurchaseOrderItem> Items { get; private set; } = new List<PurchaseOrderItem>();
+    
+    private readonly List<PurchaseOrderItem> _items = new();
+    /// <summary>
+    /// Collection of purchase order items, each representing a requested quantity from the supplier.
+    /// Read-only to enforce proper aggregate management.
+    /// </summary>
+    public IReadOnlyCollection<PurchaseOrderItem> Items => _items.AsReadOnly();
 
     // The parameterless constructor is required by EF Core for entity materialization.
     // It may appear unused to static analyzers but must remain.
@@ -228,7 +234,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         else
         {
             var newItem = PurchaseOrderItem.Create(Id, itemId, quantity, unitPrice, discount);
-            Items.Add(newItem);
+            _items.Add(newItem);
         }
 
         RecalculateTotals();
@@ -247,7 +253,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
             if (item.ReceivedQuantity > 0)
                 throw new CannotRemoveReceivedPurchaseOrderItemException(item.Id);
 
-            Items.Remove(item);
+            _items.Remove(item);
             RecalculateTotals();
             QueueDomainEvent(new PurchaseOrderItemRemoved { PurchaseOrder = this, ItemId = itemId });
         }

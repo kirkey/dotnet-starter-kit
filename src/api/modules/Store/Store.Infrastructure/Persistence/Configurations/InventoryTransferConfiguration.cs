@@ -65,14 +65,50 @@ public class InventoryTransferConfiguration : IEntityTypeConfiguration<Inventory
             .HasForeignKey(x => x.ToLocationId)
             .OnDelete(DeleteBehavior.SetNull);
 
+        // Configure relationship to items (one-to-many)
+        builder.HasMany(x => x.Items)
+            .WithOne()
+            .HasForeignKey(x => x.InventoryTransferId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Ensure EF uses the backing field for change tracking
+        var navigation = builder.Metadata.FindNavigation(nameof(InventoryTransfer.Items));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         // Indexes for foreign keys and query optimization
-        builder.HasIndex(x => x.FromWarehouseId);
-        builder.HasIndex(x => x.ToWarehouseId);
-        builder.HasIndex(x => x.FromLocationId);
-        builder.HasIndex(x => x.ToLocationId);
-        builder.HasIndex(x => x.Status);
-        builder.HasIndex(x => x.TransferType);
-        builder.HasIndex(x => x.TransferDate);
+        builder.HasIndex(x => x.FromWarehouseId)
+            .HasDatabaseName("IX_InventoryTransfers_FromWarehouseId");
+
+        builder.HasIndex(x => x.ToWarehouseId)
+            .HasDatabaseName("IX_InventoryTransfers_ToWarehouseId");
+
+        builder.HasIndex(x => x.FromLocationId)
+            .HasDatabaseName("IX_InventoryTransfers_FromLocationId");
+
+        builder.HasIndex(x => x.ToLocationId)
+            .HasDatabaseName("IX_InventoryTransfers_ToLocationId");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_InventoryTransfers_Status");
+
+        builder.HasIndex(x => x.TransferType)
+            .HasDatabaseName("IX_InventoryTransfers_TransferType");
+
+        builder.HasIndex(x => x.TransferDate)
+            .HasDatabaseName("IX_InventoryTransfers_TransferDate");
+
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.FromWarehouseId, x.TransferDate })
+            .HasDatabaseName("IX_InventoryTransfers_FromWarehouse_TransferDate");
+
+        builder.HasIndex(x => new { x.ToWarehouseId, x.TransferDate })
+            .HasDatabaseName("IX_InventoryTransfers_ToWarehouse_TransferDate");
+
+        builder.HasIndex(x => new { x.Status, x.TransferDate })
+            .HasDatabaseName("IX_InventoryTransfers_Status_TransferDate");
+
+        builder.HasIndex(x => new { x.FromWarehouseId, x.ToWarehouseId })
+            .HasDatabaseName("IX_InventoryTransfers_FromWarehouse_ToWarehouse");
 
         builder.ToTable("InventoryTransfers", SchemaNames.Store);
     }

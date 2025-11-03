@@ -48,11 +48,31 @@ public class PurchaseOrderConfiguration : IEntityTypeConfiguration<PurchaseOrder
             .HasForeignKey(x => x.SupplierId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Configure relationship to items (one-to-many)
+        builder.HasMany(x => x.Items)
+            .WithOne(x => x.PurchaseOrder)
+            .HasForeignKey(x => x.PurchaseOrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Ensure EF uses the backing field for change tracking
+        var navigation = builder.Metadata.FindNavigation(nameof(PurchaseOrder.Items));
+        navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         // Indexes for foreign keys and query optimization
         builder.HasIndex(x => x.SupplierId);
         builder.HasIndex(x => x.Status);
         builder.HasIndex(x => x.OrderDate);
         builder.HasIndex(x => x.ExpectedDeliveryDate);
+
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.SupplierId, x.OrderDate })
+            .HasDatabaseName("IX_PurchaseOrders_Supplier_OrderDate");
+
+        builder.HasIndex(x => new { x.Status, x.OrderDate })
+            .HasDatabaseName("IX_PurchaseOrders_Status_OrderDate");
+
+        builder.HasIndex(x => new { x.SupplierId, x.Status })
+            .HasDatabaseName("IX_PurchaseOrders_Supplier_Status");
 
         builder.ToTable("PurchaseOrders", SchemaNames.Store);
     }

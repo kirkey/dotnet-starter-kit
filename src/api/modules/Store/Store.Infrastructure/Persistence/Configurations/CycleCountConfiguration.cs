@@ -58,11 +58,30 @@ public class CycleCountConfiguration : IEntityTypeConfiguration<CycleCount>
             .SetPropertyAccessMode(PropertyAccessMode.Field);
 
         // Indexes for foreign keys and query optimization
-        builder.HasIndex(x => x.WarehouseId);
-        builder.HasIndex(x => x.WarehouseLocationId);
-        builder.HasIndex(x => x.Status);
-        builder.HasIndex(x => x.CountType);
-        builder.HasIndex(x => x.ScheduledDate);
+        builder.HasIndex(x => x.WarehouseId)
+            .HasDatabaseName("IX_CycleCounts_WarehouseId");
+
+        builder.HasIndex(x => x.WarehouseLocationId)
+            .HasDatabaseName("IX_CycleCounts_WarehouseLocationId");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_CycleCounts_Status");
+
+        builder.HasIndex(x => x.CountType)
+            .HasDatabaseName("IX_CycleCounts_CountType");
+
+        builder.HasIndex(x => x.ScheduledDate)
+            .HasDatabaseName("IX_CycleCounts_ScheduledDate");
+
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.WarehouseId, x.ScheduledDate })
+            .HasDatabaseName("IX_CycleCounts_Warehouse_ScheduledDate");
+
+        builder.HasIndex(x => new { x.Status, x.ScheduledDate })
+            .HasDatabaseName("IX_CycleCounts_Status_ScheduledDate");
+
+        builder.HasIndex(x => new { x.WarehouseId, x.Status })
+            .HasDatabaseName("IX_CycleCounts_Warehouse_Status");
 
         builder.ToTable("CycleCounts", SchemaNames.Store);
     }

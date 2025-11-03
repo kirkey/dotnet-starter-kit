@@ -106,10 +106,12 @@ public sealed class PutAwayTask : AuditableEntity, IAggregateRoot
     /// </summary>
     public GoodsReceipt? GoodsReceipt { get; private set; }
 
+    private readonly List<PutAwayTaskItem> _items = new();
     /// <summary>
-    /// Put-away task items.
+    /// Collection of put-away task items, each representing an item to be stored in a specific location.
+    /// Read-only to enforce proper aggregate management.
     /// </summary>
-    public ICollection<PutAwayTaskItem> Items { get; private set; } = new List<PutAwayTaskItem>();
+    public IReadOnlyCollection<PutAwayTaskItem> Items => _items.AsReadOnly();
 
     private PutAwayTask() { }
 
@@ -175,7 +177,7 @@ public sealed class PutAwayTask : AuditableEntity, IAggregateRoot
 
         var taskItem = PutAwayTaskItem.Create(Id, itemId, toBinId, lotNumberId, serialNumberId, quantity, notes);
         taskItem.SetSequence(sequenceNumber);
-        Items.Add(taskItem);
+        _items.Add(taskItem);
         TotalLines++;
 
         QueueDomainEvent(new PutAwayTaskItemAdded { PutAwayTask = this, Item = taskItem });
