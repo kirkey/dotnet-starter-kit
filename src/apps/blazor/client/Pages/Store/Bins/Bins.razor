@@ -34,7 +34,7 @@
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="decimal?" @bind-Value="context.Capacity" For="@(() => context.Capacity)" Label="Capacity" Min="0" />
+            <MudNumericField T="decimal?" @bind-Value="context.Capacity" For="@(() => context.Capacity)" Format="N2" Label="Capacity" Min="0" />
         </MudItem>
         <MudItem xs="12" md="4">
             <MudNumericField T="int?" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" />

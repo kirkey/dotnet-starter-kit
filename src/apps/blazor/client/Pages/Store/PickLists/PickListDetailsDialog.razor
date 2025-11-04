@@ -57,10 +57,10 @@
                         
                         <MudGrid>
                             <MudItem xs="12" md="4">
-                                <MudNumericField Label="Total Items" Value="@_pickList.TotalLines" ReadOnly="true" Variant="Variant.Filled" />
+                                <MudNumericField Format="N2" Label="Total Items" Value="@_pickList.TotalLines" ReadOnly="true" Variant="Variant.Filled" />
                             </MudItem>
                             <MudItem xs="12" md="4">
-                                <MudNumericField Label="Picked Items" Value="@_pickList.PickedLines" ReadOnly="true" Variant="Variant.Filled" />
+                                <MudNumericField Format="N2" Label="Picked Items" Value="@_pickList.PickedLines" ReadOnly="true" Variant="Variant.Filled" />
                             </MudItem>
                             <MudItem xs="12" md="4">
                                 <MudTextField Label="Completion" Value="@GetCompletionPercentage()" ReadOnly="true" Variant="Variant.Filled" />

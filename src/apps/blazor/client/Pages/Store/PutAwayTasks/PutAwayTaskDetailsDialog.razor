@@ -57,10 +57,10 @@
                         
                         <MudGrid>
                             <MudItem xs="12" md="4">
-                                <MudNumericField Label="Total Items" Value="@_putAwayTask.TotalLines" ReadOnly="true" Variant="Variant.Filled" />
+                                <MudNumericField Format="N2" Label="Total Items" Value="@_putAwayTask.TotalLines" ReadOnly="true" Variant="Variant.Filled" />
                             </MudItem>
                             <MudItem xs="12" md="4">
-                                <MudNumericField Label="Completed Items" Value="@_putAwayTask.CompletedLines" ReadOnly="true" Variant="Variant.Filled" />
+                                <MudNumericField Format="N2" Label="Completed Items" Value="@_putAwayTask.CompletedLines" ReadOnly="true" Variant="Variant.Filled" />
                             </MudItem>
                             <MudItem xs="12" md="4">
                                 <MudTextField Label="Completion" Value="@GetCompletionPercentage()" ReadOnly="true" Variant="Variant.Filled" />

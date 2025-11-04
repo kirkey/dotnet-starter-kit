@@ -28,15 +28,15 @@
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.QuantityOnHand" For="@(() => context.QuantityOnHand)" Label="Quantity On Hand" Min="0" />
+            <MudNumericField T="int" @bind-Value="context.QuantityOnHand" For="@(() => context.QuantityOnHand)" Format="N0" Label="Quantity On Hand" Min="0" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.QuantityAvailable" For="@(() => context.QuantityAvailable)" Label="Available" Min="0" />
+            <MudNumericField T="int" @bind-Value="context.QuantityAvailable" For="@(() => context.QuantityAvailable)" Format="N0" Label="Available" Min="0" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.QuantityReserved" For="@(() => context.QuantityReserved)" Label="Reserved" Min="0" ReadOnly />
+            <MudNumericField T="int" @bind-Value="context.QuantityReserved" For="@(() => context.QuantityReserved)" Format="N0" Label="Reserved" Min="0" ReadOnly />
         </MudItem>
 
         <MudItem xs="12" md="4">

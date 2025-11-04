@@ -11,43 +11,39 @@
             </MudItem>
         }
 
-        <MudItem xs="12" sm="6" md="4" lg="3">
+        <MudItem xs="12">
             <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />
-        </MudItem>
 
-        <MudItem xs="12" md="4">
+        <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="4">
+        <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Contact Person" For="@(() => context.ContactPerson)" @bind-Value="context.ContactPerson" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="4">
+        <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Email" For="@(() => context.Email)" @bind-Value="context.Email" Required="true" />
         </MudItem>
 
-        <MudItem xs="12" md="4">
+        <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Phone" For="@(() => context.Phone)" @bind-Value="context.Phone" Required="true" />
         </MudItem>
-        <MudItem xs="12" md="8">
+        <MudItem xs="12">
             <MudTextField Label="Address" For="@(() => context.Address)" @bind-Value="context.Address" Required="true" />
         </MudItem>
 
-
-        <MudItem xs="12" md="4">
+        <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Postal Code" For="@(() => context.PostalCode)" @bind-Value="context.PostalCode" />
         </MudItem>
-        <MudItem xs="12" md="8">
+        <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Website" For="@(() => context.Website)" @bind-Value="context.Website" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="decimal?" @bind-Value="context.CreditLimit" For="@(() => context.CreditLimit)" Label="Credit Limit" Immediate="true" />
+            <MudNumericField T="decimal?" @bind-Value="context.CreditLimit" For="@(() => context.CreditLimit)" Format="N2" Label="Credit Limit" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int?" @bind-Value="context.PaymentTermsDays" For="@(() => context.PaymentTermsDays)" Label="Payment Terms (Days)" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.PaymentTermsDays" For="@(() => context.PaymentTermsDays)" Format="N2" Label="Payment Terms (Days)" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch Class="mt-3" T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
@@ -56,6 +52,9 @@
             <MudNumericField T="decimal?" @bind-Value="context.Rating" For="@(() => context.Rating)" Label="Rating (0-5)" Immediate="true" />
         </MudItem>
 
+        <MudItem xs="12">
+            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />
+        </MudItem>
         <MudItem xs="12">
             <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
         </MudItem>

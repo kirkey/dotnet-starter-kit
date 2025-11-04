@@ -32,7 +32,7 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField @bind-Value="context.QuantityAdjusted" For="@(() => context.QuantityAdjusted)" Label="Quantity Adjusted" Required="true" />
+            <MudNumericField @bind-Value="context.QuantityAdjusted" For="@(() => context.QuantityAdjusted)" Format="N0" Label="Quantity Adjusted" Required="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteAdjustmentReason @bind-Value="context.Reason"

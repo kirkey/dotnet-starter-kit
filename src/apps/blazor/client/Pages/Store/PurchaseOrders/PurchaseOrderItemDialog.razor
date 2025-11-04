@@ -14,6 +14,7 @@
                     <MudNumericField @bind-Value="Model.Quantity"
                                      Label="Quantity"
                                      For="@(() => Model.Quantity)"
+                                     Format="N2"
                                      Required="true"
                                      Min="1"
                                      Variant="Variant.Filled" />
@@ -42,6 +43,7 @@
                     <MudNumericField @bind-Value="Model.ReceivedQuantity"
                                      Label="Received Quantity"
                                      For="@(() => Model.ReceivedQuantity)"
+                                     Format="N2"
                                      Min="0"
                                      Variant="Variant.Filled"
                                      ReadOnly="@(Model.Id == default)" />

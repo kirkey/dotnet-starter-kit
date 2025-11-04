@@ -16,6 +16,7 @@
                         <MudNumericField @bind-Value="Model.SystemQuantity"
                                          Label="System Quantity"
                                          For="@(() => Model.SystemQuantity)"
+                                         Format="N2"
                                          Required="true"
                                          Min="0"
                                          Variant="Variant.Filled"
@@ -26,6 +27,7 @@
                         <MudNumericField T="int?" @bind-Value="Model.CountedQuantity"
                                          Label="Counted Quantity (Optional)"
                                          For="@(() => Model.CountedQuantity)"
+                                         Format="N2"
                                          Min="0"
                                          Variant="Variant.Filled"
                                          HelperText="Can be recorded later" />
@@ -43,6 +45,7 @@
                         <MudNumericField T="int?" @bind-Value="Model.CountedQuantity"
                                          Label="Counted Quantity"
                                          For="@(() => Model.CountedQuantity)"
+                                         Format="N2"
                                          Required="true"
                                          Min="0"
                                          Variant="Variant.Filled"
