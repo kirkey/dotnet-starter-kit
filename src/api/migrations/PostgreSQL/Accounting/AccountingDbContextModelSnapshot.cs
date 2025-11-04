@@ -680,12 +680,17 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("ApprovalDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("ApprovalStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("ApprovedBy")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("ApprovedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("BillDate")
                         .HasColumnType("timestamp with time zone");
@@ -714,30 +719,24 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(2048)
+                        .HasMaxLength(500)
                         .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<decimal>("DiscountAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<DateTime?>("DiscountDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("ExpenseAccountId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("boolean");
+                    b.Property<bool>("IsPaid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
-                    b.Property<bool>("IsVoid")
-                        .HasColumnType("boolean");
+                    b.Property<bool>("IsPosted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -750,27 +749,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(256)
                         .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
-                        .HasMaxLength(2048)
-                        .HasColumnType("VARCHAR(2048)");
-
-                    b.Property<decimal>("PaidAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<DateTime?>("PaidDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("PaymentMethod")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("PaymentReference")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("PaymentTerms")
                         .HasMaxLength(100)
@@ -779,29 +765,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<Guid?>("PeriodId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("PurchaseOrderId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("RejectionReason")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<decimal>("ShippingAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                    b.Property<string>("PurchaseOrderNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
-
-                    b.Property<decimal>("SubtotalAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<decimal>("TaxAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 2)
@@ -810,23 +781,41 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<Guid>("VendorId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("VendorInvoiceNumber")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("BillDate");
+                    b.HasIndex("ApprovalStatus")
+                        .HasDatabaseName("IX_Bills_ApprovalStatus");
+
+                    b.HasIndex("BillDate")
+                        .HasDatabaseName("IX_Bills_BillDate");
 
                     b.HasIndex("BillNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_Bills_BillNumber");
 
-                    b.HasIndex("DueDate");
+                    b.HasIndex("DueDate")
+                        .HasDatabaseName("IX_Bills_DueDate");
 
-                    b.HasIndex("Status");
+                    b.HasIndex("IsPaid")
+                        .HasDatabaseName("IX_Bills_IsPaid");
 
-                    b.HasIndex("VendorId");
+                    b.HasIndex("IsPosted")
+                        .HasDatabaseName("IX_Bills_IsPosted");
+
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("IX_Bills_PeriodId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Bills_Status");
+
+                    b.HasIndex("VendorId")
+                        .HasDatabaseName("IX_Bills_VendorId");
+
+                    b.HasIndex("Status", "DueDate")
+                        .HasDatabaseName("IX_Bills_Status_DueDate");
+
+                    b.HasIndex("VendorId", "BillDate")
+                        .HasDatabaseName("IX_Bills_VendorId_BillDate");
 
                     b.ToTable("Bills", "accounting");
                 });
@@ -837,10 +826,17 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("uuid");
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<Guid>("BillId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ChartOfAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CostCenterId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CreatedBy")
@@ -878,35 +874,57 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("LineTotal")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                    b.Property<int>("LineNumber")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("VARCHAR(2048)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("Quantity")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
 
-                    b.Property<decimal>("UnitPrice")
+                    b.Property<decimal>("TaxAmount")
+                        .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<Guid?>("TaxCodeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId")
-                        .HasDatabaseName("IX_BillLineItems_AccountId");
 
                     b.HasIndex("BillId")
                         .HasDatabaseName("IX_BillLineItems_BillId");
 
-                    b.HasIndex("BillId", "AccountId")
-                        .HasDatabaseName("IX_BillLineItems_Bill_Account");
+                    b.HasIndex("ChartOfAccountId")
+                        .HasDatabaseName("IX_BillLineItems_ChartOfAccountId");
+
+                    b.HasIndex("CostCenterId")
+                        .HasDatabaseName("IX_BillLineItems_CostCenterId");
+
+                    b.HasIndex("ProjectId")
+                        .HasDatabaseName("IX_BillLineItems_ProjectId");
+
+                    b.HasIndex("TaxCodeId")
+                        .HasDatabaseName("IX_BillLineItems_TaxCodeId");
+
+                    b.HasIndex("BillId", "LineNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_BillLineItems_BillId_LineNumber");
 
                     b.ToTable("BillLineItems", "accounting");
                 });
@@ -5814,11 +5832,19 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             modelBuilder.Entity("Accounting.Domain.Entities.JournalEntryLine", b =>
                 {
+                    b.HasOne("Accounting.Domain.Entities.ChartOfAccount", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Accounting.Domain.Entities.JournalEntry", null)
                         .WithMany("Lines")
                         .HasForeignKey("JournalEntryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.MeterReading", b =>

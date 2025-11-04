@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
     /// <inheritdoc />
-    public partial class InitialAccountingSchema : Migration
+    public partial class InitialAccountingDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -247,32 +247,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BillNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VendorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    VendorInvoiceNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     BillDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    SubtotalAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    TaxAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    ShippingAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    DiscountAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    DiscountDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     TotalAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    PaidAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    PaymentTerms = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Status = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
-                    IsApproved = table.Column<bool>(type: "boolean", nullable: false),
-                    ApprovalDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    IsVoid = table.Column<bool>(type: "boolean", nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    IsPosted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    IsPaid = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     PaidDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    PaymentMethod = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    PaymentReference = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    PurchaseOrderId = table.Column<Guid>(type: "uuid", nullable: true),
-                    RejectionReason = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
-                    ExpenseAccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ApprovalStatus = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    ApprovedBy = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     PeriodId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Name = table.Column<string>(type: "VARCHAR(1024)", maxLength: 256, nullable: false),
-                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2048, nullable: true),
-                    Notes = table.Column<string>(type: "VARCHAR(2048)", maxLength: 2048, nullable: true),
+                    PaymentTerms = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    PurchaseOrderNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", maxLength: 500, nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1697,13 +1687,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BillId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LineNumber = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     Quantity = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    LineTotal = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    AccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    UnitPrice = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    ChartOfAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TaxCodeId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TaxAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    ProjectId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CostCenterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Notes = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
-                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
@@ -2132,6 +2127,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 {
                     table.PrimaryKey("PK_JournalEntryLines", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_JournalEntryLines_ChartOfAccounts_AccountId",
+                        column: x => x.AccountId,
+                        principalSchema: "accounting",
+                        principalTable: "ChartOfAccounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_JournalEntryLines_JournalEntries_JournalEntryId",
                         column: x => x.JournalEntryId,
                         principalSchema: "accounting",
@@ -2278,22 +2280,47 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "RoutingNumber");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BillLineItems_AccountId",
-                schema: "accounting",
-                table: "BillLineItems",
-                column: "AccountId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BillLineItems_Bill_Account",
-                schema: "accounting",
-                table: "BillLineItems",
-                columns: new[] { "BillId", "AccountId" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BillLineItems_BillId",
                 schema: "accounting",
                 table: "BillLineItems",
                 column: "BillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BillLineItems_BillId_LineNumber",
+                schema: "accounting",
+                table: "BillLineItems",
+                columns: new[] { "BillId", "LineNumber" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BillLineItems_ChartOfAccountId",
+                schema: "accounting",
+                table: "BillLineItems",
+                column: "ChartOfAccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BillLineItems_CostCenterId",
+                schema: "accounting",
+                table: "BillLineItems",
+                column: "CostCenterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BillLineItems_ProjectId",
+                schema: "accounting",
+                table: "BillLineItems",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BillLineItems_TaxCodeId",
+                schema: "accounting",
+                table: "BillLineItems",
+                column: "TaxCodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_ApprovalStatus",
+                schema: "accounting",
+                table: "Bills",
+                column: "ApprovalStatus");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bills_BillDate",
@@ -2315,16 +2342,46 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "DueDate");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bills_IsPaid",
+                schema: "accounting",
+                table: "Bills",
+                column: "IsPaid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_IsPosted",
+                schema: "accounting",
+                table: "Bills",
+                column: "IsPosted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_PeriodId",
+                schema: "accounting",
+                table: "Bills",
+                column: "PeriodId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bills_Status",
                 schema: "accounting",
                 table: "Bills",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bills_Status_DueDate",
+                schema: "accounting",
+                table: "Bills",
+                columns: new[] { "Status", "DueDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bills_VendorId",
                 schema: "accounting",
                 table: "Bills",
                 column: "VendorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_VendorId_BillDate",
+                schema: "accounting",
+                table: "Bills",
+                columns: new[] { "VendorId", "BillDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BudgetDetails_BudgetId",
@@ -3382,10 +3439,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting");
 
             migrationBuilder.DropTable(
-                name: "ChartOfAccounts",
-                schema: "accounting");
-
-            migrationBuilder.DropTable(
                 name: "Checks",
                 schema: "accounting");
 
@@ -3535,6 +3588,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
             migrationBuilder.DropTable(
                 name: "FiscalPeriodCloses",
+                schema: "accounting");
+
+            migrationBuilder.DropTable(
+                name: "ChartOfAccounts",
                 schema: "accounting");
 
             migrationBuilder.DropTable(
