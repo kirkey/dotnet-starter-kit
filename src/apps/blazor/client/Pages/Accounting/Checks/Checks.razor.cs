@@ -92,23 +92,8 @@ public partial class Checks
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var searchQuery = new CheckSearchQuery
-                {
-                    PageNumber = filter.PageNumber,
-                    PageSize = filter.PageSize,
-                    OrderBy = filter.OrderBy,
-                    Keyword = filter.Keyword,
-                    CheckNumber = CheckNumber,
-                    BankAccountCode = BankAccountCode,
-                    Status = Status,
-                    PayeeName = PayeeName,
-                    AmountFrom = AmountFrom,
-                    AmountTo = AmountTo,
-                    IssuedDateFrom = IssuedDateFrom,
-                    IssuedDateTo = IssuedDateTo,
-                    IsPrinted = IsPrinted
-                };
-                var result = await Client.CheckSearchEndpointAsync("1", searchQuery);
+                var paginationFilter = filter.Adapt<CheckSearchQuery>();
+                var result = await Client.CheckSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<CheckSearchResponse>>();
             },
             createFunc: async check =>

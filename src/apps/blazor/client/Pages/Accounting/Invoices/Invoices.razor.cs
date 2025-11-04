@@ -160,24 +160,8 @@ public partial class Invoices
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var searchQuery = new SearchInvoicesCommand
-                {
-                    PageNumber = filter.PageNumber,
-                    PageSize = filter.PageSize,
-                    OrderBy = filter.OrderBy,
-                    Keyword = filter.Keyword,
-                    InvoiceNumber = InvoiceNumber,
-                    Status = Status,
-                    BillingPeriod = BillingPeriod,
-                    InvoiceDateFrom = InvoiceDateFrom,
-                    InvoiceDateTo = InvoiceDateTo,
-                    DueDateFrom = DueDateFrom,
-                    DueDateTo = DueDateTo,
-                    MinAmount = MinAmount,
-                    MaxAmount = MaxAmount,
-                    HasOutstandingBalance = HasOutstandingBalance ? true : null
-                };
-                var result = await Client.SearchInvoicesEndpointAsync("1", searchQuery);
+                var paginationFilter = filter.Adapt<SearchInvoicesCommand>();
+                var result = await Client.SearchInvoicesEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<InvoiceResponse>>();
             },
             createFunc: async invoice =>
