@@ -20,7 +20,7 @@ public partial class InventoryTransfers
                 new EntityField<GetInventoryTransferListResponse>(x => x.TransferNumber, "Transfer #", "TransferNumber"),
                 new EntityField<GetInventoryTransferListResponse>(x => x.FromWarehouseName, "From", "FromWarehouseName"),
                 new EntityField<GetInventoryTransferListResponse>(x => x.ToWarehouseName, "To", "ToWarehouseName"),
-                new EntityField<GetInventoryTransferListResponse>(x => x.TransferDate, "Date", "TransferDate", typeof(DateTime)),
+                new EntityField<GetInventoryTransferListResponse>(x => x.TransferDate, "Date", "TransferDate", typeof(DateOnly)),
                 new EntityField<GetInventoryTransferListResponse>(x => x.Status, "Status", "Status"),
                 new EntityField<GetInventoryTransferListResponse>(x => x.TransferType, "Type", "TransferType"),
                 new EntityField<GetInventoryTransferListResponse>(x => x.Priority, "Priority", "Priority")

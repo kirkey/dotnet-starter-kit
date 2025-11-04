@@ -1,0 +1,479 @@
+@page "/accounting/invoices"
+@using FSH.Starter.Blazor.Client.Pages.Accounting.Invoices.Components
+
+<PageHeader Title="Invoice Management" Header="Invoice Management" SubHeader="Manage customer invoices, track receivables, and process payments." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Assessment" OnClick="@ShowInvoiceReports">
+                Reports
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Receipt" OnClick="@ShowBillingPeriods">
+                Billing Periods
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Pending" OnClick="@ShowDraftInvoices">
+                Draft Invoices
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Send" OnClick="@ShowSentInvoices">
+                Sent Invoices
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.MoneyOff" OnClick="@ShowUnpaidInvoices">
+                Unpaid Invoices
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Warning" OnClick="@ShowOverdueInvoices">
+                Overdue Invoices
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.FileDownload" OnClick="@ExportInvoices">
+                Export
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Settings" OnClick="@ShowSettings">
+                Settings
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="InvoiceResponse" TId="DefaultIdType" TRequest="InvoiceViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@InvoiceNumber"
+                          Label="Invoice Number"
+                          Placeholder="Search by invoice number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@Status"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@("Sent")">Sent</MudSelectItem>
+                <MudSelectItem Value="@("Paid")">Paid</MudSelectItem>
+                <MudSelectItem Value="@("Overdue")">Overdue</MudSelectItem>
+                <MudSelectItem Value="@("Cancelled")">Cancelled</MudSelectItem>
+                <MudSelectItem Value="@("Voided")">Voided</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@BillingPeriod"
+                          Label="Billing Period"
+                          Placeholder="e.g., 2025-01"
+                          Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@InvoiceDateFrom"
+                           Label="Invoice Date From"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@InvoiceDateTo"
+                           Label="Invoice Date To"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@DueDateFrom"
+                           Label="Due Date From"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@DueDateTo"
+                           Label="Due Date To"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal?"
+                             @bind-Value="@MinAmount"
+                             Label="Min Amount"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal?"
+                             @bind-Value="@MaxAmount"
+                             Label="Max Amount"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@HasOutstandingBalance"
+                       Label="Has Outstanding Balance"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="invoice">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewInvoiceDetails(invoice.Id))">
+            View Details
+        </MudMenuItem>
+        <MudDivider />
+        @if (invoice.Status == "Draft")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Send" OnClick="@(() => OnSendInvoice(invoice.Id))">
+                Send Invoice
+            </MudMenuItem>
+        }
+        @if (invoice.Status is "Sent" or "Overdue" && invoice.PaidAmount < invoice.TotalAmount)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Payment" OnClick="@(() => OnMarkAsPaid(invoice.Id))">
+                Mark as Paid
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.AccountBalance" OnClick="@(() => OnApplyPayment(invoice.Id))">
+                Apply Payment
+            </MudMenuItem>
+        }
+        @if (invoice.Status is "Draft" or "Sent")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnCancelInvoice(invoice.Id))">
+                Cancel Invoice
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => OnPrintInvoice(invoice.Id))">
+            Print Invoice
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Email" OnClick="@(() => OnEmailInvoice(invoice.Id))">
+            Email Invoice
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Invoice Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudChip T="string" 
+                         Color="@GetStatusColor(context.Status)" 
+                         Size="Size.Large">
+                    @context.Status
+                </MudChip>
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.InvoiceNumber"
+                          For="@(() => context.InvoiceNumber)"
+                          Label="Invoice Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique invoice number" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <AutocompleteCustomerId @bind-Value="context.MemberId"
+                                    For="@(() => context.MemberId)"
+                                    Label="Customer/Member"
+                                    TextFormat="CodeName"
+                                    Variant="Variant.Filled"
+                                    Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.InvoiceDate"
+                           For="@(() => context.InvoiceDate)"
+                           DateFormat="MMMM dd, yyyy"
+                           Label="Invoice Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.DueDate"
+                           For="@(() => context.DueDate)"
+                           DateFormat="MMMM dd, yyyy"
+                           Label="Due Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.BillingPeriod"
+                          For="@(() => context.BillingPeriod)"
+                          Label="Billing Period"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="e.g., 2025-01 or Jan 2025" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudDivider />
+            <MudText Typo="Typo.h6" Class="my-3">Utility Charges</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" @bind-Value="context.KWhUsed"
+                             For="@(() => context.KWhUsed)"
+                             Label="kWh Used"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.End"
+                             AdornmentText="kWh" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" @bind-Value="context.UsageCharge"
+                             For="@(() => context.UsageCharge)"
+                             Label="Usage Charge"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" @bind-Value="context.BasicServiceCharge"
+                             For="@(() => context.BasicServiceCharge)"
+                             Label="Basic Service Charge"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" @bind-Value="context.TaxAmount"
+                             For="@(() => context.TaxAmount)"
+                             Label="Tax Amount"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.Percent" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudDivider />
+            <MudText Typo="Typo.h6" Class="my-3">Additional Charges (Optional)</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" @bind-Value="context.DemandCharge"
+                             For="@(() => context.DemandCharge)"
+                             Label="Demand Charge"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" @bind-Value="context.LateFee"
+                             For="@(() => context.LateFee)"
+                             Label="Late Fee"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" @bind-Value="context.ReconnectionFee"
+                             For="@(() => context.ReconnectionFee)"
+                             Label="Reconnection Fee"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" @bind-Value="context.OtherCharges"
+                             For="@(() => context.OtherCharges)"
+                             Label="Other Charges"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" @bind-Value="context.DepositAmount"
+                             For="@(() => context.DepositAmount)"
+                             Label="Deposit Amount"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.RateSchedule"
+                          For="@(() => context.RateSchedule)"
+                          Label="Rate Schedule"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., Residential, Commercial" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField T="decimal" @bind-Value="context.TotalAmount"
+                                 Label="Total Amount"
+                                 ReadOnly
+                                 Format="N2"
+                                 Variant="Variant.Filled" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Lines="2"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Lines="3"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        @if (context.Status is "Draft" or "Sent")
+        {
+            <MudItem xs="12">
+                <MudDivider />
+                <MudText Typo="Typo.h6" Class="my-3">Invoice Line Items (Optional)</MudText>
+                <MudText Typo="Typo.body2" Class="mb-3">
+                    Line items are optional. Use them for detailed charges beyond the standard utility charges above.
+                </MudText>
+            </MudItem>
+
+            <MudItem xs="12">
+                <InvoiceLineEditor @bind-Lines="context.LineItems" 
+                                   IsReadOnly="@(context.Status == "Paid" || context.Status == "Cancelled")" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Dense="true" Class="my-3">
+                    <div class="d-flex justify-space-between align-center">
+                        <div>
+                            <strong>Utility Charges:</strong> @((context.UsageCharge + context.BasicServiceCharge + context.TaxAmount + context.OtherCharges).ToString("N2")) &nbsp;&nbsp;
+                            <strong>Additional Fees:</strong> @(((context.LateFee ?? 0) + (context.ReconnectionFee ?? 0) + (context.DemandCharge ?? 0) + (context.DepositAmount ?? 0)).ToString("N2")) &nbsp;&nbsp;
+                            <strong>Line Items:</strong> @context.LineItems.Sum(l => l.TotalPrice).ToString("N2") &nbsp;&nbsp;
+                            <strong>Invoice Total:</strong> @context.CalculatedTotal.ToString("N2")
+                        </div>
+                    </div>
+                </MudAlert>
+            </MudItem>
+        }
+        else
+        {
+            <MudItem xs="12">
+                <MudDivider />
+                <MudText Typo="Typo.h6" Class="my-3">Invoice Line Items (Read-Only)</MudText>
+                <MudText Typo="Typo.body2" Class="mb-3">
+                    Invoice has been @context.Status. Line items cannot be modified.
+                </MudText>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudButton StartIcon="@Icons.Material.Filled.Visibility" 
+                           Color="Color.Info" 
+                           OnClick="@(() => ViewInvoiceDetails(context.Id!.Value))" 
+                           Variant="Variant.Filled">
+                    View Full Invoice Details
+                </MudButton>
+            </MudItem>
+        }
+    </EditFormContent>
+</EntityTable>
+
+@* Dialog for marking as paid *@
+<MudDialog @bind-IsVisible="_markAsPaidDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Payment" Class="mr-3" /> Mark Invoice as Paid
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDatePicker @bind-Date="_markAsPaidCommand.PaidDate"
+                       Label="Payment Date"
+                       Required="true"
+                       Variant="Variant.Outlined" />
+        <MudTextField @bind-Value="_markAsPaidCommand.PaymentMethod"
+                      Label="Payment Method"
+                      Required="true"
+                      Variant="Variant.Outlined" />
+        <MudNumericField T="decimal" @bind-Value="_markAsPaidCommand.AmountPaid"
+                         Label="Amount Paid"
+                         Required="true"
+                         Format="N2"
+                         Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _markAsPaidDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="SubmitMarkAsPaid">Mark as Paid</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Dialog for applying payment *@
+<MudDialog @bind-IsVisible="_applyPaymentDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Class="mr-3" /> Apply Payment
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDatePicker @bind-Date="_applyPaymentCommand.PaymentDate"
+                       Label="Payment Date"
+                       Required="true"
+                       Variant="Variant.Outlined" />
+        <MudNumericField T="decimal" @bind-Value="_applyPaymentCommand.Amount"
+                         Label="Payment Amount"
+                         Required="true"
+                         Format="N2"
+                         Variant="Variant.Outlined" />
+        <MudTextField @bind-Value="_applyPaymentCommand.PaymentMethod"
+                      Label="Payment Method"
+                      Required="true"
+                      Variant="Variant.Outlined" />
+        <MudTextField @bind-Value="_applyPaymentCommand.Reference"
+                      Label="Payment Reference"
+                      Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _applyPaymentDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitApplyPayment">Apply Payment</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Dialog for cancelling invoice *@
+<MudDialog @bind-IsVisible="_cancelDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-3" /> Cancel Invoice
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_cancelCommand.Reason"
+                      Label="Cancellation Reason"
+                      Required="true"
+                      Lines="3"
+                      Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _cancelDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="SubmitCancelInvoice">Cancel Invoice</MudButton>
+    </DialogActions>
+</MudDialog>
+

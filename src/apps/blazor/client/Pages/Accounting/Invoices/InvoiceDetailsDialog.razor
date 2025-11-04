@@ -1,0 +1,254 @@
+
+<MudDialog>
+    <DialogContent>
+        @if (_isLoading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+            <MudText Align="Align.Center" Class="my-4">Loading invoice details...</MudText>
+        }
+        else if (_invoice is not null)
+        {
+            <MudGrid Spacing="2">
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.h5" Class="mb-2">
+                                    <MudIcon Icon="@Icons.Material.Filled.Receipt" Class="mr-2" />
+                                    Invoice @_invoice.InvoiceNumber
+                                </MudText>
+                                <MudChip T="string" Color="@GetStatusColor(_invoice.Status)" Size="Size.Large">
+                                    @_invoice.Status
+                                </MudChip>
+                            </MudItem>
+                            <MudItem xs="12" md="6" Class="d-flex align-end flex-column">
+                                <MudText Typo="Typo.h4" Color="Color.Primary">
+                                    @_invoice.TotalAmount.ToString("N2")
+                                </MudText>
+                                <MudText Typo="Typo.body2">Total Amount</MudText>
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudPaper Elevation="1" Class="pa-3">
+                        <MudText Typo="Typo.h6" Class="mb-2">Invoice Information</MudText>
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CalendarToday">
+                                <MudText><strong>Invoice Date:</strong> @_invoice.InvoiceDate.ToString("MMMM dd, yyyy")</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.Event">
+                                <MudText><strong>Due Date:</strong> @_invoice.DueDate.ToString("MMMM dd, yyyy")</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.DateRange">
+                                <MudText><strong>Billing Period:</strong> @_invoice.BillingPeriod</MudText>
+                            </MudListItem>
+                            @if (!string.IsNullOrEmpty(_invoice.RateSchedule))
+                            {
+                                <MudListItem T="string" Icon="@Icons.Material.Filled.Schedule">
+                                    <MudText><strong>Rate Schedule:</strong> @_invoice.RateSchedule</MudText>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudPaper Elevation="1" Class="pa-3">
+                        <MudText Typo="Typo.h6" Class="mb-2">Payment Information</MudText>
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.AttachMoney">
+                                <MudText><strong>Paid Amount:</strong> @_invoice.PaidAmount.ToString("N2")</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.MoneyOff">
+                                <MudText><strong>Outstanding:</strong> @(_invoice.TotalAmount - _invoice.PaidAmount).ToString("N2")</MudText>
+                            </MudListItem>
+                            @if (_invoice.PaidDate.HasValue)
+                            {
+                                <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle">
+                                    <MudText><strong>Paid Date:</strong> @_invoice.PaidDate.Value.ToString("MMMM dd, yyyy")</MudText>
+                                </MudListItem>
+                            }
+                            @if (!string.IsNullOrEmpty(_invoice.PaymentMethod))
+                            {
+                                <MudListItem T="string" Icon="@Icons.Material.Filled.Payment">
+                                    <MudText><strong>Payment Method:</strong> @_invoice.PaymentMethod</MudText>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudPaper Elevation="1" Class="pa-3">
+                        <MudText Typo="Typo.h6" Class="mb-3">Charge Breakdown</MudText>
+                        <MudSimpleTable Dense="true" Hover="true" Bordered="true">
+                            <thead>
+                                <tr>
+                                    <th>Charge Type</th>
+                                    <th style="text-align:right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (_invoice.KWhUsed > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.Bolt" Size="Size.Small" Class="mr-2" />
+                                            Usage (@_invoice.KWhUsed.ToString("N2") kWh)
+                                        </td>
+                                        <td style="text-align:right">@_invoice.UsageCharge.ToString("N2")</td>
+                                    </tr>
+                                }
+                                @if (_invoice.BasicServiceCharge > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.Build" Size="Size.Small" Class="mr-2" />
+                                            Basic Service Charge
+                                        </td>
+                                        <td style="text-align:right">@_invoice.BasicServiceCharge.ToString("N2")</td>
+                                    </tr>
+                                }
+                                @if (_invoice.DemandCharge is > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" Class="mr-2" />
+                                            Demand Charge
+                                        </td>
+                                        <td style="text-align:right">@_invoice.DemandCharge.Value.ToString("N2")</td>
+                                    </tr>
+                                }
+                                @if (_invoice.OtherCharges > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.AddCircle" Size="Size.Small" Class="mr-2" />
+                                            Other Charges
+                                        </td>
+                                        <td style="text-align:right">@_invoice.OtherCharges.ToString("N2")</td>
+                                    </tr>
+                                }
+                                @if (_invoice.LateFee is > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.Warning" Size="Size.Small" Class="mr-2" />
+                                            Late Fee
+                                        </td>
+                                        <td style="text-align:right">@_invoice.LateFee.Value.ToString("N2")</td>
+                                    </tr>
+                                }
+                                @if (_invoice.ReconnectionFee is > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.PowerSettingsNew" Size="Size.Small" Class="mr-2" />
+                                            Reconnection Fee
+                                        </td>
+                                        <td style="text-align:right">@_invoice.ReconnectionFee.Value.ToString("N2")</td>
+                                    </tr>
+                                }
+                                @if (_invoice.DepositAmount is > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.Savings" Size="Size.Small" Class="mr-2" />
+                                            Deposit Amount
+                                        </td>
+                                        <td style="text-align:right">@_invoice.DepositAmount.Value.ToString("N2")</td>
+                                    </tr>
+                                }
+                                @if (_invoice.TaxAmount > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <MudIcon Icon="@Icons.Material.Filled.Percent" Size="Size.Small" Class="mr-2" />
+                                            Tax
+                                        </td>
+                                        <td style="text-align:right">@_invoice.TaxAmount.ToString("N2")</td>
+                                    </tr>
+                                }
+                                <tr style="font-weight:bold; background-color: #f5f5f5;">
+                                    <td>TOTAL AMOUNT</td>
+                                    <td style="text-align:right">@_invoice.TotalAmount.ToString("N2")</td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudPaper>
+                </MudItem>
+
+                @if (_lineItems.Any())
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="1" Class="pa-3">
+                            <MudText Typo="Typo.h6" Class="mb-3">Invoice Line Items</MudText>
+                            <MudTable Items="@_lineItems" Dense="true" Hover="true" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh>Description</MudTh>
+                                    <MudTh>Account</MudTh>
+                                    <MudTh Style="text-align:right">Quantity</MudTh>
+                                    <MudTh Style="text-align:right">Unit Price</MudTh>
+                                    <MudTh Style="text-align:right">Total</MudTh>
+                                </HeaderContent>
+                                <RowTemplate Context="line">
+                                    <MudTd>@line.Description</MudTd>
+                                    <MudTd>@line.AccountCode - @line.AccountName</MudTd>
+                                    <MudTd Style="text-align:right">@line.Quantity.ToString("N4")</MudTd>
+                                    <MudTd Style="text-align:right">@line.UnitPrice.ToString("N2")</MudTd>
+                                    <MudTd Style="text-align:right"><strong>@line.TotalPrice.ToString("N2")</strong></MudTd>
+                                </RowTemplate>
+                                <FooterContent>
+                                    <MudTd colspan="4"><strong>LINE ITEMS TOTAL</strong></MudTd>
+                                    <MudTd Style="text-align:right"><strong>@_lineItems.Sum(l => l.TotalPrice).ToString("N2")</strong></MudTd>
+                                </FooterContent>
+                            </MudTable>
+                        </MudPaper>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(_invoice.Description))
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="1" Class="pa-3">
+                            <MudText Typo="Typo.h6" Class="mb-2">Description</MudText>
+                            <MudText>@_invoice.Description</MudText>
+                        </MudPaper>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(_invoice.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="1" Class="pa-3">
+                            <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
+                            <MudText>@_invoice.Notes</MudText>
+                        </MudPaper>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Failed to load invoice details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Close</MudButton>
+        @if (_invoice is not null && _invoice.Status == "Draft")
+        {
+            <MudButton Color="Color.Info" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Send" OnClick="OnSendInvoice">
+                Send Invoice
+            </MudButton>
+        }
+        @if (_invoice is not null && _invoice.Status != "Paid")
+        {
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Print" OnClick="OnPrint">
+                Print
+            </MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+

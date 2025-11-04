@@ -31,7 +31,7 @@ public partial class CycleCounts
             [
                 new EntityField<CycleCountResponse>(x => x.CountNumber, "Count #", "CountNumber"),
                 new EntityField<CycleCountResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
-                new EntityField<CycleCountResponse>(x => x.CountDate, "Count Date", "CountDate", typeof(DateTime)),
+                new EntityField<CycleCountResponse>(x => x.CountDate, "Count Date", "CountDate", typeof(DateOnly)),
                 new EntityField<CycleCountResponse>(x => x.Status, "Status", "Status"),
                 new EntityField<CycleCountResponse>(x => x.CountType, "Type", "CountType"),
                 new EntityField<CycleCountResponse>(x => x.TotalItems, "Total Items", "TotalItems", typeof(int)),

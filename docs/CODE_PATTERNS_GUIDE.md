@@ -456,7 +456,7 @@ public partial class DebitMemos
             entityResource: FshResources.Accounting,
             fields: [
                 new EntityField<DebitMemoResponse>(response => response.MemoNumber, "Memo Number", "MemoNumber"),
-                new EntityField<DebitMemoResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateTime)),
+                new EntityField<DebitMemoResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateOnly)),
                 new EntityField<DebitMemoResponse>(response => response.Amount, "Amount", "Amount", typeof(decimal)),
                 new EntityField<DebitMemoResponse>(response => response.Status, "Status", "Status"),
                 new EntityField<DebitMemoResponse>(response => response.ApprovalStatus, "Approval", "ApprovalStatus"),

@@ -1,0 +1,135 @@
+@* 
+    Invoice Line Item Editor Component
+    Provides inline editing of invoice line items with real-time total calculation
+*@
+
+<MudTable Items="@Lines" Dense="true" Hover="true" Elevation="0" Class="mb-3">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Invoice Line Items</MudText>
+        <MudSpacer />
+        <MudButton StartIcon="@Icons.Material.Filled.Add"
+                   Color="Color.Primary"
+                   Size="Size.Small"
+                   OnClick="AddLine"
+                   Disabled="@IsReadOnly">
+            Add Line Item
+        </MudButton>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Description</MudTh>
+        <MudTh Style="width:250px;">Account</MudTh>
+        <MudTh Style="text-align:right; width:120px;">Quantity</MudTh>
+        <MudTh Style="text-align:right; width:120px;">Unit Price</MudTh>
+        <MudTh Style="text-align:right; width:120px;">Total</MudTh>
+        @if (!IsReadOnly)
+        {
+            <MudTh Style="width:80px;">Actions</MudTh>
+        }
+    </HeaderContent>
+    <RowTemplate Context="line">
+        <MudTd DataLabel="Description">
+            @if (IsReadOnly)
+            {
+                <span>@line.Description</span>
+            }
+            else
+            {
+                <MudTextField @bind-Value="line.Description"
+                             Variant="Variant.Outlined"
+                             Margin="Margin.Dense"
+                             MaxLength="500"
+                             Required="true" />
+            }
+        </MudTd>
+        <MudTd DataLabel="Account">
+            @if (IsReadOnly)
+            {
+                <span>@line.AccountCode - @line.AccountName</span>
+            }
+            else
+            {
+                <AutocompleteChartOfAccountId @bind-Value="line.AccountId"
+                                              For="@(()=>line.AccountId)"
+                                              Label=""
+                                              Variant="Variant.Outlined"
+                                              Margin="Margin.Dense"
+                                              TextFormat="CodeName" />
+            }
+        </MudTd>
+        <MudTd DataLabel="Quantity" Style="text-align:right">
+            @if (IsReadOnly)
+            {
+                <span>@line.Quantity.ToString("N4")</span>
+            }
+            else
+            {
+                <MudNumericField T="decimal"
+                                Value="line.Quantity"
+                                Format="N4"
+                                Variant="Variant.Outlined"
+                                Margin="Margin.Dense"
+                                Min="0.0001m"
+                                Adornment="Adornment.Start"
+                                AdornmentIcon="@Icons.Material.Filled.Tag"
+                                ValueChanged="@((decimal val) => { line.Quantity = val; line.CalculateTotal(); LinesChanged.InvokeAsync(Lines); })" />
+            }
+        </MudTd>
+        <MudTd DataLabel="Unit Price" Style="text-align:right">
+            @if (IsReadOnly)
+            {
+                <span>@line.UnitPrice.ToString("N2")</span>
+            }
+            else
+            {
+                <MudNumericField T="decimal"
+                                Value="line.UnitPrice"
+                                Format="N2"
+                                Variant="Variant.Outlined"
+                                Margin="Margin.Dense"
+                                Min="0"
+                                Adornment="Adornment.Start"
+                                AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                                ValueChanged="@((decimal val) => { line.UnitPrice = val; line.CalculateTotal(); LinesChanged.InvokeAsync(Lines); })" />
+            }
+        </MudTd>
+        <MudTd DataLabel="Total" Style="text-align:right">
+            <strong>@line.TotalPrice.ToString("N2")</strong>
+        </MudTd>
+        @if (!IsReadOnly)
+        {
+            <MudTd DataLabel="Actions">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                              Color="Color.Error"
+                              Size="Size.Small"
+                              OnClick="@(() => RemoveLine(line))" />
+            </MudTd>
+        }
+    </RowTemplate>
+    <FooterContent>
+        <MudTd colspan="4"><strong>LINE ITEMS TOTAL</strong></MudTd>
+        <MudTd Style="text-align:right"><strong>@TotalAmount.ToString("N2")</strong></MudTd>
+        @if (!IsReadOnly)
+        {
+            <MudTd></MudTd>
+        }
+    </FooterContent>
+</MudTable>
+
+@if (Lines.Count == 0)
+{
+    <MudAlert Severity="Severity.Info" Dense="true">
+        Click "Add Line Item" to start adding items to this invoice. Line items are optional for utility invoices with automatic charges.
+    </MudAlert>
+}
+else if (!IsReadOnly)
+{
+    <MudAlert Severity="Severity.Success" Dense="true" Class="mt-2">
+        <div class="d-flex justify-space-between align-center">
+            <div>
+                <strong>Line Items:</strong> @Lines.Count &nbsp;&nbsp;
+                <strong>Total Amount:</strong> @TotalAmount.ToString("N2")
+            </div>
+        </div>
+    </MudAlert>
+}
+

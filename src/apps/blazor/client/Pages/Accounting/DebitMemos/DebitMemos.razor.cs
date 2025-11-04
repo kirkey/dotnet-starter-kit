@@ -47,7 +47,7 @@ public partial class DebitMemos
             fields:
             [
                 new EntityField<DebitMemoResponse>(response => response.MemoNumber, "Memo Number", "MemoNumber"),
-                new EntityField<DebitMemoResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateTime)),
+                new EntityField<DebitMemoResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateOnly)),
                 new EntityField<DebitMemoResponse>(response => response.Amount, "Amount", "Amount", typeof(decimal)),
                 new EntityField<DebitMemoResponse>(response => response.AppliedAmount, "Applied", "AppliedAmount", typeof(decimal)),
                 new EntityField<DebitMemoResponse>(response => response.UnappliedAmount, "Unapplied", "UnappliedAmount", typeof(decimal)),

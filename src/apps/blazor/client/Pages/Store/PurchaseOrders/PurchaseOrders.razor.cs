@@ -26,10 +26,10 @@ public partial class PurchaseOrders
             [
                 new EntityField<PurchaseOrderResponse>(x => x.OrderNumber, "Order Number", "OrderNumber"),
                 new EntityField<PurchaseOrderResponse>(x => x.SupplierId, "Supplier ID", "SupplierId"),
-                new EntityField<PurchaseOrderResponse>(x => x.OrderDate, "Order Date", "OrderDate", typeof(DateTime)),
+                new EntityField<PurchaseOrderResponse>(x => x.OrderDate, "Order Date", "OrderDate", typeof(DateOnly)),
                 new EntityField<PurchaseOrderResponse>(x => x.Status, "Status", "Status"),
                 new EntityField<PurchaseOrderResponse>(x => x.TotalAmount, "Total Amount", "TotalAmount", typeof(decimal)),
-                new EntityField<PurchaseOrderResponse>(x => x.ExpectedDeliveryDate, "Expected Delivery", "ExpectedDeliveryDate", typeof(DateTime?)),
+                new EntityField<PurchaseOrderResponse>(x => x.ExpectedDeliveryDate, "Expected Delivery", "ExpectedDeliveryDate", typeof(DateOnly?)),
                 new EntityField<PurchaseOrderResponse>(x => x.IsUrgent, "Urgent", "IsUrgent", typeof(bool))
             ],
             enableAdvancedSearch: true,
@@ -108,7 +108,7 @@ public partial class PurchaseOrders
         var dialog = await DialogService.ShowAsync<PurchaseOrderDetailsDialog>("Purchase Order Details", parameters, options);
         var result = await dialog.Result;
 
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             // Reload the table to reflect any changes made in the dialog
             await _table.ReloadDataAsync();

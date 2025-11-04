@@ -50,7 +50,7 @@ public partial class CreditMemos
             fields:
             [
                 new EntityField<CreditMemoResponse>(response => response.MemoNumber, "Memo Number", "MemoNumber"),
-                new EntityField<CreditMemoResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateTime)),
+                new EntityField<CreditMemoResponse>(response => response.MemoDate, "Date", "MemoDate", typeof(DateOnly)),
                 new EntityField<CreditMemoResponse>(response => response.Amount, "Amount", "Amount", typeof(decimal)),
                 new EntityField<CreditMemoResponse>(response => response.AppliedAmount, "Applied", "AppliedAmount", typeof(decimal)),
                 new EntityField<CreditMemoResponse>(response => response.RefundedAmount, "Refunded", "RefundedAmount", typeof(decimal)),

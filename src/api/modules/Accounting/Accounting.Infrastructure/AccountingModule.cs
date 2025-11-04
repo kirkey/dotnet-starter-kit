@@ -10,7 +10,6 @@ using Accounting.Infrastructure.Endpoints.BankReconciliations;
 using Accounting.Infrastructure.Endpoints.Banks;
 using Accounting.Infrastructure.Endpoints.Billing;
 using Accounting.Infrastructure.Endpoints.Bills;
-using Accounting.Infrastructure.Endpoints.Bills.LineItems;
 using Accounting.Infrastructure.Endpoints.BudgetDetails;
 using Accounting.Infrastructure.Endpoints.Budgets;
 using Accounting.Infrastructure.Endpoints.ChartOfAccounts;

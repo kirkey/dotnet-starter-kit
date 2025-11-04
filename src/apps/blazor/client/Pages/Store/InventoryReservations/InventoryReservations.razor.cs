@@ -36,8 +36,8 @@ public partial class InventoryReservations
                 new EntityField<InventoryReservationResponse>(x => x.ReservedQuantity, "Qty Reserved", "ReservedQuantity", typeof(decimal)),
                 new EntityField<InventoryReservationResponse>(x => x.ReferenceType, "Type", "ReferenceType"),
                 new EntityField<InventoryReservationResponse>(x => x.Status, "Status", "Status"),
-                new EntityField<InventoryReservationResponse>(x => x.ReservationDate, "Reserved On", "ReservationDate", typeof(DateTime)),
-                new EntityField<InventoryReservationResponse>(x => x.ExpirationDate, "Expires", "ExpirationDate", typeof(DateTime?))
+                new EntityField<InventoryReservationResponse>(x => x.ReservationDate, "Reserved On", "ReservationDate", typeof(DateOnly)),
+                new EntityField<InventoryReservationResponse>(x => x.ExpirationDate, "Expires", "ExpirationDate", typeof(DateOnly?))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

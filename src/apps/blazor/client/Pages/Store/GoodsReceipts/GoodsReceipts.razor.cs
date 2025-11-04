@@ -27,7 +27,7 @@ public partial class GoodsReceipts
             fields:
             [
                 new EntityField<GoodsReceiptResponse>(x => x.ReceiptNumber, "Receipt #", "ReceiptNumber"),
-                new EntityField<GoodsReceiptResponse>(x => x.ReceivedDate, "Received Date", "ReceivedDate", typeof(DateTime)),
+                new EntityField<GoodsReceiptResponse>(x => x.ReceivedDate, "Received Date", "ReceivedDate", typeof(DateOnly)),
                 new EntityField<GoodsReceiptResponse>(x => x.Status, "Status", "Status"),
                 new EntityField<GoodsReceiptResponse>(x => x.PurchaseOrderId, "PO", "PurchaseOrderId"),
                 new EntityField<GoodsReceiptResponse>(x => x.ItemCount, "Items", "ItemCount", typeof(int)),
