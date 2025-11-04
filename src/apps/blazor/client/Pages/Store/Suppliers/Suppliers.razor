@@ -28,17 +28,16 @@
         <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Phone" For="@(() => context.Phone)" @bind-Value="context.Phone" Required="true" Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="12">
+        <MudItem xs="12" lg="10">
             <MudTextField Label="Address" For="@(() => context.Address)" @bind-Value="context.Address" Required="true" Variant="Variant.Filled" />
         </MudItem>
-
-        <MudItem xs="12" sm="6" md="4" lg="3">
+        <MudItem xs="6" sm="4" md="3" lg="2">
             <MudTextField Label="Postal Code" For="@(() => context.PostalCode)" @bind-Value="context.PostalCode" Variant="Variant.Text" />
         </MudItem>
         <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Website" For="@(() => context.Website)" @bind-Value="context.Website" Variant="Variant.Text" />
         </MudItem>
-
+        <MudDivider/>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="decimal?" @bind-Value="context.CreditLimit" For="@(() => context.CreditLimit)" Format="N2" Label="Credit Limit" Immediate="true" Variant="Variant.Text" />
         </MudItem>

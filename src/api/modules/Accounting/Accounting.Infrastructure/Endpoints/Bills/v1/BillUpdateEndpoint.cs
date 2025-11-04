@@ -30,7 +30,7 @@ public static class BillUpdateEndpoint
             .Produces<UpdateBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.Edit")
+            .RequirePermission("Permissions.Accounting.Edit")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

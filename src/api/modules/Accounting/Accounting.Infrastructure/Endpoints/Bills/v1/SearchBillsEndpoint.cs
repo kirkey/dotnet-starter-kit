@@ -22,7 +22,7 @@ public static class SearchBillsEndpoint
             .WithDescription("Search and filter bills with pagination.")
             .Produces<PagedList<BillResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Bills.View")
+            .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

@@ -26,7 +26,7 @@ public static class PostBillEndpoint
             .Produces<PostBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.Post")
+            .RequirePermission("Permissions.Accounting.Post")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

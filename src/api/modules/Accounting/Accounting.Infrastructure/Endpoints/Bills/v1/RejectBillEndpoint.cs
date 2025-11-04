@@ -26,7 +26,7 @@ public static class RejectBillEndpoint
             .Produces<RejectBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.Reject")
+            .RequirePermission("Permissions.Accounting.Reject")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

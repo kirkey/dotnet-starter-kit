@@ -26,7 +26,7 @@ public static class MarkBillAsPaidEndpoint
             .Produces<MarkBillAsPaidResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.MarkPaid")
+            .RequirePermission("Permissions.Accounting.MarkPaid")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

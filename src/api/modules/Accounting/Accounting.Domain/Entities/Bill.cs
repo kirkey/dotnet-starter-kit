@@ -129,11 +129,7 @@ public class Bill : AuditableEntity, IAggregateRoot
     /// </summary>
     public string? PurchaseOrderNumber { get; private set; }
 
-    /// <summary>
-    /// Additional notes or comments about the bill.
-    /// Example: "Includes shipping charges", "Partial delivery".
-    /// </summary>
-    public string? Notes { get; private set; }
+    // Description and Notes properties are inherited from AuditableEntity base class
 
     private readonly List<BillLineItem> _lineItems = new();
     /// <summary>

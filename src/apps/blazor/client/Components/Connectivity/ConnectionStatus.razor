@@ -26,13 +26,14 @@
     {
         if (MessagingConnection is not null)
         {
+            // Set initial state from the cascading parameter
             SetConnectionState(MessagingConnection.ConnectionState, MessagingConnection.ConnectionId);
 
             // Subscribe to connection state changes
             Courier.SubscribeWeak<NotificationWrapper<ConnectionStateChanged>>(wrapper =>
             {
                 SetConnectionState(wrapper.Notification.State, wrapper.Notification.Message);
-                StateHasChanged();
+                // StateHasChanged is called inside SetConnectionState
             });
         }
     }
@@ -44,29 +45,28 @@
     /// <param name="message">The status message or connection ID.</param>
     private void SetConnectionState(ConnectionState state, string? message)
     {
-        switch (state)
+        (TooltipText, Icon, IconColor) = state switch
         {
-            case ConnectionState.Connected:
-                TooltipText = $"Connected to Messaging Server (ID: {message})";
-                Icon = Icons.Material.Filled.SignalWifiStatusbar4Bar;
-                IconColor = Color.Success;
-                break;
-
-            case ConnectionState.Connecting:
-                TooltipText = $"Connecting to server... ({message})";
-                Icon = Icons.Material.Filled.SignalWifiStatusbarConnectedNoInternet4;
-                IconColor = Color.Warning;
-                break;
-
-            case ConnectionState.Disconnected:
-                TooltipText = $"Disconnected from server ({message})";
-                Icon = Icons.Material.Filled.SignalWifiOff;
-                IconColor = Color.Error;
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException(nameof(state), state, null);
-        }
+            ConnectionState.Connected =>
+            (
+                $"Connected to Messaging Server (ID: {message})",
+                Icons.Material.Filled.SignalWifiStatusbar4Bar,
+                Color.Success
+            ),
+            ConnectionState.Connecting =>
+            (
+                $"Connecting to server... ({message})",
+                Icons.Material.Filled.SignalWifiStatusbarConnectedNoInternet4,
+                Color.Warning
+            ),
+            ConnectionState.Disconnected =>
+            (
+                $"Disconnected from server ({message})",
+                Icons.Material.Filled.SignalWifiOff,
+                Color.Error
+            ),
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
+        };
 
         StateHasChanged();
     }

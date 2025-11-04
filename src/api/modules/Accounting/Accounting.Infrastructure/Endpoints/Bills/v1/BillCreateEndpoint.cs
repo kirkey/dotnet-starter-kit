@@ -25,7 +25,7 @@ public static class BillCreateEndpoint
             .Produces<BillCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Bills.Create")
+            .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

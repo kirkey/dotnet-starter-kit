@@ -23,7 +23,7 @@ public static class DeleteBillEndpoint
             .Produces<DeleteBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.Delete")
+            .RequirePermission("Permissions.Accounting.Delete")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

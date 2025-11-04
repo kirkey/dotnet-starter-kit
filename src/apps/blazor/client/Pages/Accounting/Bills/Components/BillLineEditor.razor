@@ -95,7 +95,7 @@
         <MudTd DataLabel="Unit Price" Style="text-align:right">
             @if (IsReadOnly)
             {
-                <span>@line.UnitPrice.ToString("C2")</span>
+                <span>@line.UnitPrice.ToString("N2")</span>
             }
             else
             {
@@ -111,12 +111,12 @@
             }
         </MudTd>
         <MudTd DataLabel="Amount" Style="text-align:right">
-            <strong>@line.Amount.ToString("C2")</strong>
+            <strong>@line.Amount.ToString("N2")</strong>
         </MudTd>
         <MudTd DataLabel="Tax" Style="text-align:right">
             @if (IsReadOnly)
             {
-                <span>@line.TaxAmount.ToString("C2")</span>
+                <span>@line.TaxAmount.ToString("N2")</span>
             }
             else
             {
@@ -143,8 +143,8 @@
     </RowTemplate>
     <FooterContent>
         <MudTd colspan="5"><strong>TOTALS</strong></MudTd>
-        <MudTd Style="text-align:right"><strong>@SubtotalAmount.ToString("C2")</strong></MudTd>
-        <MudTd Style="text-align:right"><strong>@TotalTax.ToString("C2")</strong></MudTd>
+        <MudTd Style="text-align:right"><strong>@SubtotalAmount.ToString("N2")</strong></MudTd>
+        <MudTd Style="text-align:right"><strong>@TotalTax.ToString("N2")</strong></MudTd>
         @if (!IsReadOnly)
         {
             <MudTd></MudTd>
@@ -164,9 +164,9 @@ else if (!IsReadOnly)
         <div class="d-flex justify-space-between align-center">
             <div>
                 <strong>Line Items:</strong> @Lines.Count &nbsp;&nbsp;
-                <strong>Subtotal:</strong> @SubtotalAmount.ToString("C2") &nbsp;&nbsp;
-                <strong>Tax:</strong> @TotalTax.ToString("C2") &nbsp;&nbsp;
-                <strong>Total Amount:</strong> @TotalAmount.ToString("C2")
+                <strong>Subtotal:</strong> @SubtotalAmount.ToString("N2") &nbsp;&nbsp;
+                <strong>Tax:</strong> @TotalTax.ToString("N2") &nbsp;&nbsp;
+                <strong>Total Amount:</strong> @TotalAmount.ToString("N2")
             </div>
         </div>
     </MudAlert>

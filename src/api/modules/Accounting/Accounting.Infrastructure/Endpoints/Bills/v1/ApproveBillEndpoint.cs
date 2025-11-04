@@ -26,7 +26,7 @@ public static class ApproveBillEndpoint
             .Produces<ApproveBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.Approve")
+            .RequirePermission("Permissions.Accounting.Approve")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

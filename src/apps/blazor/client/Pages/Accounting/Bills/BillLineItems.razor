@@ -33,9 +33,9 @@
             }
         </MudTd>
         <MudTd DataLabel="Quantity" Style="text-align: right">@context.Quantity.ToString("N4")</MudTd>
-        <MudTd DataLabel="Unit Price" Style="text-align: right">@context.UnitPrice.ToString("C2")</MudTd>
-        <MudTd DataLabel="Amount" Style="text-align: right">@context.Amount.ToString("C2")</MudTd>
-        <MudTd DataLabel="Tax" Style="text-align: right">@context.TaxAmount.ToString("C2")</MudTd>
+        <MudTd DataLabel="Unit Price" Style="text-align: right">@context.UnitPrice.ToString("N2")</MudTd>
+        <MudTd DataLabel="Amount" Style="text-align: right">@context.Amount.ToString("N2")</MudTd>
+        <MudTd DataLabel="Tax" Style="text-align: right">@context.TaxAmount.ToString("N2")</MudTd>
         <MudTd DataLabel="Notes">@context.Notes</MudTd>
         @if (!IsPosted && !IsPaid)
         {
@@ -50,8 +50,8 @@
     </NoRecordsContent>
     <FooterContent>
         <MudTd colspan="5" Style="text-align: right; font-weight: bold;">Total:</MudTd>
-        <MudTd Style="text-align: right; font-weight: bold;">@_items.Sum(x => x.Amount).ToString("C2")</MudTd>
-        <MudTd Style="text-align: right; font-weight: bold;">@_items.Sum(x => x.TaxAmount).ToString("C2")</MudTd>
+        <MudTd Style="text-align: right; font-weight: bold;">@_items.Sum(x => x.Amount).ToString("N2")</MudTd>
+        <MudTd Style="text-align: right; font-weight: bold;">@_items.Sum(x => x.TaxAmount).ToString("N2")</MudTd>
         <MudTd colspan="2"></MudTd>
     </FooterContent>
 </MudTable>

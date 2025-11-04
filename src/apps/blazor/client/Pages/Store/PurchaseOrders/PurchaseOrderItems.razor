@@ -24,9 +24,9 @@
         <MudTd DataLabel="Item">@context.ItemName</MudTd>
         <MudTd DataLabel="SKU">@context.ItemSku</MudTd>
         <MudTd DataLabel="Quantity" Style="text-align: right">@context.Quantity</MudTd>
-        <MudTd DataLabel="Unit Price" Style="text-align: right">@context.UnitPrice.ToString("C2")</MudTd>
-        <MudTd DataLabel="Discount" Style="text-align: right">@context.DiscountAmount.ToString("C2")</MudTd>
-        <MudTd DataLabel="Total" Style="text-align: right">@context.TotalPrice.ToString("C2")</MudTd>
+        <MudTd DataLabel="Unit Price" Style="text-align: right">@context.UnitPrice.ToString("N2")</MudTd>
+        <MudTd DataLabel="Discount" Style="text-align: right">@context.DiscountAmount.ToString("N2")</MudTd>
+        <MudTd DataLabel="Total" Style="text-align: right">@context.TotalPrice.ToString("N2")</MudTd>
         <MudTd DataLabel="Received" Style="text-align: right">@context.ReceivedQuantity</MudTd>
         <MudTd DataLabel="Notes">@context.Notes</MudTd>
         <MudTd DataLabel="Actions" Style="text-align: center">

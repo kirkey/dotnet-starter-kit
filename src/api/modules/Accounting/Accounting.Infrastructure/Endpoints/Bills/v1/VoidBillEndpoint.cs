@@ -26,7 +26,7 @@ public static class VoidBillEndpoint
             .Produces<VoidBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.Void")
+            .RequirePermission("Permissions.Accounting.Void")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

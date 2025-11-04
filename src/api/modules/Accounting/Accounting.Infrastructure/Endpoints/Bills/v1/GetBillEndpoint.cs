@@ -21,7 +21,7 @@ public static class GetBillEndpoint
             .WithDescription("Retrieves a bill with all line items.")
             .Produces<BillResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Bills.View")
+            .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

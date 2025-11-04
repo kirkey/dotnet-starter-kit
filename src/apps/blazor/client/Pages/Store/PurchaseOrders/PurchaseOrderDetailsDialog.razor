@@ -44,19 +44,19 @@
                                 }
                                 <tr>
                                     <td style="font-weight: 500;">Total Amount</td>
-                                    <td><strong>@_purchaseOrder.TotalAmount.ToString("C2")</strong></td>
+                                    <td><strong>@_purchaseOrder.TotalAmount.ToString("N2")</strong></td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: 500;">Tax Amount</td>
-                                    <td>@_purchaseOrder.TaxAmount.ToString("C2")</td>
+                                    <td>@_purchaseOrder.TaxAmount.ToString("N2")</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: 500;">Discount Amount</td>
-                                    <td>@_purchaseOrder.DiscountAmount.ToString("C2")</td>
+                                    <td>@_purchaseOrder.DiscountAmount.ToString("N2")</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: 500;">Net Amount</td>
-                                    <td><strong>@_purchaseOrder.NetAmount.ToString("C2")</strong></td>
+                                    <td><strong>@_purchaseOrder.NetAmount.ToString("N2")</strong></td>
                                 </tr>
                                 @if (!string.IsNullOrEmpty(_purchaseOrder.DeliveryAddress))
                                 {

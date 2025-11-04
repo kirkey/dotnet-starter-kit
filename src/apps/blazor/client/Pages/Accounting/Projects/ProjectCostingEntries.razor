@@ -22,7 +22,7 @@
             <MudTd DataLabel="Entry Date">@context.EntryDate?.ToString("MM/dd/yyyy")</MudTd>
             <MudTd DataLabel="Description">@context.Description</MudTd>
             <MudTd DataLabel="Category">@context.Category</MudTd>
-            <MudTd DataLabel="Amount">@context.Amount.ToString("C2")</MudTd>
+            <MudTd DataLabel="Amount">@context.Amount.ToString("N2")</MudTd>
             <MudTd DataLabel="Vendor">@context.Vendor</MudTd>
             <MudTd DataLabel="Billable">
                 @if (context.IsBillable)

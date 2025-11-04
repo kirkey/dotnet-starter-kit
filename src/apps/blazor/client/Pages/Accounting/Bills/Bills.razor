@@ -243,9 +243,9 @@
                     <div class="d-flex justify-space-between align-center">
                         <div>
                             <strong>Line Items:</strong> @context.LineItems.Count &nbsp;&nbsp;
-                            <strong>Subtotal:</strong> @context.SubtotalAmount.ToString("C2") &nbsp;&nbsp;
-                            <strong>Tax:</strong> @context.TotalTaxAmount.ToString("C2") &nbsp;&nbsp;
-                            <strong>Total:</strong> @context.CalculatedTotal.ToString("C2")
+                            <strong>Subtotal:</strong> @context.SubtotalAmount.ToString("N2") &nbsp;&nbsp;
+                            <strong>Tax:</strong> @context.TotalTaxAmount.ToString("N2") &nbsp;&nbsp;
+                            <strong>Total:</strong> @context.CalculatedTotal.ToString("N2")
                         </div>
                         <div>
                             @if (context.LineItems.Count > 0)
