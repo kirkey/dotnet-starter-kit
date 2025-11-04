@@ -125,4 +125,24 @@ public class InvoiceResponse
     /// Additional notes or comments about the invoice.
     /// </summary>
     public string? Notes { get; set; }
+    
+    /// <summary>
+    /// Outstanding amount still due (TotalAmount - PaidAmount).
+    /// </summary>
+    public decimal OutstandingAmount { get; set; }
+    
+    /// <summary>
+    /// Number of line items associated with this invoice.
+    /// </summary>
+    public int LineItemCount { get; set; }
+    
+    /// <summary>
+    /// Date when the invoice record was created.
+    /// </summary>
+    public DateTimeOffset? CreatedOn { get; set; }
+    
+    /// <summary>
+    /// Date when the invoice record was last modified.
+    /// </summary>
+    public DateTimeOffset? LastModifiedOn { get; set; }
 }

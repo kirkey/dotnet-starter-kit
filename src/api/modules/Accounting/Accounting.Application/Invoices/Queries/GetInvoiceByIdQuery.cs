@@ -2,7 +2,8 @@ using Accounting.Application.Invoices.Responses;
 
 namespace Accounting.Application.Invoices.Queries;
 
-public class GetInvoiceByIdQuery : IRequest<InvoiceResponse>
-{
-    public DefaultIdType Id { get; set; }
-}
+/// <summary>
+/// Query to get a specific invoice by ID.
+/// </summary>
+/// <param name="Id">Invoice identifier.</param>
+public sealed record GetInvoiceByIdQuery(DefaultIdType Id) : IRequest<InvoiceResponse>;

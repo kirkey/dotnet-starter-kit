@@ -1,3 +1,6 @@
+using Accounting.Infrastructure.Endpoints.Invoice.LineItems.v1;
+using Accounting.Infrastructure.Endpoints.Invoice.v1;
+
 namespace Accounting.Infrastructure.Endpoints.Invoice;
 
 /// <summary>
@@ -12,12 +15,28 @@ public static class InvoiceEndpoints
     {
         var invoiceGroup = app.MapGroup("/invoices")
             .WithTags("Invoices")
-            .WithDescription("Endpoints for managing invoices");
+            .WithDescription("Endpoints for managing customer invoices");
 
-        // Version 1 endpoints
-        // invoiceGroup.MapInvoiceGetEndpoint();
-        // invoiceGroup.MapInvoiceSearchEndpoint();
-        // invoiceGroup.MapInvoiceDeleteEndpoint();
+        // Invoice CRUD endpoints
+        invoiceGroup.MapInvoiceCreateEndpoint();
+        invoiceGroup.MapUpdateInvoiceEndpoint();
+        invoiceGroup.MapDeleteInvoiceEndpoint();
+        invoiceGroup.MapGetInvoiceEndpoint();
+        invoiceGroup.MapSearchInvoicesEndpoint();
+
+        // Invoice workflow endpoints
+        invoiceGroup.MapSendInvoiceEndpoint();
+        invoiceGroup.MapMarkInvoiceAsPaidEndpoint();
+        invoiceGroup.MapApplyInvoicePaymentEndpoint();
+        invoiceGroup.MapCancelInvoiceEndpoint();
+        invoiceGroup.MapVoidInvoiceEndpoint();
+
+        // Invoice line items endpoints (nested under invoices)
+        invoiceGroup.MapAddInvoiceLineItemEndpoint();
+        invoiceGroup.MapUpdateInvoiceLineItemEndpoint();
+        invoiceGroup.MapDeleteInvoiceLineItemEndpoint();
+        invoiceGroup.MapGetInvoiceLineItemEndpoint();
+        invoiceGroup.MapGetInvoiceLineItemsEndpoint();
 
         return app;
     }

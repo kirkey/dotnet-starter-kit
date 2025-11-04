@@ -1,5 +1,4 @@
 using Accounting.Application.Bills.Update.v1;
-using Asp.Versioning;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 

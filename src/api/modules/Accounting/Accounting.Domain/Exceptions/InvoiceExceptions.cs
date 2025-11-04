@@ -5,6 +5,11 @@ namespace Accounting.Domain.Exceptions;
 /// <summary>
 /// Exception thrown when an invoice is not found by ID.
 /// </summary>
+public sealed class InvoiceNotFoundException(DefaultIdType id) : NotFoundException($"invoice with id {id} not found");
+
+/// <summary>
+/// Exception thrown when an invoice is not found by ID.
+/// </summary>
 public sealed class InvoiceByIdNotFoundException(DefaultIdType id) : NotFoundException($"invoice with id {id} not found");
 
 /// <summary>
@@ -47,3 +52,9 @@ public sealed class CannotVoidPaidInvoiceException(DefaultIdType id) : Forbidden
 /// Exception thrown when the due date is before the invoice date.
 /// </summary>
 public sealed class InvalidDueDateException() : ForbiddenException("due date cannot be before invoice date");
+
+/// <summary>
+/// Exception thrown when an invoice line item is not found by ID.
+/// </summary>
+public sealed class InvoiceLineItemNotFoundException(DefaultIdType id) : NotFoundException($"invoice line item with id {id} not found");
+

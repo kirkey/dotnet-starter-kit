@@ -1,5 +1,4 @@
 using Accounting.Application.Bills.LineItems.Delete.v1;
-using Asp.Versioning;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.LineItems.v1;
 
