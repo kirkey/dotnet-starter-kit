@@ -26,7 +26,6 @@ public partial class ChartOfAccounts
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<SearchChartOfAccountQuery>();
-
                 var result = await Client.ChartOfAccountSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<ChartOfAccountResponse>>();
             },

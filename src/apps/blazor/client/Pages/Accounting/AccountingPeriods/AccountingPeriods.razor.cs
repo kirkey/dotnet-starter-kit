@@ -30,7 +30,6 @@ public partial class AccountingPeriods
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<SearchAccountingPeriodsQuery>();
-
                 var result = await Client.AccountingPeriodSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<AccountingPeriodResponse>>();
             },
