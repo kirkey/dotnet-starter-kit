@@ -125,15 +125,7 @@ public class WriteOff : AuditableEntity, IAggregateRoot
     /// </summary>
     public string? Reason { get; private set; }
 
-    /// <summary>
-    /// Optional detailed description.
-    /// </summary>
-    public new string? Description { get; private set; }
-
-    /// <summary>
-    /// Optional notes about collection attempts or circumstances.
-    /// </summary>
-    public new string? Notes { get; private set; }
+    // Description and Notes properties inherited from AuditableEntity base class
 
     // Parameterless constructor for EF Core
     private WriteOff()

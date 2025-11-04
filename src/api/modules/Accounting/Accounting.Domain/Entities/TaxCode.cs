@@ -41,10 +41,7 @@ public class TaxCode : AuditableEntity, IAggregateRoot
     /// </summary>
     public string Code { get; private set; } = string.Empty;
 
-    /// <summary>
-    /// Tax code name/description.
-    /// </summary>
-    public new string Name { get; private set; } = string.Empty;
+    // Name property inherited from AuditableEntity base class
 
     /// <summary>
     /// Tax type: SalesTax, VAT, GST, UseTax, Excise, Withholding.
@@ -105,16 +102,6 @@ public class TaxCode : AuditableEntity, IAggregateRoot
     /// Optional reporting category for tax returns.
     /// </summary>
     public string? ReportingCategory { get; private set; }
-
-    /// <summary>
-    /// Optional description or usage notes.
-    /// </summary>
-    public new string? Description { get; private set; }
-
-    // Parameterless constructor for EF Core
-    private TaxCode()
-    {
-    }
 
     private TaxCode(
         string code,

@@ -118,15 +118,7 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
     /// </summary>
     public string? StatementNumber { get; private set; }
 
-    /// <summary>
-    /// Optional notes about reconciliation items or discrepancies.
-    /// </summary>
-    public new string? Notes { get; private set; }
-
-    /// <summary>
-    /// Optional description of the reconciliation.
-    /// </summary>
-    public new string? Description { get; private set; }
+    // Description and Notes properties inherited from AuditableEntity base class
 
     // Parameterless constructor for EF Core
     private BankReconciliation()

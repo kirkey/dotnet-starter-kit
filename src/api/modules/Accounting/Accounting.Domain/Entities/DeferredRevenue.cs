@@ -52,10 +52,7 @@ public class DeferredRevenue : AuditableEntity, IAggregateRoot
     /// </summary>
     public decimal Amount { get; private set; }
 
-    /// <summary>
-    /// Optional description for the deferred revenue entry. Hides the base Description.
-    /// </summary>
-    public new string? Description { get; private set; }
+    // Description property inherited from AuditableEntity base class
 
     /// <summary>
     /// Whether the deferred revenue has been recognized.

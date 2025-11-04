@@ -42,10 +42,7 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public string TemplateCode { get; private set; } = string.Empty;
 
-    /// <summary>
-    /// Description of what this recurring entry is for.
-    /// </summary>
-    public new string Description { get; private set; } = string.Empty;
+    // Description property inherited from AuditableEntity base class
 
     /// <summary>
     /// Recurrence frequency: Monthly, Quarterly, Annually, Custom.
@@ -126,16 +123,6 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
     /// Optional memo text for generated entries.
     /// </summary>
     public string? Memo { get; private set; }
-
-    /// <summary>
-    /// Optional notes about the template.
-    /// </summary>
-    public new string? Notes { get; private set; }
-
-    // Parameterless constructor for EF Core
-    private RecurringJournalEntry()
-    {
-    }
 
     private RecurringJournalEntry(
         string templateCode,

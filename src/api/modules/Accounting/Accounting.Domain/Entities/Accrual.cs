@@ -62,14 +62,7 @@ public class Accrual : AuditableEntity, IAggregateRoot
     /// </remarks>
     public decimal Amount { get; private set; }
 
-    /// <summary>
-    /// Optional human-readable description of the accrual (max length = 200).
-    /// </summary>
-    /// <remarks>
-    /// This property hides a base Description property (see <c>new</c>). The description is trimmed
-    /// and truncated to the maximum length. Default (EF parameterless constructor) is empty string.
-    /// </remarks>
-    public new string? Description { get; private set; }
+    // Description property inherited from AuditableEntity base class
 
     /// <summary>
     /// Whether this accrual has been reversed.

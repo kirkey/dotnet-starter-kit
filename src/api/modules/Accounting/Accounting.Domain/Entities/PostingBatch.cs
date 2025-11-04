@@ -58,11 +58,8 @@ public class PostingBatch : AuditableEntity, IAggregateRoot
     /// Workflow status: Draft, Posted, Reversed.
     /// </summary>
     public string Status { get; private set; } // Draft, Posted, Reversed
-    // Hide base Description property with 'new' keyword to resolve warning
-    /// <summary>
-    /// Optional batch description.
-    /// </summary>
-    public new string? Description { get; private set; }
+
+    // Description property inherited from AuditableEntity base class
 
     /// <summary>
     /// Optional accounting period the batch belongs to.

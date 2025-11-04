@@ -39,12 +39,7 @@ public class InvoiceLineItem : AuditableEntity, IAggregateRoot
     /// </summary>
     public DefaultIdType InvoiceId { get; private set; }
 
-    /// <summary>
-    /// Description of the charge, product, or service.
-    /// Example: "Electric service charge", "Maintenance fee", "Equipment rental".
-    /// Max length: 500 characters. Required field.
-    /// </summary>
-    public new string Description { get; private set; } = string.Empty;
+    // Description property inherited from AuditableEntity base class
 
     /// <summary>
     /// Quantity of items or units of service.

@@ -39,10 +39,7 @@ public class CostCenter : AuditableEntity, IAggregateRoot
     /// </summary>
     public string Code { get; private set; } = string.Empty;
 
-    /// <summary>
-    /// Cost center name.
-    /// </summary>
-    public new string Name { get; private set; } = string.Empty;
+    // Name property inherited from AuditableEntity base class
 
     /// <summary>
     /// Cost center type: Department, Division, BusinessUnit, Project, Location.
@@ -93,21 +90,6 @@ public class CostCenter : AuditableEntity, IAggregateRoot
     /// Optional end date when cost center is closed.
     /// </summary>
     public DateTime? EndDate { get; private set; }
-
-    /// <summary>
-    /// Optional description or purpose of the cost center.
-    /// </summary>
-    public new string? Description { get; private set; }
-
-    /// <summary>
-    /// Optional notes about the cost center.
-    /// </summary>
-    public new string? Notes { get; private set; }
-
-    // Parameterless constructor for EF Core
-    private CostCenter()
-    {
-    }
 
     private CostCenter(
         string code,

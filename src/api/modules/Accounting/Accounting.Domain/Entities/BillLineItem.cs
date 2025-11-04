@@ -40,11 +40,7 @@ public class BillLineItem : AuditableEntity, IAggregateRoot
     /// </summary>
     public int LineNumber { get; private set; }
 
-    /// <summary>
-    /// Description of the goods or services.
-    /// Example: "Office Supplies - Paper Reams", "Consulting Services - October".
-    /// </summary>
-    public new string Description { get; private set; }
+    // Description property inherited from AuditableEntity base class
 
     /// <summary>
     /// Quantity of items or units.
@@ -96,19 +92,7 @@ public class BillLineItem : AuditableEntity, IAggregateRoot
     /// Example: links to department for expense allocation.
     /// </summary>
     public DefaultIdType? CostCenterId { get; private set; }
-
-    /// <summary>
-    /// Additional notes for this line item.
-    /// Example: "Approved by manager", "Price includes shipping".
-    /// </summary>
-    public string? Notes { get; private set; }
-
-    // EF Core parameterless constructor
-    private BillLineItem()
-    {
-        Description = string.Empty;
-    }
-
+    
     // Private constructor with required parameters
     private BillLineItem(
         DefaultIdType billId,
