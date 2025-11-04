@@ -28,27 +28,27 @@
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.QuantityOnHand" For="@(() => context.QuantityOnHand)" Format="N0" Label="Quantity On Hand" Min="0" />
+            <MudNumericField T="int" @bind-Value="context.QuantityOnHand" For="@(() => context.QuantityOnHand)" Format="N0" Label="Quantity On Hand" Min="0" Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.QuantityAvailable" For="@(() => context.QuantityAvailable)" Format="N0" Label="Available" Min="0" />
+            <MudNumericField T="int" @bind-Value="context.QuantityAvailable" For="@(() => context.QuantityAvailable)" Format="N0" Label="Available" Min="0" Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.QuantityReserved" For="@(() => context.QuantityReserved)" Format="N0" Label="Reserved" Min="0" ReadOnly />
+            <MudNumericField T="int" @bind-Value="context.QuantityReserved" For="@(() => context.QuantityReserved)" Format="N0" Label="Reserved" Min="0" ReadOnly Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int" @bind-Value="context.QuantityAllocated" For="@(() => context.QuantityAllocated)" Label="Allocated" Min="0" ReadOnly />
+            <MudNumericField T="int" @bind-Value="context.QuantityAllocated" For="@(() => context.QuantityAllocated)" Label="Allocated" Min="0" ReadOnly Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudDatePicker Label="Last Count Date" @bind-Date="context.LastCountDate" For="@(() => context.LastCountDate)" DateFormat="MMMM dd, yyyy" />
+            <MudDatePicker Label="Last Count Date" @bind-Date="context.LastCountDate" For="@(() => context.LastCountDate)" DateFormat="MMMM dd, yyyy" Variant="Variant.Text" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudDatePicker Label="Last Movement Date" @bind-Date="context.LastMovementDate" For="@(() => context.LastMovementDate)" DateFormat="MMMM dd, yyyy" />
+            <MudDatePicker Label="Last Movement Date" @bind-Date="context.LastMovementDate" For="@(() => context.LastMovementDate)" DateFormat="MMMM dd, yyyy" Variant="Variant.Text" />
         </MudItem>
     </EditFormContent>
 

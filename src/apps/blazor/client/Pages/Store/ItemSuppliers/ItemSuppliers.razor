@@ -12,7 +12,7 @@
         }
 
         <MudItem xs="12">
-            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" />
+            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
@@ -28,32 +28,31 @@
             <AutocompleteSupplier Value="context.SupplierId"
                                  For="@(() => context.SupplierId)"
                                  Label="Supplier"
-                                 Variant="Variant.Filled"
-                                 Required="true" />
+                                 Variant="Variant.Text" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="decimal?" @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" Required="true" Min="0" Format="N2" />
+            <MudNumericField T="decimal?" @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" Required="true" Min="0" Format="N2" Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int?" @bind-Value="context.LeadTimeDays" For="@(() => context.LeadTimeDays)" Label="Lead Time (Days)" Required="true" Min="0" />
+            <MudNumericField T="int?" @bind-Value="context.LeadTimeDays" For="@(() => context.LeadTimeDays)" Label="Lead Time (Days)" Required="true" Min="0" Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int?" @bind-Value="context.MinimumOrderQuantity" For="@(() => context.MinimumOrderQuantity)" Label="Min Order Qty" Min="1" />
+            <MudNumericField T="int?" @bind-Value="context.MinimumOrderQuantity" For="@(() => context.MinimumOrderQuantity)" Label="Min Order Qty" Min="1" Variant="Variant.Text" />
         </MudItem>
 
         <MudItem xs="12" md="4">
-            <MudNumericField T="int?" @bind-Value="context.PackagingQuantity" For="@(() => context.PackagingQuantity)" Label="Packaging Qty" Min="1" />
+            <MudNumericField T="int?" @bind-Value="context.PackagingQuantity" For="@(() => context.PackagingQuantity)" Label="Packaging Qty" Min="1" Variant="Variant.Text" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Supplier Part Number" For="@(() => context.SupplierPartNumber)" @bind-Value="context.SupplierPartNumber" />
+            <MudTextField Label="Supplier Part Number" For="@(() => context.SupplierPartNumber)" @bind-Value="context.SupplierPartNumber" Variant="Variant.Text" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="decimal?" @bind-Value="context.ReliabilityRating" For="@(() => context.ReliabilityRating)" Label="Reliability Rating (0-100)" Min="0" Max="100" />
+            <MudNumericField T="decimal?" @bind-Value="context.ReliabilityRating" For="@(() => context.ReliabilityRating)" Label="Reliability Rating (0-100)" Min="0" Max="100" Variant="Variant.Text" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
@@ -65,11 +64,11 @@
         </MudItem>
 
         <MudItem xs="12">
-            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />
+            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" Variant="Variant.Text" />
         </MudItem>
 
         <MudItem xs="12">
-            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
+            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" Variant="Variant.Text" />
         </MudItem>
     </EditFormContent>
 </EntityTable>

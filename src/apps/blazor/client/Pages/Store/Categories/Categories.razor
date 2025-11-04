@@ -14,23 +14,24 @@
         <MudItem xs="12" sm="6" md="4" lg="3">
             <AutocompleteCategoryId @bind-Value="context.ParentCategoryId"
                                     For="@(() => context.ParentCategoryId)"
-                                    Label="Parent Category"/>
+                                    Label="Parent Category"
+                                    Variant="Variant.Text"/>
             
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" />
+            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" />
+            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudNumericField T="int?" Label="Sort Order" @bind-Value="context.SortOrder" Immediate="true" />
+            <MudNumericField T="int?" Label="Sort Order" @bind-Value="context.SortOrder" Immediate="true" Variant="Variant.Text" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <MudSwitch Class="mt-3" T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
         </MudItem>
         <MudItem xs="12">
-            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />
+            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" Variant="Variant.Text" />
         </MudItem>
 
         <!-- Image Management -->
