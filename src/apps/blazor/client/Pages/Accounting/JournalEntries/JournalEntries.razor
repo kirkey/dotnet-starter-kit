@@ -65,7 +65,7 @@
                 Reject
             </MudMenuItem>
         }
-        @if (entry.ApprovalStatus == "Approved" && !entry.IsPosted)
+        @if (entry is { ApprovalStatus: "Approved", IsPosted: false })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.PostAdd" OnClick="@(() => OnPost(entry.Id))">
                 Post to GL

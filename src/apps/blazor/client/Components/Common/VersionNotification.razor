@@ -126,7 +126,7 @@
         {
             var result = await VersionCheckService.InitializeVersionCheckAsync();
 
-            if (result.Success && result.IsNewVersion)
+            if (result is { Success: true, IsNewVersion: true })
             {
                 _currentVersion = result.CurrentVersion;
                 _serverVersion = result.ServerVersion;
@@ -154,7 +154,7 @@
         {
             var result = await VersionCheckService.CheckForNewVersionAsync();
 
-            if (result.Success && result.IsNewVersion)
+            if (result is { Success: true, IsNewVersion: true })
             {
                 _currentVersion = result.CurrentVersion;
                 _serverVersion = result.ServerVersion;

@@ -55,7 +55,7 @@
                 </div>
             </MudMenuItem>
         }
-        @if (context.Status == "Completed" && (context.VarianceItems > 0))
+        @if (context is { Status: "Completed", VarianceItems: > 0 })
         {
             <MudMenuItem OnClick="@(() => ReconcileCount(context.Id))">
                 <div class="d-flex align-center">
@@ -64,7 +64,7 @@
                 </div>
             </MudMenuItem>
         }
-        @if (context.Status == "Scheduled" || context.Status == "InProgress")
+        @if (context.Status is "Scheduled" or "InProgress")
         {
             <MudMenuItem OnClick="@(() => CancelCount(context.Id))">
                 <div class="d-flex align-center">

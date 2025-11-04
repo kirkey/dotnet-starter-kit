@@ -48,7 +48,7 @@ public partial class JournalEntries
     /// <summary>
     /// Dialog options for modal dialogs.
     /// </summary>
-    private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
+    private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
 
     /// <summary>
     /// Gets the status color based on approval status.
@@ -301,7 +301,7 @@ public partial class JournalEntries
         var options = new DialogOptions 
         { 
             CloseOnEscapeKey = true, 
-            MaxWidth = MaxWidth.Large, 
+            MaxWidth = MaxWidth.ExtraLarge, 
             FullWidth = true 
         };
 

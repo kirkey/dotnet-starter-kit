@@ -96,7 +96,7 @@
                 Stop Payment
             </MudMenuItem>
         }
-        @if (check.Status == "Available" || check.Status == "Issued")
+        @if (check.Status is "Available" or "Issued")
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnVoidCheck(check.Id))">
                 Void Check
@@ -279,7 +279,7 @@
                            Color="Color.Warning" />
             </MudItem>
 
-            @if (context.IsPrinted && context.PrintedDate.HasValue)
+            @if (context is { IsPrinted: true, PrintedDate: not null })
             {
                 <MudItem xs="12" sm="6" md="3">
                     <MudDatePicker Date="@context.PrintedDate"

@@ -49,7 +49,7 @@
                                   Outlined="true"
                                   Style="cursor: pointer;"
                                   OnClick="OpenFilePicker"
-                                  OnKeyDown="@(async (KeyboardEventArgs args) => { if (args.Key == "Enter" || args.Key == " ") await OpenFilePicker(); })"
+                                  OnKeyDown="@(async (KeyboardEventArgs args) => { if (args.Key is "Enter" or " ") await OpenFilePicker(); })"
                                   TabIndex="0"
                                   Role="button">
                             <MudIcon Icon="@Icons.Material.Outlined.CloudUpload" 

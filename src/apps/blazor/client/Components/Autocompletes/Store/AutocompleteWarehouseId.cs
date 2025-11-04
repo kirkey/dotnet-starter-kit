@@ -17,7 +17,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
     /// <returns>The warehouse response, or null if not found.</returns>
     protected override async Task<WarehouseResponse?> GetItem(DefaultIdType? id)
     {
-        if (id is null || !id.HasValue) return null;
+        if (id is null or null) return null;
         
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
@@ -67,7 +67,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
 
     protected override string GetTextValue(DefaultIdType? id)
     {
-        if (id is null || !id.HasValue) return string.Empty;
+        if (id is null or null) return string.Empty;
         return _cache.TryGetValue(id.Value, out var dto) ? dto.Name ?? string.Empty : string.Empty;
     }
 }

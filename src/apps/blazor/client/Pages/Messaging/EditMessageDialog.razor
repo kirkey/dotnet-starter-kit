@@ -85,7 +85,7 @@
 
     private void HandleKeyDown(KeyboardEventArgs e)
     {
-        if (e.Key == "Enter" && e.CtrlKey)
+        if (e is { Key: "Enter", CtrlKey: true })
         {
             if (IsValid())
                 Save();

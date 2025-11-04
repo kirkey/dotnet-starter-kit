@@ -95,7 +95,7 @@ public partial class GoodsReceipts
                 OrderBy = ["OrderNumber"]
             };
             var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
-            _purchaseOrders = result.Items?.Where(x => x.Status == "Sent" || x.Status == "PartiallyReceived").ToList() ?? new List<PurchaseOrderResponse>();
+            _purchaseOrders = result.Items?.Where(x => x.Status is "Sent" or "PartiallyReceived").ToList() ?? new List<PurchaseOrderResponse>();
         }
         catch (Exception ex)
         {

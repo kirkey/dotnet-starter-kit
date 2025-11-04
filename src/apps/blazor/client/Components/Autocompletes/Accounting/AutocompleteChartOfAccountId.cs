@@ -26,7 +26,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
     /// </summary>
     protected override async Task<ChartOfAccountResponse?> GetItem(DefaultIdType? id)
     {
-        if (id == null || id == default) return null;
+        if (id is null or null) return null;
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
@@ -78,7 +78,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
     /// </summary>
     protected override string GetTextValue(DefaultIdType? id)
     {
-        if (id == null || id == default) return string.Empty;
+        if (id is null or null) return string.Empty;
 
         if (_cache.TryGetValue(id.Value, out var dto))
         {

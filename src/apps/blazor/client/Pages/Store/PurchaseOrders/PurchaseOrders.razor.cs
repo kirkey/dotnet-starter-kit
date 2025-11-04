@@ -102,7 +102,7 @@ public partial class PurchaseOrders
             CloseButton = true,
             CloseOnEscapeKey = true,
             FullWidth = false,
-            MaxWidth = MaxWidth.Large, 
+            MaxWidth = MaxWidth.ExtraLarge, 
         };
 
         var dialog = await DialogService.ShowAsync<PurchaseOrderDetailsDialog>("Purchase Order Details", parameters, options);

@@ -31,7 +31,7 @@
                 </div>
             </MudMenuItem>
         }
-        @if (context.Status == "Draft" || context.Status == "Approved")
+        @if (context.Status is "Draft" or "Approved")
         {
             <MudMenuItem OnClick="@(() => CancelTransfer(context.Id))">
                 <div class="d-flex align-center">

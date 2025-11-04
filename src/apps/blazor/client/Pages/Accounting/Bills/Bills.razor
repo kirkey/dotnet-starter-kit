@@ -3,6 +3,43 @@
 
 <PageHeader Title="Bill Management" Header="Bill Management" SubHeader="Manage vendor bills, track payables, and process payments." />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Assessment" OnClick="@ShowBillReports">
+                Reports
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Payment" OnClick="@ShowPaymentBatch">
+                Payment Batch
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.CheckCircle" OnClick="@ShowPendingApprovals">
+                Pending Approvals
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.PostAdd" OnClick="@ShowUnpostedBills">
+                Unposted Bills
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.MoneyOff" OnClick="@ShowUnpaidBills">
+                Unpaid Bills
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.CalendarMonth" OnClick="@ShowAgingReport">
+                Aging Report
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.FileDownload" OnClick="@ExportBills">
+                Export
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Settings" OnClick="@ShowSettings">
+                Settings
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="BillSearchResponse" TId="DefaultIdType" TRequest="BillViewModel" Context="@Context">
     <AdvancedSearchContent>
         <MudItem xs="12" sm="6" md="4">
@@ -80,7 +117,7 @@
             View Details
         </MudMenuItem>
         <MudDivider />
-        @if (bill.Status == "Draft" || bill.Status == "Submitted")
+        @if (bill.Status is "Draft" or "Submitted")
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Check" OnClick="@(() => OnApproveBill(bill.Id))">
                 Approve Bill
@@ -89,13 +126,13 @@
                 Reject Bill
             </MudMenuItem>
         }
-        @if (bill.Status == "Approved" && !bill.IsPosted)
+        @if (bill is { Status: "Approved", IsPosted: false })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.PostAdd" OnClick="@(() => OnPostBill(bill.Id))">
                 Post to GL
             </MudMenuItem>
         }
-        @if (bill.IsPosted && !bill.IsPaid)
+        @if (bill is { IsPosted: true, IsPaid: false })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Payment" OnClick="@(() => OnMarkAsPaid(bill.Id))">
                 Mark as Paid
@@ -112,7 +149,7 @@
         </MudMenuItem>
     </ExtraActions>
 
-    <ActionsContent Context="bill">
+    @*<ActionsContent Context="bill">
         <MudChip T="string" 
                  Color="@GetStatusColor(bill.Status)" 
                  Size="Size.Small">
@@ -130,7 +167,7 @@
                 Paid
             </MudChip>
         }
-    </ActionsContent>
+    </ActionsContent>*@
 
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
@@ -226,7 +263,7 @@
                           Variant="Variant.Filled" />
         </MudItem>
 
-        @if (!context.IsPosted && !context.IsPaid)
+        @if (context is { IsPosted: false, IsPaid: false })
         {
             <MudItem xs="12">
                 <MudDivider />

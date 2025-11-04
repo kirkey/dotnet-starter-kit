@@ -74,7 +74,7 @@
                 </div>
             </MudMenuItem>
         }
-        @if (context.Status == "Draft" || context.Status == "Submitted" || context.Status == "Approved")
+        @if (context.Status is "Draft" or "Submitted" or "Approved")
         {
             <MudMenuItem OnClick="@(() => CancelOrder(context.Id))">
                 <div class="d-flex align-center">

@@ -390,7 +390,7 @@ public partial class StoreDashboard
             
             // Filter for pending and in-transit on client side
             var activeTransfers = result.Items?
-                .Where(t => t.Status == "Pending" || t.Status == "InTransit" || t.Status == "Approved")
+                .Where(t => t.Status is "Pending" or "InTransit" or "Approved")
                 .ToList() ?? new List<GetInventoryTransferListResponse>();
 
             _metrics.InventoryTransfersPending = activeTransfers.Count;

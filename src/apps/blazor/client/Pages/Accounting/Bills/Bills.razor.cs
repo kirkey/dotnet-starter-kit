@@ -82,7 +82,7 @@ public partial class Bills
     /// <summary>
     /// Dialog options for modal dialogs.
     /// </summary>
-    private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+    private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
 
     /// <summary>
     /// Command for approving a bill.
@@ -138,8 +138,8 @@ public partial class Bills
             [
                 new EntityField<BillSearchResponse>(response => response.BillNumber, "Bill Number", "BillNumber"),
                 new EntityField<BillSearchResponse>(response => response.VendorName, "Vendor", "VendorName"),
-                new EntityField<BillSearchResponse>(response => response.BillDate, "Bill Date", "BillDate", typeof(DateTime)),
-                new EntityField<BillSearchResponse>(response => response.DueDate, "Due Date", "DueDate", typeof(DateTime)),
+                new EntityField<BillSearchResponse>(response => response.BillDate, "Bill Date", "BillDate", typeof(DateOnly)),
+                new EntityField<BillSearchResponse>(response => response.DueDate, "Due Date", "DueDate", typeof(DateOnly)),
                 new EntityField<BillSearchResponse>(response => response.TotalAmount, "Amount", "TotalAmount", typeof(decimal)),
                 new EntityField<BillSearchResponse>(response => response.Status, "Status", "Status"),
                 new EntityField<BillSearchResponse>(response => response.ApprovalStatus, "Approval", "ApprovalStatus"),
@@ -241,33 +241,6 @@ public partial class Bills
             {
                 await Client.DeleteBillEndpointAsync("1", id);
                 Snackbar.Add("Bill deleted successfully", Severity.Success);
-            },
-            getDetailsFunc: async id =>
-            {
-                var response = await Client.GetBillEndpointAsync("1", id);
-                var lineItems = await Client.GetBillLineItemsEndpointAsync("1", id);
-                
-                var viewModel = response.Adapt<BillViewModel>();
-                viewModel.LineItems = lineItems.Select(li => new BillLineItemViewModel
-                {
-                    Id = li.Id,
-                    BillId = id,
-                    LineNumber = li.LineNumber,
-                    Description = li.Description ?? string.Empty,
-                    Quantity = li.Quantity,
-                    UnitPrice = li.UnitPrice,
-                    Amount = li.Amount,
-                    ChartOfAccountId = li.ChartOfAccountId,
-                    ChartOfAccountCode = li.ChartOfAccountCode,
-                    ChartOfAccountName = li.ChartOfAccountName,
-                    TaxCodeId = li.TaxCodeId,
-                    TaxAmount = li.TaxAmount,
-                    ProjectId = li.ProjectId,
-                    CostCenterId = li.CostCenterId,
-                    Notes = li.Notes
-                }).ToList();
-                
-                return viewModel;
             },
             getDefaultsFunc: () => Task.FromResult(new BillViewModel
             {
@@ -407,7 +380,83 @@ public partial class Bills
     /// </summary>
     private void OnPrintBill(DefaultIdType billId)
     {
-        Snackbar.Add("Print functionality not yet implemented", Severity.Info);
+        Snackbar.Add($"Print functionality not yet implemented for bill {billId}", Severity.Info);
+    }
+
+    // Action Navigation Menu Methods
+
+
+    /// <summary>
+    /// Shows bill reports (placeholder).
+    /// </summary>
+    private void ShowBillReports()
+    {
+        Snackbar.Add("Bill reports feature coming soon", Severity.Info);
+    }
+
+    /// <summary>
+    /// Shows payment batch processing (placeholder).
+    /// </summary>
+    private void ShowPaymentBatch()
+    {
+        Snackbar.Add("Payment batch processing feature coming soon", Severity.Info);
+    }
+
+    /// <summary>
+    /// Filters to show only pending approval bills.
+    /// </summary>
+    private async Task ShowPendingApprovals()
+    {
+        Status = null;
+        ApprovalStatus = "Pending";
+        await _table.ReloadDataAsync();
+        Snackbar.Add("Showing bills pending approval", Severity.Info);
+    }
+
+    /// <summary>
+    /// Filters to show only unposted bills.
+    /// </summary>
+    private async Task ShowUnpostedBills()
+    {
+        IsPosted = false;
+        Status = "Approved";
+        await _table.ReloadDataAsync();
+        Snackbar.Add("Showing unposted bills", Severity.Info);
+    }
+
+    /// <summary>
+    /// Filters to show only unpaid bills.
+    /// </summary>
+    private async Task ShowUnpaidBills()
+    {
+        IsPaid = false;
+        IsPosted = true;
+        await _table.ReloadDataAsync();
+        Snackbar.Add("Showing unpaid bills", Severity.Info);
+    }
+
+    /// <summary>
+    /// Shows aging report (placeholder).
+    /// </summary>
+    private void ShowAgingReport()
+    {
+        Snackbar.Add("Aging report feature coming soon", Severity.Info);
+    }
+
+    /// <summary>
+    /// Exports bills to Excel (placeholder).
+    /// </summary>
+    private void ExportBills()
+    {
+        Snackbar.Add("Export feature coming soon", Severity.Info);
+    }
+
+    /// <summary>
+    /// Shows bill settings (placeholder).
+    /// </summary>
+    private void ShowSettings()
+    {
+        Snackbar.Add("Settings feature coming soon", Severity.Info);
     }
 
     // View Bill Details with Line Items
@@ -420,7 +469,7 @@ public partial class Bills
 
         var options = new DialogOptions
         {
-            MaxWidth = MaxWidth.Large,
+            MaxWidth = MaxWidth.ExtraLarge,
             FullWidth = true,
             CloseOnEscapeKey = true
         };

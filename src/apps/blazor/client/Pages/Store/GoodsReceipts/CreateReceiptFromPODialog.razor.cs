@@ -46,7 +46,7 @@ public partial class CreateReceiptFromPODialog
             };
             var poResult = await Client.SearchPurchaseOrdersEndpointAsync("1", poCommand).ConfigureAwait(false);
             _purchaseOrders = poResult.Items?
-                .Where(x => x.Status == "Sent" || x.Status == "PartiallyReceived")
+                .Where(x => x.Status is "Sent" or "PartiallyReceived")
                 .ToList() ?? new List<PurchaseOrderResponse>();
 
             // Load suppliers for display
