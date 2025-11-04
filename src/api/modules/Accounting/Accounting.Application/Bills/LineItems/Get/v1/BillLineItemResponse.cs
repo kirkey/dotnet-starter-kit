@@ -98,7 +98,7 @@ public sealed record BillLineItemResponse
     /// <summary>
     /// Date and time when the line item was created.
     /// </summary>
-    public DateTime CreatedOn { get; init; }
+    public DateTimeOffset CreatedOn { get; init; }
 
     /// <summary>
     /// User who created the line item.

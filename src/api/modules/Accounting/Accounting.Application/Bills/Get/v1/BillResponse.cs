@@ -110,7 +110,7 @@ public sealed record BillResponse
     /// <summary>
     /// Date and time when the bill was created.
     /// </summary>
-    public DateTime CreatedOn { get; init; }
+    public DateTimeOffset CreatedOn { get; init; }
 
     /// <summary>
     /// User who created the bill.
@@ -120,7 +120,7 @@ public sealed record BillResponse
     /// <summary>
     /// Date and time when the bill was last modified.
     /// </summary>
-    public DateTime? LastModifiedOn { get; init; }
+    public DateTimeOffset? LastModifiedOn { get; init; }
 
     /// <summary>
     /// User who last modified the bill.

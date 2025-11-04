@@ -1,6 +1,3 @@
-using Accounting.Domain.Entities;
-using Accounting.Domain.Exceptions;
-
 namespace Accounting.Application.Bills.Approve.v1;
 
 /// <summary>
