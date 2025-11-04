@@ -2,20 +2,30 @@ using Accounting.Application.BankReconciliations.Start.v1;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
-public static class BankReconciliationStartEndpoint
+/// <summary>
+/// Endpoint to transition a bank reconciliation to in-progress status.
+/// </summary>
+public static class StartBankReconciliationEndpoint
 {
-    internal static RouteHandlerBuilder MapBankReconciliationStartEndpoint(this IEndpointRouteBuilder endpoints)
+    /// <summary>
+    /// Maps the POST endpoint to start a bank reconciliation.
+    /// </summary>
+    internal static RouteHandlerBuilder MapStartBankReconciliationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/{id}/start", async (DefaultIdType id, ISender mediator) =>
             {
                 await mediator.Send(new StartBankReconciliationCommand(id)).ConfigureAwait(false);
-                return Results.Ok();
+                return Results.NoContent();
             })
-            .WithName(nameof(BankReconciliationStartEndpoint))
+            .WithName(nameof(StartBankReconciliationEndpoint))
             .WithSummary("Start a bank reconciliation")
-            .WithDescription("Mark a bank reconciliation as in progress")
-            .Produces(StatusCodes.Status200OK)
+            .WithDescription("Transition a bank reconciliation from Pending to InProgress status. " +
+                "Once started, the user can begin entering reconciliation items such as outstanding checks " +
+                "and deposits in transit.")
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesProblem(StatusCodes.Status409Conflict)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

@@ -17,15 +17,15 @@ public static class BankReconciliationsEndpoints
             .WithDescription("Endpoints for managing bank reconciliations");
 
         // Version 1 endpoints
-        bankReconciliationsGroup.MapBankReconciliationCreateEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationUpdateEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationGetEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationDeleteEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationSearchEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationStartEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationCompleteEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationApproveEndpoint();
-        bankReconciliationsGroup.MapBankReconciliationRejectEndpoint();
+        bankReconciliationsGroup.MapCreateBankReconciliationEndpoint();
+        bankReconciliationsGroup.MapUpdateBankReconciliationEndpoint();
+        bankReconciliationsGroup.MapGetBankReconciliationEndpoint();
+        bankReconciliationsGroup.MapDeleteBankReconciliationEndpoint();
+        bankReconciliationsGroup.MapSearchBankReconciliationsEndpoint();
+        bankReconciliationsGroup.MapStartBankReconciliationEndpoint();
+        bankReconciliationsGroup.MapCompleteBankReconciliationEndpoint();
+        bankReconciliationsGroup.MapApproveBankReconciliationEndpoint();
+        bankReconciliationsGroup.MapRejectBankReconciliationEndpoint();
 
         return app;
     }

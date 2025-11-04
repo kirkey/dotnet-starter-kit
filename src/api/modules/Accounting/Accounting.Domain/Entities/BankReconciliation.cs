@@ -1,3 +1,4 @@
+using Accounting.Domain.Constants;
 using Accounting.Domain.Events.BankReconciliation;
 
 namespace Accounting.Domain.Entities;
@@ -85,8 +86,9 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Reconciliation status: Pending, InProgress, Completed, Approved.
+    /// Uses string-based values from ReconciliationStatuses constants.
     /// </summary>
-    public ReconciliationStatus Status { get; private set; }
+    public string Status { get; private set; } = ReconciliationStatuses.Pending;
 
     /// <summary>
     /// Whether the reconciliation is complete and approved.
@@ -146,7 +148,7 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
         DepositsInTransitTotal = 0;
         BankErrors = 0;
         BookErrors = 0;
-        Status = ReconciliationStatus.Pending;
+        Status = ReconciliationStatuses.Pending;
         IsReconciled = false;
         StatementNumber = statementNumber?.Trim();
         Description = description?.Trim();
@@ -203,10 +205,10 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
     /// </summary>
     public void StartReconciliation()
     {
-        if (Status != ReconciliationStatus.Pending)
+        if (Status != ReconciliationStatuses.Pending)
             throw new InvalidReconciliationStatusException($"Cannot start reconciliation with status {Status}");
 
-        Status = ReconciliationStatus.InProgress;
+        Status = ReconciliationStatuses.InProgress;
         QueueDomainEvent(new BankReconciliationStarted(Id));
     }
 
@@ -218,7 +220,7 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
         if (IsReconciled)
             throw new BankReconciliationAlreadyReconciledException(Id);
 
-        if (Status != ReconciliationStatus.InProgress)
+        if (Status != ReconciliationStatuses.InProgress)
             throw new InvalidReconciliationStatusException($"Cannot complete reconciliation with status {Status}");
 
         // Verify that adjusted book balance matches statement balance (within reasonable tolerance)
@@ -229,7 +231,7 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
             throw new ReconciliationBalanceMismatchException(
                 $"Adjusted balance {AdjustedBalance:N2} does not match expected balance {expectedBalance:N2}");
 
-        Status = ReconciliationStatus.Completed;
+        Status = ReconciliationStatuses.Completed;
         ReconciledDate = DateTime.UtcNow;
         ReconciledBy = reconciledBy?.Trim();
 
@@ -241,13 +243,13 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Approve(string approvedBy)
     {
-        if (Status != ReconciliationStatus.Completed)
+        if (Status != ReconciliationStatuses.Completed)
             throw new InvalidReconciliationStatusException($"Cannot approve reconciliation with status {Status}");
 
         if (IsReconciled)
             throw new BankReconciliationAlreadyReconciledException(Id);
 
-        Status = ReconciliationStatus.Approved;
+        Status = ReconciliationStatuses.Approved;
         IsReconciled = true;
         ApprovedBy = approvedBy?.Trim();
         ApprovedDate = DateTime.UtcNow;
@@ -260,10 +262,10 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Reject(string rejectedBy, string? reason = null)
     {
-        if (Status != ReconciliationStatus.Completed)
+        if (Status != ReconciliationStatuses.Completed)
             throw new InvalidReconciliationStatusException($"Cannot reject reconciliation with status {Status}");
 
-        Status = ReconciliationStatus.Pending;
+        Status = ReconciliationStatuses.Pending;
         Notes = string.IsNullOrWhiteSpace(Notes) 
             ? $"Rejected by {rejectedBy}: {reason}" 
             : $"{Notes}\nRejected by {rejectedBy}: {reason}";
@@ -272,13 +274,3 @@ public class BankReconciliation : AuditableEntity, IAggregateRoot
     }
 }
 
-/// <summary>
-/// Bank reconciliation status values.
-/// </summary>
-public enum ReconciliationStatus
-{
-    Pending,
-    InProgress,
-    Completed,
-    Approved
-}

@@ -1,0 +1,169 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.BankReconciliations
+
+<MudDialog>
+    <DialogContent>
+        @if (Reconciliation != null)
+        {
+            <MudStack Spacing="3">
+                <MudPaper Elevation="0" Class="pa-3 mud-background-gray">
+                    <MudGrid>
+                        <MudItem xs="12" sm="6">
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">Statement Number</MudText>
+                            <MudText Typo="Typo.body2">@(Reconciliation.StatementNumber ?? "N/A")</MudText>
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">Reconciliation Date</MudText>
+                            <MudText Typo="Typo.body2">@Reconciliation.ReconciliationDate.ToString("MMMM dd, yyyy")</MudText>
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">Status</MudText>
+                            <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(Reconciliation.Status)" Variant="Variant.Filled">
+                                @Reconciliation.Status
+                            </MudChip>
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">Approved</MudText>
+                            <MudIcon Icon="@(Reconciliation.IsReconciled ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel)" 
+                                     Color="@(Reconciliation.IsReconciled ? Color.Success : Color.Error)" />
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+
+                <MudDivider />
+
+                <MudText Typo="Typo.h6">Balances</MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudNumericField @bind-Value="Reconciliation.StatementBalance"
+                                       Label="Statement Balance"
+                                       Format="C"
+                                       ReadOnly="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudNumericField @bind-Value="Reconciliation.BookBalance"
+                                       Label="Book Balance"
+                                       Format="C"
+                                       ReadOnly="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudNumericField @bind-Value="Reconciliation.OutstandingChecksTotal"
+                                       Label="Outstanding Checks"
+                                       Format="C"
+                                       ReadOnly="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudNumericField @bind-Value="Reconciliation.DepositsInTransitTotal"
+                                       Label="Deposits in Transit"
+                                       Format="C"
+                                       ReadOnly="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudNumericField @bind-Value="Reconciliation.BankErrors"
+                                       Label="Bank Errors"
+                                       Format="C"
+                                       ReadOnly="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudNumericField @bind-Value="Reconciliation.BookErrors"
+                                       Label="Book Errors"
+                                       Format="C"
+                                       ReadOnly="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudField Label="Adjusted Balance" Variant="Variant.Outlined">
+                            <MudText Typo="Typo.h6" Color="@(IsBalanced ? Color.Success : Color.Error)">
+                                @Reconciliation.AdjustedBalance.ToString("C")
+                                @if (IsBalanced)
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" />
+                                }
+                            </MudText>
+                        </MudField>
+                    </MudItem>
+                </MudGrid>
+
+                <MudDivider />
+
+                <MudText Typo="Typo.h6">Audit Information</MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Completed By</MudText>
+                        <MudText Typo="Typo.body2">@(Reconciliation.ReconciledBy ?? "—")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Completed Date</MudText>
+                        <MudText Typo="Typo.body2">@(Reconciliation.ReconciledDate?.ToString("MMMM dd, yyyy HH:mm") ?? "—")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Approved By</MudText>
+                        <MudText Typo="Typo.body2">@(Reconciliation.ApprovedBy ?? "—")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Approved Date</MudText>
+                        <MudText Typo="Typo.body2">@(Reconciliation.ApprovedDate?.ToString("MMMM dd, yyyy HH:mm") ?? "—")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Created</MudText>
+                        <MudText Typo="Typo.body2">@Reconciliation.CreatedOn.ToString("MMMM dd, yyyy HH:mm")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Last Modified</MudText>
+                        <MudText Typo="Typo.body2">@Reconciliation.LastModifiedOn?.ToString("MMMM dd, yyyy HH:mm") ?? "—"</MudText>
+                    </MudItem>
+                </MudGrid>
+
+                @if (!string.IsNullOrWhiteSpace(Reconciliation.Description))
+                {
+                    <MudDivider />
+                    <MudText Typo="Typo.h6">Description</MudText>
+                    <MudText Typo="Typo.body2">@Reconciliation.Description</MudText>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Reconciliation.Notes))
+                {
+                    <MudDivider />
+                    <MudText Typo="Typo.h6">Notes</MudText>
+                    <MudText Typo="Typo.body2">@Reconciliation.Notes</MudText>
+                }
+            </MudStack>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public DefaultIdType Id { get; set; }
+
+    private BankReconciliationResponse? Reconciliation { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Reconciliation = await Client.GetBankReconciliationEndpointAsync("1", Id);
+    }
+
+    private bool IsBalanced => Reconciliation != null && Reconciliation.AdjustedBalance == Reconciliation.StatementBalance;
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Default,
+        "InProgress" => Color.Info,
+        "Completed" => Color.Warning,
+        "Approved" => Color.Success,
+        _ => Color.Default
+    };
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

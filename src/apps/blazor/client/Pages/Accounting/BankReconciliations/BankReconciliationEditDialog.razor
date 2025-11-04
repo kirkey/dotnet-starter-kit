@@ -1,0 +1,203 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.BankReconciliations
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Update Reconciliation Items</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (Reconciliation != null)
+        {
+            <EditForm Model="@UpdateModel" OnValidSubmit="@OnSubmit">
+                <DataAnnotationsValidator />
+                <MudStack Spacing="3">
+                    <MudPaper Elevation="0" Class="pa-3 mud-background-gray">
+                        <MudGrid>
+                            <MudItem xs="12" sm="6">
+                                <MudNumericField @bind-Value="Reconciliation.StatementBalance"
+                                               Label="Statement Balance"
+                                               Format="C"
+                                               ReadOnly="true"
+                                               Variant="Variant.Outlined" />
+                            </MudItem>
+                            <MudItem xs="12" sm="6">
+                                <MudNumericField @bind-Value="Reconciliation.BookBalance"
+                                               Label="Book Balance"
+                                               Format="C"
+                                               ReadOnly="true"
+                                               Variant="Variant.Outlined" />
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
+
+                    <MudDivider />
+
+                    <MudText Typo="Typo.h6">Reconciliation Items</MudText>
+
+                    <MudNumericField @bind-Value="UpdateModel.OutstandingChecksTotal"
+                                   Label="Outstanding Checks Total"
+                                   For="@(() => UpdateModel.OutstandingChecksTotal)"
+                                   Format="F2"
+                                   Variant="Variant.Outlined"
+                                   HelperText="Total of checks not yet cleared by bank" />
+
+                    <MudNumericField @bind-Value="UpdateModel.DepositsInTransitTotal"
+                                   Label="Deposits in Transit Total"
+                                   For="@(() => UpdateModel.DepositsInTransitTotal)"
+                                   Format="F2"
+                                   Variant="Variant.Outlined"
+                                   HelperText="Total of deposits not yet shown on bank statement" />
+
+                    <MudDivider />
+
+                    <MudText Typo="Typo.h6">Adjustments</MudText>
+
+                    <MudNumericField @bind-Value="UpdateModel.BankErrors"
+                                   Label="Bank Errors"
+                                   For="@(() => UpdateModel.BankErrors)"
+                                   Format="F2"
+                                   Variant="Variant.Outlined"
+                                   HelperText="Errors on bank's side (may be positive or negative)" />
+
+                    <MudNumericField @bind-Value="UpdateModel.BookErrors"
+                                   Label="Book Errors"
+                                   For="@(() => UpdateModel.BookErrors)"
+                                   Format="F2"
+                                   Variant="Variant.Outlined"
+                                   HelperText="Errors in books requiring adjustment entries" />
+
+                    <MudDivider />
+
+                    <MudPaper Elevation="0" Class="@($"{BalancePaperClass} pa-3")">
+                        <MudStack>
+                            <MudText Typo="Typo.subtitle2">Reconciliation Summary</MudText>
+                            <MudGrid Spacing="1">
+                                <MudItem xs="12">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                                        <MudText Typo="Typo.body2">Statement Balance:</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Primary">@Reconciliation.StatementBalance.ToString("C")</MudText>
+                                    </MudStack>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                                        <MudText Typo="Typo.body2">+ Outstanding Checks:</MudText>
+                                        <MudText Typo="Typo.body2">(@UpdateModel.OutstandingChecksTotal.ToString("C"))</MudText>
+                                    </MudStack>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                                        <MudText Typo="Typo.body2">- Deposits in Transit:</MudText>
+                                        <MudText Typo="Typo.body2">@UpdateModel.DepositsInTransitTotal.ToString("C")</MudText>
+                                    </MudStack>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                                        <MudText Typo="Typo.body2">+ Bank Errors:</MudText>
+                                        <MudText Typo="Typo.body2">@UpdateModel.BankErrors.ToString("C")</MudText>
+                                    </MudStack>
+                                </MudItem>
+                                <MudDivider />
+                                <MudItem xs="12">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                                        <MudText Typo="Typo.subtitle2">Expected Balance:</MudText>
+                                        <MudText Typo="Typo.subtitle2" Color="@(IsBalanced ? Color.Success : Color.Error)">
+                                            @ExpectedBalance.ToString("C")
+                                        </MudText>
+                                    </MudStack>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                                        <MudText Typo="Typo.subtitle2">Book Balance + Errors:</MudText>
+                                        <MudText Typo="Typo.subtitle2" Color="@(IsBalanced ? Color.Success : Color.Error)">
+                                            @CalculatedBalance.ToString("C")
+                                        </MudText>
+                                    </MudStack>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                                        <MudText Typo="Typo.subtitle2">Difference:</MudText>
+                                        <MudText Typo="Typo.subtitle2" Color="@(IsBalanced ? Color.Success : Color.Error)">
+                                            @Difference.ToString("C")
+                                            @if (IsBalanced)
+                                            {
+                                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" />
+                                            }
+                                        </MudText>
+                                    </MudStack>
+                                </MudItem>
+                            </MudGrid>
+                        </MudStack>
+                    </MudPaper>
+
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Filled" Dense="true">
+                        Expected Balance = Statement Balance - Outstanding Checks + Deposits in Transit + Bank Errors
+                    </MudAlert>
+                </MudStack>
+            </EditForm>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@OnSubmit" Disabled="@(!IsBalanced)">
+            Update Items
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public DefaultIdType Id { get; set; }
+
+    private BankReconciliationResponse? Reconciliation { get; set; }
+    private UpdateBankReconciliationCommand UpdateModel { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Reconciliation = await Client.GetBankReconciliationEndpointAsync("1", Id);
+        if (Reconciliation != null)
+        {
+            UpdateModel.Id = Id;
+            UpdateModel.OutstandingChecksTotal = Reconciliation.OutstandingChecksTotal;
+            UpdateModel.DepositsInTransitTotal = Reconciliation.DepositsInTransitTotal;
+            UpdateModel.BankErrors = Reconciliation.BankErrors;
+            UpdateModel.BookErrors = Reconciliation.BookErrors;
+        }
+    }
+
+    private decimal ExpectedBalance =>
+        Reconciliation != null
+            ? Reconciliation.StatementBalance - UpdateModel.OutstandingChecksTotal + UpdateModel.DepositsInTransitTotal + UpdateModel.BankErrors
+            : 0;
+
+    private decimal CalculatedBalance =>
+        Reconciliation != null
+            ? Reconciliation.BookBalance + UpdateModel.BookErrors
+            : 0;
+
+    private decimal Difference => Math.Abs(ExpectedBalance - CalculatedBalance);
+
+    private bool IsBalanced => Difference < 0.01m;
+
+    private string BalancePaperClass => IsBalanced
+        ? "mud-background-success mud-background-opacity"
+        : "mud-background-error mud-background-opacity";
+
+    private async Task OnSubmit()
+    {
+        try
+        {
+            await Client.UpdateBankReconciliationEndpointAsync("1", Id, UpdateModel);
+            Snackbar.Add("Reconciliation items updated successfully.", Severity.Success);
+            MudDialog.Close(true);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error updating reconciliation: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

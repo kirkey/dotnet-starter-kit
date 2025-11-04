@@ -1,0 +1,70 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.BankReconciliations
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Reject Reconciliation</MudText>
+    </TitleContent>
+    <DialogContent>
+        <EditForm Model="@Command" OnValidSubmit="@OnSubmit">
+            <DataAnnotationsValidator />
+            <MudStack Spacing="3">
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Filled">
+                    This will return the reconciliation to Pending status for rework.
+                </MudAlert>
+
+                <MudTextField @bind-Value="Command.RejectedBy"
+                             Label="Rejected By"
+                             For="@(() => Command.RejectedBy)"
+                             HelperText="Your name or email"
+                             Variant="Variant.Outlined"
+                             Required="true" />
+
+                <MudTextField @bind-Value="Command.Reason"
+                             Label="Rejection Reason"
+                             For="@(() => Command.Reason)"
+                             HelperText="Briefly explain why the reconciliation is being rejected"
+                             Variant="Variant.Outlined"
+                             Lines="4"
+                             Required="true" />
+
+                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                    <ValidationMessage For="@(() => Command.RejectedBy)" />
+                    <ValidationMessage For="@(() => Command.Reason)" />
+                </MudText>
+            </MudStack>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="@OnSubmit">Reject</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public RejectBankReconciliationCommand Command { get; set; } = new();
+
+    [Parameter]
+    public DefaultIdType ReconciliationId { get; set; }
+
+    private async Task OnSubmit()
+    {
+        try
+        {
+            Command.Id = ReconciliationId;
+            await Client.RejectBankReconciliationEndpointAsync("1", ReconciliationId, Command);
+            Snackbar.Add("Reconciliation rejected successfully.", Severity.Success);
+            MudDialog.Close(true);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error rejecting reconciliation: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

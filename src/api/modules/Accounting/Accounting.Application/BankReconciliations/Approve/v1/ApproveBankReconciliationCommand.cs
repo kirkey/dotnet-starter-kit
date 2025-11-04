@@ -1,7 +1,15 @@
 namespace Accounting.Application.BankReconciliations.Approve.v1;
 
-public sealed class ApproveBankReconciliationCommand : IRequest
+/// <summary>
+/// Command to approve a completed bank reconciliation.
+/// Transitions reconciliation to approved status and sets IsReconciled flag to true.
+/// </summary>
+public sealed class ApproveBankReconciliationCommand : BaseRequest, IRequest
 {
-    public DefaultIdType Id { get; set; }
+    /// <summary>
+    /// User identifier or name who is approving the reconciliation.
+    /// Required. Maximum 256 characters.
+    /// Used for audit trail and compliance reporting.
+    /// </summary>
     public string ApprovedBy { get; set; } = string.Empty;
 }

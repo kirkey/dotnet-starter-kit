@@ -18,7 +18,7 @@ public class SearchBankReconciliationsSpec : EntitiesByPaginationFilterSpec<Bank
             .Where(r => r.BankAccountId == request.BankAccountId!.Value, request.BankAccountId.HasValue)
             .Where(r => r.ReconciliationDate >= request.FromDate!.Value, request.FromDate.HasValue)
             .Where(r => r.ReconciliationDate <= request.ToDate!.Value, request.ToDate.HasValue)
-            .Where(r => r.Status.ToString() == request.Status, !string.IsNullOrEmpty(request.Status))
+            .Where(r => r.Status == request.Status, !string.IsNullOrEmpty(request.Status))
             .Where(r => r.IsReconciled == request.IsReconciled!.Value, request.IsReconciled.HasValue)
             .OrderByDescending(r => r.ReconciliationDate, !request.HasOrderBy());
     }

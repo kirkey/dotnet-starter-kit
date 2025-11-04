@@ -1,0 +1,180 @@
+@page "/accounting/bank-reconciliations"
+
+<PageHeader Title="Bank Reconciliation" Header="Bank Reconciliation" SubHeader="Reconcile bank statements with general ledger cash accounts." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Assessment" OnClick="@ShowReconciliationReports">
+                Reports
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Summarize" OnClick="@ShowSummary">
+                Summary
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.CheckCircle" OnClick="@ShowPendingApprovals">
+                Pending Approvals
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Pending" OnClick="@ShowInProgressReconciliations">
+                In Progress
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Done" OnClick="@ShowCompletedReconciliations">
+                Completed
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.FileDownload" OnClick="@ExportReconciliations">
+                Export
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Settings" OnClick="@ShowSettings">
+                Settings
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="BankReconciliationResponse" TId="DefaultIdType" TRequest="BankReconciliationViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@BankAccountFilter"
+                          Label="Bank Account"
+                          Placeholder="Filter by account"
+                          Variant="Variant.Outlined"
+                          Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@Status"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("InProgress")">In Progress</MudSelectItem>
+                <MudSelectItem Value="@("Completed")">Completed</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@ReconciliationDateFrom"
+                           Label="Reconciliation Date From"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@ReconciliationDateTo"
+                           Label="Reconciliation Date To"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@IsReconciled"
+                       Label="Approved Only"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="reconciliation">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewReconciliationDetails(reconciliation.Id))">
+            View Details
+        </MudMenuItem>
+        <MudDivider />
+        @if (reconciliation.Status is "Pending")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PlayArrow" OnClick="@(() => OnStartReconciliation(reconciliation.Id))">
+                Start Reconciliation
+            </MudMenuItem>
+        }
+        @if (reconciliation.Status is "InProgress")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OnEditReconciliation(reconciliation.Id))">
+                Edit Items
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnCompleteReconciliation(reconciliation.Id))">
+                Complete
+            </MudMenuItem>
+        }
+        @if (reconciliation.Status is "Completed" && !reconciliation.IsReconciled)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.ThumbUp" OnClick="@(() => OnApproveReconciliation(reconciliation.Id))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnRejectReconciliation(reconciliation.Id))">
+                Reject
+            </MudMenuItem>
+        }
+        @if (reconciliation.Status is not "Approved")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Delete" OnClick="@(() => OnDeleteReconciliation(reconciliation.Id))">
+                Delete
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => OnPrintReconciliation(reconciliation.Id))">
+            Print
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Reconciliation Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="@context.BankAccountId"
+                          Label="Bank Account ID"
+                          For="@(() => context.BankAccountId)"
+                          Variant="Variant.Outlined"
+                          Required="true"
+                          HelperText="Enter the bank account identifier" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker @bind-Date="@context.ReconciliationDate"
+                           Label="Reconciliation Date"
+                           For="@(() => context.ReconciliationDate)"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined"
+                           Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudNumericField @bind-Value="context.StatementBalance"
+                             Label="Statement Balance"
+                             For="@(() => context.StatementBalance)"
+                             Format="F2"
+                             Variant="Variant.Outlined"
+                             Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudNumericField @bind-Value="context.BookBalance"
+                             Label="Book Balance"
+                             For="@(() => context.BookBalance)"
+                             Format="F2"
+                             Variant="Variant.Outlined"
+                             Required="true" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.StatementNumber"
+                          Label="Statement Number"
+                          For="@(() => context.StatementNumber)"
+                          Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" md="12">
+            <MudTextField @bind-Value="context.Description"
+                          Label="Description"
+                          For="@(() => context.Description)"
+                          Variant="Variant.Outlined"
+                          Lines="2" />
+        </MudItem>
+        <MudItem xs="12" md="12">
+            <MudTextField @bind-Value="context.Notes"
+                          Label="Notes"
+                          For="@(() => context.Notes)"
+                          Variant="Variant.Outlined"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

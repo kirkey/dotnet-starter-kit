@@ -1,0 +1,61 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.BankReconciliations
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Approve Reconciliation</MudText>
+    </TitleContent>
+    <DialogContent>
+        <EditForm Model="@Command" OnValidSubmit="@OnSubmit">
+            <FluentValidationValidator />
+            <MudStack Spacing="3">
+                <MudAlert Severity="Severity.Success" Variant="Variant.Filled">
+                    This will mark the reconciliation as approved and finalize it.
+                </MudAlert>
+
+                <MudTextField @bind-Value="Command.ApprovedBy"
+                             Label="Approved By"
+                             For="@(() => Command.ApprovedBy)"
+                             HelperText="Your name or email"
+                             Variant="Variant.Outlined"
+                             Required="true" />
+
+                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                    <ValidationMessage For="@(() => Command.ApprovedBy)" />
+                </MudText>
+            </MudStack>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Success" OnClick="@OnSubmit">Approve</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public ApproveBankReconciliationCommand Command { get; set; } = new();
+
+    [Parameter]
+    public DefaultIdType ReconciliationId { get; set; }
+
+    private async Task OnSubmit()
+    {
+        try
+        {
+            Command.Id = ReconciliationId;
+            await Client.ApproveBankReconciliationEndpointAsync("1", ReconciliationId, Command);
+            Snackbar.Add("Reconciliation approved successfully.", Severity.Success);
+            MudDialog.Close(true);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error approving reconciliation: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

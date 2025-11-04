@@ -697,211 +697,211 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Create a bank reconciliation
-        /// </summary>
-        /// <remarks>
         /// Create a new bank reconciliation
+        /// </summary>
+        /// <remarks>
+        /// Create a new bank reconciliation with opening balances from bank statement and general ledger. Reconciliation starts in Pending status and moves through InProgress, Completed, and Approved statuses.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BankReconciliationCreateEndpointAsync(string version, CreateBankReconciliationCommand body);
+        System.Threading.Tasks.Task<System.Guid> CreateBankReconciliationEndpointAsync(string version, CreateBankReconciliationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create a bank reconciliation
-        /// </summary>
-        /// <remarks>
         /// Create a new bank reconciliation
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BankReconciliationCreateEndpointAsync(string version, CreateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Update a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Update reconciliation items for a bank reconciliation
+        /// Create a new bank reconciliation with opening balances from bank statement and general ledger. Reconciliation starts in Pending status and moves through InProgress, Completed, and Approved statuses.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BankReconciliationUpdateEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Update a bank reconciliation
-        /// </summary>
-        /// <remarks>
-        /// Update reconciliation items for a bank reconciliation
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BankReconciliationUpdateEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> CreateBankReconciliationEndpointAsync(string version, CreateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get a bank reconciliation
+        /// Update reconciliation items
         /// </summary>
         /// <remarks>
-        /// Get a bank reconciliation by ID
+        /// Update outstanding checks, deposits in transit, and error adjustments for an in-progress reconciliation. Calculates adjusted book balance which must eventually match the statement balance.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankReconciliationResponse> BankReconciliationGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task UpdateBankReconciliationEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get a bank reconciliation
+        /// Update reconciliation items
         /// </summary>
         /// <remarks>
-        /// Get a bank reconciliation by ID
+        /// Update outstanding checks, deposits in transit, and error adjustments for an in-progress reconciliation. Calculates adjusted book balance which must eventually match the statement balance.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task UpdateBankReconciliationEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get bank reconciliation details
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a specific bank reconciliation with all its details including status, balances, adjustments, and audit information.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankReconciliationResponse> BankReconciliationGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BankReconciliationResponse> GetBankReconciliationEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get bank reconciliation details
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a specific bank reconciliation with all its details including status, balances, adjustments, and audit information.
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<BankReconciliationResponse> GetBankReconciliationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Delete a bank reconciliation by ID
+        /// Delete a bank reconciliation. Only reconciliations that are not yet reconciled and approved can be deleted. This permanently removes the reconciliation record.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationDeleteEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteBankReconciliationEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Delete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Delete a bank reconciliation by ID
+        /// Delete a bank reconciliation. Only reconciliations that are not yet reconciled and approved can be deleted. This permanently removes the reconciliation record.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteBankReconciliationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search bank reconciliations
         /// </summary>
         /// <remarks>
-        /// Search and filter bank reconciliations with pagination
+        /// Search and filter bank reconciliations by bank account, date range, status, and reconciliation state. Supports pagination. Results are ordered by reconciliation date (most recent first).
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> BankReconciliationSearchEndpointAsync(string version, SearchBankReconciliationsCommand body);
+        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Search bank reconciliations
         /// </summary>
         /// <remarks>
-        /// Search and filter bank reconciliations with pagination
+        /// Search and filter bank reconciliations by bank account, date range, status, and reconciliation state. Supports pagination. Results are ordered by reconciliation date (most recent first).
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> BankReconciliationSearchEndpointAsync(string version, SearchBankReconciliationsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Start a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as in progress
+        /// Transition a bank reconciliation from Pending to InProgress status. Once started, the user can begin entering reconciliation items such as outstanding checks and deposits in transit.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationStartEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task StartBankReconciliationEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Start a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as in progress
+        /// Transition a bank reconciliation from Pending to InProgress status. Once started, the user can begin entering reconciliation items such as outstanding checks and deposits in transit.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationStartEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task StartBankReconciliationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as completed
+        /// Mark a bank reconciliation as completed. Verifies that the adjusted book balance equals the statement balance (within tolerance). Records who completed the reconciliation for audit purposes.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationCompleteEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body);
+        System.Threading.Tasks.Task CompleteBankReconciliationEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Complete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as completed
+        /// Mark a bank reconciliation as completed. Verifies that the adjusted book balance equals the statement balance (within tolerance). Records who completed the reconciliation for audit purposes.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationCompleteEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CompleteBankReconciliationEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Approve a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Approve a completed bank reconciliation
+        /// Approve a completed bank reconciliation, marking it as final and verified. Only reconciliations with Completed status can be approved. Sets IsReconciled to true.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationApproveEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body);
+        System.Threading.Tasks.Task ApproveBankReconciliationEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Approve a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Approve a completed bank reconciliation
+        /// Approve a completed bank reconciliation, marking it as final and verified. Only reconciliations with Completed status can be approved. Sets IsReconciled to true.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationApproveEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task ApproveBankReconciliationEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reject a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Reject a completed bank reconciliation for rework
+        /// Reject a completed bank reconciliation and return it to Pending status for rework. The rejection reason is recorded in the reconciliation notes for reference.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationRejectEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body);
+        System.Threading.Tasks.Task RejectBankReconciliationEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Reject a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Reject a completed bank reconciliation for rework
+        /// Reject a completed bank reconciliation and return it to Pending status for rework. The rejection reason is recorded in the reconciliation notes for reference.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task BankReconciliationRejectEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task RejectBankReconciliationEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new bank
@@ -12353,30 +12353,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Create a bank reconciliation
+        /// Create a new bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Create a new bank reconciliation
+        /// Create a new bank reconciliation with opening balances from bank statement and general ledger. Reconciliation starts in Pending status and moves through InProgress, Completed, and Approved statuses.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> BankReconciliationCreateEndpointAsync(string version, CreateBankReconciliationCommand body)
+        public virtual System.Threading.Tasks.Task<System.Guid> CreateBankReconciliationEndpointAsync(string version, CreateBankReconciliationCommand body)
         {
-            return BankReconciliationCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateBankReconciliationEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create a bank reconciliation
+        /// Create a new bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Create a new bank reconciliation
+        /// Create a new bank reconciliation with opening balances from bank statement and general ledger. Reconciliation starts in Pending status and moves through InProgress, Completed, and Approved statuses.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> BankReconciliationCreateEndpointAsync(string version, CreateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> CreateBankReconciliationEndpointAsync(string version, CreateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12427,7 +12427,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 201)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -12435,6 +12435,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -12457,30 +12477,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Update a bank reconciliation
+        /// Update reconciliation items
         /// </summary>
         /// <remarks>
-        /// Update reconciliation items for a bank reconciliation
+        /// Update outstanding checks, deposits in transit, and error adjustments for an in-progress reconciliation. Calculates adjusted book balance which must eventually match the statement balance.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> BankReconciliationUpdateEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body)
+        public virtual System.Threading.Tasks.Task UpdateBankReconciliationEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body)
         {
-            return BankReconciliationUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateBankReconciliationEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Update a bank reconciliation
+        /// Update reconciliation items
         /// </summary>
         /// <remarks>
-        /// Update reconciliation items for a bank reconciliation
+        /// Update outstanding checks, deposits in transit, and error adjustments for an in-progress reconciliation. Calculates adjusted book balance which must eventually match the statement balance.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> BankReconciliationUpdateEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task UpdateBankReconciliationEndpointAsync(string version, System.Guid id, UpdateBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12502,7 +12522,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -12535,14 +12554,39 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return objectResponse_.Object;
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -12565,30 +12609,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Get a bank reconciliation
+        /// Get bank reconciliation details
         /// </summary>
         /// <remarks>
-        /// Get a bank reconciliation by ID
+        /// Retrieve a specific bank reconciliation with all its details including status, balances, adjustments, and audit information.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BankReconciliationResponse> BankReconciliationGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<BankReconciliationResponse> GetBankReconciliationEndpointAsync(string version, System.Guid id)
         {
-            return BankReconciliationGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return GetBankReconciliationEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get a bank reconciliation
+        /// Get bank reconciliation details
         /// </summary>
         /// <remarks>
-        /// Get a bank reconciliation by ID
+        /// Retrieve a specific bank reconciliation with all its details including status, balances, adjustments, and audit information.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BankReconciliationResponse> BankReconciliationGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BankReconciliationResponse> GetBankReconciliationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12646,6 +12690,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         {
                             var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
@@ -12669,14 +12723,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Delete a bank reconciliation by ID
+        /// Delete a bank reconciliation. Only reconciliations that are not yet reconciled and approved can be deleted. This permanently removes the reconciliation record.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task BankReconciliationDeleteEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteBankReconciliationEndpointAsync(string version, System.Guid id)
         {
-            return BankReconciliationDeleteEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteBankReconciliationEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12684,12 +12738,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Delete a bank reconciliation by ID
+        /// Delete a bank reconciliation. Only reconciliations that are not yet reconciled and approved can be deleted. This permanently removes the reconciliation record.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task BankReconciliationDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteBankReconciliationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12741,6 +12795,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return;
                         }
                         else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         {
                             var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
@@ -12764,14 +12838,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search bank reconciliations
         /// </summary>
         /// <remarks>
-        /// Search and filter bank reconciliations with pagination
+        /// Search and filter bank reconciliations by bank account, date range, status, and reconciliation state. Supports pagination. Results are ordered by reconciliation date (most recent first).
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BankReconciliationResponsePagedList> BankReconciliationSearchEndpointAsync(string version, SearchBankReconciliationsCommand body)
+        public virtual System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body)
         {
-            return BankReconciliationSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return SearchBankReconciliationsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12779,12 +12853,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search bank reconciliations
         /// </summary>
         /// <remarks>
-        /// Search and filter bank reconciliations with pagination
+        /// Search and filter bank reconciliations by bank account, date range, status, and reconciliation state. Supports pagination. Results are ordered by reconciliation date (most recent first).
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BankReconciliationResponsePagedList> BankReconciliationSearchEndpointAsync(string version, SearchBankReconciliationsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12845,6 +12919,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         {
                             var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
@@ -12868,14 +12952,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Start a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as in progress
+        /// Transition a bank reconciliation from Pending to InProgress status. Once started, the user can begin entering reconciliation items such as outstanding checks and deposits in transit.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task BankReconciliationStartEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task StartBankReconciliationEndpointAsync(string version, System.Guid id)
         {
-            return BankReconciliationStartEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return StartBankReconciliationEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12883,12 +12967,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Start a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as in progress
+        /// Transition a bank reconciliation from Pending to InProgress status. Once started, the user can begin entering reconciliation items such as outstanding checks and deposits in transit.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task BankReconciliationStartEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task StartBankReconciliationEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12937,9 +13021,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -12965,14 +13069,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Complete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as completed
+        /// Mark a bank reconciliation as completed. Verifies that the adjusted book balance equals the statement balance (within tolerance). Records who completed the reconciliation for audit purposes.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task BankReconciliationCompleteEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body)
+        public virtual System.Threading.Tasks.Task CompleteBankReconciliationEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body)
         {
-            return BankReconciliationCompleteEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return CompleteBankReconciliationEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12980,12 +13084,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Complete a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Mark a bank reconciliation as completed
+        /// Mark a bank reconciliation as completed. Verifies that the adjusted book balance equals the statement balance (within tolerance). Records who completed the reconciliation for audit purposes.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task BankReconciliationCompleteEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task CompleteBankReconciliationEndpointAsync(string version, System.Guid id, CompleteBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13040,9 +13144,39 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -13068,14 +13202,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Approve a completed bank reconciliation
+        /// Approve a completed bank reconciliation, marking it as final and verified. Only reconciliations with Completed status can be approved. Sets IsReconciled to true.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task BankReconciliationApproveEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body)
+        public virtual System.Threading.Tasks.Task ApproveBankReconciliationEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body)
         {
-            return BankReconciliationApproveEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ApproveBankReconciliationEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13083,12 +13217,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Approve a completed bank reconciliation
+        /// Approve a completed bank reconciliation, marking it as final and verified. Only reconciliations with Completed status can be approved. Sets IsReconciled to true.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task BankReconciliationApproveEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ApproveBankReconciliationEndpointAsync(string version, System.Guid id, ApproveBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13143,9 +13277,39 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -13171,14 +13335,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Reject a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Reject a completed bank reconciliation for rework
+        /// Reject a completed bank reconciliation and return it to Pending status for rework. The rejection reason is recorded in the reconciliation notes for reference.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task BankReconciliationRejectEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body)
+        public virtual System.Threading.Tasks.Task RejectBankReconciliationEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body)
         {
-            return BankReconciliationRejectEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return RejectBankReconciliationEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13186,12 +13350,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Reject a bank reconciliation
         /// </summary>
         /// <remarks>
-        /// Reject a completed bank reconciliation for rework
+        /// Reject a completed bank reconciliation and return it to Pending status for rework. The rejection reason is recorded in the reconciliation notes for reference.
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task BankReconciliationRejectEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task RejectBankReconciliationEndpointAsync(string version, System.Guid id, RejectBankReconciliationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13246,9 +13410,39 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -52524,6 +52718,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
         public string? ApprovedBy { get; set; } = default!;
 
@@ -54381,6 +54590,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("reconciledBy")]
         public string? ReconciledBy { get; set; } = default!;
 
@@ -54729,12 +54953,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string? Notes { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("bankAccountId")]
         public System.Guid BankAccountId { get; set; } = default!;
 
@@ -54749,6 +54967,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("statementNumber")]
         public string? StatementNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
@@ -61269,6 +61493,21 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rejectedBy")]
         public string? RejectedBy { get; set; } = default!;

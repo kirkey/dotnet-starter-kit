@@ -3,9 +3,15 @@ using Accounting.Application.BankReconciliations.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
-public static class BankReconciliationGetEndpoint
+/// <summary>
+/// Endpoint to retrieve a single bank reconciliation by ID.
+/// </summary>
+public static class GetBankReconciliationEndpoint
 {
-    internal static RouteHandlerBuilder MapBankReconciliationGetEndpoint(this IEndpointRouteBuilder endpoints)
+    /// <summary>
+    /// Maps the GET endpoint for retrieving a specific bank reconciliation.
+    /// </summary>
+    internal static RouteHandlerBuilder MapGetBankReconciliationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
@@ -13,10 +19,12 @@ public static class BankReconciliationGetEndpoint
                 var response = await mediator.Send(new GetBankReconciliationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(nameof(BankReconciliationGetEndpoint))
-            .WithSummary("Get a bank reconciliation")
-            .WithDescription("Get a bank reconciliation by ID")
+            .WithName(nameof(GetBankReconciliationEndpoint))
+            .WithSummary("Get bank reconciliation details")
+            .WithDescription("Retrieve a specific bank reconciliation with all its details including status, balances, " +
+                "adjustments, and audit information.")
             .Produces<BankReconciliationResponse>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

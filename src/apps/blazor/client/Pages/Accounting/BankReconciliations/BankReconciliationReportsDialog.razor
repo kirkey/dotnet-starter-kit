@@ -1,0 +1,40 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.BankReconciliations
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Bank Reconciliation Reports</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack Spacing="2">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Assessment" FullWidth="true">
+                Monthly Summary Report
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ViewList" FullWidth="true">
+                Outstanding Items Report
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Error" FullWidth="true">
+                Reconciliation Discrepancies Report
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.History" FullWidth="true">
+                Reconciliation History Report
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.VerifiedUser" FullWidth="true">
+                Approval Trail Report
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.TrendingUp" FullWidth="true">
+                Reconciliation Trend Analysis
+            </MudButton>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

@@ -2,23 +2,33 @@ using Accounting.Application.BankReconciliations.Update.v1;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
-public static class BankReconciliationUpdateEndpoint
+/// <summary>
+/// Endpoint to update reconciliation items for an in-progress bank reconciliation.
+/// </summary>
+public static class UpdateBankReconciliationEndpoint
 {
-    internal static RouteHandlerBuilder MapBankReconciliationUpdateEndpoint(this IEndpointRouteBuilder endpoints)
+    /// <summary>
+    /// Maps the PUT endpoint for updating bank reconciliation items.
+    /// </summary>
+    internal static RouteHandlerBuilder MapUpdateBankReconciliationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPut("/{id}", async (DefaultIdType id, UpdateBankReconciliationCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
-                    return Results.BadRequest("ID mismatch");
+                    return Results.BadRequest("ID mismatch between URL parameter and request body.");
 
-                var response = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Ok(response);
+                await mediator.Send(command).ConfigureAwait(false);
+                return Results.NoContent();
             })
-            .WithName(nameof(BankReconciliationUpdateEndpoint))
-            .WithSummary("Update a bank reconciliation")
-            .WithDescription("Update reconciliation items for a bank reconciliation")
-            .Produces<DefaultIdType>()
+            .WithName(nameof(UpdateBankReconciliationEndpoint))
+            .WithSummary("Update reconciliation items")
+            .WithDescription("Update outstanding checks, deposits in transit, and error adjustments for an in-progress reconciliation. " +
+                "Calculates adjusted book balance which must eventually match the statement balance.")
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesProblem(StatusCodes.Status409Conflict)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }
