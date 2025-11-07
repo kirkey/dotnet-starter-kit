@@ -1,6 +1,5 @@
 using Accounting.Application.PaymentAllocations.Queries;
 using Accounting.Application.PaymentAllocations.Responses;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.PaymentAllocations.Handlers;
 

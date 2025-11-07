@@ -1,3 +1,5 @@
+using Accounting.Infrastructure.Endpoints.TrialBalance.v1;
+
 namespace Accounting.Infrastructure.Endpoints.TrialBalance;
 
 /// <summary>
@@ -14,12 +16,14 @@ public static class TrialBalanceEndpoints
             .WithTags("Trial-Balance")
             .WithDescription("Endpoints for managing trial balance reports");
 
-        // Version 1 endpoints will be added here when implemented
-        // trialBalanceGroup.MapTrialBalanceCreateEndpoint();
-        // trialBalanceGroup.MapTrialBalanceUpdateEndpoint();
-        // trialBalanceGroup.MapTrialBalanceDeleteEndpoint();
-        // trialBalanceGroup.MapTrialBalanceGetEndpoint();
-        // trialBalanceGroup.MapTrialBalanceSearchEndpoint();
+        // Version 1 endpoints - CRUD and workflow operations
+        trialBalanceGroup.MapTrialBalanceCreateEndpoint();
+        trialBalanceGroup.MapTrialBalanceGetEndpoint();
+        trialBalanceGroup.MapTrialBalanceSearchEndpoint();
+        
+        // Workflow operations
+        trialBalanceGroup.MapTrialBalanceFinalizeEndpoint();
+        trialBalanceGroup.MapTrialBalanceReopenEndpoint();
 
         return app;
     }

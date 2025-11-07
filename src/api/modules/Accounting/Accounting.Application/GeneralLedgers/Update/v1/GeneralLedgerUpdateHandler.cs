@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.GeneralLedgers.Update.v1;
 
 /// <summary>

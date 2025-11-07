@@ -1,6 +1,3 @@
-using Accounting.Application.GeneralLedgers.Get.v1;
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.GeneralLedgers.Get.v1;
 
 /// <summary>

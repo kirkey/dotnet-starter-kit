@@ -51,16 +51,16 @@ Core operations needed soon:
 ❌ Payment                    - Apply customer/vendor payments ✅ API Complete
 ❌ PaymentAllocation          - Payment application tracking ✅ API Complete
 ❌ GeneralLedger              - Core accounting records ✅ API Complete
-❌ TrialBalance               - Financial reporting
-❌ FiscalPeriodClose          - Period-end processing
-❌ PostingBatch               - Transaction batching
+❌ TrialBalance               - Financial reporting ✅ API Complete
+❌ FiscalPeriodClose          - Period-end processing ✅ API Complete
+❌ PostingBatch               - Transaction batching ✅ API Complete
 ❌ RecurringJournalEntry      - Automated entries
 ❌ RetainedEarnings           - Year-end closing
 ❌ AccountsReceivableAccount  - AR tracking
 ❌ AccountsPayableAccount     - AP tracking
 ```
 
-**Note:** Payment, PaymentAllocation, and GeneralLedger have complete APIs ready for UI implementation.
+**Note:** Payment, PaymentAllocation, GeneralLedger, TrialBalance, FiscalPeriodClose, and PostingBatch have complete APIs ready for UI implementation.
 
 ### 🟡 MEDIUM PRIORITY (12)
 

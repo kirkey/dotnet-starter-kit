@@ -1,5 +1,4 @@
 using Accounting.Application.PaymentAllocations.Commands;
-using Microsoft.Extensions.Logging;
 
 namespace Accounting.Application.PaymentAllocations.Handlers;
 

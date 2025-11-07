@@ -1,3 +1,5 @@
+using Accounting.Infrastructure.Endpoints.PostingBatch.v1;
+
 namespace Accounting.Infrastructure.Endpoints.PostingBatch;
 
 /// <summary>
@@ -14,12 +16,16 @@ public static class PostingBatchEndpoints
             .WithTags("Posting-Batch")
             .WithDescription("Endpoints for managing posting batch operations");
 
-        // Version 1 endpoints will be added here when implemented
-        // postingBatchGroup.MapPostingBatchCreateEndpoint();
-        // postingBatchGroup.MapPostingBatchUpdateEndpoint();
-        // postingBatchGroup.MapPostingBatchDeleteEndpoint();
-        // postingBatchGroup.MapPostingBatchGetEndpoint();
-        // postingBatchGroup.MapPostingBatchSearchEndpoint();
+        // CRUD operations
+        postingBatchGroup.MapPostingBatchCreateEndpoint();
+        postingBatchGroup.MapPostingBatchGetEndpoint();
+        postingBatchGroup.MapPostingBatchSearchEndpoint();
+
+        // Workflow operations
+        postingBatchGroup.MapPostingBatchApproveEndpoint();
+        postingBatchGroup.MapPostingBatchRejectEndpoint();
+        postingBatchGroup.MapPostingBatchPostEndpoint();
+        postingBatchGroup.MapPostingBatchReverseEndpoint();
 
         return app;
     }

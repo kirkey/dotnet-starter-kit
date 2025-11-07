@@ -1,22 +1,25 @@
-using Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
+using Accounting.Application.TrialBalance.Search.v1;
 
-// Endpoint for searching trial balances
 namespace Accounting.Infrastructure.Endpoints.TrialBalance.v1;
 
+/// <summary>
+/// Endpoint for searching trial balance reports.
+/// </summary>
 public static class TrialBalanceSearchEndpoint
 {
     internal static RouteHandlerBuilder MapTrialBalanceSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (GenerateTrialBalanceQuery query, ISender mediator) =>
+            .MapPost("/search", async (TrialBalanceSearchQuery request, ISender mediator) =>
             {
-                var response = await mediator.Send(query).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(TrialBalanceSearchEndpoint))
-            .WithSummary("Search trial balances")
-            .WithDescription("Generates a trial balance report for a given date and filters")
-            .Produces<TrialBalanceDto>()
+            .WithSummary("Search trial balance reports")
+            .WithDescription("Searches trial balance reports with filtering and pagination")
+            .Produces<PagedList<TrialBalanceSearchResponse>>()
+            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }
