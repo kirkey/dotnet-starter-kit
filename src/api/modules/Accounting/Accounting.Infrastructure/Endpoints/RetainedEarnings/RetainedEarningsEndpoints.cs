@@ -11,9 +11,16 @@ public static class RetainedEarningsEndpoints
             .WithDescription("Endpoints for managing retained earnings")
             .MapToApiVersion(1);
 
+        // CRUD operations
         group.MapRetainedEarningsCreateEndpoint();
         group.MapRetainedEarningsGetEndpoint();
         group.MapRetainedEarningsSearchEndpoint();
+
+        // Workflow operations
+        group.MapRetainedEarningsUpdateNetIncomeEndpoint();
+        group.MapRetainedEarningsRecordDistributionEndpoint();
+        group.MapRetainedEarningsCloseEndpoint();
+        group.MapRetainedEarningsReopenEndpoint();
 
         return app;
     }

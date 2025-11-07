@@ -55,12 +55,12 @@ Core operations needed soon:
 ❌ FiscalPeriodClose          - Period-end processing ✅ API Complete
 ❌ PostingBatch               - Transaction batching ✅ API Complete
 ❌ RecurringJournalEntry      - Automated entries ✅ API Complete
-❌ RetainedEarnings           - Year-end closing
+❌ RetainedEarnings           - Year-end closing ✅ API Complete
 ❌ AccountsReceivableAccount  - AR tracking
 ❌ AccountsPayableAccount     - AP tracking
 ```
 
-**Note:** Payment, PaymentAllocation, GeneralLedger, TrialBalance, FiscalPeriodClose, PostingBatch, and RecurringJournalEntry have complete APIs ready for UI implementation.
+**Note:** All high-priority entities now have complete APIs ready for UI implementation.
 
 ### 🟡 MEDIUM PRIORITY (12)
 
