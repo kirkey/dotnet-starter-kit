@@ -23,10 +23,12 @@ public sealed class GenerateRecurringJournalEntryHandler(
         // Generate journal entry from template
         var journalNumber = $"REC-{template.TemplateCode}-{generateDate:yyyyMMdd}";
         var journalEntry = JournalEntry.Create(
-            journalNumber,
             generateDate,
+            journalNumber,
             template.Description,
-            template.Notes
+            "RecurringTemplate",
+            template.PostingBatchId,
+            template.Amount
         );
 
         // Add debit line
@@ -47,8 +49,8 @@ public sealed class GenerateRecurringJournalEntryHandler(
 
         await _journalRepository.AddAsync(journalEntry, cancellationToken);
         
-        // Mark as generated on template
-        template.MarkAsGenerated(generateDate);
+        // Record generation on template
+        template.RecordGeneration(journalEntry.Id, generateDate);
         await _recurringRepository.UpdateAsync(template, cancellationToken);
         
         await _journalRepository.SaveChangesAsync(cancellationToken);

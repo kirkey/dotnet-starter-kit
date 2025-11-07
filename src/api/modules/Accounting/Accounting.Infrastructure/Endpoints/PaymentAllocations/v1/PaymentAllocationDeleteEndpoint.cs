@@ -9,7 +9,7 @@ public static class PaymentAllocationDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new DeletePaymentAllocationCommand { Id = id }).ConfigureAwait(false);
+                await mediator.Send(new DeletePaymentAllocationCommand(id)).ConfigureAwait(false);
                 return Results.Ok();
             })
             .WithName(nameof(PaymentAllocationDeleteEndpoint))
