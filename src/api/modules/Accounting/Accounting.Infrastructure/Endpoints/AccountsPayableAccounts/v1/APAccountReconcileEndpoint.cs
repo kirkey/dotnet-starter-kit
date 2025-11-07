@@ -1,0 +1,26 @@
+using Accounting.Application.AccountsPayableAccounts.Reconcile.v1;
+
+namespace Accounting.Infrastructure.Endpoints.AccountsPayableAccounts.v1;
+
+public static class APAccountReconcileEndpoint
+{
+    internal static RouteHandlerBuilder MapAPAccountReconcileEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileAPAccountCommand command, ISender mediator) =>
+            {
+                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var accountId = await mediator.Send(command).ConfigureAwait(false);
+                return Results.Ok(new { Id = accountId, Message = "Reconciliation completed successfully" });
+            })
+            .WithName(nameof(APAccountReconcileEndpoint))
+            .WithSummary("Reconcile with subsidiary ledger")
+            .WithDescription("Reconciles AP control account with subsidiary vendor ledgers")
+            .Produces<object>()
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .RequirePermission("Permissions.Accounting.Update")
+            .MapToApiVersion(1);
+    }
+}
+

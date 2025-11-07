@@ -11,9 +11,17 @@ public static class AccountsReceivableAccountsEndpoints
             .WithDescription("Endpoints for managing AR accounts")
             .MapToApiVersion(1);
 
+        // CRUD operations
         group.MapARAccountCreateEndpoint();
         group.MapARAccountGetEndpoint();
         group.MapARAccountSearchEndpoint();
+
+        // Workflow operations
+        group.MapARAccountUpdateBalanceEndpoint();
+        group.MapARAccountUpdateAllowanceEndpoint();
+        group.MapARAccountRecordWriteOffEndpoint();
+        group.MapARAccountRecordCollectionEndpoint();
+        group.MapARAccountReconcileEndpoint();
 
         return app;
     }

@@ -11,9 +11,16 @@ public static class AccountsPayableAccountsEndpoints
             .WithDescription("Endpoints for managing AP accounts")
             .MapToApiVersion(1);
 
+        // CRUD operations
         group.MapAPAccountCreateEndpoint();
         group.MapAPAccountGetEndpoint();
         group.MapAPAccountSearchEndpoint();
+
+        // Workflow operations
+        group.MapAPAccountUpdateBalanceEndpoint();
+        group.MapAPAccountRecordPaymentEndpoint();
+        group.MapAPAccountRecordDiscountLostEndpoint();
+        group.MapAPAccountReconcileEndpoint();
 
         return app;
     }

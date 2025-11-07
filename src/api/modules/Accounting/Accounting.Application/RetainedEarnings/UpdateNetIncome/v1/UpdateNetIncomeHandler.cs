@@ -1,17 +1,12 @@
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.RetainedEarnings.UpdateNetIncome.v1;
 
-public sealed class UpdateNetIncomeHandler : IRequestHandler<UpdateNetIncomeCommand, DefaultIdType>
+public sealed class UpdateNetIncomeHandler(
+    IRepository<Domain.Entities.RetainedEarnings> repository,
+    ILogger<UpdateNetIncomeHandler> logger)
+    : IRequestHandler<UpdateNetIncomeCommand, DefaultIdType>
 {
-    private readonly IRepository<Domain.Entities.RetainedEarnings> _repository;
-    private readonly ILogger<UpdateNetIncomeHandler> _logger;
-
-    public UpdateNetIncomeHandler(IRepository<Domain.Entities.RetainedEarnings> repository, ILogger<UpdateNetIncomeHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly IRepository<Domain.Entities.RetainedEarnings> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    private readonly ILogger<UpdateNetIncomeHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public async Task<DefaultIdType> Handle(UpdateNetIncomeCommand request, CancellationToken cancellationToken)
     {

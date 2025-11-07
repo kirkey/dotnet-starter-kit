@@ -1,17 +1,12 @@
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.RetainedEarnings.Reopen.v1;
 
-public sealed class ReopenRetainedEarningsHandler : IRequestHandler<ReopenRetainedEarningsCommand, DefaultIdType>
+public sealed class ReopenRetainedEarningsHandler(
+    IRepository<Domain.Entities.RetainedEarnings> repository,
+    ILogger<ReopenRetainedEarningsHandler> logger)
+    : IRequestHandler<ReopenRetainedEarningsCommand, DefaultIdType>
 {
-    private readonly IRepository<Domain.Entities.RetainedEarnings> _repository;
-    private readonly ILogger<ReopenRetainedEarningsHandler> _logger;
-
-    public ReopenRetainedEarningsHandler(IRepository<Domain.Entities.RetainedEarnings> repository, ILogger<ReopenRetainedEarningsHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly IRepository<Domain.Entities.RetainedEarnings> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    private readonly ILogger<ReopenRetainedEarningsHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public async Task<DefaultIdType> Handle(ReopenRetainedEarningsCommand request, CancellationToken cancellationToken)
     {

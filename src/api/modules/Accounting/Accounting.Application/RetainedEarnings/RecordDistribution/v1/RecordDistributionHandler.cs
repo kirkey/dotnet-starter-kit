@@ -1,17 +1,12 @@
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.RetainedEarnings.RecordDistribution.v1;
 
-public sealed class RecordDistributionHandler : IRequestHandler<RecordDistributionCommand, DefaultIdType>
+public sealed class RecordDistributionHandler(
+    IRepository<Domain.Entities.RetainedEarnings> repository,
+    ILogger<RecordDistributionHandler> logger)
+    : IRequestHandler<RecordDistributionCommand, DefaultIdType>
 {
-    private readonly IRepository<Domain.Entities.RetainedEarnings> _repository;
-    private readonly ILogger<RecordDistributionHandler> _logger;
-
-    public RecordDistributionHandler(IRepository<Domain.Entities.RetainedEarnings> repository, ILogger<RecordDistributionHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly IRepository<Domain.Entities.RetainedEarnings> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    private readonly ILogger<RecordDistributionHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public async Task<DefaultIdType> Handle(RecordDistributionCommand request, CancellationToken cancellationToken)
     {
