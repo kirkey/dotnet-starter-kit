@@ -16,14 +16,18 @@ public static class RecurringJournalEntriesEndpoints
             .WithTags("Recurring-Journal-Entries")
             .WithDescription("Endpoints for managing recurring journal entry templates");
 
-        // Version 1 endpoints
+        // CRUD operations
         recurringGroup.MapRecurringJournalEntryCreateEndpoint();
         recurringGroup.MapRecurringJournalEntryGetEndpoint();
+        recurringGroup.MapRecurringJournalEntryUpdateEndpoint();
         recurringGroup.MapRecurringJournalEntryDeleteEndpoint();
         recurringGroup.MapRecurringJournalEntrySearchEndpoint();
+        
+        // Workflow operations
         recurringGroup.MapRecurringJournalEntryApproveEndpoint();
         recurringGroup.MapRecurringJournalEntrySuspendEndpoint();
         recurringGroup.MapRecurringJournalEntryReactivateEndpoint();
+        recurringGroup.MapRecurringJournalEntryGenerateEndpoint();
 
         return app;
     }

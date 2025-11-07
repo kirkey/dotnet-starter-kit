@@ -54,13 +54,13 @@ Core operations needed soon:
 ❌ TrialBalance               - Financial reporting ✅ API Complete
 ❌ FiscalPeriodClose          - Period-end processing ✅ API Complete
 ❌ PostingBatch               - Transaction batching ✅ API Complete
-❌ RecurringJournalEntry      - Automated entries
+❌ RecurringJournalEntry      - Automated entries ✅ API Complete
 ❌ RetainedEarnings           - Year-end closing
 ❌ AccountsReceivableAccount  - AR tracking
 ❌ AccountsPayableAccount     - AP tracking
 ```
 
-**Note:** Payment, PaymentAllocation, GeneralLedger, TrialBalance, FiscalPeriodClose, and PostingBatch have complete APIs ready for UI implementation.
+**Note:** Payment, PaymentAllocation, GeneralLedger, TrialBalance, FiscalPeriodClose, PostingBatch, and RecurringJournalEntry have complete APIs ready for UI implementation.
 
 ### 🟡 MEDIUM PRIORITY (12)
 
