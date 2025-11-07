@@ -30,4 +30,9 @@ public class PaymentAllocationResponse
     /// Optional notes or comments about this payment allocation.
     /// </summary>
     public string? Notes { get; set; }
+
+    /// <summary>
+    /// Date and time when the allocation was created.
+    /// </summary>
+    public DateTime CreatedOn { get; set; }
 }

@@ -16,8 +16,10 @@ public static class PaymentAllocationsEndpoints
             .WithTags("Payment-Allocations")
             .WithDescription("Endpoints for managing payment allocations");
 
-        // Version 1 endpoints
+        // Version 1 endpoints - CRUD operations
+        paymentAllocationsGroup.MapPaymentAllocationCreateEndpoint();
         paymentAllocationsGroup.MapPaymentAllocationGetEndpoint();
+        paymentAllocationsGroup.MapPaymentAllocationUpdateEndpoint();
         paymentAllocationsGroup.MapPaymentAllocationDeleteEndpoint();
         paymentAllocationsGroup.MapPaymentAllocationSearchEndpoint();
 

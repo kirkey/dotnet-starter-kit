@@ -1,3 +1,5 @@
+using Accounting.Infrastructure.Endpoints.GeneralLedger.v1;
+
 namespace Accounting.Infrastructure.Endpoints.GeneralLedger;
 
 /// <summary>
@@ -14,9 +16,12 @@ public static class GeneralLedgerEndpoints
             .WithTags("General-Ledger")
             .WithDescription("Endpoints for managing general ledger entries");
 
-        // Version 1 endpoints
-        // generalLedgerGroup.MapGeneralLedgerUpdateEndpoint();
-        // generalLedgerGroup.MapGeneralLedgerDeleteEndpoint();
+        // Version 1 endpoints - Read and Update operations
+        // Note: GL entries are primarily created through Journal Entry posting
+        generalLedgerGroup.MapGeneralLedgerGetEndpoint();
+        generalLedgerGroup.MapGeneralLedgerSearchEndpoint();
+        generalLedgerGroup.MapGeneralLedgerUpdateEndpoint();
+        // Delete is intentionally not exposed - use reversing entries instead
 
         return app;
     }

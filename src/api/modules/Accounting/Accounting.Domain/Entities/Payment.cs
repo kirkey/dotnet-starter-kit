@@ -159,4 +159,17 @@ public class Payment : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new PaymentReferenceUpdated(Id, PaymentNumber, ReferenceNumber));
         return this;
     }
+
+    /// <summary>
+    /// Update payment details (reference, deposit account, description, notes).
+    /// </summary>
+    public Payment Update(string? referenceNumber = null, string? depositToAccountCode = null, string? description = null, string? notes = null)
+    {
+        ReferenceNumber = referenceNumber?.Trim();
+        DepositToAccountCode = depositToAccountCode?.Trim();
+        Description = description?.Trim();
+        Notes = notes?.Trim();
+        QueueDomainEvent(new PaymentUpdated(Id, PaymentNumber));
+        return this;
+    }
 }

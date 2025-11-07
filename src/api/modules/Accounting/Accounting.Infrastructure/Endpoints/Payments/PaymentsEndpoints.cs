@@ -16,8 +16,17 @@ public static class PaymentsEndpoints
             .WithTags("Payments")
             .WithDescription("Endpoints for managing payments");
 
-        // Version 1 endpoints
+        // Version 1 endpoints - CRUD operations
+        paymentsGroup.MapPaymentCreateEndpoint();
+        paymentsGroup.MapPaymentGetEndpoint();
+        paymentsGroup.MapPaymentUpdateEndpoint();
+        paymentsGroup.MapPaymentDeleteEndpoint();
+        paymentsGroup.MapPaymentSearchEndpoint();
+        
+        // Workflow operations
         paymentsGroup.MapAllocatePaymentEndpoint();
+        paymentsGroup.MapRefundPaymentEndpoint();
+        paymentsGroup.MapVoidPaymentEndpoint();
 
         return app;
     }
