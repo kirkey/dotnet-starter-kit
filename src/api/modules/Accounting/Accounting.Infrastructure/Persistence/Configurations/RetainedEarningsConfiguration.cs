@@ -25,8 +25,37 @@ public class RetainedEarningsConfiguration : IEntityTypeConfiguration<RetainedEa
         builder.Property(x => x.ApproprietedAmount).HasPrecision(18, 2);
         builder.Property(x => x.UnappropriatedAmount).HasPrecision(18, 2);
         
-        builder.HasIndex(x => x.FiscalYear).IsUnique();
-        builder.HasIndex(x => x.Status);
+        // Single column indexes
+        builder.HasIndex(x => x.FiscalYear)
+            .IsUnique()
+            .HasDatabaseName("IX_RetainedEarnings_FiscalYear");
+        
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_RetainedEarnings_Status");
+        
+        builder.HasIndex(x => x.ClosedDate)
+            .HasDatabaseName("IX_RetainedEarnings_ClosedDate");
+        
+        builder.HasIndex(x => x.ClosedBy)
+            .HasDatabaseName("IX_RetainedEarnings_ClosedBy");
+        
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.FiscalYear, x.Status })
+            .HasDatabaseName("IX_RetainedEarnings_Year_Status");
+        
+        builder.HasIndex(x => new { x.Status, x.ClosedDate })
+            .HasDatabaseName("IX_RetainedEarnings_Status_ClosedDate");
+        
+        builder.HasIndex(x => new { x.FiscalYear, x.ClosingBalance })
+            .HasDatabaseName("IX_RetainedEarnings_Year_ClosingBalance");
+        
+        // Composite index for equity change analysis
+        builder.HasIndex(x => new { x.FiscalYear, x.NetIncome, x.Distributions })
+            .HasDatabaseName("IX_RetainedEarnings_Year_Income_Distributions");
+        
+        // Composite index for appropriation tracking
+        builder.HasIndex(x => new { x.FiscalYear, x.ApproprietedAmount, x.UnappropriatedAmount })
+            .HasDatabaseName("IX_RetainedEarnings_Year_Appropriation");
     }
 }
 

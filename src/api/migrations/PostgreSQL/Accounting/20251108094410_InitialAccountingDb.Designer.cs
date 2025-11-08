@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20251108025721_InitialAccountingDb")]
+    [Migration("20251108094410_InitialAccountingDb")]
     partial class InitialAccountingDb
     {
         /// <inheritdoc />
@@ -97,16 +97,42 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EndDate");
+                    b.HasIndex("EndDate")
+                        .HasDatabaseName("IX_AccountingPeriods_EndDate");
 
-                    b.HasIndex("IsClosed");
+                    b.HasIndex("FiscalYear")
+                        .HasDatabaseName("IX_AccountingPeriods_FiscalYear");
 
-                    b.HasIndex("StartDate");
+                    b.HasIndex("IsAdjustmentPeriod")
+                        .HasDatabaseName("IX_AccountingPeriods_IsAdjustmentPeriod");
+
+                    b.HasIndex("IsClosed")
+                        .HasDatabaseName("IX_AccountingPeriods_IsClosed");
+
+                    b.HasIndex("PeriodType")
+                        .HasDatabaseName("IX_AccountingPeriods_PeriodType");
+
+                    b.HasIndex("StartDate")
+                        .HasDatabaseName("IX_AccountingPeriods_StartDate");
 
                     b.HasIndex("FiscalYear", "PeriodType")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_AccountingPeriods_FiscalYear_PeriodType");
 
-                    b.HasIndex("StartDate", "EndDate");
+                    b.HasIndex("IsClosed", "FiscalYear")
+                        .HasDatabaseName("IX_AccountingPeriods_IsClosed_Year");
+
+                    b.HasIndex("StartDate", "EndDate")
+                        .HasDatabaseName("IX_AccountingPeriods_DateRange");
+
+                    b.HasIndex("FiscalYear", "IsAdjustmentPeriod", "IsClosed")
+                        .HasDatabaseName("IX_AccountingPeriods_Year_Adjustment_Closed");
+
+                    b.HasIndex("FiscalYear", "IsClosed", "PeriodType")
+                        .HasDatabaseName("IX_AccountingPeriods_Year_Closed_Type");
+
+                    b.HasIndex("StartDate", "EndDate", "IsClosed")
+                        .HasDatabaseName("IX_AccountingPeriods_DateRange_IsClosed");
 
                     b.ToTable("AccountingPeriods", "accounting");
                 });
@@ -136,7 +162,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("Current0to30")
+                    b.Property<decimal>("Current0To30")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
@@ -144,11 +170,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
-                    b.Property<decimal>("Days31to60")
+                    b.Property<decimal>("Days31To60")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
-                    b.Property<decimal>("Days61to90")
+                    b.Property<decimal>("Days61To90")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
@@ -231,15 +257,35 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasKey("Id");
 
                     b.HasIndex("AccountNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_AccountsPayableAccounts_AccountNumber");
 
-                    b.HasIndex("GeneralLedgerAccountId");
+                    b.HasIndex("GeneralLedgerAccountId")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_GeneralLedgerAccountId");
 
-                    b.HasIndex("IsActive");
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_IsActive");
 
-                    b.HasIndex("IsReconciled");
+                    b.HasIndex("IsReconciled")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_IsReconciled");
 
-                    b.HasIndex("PeriodId");
+                    b.HasIndex("LastReconciliationDate")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_LastReconciliationDate");
+
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_PeriodId");
+
+                    b.HasIndex("IsActive", "CurrentBalance")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_IsActive_Balance");
+
+                    b.HasIndex("IsActive", "PeriodId")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_IsActive_PeriodId");
+
+                    b.HasIndex("PeriodId", "IsReconciled")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_Period_IsReconciled");
+
+                    b.HasIndex("PeriodId", "IsActive", "CurrentBalance")
+                        .HasDatabaseName("IX_AccountsPayableAccounts_Period_Active_Balance");
 
                     b.ToTable("AccountsPayableAccounts", "accounting");
                 });
@@ -277,7 +323,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("Current0to30")
+                    b.Property<decimal>("Current0To30")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
@@ -288,11 +334,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<int>("CustomerCount")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("Days31to60")
+                    b.Property<decimal>("Days31To60")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
-                    b.Property<decimal>("Days61to90")
+                    b.Property<decimal>("Days61To90")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
@@ -500,8 +546,30 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccrualDate")
+                        .HasDatabaseName("IX_Accruals_AccrualDate");
+
                     b.HasIndex("AccrualNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_Accruals_AccrualNumber");
+
+                    b.HasIndex("IsReversed")
+                        .HasDatabaseName("IX_Accruals_IsReversed");
+
+                    b.HasIndex("ReversalDate")
+                        .HasDatabaseName("IX_Accruals_ReversalDate");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Accruals_Status");
+
+                    b.HasIndex("IsReversed", "AccrualDate")
+                        .HasDatabaseName("IX_Accruals_IsReversed_Date");
+
+                    b.HasIndex("Status", "AccrualDate")
+                        .HasDatabaseName("IX_Accruals_Status_Date");
+
+                    b.HasIndex("IsReversed", "ReversalDate", "Status")
+                        .HasDatabaseName("IX_Accruals_IsReversed_ReversalDate_Status");
 
                     b.ToTable("Accruals", "accounting");
                 });
@@ -1767,15 +1835,41 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_CostCenters_Code");
 
-                    b.HasIndex("CostCenterType");
+                    b.HasIndex("CostCenterType")
+                        .HasDatabaseName("IX_CostCenters_CostCenterType");
 
-                    b.HasIndex("IsActive");
+                    b.HasIndex("EndDate")
+                        .HasDatabaseName("IX_CostCenters_EndDate");
 
-                    b.HasIndex("ManagerId");
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_CostCenters_IsActive");
 
-                    b.HasIndex("ParentCostCenterId");
+                    b.HasIndex("ManagerId")
+                        .HasDatabaseName("IX_CostCenters_ManagerId");
+
+                    b.HasIndex("ParentCostCenterId")
+                        .HasDatabaseName("IX_CostCenters_ParentCostCenterId");
+
+                    b.HasIndex("StartDate")
+                        .HasDatabaseName("IX_CostCenters_StartDate");
+
+                    b.HasIndex("IsActive", "CostCenterType")
+                        .HasDatabaseName("IX_CostCenters_IsActive_Type");
+
+                    b.HasIndex("ManagerId", "IsActive")
+                        .HasDatabaseName("IX_CostCenters_Manager_IsActive");
+
+                    b.HasIndex("ParentCostCenterId", "IsActive")
+                        .HasDatabaseName("IX_CostCenters_Parent_IsActive");
+
+                    b.HasIndex("IsActive", "BudgetAmount", "ActualAmount")
+                        .HasDatabaseName("IX_CostCenters_Active_Budget_Actual");
+
+                    b.HasIndex("StartDate", "EndDate", "IsActive")
+                        .HasDatabaseName("IX_CostCenters_DateRange_IsActive");
 
                     b.ToTable("CostCenters", "accounting");
                 });
@@ -2320,8 +2414,17 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("RecognitionDate")
                         .HasDatabaseName("IX_DeferredRevenue_RecognitionDate");
 
+                    b.HasIndex("RecognizedDate")
+                        .HasDatabaseName("IX_DeferredRevenue_RecognizedDate");
+
                     b.HasIndex("IsRecognized", "RecognitionDate")
                         .HasDatabaseName("IX_DeferredRevenue_IsRecognized_RecognitionDate");
+
+                    b.HasIndex("IsRecognized", "RecognitionDate", "RecognizedDate")
+                        .HasDatabaseName("IX_DeferredRevenue_Recognition_Tracking");
+
+                    b.HasIndex("RecognitionDate", "IsRecognized", "Amount")
+                        .HasDatabaseName("IX_DeferredRevenue_Date_IsRecognized_Amount");
 
                     b.ToTable("DeferredRevenue", "accounting");
                 });
@@ -2420,16 +2523,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("APReconciliationComplete")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("ARReconciliationComplete")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("AccrualsPosted")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("AllJournalsPosted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("ApReconciliationComplete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("ArReconciliationComplete")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("BankReconciliationsComplete")
@@ -2798,15 +2901,53 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccumulatedDepreciationAccountId");
+                    b.HasIndex("AccumulatedDepreciationAccountId")
+                        .HasDatabaseName("IX_FixedAssets_AccumulatedDepreciationAccountId");
 
-                    b.HasIndex("DepreciationExpenseAccountId");
+                    b.HasIndex("Department")
+                        .HasDatabaseName("IX_FixedAssets_Department");
 
-                    b.HasIndex("DepreciationMethodId");
+                    b.HasIndex("DepreciationExpenseAccountId")
+                        .HasDatabaseName("IX_FixedAssets_DepreciationExpenseAccountId");
 
-                    b.HasIndex("IsDisposed");
+                    b.HasIndex("DepreciationMethodId")
+                        .HasDatabaseName("IX_FixedAssets_DepreciationMethodId");
 
-                    b.HasIndex("PurchaseDate");
+                    b.HasIndex("DisposalDate")
+                        .HasDatabaseName("IX_FixedAssets_DisposalDate");
+
+                    b.HasIndex("IsDisposed")
+                        .HasDatabaseName("IX_FixedAssets_IsDisposed");
+
+                    b.HasIndex("Location")
+                        .HasDatabaseName("IX_FixedAssets_Location");
+
+                    b.HasIndex("PurchaseDate")
+                        .HasDatabaseName("IX_FixedAssets_PurchaseDate");
+
+                    b.HasIndex("SerialNumber")
+                        .HasDatabaseName("IX_FixedAssets_SerialNumber");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_FixedAssets_Status");
+
+                    b.HasIndex("Department", "IsDisposed")
+                        .HasDatabaseName("IX_FixedAssets_Department_IsDisposed");
+
+                    b.HasIndex("IsDisposed", "CurrentBookValue")
+                        .HasDatabaseName("IX_FixedAssets_IsDisposed_BookValue");
+
+                    b.HasIndex("IsDisposed", "PurchaseDate")
+                        .HasDatabaseName("IX_FixedAssets_IsDisposed_PurchaseDate");
+
+                    b.HasIndex("Location", "IsDisposed")
+                        .HasDatabaseName("IX_FixedAssets_Location_IsDisposed");
+
+                    b.HasIndex("DepreciationMethodId", "IsDisposed", "PurchaseDate")
+                        .HasDatabaseName("IX_FixedAssets_Method_IsDisposed_Purchase");
+
+                    b.HasIndex("IsDisposed", "DisposalDate", "DisposalAmount")
+                        .HasDatabaseName("IX_FixedAssets_Disposal_Date_Amount");
 
                     b.ToTable("FixedAssets", "accounting");
                 });
@@ -3197,7 +3338,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("InstalledCapacityKW")
+                    b.Property<decimal>("InstalledCapacityKw")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
 
@@ -4708,7 +4849,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime?>("ActivationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal?>("ContractCapacityMW")
+                    b.Property<decimal?>("ContractCapacityMw")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
 
@@ -4745,7 +4886,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTimeOffset?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal?>("DemandChargePerKW")
+                    b.Property<decimal?>("DemandChargePerKw")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
@@ -5734,10 +5875,33 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FiscalYear")
-                        .IsUnique();
+                    b.HasIndex("ClosedBy")
+                        .HasDatabaseName("IX_RetainedEarnings_ClosedBy");
 
-                    b.HasIndex("Status");
+                    b.HasIndex("ClosedDate")
+                        .HasDatabaseName("IX_RetainedEarnings_ClosedDate");
+
+                    b.HasIndex("FiscalYear")
+                        .IsUnique()
+                        .HasDatabaseName("IX_RetainedEarnings_FiscalYear");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_RetainedEarnings_Status");
+
+                    b.HasIndex("FiscalYear", "ClosingBalance")
+                        .HasDatabaseName("IX_RetainedEarnings_Year_ClosingBalance");
+
+                    b.HasIndex("FiscalYear", "Status")
+                        .HasDatabaseName("IX_RetainedEarnings_Year_Status");
+
+                    b.HasIndex("Status", "ClosedDate")
+                        .HasDatabaseName("IX_RetainedEarnings_Status_ClosedDate");
+
+                    b.HasIndex("FiscalYear", "ApproprietedAmount", "UnappropriatedAmount")
+                        .HasDatabaseName("IX_RetainedEarnings_Year_Appropriation");
+
+                    b.HasIndex("FiscalYear", "NetIncome", "Distributions")
+                        .HasDatabaseName("IX_RetainedEarnings_Year_Income_Distributions");
 
                     b.ToTable("RetainedEarnings", "accounting");
                 });
@@ -6324,22 +6488,63 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("ApprovalStatus")
+                        .HasDatabaseName("IX_WriteOffs_ApprovalStatus");
 
-                    b.HasIndex("ExpenseAccountId");
+                    b.HasIndex("ApprovedDate")
+                        .HasDatabaseName("IX_WriteOffs_ApprovedDate");
 
-                    b.HasIndex("InvoiceId");
+                    b.HasIndex("CustomerId")
+                        .HasDatabaseName("IX_WriteOffs_CustomerId");
 
-                    b.HasIndex("JournalEntryId");
+                    b.HasIndex("ExpenseAccountId")
+                        .HasDatabaseName("IX_WriteOffs_ExpenseAccountId");
 
-                    b.HasIndex("ReceivableAccountId");
+                    b.HasIndex("InvoiceId")
+                        .HasDatabaseName("IX_WriteOffs_InvoiceId");
+
+                    b.HasIndex("IsRecovered")
+                        .HasDatabaseName("IX_WriteOffs_IsRecovered");
+
+                    b.HasIndex("JournalEntryId")
+                        .HasDatabaseName("IX_WriteOffs_JournalEntryId");
+
+                    b.HasIndex("ReceivableAccountId")
+                        .HasDatabaseName("IX_WriteOffs_ReceivableAccountId");
 
                     b.HasIndex("ReferenceNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_WriteOffs_ReferenceNumber");
 
-                    b.HasIndex("Status");
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_WriteOffs_Status");
 
-                    b.HasIndex("WriteOffDate");
+                    b.HasIndex("WriteOffDate")
+                        .HasDatabaseName("IX_WriteOffs_WriteOffDate");
+
+                    b.HasIndex("WriteOffType")
+                        .HasDatabaseName("IX_WriteOffs_WriteOffType");
+
+                    b.HasIndex("ApprovalStatus", "WriteOffDate")
+                        .HasDatabaseName("IX_WriteOffs_Approval_Date");
+
+                    b.HasIndex("CustomerId", "WriteOffDate")
+                        .HasDatabaseName("IX_WriteOffs_Customer_Date");
+
+                    b.HasIndex("IsRecovered", "WriteOffDate")
+                        .HasDatabaseName("IX_WriteOffs_IsRecovered_Date");
+
+                    b.HasIndex("Status", "WriteOffDate")
+                        .HasDatabaseName("IX_WriteOffs_Status_Date");
+
+                    b.HasIndex("ApprovalStatus", "Status", "WriteOffDate")
+                        .HasDatabaseName("IX_WriteOffs_Approval_Status_Date");
+
+                    b.HasIndex("CustomerId", "WriteOffType", "Amount")
+                        .HasDatabaseName("IX_WriteOffs_Customer_Type_Amount");
+
+                    b.HasIndex("IsRecovered", "RecoveredAmount", "WriteOffDate")
+                        .HasDatabaseName("IX_WriteOffs_Recovery_Amount_Date");
 
                     b.ToTable("WriteOffs", "accounting");
                 });

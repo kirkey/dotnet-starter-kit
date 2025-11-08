@@ -54,10 +54,45 @@ public class CostCenterConfiguration : IEntityTypeConfiguration<CostCenter>
         builder.Property(x => x.Notes)
             .HasMaxLength(2048);
 
-        // Indexes for foreign keys and query optimization
-        builder.HasIndex(x => x.ParentCostCenterId);
-        builder.HasIndex(x => x.ManagerId);
-        builder.HasIndex(x => x.IsActive);
-        builder.HasIndex(x => x.CostCenterType);
+        // Single column indexes
+        builder.HasIndex(x => x.Code)
+            .IsUnique()
+            .HasDatabaseName("IX_CostCenters_Code");
+        
+        builder.HasIndex(x => x.ParentCostCenterId)
+            .HasDatabaseName("IX_CostCenters_ParentCostCenterId");
+        
+        builder.HasIndex(x => x.ManagerId)
+            .HasDatabaseName("IX_CostCenters_ManagerId");
+        
+        builder.HasIndex(x => x.IsActive)
+            .HasDatabaseName("IX_CostCenters_IsActive");
+        
+        builder.HasIndex(x => x.CostCenterType)
+            .HasDatabaseName("IX_CostCenters_CostCenterType");
+        
+        builder.HasIndex(x => x.StartDate)
+            .HasDatabaseName("IX_CostCenters_StartDate");
+        
+        builder.HasIndex(x => x.EndDate)
+            .HasDatabaseName("IX_CostCenters_EndDate");
+        
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.IsActive, x.CostCenterType })
+            .HasDatabaseName("IX_CostCenters_IsActive_Type");
+        
+        builder.HasIndex(x => new { x.ParentCostCenterId, x.IsActive })
+            .HasDatabaseName("IX_CostCenters_Parent_IsActive");
+        
+        builder.HasIndex(x => new { x.ManagerId, x.IsActive })
+            .HasDatabaseName("IX_CostCenters_Manager_IsActive");
+        
+        // Composite index for budget variance reports
+        builder.HasIndex(x => new { x.IsActive, x.BudgetAmount, x.ActualAmount })
+            .HasDatabaseName("IX_CostCenters_Active_Budget_Actual");
+        
+        // Composite index for period-based queries
+        builder.HasIndex(x => new { x.StartDate, x.EndDate, x.IsActive })
+            .HasDatabaseName("IX_CostCenters_DateRange_IsActive");
     }
 }

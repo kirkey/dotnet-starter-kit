@@ -57,9 +57,20 @@ public class DeferredRevenueConfiguration : IEntityTypeConfiguration<DeferredRev
 
         builder.HasIndex(dr => dr.IsRecognized)
             .HasDatabaseName("IX_DeferredRevenue_IsRecognized");
+        
+        builder.HasIndex(dr => dr.RecognizedDate)
+            .HasDatabaseName("IX_DeferredRevenue_RecognizedDate");
 
+        // Composite indexes for common query patterns
         builder.HasIndex(dr => new { dr.IsRecognized, dr.RecognitionDate })
             .HasDatabaseName("IX_DeferredRevenue_IsRecognized_RecognitionDate");
+        
+        builder.HasIndex(dr => new { dr.RecognitionDate, dr.IsRecognized, dr.Amount })
+            .HasDatabaseName("IX_DeferredRevenue_Date_IsRecognized_Amount");
+        
+        // Composite index for revenue recognition schedule
+        builder.HasIndex(dr => new { dr.IsRecognized, dr.RecognitionDate, dr.RecognizedDate })
+            .HasDatabaseName("IX_DeferredRevenue_Recognition_Tracking");
     }
 }
 

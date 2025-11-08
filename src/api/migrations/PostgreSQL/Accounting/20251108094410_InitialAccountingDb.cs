@@ -55,9 +55,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     AccountNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     AccountName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     CurrentBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Current0to30 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Days31to60 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Days61to90 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Current0To30 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Days31To60 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Days61To90 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     Over90Days = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     VendorCount = table.Column<int>(type: "integer", nullable: false),
                     DaysPayableOutstanding = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
@@ -98,9 +98,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     AccountNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     AccountName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     CurrentBalance = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Current0to30 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Days31to60 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Days61to90 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Current0To30 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Days31To60 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Days61To90 = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     Over90Days = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     AllowanceForDoubtfulAccounts = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     NetReceivables = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
@@ -753,8 +753,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     TrialBalanceBalanced = table.Column<bool>(type: "boolean", nullable: false),
                     AllJournalsPosted = table.Column<bool>(type: "boolean", nullable: false),
                     BankReconciliationsComplete = table.Column<bool>(type: "boolean", nullable: false),
-                    APReconciliationComplete = table.Column<bool>(type: "boolean", nullable: false),
-                    ARReconciliationComplete = table.Column<bool>(type: "boolean", nullable: false),
+                    ApReconciliationComplete = table.Column<bool>(type: "boolean", nullable: false),
+                    ArReconciliationComplete = table.Column<bool>(type: "boolean", nullable: false),
                     InventoryReconciliationComplete = table.Column<bool>(type: "boolean", nullable: false),
                     FixedAssetDepreciationPosted = table.Column<bool>(type: "boolean", nullable: false),
                     PrepaidExpensesAmortized = table.Column<bool>(type: "boolean", nullable: false),
@@ -954,7 +954,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     AgreementStatus = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     EffectiveDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    InstalledCapacityKW = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
+                    InstalledCapacityKw = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
                     NetMeteringRate = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: false),
                     ExcessGenerationRate = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: false),
                     MonthlyServiceCharge = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
@@ -1311,7 +1311,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EnergyPricePerKWh = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: false),
-                    DemandChargePerKW = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: true),
+                    DemandChargePerKw = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: true),
                     MinimumPurchaseKWh = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: true),
                     MaximumPurchaseKWh = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: true),
                     Status = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
@@ -1324,7 +1324,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     LifetimeEnergyKWh = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     EnergySource = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     IncludesRenewableCredits = table.Column<bool>(type: "boolean", nullable: false),
-                    ContractCapacityMW = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: true),
+                    ContractCapacityMw = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: true),
                     IsTakeOrPay = table.Column<bool>(type: "boolean", nullable: false),
                     HasPriceEscalation = table.Column<bool>(type: "boolean", nullable: false),
                     EscalationRate = table.Column<decimal>(type: "numeric(5,4)", precision: 5, scale: 4, nullable: true),
@@ -2267,10 +2267,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AccountingPeriods_DateRange",
+                schema: "accounting",
+                table: "AccountingPeriods",
+                columns: new[] { "StartDate", "EndDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountingPeriods_DateRange_IsClosed",
+                schema: "accounting",
+                table: "AccountingPeriods",
+                columns: new[] { "StartDate", "EndDate", "IsClosed" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AccountingPeriods_EndDate",
                 schema: "accounting",
                 table: "AccountingPeriods",
                 column: "EndDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountingPeriods_FiscalYear",
+                schema: "accounting",
+                table: "AccountingPeriods",
+                column: "FiscalYear");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountingPeriods_FiscalYear_PeriodType",
@@ -2280,10 +2298,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_AccountingPeriods_IsAdjustmentPeriod",
+                schema: "accounting",
+                table: "AccountingPeriods",
+                column: "IsAdjustmentPeriod");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AccountingPeriods_IsClosed",
                 schema: "accounting",
                 table: "AccountingPeriods",
                 column: "IsClosed");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountingPeriods_IsClosed_Year",
+                schema: "accounting",
+                table: "AccountingPeriods",
+                columns: new[] { "IsClosed", "FiscalYear" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountingPeriods_PeriodType",
+                schema: "accounting",
+                table: "AccountingPeriods",
+                column: "PeriodType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountingPeriods_StartDate",
@@ -2292,10 +2328,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "StartDate");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccountingPeriods_StartDate_EndDate",
+                name: "IX_AccountingPeriods_Year_Adjustment_Closed",
                 schema: "accounting",
                 table: "AccountingPeriods",
-                columns: new[] { "StartDate", "EndDate" });
+                columns: new[] { "FiscalYear", "IsAdjustmentPeriod", "IsClosed" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountingPeriods_Year_Closed_Type",
+                schema: "accounting",
+                table: "AccountingPeriods",
+                columns: new[] { "FiscalYear", "IsClosed", "PeriodType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountsPayableAccounts_AccountNumber",
@@ -2317,10 +2359,40 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AccountsPayableAccounts_IsActive_Balance",
+                schema: "accounting",
+                table: "AccountsPayableAccounts",
+                columns: new[] { "IsActive", "CurrentBalance" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountsPayableAccounts_IsActive_PeriodId",
+                schema: "accounting",
+                table: "AccountsPayableAccounts",
+                columns: new[] { "IsActive", "PeriodId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AccountsPayableAccounts_IsReconciled",
                 schema: "accounting",
                 table: "AccountsPayableAccounts",
                 column: "IsReconciled");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountsPayableAccounts_LastReconciliationDate",
+                schema: "accounting",
+                table: "AccountsPayableAccounts",
+                column: "LastReconciliationDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountsPayableAccounts_Period_Active_Balance",
+                schema: "accounting",
+                table: "AccountsPayableAccounts",
+                columns: new[] { "PeriodId", "IsActive", "CurrentBalance" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountsPayableAccounts_Period_IsReconciled",
+                schema: "accounting",
+                table: "AccountsPayableAccounts",
+                columns: new[] { "PeriodId", "IsReconciled" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountsPayableAccounts_PeriodId",
@@ -2360,11 +2432,53 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "PeriodId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Accruals_AccrualDate",
+                schema: "accounting",
+                table: "Accruals",
+                column: "AccrualDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Accruals_AccrualNumber",
                 schema: "accounting",
                 table: "Accruals",
                 column: "AccrualNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accruals_IsReversed",
+                schema: "accounting",
+                table: "Accruals",
+                column: "IsReversed");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accruals_IsReversed_Date",
+                schema: "accounting",
+                table: "Accruals",
+                columns: new[] { "IsReversed", "AccrualDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accruals_IsReversed_ReversalDate_Status",
+                schema: "accounting",
+                table: "Accruals",
+                columns: new[] { "IsReversed", "ReversalDate", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accruals_ReversalDate",
+                schema: "accounting",
+                table: "Accruals",
+                column: "ReversalDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accruals_Status",
+                schema: "accounting",
+                table: "Accruals",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accruals_Status_Date",
+                schema: "accounting",
+                table: "Accruals",
+                columns: new[] { "Status", "AccrualDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankReconciliations_BankAccountId",
@@ -2693,6 +2807,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_Active_Budget_Actual",
+                schema: "accounting",
+                table: "CostCenters",
+                columns: new[] { "IsActive", "BudgetAmount", "ActualAmount" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CostCenters_Code",
                 schema: "accounting",
                 table: "CostCenters",
@@ -2706,10 +2826,34 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "CostCenterType");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_DateRange_IsActive",
+                schema: "accounting",
+                table: "CostCenters",
+                columns: new[] { "StartDate", "EndDate", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_EndDate",
+                schema: "accounting",
+                table: "CostCenters",
+                column: "EndDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CostCenters_IsActive",
                 schema: "accounting",
                 table: "CostCenters",
                 column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_IsActive_Type",
+                schema: "accounting",
+                table: "CostCenters",
+                columns: new[] { "IsActive", "CostCenterType" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_Manager_IsActive",
+                schema: "accounting",
+                table: "CostCenters",
+                columns: new[] { "ManagerId", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CostCenters_ManagerId",
@@ -2718,10 +2862,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "ManagerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_Parent_IsActive",
+                schema: "accounting",
+                table: "CostCenters",
+                columns: new[] { "ParentCostCenterId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CostCenters_ParentCostCenterId",
                 schema: "accounting",
                 table: "CostCenters",
                 column: "ParentCostCenterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CostCenters_StartDate",
+                schema: "accounting",
+                table: "CostCenters",
+                column: "StartDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CreditMemos_IsApplied",
@@ -2823,6 +2979,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeferredRevenue_Date_IsRecognized_Amount",
+                schema: "accounting",
+                table: "DeferredRevenue",
+                columns: new[] { "RecognitionDate", "IsRecognized", "Amount" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeferredRevenue_IsRecognized",
                 schema: "accounting",
                 table: "DeferredRevenue",
@@ -2842,10 +3004,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeferredRevenue_Recognition_Tracking",
+                schema: "accounting",
+                table: "DeferredRevenue",
+                columns: new[] { "IsRecognized", "RecognitionDate", "RecognizedDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeferredRevenue_RecognitionDate",
                 schema: "accounting",
                 table: "DeferredRevenue",
                 column: "RecognitionDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeferredRevenue_RecognizedDate",
+                schema: "accounting",
+                table: "DeferredRevenue",
+                column: "RecognizedDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DepreciationEntry_FixedAssetId",
@@ -2969,6 +3143,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "AccumulatedDepreciationAccountId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_Department",
+                schema: "accounting",
+                table: "FixedAssets",
+                column: "Department");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_Department_IsDisposed",
+                schema: "accounting",
+                table: "FixedAssets",
+                columns: new[] { "Department", "IsDisposed" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FixedAssets_DepreciationExpenseAccountId",
                 schema: "accounting",
                 table: "FixedAssets",
@@ -2981,16 +3167,70 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "DepreciationMethodId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_Disposal_Date_Amount",
+                schema: "accounting",
+                table: "FixedAssets",
+                columns: new[] { "IsDisposed", "DisposalDate", "DisposalAmount" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_DisposalDate",
+                schema: "accounting",
+                table: "FixedAssets",
+                column: "DisposalDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FixedAssets_IsDisposed",
                 schema: "accounting",
                 table: "FixedAssets",
                 column: "IsDisposed");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_IsDisposed_BookValue",
+                schema: "accounting",
+                table: "FixedAssets",
+                columns: new[] { "IsDisposed", "CurrentBookValue" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_IsDisposed_PurchaseDate",
+                schema: "accounting",
+                table: "FixedAssets",
+                columns: new[] { "IsDisposed", "PurchaseDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_Location",
+                schema: "accounting",
+                table: "FixedAssets",
+                column: "Location");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_Location_IsDisposed",
+                schema: "accounting",
+                table: "FixedAssets",
+                columns: new[] { "Location", "IsDisposed" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_Method_IsDisposed_Purchase",
+                schema: "accounting",
+                table: "FixedAssets",
+                columns: new[] { "DepreciationMethodId", "IsDisposed", "PurchaseDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FixedAssets_PurchaseDate",
                 schema: "accounting",
                 table: "FixedAssets",
                 column: "PurchaseDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_SerialNumber",
+                schema: "accounting",
+                table: "FixedAssets",
+                column: "SerialNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FixedAssets_Status",
+                schema: "accounting",
+                table: "FixedAssets",
+                column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneralLedger_Account_Date",
@@ -3763,6 +4003,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RetainedEarnings_ClosedBy",
+                schema: "accounting",
+                table: "RetainedEarnings",
+                column: "ClosedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RetainedEarnings_ClosedDate",
+                schema: "accounting",
+                table: "RetainedEarnings",
+                column: "ClosedDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RetainedEarnings_FiscalYear",
                 schema: "accounting",
                 table: "RetainedEarnings",
@@ -3774,6 +4026,36 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting",
                 table: "RetainedEarnings",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RetainedEarnings_Status_ClosedDate",
+                schema: "accounting",
+                table: "RetainedEarnings",
+                columns: new[] { "Status", "ClosedDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RetainedEarnings_Year_Appropriation",
+                schema: "accounting",
+                table: "RetainedEarnings",
+                columns: new[] { "FiscalYear", "ApproprietedAmount", "UnappropriatedAmount" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RetainedEarnings_Year_ClosingBalance",
+                schema: "accounting",
+                table: "RetainedEarnings",
+                columns: new[] { "FiscalYear", "ClosingBalance" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RetainedEarnings_Year_Income_Distributions",
+                schema: "accounting",
+                table: "RetainedEarnings",
+                columns: new[] { "FiscalYear", "NetIncome", "Distributions" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RetainedEarnings_Year_Status",
+                schema: "accounting",
+                table: "RetainedEarnings",
+                columns: new[] { "FiscalYear", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_SecurityDeposit_DepositDate",
@@ -3935,6 +4217,42 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_Approval_Date",
+                schema: "accounting",
+                table: "WriteOffs",
+                columns: new[] { "ApprovalStatus", "WriteOffDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_Approval_Status_Date",
+                schema: "accounting",
+                table: "WriteOffs",
+                columns: new[] { "ApprovalStatus", "Status", "WriteOffDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_ApprovalStatus",
+                schema: "accounting",
+                table: "WriteOffs",
+                column: "ApprovalStatus");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_ApprovedDate",
+                schema: "accounting",
+                table: "WriteOffs",
+                column: "ApprovedDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_Customer_Date",
+                schema: "accounting",
+                table: "WriteOffs",
+                columns: new[] { "CustomerId", "WriteOffDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_Customer_Type_Amount",
+                schema: "accounting",
+                table: "WriteOffs",
+                columns: new[] { "CustomerId", "WriteOffType", "Amount" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WriteOffs_CustomerId",
                 schema: "accounting",
                 table: "WriteOffs",
@@ -3953,6 +4271,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_IsRecovered",
+                schema: "accounting",
+                table: "WriteOffs",
+                column: "IsRecovered");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_IsRecovered_Date",
+                schema: "accounting",
+                table: "WriteOffs",
+                columns: new[] { "IsRecovered", "WriteOffDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WriteOffs_JournalEntryId",
                 schema: "accounting",
                 table: "WriteOffs",
@@ -3963,6 +4293,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 schema: "accounting",
                 table: "WriteOffs",
                 column: "ReceivableAccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_Recovery_Amount_Date",
+                schema: "accounting",
+                table: "WriteOffs",
+                columns: new[] { "IsRecovered", "RecoveredAmount", "WriteOffDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_WriteOffs_ReferenceNumber",
@@ -3978,10 +4314,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_Status_Date",
+                schema: "accounting",
+                table: "WriteOffs",
+                columns: new[] { "Status", "WriteOffDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WriteOffs_WriteOffDate",
                 schema: "accounting",
                 table: "WriteOffs",
                 column: "WriteOffDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WriteOffs_WriteOffType",
+                schema: "accounting",
+                table: "WriteOffs",
+                column: "WriteOffType");
         }
 
         /// <inheritdoc />

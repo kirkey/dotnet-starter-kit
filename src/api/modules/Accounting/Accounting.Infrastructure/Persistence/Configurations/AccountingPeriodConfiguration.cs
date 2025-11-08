@@ -41,9 +41,44 @@ public class AccountingPeriodConfiguration : IEntityTypeConfiguration<Accounting
             .IsRequired();
 
         // Indexes for query optimization
-        builder.HasIndex(x => x.IsClosed);
-        builder.HasIndex(x => x.StartDate);
-        builder.HasIndex(x => x.EndDate);
-        builder.HasIndex(x => new { x.StartDate, x.EndDate });
+        builder.HasIndex(x => new { x.FiscalYear, x.PeriodType })
+            .IsUnique()
+            .HasDatabaseName("IX_AccountingPeriods_FiscalYear_PeriodType");
+        
+        builder.HasIndex(x => x.FiscalYear)
+            .HasDatabaseName("IX_AccountingPeriods_FiscalYear");
+        
+        builder.HasIndex(x => x.PeriodType)
+            .HasDatabaseName("IX_AccountingPeriods_PeriodType");
+        
+        builder.HasIndex(x => x.IsClosed)
+            .HasDatabaseName("IX_AccountingPeriods_IsClosed");
+        
+        builder.HasIndex(x => x.IsAdjustmentPeriod)
+            .HasDatabaseName("IX_AccountingPeriods_IsAdjustmentPeriod");
+        
+        builder.HasIndex(x => x.StartDate)
+            .HasDatabaseName("IX_AccountingPeriods_StartDate");
+        
+        builder.HasIndex(x => x.EndDate)
+            .HasDatabaseName("IX_AccountingPeriods_EndDate");
+        
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.StartDate, x.EndDate })
+            .HasDatabaseName("IX_AccountingPeriods_DateRange");
+        
+        builder.HasIndex(x => new { x.IsClosed, x.FiscalYear })
+            .HasDatabaseName("IX_AccountingPeriods_IsClosed_Year");
+        
+        builder.HasIndex(x => new { x.FiscalYear, x.IsClosed, x.PeriodType })
+            .HasDatabaseName("IX_AccountingPeriods_Year_Closed_Type");
+        
+        // Composite index for period selection queries
+        builder.HasIndex(x => new { x.StartDate, x.EndDate, x.IsClosed })
+            .HasDatabaseName("IX_AccountingPeriods_DateRange_IsClosed");
+        
+        // Composite index for adjustment period queries
+        builder.HasIndex(x => new { x.FiscalYear, x.IsAdjustmentPeriod, x.IsClosed })
+            .HasDatabaseName("IX_AccountingPeriods_Year_Adjustment_Closed");
     }
 }

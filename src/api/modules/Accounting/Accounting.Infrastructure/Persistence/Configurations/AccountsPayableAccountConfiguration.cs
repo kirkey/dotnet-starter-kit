@@ -27,11 +27,39 @@ public class AccountsPayableAccountConfiguration : IEntityTypeConfiguration<Acco
         builder.Property(x => x.YearToDateDiscountsTaken).HasPrecision(18, 2);
         builder.Property(x => x.YearToDateDiscountsLost).HasPrecision(18, 2);
         
-        builder.HasIndex(x => x.AccountNumber).IsUnique();
-        builder.HasIndex(x => x.IsActive);
-        builder.HasIndex(x => x.GeneralLedgerAccountId);
-        builder.HasIndex(x => x.PeriodId);
-        builder.HasIndex(x => x.IsReconciled);
+        // Single column indexes
+        builder.HasIndex(x => x.AccountNumber)
+            .IsUnique()
+            .HasDatabaseName("IX_AccountsPayableAccounts_AccountNumber");
+        
+        builder.HasIndex(x => x.IsActive)
+            .HasDatabaseName("IX_AccountsPayableAccounts_IsActive");
+        
+        builder.HasIndex(x => x.GeneralLedgerAccountId)
+            .HasDatabaseName("IX_AccountsPayableAccounts_GeneralLedgerAccountId");
+        
+        builder.HasIndex(x => x.PeriodId)
+            .HasDatabaseName("IX_AccountsPayableAccounts_PeriodId");
+        
+        builder.HasIndex(x => x.IsReconciled)
+            .HasDatabaseName("IX_AccountsPayableAccounts_IsReconciled");
+        
+        builder.HasIndex(x => x.LastReconciliationDate)
+            .HasDatabaseName("IX_AccountsPayableAccounts_LastReconciliationDate");
+        
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.IsActive, x.PeriodId })
+            .HasDatabaseName("IX_AccountsPayableAccounts_IsActive_PeriodId");
+        
+        builder.HasIndex(x => new { x.PeriodId, x.IsReconciled })
+            .HasDatabaseName("IX_AccountsPayableAccounts_Period_IsReconciled");
+        
+        builder.HasIndex(x => new { x.IsActive, x.CurrentBalance })
+            .HasDatabaseName("IX_AccountsPayableAccounts_IsActive_Balance");
+        
+        // Composite index for aging report queries
+        builder.HasIndex(x => new { x.PeriodId, x.IsActive, x.CurrentBalance })
+            .HasDatabaseName("IX_AccountsPayableAccounts_Period_Active_Balance");
     }
 }
 
