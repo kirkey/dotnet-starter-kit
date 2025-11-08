@@ -6,9 +6,9 @@ public static class UpdateBudgetEndpoint
 {
     internal static RouteHandlerBuilder MapUpdateBudgetEndpoint(this IEndpointRouteBuilder app)
     {
-        return app.MapPut("/{id:guid}/budget", async (DefaultIdType id, UpdateBudgetCommand command, ISender mediator) =>
+        return app.MapPut("/{id:guid}/budget", async ([FromRoute] DefaultIdType id, [FromBody] UpdateBudgetRequest request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest();
+                var command = new UpdateBudgetCommand(id, request.BudgetAmount);
                 var costCenterId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = costCenterId });
             })
@@ -21,4 +21,8 @@ public static class UpdateBudgetEndpoint
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }
+
+    public sealed record UpdateBudgetRequest(decimal BudgetAmount);
 }
+
+
