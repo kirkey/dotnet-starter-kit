@@ -1,17 +1,12 @@
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.PrepaidExpenses.Update.v1;
 
-public sealed class UpdatePrepaidExpenseHandler : IRequestHandler<UpdatePrepaidExpenseCommand, DefaultIdType>
+public sealed class UpdatePrepaidExpenseHandler(
+    IRepository<PrepaidExpense> repository,
+    ILogger<UpdatePrepaidExpenseHandler> logger)
+    : IRequestHandler<UpdatePrepaidExpenseCommand, DefaultIdType>
 {
-    private readonly IRepository<PrepaidExpense> _repository;
-    private readonly ILogger<UpdatePrepaidExpenseHandler> _logger;
-
-    public UpdatePrepaidExpenseHandler(IRepository<PrepaidExpense> repository, ILogger<UpdatePrepaidExpenseHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly IRepository<PrepaidExpense> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    private readonly ILogger<UpdatePrepaidExpenseHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public async Task<DefaultIdType> Handle(UpdatePrepaidExpenseCommand request, CancellationToken cancellationToken)
     {

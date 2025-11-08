@@ -27,6 +27,7 @@ using Accounting.Infrastructure.Endpoints.FixedAssets;
 using Accounting.Infrastructure.Endpoints.GeneralLedger;
 using Accounting.Infrastructure.Endpoints.InterCompanyTransactions;
 using Accounting.Infrastructure.Endpoints.Inventory;
+using Accounting.Infrastructure.Endpoints.InventoryItems;
 using Accounting.Infrastructure.Endpoints.Invoice;
 using Accounting.Infrastructure.Endpoints.JournalEntries;
 using Accounting.Infrastructure.Endpoints.JournalEntryLines;
@@ -121,8 +122,9 @@ public static class AccountingModule
         accountingGroup.MapFixedAssetsEndpoints();
         accountingGroup.MapRegulatoryReportsEndpoints();
         accountingGroup.MapAccountReconciliationEndpoints();
-        accountingGroup.MapVendorsEndpoints();
-        accountingGroup.MapSecurityDepositsEndpoints();
+        accountingGroup.MapDeferredRevenueEndpoints();
+        accountingGroup.MapWriteOffsEndpoints();
+        accountingGroup.MapInventoryItemsEndpoints();
 
         return app;
     }

@@ -1,17 +1,12 @@
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.PrepaidExpenses.RecordAmortization.v1;
 
-public sealed class RecordAmortizationHandler : IRequestHandler<RecordAmortizationCommand, DefaultIdType>
+public sealed class RecordAmortizationHandler(
+    IRepository<PrepaidExpense> repository,
+    ILogger<RecordAmortizationHandler> logger)
+    : IRequestHandler<RecordAmortizationCommand, DefaultIdType>
 {
-    private readonly IRepository<PrepaidExpense> _repository;
-    private readonly ILogger<RecordAmortizationHandler> _logger;
-
-    public RecordAmortizationHandler(IRepository<PrepaidExpense> repository, ILogger<RecordAmortizationHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly IRepository<PrepaidExpense> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    private readonly ILogger<RecordAmortizationHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public async Task<DefaultIdType> Handle(RecordAmortizationCommand request, CancellationToken cancellationToken)
     {

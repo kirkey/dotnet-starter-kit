@@ -1,17 +1,12 @@
-using Microsoft.Extensions.Logging;
-
 namespace Accounting.Application.PrepaidExpenses.Cancel.v1;
 
-public sealed class CancelPrepaidExpenseHandler : IRequestHandler<CancelPrepaidExpenseCommand, DefaultIdType>
+public sealed class CancelPrepaidExpenseHandler(
+    IRepository<PrepaidExpense> repository,
+    ILogger<CancelPrepaidExpenseHandler> logger)
+    : IRequestHandler<CancelPrepaidExpenseCommand, DefaultIdType>
 {
-    private readonly IRepository<PrepaidExpense> _repository;
-    private readonly ILogger<CancelPrepaidExpenseHandler> _logger;
-
-    public CancelPrepaidExpenseHandler(IRepository<PrepaidExpense> repository, ILogger<CancelPrepaidExpenseHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly IRepository<PrepaidExpense> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    private readonly ILogger<CancelPrepaidExpenseHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public async Task<DefaultIdType> Handle(CancelPrepaidExpenseCommand request, CancellationToken cancellationToken)
     {

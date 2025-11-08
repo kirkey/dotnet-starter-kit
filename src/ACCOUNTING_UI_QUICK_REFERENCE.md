@@ -70,10 +70,10 @@ Asset and expense management:
 ❌ FixedAsset              - Asset tracking & depreciation ✅ API Complete
 ❌ DepreciationMethod      - Depreciation calculation ✅ API Complete
 ❌ PrepaidExpense          - Expense amortization ✅ API Complete
-❌ DeferredRevenue         - Revenue recognition
-❌ WriteOff                - Bad debt management
-❌ InventoryItem           - Inventory tracking
-❌ CostCenter              - Cost allocation
+❌ DeferredRevenue         - Revenue recognition ✅ API Complete
+❌ WriteOff                - Bad debt management ✅ API Complete
+❌ InventoryItem           - Inventory tracking ✅ API Complete
+❌ CostCenter              - Cost allocation ✅ API Complete
 ❌ InterCompanyTransaction - Inter-company accounting
 ❌ SecurityDeposit         - Deposit management
 ❌ ProjectCost             - Project cost details

@@ -11,9 +11,17 @@ public static class CostCentersEndpoints
             .WithDescription("Endpoints for managing cost centers")
             .MapToApiVersion(1);
 
+        // CRUD operations
         group.MapCostCenterCreateEndpoint();
         group.MapCostCenterGetEndpoint();
+        group.MapCostCenterUpdateEndpoint();
         group.MapCostCenterSearchEndpoint();
+
+        // Workflow operations
+        group.MapCostCenterUpdateBudgetEndpoint();
+        group.MapCostCenterRecordActualEndpoint();
+        group.MapCostCenterActivateEndpoint();
+        group.MapCostCenterDeactivateEndpoint();
 
         return app;
     }

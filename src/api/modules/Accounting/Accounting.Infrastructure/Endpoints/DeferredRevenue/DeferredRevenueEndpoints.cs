@@ -16,11 +16,15 @@ public static class DeferredRevenueEndpoints
             .WithTags("Deferred-Revenue")
             .WithDescription("Endpoints for managing deferred revenue entries");
 
-        // Version 1 endpoints
+        // CRUD operations
         deferredRevenueGroup.MapDeferredRevenueCreateEndpoint();
-        deferredRevenueGroup.MapDeferredRevenueUpdateEndpoint();
         deferredRevenueGroup.MapDeferredRevenueGetEndpoint();
+        deferredRevenueGroup.MapDeferredRevenueUpdateEndpoint();
+        deferredRevenueGroup.MapDeferredRevenueDeleteEndpoint();
         deferredRevenueGroup.MapDeferredRevenueSearchEndpoint();
+
+        // Workflow operations
+        deferredRevenueGroup.MapDeferredRevenueRecognizeEndpoint();
 
         return app;
     }
