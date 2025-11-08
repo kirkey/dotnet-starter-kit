@@ -11,9 +11,16 @@ public static class PrepaidExpensesEndpoints
             .WithDescription("Endpoints for managing prepaid expenses")
             .MapToApiVersion(1);
 
+        // CRUD operations
         group.MapPrepaidExpenseCreateEndpoint();
         group.MapPrepaidExpenseGetEndpoint();
+        group.MapPrepaidExpenseUpdateEndpoint();
         group.MapPrepaidExpenseSearchEndpoint();
+
+        // Workflow operations
+        group.MapPrepaidExpenseRecordAmortizationEndpoint();
+        group.MapPrepaidExpenseCloseEndpoint();
+        group.MapPrepaidExpenseCancelEndpoint();
 
         return app;
     }
