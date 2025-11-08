@@ -33,7 +33,7 @@ public partial class AddPickListItemDialog
     {
         if (string.IsNullOrWhiteSpace(searchString) || searchString.Length < 2)
         {
-            return Enumerable.Empty<ItemResponse>();
+            return [];
         }
 
         try
@@ -52,7 +52,7 @@ public partial class AddPickListItemDialog
         catch (Exception ex)
         {
             Snackbar.Add($"Failed to search items: {ex.Message}", Severity.Error);
-            return Enumerable.Empty<ItemResponse>();
+            return [];
         }
     }
 
@@ -63,7 +63,7 @@ public partial class AddPickListItemDialog
     {
         if (string.IsNullOrWhiteSpace(searchString) || searchString.Length < 2)
         {
-            return Enumerable.Empty<BinResponse>();
+            return [];
         }
 
         try
@@ -82,7 +82,7 @@ public partial class AddPickListItemDialog
         catch (Exception ex)
         {
             Snackbar.Add($"Failed to search bins: {ex.Message}", Severity.Error);
-            return Enumerable.Empty<BinResponse>();
+            return [];
         }
     }
 

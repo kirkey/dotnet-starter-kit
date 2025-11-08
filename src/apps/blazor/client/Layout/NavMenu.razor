@@ -1,4 +1,5 @@
 ﻿@using FSH.Starter.Blazor.Client.Models.NavigationMenu
+﻿@using FSH.Starter.Blazor.Client.Models.NavigationMenu
 <PersonCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text); margin-bottom:0px!important" />
 <MudNavMenu>
     @foreach (var sec in _sections)
@@ -15,31 +16,40 @@
                 <MudNavGroup Title="@item.Title" Icon="@item.Icon" Disabled="@IsItemDisabled(item)">
                     @foreach (var sub in item.MenuItems)
                     {
-                        <MudNavLink Href="@sub.Href" Icon="@sub.Icon" Class="fsh-nav-child" Disabled="@(sub.Disabled || IsSubItemDisabled(sub))" Target="@sub.Target">
-                            <MudStack>
-                                <MudStack Row="true">
-                                    @sub.Title
-                                    @*if (sub.PageStatus == PageStatus.InProgress)
+                        @if (sub.IsGroupHeader)
+                        {
+                            <div class="nav-group-divider">
+                                <MudText Typo="Typo.caption" Color="Color.Inherit" Class="nav-group-header-text">@sub.Title</MudText>
+                            </div>
+                        }
+                        else
+                        {
+                            <MudNavLink Href="@sub.Href" Icon="@sub.Icon" Class="fsh-nav-child" Disabled="@(sub.Disabled || IsSubItemDisabled(sub))" Target="@sub.Target">
+                                <MudStack>
+                                    <MudStack Row="true">
+                                        @sub.Title
+                                        @*if (sub.PageStatus == PageStatus.InProgress)
+                                        {
+                                            <MudIcon Class="in-progress-badge" Icon="@Icons.Material.Filled.Science" Size="Size.Small"  />
+                                        }*@
+                                    </MudStack>
+                                    @if (sub.PageStatus == PageStatus.ComingSoon)
                                     {
-                                        <MudIcon Class="in-progress-badge" Icon="@Icons.Material.Filled.Science" Size="Size.Small"  />
-                                    }*@
+                                        <div class="coming-soon-caption sub-item-caption">
+                                            <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Small" Class="coming-soon-icon" />
+                                            <span class="coming-soon-text">Coming Soon</span>
+                                        </div>
+                                    }
+                                    @if (sub.PageStatus == PageStatus.InProgress)
+                                    {
+                                        <div class="in-progress-caption sub-item-caption">
+                                            <MudIcon Icon="@Icons.Material.Filled.BugReport" Size="Size.Small" Class="in-progress-icon" Title="Feature in development - may contain bugs" />
+                                            <span class="in-progress-text">In Development</span>
+                                        </div>
+                                    }
                                 </MudStack>
-                                @if (sub.PageStatus == PageStatus.ComingSoon)
-                                {
-                                    <div class="coming-soon-caption sub-item-caption">
-                                        <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Small" Class="coming-soon-icon" />
-                                        <span class="coming-soon-text">Coming Soon</span>
-                                    </div>
-                                }
-                                @if (sub.PageStatus == PageStatus.InProgress)
-                                {
-                                    <div class="in-progress-caption sub-item-caption">
-                                        <MudIcon Icon="@Icons.Material.Filled.BugReport" Size="Size.Small" Class="in-progress-icon" Title="Feature in development - may contain bugs" />
-                                        <span class="in-progress-text">In Development</span>
-                                    </div>
-                                }
-                            </MudStack>
-                        </MudNavLink>
+                            </MudNavLink>
+                        }
                     }
                 </MudNavGroup>
             }
@@ -156,5 +166,21 @@
     .mud-nav-group.mud-disabled > .mud-nav-group-header {
         opacity: 0.6;
         cursor: not-allowed;
+    }
+    
+    /* Group divider styles */
+    .nav-group-divider {
+        margin: 12px 16px 8px 34px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    
+    .nav-group-header-text {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        opacity: 0.6;
+        margin-top: 4px;
     }
 </style>

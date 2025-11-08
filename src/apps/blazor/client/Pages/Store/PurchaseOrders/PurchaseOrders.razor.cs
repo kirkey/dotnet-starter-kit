@@ -9,7 +9,7 @@ public partial class PurchaseOrders
     private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> Context = default!;
     private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = default!;
 
-    private List<SupplierResponse> _suppliers = new();
+    private List<SupplierResponse> _suppliers = [];
     private DefaultIdType? SearchSupplierId { get; set; }
     private string? SearchStatus { get; set; }
     private DateTime? SearchFromDate { get; set; }
@@ -79,7 +79,7 @@ public partial class PurchaseOrders
                 OrderBy = ["Name"]
             };
             var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
-            _suppliers = result.Items?.ToList() ?? new List<SupplierResponse>();
+            _suppliers = result.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {

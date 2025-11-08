@@ -40,12 +40,15 @@ public sealed class GeneralLedgerSearchHandler : IRequestHandler<GeneralLedgerSe
             Debit = e.Debit,
             Credit = e.Credit,
             Memo = e.Memo,
-            UsoaClass = e.UsoaClass,
+            UsoaClass = e.UsoaClass ?? string.Empty,
             TransactionDate = e.TransactionDate,
             ReferenceNumber = e.ReferenceNumber,
             PeriodId = e.PeriodId,
             Description = e.Description,
-            CreatedOn = e.CreatedOn.DateTime
+            CreatedOn = e.CreatedOn.DateTime,
+            IsPosted = e.IsPosted,
+            Source = e.Source,
+            SourceId = e.SourceId
         }).ToList();
 
         _logger.LogInformation("Found {Count} general ledger entries", response.Count);

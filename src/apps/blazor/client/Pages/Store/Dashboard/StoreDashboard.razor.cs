@@ -15,19 +15,19 @@ public partial class StoreDashboard
     private readonly StoreDashboardCharts _charts = new();
 
     /// <summary>Low stock items for the data table.</summary>
-    private readonly List<StockItem> _stockItems = new();
+    private readonly List<StockItem> _stockItems = [];
 
     /// <summary>Recent goods receipts list.</summary>
-    private readonly List<GoodsReceiptItem> _goodsReceipts = new();
+    private readonly List<GoodsReceiptItem> _goodsReceipts = [];
 
     /// <summary>Active inventory transfers list.</summary>
-    private readonly List<InventoryTransferItem> _inventoryTransfers = new();
+    private readonly List<InventoryTransferItem> _inventoryTransfers = [];
 
     /// <summary>Active pick lists.</summary>
-    private readonly List<PickListItem> _pickLists = new();
+    private readonly List<PickListItem> _pickLists = [];
 
     /// <summary>Active put away tasks.</summary>
-    private readonly List<PutAwayTaskItem> _putAwayTasks = new();
+    private readonly List<PutAwayTaskItem> _putAwayTasks = [];
 
     /// <summary>
     /// Initialize the dashboard - load real data from API.
@@ -286,49 +286,44 @@ public partial class StoreDashboard
     private void InitializeCharts()
     {
         // Purchase Order Status Chart (Donut)
-        _charts.OrderSourceLabels = new[] { "Pending", "Approved/Sent", "Completed", "Cancelled" };
+        _charts.OrderSourceLabels = ["Pending", "Approved/Sent", "Completed", "Cancelled"];
         var total = _metrics.PurchaseOrdersPending + _metrics.PurchaseOrdersApproved + 
                     _metrics.PurchaseOrdersCompleted + _metrics.PurchaseOrdersCancelled;
         
         if (total > 0)
         {
-            _charts.OrderSourceDatasets = new List<ChartSeries>
-            {
-                new() { 
-                    Name = "Purchase Orders", 
-                    Data = new double[] 
-                    { 
-                        _metrics.PurchaseOrdersPending,
-                        _metrics.PurchaseOrdersApproved,
-                        _metrics.PurchaseOrdersCompleted,
-                        _metrics.PurchaseOrdersCancelled
-                    }
+            _charts.OrderSourceDatasets =
+            [
+                new()
+                {
+                    Name = "Purchase Orders",
+                    Data =
+                    [
+                        _metrics.PurchaseOrdersPending, _metrics.PurchaseOrdersApproved,
+                        _metrics.PurchaseOrdersCompleted, _metrics.PurchaseOrdersCancelled
+                    ]
                 }
-            };
+            ];
         }
         else
         {
-            _charts.OrderSourceDatasets = new List<ChartSeries>
-            {
-                new() { Name = "Purchase Orders", Data = new double[] { 1 } }
-            };
+            _charts.OrderSourceDatasets = [new() { Name = "Purchase Orders", Data = [1] }];
         }
 
         // Stock Level Chart (Bar) - Show top items by stock
         if (_stockItems.Count > 0)
         {
             _charts.StockLabels = _stockItems.Take(10).Select(s => s.Product).ToArray();
-            _charts.StockDatasets = new List<ChartSeries>
-            {
-                new() { 
-                    Name = "Current Stock", 
+            _charts.StockDatasets =
+            [
+                new()
+                {
+                    Name = "Current Stock",
                     Data = _stockItems.Take(10).Select(s => (double)s.CurrentStock).ToArray()
                 },
-                new() { 
-                    Name = "Reorder Point", 
-                    Data = _stockItems.Take(10).Select(s => (double)s.Threshold).ToArray()
-                }
-            };
+
+                new() { Name = "Reorder Point", Data = _stockItems.Take(10).Select(s => (double)s.Threshold).ToArray() }
+            ];
         }
     }
 
@@ -391,7 +386,7 @@ public partial class StoreDashboard
             // Filter for pending and in-transit on client side
             var activeTransfers = result.Items?
                 .Where(t => t.Status is "Pending" or "InTransit" or "Approved")
-                .ToList() ?? new List<GetInventoryTransferListResponse>();
+                .ToList() ?? [];
 
             _metrics.InventoryTransfersPending = activeTransfers.Count;
 

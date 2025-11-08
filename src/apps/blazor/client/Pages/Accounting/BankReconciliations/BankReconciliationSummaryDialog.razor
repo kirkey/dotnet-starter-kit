@@ -159,8 +159,8 @@
         public int PendingCount { get; set; }
         public int InProgressCount { get; set; }
         public int ApprovedCount { get; set; }
-        public List<BankReconciliationResponse> RecentReconciliations { get; set; } = new();
-        public List<BankAccountSummaryItem> BankAccountSummaries { get; set; } = new();
+        public List<BankReconciliationResponse> RecentReconciliations { get; set; } = [];
+        public List<BankAccountSummaryItem> BankAccountSummaries { get; set; } = [];
     }
 
     private class BankAccountSummaryItem

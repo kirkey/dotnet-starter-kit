@@ -4,6 +4,8 @@ public record VendorSearchResponse(
     DefaultIdType Id,
     string VendorCode,
     string Name,
+    string? ContactPerson,
+    string? Email,
     string? Address,
     string? ExpenseAccountCode,
     string? ExpenseAccountName,

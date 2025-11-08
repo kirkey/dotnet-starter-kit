@@ -43,7 +43,7 @@
     [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
     [Parameter] public EventCallback OnItemsChanged { get; set; }
 
-    private List<PurchaseOrderItemResponse> _items = new();
+    private List<PurchaseOrderItemResponse> _items = [];
     private bool _loading;
 
     protected override async Task OnParametersSetAsync()
@@ -59,7 +59,7 @@
         _loading = true;
         try
         {
-            _items = (await Client.GetPurchaseOrderItemsEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false))?.ToList() ?? new();
+            _items = (await Client.GetPurchaseOrderItemsEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false))?.ToList() ?? [];
         }
         catch (Exception ex)
         {

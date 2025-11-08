@@ -67,7 +67,7 @@ public class AutocompleteBank : AutocompleteBase<BankResponse, IClient, DefaultI
             .ConfigureAwait(false);
 
         var paginationResponse = response?.Adapt<PaginationResponse<BankResponse>>();
-        var items = paginationResponse?.Items?.ToList() ?? new List<BankResponse>();
+        var items = paginationResponse?.Items?.ToList() ?? [];
 
         // Refresh cache with returned items
         _cache.Clear();

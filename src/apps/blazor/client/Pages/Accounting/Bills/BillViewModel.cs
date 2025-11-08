@@ -116,7 +116,7 @@ public class BillViewModel
     /// </summary>
     [Required(ErrorMessage = "At least one line item is required")]
     [MinLength(1, ErrorMessage = "At least one line item is required")]
-    public List<BillLineItemViewModel> LineItems { get; set; } = new();
+    public List<BillLineItemViewModel> LineItems { get; set; } = [];
 
     /// <summary>
     /// Subtotal amount (sum of all line amounts excluding tax).

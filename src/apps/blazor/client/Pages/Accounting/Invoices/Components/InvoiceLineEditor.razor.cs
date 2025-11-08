@@ -9,7 +9,7 @@ public partial class InvoiceLineEditor
     /// Collection of invoice line items to edit.
     /// </summary>
     [Parameter]
-    public List<InvoiceLineItemViewModel> Lines { get; set; } = new();
+    public List<InvoiceLineItemViewModel> Lines { get; set; } = [];
 
     /// <summary>
     /// Event callback when lines are modified.

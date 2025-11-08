@@ -1,91 +1,144 @@
 @page "/accounting/vendors"
 
-<PageHeader Title="Vendors" Header="Vendors" SubHeader="Manage Vendors and Suppliers." />
+<PageHeader Title="Vendors" Header="Vendors" SubHeader="Manage vendor accounts and supplier information for accounts payable." />
 
 <EntityTable @ref="_table" TEntity="VendorSearchResponse" TId="DefaultIdType" TRequest="VendorViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@VendorCode"
+                          Label="Vendor Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@VendorName"
+                          Label="Vendor Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Business" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@Phone"
+                          Label="Phone"
+                          Placeholder="Search by phone"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Phone" />
+        </MudItem>
+    </AdvancedSearchContent>
+
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {
-            <MudItem xs="12" md="6" lg="4">
-                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            <MudItem xs="12" md="6">
+                <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Vendor ID" />
             </MudItem>
         }
-        <MudItem xs="12" sm="6" md="4" lg="3">
+
+        <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="context.VendorCode"
                           For="@(() => context.VendorCode)"
                           Label="Vendor Code"
-                          Variant="Variant.Filled" />
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique identifier for the vendor" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField @bind-Value="context.Tin"
-                          For="@(() => context.Tin)"
-                          Label="TIN"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12">
+
+        <MudItem xs="12" sm="6" md="8">
             <MudTextField @bind-Value="context.Name"
                           For="@(() => context.Name)"
-                          Label="Name"
-                          Variant="Variant.Filled" />
+                          Label="Vendor Name"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Full legal name of the vendor" />
         </MudItem>
+
         <MudItem xs="12" sm="6">
-            <MudTextField @bind-Value="context.Address"
-                          For="@(() => context.Address)"
-                          Label="Address"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudTextField @bind-Value="context.BillingAddress"
-                          For="@(() => context.BillingAddress)"
-                          Label="Billing Address"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="context.ContactPerson"
                           For="@(() => context.ContactPerson)"
                           Label="Contact Person"
-                          Variant="Variant.Filled" />
+                          Variant="Variant.Filled"
+                          HelperText="Primary contact name" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="context.Email"
-                          For="@(() => context.Email)"
-                          Label="Email"
-                          Variant="Variant.Filled" />
-        </MudItem>
+
         <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="context.Phone"
                           For="@(() => context.Phone)"
                           Label="Phone Number"
-                          Variant="Variant.Filled" />
+                          Variant="Variant.Filled"
+                          HelperText="Contact phone number" />
         </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Email"
+                          HelperText="Contact email address" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Tin"
+                          For="@(() => context.Tin)"
+                          Label="TIN/Tax ID"
+                          Variant="Variant.Filled"
+                          HelperText="Tax identification number" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Address"
+                          For="@(() => context.Address)"
+                          Label="Physical Address"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Street address and location" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.BillingAddress"
+                          For="@(() => context.BillingAddress)"
+                          Label="Billing Address"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Leave blank if same as physical address" />
+        </MudItem>
+
         <MudItem xs="12" sm="6">
             <MudTextField @bind-Value="context.Terms"
                           For="@(() => context.Terms)"
                           Label="Payment Terms"
                           Variant="Variant.Filled"
-                          HelperText="e.g., Net 30, Net 60, COD" />
+                          HelperText="e.g., Net 30, Due on Receipt" />
         </MudItem>
+
         <MudItem xs="12" sm="6">
             <AutocompleteChartOfAccountCode @bind-Value="context.ExpenseAccountCode"
                                             For="@(() => context.ExpenseAccountCode)"
-                                            Label="Default Expense Account" 
-                                            TextFormat="CodeName"
+                                            Label="Default Expense Account"
                                             Variant="Variant.Filled"
-                                            HelperText="Default account for purchases from this vendor" />
+                                            HelperText="Default account for vendor expenses" />
         </MudItem>
+
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Description"
                           For="@(() => context.Description)"
                           Label="Description"
                           Variant="Variant.Filled"
-                          Lines="2" />
+                          Lines="2"
+                          HelperText="Brief description of vendor services/products" />
         </MudItem>
+
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Notes"
                           For="@(() => context.Notes)"
                           Label="Notes"
                           Variant="Variant.Filled"
-                          Lines="3" />
+                          Lines="3"
+                          HelperText="Additional notes or special instructions" />
         </MudItem>
     </EditFormContent>
 </EntityTable>

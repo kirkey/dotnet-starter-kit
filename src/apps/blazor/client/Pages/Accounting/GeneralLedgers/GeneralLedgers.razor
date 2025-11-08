@@ -1,0 +1,242 @@
+@page "/accounting/general-ledger"
+
+<PageHeader Title="General Ledger" Header="General Ledger" SubHeader="View and manage all financial transactions posted to the general ledger." />
+
+<EntityTable @ref="_table" TEntity="GeneralLedgerSearchResponse" TId="DefaultIdType" TRequest="GeneralLedgerViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteChartOfAccountId @bind-Value="@SearchAccountId"
+                                          Label="Account"
+                                          Placeholder="Select account"
+                                          Variant="Variant.Outlined"
+                                          Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchReferenceNumber"
+                          Label="Reference Number"
+                          Placeholder="Search by reference"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchStartDate"
+                           Label="Date From"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchEndDate"
+                           Label="Date To"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteAccountingPeriodId @bind-Value="@SearchPeriodId"
+                                            Label="Accounting Period"
+                                            Variant="Variant.Outlined"
+                                            Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="@SearchMinDebit"
+                             Label="Min Debit Amount"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Clearable="true"
+                             Min="0" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="@SearchMaxDebit"
+                             Label="Max Debit Amount"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Clearable="true"
+                             Min="0" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="@SearchMinCredit"
+                             Label="Min Credit Amount"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Clearable="true"
+                             Min="0" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="@SearchMaxCredit"
+                             Label="Max Credit Amount"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Clearable="true"
+                             Min="0" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchUsoaClass"
+                       Label="USOA Class"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Generation")">Generation</MudSelectItem>
+                <MudSelectItem Value="@("Transmission")">Transmission</MudSelectItem>
+                <MudSelectItem Value="@("Distribution")">Distribution</MudSelectItem>
+                <MudSelectItem Value="@("General")">General</MudSelectItem>
+                <MudSelectItem Value="@("Administrative")">Administrative</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entry">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => OnViewDetails(entry.Id))">
+            View Details
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Receipt" OnClick="@(() => OnViewJournalEntry(entry.EntryId))">
+            View Source Entry
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" md="6">
+            <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Entry ID" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            @if (context.IsPosted)
+            {
+                <MudChip T="object" Color="Color.Success" Size="Size.Large" Icon="@Icons.Material.Filled.CheckCircle">
+                    Posted on @context.PostedDate?.ToString("yyyy-MM-dd")
+                </MudChip>
+            }
+            else
+            {
+                <MudChip T="object" Color="Color.Warning" Size="Size.Large" Icon="@Icons.Material.Filled.HourglassEmpty">
+                    Unposted
+                </MudChip>
+            }
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.AccountCode"
+                          For="@(() => context.AccountCode)"
+                          Label="Account Code"
+                          Variant="Variant.Filled"
+                          ReadOnly />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.TransactionDate"
+                           For="@(() => context.TransactionDate)"
+                           Label="Transaction Date"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Filled"
+                           ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ReferenceNumber"
+                          For="@(() => context.ReferenceNumber)"
+                          Label="Reference Number"
+                          Variant="Variant.Filled"
+                          ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" @bind-Value="context.Debit"
+                             For="@(() => context.Debit)"
+                             Label="Debit Amount"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" @bind-Value="context.Credit"
+                             For="@(() => context.Credit)"
+                             Label="Credit Amount"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.UsoaClass"
+                       For="@(() => context.UsoaClass)"
+                       Label="USOA Class"
+                       Variant="Variant.Filled"
+                       Disabled="@context.IsPosted">
+                <MudSelectItem Value="@("Generation")">Generation</MudSelectItem>
+                <MudSelectItem Value="@("Transmission")">Transmission</MudSelectItem>
+                <MudSelectItem Value="@("Distribution")">Distribution</MudSelectItem>
+                <MudSelectItem Value="@("General")">General</MudSelectItem>
+                <MudSelectItem Value="@("Administrative")">Administrative</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Memo"
+                          For="@(() => context.Memo)"
+                          Label="Memo"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          ReadOnly="@context.IsPosted" />
+        </MudItem>
+
+        @if (context.IsPosted)
+        {
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Dense="true">
+                    <strong>Posted Entry:</strong> This entry was posted on @context.PostedDate?.ToString("yyyy-MM-dd") by @context.PostedBy.
+                    Posted entries cannot be modified. Use a reversing journal entry for corrections.
+                </MudAlert>
+            </MudItem>
+        }
+
+        @if (!string.IsNullOrEmpty(context.Source))
+        {
+            <MudItem xs="12" sm="6">
+                <MudTextField Value="@context.Source"
+                              Label="Source System"
+                              Variant="Variant.Filled"
+                              ReadOnly />
+            </MudItem>
+        }
+
+        @if (context.CreatedOn != default)
+        {
+            <MudItem xs="12" sm="6">
+                <MudTextField Value="@($"Created on {context.CreatedOn:yyyy-MM-dd HH:mm} by {context.CreatedByUserName}")"
+                              Label="Audit Trail"
+                              Variant="Variant.Filled"
+                              ReadOnly />
+            </MudItem>
+        }
+    </EditFormContent>
+</EntityTable>
+
+@if (_showDetailsDialog)
+{
+    <GeneralLedgerDetailsDialog @bind-IsOpen="_showDetailsDialog"
+                                GeneralLedgerId="_selectedGeneralLedgerId"
+                                OnClose="@(() => _showDetailsDialog = false)" />
+}
+

@@ -59,7 +59,7 @@
     [Parameter] public DefaultIdType ProjectId { get; set; }
 
     private bool _loading;
-    private List<ProjectCostingViewModel> _items = new();
+    private List<ProjectCostingViewModel> _items = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -96,7 +96,7 @@
 
     private class PagedResponse
     {
-        public List<ProjectCostingResponse> Data { get; set; } = new();
+        public List<ProjectCostingResponse> Data { get; set; } = [];
         public int TotalCount { get; set; }
     }
 

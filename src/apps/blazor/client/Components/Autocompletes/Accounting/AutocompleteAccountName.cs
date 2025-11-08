@@ -5,7 +5,7 @@ public class AutocompleteAccountName : MudAutocomplete<string>
     [Inject] protected IClient Client { get; set; } = default!;
     [Inject] protected ApiHelper ApiHelper { get; set; } = default!;
     
-    private List<ChartOfAccountResponse> _list = new();
+    private List<ChartOfAccountResponse> _list = [];
 
     [Parameter] public string Parent { get; set; } = default!;
 
@@ -25,7 +25,7 @@ public class AutocompleteAccountName : MudAutocomplete<string>
     {
         var filter = new SearchChartOfAccountQuery
         {
-            AdvancedSearch = new Search { Fields = new[] { "accountName", "name", "description", "notes" }, Keyword = value },
+            AdvancedSearch = new Search { Fields = ["accountName", "name", "description", "notes"], Keyword = value },
             PageSize = 10
         };
 
@@ -34,7 +34,7 @@ public class AutocompleteAccountName : MudAutocomplete<string>
                 .ConfigureAwait(false)
             is var response)
         {
-            _list = response?.Items?.ToList() ?? new List<ChartOfAccountResponse>();
+            _list = response?.Items?.ToList() ?? [];
         }
 
         return _list.Select(x => x.Name!);

@@ -16,7 +16,7 @@ public partial class NavMenu
     [Inject]
     private IMenuService MenuService { get; set; } = default!;
 
-    private List<MenuSectionModel> _sections = new();
+    private List<MenuSectionModel> _sections = [];
 
     /// <summary>
     /// Initializes the navigation menu by filtering sections and items based on user roles and permissions.

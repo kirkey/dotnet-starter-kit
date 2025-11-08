@@ -41,7 +41,7 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "name", "description", "notes" },
+                Fields = ["name", "description", "notes"],
                 Keyword = value
             }
         };
@@ -50,7 +50,7 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
                 () => Client.AccountingPeriodSearchEndpointAsync("1", request, token))
             .ConfigureAwait(false);
 
-        var items = response?.Items?.ToList() ?? new List<AccountingPeriodResponse>();
+        var items = response?.Items?.ToList() ?? [];
 
         // Refresh cache with returned items (keep only the latest results)
         _cache.Clear();

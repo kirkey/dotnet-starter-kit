@@ -18,7 +18,7 @@ public partial class Messaging : IDisposable
     private GetConversationResponse? _conversationDetails;
     private List<MessageDto>? _messages;
     private List<UserDto>? _allUsers;
-    private HashSet<string> _onlineUserIds = new();
+    private HashSet<string> _onlineUserIds = [];
     private DefaultIdType? _currentUserId;
     private string _newMessage = string.Empty;
     private string _searchConversation = string.Empty;
@@ -78,7 +78,7 @@ public partial class Messaging : IDisposable
             };
 
             var result = await Client.GetConversationListEndpointAsync("1", filter);
-            _conversations = result.Items?.ToList() ?? new List<ConversationDto>();
+            _conversations = result.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {
@@ -138,7 +138,7 @@ public partial class Messaging : IDisposable
             };
 
             var result = await Client.GetMessageListEndpointAsync("1", conversationId, filter);
-            _messages = result.Items?.OrderBy(m => m.SentAt).ToList() ?? new List<MessageDto>();
+            _messages = result.Items?.OrderBy(m => m.SentAt).ToList() ?? [];
 
             if (!silent)
             {
@@ -392,24 +392,24 @@ public partial class Messaging : IDisposable
             _allUsers = allUsers?
                 .Where(u => u.Id != _currentUserId)
                 .Select(u => new UserDto { Id = u.Id, Name = u.UserName ?? u.Email ?? "Unknown" })
-                .ToList() ?? new List<UserDto>();
+                .ToList() ?? [];
             
             // Get online user IDs from the API
             try
             {
                 var onlineResponse = await Client.GetOnlineUsersEndpointAsync("1");
-                _onlineUserIds = onlineResponse?.UserIds?.ToHashSet() ?? new HashSet<string>();
+                _onlineUserIds = onlineResponse?.UserIds?.ToHashSet() ?? [];
             }
             catch
             {
                 // If online users endpoint fails, continue with empty set
-                _onlineUserIds = new HashSet<string>();
+                _onlineUserIds = [];
             }
         }
         catch (Exception ex)
         {
             Snackbar.Add($"Error loading users: {ex.Message}", Severity.Error);
-            _allUsers = new List<UserDto>();
+            _allUsers = [];
         }
     }
 
@@ -573,7 +573,7 @@ public partial class Messaging : IDisposable
     private IEnumerable<ConversationDto> FilteredConversations =>
         _conversations?.Where(c =>
             string.IsNullOrWhiteSpace(_searchConversation) ||
-            GetConversationTitle(c).Contains(_searchConversation, StringComparison.OrdinalIgnoreCase)) ?? Enumerable.Empty<ConversationDto>();
+            GetConversationTitle(c).Contains(_searchConversation, StringComparison.OrdinalIgnoreCase)) ?? [];
 
     private bool IsSelectedConversation(DefaultIdType id) =>
         _selectedConversation?.Id == id;

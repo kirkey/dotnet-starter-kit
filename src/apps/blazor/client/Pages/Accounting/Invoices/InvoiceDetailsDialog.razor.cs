@@ -18,7 +18,7 @@ public partial class InvoiceDetailsDialog
     public IMudDialogInstance MudDialog { get; set; } = default!;
 
     private InvoiceResponse? _invoice;
-    private List<InvoiceLineItemViewModel> _lineItems = new();
+    private List<InvoiceLineItemViewModel> _lineItems = [];
     private bool _isLoading = true;
 
     /// <summary>
@@ -55,7 +55,7 @@ public partial class InvoiceDetailsDialog
             
             // Load line items if any exist
             // Note: This assumes line items are included in the response or need separate endpoint
-            _lineItems = new List<InvoiceLineItemViewModel>(); // TODO: Load from API when endpoint is available
+            _lineItems = []; // TODO: Load from API when endpoint is available
             
             _isLoading = false;
         }

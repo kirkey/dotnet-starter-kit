@@ -42,7 +42,7 @@ public class AutocompleteCategoryId : AutocompleteBase<CategoryResponse, IClient
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "code", "name", "description", "notes" },
+                Fields = ["code", "name", "description", "notes"],
                 Keyword = value
             }
         };

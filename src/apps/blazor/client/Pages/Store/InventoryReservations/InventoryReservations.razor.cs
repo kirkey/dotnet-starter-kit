@@ -9,8 +9,8 @@ public partial class InventoryReservations
     private EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> Context { get; set; } = default!;
     private EntityTable<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> _table = default!;
 
-    private List<ItemResponse> _items = new();
-    private List<WarehouseResponse> _warehouses = new();
+    private List<ItemResponse> _items = [];
+    private List<WarehouseResponse> _warehouses = [];
 
     // Search filter properties - bound to UI controls in the razor file
     private DefaultIdType? SearchItemId { get; set; }
@@ -89,7 +89,7 @@ public partial class InventoryReservations
                 OrderBy = ["Name"]
             };
             var result = await Client.SearchItemsEndpointAsync("1", command).ConfigureAwait(false);
-            _items = result.Items?.ToList() ?? new List<ItemResponse>();
+            _items = result.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {
@@ -111,7 +111,7 @@ public partial class InventoryReservations
                 OrderBy = ["Name"]
             };
             var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
-            _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
+            _warehouses = result.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {

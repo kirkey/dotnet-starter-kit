@@ -201,11 +201,11 @@
                 try
                 {
                     var vendor = await Client.VendorGetEndpointAsync("1", _bill.VendorId).ConfigureAwait(false);
-                    _vendorName = vendor?.Name;
+                    _vendorName = $"{vendor?.VendorCode} - {vendor?.Name}";
                 }
                 catch
                 {
-                    _vendorName = "Unknown Vendor";
+                    _vendorName = _bill.VendorName ?? "Unknown Vendor";
                 }
             }
         }

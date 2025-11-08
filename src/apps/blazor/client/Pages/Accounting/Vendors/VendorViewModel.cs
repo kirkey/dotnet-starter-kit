@@ -1,80 +1,96 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Vendors;
 
 /// <summary>
-/// ViewModel used by the Vendors page for add/edit operations.
-/// Mirrors the shape of the API's VendorUpdateCommand so Mapster/Adapt can map between them.
+/// View model for creating and editing vendors.
 /// </summary>
 public class VendorViewModel
 {
     /// <summary>
-    /// Primary identifier of the vendor.
+    /// Vendor identifier (null for new vendors).
     /// </summary>
-    public DefaultIdType Id { get; set; }
+    public DefaultIdType? Id { get; set; }
 
     /// <summary>
-    /// Unique code identifying the vendor (e.g., "VEND001", "ACME-CORP").
+    /// Unique vendor code.
     /// </summary>
+    [Required(ErrorMessage = "Vendor code is required")]
+    [StringLength(50, ErrorMessage = "Vendor code cannot exceed 50 characters")]
     public string VendorCode { get; set; } = string.Empty;
 
     /// <summary>
-    /// The name of the vendor or supplier company.
+    /// Vendor name.
     /// </summary>
+    [Required(ErrorMessage = "Vendor name is required")]
+    [StringLength(200, ErrorMessage = "Vendor name cannot exceed 200 characters")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Mailing or physical address for correspondence and shipments.
+    /// Physical address.
     /// </summary>
+    [StringLength(500, ErrorMessage = "Address cannot exceed 500 characters")]
     public string? Address { get; set; }
 
     /// <summary>
-    /// Billing address used for invoices and financial correspondence.
+    /// Billing address (if different from physical address).
     /// </summary>
+    [StringLength(500, ErrorMessage = "Billing address cannot exceed 500 characters")]
     public string? BillingAddress { get; set; }
 
     /// <summary>
-    /// Primary contact person at the vendor organization.
+    /// Contact person name.
     /// </summary>
+    [StringLength(100, ErrorMessage = "Contact person cannot exceed 100 characters")]
     public string? ContactPerson { get; set; }
 
     /// <summary>
-    /// Vendor email address for communications.
+    /// Contact email address.
     /// </summary>
+    [EmailAddress(ErrorMessage = "Invalid email address")]
+    [StringLength(100, ErrorMessage = "Email cannot exceed 100 characters")]
     public string? Email { get; set; }
 
     /// <summary>
-    /// Payment terms negotiated with the vendor (e.g., "Net 30", "Net 60", "COD", "2/10 Net 30").
+    /// Payment terms (e.g., "Net 30", "Due on Receipt").
     /// </summary>
+    [StringLength(50, ErrorMessage = "Terms cannot exceed 50 characters")]
     public string? Terms { get; set; }
 
     /// <summary>
-    /// Default expense account code for purchases from this vendor.
-    /// Used for automated journal entry creation.
+    /// Default expense account code for this vendor.
     /// </summary>
+    [StringLength(50, ErrorMessage = "Expense account code cannot exceed 50 characters")]
     public string? ExpenseAccountCode { get; set; }
 
     /// <summary>
-    /// Expense account name for reference and display purposes.
+    /// Default expense account name (for display).
     /// </summary>
     public string? ExpenseAccountName { get; set; }
 
     /// <summary>
-    /// Tax identification number for 1099 reporting and compliance.
+    /// Tax Identification Number.
     /// </summary>
+    [StringLength(50, ErrorMessage = "TIN cannot exceed 50 characters")]
     public string? Tin { get; set; }
 
     /// <summary>
-    /// Primary phone number for vendor contact.
+    /// Phone number.
     /// </summary>
+    [Phone(ErrorMessage = "Invalid phone number")]
+    [StringLength(20, ErrorMessage = "Phone cannot exceed 20 characters")]
     public string? Phone { get; set; }
 
     /// <summary>
-    /// Detailed description of the vendor's business or services provided.
+    /// Description or notes about the vendor.
     /// </summary>
+    [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters")]
     public string? Description { get; set; }
 
     /// <summary>
-    /// Additional notes or comments about the vendor (e.g., special handling, preferred contact times).
+    /// Additional notes.
     /// </summary>
+    [StringLength(2000, ErrorMessage = "Notes cannot exceed 2000 characters")]
     public string? Notes { get; set; }
 }
 

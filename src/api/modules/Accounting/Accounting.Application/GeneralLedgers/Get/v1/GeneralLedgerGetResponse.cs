@@ -74,5 +74,30 @@ public sealed record GeneralLedgerGetResponse
     /// Who created the entry.
     /// </summary>
     public string? CreatedByUserName { get; init; }
+
+    /// <summary>
+    /// Indicates whether this entry has been posted to the general ledger.
+    /// </summary>
+    public bool IsPosted { get; init; }
+
+    /// <summary>
+    /// Date when the entry was posted (for audit trail).
+    /// </summary>
+    public DateTime? PostedDate { get; init; }
+
+    /// <summary>
+    /// User who posted the entry (for audit trail and SOX compliance).
+    /// </summary>
+    public string? PostedBy { get; init; }
+
+    /// <summary>
+    /// Source type of the transaction (JournalEntry, Invoice, Bill, Payment, etc.).
+    /// </summary>
+    public string? Source { get; init; }
+
+    /// <summary>
+    /// Source document identifier for complete audit trail.
+    /// </summary>
+    public DefaultIdType? SourceId { get; init; }
 }
 

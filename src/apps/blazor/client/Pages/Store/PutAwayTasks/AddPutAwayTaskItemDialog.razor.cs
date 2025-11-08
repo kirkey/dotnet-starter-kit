@@ -25,7 +25,7 @@ public partial class AddPutAwayTaskItemDialog
     private async Task<IEnumerable<ItemResponse>> SearchItems(string searchValue, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(searchValue) || searchValue.Length < 2)
-            return Array.Empty<ItemResponse>();
+            return [];
 
         try
         {
@@ -43,7 +43,7 @@ public partial class AddPutAwayTaskItemDialog
         catch (Exception ex)
         {
             Snackbar.Add($"Failed to search items: {ex.Message}", Severity.Error);
-            return Array.Empty<ItemResponse>();
+            return [];
         }
     }
 
@@ -53,7 +53,7 @@ public partial class AddPutAwayTaskItemDialog
     private async Task<IEnumerable<BinResponse>> SearchBins(string searchValue, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(searchValue) || searchValue.Length < 2)
-            return Array.Empty<BinResponse>();
+            return [];
 
         try
         {
@@ -71,7 +71,7 @@ public partial class AddPutAwayTaskItemDialog
         catch (Exception ex)
         {
             Snackbar.Add($"Failed to search bins: {ex.Message}", Severity.Error);
-            return Array.Empty<BinResponse>();
+            return [];
         }
     }
 

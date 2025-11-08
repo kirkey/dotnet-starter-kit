@@ -43,7 +43,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "name", "description", "notes" },
+                Fields = ["name", "description", "notes"],
                 Keyword = value
             }
         };

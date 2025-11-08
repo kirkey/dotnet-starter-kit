@@ -23,6 +23,11 @@ public class MenuSectionSubItemModel
     public string Href { get; set; } = string.Empty;
     
     /// <summary>
+    /// Gets or sets whether this item is a group header/divider (non-clickable visual separator).
+    /// </summary>
+    public bool IsGroupHeader { get; set; }
+    
+    /// <summary>
     /// Gets or sets the target window/frame for navigation (e.g., "_blank" for new window).
     /// </summary>
     public string? Target { get; set; }

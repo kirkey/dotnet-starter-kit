@@ -45,6 +45,7 @@ using Accounting.Infrastructure.Endpoints.RegulatoryReports;
 using Accounting.Infrastructure.Endpoints.RetainedEarnings;
 using Accounting.Infrastructure.Endpoints.TaxCodes;
 using Accounting.Infrastructure.Endpoints.TrialBalance;
+using Accounting.Infrastructure.Endpoints.Vendors;
 using Accounting.Infrastructure.Endpoints.WriteOffs;
 using Accounting.Infrastructure.Import;
 using Accounting.Infrastructure.Persistence;
@@ -97,6 +98,7 @@ public static class AccountingModule
         accountingGroup.MapBillsEndpoints();
         accountingGroup.MapDebitMemosEndpoints();
         accountingGroup.MapPayeesEndpoints();
+        accountingGroup.MapVendorsEndpoints();
 
         // ============================================================================
         // PAYMENTS & BANKING

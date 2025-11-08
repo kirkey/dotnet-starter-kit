@@ -16,7 +16,7 @@ public class MenuSectionModel
     /// Gets or sets the collection of menu items within this section.
     /// Contains the actual navigable menu items and their properties.
     /// </summary>
-    public List<MenuSectionItemModel> SectionItems { get; set; } = new();
+    public List<MenuSectionItemModel> SectionItems { get; set; } = [];
     
     /// <summary>
     /// Gets or sets the roles required to access this menu section.

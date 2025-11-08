@@ -9,8 +9,8 @@ public partial class GoodsReceipts
     private EntityServerTableContext<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> Context = default!;
     private EntityTable<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> _table = default!;
 
-    private List<WarehouseResponse> _warehouses = new();
-    private List<PurchaseOrderResponse> _purchaseOrders = new();
+    private List<WarehouseResponse> _warehouses = [];
+    private List<PurchaseOrderResponse> _purchaseOrders = [];
     
     private DefaultIdType? SearchWarehouseId { get; set; }
     private DefaultIdType? SearchPurchaseOrderId { get; set; }
@@ -73,7 +73,7 @@ public partial class GoodsReceipts
                 OrderBy = ["Name"]
             };
             var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
-            _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
+            _warehouses = result.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {
@@ -95,7 +95,7 @@ public partial class GoodsReceipts
                 OrderBy = ["OrderNumber"]
             };
             var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
-            _purchaseOrders = result.Items?.Where(x => x.Status is "Sent" or "PartiallyReceived").ToList() ?? new List<PurchaseOrderResponse>();
+            _purchaseOrders = result.Items?.Where(x => x.Status is "Sent" or "PartiallyReceived").ToList() ?? [];
         }
         catch (Exception ex)
         {

@@ -36,6 +36,10 @@
 
    <ItemGroup>
      <_ContentIncludedByDefault Remove="Pages\App\Settings.razor" />
+     <_ContentIncludedByDefault Remove="Pages\Accounting\Payments\PaymentAllocateDialog.razor" />
+     <_ContentIncludedByDefault Remove="Pages\Accounting\Payments\PaymentDetailsDialog.razor" />
+     <_ContentIncludedByDefault Remove="Pages\Accounting\Payments\Payments.razor" />
+     <_ContentIncludedByDefault Remove="Pages\Accounting\Vendors\Vendors.razor" />
    </ItemGroup>
 
    <ItemGroup>

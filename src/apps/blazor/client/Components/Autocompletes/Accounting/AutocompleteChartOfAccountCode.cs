@@ -36,7 +36,7 @@ public class AutocompleteChartOfAccountCode : AutocompleteBase<ChartOfAccountRes
             AdvancedSearch = new Search
             {
                 // Include accountCode explicitly to allow quick exact/starts-with lookups.
-                Fields = new[] { "accountCode" },
+                Fields = ["accountCode"],
                 Keyword = code
             }
         };
@@ -65,7 +65,7 @@ public class AutocompleteChartOfAccountCode : AutocompleteBase<ChartOfAccountRes
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "accountCode", "name", "description", "notes" },
+                Fields = ["accountCode", "name", "description", "notes"],
                 Keyword = value
             }
         };
@@ -74,7 +74,7 @@ public class AutocompleteChartOfAccountCode : AutocompleteBase<ChartOfAccountRes
                 () => Client.ChartOfAccountSearchEndpointAsync("1", request, token))
             .ConfigureAwait(false);
 
-        var items = response?.Items?.ToList() ?? new List<ChartOfAccountResponse>();
+        var items = response?.Items?.ToList() ?? [];
 
         // Refresh cache with returned items (keep only the latest results)
         _cache.Clear();

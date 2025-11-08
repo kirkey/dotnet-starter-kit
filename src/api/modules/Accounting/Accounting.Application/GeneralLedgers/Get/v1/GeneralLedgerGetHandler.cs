@@ -45,14 +45,19 @@ public sealed class GeneralLedgerGetHandler : IRequestHandler<GeneralLedgerGetQu
             Debit = entry.Debit,
             Credit = entry.Credit,
             Memo = entry.Memo,
-            UsoaClass = entry.UsoaClass,
+            UsoaClass = entry.UsoaClass ?? string.Empty,
             TransactionDate = entry.TransactionDate,
             ReferenceNumber = entry.ReferenceNumber,
             PeriodId = entry.PeriodId,
             Description = entry.Description,
             Notes = entry.Notes,
             CreatedOn = entry.CreatedOn.DateTime,
-            CreatedByUserName = entry.CreatedByUserName ?? string.Empty
+            CreatedByUserName = entry.CreatedByUserName ?? string.Empty,
+            IsPosted = entry.IsPosted,
+            PostedDate = entry.PostedDate,
+            PostedBy = entry.PostedBy,
+            Source = entry.Source,
+            SourceId = entry.SourceId
         };
     }
 }

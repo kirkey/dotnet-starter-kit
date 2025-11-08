@@ -10,7 +10,7 @@ public partial class BillLineEditor
     /// The list of bill line items to edit.
     /// </summary>
     [Parameter]
-    public List<BillLineItemViewModel> Lines { get; set; } = new();
+    public List<BillLineItemViewModel> Lines { get; set; } = [];
 
     /// <summary>
     /// Event callback when lines are modified.

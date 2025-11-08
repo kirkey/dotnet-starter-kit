@@ -11,8 +11,8 @@ public partial class ReceivingHistoryDialog
 
     private PurchaseOrderResponse? _purchaseOrder;
     private string? _supplierName;
-    private List<GoodsReceiptResponse> _receipts = new();
-    private List<PurchaseOrderItemResponse> _poItems = new();
+    private List<GoodsReceiptResponse> _receipts = [];
+    private List<PurchaseOrderItemResponse> _poItems = [];
     private bool _loading = true;
 
     protected override async Task OnInitializedAsync()
@@ -51,10 +51,10 @@ public partial class ReceivingHistoryDialog
                 PurchaseOrderId = PurchaseOrderId,
                 PageNumber = 1,
                 PageSize = 100,
-                OrderBy = new[] { "ReceivedDate desc" }
+                OrderBy = ["ReceivedDate desc"]
             };
             var receiptsResult = await Client.SearchGoodsReceiptsEndpointAsync("1", receiptsCommand).ConfigureAwait(false);
-            _receipts = receiptsResult.Items?.ToList() ?? new List<GoodsReceiptResponse>();
+            _receipts = receiptsResult.Items?.ToList() ?? [];
 
             // Load PO items to show receiving progress
             var itemsResult = await Client.GetPurchaseOrderItemsForReceivingEndpointAsync("1", PurchaseOrderId).ConfigureAwait(false);
@@ -75,7 +75,7 @@ public partial class ReceivingHistoryDialog
                     ReceivedQuantity = x.ReceivedQuantity,
                     Notes = null
                 })
-                .ToList() ?? new List<PurchaseOrderItemResponse>();
+                .ToList() ?? [];
         }
         catch (Exception ex)
         {

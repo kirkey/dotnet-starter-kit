@@ -64,5 +64,20 @@ public sealed record GeneralLedgerSearchResponse
     /// When created.
     /// </summary>
     public DateTime CreatedOn { get; init; }
+
+    /// <summary>
+    /// Indicates whether this entry has been posted to the general ledger.
+    /// </summary>
+    public bool IsPosted { get; init; }
+
+    /// <summary>
+    /// Source type of the transaction (JournalEntry, Invoice, Bill, Payment, etc.).
+    /// </summary>
+    public string? Source { get; init; }
+
+    /// <summary>
+    /// Source document identifier for complete audit trail.
+    /// </summary>
+    public DefaultIdType? SourceId { get; init; }
 }
 

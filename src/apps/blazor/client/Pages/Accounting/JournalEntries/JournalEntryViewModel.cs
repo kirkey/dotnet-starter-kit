@@ -80,7 +80,7 @@ public class JournalEntryViewModel
     /// </summary>
     [Required(ErrorMessage = "At least 2 lines are required")]
     [MinLength(2, ErrorMessage = "At least 2 lines are required for a balanced entry")]
-    public List<JournalEntryLineViewModel> Lines { get; set; } = new();
+    public List<JournalEntryLineViewModel> Lines { get; set; } = [];
 
     // Calculated properties
     /// <summary>

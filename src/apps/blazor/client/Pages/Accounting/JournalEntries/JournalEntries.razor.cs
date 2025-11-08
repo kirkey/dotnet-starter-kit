@@ -173,7 +173,7 @@ public partial class JournalEntries
             {
                 Date = DateTime.Today,
                 Source = "ManualEntry",
-                Lines = new List<JournalEntryLineViewModel>()
+                Lines = []
             }));
 
         return base.OnInitializedAsync();
@@ -207,7 +207,7 @@ public partial class JournalEntries
                 DebitAmount = l.DebitAmount,
                 CreditAmount = l.CreditAmount,
                 Description = l.Memo // Note: API uses 'Memo' but UI uses 'Description'
-            }).ToList() ?? new List<JournalEntryLineViewModel>()
+            }).ToList() ?? []
         };
     }
 

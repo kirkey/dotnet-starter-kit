@@ -49,7 +49,7 @@ public class AutocompleteCustomerId : AutocompleteBase<CustomerDetailsDto, IClie
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "customerNumber", "fullName", "email" },
+                Fields = ["customerNumber", "fullName", "email"],
                 Keyword = value
             }
         };
@@ -58,7 +58,7 @@ public class AutocompleteCustomerId : AutocompleteBase<CustomerDetailsDto, IClie
                 () => Client.CustomerSearchEndpointAsync("1", request, token))
             .ConfigureAwait(false);
 
-        var items = response?.Items?.ToList() ?? new List<CustomerSearchResponse>();
+        var items = response?.Items?.ToList() ?? [];
 
         // Refresh cache with returned items
         _cache.Clear();

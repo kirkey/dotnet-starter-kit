@@ -8,12 +8,12 @@ public partial class CreateReceiptFromPODialog
 {
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
 
-    private List<PurchaseOrderResponse> _purchaseOrders = new();
-    private List<SupplierResponse> _suppliers = new();
-    private List<PurchaseOrderItemResponse> _poItems = new();
+    private List<PurchaseOrderResponse> _purchaseOrders = [];
+    private List<SupplierResponse> _suppliers = [];
+    private List<PurchaseOrderItemResponse> _poItems = [];
     private PurchaseOrderResponse? _selectedPurchaseOrder;
     private Dictionary<DefaultIdType, int> _receiveQuantities = new();
-    private HashSet<DefaultIdType> _selectedItemIds = new();
+    private HashSet<DefaultIdType> _selectedItemIds = [];
     private bool _selectAll = false;
     private bool _loading = true;
     private string _searchString = "";
@@ -42,22 +42,22 @@ public partial class CreateReceiptFromPODialog
             {
                 PageNumber = 1,
                 PageSize = 100,
-                OrderBy = new[] { "OrderDate desc" }
+                OrderBy = ["OrderDate desc"]
             };
             var poResult = await Client.SearchPurchaseOrdersEndpointAsync("1", poCommand).ConfigureAwait(false);
             _purchaseOrders = poResult.Items?
                 .Where(x => x.Status is "Sent" or "PartiallyReceived")
-                .ToList() ?? new List<PurchaseOrderResponse>();
+                .ToList() ?? [];
 
             // Load suppliers for display
             var supplierCommand = new SearchSuppliersCommand
             {
                 PageNumber = 1,
                 PageSize = 500,
-                OrderBy = new[] { "Name" }
+                OrderBy = ["Name"]
             };
             var supplierResult = await Client.SearchSuppliersEndpointAsync("1", supplierCommand).ConfigureAwait(false);
-            _suppliers = supplierResult.Items?.ToList() ?? new List<SupplierResponse>();
+            _suppliers = supplierResult.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {
@@ -98,7 +98,7 @@ public partial class CreateReceiptFromPODialog
                     ReceivedQuantity = x.ReceivedQuantity,
                     Notes = null
                 })
-                .ToList() ?? new List<PurchaseOrderItemResponse>();
+                .ToList() ?? [];
 
             // Initialize receive quantities with remaining quantities
             _receiveQuantities.Clear();

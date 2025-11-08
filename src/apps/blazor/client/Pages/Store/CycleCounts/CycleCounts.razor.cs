@@ -12,7 +12,7 @@ public partial class CycleCounts
     private EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context = default!;
     private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = default!;
 
-    private List<WarehouseResponse> _warehouses = new();
+    private List<WarehouseResponse> _warehouses = [];
     
     // Search filter properties - bound to UI controls in the razor file
     private DefaultIdType? SearchWarehouseId { get; set; }
@@ -76,7 +76,7 @@ public partial class CycleCounts
                 OrderBy = ["Name"]
             };
             var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
-            _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
+            _warehouses = result.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {

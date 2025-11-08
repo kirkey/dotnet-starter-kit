@@ -5,7 +5,7 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
     [Inject] protected IClient Client { get; set; } = default!;
     [Inject] protected ApiHelper ApiHelper { get; set; } = default!;
     
-    private List<ChartOfAccountResponse> _list = new();
+    private List<ChartOfAccountResponse> _list = [];
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
@@ -23,7 +23,7 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
     {
         var filter = new SearchChartOfAccountQuery
         {
-            AdvancedSearch = new Search { Fields = new[] { "usoaCategory", "description", "notes" }, Keyword = value },
+            AdvancedSearch = new Search { Fields = ["usoaCategory", "description", "notes"], Keyword = value },
             PageSize = 10
         };
 
@@ -32,7 +32,7 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
                 .ConfigureAwait(false)
             is var response)
         {
-            _list = response?.Items?.ToList() ?? new List<ChartOfAccountResponse>();
+            _list = response?.Items?.ToList() ?? [];
         }
 
         return _list.Select(x => x.Name!);

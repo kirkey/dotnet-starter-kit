@@ -9,8 +9,8 @@ public partial class CycleCounts : ComponentBase
     protected EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context { get; set; } = default!;
     private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = default!;
 
-    private List<WarehouseResponse> _warehouses = new();
-    private List<GetWarehouseLocationListResponse> _warehouseLocations = new();
+    private List<WarehouseResponse> _warehouses = [];
+    private List<GetWarehouseLocationListResponse> _warehouseLocations = [];
 
     protected override Task OnInitializedAsync()
     {
@@ -71,14 +71,14 @@ public partial class CycleCounts : ComponentBase
     {
         var filter = new SearchWarehousesCommand { PageSize = 1000 };
         var result = await Client.SearchWarehousesEndpointAsync("1", filter);
-        _warehouses = result.Items?.ToList() ?? new List<WarehouseResponse>();
+        _warehouses = result.Items?.ToList() ?? [];
     }
 
     private async Task LoadWarehouseLocationsAsync()
     {
         var filter = new SearchWarehouseLocationsCommand { PageSize = 1000 };
         var result = await Client.SearchWarehouseLocationsEndpointAsync("1", filter);
-        _warehouseLocations = result.Items?.ToList() ?? new List<GetWarehouseLocationListResponse>();
+        _warehouseLocations = result.Items?.ToList() ?? [];
     }
 
     private async Task<IEnumerable<DefaultIdType>> SearchWarehouses(string value, CancellationToken token)

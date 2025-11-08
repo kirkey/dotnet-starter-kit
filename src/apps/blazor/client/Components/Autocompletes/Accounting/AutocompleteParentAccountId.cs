@@ -44,7 +44,7 @@ public class AutocompleteParentAccountId : AutocompleteBase<ChartOfAccountRespon
             PageSize = 10,
             AdvancedSearch = new Search
             {
-                Fields = new[] { "name", "description", "notes" },
+                Fields = ["name", "description", "notes"],
                 Keyword = value
             }
         };

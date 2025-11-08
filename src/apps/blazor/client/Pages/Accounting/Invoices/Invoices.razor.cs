@@ -234,7 +234,7 @@ public partial class Invoices
                 DueDate = DateTime.Today.AddDays(30),
                 Status = "Draft",
                 BillingPeriod = DateTime.Today.ToString("yyyy-MM"),
-                LineItems = new List<InvoiceLineItemViewModel>()
+                LineItems = []
             }),
             hasExtraActionsFunc: () => true);
 

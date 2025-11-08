@@ -53,7 +53,7 @@
         // Filter out existing members from all users
         _availableUsers = AllUsers?
             .Where(u => ExistingMembers == null || !ExistingMembers.Contains(u.Id))
-            .ToList() ?? new List<UserDto>();
+            .ToList() ?? [];
     }
 
     private void Add() => MudDialog.Close(DialogResult.Ok(_selectedUserId));

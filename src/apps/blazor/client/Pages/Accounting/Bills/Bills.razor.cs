@@ -233,7 +233,7 @@ public partial class Bills
                 DueDate = DateTime.Today.AddDays(30),
                 Status = "Draft",
                 ApprovalStatus = "Pending",
-                LineItems = new List<BillLineItemViewModel>()
+                LineItems = []
             }),
             hasExtraActionsFunc: () => true);
 

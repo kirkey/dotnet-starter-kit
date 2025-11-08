@@ -155,7 +155,7 @@ public class InvoiceViewModel
     /// <summary>
     /// Collection of line items.
     /// </summary>
-    public List<InvoiceLineItemViewModel> LineItems { get; set; } = new();
+    public List<InvoiceLineItemViewModel> LineItems { get; set; } = [];
 
     /// <summary>
     /// Calculated total from charges (usage + basic service + tax + other charges + fees).

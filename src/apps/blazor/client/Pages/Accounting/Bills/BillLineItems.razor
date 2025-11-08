@@ -84,7 +84,7 @@
     /// <summary>
     /// List of bill line items.
     /// </summary>
-    private List<BillLineItemResponse> _items = new();
+    private List<BillLineItemResponse> _items = [];
 
     /// <summary>
     /// Loading state indicator.
@@ -116,7 +116,7 @@
         catch (Exception ex)
         {
             Snackbar.Add($"Failed to load line items: {ex.Message}", Severity.Error);
-            _items = new();
+            _items = [];
         }
         finally
         {

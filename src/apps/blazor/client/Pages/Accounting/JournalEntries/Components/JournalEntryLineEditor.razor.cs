@@ -10,7 +10,7 @@ public partial class JournalEntryLineEditor
     /// The list of journal entry lines to edit.
     /// </summary>
     [Parameter]
-    public List<JournalEntryLineViewModel> Lines { get; set; } = new();
+    public List<JournalEntryLineViewModel> Lines { get; set; } = [];
 
     /// <summary>
     /// Event callback when lines are modified.

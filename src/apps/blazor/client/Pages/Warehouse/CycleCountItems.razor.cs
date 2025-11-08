@@ -11,8 +11,8 @@ public partial class CycleCountItems
     [Parameter] public string? CycleCountStatus { get; set; }
     [Parameter] public EventCallback OnItemsChanged { get; set; }
 
-    private List<CycleCountItemResponse> _items = new();
-    private List<ItemResponse> _itemsCache = new();
+    private List<CycleCountItemResponse> _items = [];
+    private List<ItemResponse> _itemsCache = [];
     private bool _loading;
     private bool _canEdit => CycleCountStatus is "Scheduled" or "InProgress";
 
@@ -35,7 +35,7 @@ public partial class CycleCountItems
         try
         {
             var cycleCount = await Client.GetCycleCountEndpointAsync("1", CycleCountId).ConfigureAwait(false);
-            _items = cycleCount?.Items?.ToList() ?? new();
+            _items = cycleCount?.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {
@@ -60,7 +60,7 @@ public partial class CycleCountItems
                 PageSize = 1000
             };
             var result = await Client.SearchItemsEndpointAsync("1", command).ConfigureAwait(false);
-            _itemsCache = result.Items?.ToList() ?? new();
+            _itemsCache = result.Items?.ToList() ?? [];
         }
         catch (Exception ex)
         {
