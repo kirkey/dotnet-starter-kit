@@ -43,7 +43,7 @@ public partial class GeneralLedgers
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<GeneralLedgerSearchResponse>(response => response.TransactionDate, "Date", "TransactionDate", typeof(DateTime)),
+                new EntityField<GeneralLedgerSearchResponse>(response => response.TransactionDate, "Date", "TransactionDate", typeof(DateOnly)),
                 new EntityField<GeneralLedgerSearchResponse>(response => response.AccountId, "Account", "AccountId"),
                 new EntityField<GeneralLedgerSearchResponse>(response => response.ReferenceNumber, "Reference", "ReferenceNumber"),
                 new EntityField<GeneralLedgerSearchResponse>(response => response.Debit, "Debit", "Debit", typeof(decimal)),

@@ -1,5 +1,5 @@
 using Accounting.Application.FiscalPeriodCloses.Get;
-using Accounting.Application.FiscalPeriodCloses.Responses;
+using Accounting.Application.FiscalPeriodCloses.Queries;
 
 namespace Accounting.Infrastructure.Endpoints.FiscalPeriodCloses.v1;
 
@@ -14,8 +14,9 @@ public static class FiscalPeriodCloseGetEndpoint
                 return Results.Ok(response);
             })
             .WithName(nameof(FiscalPeriodCloseGetEndpoint))
-            .WithSummary("Get fiscal period close by ID")
-            .Produces<FiscalPeriodCloseResponse>()
+            .WithSummary("Get fiscal period close by ID with complete details")
+            .WithDescription("Returns complete fiscal period close details including tasks, validation status, and audit trail.")
+            .Produces<FiscalPeriodCloseDetailsDto>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);

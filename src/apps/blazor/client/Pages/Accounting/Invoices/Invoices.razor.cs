@@ -148,8 +148,8 @@ public partial class Invoices
             fields:
             [
                 new EntityField<InvoiceResponse>(response => response.InvoiceNumber, "Invoice Number", "InvoiceNumber"),
-                new EntityField<InvoiceResponse>(response => response.InvoiceDate, "Invoice Date", "InvoiceDate", typeof(DateTime)),
-                new EntityField<InvoiceResponse>(response => response.DueDate, "Due Date", "DueDate", typeof(DateTime)),
+                new EntityField<InvoiceResponse>(response => response.InvoiceDate, "Invoice Date", "InvoiceDate", typeof(DateOnly)),
+                new EntityField<InvoiceResponse>(response => response.DueDate, "Due Date", "DueDate", typeof(DateOnly)),
                 new EntityField<InvoiceResponse>(response => response.BillingPeriod, "Billing Period", "BillingPeriod"),
                 new EntityField<InvoiceResponse>(response => response.TotalAmount, "Total Amount", "TotalAmount", typeof(decimal)),
                 new EntityField<InvoiceResponse>(response => response.PaidAmount, "Paid Amount", "PaidAmount", typeof(decimal)),

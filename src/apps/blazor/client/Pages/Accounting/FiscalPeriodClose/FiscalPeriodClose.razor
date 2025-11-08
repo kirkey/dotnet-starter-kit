@@ -1,0 +1,132 @@
+@page "/accounting/fiscal-period-close"
+
+<PageHeader Title="Fiscal Period Close" Header="Fiscal Period Close" SubHeader="Manage month-end, quarter-end, and year-end closing processes with comprehensive checklists and validation." />
+
+<EntityTable @ref="_table" TEntity="FiscalPeriodCloseResponse" TId="DefaultIdType" TRequest="FiscalPeriodCloseViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCloseNumber"
+                          Label="Close Number"
+                          Placeholder="Search by close number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchCloseType"
+                       Label="Close Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("MonthEnd")">Month-End</MudSelectItem>
+                <MudSelectItem Value="@("QuarterEnd")">Quarter-End</MudSelectItem>
+                <MudSelectItem Value="@("YearEnd")">Year-End</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("InProgress")">In Progress</MudSelectItem>
+                <MudSelectItem Value="@("Completed")">Completed</MudSelectItem>
+                <MudSelectItem Value="@("Reopened")">Reopened</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="periodClose">
+        <MudMenuItem Icon="@Icons.Material.Filled.Checklist" 
+                     OnClick="@(() => OnViewChecklist(periodClose.Id))">
+            View Checklist
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" 
+                     OnClick="@(() => OnComplete(periodClose.Id))"
+                     Disabled="@(periodClose.Status == "Completed")">
+            Complete Close
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.LockOpen" 
+                     OnClick="@(() => OnReopen(periodClose.Id))"
+                     Disabled="@(periodClose.Status != "Completed")">
+            Reopen Period
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Assessment" 
+                     OnClick="@(() => OnViewReport(periodClose.Id))">
+            View Report
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.CloseNumber"
+                          For="@(() => context.CloseNumber)"
+                          Label="Close Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique identifier (e.g., CLOSE-2025-10)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <AutocompleteAccountingPeriodId @bind-Value="context.PeriodId"
+                                            For="@(() => context.PeriodId)"
+                                            Label="Accounting Period"
+                                            Variant="Variant.Filled"
+                                            Required="true"
+                                            HelperText="Select the period to close" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudSelect T="string"
+                       @bind-Value="context.CloseType"
+                       For="@(() => context.CloseType)"
+                       Label="Close Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("MonthEnd")">Month-End Close</MudSelectItem>
+                <MudSelectItem Value="@("QuarterEnd")">Quarter-End Close</MudSelectItem>
+                <MudSelectItem Value="@("YearEnd")">Year-End Close</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudDatePicker @bind-Date="context.PeriodStartDate"
+                           For="@(() => context.PeriodStartDate)"
+                           Label="Period Start Date"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudDatePicker @bind-Date="context.PeriodEndDate"
+                           For="@(() => context.PeriodEndDate)"
+                           Label="Period End Date"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Brief description of this period close" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes or special instructions" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+<FiscalPeriodCloseChecklistDialog @ref="_checklistDialog" OnTaskCompleted="OnTaskCompletedCallback" />
+<FiscalPeriodCloseReopenDialog @ref="_reopenDialog" OnReopened="OnReopenedCallback" />
+

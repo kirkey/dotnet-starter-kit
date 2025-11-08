@@ -5,12 +5,12 @@ namespace Accounting.Infrastructure.Endpoints.FiscalPeriodCloses.v1;
 /// <summary>
 /// Endpoint for adding a validation issue to a fiscal period close.
 /// </summary>
-public static class AddValidationIssueEndpoint
+public static class AddFiscalPeriodCloseValidationIssueEndpoint
 {
-    internal static RouteHandlerBuilder MapAddValidationIssueEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapAddFiscalPeriodCloseValidationIssueEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/validation-issues", async (DefaultIdType id, AddValidationIssueCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/validation-issues", async (DefaultIdType id, AddFiscalPeriodCloseValidationIssueCommand command, ISender mediator) =>
             {
                 if (id != command.FiscalPeriodCloseId)
                 {
@@ -20,8 +20,8 @@ public static class AddValidationIssueEndpoint
                 var closeId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = closeId, Message = "Validation issue added successfully" });
             })
-            .WithName(nameof(AddValidationIssueEndpoint))
-            .WithSummary("Add a validation issue")
+            .WithName(nameof(AddFiscalPeriodCloseValidationIssueEndpoint))
+            .WithSummary("Add a validation issue to fiscal period close")
             .WithDescription("Adds a validation issue to the fiscal period close process")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)

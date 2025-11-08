@@ -1,0 +1,155 @@
+@page "/accounting/trial-balance"
+
+<PageHeader Title="Trial Balance" Header="Trial Balance" SubHeader="Generate and manage trial balance reports for period-end verification and financial statement preparation." />
+
+<EntityTable @ref="_table" TEntity="TrialBalanceSearchResponse" TId="DefaultIdType" TRequest="TrialBalanceViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@TrialBalanceNumber"
+                          Label="Trial Balance Number"
+                          Placeholder="Search by number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteAccountingPeriodId @bind-Value="@SearchPeriodId"
+                                            Label="Accounting Period"
+                                            Placeholder="Select period"
+                                            Variant="Variant.Outlined"
+                                            Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@("Finalized")">Finalized</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchStartDate"
+                           Label="Start Date From"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchEndDate"
+                           Label="End Date To"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox T="bool"
+                         @bind-Checked="@SearchBalancedOnly"
+                         Label="Balanced Only"
+                         Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="trialBalance">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" 
+                     OnClick="@(() => OnViewDetails(trialBalance.Id))"
+                     Disabled="@(trialBalance.Status == "Draft")">
+            View Report
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" 
+                     OnClick="@(() => OnFinalize(trialBalance.Id))"
+                     Disabled="@(trialBalance.Status == "Finalized" || !trialBalance.IsBalanced)">
+            Finalize
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.LockOpen" 
+                     OnClick="@(() => OnReopen(trialBalance.Id))"
+                     Disabled="@(trialBalance.Status != "Finalized")">
+            Reopen
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Download" 
+                     OnClick="@(() => OnExport(trialBalance.Id))">
+            Export to Excel
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Trial Balance ID" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.TrialBalanceNumber"
+                          For="@(() => context.TrialBalanceNumber)"
+                          Label="Trial Balance Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique identifier (e.g., TB-2025-01)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <AutocompleteAccountingPeriodId @bind-Value="context.PeriodId"
+                                            For="@(() => context.PeriodId)"
+                                            Label="Accounting Period"
+                                            Variant="Variant.Filled"
+                                            Required="true"
+                                            HelperText="Select the accounting period" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudDatePicker @bind-Date="context.PeriodStartDate"
+                           For="@(() => context.PeriodStartDate)"
+                           Label="Period Start Date"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudDatePicker @bind-Date="context.PeriodEndDate"
+                           For="@(() => context.PeriodEndDate)"
+                           Label="Period End Date"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudCheckBox T="bool"
+                         @bind-Checked="context.IncludeZeroBalances"
+                         For="@(() => context.IncludeZeroBalances)"
+                         Label="Include Zero Balances"
+                         Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudCheckBox T="bool"
+                         @bind-Checked="context.AutoGenerate"
+                         For="@(() => context.AutoGenerate)"
+                         Label="Auto-Generate from GL"
+                         Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Brief description of this trial balance" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes or comments" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+<TrialBalanceDetailsDialog @ref="_detailsDialog" />
+

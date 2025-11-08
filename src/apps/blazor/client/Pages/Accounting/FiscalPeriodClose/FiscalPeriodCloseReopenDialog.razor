@@ -1,0 +1,111 @@
+<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6">Reopen Fiscal Period Close</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    Please provide a reason for reopening this period. This action will unlock the period for modifications.
+                </MudText>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@_reopenReason"
+                              Label="Reason for Reopening"
+                              Variant="Variant.Outlined"
+                              Lines="4"
+                              Required="true"
+                              HelperText="Explain why this period needs to be reopened"
+                              Error="@_hasError"
+                              ErrorText="Reason is required" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Warning">
+                    <strong>Warning:</strong> Reopening the period will allow modifications to posted transactions. 
+                    All checklist items will remain completed, but the period can be modified again.
+                </MudAlert>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" 
+                   Color="Color.Warning" 
+                   OnClick="Reopen"
+                   StartIcon="@Icons.Material.Filled.LockOpen">
+            Reopen Period
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public EventCallback OnReopened { get; set; }
+
+    private DefaultIdType _periodCloseId;
+    private string _reopenReason = string.Empty;
+    private bool _hasError = false;
+
+    /// <summary>
+    /// Shows the reopen dialog for the specified period close.
+    /// </summary>
+    public async Task ShowAsync(DefaultIdType periodCloseId)
+    {
+        _periodCloseId = periodCloseId;
+        _reopenReason = string.Empty;
+        _hasError = false;
+
+        var dialogOptions = new DialogOptions
+        {
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true,
+            CloseButton = true,
+            CloseOnEscapeKey = true
+        };
+
+        var dialog = await DialogService.ShowAsync<FiscalPeriodCloseReopenDialog>(
+            "Reopen Period", 
+            dialogOptions);
+
+        await dialog.Result;
+    }
+
+    /// <summary>
+    /// Reopens the fiscal period close.
+    /// </summary>
+    private async Task Reopen()
+    {
+        if (string.IsNullOrWhiteSpace(_reopenReason))
+        {
+            _hasError = true;
+            StateHasChanged();
+            return;
+        }
+
+        try
+        {
+            var command = new ReopenFiscalPeriodCloseCommand
+            {
+                FiscalPeriodCloseId = _periodCloseId,
+                Reason = _reopenReason,
+                ReopenedBy = "Current User" // TODO: Get from auth context
+            };
+
+            await Client.ReopenFiscalPeriodCloseEndpointAsync("1", _periodCloseId, command);
+            Snackbar.Add("Fiscal period reopened successfully", Severity.Success);
+
+            await OnReopened.InvokeAsync();
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error reopening period: {ex.Message}", Severity.Error);
+        }
+    }
+
+    /// <summary>
+    /// Cancels the reopen operation.
+    /// </summary>
+    private void Cancel() => MudDialog.Cancel();
+}
+

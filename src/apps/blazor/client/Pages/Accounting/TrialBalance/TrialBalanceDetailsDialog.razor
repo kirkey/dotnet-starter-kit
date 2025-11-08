@@ -1,0 +1,273 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else if (_trialBalance != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h5">@_trialBalance.TrialBalanceNumber</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        Period: @_trialBalance.PeriodStartDate.ToString("MMM dd, yyyy") - @_trialBalance.PeriodEndDate.ToString("MMM dd, yyyy")
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <!-- Status and Balance Information -->
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Status</MudText>
+                            <MudChip T="string"
+                                     Color="@(_trialBalance.Status == "Finalized" ? Color.Success : Color.Default)" 
+                                     Size="Size.Small">
+                                @_trialBalance.Status
+                            </MudChip>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Total Debits</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Primary">@_trialBalance.TotalDebits.ToString("N2")</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Total Credits</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Secondary">@_trialBalance.TotalCredits.ToString("N2")</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Balance Status</MudText>
+                            @if (_trialBalance.IsBalanced)
+                            {
+                                <MudChip T="string" Color="Color.Success" Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small">Balanced</MudChip>
+                            }
+                            else
+                            {
+                                <MudChip T="string" Color="Color.Error" Icon="@Icons.Material.Filled.Error" Size="Size.Small">
+                                    Out by @_trialBalance.OutOfBalanceAmount.ToString("N2")
+                                </MudChip>
+                            }
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <!-- Financial Summary -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Financial Summary</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_trialBalance.TotalAssets.ToString("N2")"
+                                  Label="Total Assets"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.AccountBalance" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_trialBalance.TotalLiabilities.ToString("N2")"
+                                  Label="Total Liabilities"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.AccountBalance" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_trialBalance.TotalEquity.ToString("N2")"
+                                  Label="Total Equity"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.AccountBalance" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_trialBalance.TotalRevenue.ToString("N2")"
+                                  Label="Total Revenue"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.TrendingUp" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_trialBalance.TotalExpenses.ToString("N2")"
+                                  Label="Total Expenses"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.TrendingDown" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_trialBalance.NetIncome.ToString("N2")"
+                                  Label="Net Income"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                </MudItem>
+
+                <!-- Line Items Table -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Account Balances (@_trialBalance.AccountCount accounts)</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTable Items="@_trialBalance.LineItems"
+                              Hover="true"
+                              Dense="true"
+                              Elevation="0"
+                              FixedHeader="true"
+                              Height="400px">
+                        <HeaderContent>
+                            <MudTh>Account Code</MudTh>
+                            <MudTh>Account Name</MudTh>
+                            <MudTh>Type</MudTh>
+                            <MudTh Style="text-align: right">Debit Balance</MudTh>
+                            <MudTh Style="text-align: right">Credit Balance</MudTh>
+                            <MudTh Style="text-align: right">Net Balance</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Account Code">@context.AccountCode</MudTd>
+                            <MudTd DataLabel="Account Name">@context.AccountName</MudTd>
+                            <MudTd DataLabel="Type">@context.AccountType</MudTd>
+                            <MudTd DataLabel="Debit Balance" Style="text-align: right">
+                                @(context.DebitBalance > 0 ? context.DebitBalance.ToString("N2") : "-")
+                            </MudTd>
+                            <MudTd DataLabel="Credit Balance" Style="text-align: right">
+                                @(context.CreditBalance > 0 ? context.CreditBalance.ToString("N2") : "-")
+                            </MudTd>
+                            <MudTd DataLabel="Net Balance" Style="text-align: right; font-weight: 600">
+                                @context.NetBalance.ToString("N2")
+                            </MudTd>
+                        </RowTemplate>
+                        <FooterContent>
+                            <MudTh Style="font-weight: bold">Totals</MudTh>
+                            <MudTh></MudTh>
+                            <MudTh></MudTh>
+                            <MudTh Style="text-align: right; font-weight: bold">@_trialBalance.TotalDebits.ToString("N2")</MudTh>
+                            <MudTh Style="text-align: right; font-weight: bold">@_trialBalance.TotalCredits.ToString("N2")</MudTh>
+                            <MudTh Style="text-align: right; font-weight: bold">
+                                @((_trialBalance.TotalDebits - _trialBalance.TotalCredits).ToString("N2"))
+                            </MudTh>
+                        </FooterContent>
+                    </MudTable>
+                </MudItem>
+
+                <!-- Additional Information -->
+                @if (!string.IsNullOrEmpty(_trialBalance.Description))
+                {
+                    <MudItem xs="12">
+                        <MudTextField Value="@_trialBalance.Description"
+                                      Label="Description"
+                                      ReadOnly
+                                      Variant="Variant.Outlined"
+                                      Lines="2" />
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(_trialBalance.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudTextField Value="@_trialBalance.Notes"
+                                      Label="Notes"
+                                      ReadOnly
+                                      Variant="Variant.Outlined"
+                                      Lines="3" />
+                    </MudItem>
+                }
+
+                @if (_trialBalance.FinalizedDate.HasValue)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Info">
+                            Finalized on @_trialBalance.FinalizedDate.Value.ToString("MMMM dd, yyyy") by @_trialBalance.FinalizedBy
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+        @if (_trialBalance != null)
+        {
+            <MudButton Variant="Variant.Filled" 
+                       Color="Color.Primary" 
+                       StartIcon="@Icons.Material.Filled.Download"
+                       OnClick="OnExport">
+                Export
+            </MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public DefaultIdType TrialBalanceId { get; set; }
+
+    private TrialBalanceGetResponse? _trialBalance;
+    private bool _loading = false;
+
+    public async Task ShowAsync(DefaultIdType trialBalanceId)
+    {
+        TrialBalanceId = trialBalanceId;
+        _loading = true;
+        _trialBalance = null;
+
+        var dialogOptions = new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseButton = true,
+            CloseOnEscapeKey = true
+        };
+
+        var dialog = DialogService.Show<TrialBalanceDetailsDialog>("Trial Balance Details", dialogOptions);
+
+        try
+        {
+            _trialBalance = await Client.TrialBalanceGetEndpointAsync("1", trialBalanceId);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading trial balance: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+
+        await dialog.Result;
+    }
+
+    private void Close() => MudDialog.Close();
+
+    private async Task OnExport()
+    {
+        Snackbar.Add("Export feature coming soon", Severity.Info);
+        await Task.CompletedTask;
+    }
+}
+

@@ -12,15 +12,15 @@ public static class AccountsPayableAccountsEndpoints
             .MapToApiVersion(1);
 
         // CRUD operations
-        group.MapAPAccountCreateEndpoint();
-        group.MapAPAccountGetEndpoint();
-        group.MapAPAccountSearchEndpoint();
+        group.MapApAccountCreateEndpoint();
+        group.MapApAccountGetEndpoint();
+        group.MapApAccountSearchEndpoint();
 
         // Workflow operations
-        group.MapAPAccountUpdateBalanceEndpoint();
-        group.MapAPAccountRecordPaymentEndpoint();
-        group.MapAPAccountRecordDiscountLostEndpoint();
-        group.MapAPAccountReconcileEndpoint();
+        group.MapApAccountUpdateBalanceEndpoint();
+        group.MapApAccountRecordPaymentEndpoint();
+        group.MapApAccountRecordDiscountLostEndpoint();
+        group.MapApAccountReconcileEndpoint();
 
         return app;
     }

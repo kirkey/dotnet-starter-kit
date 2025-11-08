@@ -1,0 +1,272 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else if (_periodClose != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h5">@_periodClose.CloseNumber</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        @_periodClose.CloseType Close: @_periodClose.PeriodStartDate.ToString("MMM dd, yyyy") - @_periodClose.PeriodEndDate.ToString("MMM dd, yyyy")
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <!-- Status and Progress -->
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Status</MudText>
+                            <MudChip T="string"
+                                     Color="@GetStatusColor(_periodClose.Status)" 
+                                     Size="Size.Small">
+                                @_periodClose.Status
+                            </MudChip>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Tasks Completed</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Primary">@_periodClose.TasksCompleted</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Tasks Remaining</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Secondary">@_periodClose.TasksRemaining</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Progress</MudText>
+                            <MudProgressLinear Value="@GetProgressPercentage()" Color="Color.Success" Size="Size.Medium" />
+                            <MudText Typo="Typo.caption">@GetProgressPercentage().ToString("F0")%</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <!-- Validation Status Indicators -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Validation Status</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudChip T="string"
+                             Icon="@(_periodClose.TrialBalanceBalanced ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Warning)"
+                             Color="@(_periodClose.TrialBalanceBalanced ? Color.Success : Color.Warning)"
+                             Size="Size.Small">
+                        Trial Balance @(_periodClose.TrialBalanceBalanced ? "Balanced" : "Not Balanced")
+                    </MudChip>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudChip T="string"
+                             Icon="@(_periodClose.AllJournalsPosted ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Warning)"
+                             Color="@(_periodClose.AllJournalsPosted ? Color.Success : Color.Warning)"
+                             Size="Size.Small">
+                        All Journals @(_periodClose.AllJournalsPosted ? "Posted" : "Pending")
+                    </MudChip>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudChip T="string"
+                             Icon="@(_periodClose.RequiredTasksComplete ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Warning)"
+                             Color="@(_periodClose.RequiredTasksComplete ? Color.Success : Color.Warning)"
+                             Size="Size.Small">
+                        Required Tasks @(_periodClose.RequiredTasksComplete ? "Complete" : "Incomplete")
+                    </MudChip>
+                </MudItem>
+
+                <!-- Checklist -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Close Checklist</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTable Items="@_periodClose.Tasks"
+                              Hover="true"
+                              Dense="true"
+                              Elevation="0">
+                        <HeaderContent>
+                            <MudTh>Status</MudTh>
+                            <MudTh>Task</MudTh>
+                            <MudTh>Required</MudTh>
+                            <MudTh>Completed Date</MudTh>
+                            <MudTh>Actions</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Status">
+                                @if (context.IsComplete)
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.RadioButtonUnchecked" Color="Color.Default" Size="Size.Small" />
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Task">@context.TaskName</MudTd>
+                            <MudTd DataLabel="Required">
+                                @if (context.IsRequired)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Error">Required</MudChip>
+                                }
+                                else
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Default">Optional</MudChip>
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Completed Date">
+                                @(context.CompletedDate?.ToString("MMM dd, yyyy HH:mm") ?? "-")
+                            </MudTd>
+                            <MudTd DataLabel="Actions">
+                                @if (!context.IsComplete && _periodClose.Status != "Completed")
+                                {
+                                    <MudIconButton Icon="@Icons.Material.Filled.Done"
+                                                   Size="Size.Small"
+                                                   Color="Color.Success"
+                                                   OnClick="@(() => CompleteTask(context.TaskName))"
+                                                   Title="Mark Complete" />
+                                }
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudItem>
+
+                <!-- Reconciliation Status -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Reconciliation Status</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox T="bool" Checked="@_periodClose.BankReconciliationsComplete" ReadOnly Label="Bank Reconciliations" Color="Color.Success" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox T="bool" Checked="@_periodClose.APReconciliationComplete" ReadOnly Label="AP Reconciliation" Color="Color.Success" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox T="bool" Checked="@_periodClose.ARReconciliationComplete" ReadOnly Label="AR Reconciliation" Color="Color.Success" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox T="bool" Checked="@_periodClose.InventoryReconciliationComplete" ReadOnly Label="Inventory Reconciliation" Color="Color.Success" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox T="bool" Checked="@_periodClose.FixedAssetDepreciationPosted" ReadOnly Label="Depreciation Posted" Color="Color.Success" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox T="bool" Checked="@_periodClose.AccrualsPosted" ReadOnly Label="Accruals Posted" Color="Color.Success" />
+                </MudItem>
+
+                <!-- Year-End Specific -->
+                @if (_periodClose.CloseType == "YearEnd")
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Year-End Activities</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6">
+                        <MudCheckBox T="bool" Checked="@_periodClose.NetIncomeTransferred" ReadOnly Label="Net Income Transferred to Retained Earnings" Color="Color.Success" />
+                    </MudItem>
+
+                    @if (_periodClose.FinalNetIncome.HasValue)
+                    {
+                        <MudItem xs="12" sm="6">
+                            <MudTextField Value="@_periodClose.FinalNetIncome.Value.ToString("N2")"
+                                          Label="Final Net Income"
+                                          ReadOnly
+                                          Variant="Variant.Outlined"
+                                          Adornment="Adornment.Start"
+                                          AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                        </MudItem>
+                    }
+                }
+
+                <!-- Audit Trail -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Audit Trail</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@_periodClose.CloseInitiatedDate.ToString("MMM dd, yyyy HH:mm")"
+                                  Label="Initiated Date"
+                                  ReadOnly
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@_periodClose.InitiatedBy"
+                                  Label="Initiated By"
+                                  ReadOnly
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+
+                @if (_periodClose.CompletedDate.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudTextField Value="@_periodClose.CompletedDate.Value.ToString("MMM dd, yyyy HH:mm")"
+                                      Label="Completed Date"
+                                      ReadOnly
+                                      Variant="Variant.Outlined" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6">
+                        <MudTextField Value="@_periodClose.CompletedBy"
+                                      Label="Completed By"
+                                      ReadOnly
+                                      Variant="Variant.Outlined" />
+                    </MudItem>
+                }
+
+                @if (_periodClose.ReopenedDate.HasValue)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Warning">
+                            Reopened on @_periodClose.ReopenedDate.Value.ToString("MMM dd, yyyy HH:mm") by @_periodClose.ReopenedBy
+                            <br/>
+                            Reason: @_periodClose.ReopenReason
+                        </MudAlert>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(_periodClose.Description))
+                {
+                    <MudItem xs="12">
+                        <MudTextField Value="@_periodClose.Description"
+                                      Label="Description"
+                                      ReadOnly
+                                      Variant="Variant.Outlined"
+                                      Lines="2" />
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+        @if (_periodClose != null && _periodClose.Status != "Completed")
+        {
+            <MudButton Variant="Variant.Filled" 
+                       Color="Color.Primary" 
+                       StartIcon="@Icons.Material.Filled.Refresh"
+                       OnClick="Reload">
+                Refresh
+            </MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+

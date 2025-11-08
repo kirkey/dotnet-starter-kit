@@ -77,7 +77,7 @@ public partial class BankReconciliations
             fields:
             [
                 new EntityField<BankReconciliationResponse>(r => r.StatementNumber ?? "N/A", "Statement #", "StatementNumber"),
-                new EntityField<BankReconciliationResponse>(r => r.ReconciliationDate, "Date", "ReconciliationDate", typeof(DateTime)),
+                new EntityField<BankReconciliationResponse>(r => r.ReconciliationDate, "Date", "ReconciliationDate", typeof(DateOnly)),
                 new EntityField<BankReconciliationResponse>(r => r.StatementBalance, "Statement Balance", "StatementBalance", typeof(decimal)),
                 new EntityField<BankReconciliationResponse>(r => r.BookBalance, "Book Balance", "BookBalance", typeof(decimal)),
                 new EntityField<BankReconciliationResponse>(r => r.AdjustedBalance, "Adjusted Balance", "AdjustedBalance", typeof(decimal)),

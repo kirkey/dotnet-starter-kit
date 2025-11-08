@@ -1,0 +1,15 @@
+namespace Accounting.Application.AccountsReceivableAccounts.RecordWriteOff.v1;
+
+/// <summary>
+/// Validator for RecordARWriteOffCommand.
+/// </summary>
+public sealed class RecordARWriteOffCommandValidator : AbstractValidator<RecordARWriteOffCommand>
+{
+    public RecordARWriteOffCommandValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("AR account ID is required.");
+        RuleFor(x => x.Amount).GreaterThan(0).WithMessage("Write-off amount must be positive.")
+            .LessThanOrEqualTo(999999999.99m).WithMessage("Amount must not exceed 999,999,999.99.");
+    }
+}
+

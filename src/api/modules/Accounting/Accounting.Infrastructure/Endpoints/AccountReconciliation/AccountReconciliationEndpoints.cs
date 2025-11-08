@@ -17,7 +17,7 @@ public static class AccountReconciliationEndpoints
             .WithDescription("Endpoints for managing account reconciliation processes");
 
         // Version 1 endpoints
-        reconciliationGroup.MapReconcileAccountEndpoint();
+        reconciliationGroup.MapReconcileGeneralLedgerAccountEndpoint();
 
         return app;
     }

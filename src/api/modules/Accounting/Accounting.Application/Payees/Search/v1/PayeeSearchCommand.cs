@@ -10,12 +10,6 @@ namespace Accounting.Application.Payees.Search.v1;
 public class PayeeSearchCommand : PaginationFilter, IRequest<PagedList<PayeeResponse>>
 {
     /// <summary>
-    /// Search keyword to filter payees by name, code, or description.
-    /// </summary>
-    [DefaultValue("")]
-    public string? Keyword { get; set; }
-
-    /// <summary>
     /// Filter payees by specific payee code.
     /// </summary>
     [DefaultValue("")]

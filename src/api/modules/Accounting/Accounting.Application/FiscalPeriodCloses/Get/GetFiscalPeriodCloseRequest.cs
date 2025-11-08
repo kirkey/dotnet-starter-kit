@@ -1,6 +1,9 @@
-using Accounting.Application.FiscalPeriodCloses.Responses;
+using Accounting.Application.FiscalPeriodCloses.Queries;
 
 namespace Accounting.Application.FiscalPeriodCloses.Get;
 
-public record GetFiscalPeriodCloseRequest(DefaultIdType Id) : IRequest<FiscalPeriodCloseResponse>;
+/// <summary>
+/// Request to get complete fiscal period close details including tasks and validation status.
+/// </summary>
+public record GetFiscalPeriodCloseRequest(DefaultIdType Id) : IRequest<FiscalPeriodCloseDetailsDto>;
 

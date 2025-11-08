@@ -18,7 +18,7 @@ public static class CostCentersEndpoints
         group.MapCostCenterSearchEndpoint();
 
         // Workflow operations
-        group.MapUpdateBudgetEndpoint();
+        group.MapUpdateCostCenterBudgetEndpoint();
         group.MapCostCenterRecordActualEndpoint();
         group.MapCostCenterActivateEndpoint();
         group.MapCostCenterDeactivateEndpoint();

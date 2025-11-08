@@ -111,7 +111,7 @@
 1. CustomerCreateCommand
 2. CustomerUpdateCommand
 3. FiscalPeriodCloseCreateCommand
-4. CompleteTaskCommand
+4. CompleteFiscalPeriodTaskCommand
 5. CompleteFiscalPeriodCloseCommand
 6. ReopenFiscalPeriodCloseCommand
 7. AccountsReceivableAccountCreateCommand

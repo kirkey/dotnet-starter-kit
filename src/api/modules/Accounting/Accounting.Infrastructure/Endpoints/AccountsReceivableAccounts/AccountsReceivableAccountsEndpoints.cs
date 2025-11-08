@@ -12,16 +12,16 @@ public static class AccountsReceivableAccountsEndpoints
             .MapToApiVersion(1);
 
         // CRUD operations
-        group.MapARAccountCreateEndpoint();
-        group.MapARAccountGetEndpoint();
-        group.MapARAccountSearchEndpoint();
+        group.MapArAccountCreateEndpoint();
+        group.MapArAccountGetEndpoint();
+        group.MapArAccountSearchEndpoint();
 
         // Workflow operations
-        group.MapARAccountUpdateBalanceEndpoint();
-        group.MapARAccountUpdateAllowanceEndpoint();
-        group.MapARAccountRecordWriteOffEndpoint();
-        group.MapARAccountRecordCollectionEndpoint();
-        group.MapARAccountReconcileEndpoint();
+        group.MapArAccountUpdateBalanceEndpoint();
+        group.MapArAccountUpdateAllowanceEndpoint();
+        group.MapArAccountRecordWriteOffEndpoint();
+        group.MapArAccountRecordCollectionEndpoint();
+        group.MapArAccountReconcileEndpoint();
 
         return app;
     }

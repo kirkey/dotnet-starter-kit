@@ -2,9 +2,9 @@ using Accounting.Application.AccountsPayableAccounts.RecordPayment.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsPayableAccounts.v1;
 
-public static class APAccountRecordPaymentEndpoint
+public static class ApAccountRecordPaymentEndpoint
 {
-    internal static RouteHandlerBuilder MapAPAccountRecordPaymentEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapApAccountRecordPaymentEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/{id:guid}/payments", async (DefaultIdType id, RecordAPPaymentCommand command, ISender mediator) =>
@@ -13,7 +13,7 @@ public static class APAccountRecordPaymentEndpoint
                 var accountId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = accountId, Message = "Payment recorded successfully" });
             })
-            .WithName(nameof(APAccountRecordPaymentEndpoint))
+            .WithName(nameof(ApAccountRecordPaymentEndpoint))
             .WithSummary("Record vendor payment")
             .WithDescription("Records a payment to vendors and tracks early payment discounts")
             .Produces<object>()

@@ -3,9 +3,9 @@ using Accounting.Application.AccountsReceivableAccounts.Search.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 
-public static class ARAccountSearchEndpoint
+public static class ArAccountSearchEndpoint
 {
-    internal static RouteHandlerBuilder MapARAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapArAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/search", async (SearchARAccountsRequest request, ISender mediator) =>
@@ -13,7 +13,7 @@ public static class ARAccountSearchEndpoint
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(nameof(ARAccountSearchEndpoint))
+            .WithName(nameof(ArAccountSearchEndpoint))
             .WithSummary("Search AR accounts")
             .Produces<List<ARAccountResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)

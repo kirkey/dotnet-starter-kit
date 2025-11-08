@@ -2,9 +2,9 @@ using Accounting.Application.AccountsReceivableAccounts.Create.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 
-public static class ARAccountCreateEndpoint
+public static class ArAccountCreateEndpoint
 {
-    internal static RouteHandlerBuilder MapARAccountCreateEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapArAccountCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/", async (AccountsReceivableAccountCreateCommand command, ISender mediator) =>
@@ -12,7 +12,7 @@ public static class ARAccountCreateEndpoint
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Created($"/accounting/accounts-receivable/{response.Id}", response);
             })
-            .WithName(nameof(ARAccountCreateEndpoint))
+            .WithName(nameof(ArAccountCreateEndpoint))
             .WithSummary("Create AR account")
             .Produces<AccountsReceivableAccountCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)

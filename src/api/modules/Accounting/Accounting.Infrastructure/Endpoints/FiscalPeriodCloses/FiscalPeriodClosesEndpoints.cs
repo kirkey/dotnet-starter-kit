@@ -20,9 +20,9 @@ public static class FiscalPeriodClosesEndpoints
         group.MapFiscalPeriodCloseSearchEndpoint();
         
         // Workflow operations
-        group.MapCompleteTaskEndpoint();
-        group.MapAddValidationIssueEndpoint();
-        group.MapResolveValidationIssueEndpoint();
+        group.MapCompleteFiscalPeriodCloseTaskEndpoint();
+        group.MapAddFiscalPeriodCloseValidationIssueEndpoint();
+        group.MapResolveFiscalPeriodCloseValidationIssueEndpoint();
         group.MapCompleteFiscalPeriodCloseEndpoint();
         group.MapReopenFiscalPeriodCloseEndpoint();
 

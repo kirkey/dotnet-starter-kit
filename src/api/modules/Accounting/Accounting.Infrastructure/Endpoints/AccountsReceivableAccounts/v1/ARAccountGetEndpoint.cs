@@ -3,9 +3,9 @@ using Accounting.Application.AccountsReceivableAccounts.Responses;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 
-public static class ARAccountGetEndpoint
+public static class ArAccountGetEndpoint
 {
-    internal static RouteHandlerBuilder MapARAccountGetEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapArAccountGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -13,7 +13,7 @@ public static class ARAccountGetEndpoint
                 var response = await mediator.Send(new GetARAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(nameof(ARAccountGetEndpoint))
+            .WithName(nameof(ArAccountGetEndpoint))
             .WithSummary("Get AR account by ID")
             .Produces<ARAccountResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)

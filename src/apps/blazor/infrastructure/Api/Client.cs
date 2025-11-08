@@ -3664,27 +3664,27 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<FiscalPeriodCloseCreateResponse> FiscalPeriodCloseCreateEndpointAsync(string version, FiscalPeriodCloseCreateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get fiscal period close by ID
+        /// Get fiscal period close by ID with complete details
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Returns complete fiscal period close details including tasks, validation status, and audit trail.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FiscalPeriodCloseResponse> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<FiscalPeriodCloseDetailsDto> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get fiscal period close by ID
+        /// Get fiscal period close by ID with complete details
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Returns complete fiscal period close details including tasks, validation status, and audit trail.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FiscalPeriodCloseResponse> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<FiscalPeriodCloseDetailsDto> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search fiscal period closes
@@ -3718,7 +3718,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteTaskEndpointAsync(string version, System.Guid id, CompleteTaskCommand body);
+        System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3730,7 +3730,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteTaskEndpointAsync(string version, System.Guid id, CompleteTaskCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add a validation issue
@@ -28481,30 +28481,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Get fiscal period close by ID
+        /// Get fiscal period close by ID with complete details
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Returns complete fiscal period close details including tasks, validation status, and audit trail.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FiscalPeriodCloseResponse> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<FiscalPeriodCloseDetailsDto> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id)
         {
             return FiscalPeriodCloseGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get fiscal period close by ID
+        /// Get fiscal period close by ID with complete details
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Returns complete fiscal period close details including tasks, validation status, and audit trail.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FiscalPeriodCloseResponse> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<FiscalPeriodCloseDetailsDto> FiscalPeriodCloseGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28554,7 +28554,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FiscalPeriodCloseResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<FiscalPeriodCloseDetailsDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -28714,9 +28714,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CompleteTaskEndpointAsync(string version, System.Guid id, CompleteTaskCommand body)
+        public virtual System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body)
         {
-            return CompleteTaskEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return CompleteFiscalPeriodTaskEndPointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -28729,7 +28729,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CompleteTaskEndpointAsync(string version, System.Guid id, CompleteTaskCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -64890,6 +64890,45 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CloseTaskItemDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("taskName")]
+        public string? TaskName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isRequired")]
+        public bool IsRequired { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isComplete")]
+        public bool IsComplete { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("completedDate")]
+        public System.DateTime? CompletedDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CloseValidationIssueDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("issueDescription")]
+        public string? IssueDescription { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("severity")]
+        public string? Severity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isResolved")]
+        public bool IsResolved { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("resolution")]
+        public string? Resolution { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("resolvedDate")]
+        public System.DateTime? ResolvedDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CompleteBankReconciliationCommand
     {
 
@@ -65004,7 +65043,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CompleteTaskCommand
+    public partial class CompleteFiscalPeriodTaskCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("fiscalPeriodCloseId")]
@@ -68294,6 +68333,126 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FiscalPeriodCloseDetailsDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("closeNumber")]
+        public string? CloseNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodId")]
+        public System.Guid PeriodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("closeType")]
+        public string? CloseType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodStartDate")]
+        public System.DateTime PeriodStartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("periodEndDate")]
+        public System.DateTime PeriodEndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("closeInitiatedDate")]
+        public System.DateTime CloseInitiatedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("initiatedBy")]
+        public string? InitiatedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isComplete")]
+        public bool IsComplete { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("completedDate")]
+        public System.DateTime? CompletedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tasksCompleted")]
+        public int TasksCompleted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tasksRemaining")]
+        public int TasksRemaining { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("completionPercentage")]
+        public decimal CompletionPercentage { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("requiredTasksComplete")]
+        public bool RequiredTasksComplete { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("completedBy")]
+        public string? CompletedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("trialBalanceGenerated")]
+        public bool TrialBalanceGenerated { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("trialBalanceBalanced")]
+        public bool TrialBalanceBalanced { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("allJournalsPosted")]
+        public bool AllJournalsPosted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("bankReconciliationsComplete")]
+        public bool BankReconciliationsComplete { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("apReconciliationComplete")]
+        public bool ApReconciliationComplete { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("arReconciliationComplete")]
+        public bool ArReconciliationComplete { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("inventoryReconciliationComplete")]
+        public bool InventoryReconciliationComplete { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fixedAssetDepreciationPosted")]
+        public bool FixedAssetDepreciationPosted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("prepaidExpensesAmortized")]
+        public bool PrepaidExpensesAmortized { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accrualsPosted")]
+        public bool AccrualsPosted { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("intercompanyReconciled")]
+        public bool IntercompanyReconciled { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("netIncomeTransferred")]
+        public bool NetIncomeTransferred { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("trialBalanceId")]
+        public System.Guid? TrialBalanceId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("finalNetIncome")]
+        public decimal? FinalNetIncome { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reopenReason")]
+        public string? ReopenReason { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reopenedDate")]
+        public System.DateTime? ReopenedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reopenedBy")]
+        public string? ReopenedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("tasks")]
+        public System.Collections.Generic.ICollection<CloseTaskItemDto>? Tasks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("validationIssues")]
+        public System.Collections.Generic.ICollection<CloseValidationIssueDto>? ValidationIssues { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasUnresolvedCriticalIssues")]
+        public bool HasUnresolvedCriticalIssues { get; set; } = default!;
 
     }
 
@@ -78265,6 +78424,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
+        public string? ContactPerson { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string? Address { get; set; } = default!;
 
@@ -78279,12 +78444,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("phone")]
         public string? Phone { get; set; } = default!;
-        
-        [System.Text.Json.Serialization.JsonPropertyName("contactPerson")]
-        public string? ContactPerson { get; set; } = default!;
-        
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;

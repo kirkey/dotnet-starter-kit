@@ -115,10 +115,12 @@ public class MenuService : IMenuService
                         // ========== BUDGETING & PROJECTS ==========
                         new MenuSectionSubItemModel { Title = "Planning & Tracking", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.MonetizationOn, Href = "/accounting/budgets", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.Work, Href = "/accounting-projects", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.Work, Href = "/accounting/projects", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
                         // ========== PERIOD MANAGEMENT & REPORTING ==========
                         new MenuSectionSubItemModel { Title = "Period Close & Accruals", IsGroupHeader = true },
+                        new MenuSectionSubItemModel { Title = "Trial Balance", Icon = Icons.Material.Filled.Balance, Href = "/accounting/trial-balance", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Fiscal Period Close", Icon = Icons.Material.Filled.Lock, Href = "/accounting/fiscal-period-close", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Accounting Periods", Icon = Icons.Material.Filled.CalendarMonth, Href = "/accounting/periods", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.Schedule, Href = "/accounting/accruals", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
@@ -151,7 +153,7 @@ public class MenuService : IMenuService
                         // ========== INVENTORY MANAGEMENT ==========
                         new MenuSectionSubItemModel { Title = "Inventory", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Stock Levels", Icon = Icons.Material.Filled.Inventory, Href = "/store/stock-levels", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Stock Adjustments", Icon = Icons.Material.Filled.TrendingUp, Href = "/store/stock-adjustments", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Stock Adjustments", Icon = Icons.Material.Filled.TrendingDown, Href = "/store/stock-adjustments", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Inventory Transactions", Icon = Icons.Material.Filled.SwapHoriz, Href = "/store/inventory-transactions", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Inventory Transfers", Icon = Icons.Material.Filled.Transform, Href = "/store/inventory-transfers", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Inventory Reservations", Icon = Icons.Material.Filled.BookmarkAdded, Href = "/store/inventory-reservations", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },

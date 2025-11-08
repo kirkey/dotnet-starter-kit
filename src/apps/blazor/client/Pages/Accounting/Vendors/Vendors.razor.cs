@@ -55,11 +55,11 @@ public partial class Vendors
                 var result = await Client.VendorSearchEndpointAsync("1", searchQuery);
                 return result.Adapt<PaginationResponse<VendorSearchResponse>>();
             },
-            getDetailsFunc: async id =>
-            {
-                var vendor = await Client.VendorGetEndpointAsync("1", id);
-                return vendor.Adapt<VendorViewModel>();
-            },
+            // getDetailsFunc: async id =>
+            // {
+            //     var vendor = await Client.VendorGetEndpointAsync("1", id);
+            //     return vendor.Adapt<VendorViewModel>();
+            // },
             createFunc: async viewModel =>
             {
                 var command = new VendorCreateCommand

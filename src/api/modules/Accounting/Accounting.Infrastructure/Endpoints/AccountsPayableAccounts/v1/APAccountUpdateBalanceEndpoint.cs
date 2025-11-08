@@ -2,9 +2,9 @@ using Accounting.Application.AccountsPayableAccounts.UpdateBalance.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsPayableAccounts.v1;
 
-public static class APAccountUpdateBalanceEndpoint
+public static class ApAccountUpdateBalanceEndpoint
 {
-    internal static RouteHandlerBuilder MapAPAccountUpdateBalanceEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapApAccountUpdateBalanceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPut("/{id:guid}/balance", async (DefaultIdType id, UpdateAPBalanceCommand command, ISender mediator) =>
@@ -13,7 +13,7 @@ public static class APAccountUpdateBalanceEndpoint
                 var accountId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = accountId });
             })
-            .WithName(nameof(APAccountUpdateBalanceEndpoint))
+            .WithName(nameof(ApAccountUpdateBalanceEndpoint))
             .WithSummary("Update AP aging balance")
             .WithDescription("Updates the aging buckets and calculates total balance")
             .Produces<object>()
