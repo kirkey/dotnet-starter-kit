@@ -5,17 +5,17 @@ namespace Accounting.Domain.Exceptions;
 /// <summary>
 /// Exception thrown when an AR account is not found by ID.
 /// </summary>
-public sealed class ARAccountByIdNotFoundException(DefaultIdType id) : NotFoundException($"AR account with id {id} not found");
+public sealed class ArAccountByIdNotFoundException(DefaultIdType id) : NotFoundException($"AR account with id {id} not found");
 
 /// <summary>
 /// Exception thrown when an AR account is not found by account number.
 /// </summary>
-public sealed class ARAccountByNumberNotFoundException(string accountNumber) : NotFoundException($"AR account with number {accountNumber} not found");
+public sealed class ArAccountByNumberNotFoundException(string accountNumber) : NotFoundException($"AR account with number {accountNumber} not found");
 
 /// <summary>
 /// Exception thrown when trying to create an AR account with a duplicate number.
 /// </summary>
-public sealed class DuplicateARAccountNumberException(string accountNumber) : ConflictException($"AR account with number {accountNumber} already exists");
+public sealed class DuplicateArAccountNumberException(string accountNumber) : ConflictException($"AR account with number {accountNumber} already exists");
 
 /// <summary>
 /// Exception thrown when aging bucket values are negative.

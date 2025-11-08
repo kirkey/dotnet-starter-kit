@@ -1,16 +1,16 @@
 namespace Accounting.Domain.Events.AccountsPayableAccount;
 
-public record APAccountCreated(DefaultIdType Id, string AccountNumber, string AccountName, string? Description, string? Notes) : DomainEvent;
+public record ApAccountCreated(DefaultIdType Id, string AccountNumber, string AccountName, string? Description, string? Notes) : DomainEvent;
 
-public record APAccountBalanceUpdated(DefaultIdType Id, string AccountNumber, decimal CurrentBalance) : DomainEvent;
+public record ApAccountBalanceUpdated(DefaultIdType Id, string AccountNumber, decimal CurrentBalance) : DomainEvent;
 
-public record APAccountPaymentRecorded(DefaultIdType Id, string AccountNumber, decimal Amount, decimal YearToDatePayments) : DomainEvent;
+public record ApAccountPaymentRecorded(DefaultIdType Id, string AccountNumber, decimal Amount, decimal YearToDatePayments) : DomainEvent;
 
-public record APAccountDiscountLost(DefaultIdType Id, string AccountNumber, decimal DiscountAmount, decimal YearToDateDiscountsLost) : DomainEvent;
+public record ApAccountDiscountLost(DefaultIdType Id, string AccountNumber, decimal DiscountAmount, decimal YearToDateDiscountsLost) : DomainEvent;
 
-public record APAccountReconciled(DefaultIdType Id, string AccountNumber, decimal CurrentBalance, decimal SubsidiaryBalance, decimal Variance, bool IsReconciled) : DomainEvent;
+public record ApAccountReconciled(DefaultIdType Id, string AccountNumber, decimal CurrentBalance, decimal SubsidiaryBalance, decimal Variance, bool IsReconciled) : DomainEvent;
 
-public record APAccountMetricsUpdated(DefaultIdType Id, string AccountNumber, int VendorCount, decimal DaysPayableOutstanding) : DomainEvent;
+public record ApAccountMetricsUpdated(DefaultIdType Id, string AccountNumber, int VendorCount, decimal DaysPayableOutstanding) : DomainEvent;
 
-public record APAccountDeleted(DefaultIdType Id) : DomainEvent;
+public record ApAccountDeleted(DefaultIdType Id) : DomainEvent;
 

@@ -1,6 +1,6 @@
 namespace Accounting.Domain.Events.InterconnectionAgreement;
 
-public record InterconnectionAgreementCreated(DefaultIdType Id, string AgreementNumber, DefaultIdType MemberId, string GenerationType, decimal InstalledCapacityKW, DateTime EffectiveDate, string? Description, string? Notes) : DomainEvent;
+public record InterconnectionAgreementCreated(DefaultIdType Id, string AgreementNumber, DefaultIdType MemberId, string GenerationType, decimal InstalledCapacityKw, DateTime EffectiveDate, string? Description, string? Notes) : DomainEvent;
 
 public record InterconnectionAgreementUpdated(DefaultIdType Id, string AgreementNumber, string? Description, string? Notes) : DomainEvent;
 

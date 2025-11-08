@@ -19,7 +19,7 @@ public sealed class AccountsPayableAccountCreateHandler(
             new AccountsPayableAccountByNumberSpec(request.AccountNumber), cancellationToken);
         if (existingByNumber != null)
         {
-            throw new DuplicateAPAccountNumberException(request.AccountNumber);
+            throw new DuplicateApAccountNumberException(request.AccountNumber);
         }
 
         var account = AccountsPayableAccount.Create(

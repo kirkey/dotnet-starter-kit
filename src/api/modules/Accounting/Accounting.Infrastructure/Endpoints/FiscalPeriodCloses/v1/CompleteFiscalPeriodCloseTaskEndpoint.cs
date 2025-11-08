@@ -7,7 +7,7 @@ public static class CompleteFiscalPeriodCloseTaskEndpoint
     internal static RouteHandlerBuilder MapCompleteFiscalPeriodCloseTaskEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id}/tasks/complete", async (DefaultIdType id, CompleteFiscalPeriodCloseCommand command, ISender mediator) =>
+            .MapPost("/{id}/tasks/complete", async (DefaultIdType id, CompleteFiscalPeriodTaskCommand command, ISender mediator) =>
             {
                 if (id != command.FiscalPeriodCloseId)
                     return Results.BadRequest("ID mismatch");

@@ -17,9 +17,9 @@ public class AccountsPayableAccountConfiguration : IEntityTypeConfiguration<Acco
         builder.Property(x => x.Notes).HasMaxLength(2048);
         
         builder.Property(x => x.CurrentBalance).HasPrecision(18, 2);
-        builder.Property(x => x.Current0to30).HasPrecision(18, 2);
-        builder.Property(x => x.Days31to60).HasPrecision(18, 2);
-        builder.Property(x => x.Days61to90).HasPrecision(18, 2);
+        builder.Property(x => x.Current0To30).HasPrecision(18, 2);
+        builder.Property(x => x.Days31To60).HasPrecision(18, 2);
+        builder.Property(x => x.Days61To90).HasPrecision(18, 2);
         builder.Property(x => x.Over90Days).HasPrecision(18, 2);
         builder.Property(x => x.DaysPayableOutstanding).HasPrecision(18, 2);
         builder.Property(x => x.ReconciliationVariance).HasPrecision(18, 2);

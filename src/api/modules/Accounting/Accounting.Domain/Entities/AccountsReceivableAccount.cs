@@ -37,10 +37,10 @@ namespace Accounting.Domain.Entities;
 /// - Reconciliation with subsidiary ledger required monthly
 /// - Write-offs require proper authorization
 /// </remarks>
-/// <seealso cref="Accounting.Domain.Events.AccountsReceivableAccount.ARAccountCreated"/>
-/// <seealso cref="Accounting.Domain.Events.AccountsReceivableAccount.ARAccountBalanceUpdated"/>
+/// <seealso cref="ArAccountCreated"/>
+/// <seealso cref="ArAccountBalanceUpdated"/>
 /// <seealso cref="Accounting.Domain.Events.AccountsReceivableAccount.ARAccountAgingUpdated"/>
-/// <seealso cref="Accounting.Domain.Events.AccountsReceivableAccount.ARAccountReconciled"/>
+/// <seealso cref="ArAccountReconciled"/>
 public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
 {
     private const int MaxAccountNumberLength = 50;
@@ -71,19 +71,19 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
     /// Receivables 0-30 days old (current).
     /// Example: 800000.00. Default: 0.00. Most current and likely collectible.
     /// </summary>
-    public decimal Current0to30 { get; private set; }
+    public decimal Current0To30 { get; private set; }
 
     /// <summary>
     /// Receivables 31-60 days old.
     /// Example: 400000.00. Default: 0.00. Slightly past due but generally collectible.
     /// </summary>
-    public decimal Days31to60 { get; private set; }
+    public decimal Days31To60 { get; private set; }
 
     /// <summary>
     /// Receivables 61-90 days old.
     /// Example: 200000.00. Default: 0.00. Past due, requires collection effort.
     /// </summary>
-    public decimal Days61to90 { get; private set; }
+    public decimal Days61To90 { get; private set; }
 
     /// <summary>
     /// Receivables over 90 days old.
@@ -197,9 +197,9 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
         Name = accountName.Trim();
         AccountName = accountName.Trim();
         CurrentBalance = 0m;
-        Current0to30 = 0m;
-        Days31to60 = 0m;
-        Days61to90 = 0m;
+        Current0To30 = 0m;
+        Days31To60 = 0m;
+        Days61To90 = 0m;
         Over90Days = 0m;
         AllowanceForDoubtfulAccounts = 0m;
         NetReceivables = 0m;
@@ -216,7 +216,7 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
         Description = description?.Trim();
         Notes = notes?.Trim();
 
-        QueueDomainEvent(new ARAccountCreated(Id, AccountNumber, AccountName, Description, Notes));
+        QueueDomainEvent(new ArAccountCreated(Id, AccountNumber, AccountName, Description, Notes));
     }
 
     public static AccountsReceivableAccount Create(string accountNumber, string accountName,
@@ -227,20 +227,20 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
             periodId, description, notes);
     }
 
-    public AccountsReceivableAccount UpdateBalance(decimal current0to30, decimal days31to60,
-        decimal days61to90, decimal over90Days)
+    public AccountsReceivableAccount UpdateBalance(decimal current0To30, decimal days31To60,
+        decimal days61To90, decimal over90Days)
     {
-        if (current0to30 < 0 || days31to60 < 0 || days61to90 < 0 || over90Days < 0)
+        if (current0To30 < 0 || days31To60 < 0 || days61To90 < 0 || over90Days < 0)
             throw new ArgumentException("Aging buckets cannot be negative");
 
-        Current0to30 = current0to30;
-        Days31to60 = days31to60;
-        Days61to90 = days61to90;
+        Current0To30 = current0To30;
+        Days31To60 = days31To60;
+        Days61To90 = days61To90;
         Over90Days = over90Days;
-        CurrentBalance = current0to30 + days31to60 + days61to90 + over90Days;
+        CurrentBalance = current0To30 + days31To60 + days61To90 + over90Days;
         NetReceivables = CurrentBalance - AllowanceForDoubtfulAccounts;
 
-        QueueDomainEvent(new ARAccountBalanceUpdated(Id, AccountNumber, CurrentBalance, NetReceivables));
+        QueueDomainEvent(new ArAccountBalanceUpdated(Id, AccountNumber, CurrentBalance, NetReceivables));
         return this;
     }
 
@@ -255,7 +255,7 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
         AllowanceForDoubtfulAccounts = allowanceAmount;
         NetReceivables = CurrentBalance - AllowanceForDoubtfulAccounts;
 
-        QueueDomainEvent(new ARAccountAllowanceUpdated(Id, AccountNumber, AllowanceForDoubtfulAccounts));
+        QueueDomainEvent(new ArAccountAllowanceUpdated(Id, AccountNumber, AllowanceForDoubtfulAccounts));
         return this;
     }
 
@@ -272,7 +272,7 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
             BadDebtPercentage = YearToDateWriteOffs / (YearToDateCollections + CurrentBalance);
         }
 
-        QueueDomainEvent(new ARAccountWriteOffRecorded(Id, AccountNumber, amount, YearToDateWriteOffs));
+        QueueDomainEvent(new ArAccountWriteOffRecorded(Id, AccountNumber, amount, YearToDateWriteOffs));
         return this;
     }
 
@@ -283,7 +283,7 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
 
         YearToDateCollections += amount;
 
-        QueueDomainEvent(new ARAccountCollectionRecorded(Id, AccountNumber, amount, YearToDateCollections));
+        QueueDomainEvent(new ArAccountCollectionRecorded(Id, AccountNumber, amount, YearToDateCollections));
         return this;
     }
 
@@ -293,7 +293,7 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
         IsReconciled = Math.Abs(ReconciliationVariance) < 0.01m; // Allow penny rounding
         LastReconciliationDate = DateTime.UtcNow;
 
-        QueueDomainEvent(new ARAccountReconciled(Id, AccountNumber, CurrentBalance, subsidiaryLedgerBalance, ReconciliationVariance, IsReconciled));
+        QueueDomainEvent(new ArAccountReconciled(Id, AccountNumber, CurrentBalance, subsidiaryLedgerBalance, ReconciliationVariance, IsReconciled));
         return this;
     }
 
@@ -302,7 +302,7 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
         CustomerCount = customerCount;
         DaysSalesOutstanding = daysSalesOutstanding;
 
-        QueueDomainEvent(new ARAccountMetricsUpdated(Id, AccountNumber, CustomerCount, DaysSalesOutstanding));
+        QueueDomainEvent(new ArAccountMetricsUpdated(Id, AccountNumber, CustomerCount, DaysSalesOutstanding));
         return this;
     }
 
@@ -333,9 +333,9 @@ public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
         {
             if (CurrentBalance == 0) return (0, 0, 0, 0);
             return (
-                (Current0to30 / CurrentBalance) * 100,
-                (Days31to60 / CurrentBalance) * 100,
-                (Days61to90 / CurrentBalance) * 100,
+                (Current0To30 / CurrentBalance) * 100,
+                (Days31To60 / CurrentBalance) * 100,
+                (Days61To90 / CurrentBalance) * 100,
                 (Over90Days / CurrentBalance) * 100
             );
         }

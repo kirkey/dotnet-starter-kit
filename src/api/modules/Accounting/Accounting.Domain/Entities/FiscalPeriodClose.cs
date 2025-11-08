@@ -54,8 +54,8 @@ public class FiscalPeriodClose : AuditableEntity, IAggregateRoot
     public bool TrialBalanceBalanced { get; private set; }
     public bool AllJournalsPosted { get; private set; }
     public bool BankReconciliationsComplete { get; private set; }
-    public bool APReconciliationComplete { get; private set; }
-    public bool ARReconciliationComplete { get; private set; }
+    public bool ApReconciliationComplete { get; private set; }
+    public bool ArReconciliationComplete { get; private set; }
     public bool InventoryReconciliationComplete { get; private set; }
     public bool FixedAssetDepreciationPosted { get; private set; }
     public bool PrepaidExpensesAmortized { get; private set; }
@@ -211,16 +211,16 @@ public class FiscalPeriodClose : AuditableEntity, IAggregateRoot
         return this;
     }
 
-    public FiscalPeriodClose MarkAPReconciliationComplete()
+    public FiscalPeriodClose MarkApReconciliationComplete()
     {
-        APReconciliationComplete = true;
+        ApReconciliationComplete = true;
         CompleteTask("Reconcile AP Subsidiary Ledger");
         return this;
     }
 
-    public FiscalPeriodClose MarkARReconciliationComplete()
+    public FiscalPeriodClose MarkArReconciliationComplete()
     {
-        ARReconciliationComplete = true;
+        ArReconciliationComplete = true;
         CompleteTask("Reconcile AR Subsidiary Ledger");
         return this;
     }

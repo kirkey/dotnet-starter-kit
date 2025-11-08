@@ -821,14 +821,14 @@ internal sealed class AccountingDbInitializer(
             {
                 var taxCodes = new List<TaxCode>
                 {
-                    TaxCode.Create("VAT-STD", "Standard VAT", TaxType.VAT, 0.20m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX001", "Standard", "Standard VAT rate"),
-                    TaxCode.Create("VAT-RED", "Reduced VAT", TaxType.VAT, 0.10m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX002", "Reduced", "Reduced VAT rate"),
-                    TaxCode.Create("GST-STD", "Standard GST", TaxType.GST, 0.15m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Federal", null, expenseAccount.Id, "Federal Tax Authority", "TX003", "Standard", "Standard GST rate"),
+                    TaxCode.Create("VAT-STD", "Standard VAT", TaxType.Vat, 0.20m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX001", "Standard", "Standard VAT rate"),
+                    TaxCode.Create("VAT-RED", "Reduced VAT", TaxType.Vat, 0.10m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX002", "Reduced", "Reduced VAT rate"),
+                    TaxCode.Create("GST-STD", "Standard GST", TaxType.Gst, 0.15m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Federal", null, expenseAccount.Id, "Federal Tax Authority", "TX003", "Standard", "Standard GST rate"),
                     TaxCode.Create("USE-TAX", "Use Tax", TaxType.UseTax, 0.07m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "State", null, expenseAccount.Id, "State Tax Authority", "TX004", "UseTax", "Use tax"),
                     TaxCode.Create("SALES-CA", "California Sales Tax", TaxType.SalesTax, 0.0725m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "California", null, expenseAccount.Id, "CA Tax Authority", "TX005", "State", "CA sales tax"),
                     TaxCode.Create("WHT-STD", "Standard Withholding Tax", TaxType.Withholding, 0.05m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX006", "WHT", "Standard withholding tax"),
                     TaxCode.Create("EXCISE-1", "Excise Tax Type 1", TaxType.Excise, 0.12m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Federal", null, expenseAccount.Id, "Federal Tax Authority", "TX007", "Excise", "Excise tax type 1"),
-                    TaxCode.Create("VAT-ZERO", "Zero-Rated VAT", TaxType.VAT, 0.0m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX008", "Zero", "Zero-rated VAT"),
+                    TaxCode.Create("VAT-ZERO", "Zero-Rated VAT", TaxType.Vat, 0.0m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "National", null, expenseAccount.Id, "National Tax Authority", "TX008", "Zero", "Zero-rated VAT"),
                     TaxCode.Create("PROP-TAX", "Property Tax", TaxType.Property, 0.015m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Municipal", null, expenseAccount.Id, "Municipal Tax Authority", "TX009", "Property", "Property tax"),
                     TaxCode.Create("OTHER-TAX", "Other Tax", TaxType.Other, 0.08m, revenueAccount.Id, DateTime.UtcNow.Date.AddYears(-1), false, "Local", null, expenseAccount.Id, "Local Tax Authority", "TX010", "Other", "Miscellaneous tax")
                 };

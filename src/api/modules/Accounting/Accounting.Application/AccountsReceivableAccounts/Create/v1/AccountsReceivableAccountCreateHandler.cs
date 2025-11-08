@@ -19,7 +19,7 @@ public sealed class AccountsReceivableAccountCreateHandler(
             new AccountsReceivableAccountByNumberSpec(request.AccountNumber), cancellationToken);
         if (existingByNumber != null)
         {
-            throw new DuplicateARAccountNumberException(request.AccountNumber);
+            throw new DuplicateArAccountNumberException(request.AccountNumber);
         }
 
         var account = AccountsReceivableAccount.Create(

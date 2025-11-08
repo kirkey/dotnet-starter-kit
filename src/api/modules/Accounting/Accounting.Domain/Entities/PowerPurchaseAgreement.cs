@@ -100,7 +100,7 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
     /// Optional demand charge per kilowatt per month.
     /// Example: 5.50 for $5.50/kW-month capacity charge. Null if no demand component.
     /// </summary>
-    public decimal? DemandChargePerKW { get; private set; }
+    public decimal? DemandChargePerKw { get; private set; }
 
     /// <summary>
     /// Optional minimum purchase obligation (take-or-pay) in kWh per settlement period.
@@ -186,7 +186,7 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
     /// Contract capacity in megawatts (MW).
     /// Example: 25.0 for 25 MW solar farm. Null if not applicable.
     /// </summary>
-    public decimal? ContractCapacityMW { get; private set; }
+    public decimal? ContractCapacityMw { get; private set; }
 
     /// <summary>
     /// Whether contract has take-or-pay minimum purchase obligation.
@@ -254,11 +254,11 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
 
     private PowerPurchaseAgreement(string contractNumber, string counterpartyName,
         string contractType, DateTime startDate, DateTime endDate,
-        decimal energyPricePerKWh, decimal? demandChargePerKW = null,
+        decimal energyPricePerKWh, decimal? demandChargePerKw = null,
         decimal? minimumPurchaseKWh = null, decimal? maximumPurchaseKWh = null,
         DefaultIdType? vendorId = null, string settlementFrequency = "Monthly",
         string? energySource = null, bool includesRenewableCredits = false,
-        decimal? contractCapacityMW = null, bool isTakeOrPay = false,
+        decimal? contractCapacityMw = null, bool isTakeOrPay = false,
         bool hasPriceEscalation = false, decimal? escalationRate = null,
         DateTime? nextEscalationDate = null, DefaultIdType? expenseAccountId = null,
         DefaultIdType? periodId = null, string? description = null, string? notes = null)
@@ -285,8 +285,8 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
         if (energyPricePerKWh < 0)
             throw new ArgumentException("Energy price cannot be negative", nameof(energyPricePerKWh));
 
-        if (demandChargePerKW.HasValue && demandChargePerKW.Value < 0)
-            throw new ArgumentException("Demand charge cannot be negative", nameof(demandChargePerKW));
+        if (demandChargePerKw.HasValue && demandChargePerKw.Value < 0)
+            throw new ArgumentException("Demand charge cannot be negative", nameof(demandChargePerKw));
 
         if (minimumPurchaseKWh.HasValue && minimumPurchaseKWh.Value < 0)
             throw new ArgumentException("Minimum purchase cannot be negative", nameof(minimumPurchaseKWh));
@@ -297,8 +297,8 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
         if (minimumPurchaseKWh.HasValue && maximumPurchaseKWh.HasValue && minimumPurchaseKWh.Value > maximumPurchaseKWh.Value)
             throw new ArgumentException("Minimum purchase cannot exceed maximum purchase");
 
-        if (contractCapacityMW.HasValue && contractCapacityMW.Value <= 0)
-            throw new ArgumentException("Contract capacity must be positive if specified", nameof(contractCapacityMW));
+        if (contractCapacityMw.HasValue && contractCapacityMw.Value <= 0)
+            throw new ArgumentException("Contract capacity must be positive if specified", nameof(contractCapacityMw));
 
         if (escalationRate.HasValue && escalationRate.Value < 0)
             throw new ArgumentException("Escalation rate cannot be negative", nameof(escalationRate));
@@ -310,7 +310,7 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
         StartDate = startDate;
         EndDate = endDate;
         EnergyPricePerKWh = energyPricePerKWh;
-        DemandChargePerKW = demandChargePerKW;
+        DemandChargePerKw = demandChargePerKw;
         MinimumPurchaseKWh = minimumPurchaseKWh;
         MaximumPurchaseKWh = maximumPurchaseKWh;
         Status = "Active";
@@ -323,7 +323,7 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
         LifetimeEnergyKWh = 0m;
         EnergySource = energySource?.Trim();
         IncludesRenewableCredits = includesRenewableCredits;
-        ContractCapacityMW = contractCapacityMW;
+        ContractCapacityMw = contractCapacityMw;
         IsTakeOrPay = isTakeOrPay || minimumPurchaseKWh.HasValue;
         HasPriceEscalation = hasPriceEscalation;
         EscalationRate = escalationRate;
@@ -341,19 +341,19 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
     /// </summary>
     public static PowerPurchaseAgreement Create(string contractNumber, string counterpartyName,
         string contractType, DateTime startDate, DateTime endDate,
-        decimal energyPricePerKWh, decimal? demandChargePerKW = null,
+        decimal energyPricePerKWh, decimal? demandChargePerKw = null,
         decimal? minimumPurchaseKWh = null, decimal? maximumPurchaseKWh = null,
         DefaultIdType? vendorId = null, string settlementFrequency = "Monthly",
         string? energySource = null, bool includesRenewableCredits = false,
-        decimal? contractCapacityMW = null, bool isTakeOrPay = false,
+        decimal? contractCapacityMw = null, bool isTakeOrPay = false,
         bool hasPriceEscalation = false, decimal? escalationRate = null,
         DateTime? nextEscalationDate = null, DefaultIdType? expenseAccountId = null,
         DefaultIdType? periodId = null, string? description = null, string? notes = null)
     {
         return new PowerPurchaseAgreement(contractNumber, counterpartyName, contractType,
-            startDate, endDate, energyPricePerKWh, demandChargePerKW, minimumPurchaseKWh,
+            startDate, endDate, energyPricePerKWh, demandChargePerKw, minimumPurchaseKWh,
             maximumPurchaseKWh, vendorId, settlementFrequency, energySource,
-            includesRenewableCredits, contractCapacityMW, isTakeOrPay, hasPriceEscalation,
+            includesRenewableCredits, contractCapacityMw, isTakeOrPay, hasPriceEscalation,
             escalationRate, nextEscalationDate, expenseAccountId, periodId, description, notes);
     }
 
@@ -361,7 +361,7 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
     /// Update contract details; not allowed when terminated.
     /// </summary>
     public PowerPurchaseAgreement Update(decimal? energyPricePerKWh = null,
-        decimal? demandChargePerKW = null, decimal? minimumPurchaseKWh = null,
+        decimal? demandChargePerKw = null, decimal? minimumPurchaseKWh = null,
         decimal? maximumPurchaseKWh = null, DateTime? endDate = null,
         string? settlementFrequency = null, DefaultIdType? vendorId = null,
         DefaultIdType? expenseAccountId = null, string? description = null, string? notes = null)
@@ -379,11 +379,11 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
             isUpdated = true;
         }
 
-        if (demandChargePerKW.HasValue && DemandChargePerKW != demandChargePerKW.Value)
+        if (demandChargePerKw.HasValue && DemandChargePerKw != demandChargePerKw.Value)
         {
-            if (demandChargePerKW.Value < 0)
+            if (demandChargePerKw.Value < 0)
                 throw new ArgumentException("Demand charge cannot be negative");
-            DemandChargePerKW = demandChargePerKW.Value;
+            DemandChargePerKw = demandChargePerKw.Value;
             isUpdated = true;
         }
 
@@ -554,9 +554,9 @@ public class PowerPurchaseAgreement : AuditableEntity, IAggregateRoot
         decimal oldPrice = EnergyPricePerKWh;
         EnergyPricePerKWh = EnergyPricePerKWh * (1 + EscalationRate.Value);
 
-        if (DemandChargePerKW.HasValue)
+        if (DemandChargePerKw.HasValue)
         {
-            DemandChargePerKW = DemandChargePerKW.Value * (1 + EscalationRate.Value);
+            DemandChargePerKw = DemandChargePerKw.Value * (1 + EscalationRate.Value);
         }
 
         // Set next escalation date (typically one year forward)

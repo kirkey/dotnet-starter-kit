@@ -30,7 +30,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial interface IClient
     {
         /// <summary>
-        /// Reconcile an account
+        /// Reconcile a general ledger account
         /// </summary>
         /// <remarks>
         /// Run account reconciliation for a chart of account and its reconciliation lines
@@ -38,11 +38,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ReconcileAccountEndpointAsync(string version, ReconcileAccountCommand body);
+        System.Threading.Tasks.Task<System.Guid> ReconcileGeneralLedgerAccountEndpointAsync(string version, ReconcileGeneralLedgerAccountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Reconcile an account
+        /// Reconcile a general ledger account
         /// </summary>
         /// <remarks>
         /// Run account reconciliation for a chart of account and its reconciliation lines
@@ -50,7 +50,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> ReconcileAccountEndpointAsync(string version, ReconcileAccountCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> ReconcileGeneralLedgerAccountEndpointAsync(string version, ReconcileGeneralLedgerAccountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new bill
@@ -429,7 +429,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> APAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body);
+        System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> ApAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -441,7 +441,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> APAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> ApAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get AP account by ID
@@ -452,7 +452,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<APAccountResponse> APAccountGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<APAccountResponse> ApAccountGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -464,7 +464,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<APAccountResponse> APAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<APAccountResponse> ApAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search AP accounts
@@ -475,7 +475,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> APAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -487,7 +487,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> APAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update AP aging balance
@@ -498,7 +498,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body);
+        System.Threading.Tasks.Task<object> ApAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -510,7 +510,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ApAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Record vendor payment
@@ -521,7 +521,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body);
+        System.Threading.Tasks.Task<object> ApAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -533,30 +533,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ApAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Record missed early payment discount
         /// </summary>
         /// <remarks>
-        /// Records a missed early payment discount opportunity
+        /// Records a missed early payment discount opportunity for an AP account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordDiscountLostCommand body);
+        System.Threading.Tasks.Task<object> ApAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordAPDiscountLostCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Record missed early payment discount
         /// </summary>
         /// <remarks>
-        /// Records a missed early payment discount opportunity
+        /// Records a missed early payment discount opportunity for an AP account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordDiscountLostCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ApAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordAPDiscountLostCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reconcile with subsidiary ledger
@@ -567,7 +567,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body);
+        System.Threading.Tasks.Task<object> ApAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -579,7 +579,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> APAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ApAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create AR account
@@ -590,7 +590,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ARAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body);
+        System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ArAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -602,7 +602,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ARAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ArAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get AR account by ID
@@ -613,7 +613,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ARAccountResponse> ARAccountGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -625,7 +625,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ARAccountResponse> ARAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search AR accounts
@@ -636,7 +636,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ARAccountSearchEndpointAsync(string version, SearchARAccountsRequest body);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -648,7 +648,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ARAccountSearchEndpointAsync(string version, SearchARAccountsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update AR aging balance
@@ -659,7 +659,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body);
+        System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -671,7 +671,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update allowance for doubtful accounts
@@ -682,7 +682,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body);
+        System.Threading.Tasks.Task<object> ArAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -694,53 +694,53 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ArAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Record bad debt write-off
+        /// Record AR bad debt write-off
         /// </summary>
         /// <remarks>
-        /// Records a write-off and updates bad debt statistics
+        /// Records a bad debt write-off for an AR account and updates bad debt statistics
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordWriteOffCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Record bad debt write-off
-        /// </summary>
-        /// <remarks>
-        /// Records a write-off and updates bad debt statistics
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordWriteOffCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Record collection
-        /// </summary>
-        /// <remarks>
-        /// Records a collection and updates YTD statistics
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordCollectionCommand body);
+        System.Threading.Tasks.Task<object> ArAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordARWriteOffCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Record collection
+        /// Record AR bad debt write-off
         /// </summary>
         /// <remarks>
-        /// Records a collection and updates YTD statistics
+        /// Records a bad debt write-off for an AR account and updates bad debt statistics
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordCollectionCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ArAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordARWriteOffCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Record AR collection
+        /// </summary>
+        /// <remarks>
+        /// Records a collection (payment received) for an AR account and updates YTD statistics
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<object> ArAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordARCollectionCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Record AR collection
+        /// </summary>
+        /// <remarks>
+        /// Records a collection (payment received) for an AR account and updates YTD statistics
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<object> ArAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordARCollectionCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reconcile with subsidiary ledger
@@ -751,7 +751,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body);
+        System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -763,7 +763,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ARAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create an accrual
@@ -2537,50 +2537,50 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CostCenterResponse>> CostCenterSearchEndpointAsync(string version, SearchCostCentersRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// update cost center budget
+        /// Update cost center budget
         /// </summary>
         /// <remarks>
-        /// updates the budget allocation for a cost center
+        /// Updates the budget allocation for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> UpdateBudgetEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body);
+        System.Threading.Tasks.Task<object> UpdateCostCenterBudgetEndpointAsync(string version, System.Guid id, UpdateCostCenterBudgetCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update cost center budget
+        /// Update cost center budget
         /// </summary>
         /// <remarks>
-        /// updates the budget allocation for a cost center
+        /// Updates the budget allocation for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> UpdateBudgetEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> UpdateCostCenterBudgetEndpointAsync(string version, System.Guid id, UpdateCostCenterBudgetCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// record actual expenses
+        /// Record cost center actual expenses
         /// </summary>
         /// <remarks>
-        /// records actual expenses/costs for a cost center
+        /// Records actual expenses/costs for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordActualCommand body);
+        System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordCostCenterActualCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// record actual expenses
+        /// Record cost center actual expenses
         /// </summary>
         /// <remarks>
-        /// records actual expenses/costs for a cost center
+        /// Records actual expenses/costs for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordActualCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordCostCenterActualCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Activate cost center
@@ -3710,30 +3710,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FiscalPeriodCloseResponse>> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Complete a close task
+        /// Complete a fiscal period close task
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Marks a task as complete in the fiscal period close checklist
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body);
+        System.Threading.Tasks.Task CompleteFiscalPeriodCloseTaskEndpointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Complete a close task
+        /// Complete a fiscal period close task
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Marks a task as complete in the fiscal period close checklist
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CompleteFiscalPeriodCloseTaskEndpointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Add a validation issue
+        /// Add a validation issue to fiscal period close
         /// </summary>
         /// <remarks>
         /// Adds a validation issue to the fiscal period close process
@@ -3741,11 +3741,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> AddValidationIssueEndpointAsync(string version, System.Guid id, AddValidationIssueCommand body);
+        System.Threading.Tasks.Task<object> AddFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, AddFiscalPeriodCloseValidationIssueCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Add a validation issue
+        /// Add a validation issue to fiscal period close
         /// </summary>
         /// <remarks>
         /// Adds a validation issue to the fiscal period close process
@@ -3753,10 +3753,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> AddValidationIssueEndpointAsync(string version, System.Guid id, AddValidationIssueCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> AddFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, AddFiscalPeriodCloseValidationIssueCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Resolve a validation issue
+        /// Resolve a fiscal period close validation issue
         /// </summary>
         /// <remarks>
         /// Marks a validation issue as resolved in the fiscal period close process
@@ -3764,11 +3764,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ResolveValidationIssueEndpointAsync(string version, System.Guid id, ResolveValidationIssueCommand body);
+        System.Threading.Tasks.Task<object> ResolveFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, ResolveFiscalPeriodCloseValidationIssueCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Resolve a validation issue
+        /// Resolve a fiscal period close validation issue
         /// </summary>
         /// <remarks>
         /// Marks a validation issue as resolved in the fiscal period close process
@@ -3776,7 +3776,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ResolveValidationIssueEndpointAsync(string version, System.Guid id, ResolveValidationIssueCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ResolveFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, ResolveFiscalPeriodCloseValidationIssueCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete fiscal period close
@@ -10670,7 +10670,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <summary>
-        /// Reconcile an account
+        /// Reconcile a general ledger account
         /// </summary>
         /// <remarks>
         /// Run account reconciliation for a chart of account and its reconciliation lines
@@ -10678,14 +10678,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> ReconcileAccountEndpointAsync(string version, ReconcileAccountCommand body)
+        public virtual System.Threading.Tasks.Task<System.Guid> ReconcileGeneralLedgerAccountEndpointAsync(string version, ReconcileGeneralLedgerAccountCommand body)
         {
-            return ReconcileAccountEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return ReconcileGeneralLedgerAccountEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Reconcile an account
+        /// Reconcile a general ledger account
         /// </summary>
         /// <remarks>
         /// Run account reconciliation for a chart of account and its reconciliation lines
@@ -10693,7 +10693,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> ReconcileAccountEndpointAsync(string version, ReconcileAccountCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> ReconcileGeneralLedgerAccountEndpointAsync(string version, ReconcileGeneralLedgerAccountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12635,9 +12635,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> APAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body)
+        public virtual System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> ApAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body)
         {
-            return APAccountCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return ApAccountCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12650,7 +12650,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> APAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AccountsPayableAccountCreateResponse> ApAccountCreateEndpointAsync(string version, AccountsPayableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12749,9 +12749,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<APAccountResponse> APAccountGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<APAccountResponse> ApAccountGetEndpointAsync(string version, System.Guid id)
         {
-            return APAccountGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return ApAccountGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12764,7 +12764,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<APAccountResponse> APAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<APAccountResponse> ApAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12860,9 +12860,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> APAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body)
         {
-            return APAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return ApAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12875,7 +12875,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> APAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12974,9 +12974,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> APAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body)
+        public virtual System.Threading.Tasks.Task<object> ApAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body)
         {
-            return APAccountUpdateBalanceEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ApAccountUpdateBalanceEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -12989,7 +12989,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> APAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ApAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateAPBalanceCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13103,9 +13103,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> APAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body)
+        public virtual System.Threading.Tasks.Task<object> ApAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body)
         {
-            return APAccountRecordPaymentEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ApAccountRecordPaymentEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13118,7 +13118,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> APAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ApAccountRecordPaymentEndpointAsync(string version, System.Guid id, RecordAPPaymentCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13227,14 +13227,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Record missed early payment discount
         /// </summary>
         /// <remarks>
-        /// Records a missed early payment discount opportunity
+        /// Records a missed early payment discount opportunity for an AP account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> APAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordDiscountLostCommand body)
+        public virtual System.Threading.Tasks.Task<object> ApAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordAPDiscountLostCommand body)
         {
-            return APAccountRecordDiscountLostEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ApAccountRecordDiscountLostEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13242,12 +13242,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Record missed early payment discount
         /// </summary>
         /// <remarks>
-        /// Records a missed early payment discount opportunity
+        /// Records a missed early payment discount opportunity for an AP account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> APAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordDiscountLostCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ApAccountRecordDiscountLostEndpointAsync(string version, System.Guid id, RecordAPDiscountLostCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13361,9 +13361,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> APAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body)
+        public virtual System.Threading.Tasks.Task<object> ApAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body)
         {
-            return APAccountReconcileEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ApAccountReconcileEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13376,7 +13376,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> APAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ApAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileAPAccountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13490,9 +13490,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ARAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body)
+        public virtual System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ArAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body)
         {
-            return ARAccountCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return ArAccountCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13505,7 +13505,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ARAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AccountsReceivableAccountCreateResponse> ArAccountCreateEndpointAsync(string version, AccountsReceivableAccountCreateCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13604,9 +13604,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ARAccountResponse> ARAccountGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id)
         {
-            return ARAccountGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return ArAccountGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13619,7 +13619,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ARAccountResponse> ARAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13715,9 +13715,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ARAccountSearchEndpointAsync(string version, SearchARAccountsRequest body)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body)
         {
-            return ARAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return ArAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13730,7 +13730,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ARAccountSearchEndpointAsync(string version, SearchARAccountsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13829,9 +13829,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ARAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body)
+        public virtual System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body)
         {
-            return ARAccountUpdateBalanceEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ArAccountUpdateBalanceEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13844,7 +13844,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ARAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13958,9 +13958,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ARAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body)
+        public virtual System.Threading.Tasks.Task<object> ArAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body)
         {
-            return ARAccountUpdateAllowanceEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ArAccountUpdateAllowanceEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -13973,7 +13973,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ARAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ArAccountUpdateAllowanceEndpointAsync(string version, System.Guid id, UpdateARAllowanceCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14079,30 +14079,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Record bad debt write-off
+        /// Record AR bad debt write-off
         /// </summary>
         /// <remarks>
-        /// Records a write-off and updates bad debt statistics
+        /// Records a bad debt write-off for an AR account and updates bad debt statistics
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ARAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordWriteOffCommand body)
+        public virtual System.Threading.Tasks.Task<object> ArAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordARWriteOffCommand body)
         {
-            return ARAccountRecordWriteOffEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ArAccountRecordWriteOffEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Record bad debt write-off
+        /// Record AR bad debt write-off
         /// </summary>
         /// <remarks>
-        /// Records a write-off and updates bad debt statistics
+        /// Records a bad debt write-off for an AR account and updates bad debt statistics
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ARAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordWriteOffCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ArAccountRecordWriteOffEndpointAsync(string version, System.Guid id, RecordARWriteOffCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14208,30 +14208,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Record collection
+        /// Record AR collection
         /// </summary>
         /// <remarks>
-        /// Records a collection and updates YTD statistics
+        /// Records a collection (payment received) for an AR account and updates YTD statistics
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ARAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordCollectionCommand body)
+        public virtual System.Threading.Tasks.Task<object> ArAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordARCollectionCommand body)
         {
-            return ARAccountRecordCollectionEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ArAccountRecordCollectionEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Record collection
+        /// Record AR collection
         /// </summary>
         /// <remarks>
-        /// Records a collection and updates YTD statistics
+        /// Records a collection (payment received) for an AR account and updates YTD statistics
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ARAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordCollectionCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ArAccountRecordCollectionEndpointAsync(string version, System.Guid id, RecordARCollectionCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14345,9 +14345,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ARAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body)
+        public virtual System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body)
         {
-            return ARAccountReconcileEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ArAccountReconcileEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -14360,7 +14360,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ARAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -23079,30 +23079,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// update cost center budget
+        /// Update cost center budget
         /// </summary>
         /// <remarks>
-        /// updates the budget allocation for a cost center
+        /// Updates the budget allocation for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> UpdateBudgetEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body)
+        public virtual System.Threading.Tasks.Task<object> UpdateCostCenterBudgetEndpointAsync(string version, System.Guid id, UpdateCostCenterBudgetCommand body)
         {
-            return UpdateBudgetEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateCostCenterBudgetEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update cost center budget
+        /// Update cost center budget
         /// </summary>
         /// <remarks>
-        /// updates the budget allocation for a cost center
+        /// Updates the budget allocation for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> UpdateBudgetEndpointAsync(string version, System.Guid id, UpdateBudgetRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> UpdateCostCenterBudgetEndpointAsync(string version, System.Guid id, UpdateCostCenterBudgetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -23208,30 +23208,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// record actual expenses
+        /// Record cost center actual expenses
         /// </summary>
         /// <remarks>
-        /// records actual expenses/costs for a cost center
+        /// Records actual expenses/costs for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordActualCommand body)
+        public virtual System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordCostCenterActualCommand body)
         {
             return CostCenterRecordActualEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// record actual expenses
+        /// Record cost center actual expenses
         /// </summary>
         /// <remarks>
-        /// records actual expenses/costs for a cost center
+        /// Records actual expenses/costs for a cost center
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordActualCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> CostCenterRecordActualEndpointAsync(string version, System.Guid id, RecordCostCenterActualCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28706,30 +28706,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Complete a close task
+        /// Complete a fiscal period close task
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Marks a task as complete in the fiscal period close checklist
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body)
+        public virtual System.Threading.Tasks.Task CompleteFiscalPeriodCloseTaskEndpointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body)
         {
-            return CompleteFiscalPeriodTaskEndPointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return CompleteFiscalPeriodCloseTaskEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Complete a close task
+        /// Complete a fiscal period close task
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing fiscal period close processes
+        /// Marks a task as complete in the fiscal period close checklist
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CompleteFiscalPeriodTaskEndPointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task CompleteFiscalPeriodCloseTaskEndpointAsync(string version, System.Guid id, CompleteFiscalPeriodTaskCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28819,7 +28819,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Add a validation issue
+        /// Add a validation issue to fiscal period close
         /// </summary>
         /// <remarks>
         /// Adds a validation issue to the fiscal period close process
@@ -28827,14 +28827,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> AddValidationIssueEndpointAsync(string version, System.Guid id, AddValidationIssueCommand body)
+        public virtual System.Threading.Tasks.Task<object> AddFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, AddFiscalPeriodCloseValidationIssueCommand body)
         {
-            return AddValidationIssueEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return AddFiscalPeriodCloseValidationIssueEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Add a validation issue
+        /// Add a validation issue to fiscal period close
         /// </summary>
         /// <remarks>
         /// Adds a validation issue to the fiscal period close process
@@ -28842,7 +28842,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> AddValidationIssueEndpointAsync(string version, System.Guid id, AddValidationIssueCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> AddFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, AddFiscalPeriodCloseValidationIssueCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28948,7 +28948,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Resolve a validation issue
+        /// Resolve a fiscal period close validation issue
         /// </summary>
         /// <remarks>
         /// Marks a validation issue as resolved in the fiscal period close process
@@ -28956,14 +28956,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ResolveValidationIssueEndpointAsync(string version, System.Guid id, ResolveValidationIssueCommand body)
+        public virtual System.Threading.Tasks.Task<object> ResolveFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, ResolveFiscalPeriodCloseValidationIssueCommand body)
         {
-            return ResolveValidationIssueEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ResolveFiscalPeriodCloseValidationIssueEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Resolve a validation issue
+        /// Resolve a fiscal period close validation issue
         /// </summary>
         /// <remarks>
         /// Marks a validation issue as resolved in the fiscal period close process
@@ -28971,7 +28971,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ResolveValidationIssueEndpointAsync(string version, System.Guid id, ResolveValidationIssueCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ResolveFiscalPeriodCloseValidationIssueEndpointAsync(string version, System.Guid id, ResolveFiscalPeriodCloseValidationIssueCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -62628,6 +62628,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AddFiscalPeriodCloseValidationIssueCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalPeriodCloseId")]
+        public System.Guid FiscalPeriodCloseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("issueDescription")]
+        public string? IssueDescription { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("severity")]
+        public string? Severity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("resolution")]
+        public string? Resolution { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AddGoodsReceiptItemCommand
     {
 
@@ -62852,24 +62870,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
         public decimal Amount { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddValidationIssueCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalPeriodCloseId")]
-        public System.Guid FiscalPeriodCloseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("issueDescription")]
-        public string? IssueDescription { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("severity")]
-        public string? Severity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("resolution")]
-        public string? Resolution { get; set; } = default!;
 
     }
 
@@ -64986,6 +64986,18 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CompleteFiscalPeriodTaskCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalPeriodCloseId")]
+        public System.Guid FiscalPeriodCloseId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("taskName")]
+        public string? TaskName { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CompleteInventoryTransferCommand
     {
 
@@ -65039,18 +65051,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CompleteFiscalPeriodTaskCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("fiscalPeriodCloseId")]
-        public System.Guid FiscalPeriodCloseId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("taskName")]
-        public string? TaskName { get; set; } = default!;
 
     }
 
@@ -70990,6 +70990,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
         public Search AdvancedSearch { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
         public Filter AdvancedFilter { get; set; } = default!;
 
@@ -71001,9 +71004,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
         public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
-        public string? Keyword { get; set; } = "";
 
         [System.Text.Json.Serialization.JsonPropertyName("payeeCode")]
         public string? PayeeCode { get; set; } = "";
@@ -72451,7 +72451,28 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileAccountCommand
+    public partial class ReconcileCycleCountCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconcileCycleCountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
+        public System.Guid CycleCountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discrepancies")]
+        public System.Collections.Generic.ICollection<CycleCountDiscrepancy>? Discrepancies { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReconcileGeneralLedgerAccountCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -72490,27 +72511,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileCycleCountCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileCycleCountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("cycleCountId")]
-        public System.Guid CycleCountId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discrepancies")]
-        public System.Collections.Generic.ICollection<CycleCountDiscrepancy>? Discrepancies { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ReconciliationLineDto
     {
 
@@ -72528,6 +72528,18 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("isCleared")]
         public bool IsCleared { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RecordAPDiscountLostCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
+        public decimal DiscountAmount { get; set; } = default!;
 
     }
 
@@ -72550,7 +72562,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RecordActualCommand
+    public partial class RecordARCollectionCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal Amount { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RecordARWriteOffCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -72580,7 +72604,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RecordCollectionCommand
+    public partial class RecordCostCenterActualCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -72640,18 +72664,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RecordDiscountLostCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("discountAmount")]
-        public decimal DiscountAmount { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RecordDistributionCommand
     {
 
@@ -72681,18 +72693,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("recoveryJournalEntryId")]
         public System.Guid? RecoveryJournalEntryId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RecordWriteOffCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public decimal Amount { get; set; } = default!;
 
     }
 
@@ -73252,7 +73252,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResolveValidationIssueCommand
+    public partial class ResolveFiscalPeriodCloseValidationIssueCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("fiscalPeriodCloseId")]
@@ -76516,15 +76516,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBudgetRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("budgetAmount")]
-        public decimal BudgetAmount { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateBudgetResponse
     {
 
@@ -76632,6 +76623,18 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("regulatoryClassification")]
         public string? RegulatoryClassification { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCostCenterBudgetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("budgetAmount")]
+        public decimal BudgetAmount { get; set; } = default!;
 
     }
 

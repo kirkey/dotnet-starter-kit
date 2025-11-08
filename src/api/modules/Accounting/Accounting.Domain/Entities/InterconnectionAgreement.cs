@@ -102,7 +102,7 @@ public class InterconnectionAgreement : AuditableEntity, IAggregateRoot
     /// Example: 10.5 for 10.5 kW solar system. Must be positive.
     /// Used for capacity fees and production limits.
     /// </summary>
-    public decimal InstalledCapacityKW { get; private set; }
+    public decimal InstalledCapacityKw { get; private set; }
 
     /// <summary>
     /// Rate per kWh for net metering credits.
@@ -235,7 +235,7 @@ public class InterconnectionAgreement : AuditableEntity, IAggregateRoot
     }
 
     private InterconnectionAgreement(string agreementNumber, DefaultIdType memberId,
-        string generationType, DateTime effectiveDate, decimal installedCapacityKW,
+        string generationType, DateTime effectiveDate, decimal installedCapacityKw,
         decimal netMeteringRate, decimal excessGenerationRate,
         decimal monthlyServiceCharge = 0, DateTime? expirationDate = null,
         decimal? annualGenerationLimit = null, int? numberOfPanels = null,
@@ -257,8 +257,8 @@ public class InterconnectionAgreement : AuditableEntity, IAggregateRoot
         if (generationType.Length > MaxGenerationTypeLength)
             throw new ArgumentException($"Generation type cannot exceed {MaxGenerationTypeLength} characters", nameof(generationType));
 
-        if (installedCapacityKW <= 0)
-            throw new ArgumentException("Installed capacity must be positive", nameof(installedCapacityKW));
+        if (installedCapacityKw <= 0)
+            throw new ArgumentException("Installed capacity must be positive", nameof(installedCapacityKw));
 
         if (netMeteringRate < 0)
             throw new ArgumentException("Net metering rate cannot be negative", nameof(netMeteringRate));
@@ -282,7 +282,7 @@ public class InterconnectionAgreement : AuditableEntity, IAggregateRoot
         AgreementStatus = "Active";
         EffectiveDate = effectiveDate;
         ExpirationDate = expirationDate;
-        InstalledCapacityKW = installedCapacityKW;
+        InstalledCapacityKw = installedCapacityKw;
         NetMeteringRate = netMeteringRate;
         ExcessGenerationRate = excessGenerationRate;
         MonthlyServiceCharge = monthlyServiceCharge;
@@ -301,14 +301,14 @@ public class InterconnectionAgreement : AuditableEntity, IAggregateRoot
         Description = description?.Trim();
         Notes = notes?.Trim();
 
-        QueueDomainEvent(new InterconnectionAgreementCreated(Id, AgreementNumber, MemberId, GenerationType, InstalledCapacityKW, EffectiveDate, Description, Notes));
+        QueueDomainEvent(new InterconnectionAgreementCreated(Id, AgreementNumber, MemberId, GenerationType, InstalledCapacityKw, EffectiveDate, Description, Notes));
     }
 
     /// <summary>
     /// Factory method to create a new interconnection agreement with validation.
     /// </summary>
     public static InterconnectionAgreement Create(string agreementNumber, DefaultIdType memberId,
-        string generationType, DateTime effectiveDate, decimal installedCapacityKW,
+        string generationType, DateTime effectiveDate, decimal installedCapacityKw,
         decimal netMeteringRate, decimal excessGenerationRate,
         decimal monthlyServiceCharge = 0, DateTime? expirationDate = null,
         decimal? annualGenerationLimit = null, int? numberOfPanels = null,
@@ -318,7 +318,7 @@ public class InterconnectionAgreement : AuditableEntity, IAggregateRoot
         string? description = null, string? notes = null)
     {
         return new InterconnectionAgreement(agreementNumber, memberId, generationType,
-            effectiveDate, installedCapacityKW, netMeteringRate, excessGenerationRate,
+            effectiveDate, installedCapacityKw, netMeteringRate, excessGenerationRate,
             monthlyServiceCharge, expirationDate, annualGenerationLimit, numberOfPanels,
             inverterManufacturer, inverterModel, panelManufacturer, panelModel,
             interconnectionFee, depositAmount, description, notes);

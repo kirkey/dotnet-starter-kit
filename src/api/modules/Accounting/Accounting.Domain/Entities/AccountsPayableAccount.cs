@@ -35,9 +35,9 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
     public string AccountNumber { get; private set; } = string.Empty;
     public string AccountName { get; private set; } = string.Empty;
     public decimal CurrentBalance { get; private set; }
-    public decimal Current0to30 { get; private set; }
-    public decimal Days31to60 { get; private set; }
-    public decimal Days61to90 { get; private set; }
+    public decimal Current0To30 { get; private set; }
+    public decimal Days31To60 { get; private set; }
+    public decimal Days61To90 { get; private set; }
     public decimal Over90Days { get; private set; }
     public int VendorCount { get; private set; }
     public decimal DaysPayableOutstanding { get; private set; }
@@ -66,9 +66,9 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
         Name = accountName.Trim();
         AccountName = accountName.Trim();
         CurrentBalance = 0m;
-        Current0to30 = 0m;
-        Days31to60 = 0m;
-        Days61to90 = 0m;
+        Current0To30 = 0m;
+        Days31To60 = 0m;
+        Days61To90 = 0m;
         Over90Days = 0m;
         VendorCount = 0;
         DaysPayableOutstanding = 0m;
@@ -80,7 +80,7 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
         Description = description?.Trim();
         Notes = notes?.Trim();
 
-        QueueDomainEvent(new APAccountCreated(Id, AccountNumber, AccountName, Description, Notes));
+        QueueDomainEvent(new ApAccountCreated(Id, AccountNumber, AccountName, Description, Notes));
     }
 
     public static AccountsPayableAccount Create(string accountNumber, string accountName,
@@ -91,19 +91,19 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
             periodId, description, notes);
     }
 
-    public AccountsPayableAccount UpdateBalance(decimal current0to30, decimal days31to60,
-        decimal days61to90, decimal over90Days)
+    public AccountsPayableAccount UpdateBalance(decimal current0To30, decimal days31To60,
+        decimal days61To90, decimal over90Days)
     {
-        if (current0to30 < 0 || days31to60 < 0 || days61to90 < 0 || over90Days < 0)
+        if (current0To30 < 0 || days31To60 < 0 || days61To90 < 0 || over90Days < 0)
             throw new ArgumentException("Aging buckets cannot be negative");
 
-        Current0to30 = current0to30;
-        Days31to60 = days31to60;
-        Days61to90 = days61to90;
+        Current0To30 = current0To30;
+        Days31To60 = days31To60;
+        Days61To90 = days61To90;
         Over90Days = over90Days;
-        CurrentBalance = current0to30 + days31to60 + days61to90 + over90Days;
+        CurrentBalance = current0To30 + days31To60 + days61To90 + over90Days;
 
-        QueueDomainEvent(new APAccountBalanceUpdated(Id, AccountNumber, CurrentBalance));
+        QueueDomainEvent(new ApAccountBalanceUpdated(Id, AccountNumber, CurrentBalance));
         return this;
     }
 
@@ -116,7 +116,7 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
         if (discountTaken)
             YearToDateDiscountsTaken += discountAmount;
 
-        QueueDomainEvent(new APAccountPaymentRecorded(Id, AccountNumber, amount, YearToDatePayments));
+        QueueDomainEvent(new ApAccountPaymentRecorded(Id, AccountNumber, amount, YearToDatePayments));
         return this;
     }
 
@@ -127,7 +127,7 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
 
         YearToDateDiscountsLost += discountAmount;
 
-        QueueDomainEvent(new APAccountDiscountLost(Id, AccountNumber, discountAmount, YearToDateDiscountsLost));
+        QueueDomainEvent(new ApAccountDiscountLost(Id, AccountNumber, discountAmount, YearToDateDiscountsLost));
         return this;
     }
 
@@ -137,7 +137,7 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
         IsReconciled = Math.Abs(ReconciliationVariance) < 0.01m;
         LastReconciliationDate = DateTime.UtcNow;
 
-        QueueDomainEvent(new APAccountReconciled(Id, AccountNumber, CurrentBalance, subsidiaryLedgerBalance, ReconciliationVariance, IsReconciled));
+        QueueDomainEvent(new ApAccountReconciled(Id, AccountNumber, CurrentBalance, subsidiaryLedgerBalance, ReconciliationVariance, IsReconciled));
         return this;
     }
 
@@ -146,7 +146,7 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
         VendorCount = vendorCount;
         DaysPayableOutstanding = daysPayableOutstanding;
 
-        QueueDomainEvent(new APAccountMetricsUpdated(Id, AccountNumber, VendorCount, DaysPayableOutstanding));
+        QueueDomainEvent(new ApAccountMetricsUpdated(Id, AccountNumber, VendorCount, DaysPayableOutstanding));
         return this;
     }
 
@@ -156,9 +156,9 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
         {
             if (CurrentBalance == 0) return (0, 0, 0, 0);
             return (
-                (Current0to30 / CurrentBalance) * 100,
-                (Days31to60 / CurrentBalance) * 100,
-                (Days61to90 / CurrentBalance) * 100,
+                (Current0To30 / CurrentBalance) * 100,
+                (Days31To60 / CurrentBalance) * 100,
+                (Days61To90 / CurrentBalance) * 100,
                 (Over90Days / CurrentBalance) * 100
             );
         }

@@ -73,7 +73,7 @@ public partial class FiscalPeriodCloseChecklistDialog
                 TaskName = taskName
             };
 
-            await Client.CompleteFiscalPeriodTaskEndPointAsync("1", _periodCloseId, command);
+            await Client.CompleteFiscalPeriodCloseTaskEndpointAsync("1", _periodCloseId, command);
             Snackbar.Add($"Task '{taskName}' completed successfully", Severity.Success);
 
             await LoadData();

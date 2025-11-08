@@ -22,7 +22,7 @@ public class PowerPurchaseAgreementConfiguration : IEntityTypeConfiguration<Powe
         builder.Property(x => x.Notes).HasMaxLength(2048);
         
         builder.Property(x => x.EnergyPricePerKWh).HasPrecision(18, 6);
-        builder.Property(x => x.DemandChargePerKW).HasPrecision(18, 2);
+        builder.Property(x => x.DemandChargePerKw).HasPrecision(18, 2);
         builder.Property(x => x.MinimumPurchaseKWh).HasPrecision(18, 2);
         builder.Property(x => x.MaximumPurchaseKWh).HasPrecision(18, 2);
         builder.Property(x => x.MonthlySettlementAmount).HasPrecision(18, 2);
@@ -30,7 +30,7 @@ public class PowerPurchaseAgreementConfiguration : IEntityTypeConfiguration<Powe
         builder.Property(x => x.LifetimeCost).HasPrecision(18, 2);
         builder.Property(x => x.YearToDateEnergyKWh).HasPrecision(18, 2);
         builder.Property(x => x.LifetimeEnergyKWh).HasPrecision(18, 2);
-        builder.Property(x => x.ContractCapacityMW).HasPrecision(18, 4);
+        builder.Property(x => x.ContractCapacityMw).HasPrecision(18, 4);
         builder.Property(x => x.EscalationRate).HasPrecision(5, 4);
         
         builder.HasIndex(x => x.ContractNumber).IsUnique();

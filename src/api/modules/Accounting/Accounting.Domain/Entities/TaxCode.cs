@@ -259,8 +259,8 @@ public class TaxCode : AuditableEntity, IAggregateRoot
 public enum TaxType
 {
     SalesTax,
-    VAT,
-    GST,
+    Vat,
+    Gst,
     UseTax,
     Excise,
     Withholding,

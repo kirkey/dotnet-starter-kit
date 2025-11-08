@@ -22,7 +22,7 @@ public class InterconnectionAgreementConfiguration : IEntityTypeConfiguration<In
         builder.Property(x => x.Description).HasMaxLength(2048);
         builder.Property(x => x.Notes).HasMaxLength(2048);
         
-        builder.Property(x => x.InstalledCapacityKW).HasPrecision(18, 4);
+        builder.Property(x => x.InstalledCapacityKw).HasPrecision(18, 4);
         builder.Property(x => x.NetMeteringRate).HasPrecision(18, 6);
         builder.Property(x => x.ExcessGenerationRate).HasPrecision(18, 6);
         builder.Property(x => x.MonthlyServiceCharge).HasPrecision(18, 2);
