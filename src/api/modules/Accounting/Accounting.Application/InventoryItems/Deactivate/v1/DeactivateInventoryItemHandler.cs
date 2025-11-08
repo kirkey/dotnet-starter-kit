@@ -1,3 +1,4 @@
+
 namespace Accounting.Application.InventoryItems.Deactivate.v1;
 
 public sealed class DeactivateInventoryItemHandler(
@@ -14,7 +15,7 @@ public sealed class DeactivateInventoryItemHandler(
         _logger.LogInformation("Deactivating inventory item {Id}", request.Id);
 
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        if (item == null) throw new NotFoundException($"Inventory item with ID {request.Id} not found");
+        if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
         item.Deactivate();
         await _repository.UpdateAsync(item, cancellationToken);

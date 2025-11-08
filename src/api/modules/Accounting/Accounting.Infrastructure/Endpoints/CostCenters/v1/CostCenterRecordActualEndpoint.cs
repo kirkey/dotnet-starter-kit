@@ -9,13 +9,13 @@ public static class CostCenterRecordActualEndpoint
         return endpoints
             .MapPost("/{id:guid}/actual", async (DefaultIdType id, RecordActualCommand command, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                if (id != command.Id) return Results.BadRequest();
                 var costCenterId = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Ok(new { Id = costCenterId, Message = "Actual amount recorded successfully" });
+                return Results.Ok(new { Id = costCenterId });
             })
             .WithName(nameof(CostCenterRecordActualEndpoint))
-            .WithSummary("Record actual amount")
-            .WithDescription("Records actual expenses/costs for a cost center")
+            .WithSummary("record actual expenses")
+            .WithDescription("records actual expenses/costs for a cost center")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

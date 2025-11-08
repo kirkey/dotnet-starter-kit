@@ -1,3 +1,4 @@
+
 namespace Accounting.Application.InventoryItems.AddStock.v1;
 
 public sealed class AddStockHandler(IRepository<InventoryItem> repository, ILogger<AddStockHandler> logger)
@@ -12,7 +13,7 @@ public sealed class AddStockHandler(IRepository<InventoryItem> repository, ILogg
         _logger.LogInformation("Adding stock to inventory item {Id}: {Amount}", request.Id, request.Amount);
 
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        if (item == null) throw new NotFoundException($"Inventory item with ID {request.Id} not found");
+        if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
         item.AddStock(request.Amount);
         await _repository.UpdateAsync(item, cancellationToken);

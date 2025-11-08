@@ -26,7 +26,6 @@ using Accounting.Infrastructure.Endpoints.FiscalPeriodCloses;
 using Accounting.Infrastructure.Endpoints.FixedAssets;
 using Accounting.Infrastructure.Endpoints.GeneralLedger;
 using Accounting.Infrastructure.Endpoints.InterCompanyTransactions;
-using Accounting.Infrastructure.Endpoints.Inventory;
 using Accounting.Infrastructure.Endpoints.InventoryItems;
 using Accounting.Infrastructure.Endpoints.Invoice;
 using Accounting.Infrastructure.Endpoints.JournalEntries;
@@ -44,10 +43,8 @@ using Accounting.Infrastructure.Endpoints.Projects.Costing;
 using Accounting.Infrastructure.Endpoints.RecurringJournalEntries;
 using Accounting.Infrastructure.Endpoints.RegulatoryReports;
 using Accounting.Infrastructure.Endpoints.RetainedEarnings;
-using Accounting.Infrastructure.Endpoints.SecurityDeposits;
 using Accounting.Infrastructure.Endpoints.TaxCodes;
 using Accounting.Infrastructure.Endpoints.TrialBalance;
-using Accounting.Infrastructure.Endpoints.Vendors;
 using Accounting.Infrastructure.Endpoints.WriteOffs;
 using Accounting.Infrastructure.Import;
 using Accounting.Infrastructure.Persistence;
@@ -119,7 +116,6 @@ public static class AccountingModule
         // ============================================================================
         // INVENTORY
         // ============================================================================
-        accountingGroup.MapInventoryEndpoints();
         accountingGroup.MapInventoryItemsEndpoints();
 
         // ============================================================================

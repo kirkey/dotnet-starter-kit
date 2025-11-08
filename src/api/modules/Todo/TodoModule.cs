@@ -24,7 +24,7 @@ public static class TodoModule
             todoGroup.MapTodoItemCreateEndpoint();
             todoGroup.MapGetTodoEndpoint();
             todoGroup.MapGetTodoListEndpoint();
-            todoGroup.MapTodoItemUpdationEndpoint();
+            todoGroup.MapTodoItemUpdateEndpoint();
             todoGroup.MapTodoItemDeletionEndpoint();
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Routing;
 namespace FSH.Starter.WebApi.Todo.Features.Update.v1;
 public static class UpdateTodoEndpoint
 {
-    internal static RouteHandlerBuilder MapTodoItemUpdationEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapTodoItemUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints.
             MapPut("/{id:guid}", async (DefaultIdType id, UpdateTodoCommand request, ISender mediator) =>

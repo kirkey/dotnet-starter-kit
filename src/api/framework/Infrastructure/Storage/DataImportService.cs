@@ -330,10 +330,10 @@ public sealed class DataImportService(ILogger<DataImportService> logger) : IData
                 var dateTime = cell.Value.GetDateTime();
                 return new DateTimeOffset(dateTime);
             }
-            else if (underlyingType == typeof(Guid) || underlyingType == typeof(DefaultIdType))
+            else if (underlyingType == typeof(DefaultIdType) || underlyingType == typeof(DefaultIdType))
             {
                 var guidString = cell.GetString();
-                return Guid.TryParse(guidString, out var guid) ? guid : null;
+                return DefaultIdType.TryParse(guidString, out var guid) ? guid : null;
             }
             else if (underlyingType.IsEnum)
             {

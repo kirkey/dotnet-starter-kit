@@ -16,7 +16,7 @@ public sealed class GetInventoryItemHandler(
         _logger.LogInformation("Getting inventory item {Id}", request.Id);
 
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        if (item == null) throw new NotFoundException($"Inventory item with ID {request.Id} not found");
+        if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
         return new InventoryItemResponse
         {

@@ -23,6 +23,7 @@ public static class Extensions
             .AddSwaggerGen(options =>
             {
                 options.OperationFilter<SwaggerDefaultValues>();
+                options.OperationFilter<OpenApiOperationErrorLoggingFilter>();
                 // Ensure unique schema Ids across modules by using fully qualified type names
                 // options.CustomSchemaIds(t => t.FullName);
                 
@@ -47,6 +48,9 @@ public static class Extensions
                         Array.Empty<string>()
                     }
                 });
+                
+                // Add custom document filter to capture and log OpenAPI generation errors with more details
+                options.DocumentFilter<OpenApiErrorLoggingFilter>();
             });
         services
             .AddApiVersioning(options =>

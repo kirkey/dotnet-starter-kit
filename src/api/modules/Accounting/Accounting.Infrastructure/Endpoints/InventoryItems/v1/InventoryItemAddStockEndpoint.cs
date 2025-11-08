@@ -9,13 +9,13 @@ public static class InventoryItemAddStockEndpoint
         return endpoints
             .MapPost("/{id:guid}/add-stock", async (DefaultIdType id, AddStockCommand command, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                if (id != command.Id) return Results.BadRequest();
                 var itemId = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Ok(new { Id = itemId, Message = "Stock added successfully" });
+                return Results.Ok(new { Id = itemId });
             })
             .WithName(nameof(InventoryItemAddStockEndpoint))
-            .WithSummary("Add stock")
-            .WithDescription("Increases inventory quantity")
+            .WithSummary("add stock")
+            .WithDescription("increases inventory quantity")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

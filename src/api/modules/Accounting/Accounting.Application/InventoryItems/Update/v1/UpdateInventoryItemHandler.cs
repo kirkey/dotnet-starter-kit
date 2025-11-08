@@ -1,3 +1,4 @@
+
 namespace Accounting.Application.InventoryItems.Update.v1;
 
 public sealed class UpdateInventoryItemHandler(
@@ -14,7 +15,7 @@ public sealed class UpdateInventoryItemHandler(
         _logger.LogInformation("Updating inventory item {Id}", request.Id);
 
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        if (item == null) throw new NotFoundException($"Inventory item with ID {request.Id} not found");
+        if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
         item.Update(request.Sku, request.Name, request.Quantity, request.UnitPrice, request.Description);
         await _repository.UpdateAsync(item, cancellationToken);

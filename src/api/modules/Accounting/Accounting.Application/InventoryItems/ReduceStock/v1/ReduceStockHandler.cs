@@ -1,3 +1,4 @@
+
 namespace Accounting.Application.InventoryItems.ReduceStock.v1;
 
 public sealed class ReduceStockHandler(IRepository<InventoryItem> repository, ILogger<ReduceStockHandler> logger)
@@ -12,7 +13,7 @@ public sealed class ReduceStockHandler(IRepository<InventoryItem> repository, IL
         _logger.LogInformation("Reducing stock from inventory item {Id}: {Amount}", request.Id, request.Amount);
 
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        if (item == null) throw new NotFoundException($"Inventory item with ID {request.Id} not found");
+        if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
         item.ReduceStock(request.Amount);
         await _repository.UpdateAsync(item, cancellationToken);

@@ -18,7 +18,7 @@ public static class CostCentersEndpoints
         group.MapCostCenterSearchEndpoint();
 
         // Workflow operations
-        group.MapCostCenterUpdateBudgetEndpoint();
+        group.MapUpdateBudgetEndpoint();
         group.MapCostCenterRecordActualEndpoint();
         group.MapCostCenterActivateEndpoint();
         group.MapCostCenterDeactivateEndpoint();
@@ -26,4 +26,3 @@ public static class CostCentersEndpoints
         return app;
     }
 }
-
