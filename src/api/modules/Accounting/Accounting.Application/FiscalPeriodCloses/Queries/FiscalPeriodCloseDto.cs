@@ -32,8 +32,8 @@ public record FiscalPeriodCloseDetailsDto : FiscalPeriodCloseDto
     public bool TrialBalanceBalanced { get; init; }
     public bool AllJournalsPosted { get; init; }
     public bool BankReconciliationsComplete { get; init; }
-    public bool APReconciliationComplete { get; init; }
-    public bool ARReconciliationComplete { get; init; }
+    public bool ApReconciliationComplete { get; init; }
+    public bool ArReconciliationComplete { get; init; }
     public bool InventoryReconciliationComplete { get; init; }
     public bool FixedAssetDepreciationPosted { get; init; }
     public bool PrepaidExpensesAmortized { get; init; }
