@@ -123,23 +123,41 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
         builder.HasIndex(x => x.DueDate)
             .HasDatabaseName("IX_Invoices_DueDate");
 
+        builder.HasIndex(x => x.PaidDate)
+            .HasDatabaseName("IX_Invoices_PaidDate");
+
         builder.HasIndex(x => x.Status)
             .HasDatabaseName("IX_Invoices_Status");
 
         builder.HasIndex(x => x.BillingPeriod)
             .HasDatabaseName("IX_Invoices_BillingPeriod");
 
+        builder.HasIndex(x => x.ConsumptionId)
+            .HasDatabaseName("IX_Invoices_ConsumptionId");
+
         // Composite index for member invoices by date
         builder.HasIndex(x => new { x.MemberId, x.InvoiceDate })
             .HasDatabaseName("IX_Invoices_Member_Date");
 
-        // Composite index for unpaid invoices
+        // Composite index for unpaid invoices (AR aging reports)
         builder.HasIndex(x => new { x.Status, x.DueDate })
             .HasDatabaseName("IX_Invoices_Status_DueDate");
 
         // Composite index for member billing period
         builder.HasIndex(x => new { x.MemberId, x.BillingPeriod })
             .HasDatabaseName("IX_Invoices_Member_Period");
+
+        // Composite index for status and member (common queries)
+        builder.HasIndex(x => new { x.Status, x.MemberId, x.InvoiceDate })
+            .HasDatabaseName("IX_Invoices_Status_Member_Date");
+
+        // Composite index for date range queries with status
+        builder.HasIndex(x => new { x.InvoiceDate, x.Status, x.MemberId })
+            .HasDatabaseName("IX_Invoices_Date_Status_Member");
+
+        // Composite index for outstanding balance queries
+        builder.HasIndex(x => new { x.Status, x.DueDate, x.TotalAmount })
+            .HasDatabaseName("IX_Invoices_Status_DueDate_Amount");
     }
 }
 

@@ -38,3 +38,23 @@ public record AccrualAmountAdjusted(
     decimal OldAmount, 
     decimal NewAmount, 
     string? Reason) : DomainEvent;
+
+/// <summary>
+/// Event raised when an accrual is approved.
+/// </summary>
+public record AccrualApproved(
+    DefaultIdType Id,
+    string AccrualNumber,
+    string ApprovedBy,
+    DateTime ApprovedDate) : DomainEvent;
+
+/// <summary>
+/// Event raised when an accrual is rejected.
+/// </summary>
+public record AccrualRejected(
+    DefaultIdType Id,
+    string AccrualNumber,
+    string RejectedBy,
+    DateTime RejectedDate,
+    string? Reason) : DomainEvent;
+

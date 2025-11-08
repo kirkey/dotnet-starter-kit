@@ -23,7 +23,7 @@ public sealed class PostingBatchSearchSpec : Specification<PostingBatch>
 
         if (!string.IsNullOrWhiteSpace(query.ApprovalStatus))
         {
-            Query.Where(b => b.ApprovalStatus == query.ApprovalStatus);
+            Query.Where(b => b.Status == query.ApprovalStatus);
         }
 
         if (query.StartDate.HasValue)

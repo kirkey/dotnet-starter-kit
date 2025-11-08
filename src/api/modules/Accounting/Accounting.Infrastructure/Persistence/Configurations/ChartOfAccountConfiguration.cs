@@ -51,9 +51,39 @@ public class ChartOfAccountConfiguration : IEntityTypeConfiguration<ChartOfAccou
             .HasMaxLength(2048);
 
         // Indexes for query optimization and foreign keys
-        builder.HasIndex(x => x.ParentCode);
-        builder.HasIndex(x => x.AccountType);
-        builder.HasIndex(x => x.IsActive);
-        builder.HasIndex(x => x.UsoaCategory);
+        builder.HasIndex(x => x.AccountCode)
+            .IsUnique()
+            .HasDatabaseName("IX_ChartOfAccounts_AccountCode");
+
+        builder.HasIndex(x => x.ParentCode)
+            .HasDatabaseName("IX_ChartOfAccounts_ParentCode");
+
+        builder.HasIndex(x => x.AccountType)
+            .HasDatabaseName("IX_ChartOfAccounts_AccountType");
+
+        builder.HasIndex(x => x.IsActive)
+            .HasDatabaseName("IX_ChartOfAccounts_IsActive");
+
+        builder.HasIndex(x => x.UsoaCategory)
+            .HasDatabaseName("IX_ChartOfAccounts_UsoaCategory");
+
+        builder.HasIndex(x => x.NormalBalance)
+            .HasDatabaseName("IX_ChartOfAccounts_NormalBalance");
+
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.AccountType, x.IsActive })
+            .HasDatabaseName("IX_ChartOfAccounts_Type_IsActive");
+
+        builder.HasIndex(x => new { x.IsActive, x.AccountType })
+            .HasDatabaseName("IX_ChartOfAccounts_IsActive_Type");
+
+        builder.HasIndex(x => new { x.ParentCode, x.AccountCode })
+            .HasDatabaseName("IX_ChartOfAccounts_Parent_Code");
+
+        builder.HasIndex(x => new { x.UsoaCategory, x.AccountType })
+            .HasDatabaseName("IX_ChartOfAccounts_Usoa_Type");
+
+        builder.HasIndex(x => new { x.AccountType, x.UsoaCategory, x.IsActive })
+            .HasDatabaseName("IX_ChartOfAccounts_Type_Usoa_IsActive");
     }
 }

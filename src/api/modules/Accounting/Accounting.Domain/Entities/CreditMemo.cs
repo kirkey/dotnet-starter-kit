@@ -40,7 +40,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="Accounting.Domain.Events.CreditMemo.CreditMemoApplied"/>
 /// <seealso cref="Accounting.Domain.Events.CreditMemo.CreditMemoRefunded"/>
 /// <seealso cref="Accounting.Domain.Events.CreditMemo.CreditMemoVoided"/>
-public class CreditMemo : AuditableEntity, IAggregateRoot
+public class CreditMemo : AuditableEntityWithApproval, IAggregateRoot
 {
     private const int MaxMemoNumberLength = 50;
     private const int MaxReferenceTypeLength = 20;

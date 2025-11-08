@@ -1,0 +1,405 @@
+@page "/accounting/payments"
+@using Accounting.Application.Payments.Search.v1
+@using Accounting.Application.Payments.Get.v1
+@using Accounting.Application.Payments.Create.v1
+@using Accounting.Application.Payments.Update.v1
+
+<PageHeader Title="Payment Management" Header="Payment Management" SubHeader="Record and manage customer payments, allocations, and receipts." />
+
+<EntityTable @ref="_table" TEntity="PaymentSearchResponse" TId="DefaultIdType" TRequest="PaymentViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@PaymentNumber"
+                          Label="Payment Number"
+                          Placeholder="Search by payment number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Receipt" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@ReferenceNumber"
+                          Label="Reference Number"
+                          Placeholder="Check/transaction number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@PaymentMethod"
+                       Label="Payment Method"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
+                <MudSelectItem Value="@("Check")">Check</MudSelectItem>
+                <MudSelectItem Value="@("EFT")">EFT</MudSelectItem>
+                <MudSelectItem Value="@("CreditCard")">Credit Card</MudSelectItem>
+                <MudSelectItem Value="@("DebitCard")">Debit Card</MudSelectItem>
+                <MudSelectItem Value="@("Wire")">Wire Transfer</MudSelectItem>
+                <MudSelectItem Value="@("ACH")">ACH</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="@AmountFrom"
+                             Label="Amount From"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="@AmountTo"
+                             Label="Amount To"
+                             Format="N2"
+                             Variant="Variant.Outlined"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@PaymentDateFrom"
+                           Label="Payment Date From"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@PaymentDateTo"
+                           Label="Payment Date To"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteChartOfAccountCode @bind-Value="@DepositToAccountCode"
+                                            Label="Deposit Account"
+                                            TextFormat="CodeName"
+                                            Variant="Variant.Outlined"
+                                            Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@HasUnappliedAmount"
+                       Label="Has Unapplied Amount"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="payment">
+        @if (payment.UnappliedAmount > 0)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Assignment" OnClick="@(() => OnAllocatePayment(payment.Id))">
+                Allocate Payment
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => OnPrintReceipt(payment.Id))">
+            Print Receipt
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => OnViewDetails(payment.Id))">
+            View Details
+        </MudMenuItem>
+        @if (payment.Amount > 0)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Undo" OnClick="@(() => OnRefundPayment(payment.Id))">
+                Refund Payment
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnVoidPayment(payment.Id))">
+                Void Payment
+            </MudMenuItem>
+        }
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Payment ID" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudNumericField Value="@context.UnappliedAmount"
+                                 Label="Unapplied Amount"
+                                 Format="N2"
+                                 ReadOnly
+                                 Adornment="Adornment.Start"
+                                 AdornmentIcon="@Icons.Material.Filled.Money"
+                                 Variant="Variant.Text" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PaymentNumber"
+                          For="@(() => context.PaymentNumber)"
+                          Label="Payment Number"
+                          Placeholder="e.g., PAY-2025-001"
+                          Variant="Variant.Filled"
+                          HelperText="Unique receipt/payment number"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.PaymentDate"
+                           For="@(() => context.PaymentDate)"
+                           Label="Payment Date"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.Amount"
+                             For="@(() => context.Amount)"
+                             Label="Payment Amount"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                             HelperText="Total amount received"
+                             Required="true"
+                             Min="0.01m" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.PaymentMethod"
+                       For="@(() => context.PaymentMethod)"
+                       Label="Payment Method"
+                       Variant="Variant.Filled"
+                       Required="true"
+                       AnchorOrigin="Origin.BottomCenter">
+                <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
+                <MudSelectItem Value="@("Check")">Check</MudSelectItem>
+                <MudSelectItem Value="@("EFT")">EFT</MudSelectItem>
+                <MudSelectItem Value="@("CreditCard")">Credit Card</MudSelectItem>
+                <MudSelectItem Value="@("DebitCard")">Debit Card</MudSelectItem>
+                <MudSelectItem Value="@("Wire")">Wire Transfer</MudSelectItem>
+                <MudSelectItem Value="@("ACH")">ACH</MudSelectItem>
+                <MudSelectItem Value="@("MoneyOrder")">Money Order</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ReferenceNumber"
+                          For="@(() => context.ReferenceNumber)"
+                          Label="Reference Number"
+                          Placeholder="Check/transaction number"
+                          Variant="Variant.Filled"
+                          HelperText="Check number or transaction ID" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteChartOfAccountCode @bind-Value="context.DepositToAccountCode"
+                                            For="@(() => context.DepositToAccountCode)"
+                                            Label="Deposit To Account"
+                                            TextFormat="CodeName"
+                                            Variant="Variant.Filled"
+                                            HelperText="Bank or cash account" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteMember @bind-Value="context.MemberId"
+                                For="@(() => context.MemberId)"
+                                Label="Member/Customer"
+                                TextFormat="NameCode"
+                                Variant="Variant.Filled"
+                                HelperText="Optional customer reference" />
+        </MudItem>
+
+        <MudItem xs="12" md="8">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Payment description" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes or comments" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+<PaymentDetailsDialog @ref="_detailsDialog" />
+<PaymentAllocateDialog @ref="_allocateDialog" OnSave="@OnAllocateSaved" />
+<PaymentRefundDialog @ref="_refundDialog" OnSave="@OnRefundSaved" />
+<PaymentVoidDialog @ref="_voidDialog" OnSave="@OnVoidSaved" />
+
+@code {
+    // Table reference
+    private EntityTable<PaymentSearchResponse, DefaultIdType, PaymentViewModel> _table = default!;
+
+    // Dialog references
+    private PaymentDetailsDialog _detailsDialog = default!;
+    private PaymentAllocateDialog _allocateDialog = default!;
+    private PaymentRefundDialog _refundDialog = default!;
+    private PaymentVoidDialog _voidDialog = default!;
+
+    // Search filters
+    private string? PaymentNumber { get; set; }
+    private string? ReferenceNumber { get; set; }
+    private string? PaymentMethod { get; set; }
+    private decimal? AmountFrom { get; set; }
+    private decimal? AmountTo { get; set; }
+    private DateTime? PaymentDateFrom { get; set; }
+    private DateTime? PaymentDateTo { get; set; }
+    private string? DepositToAccountCode { get; set; }
+    private bool HasUnappliedAmount { get; set; }
+
+    private EntityServerTableContext<PaymentSearchResponse, DefaultIdType, PaymentViewModel> Context => new(
+        entityNamePlural: "Payments",
+        entityName: "Payment",
+        searchAction: "accounting:payments:search",
+        createAction: "accounting:payments:create",
+        updateAction: "accounting:payments:update",
+        deleteAction: "accounting:payments:delete",
+        fields: new()
+        {
+            new(payment => payment.PaymentNumber, "Payment Number", "PaymentNumber"),
+            new(payment => payment.PaymentDate, "Payment Date", "PaymentDate", Type: typeof(DateTime)),
+            new(payment => payment.Amount, "Amount", "Amount", Type: typeof(decimal), Format: "N2"),
+            new(payment => payment.UnappliedAmount, "Unapplied", "UnappliedAmount", Type: typeof(decimal), Format: "N2"),
+            new(payment => payment.PaymentMethod, "Payment Method", "PaymentMethod"),
+            new(payment => payment.ReferenceNumber, "Reference", "ReferenceNumber"),
+            new(payment => payment.DepositToAccountCode, "Deposit Account", "DepositToAccountCode"),
+            new(payment => payment.AllocationCount, "Allocations", "AllocationCount", Type: typeof(int)),
+            new(payment => payment.CreatedOn, "Created", "CreatedOn", Type: typeof(DateTime))
+        },
+        idFunc: payment => payment.Id,
+        searchFunc: async filter =>
+        {
+            var query = new PaymentSearchQuery
+            {
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+                Keyword = filter.Keyword,
+                OrderBy = filter.OrderBy ?? new[] { "PaymentDate desc" },
+                PaymentNumber = PaymentNumber,
+                ReferenceNumber = ReferenceNumber,
+                PaymentMethod = PaymentMethod,
+                AmountFrom = AmountFrom,
+                AmountTo = AmountTo,
+                PaymentDateFrom = PaymentDateFrom,
+                PaymentDateTo = PaymentDateTo,
+                DepositToAccountCode = DepositToAccountCode,
+                HasUnappliedAmount = HasUnappliedAmount ? true : null
+            };
+
+            return await ApiHelper.ExecuteCallGuardedAsync(
+                () => AccountingClient.SearchPaymentsAsync(query),
+                Snackbar);
+        },
+        getFunc: async id =>
+        {
+            var result = await ApiHelper.ExecuteCallGuardedAsync(
+                () => AccountingClient.GetPaymentAsync(id),
+                Snackbar);
+
+            if (result == null) return null;
+
+            return new PaymentViewModel
+            {
+                Id = result.Id,
+                PaymentNumber = result.PaymentNumber,
+                MemberId = result.MemberId,
+                PaymentDate = result.PaymentDate,
+                Amount = result.Amount,
+                UnappliedAmount = result.UnappliedAmount,
+                PaymentMethod = result.PaymentMethod,
+                ReferenceNumber = result.ReferenceNumber,
+                DepositToAccountCode = result.DepositToAccountCode,
+                Description = result.Description,
+                Notes = result.Notes
+            };
+        },
+        createFunc: async payment =>
+        {
+            var command = new PaymentCreateCommand(
+                payment.PaymentNumber!,
+                payment.MemberId,
+                payment.PaymentDate ?? DateTime.Today,
+                payment.Amount ?? 0,
+                payment.PaymentMethod!,
+                payment.ReferenceNumber,
+                payment.DepositToAccountCode,
+                payment.Description,
+                payment.Notes);
+
+            var result = await ApiHelper.ExecuteCallGuardedAsync(
+                () => AccountingClient.CreatePaymentAsync(command),
+                Snackbar,
+                $"Payment {payment.PaymentNumber} created successfully.");
+
+            return result?.Id ?? default;
+        },
+        updateFunc: async payment =>
+        {
+            var command = new PaymentUpdateCommand(
+                payment.Id,
+                payment.PaymentDate,
+                payment.ReferenceNumber,
+                payment.DepositToAccountCode,
+                payment.Description,
+                payment.Notes);
+
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => AccountingClient.UpdatePaymentAsync(payment.Id, command),
+                Snackbar,
+                $"Payment {payment.PaymentNumber} updated successfully.");
+        },
+        deleteFunc: async id =>
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => AccountingClient.DeletePaymentAsync(id),
+                Snackbar,
+                "Payment deleted successfully.");
+        },
+        hasExtraActions: true,
+        canCreate: true,
+        canUpdate: true,
+        canDelete: true);
+
+    private async Task OnViewDetails(DefaultIdType id)
+    {
+        await _detailsDialog.ShowAsync(id);
+    }
+
+    private async Task OnAllocatePayment(DefaultIdType id)
+    {
+        await _allocateDialog.ShowAsync(id);
+    }
+
+    private async Task OnRefundPayment(DefaultIdType id)
+    {
+        await _refundDialog.ShowAsync(id);
+    }
+
+    private async Task OnVoidPayment(DefaultIdType id)
+    {
+        await _voidDialog.ShowAsync(id);
+    }
+
+    private async Task OnPrintReceipt(DefaultIdType id)
+    {
+        Snackbar.Add("Print receipt functionality not yet implemented.", Severity.Info);
+        await Task.CompletedTask;
+    }
+
+    private async Task OnAllocateSaved()
+    {
+        await _table.ReloadDataAsync();
+    }
+
+    private async Task OnRefundSaved()
+    {
+        await _table.ReloadDataAsync();
+    }
+
+    private async Task OnVoidSaved()
+    {
+        await _table.ReloadDataAsync();
+    }
+}
+

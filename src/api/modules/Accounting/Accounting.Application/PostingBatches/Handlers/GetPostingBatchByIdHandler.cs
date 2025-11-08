@@ -18,9 +18,9 @@ public class GetPostingBatchByIdHandler(IReadRepository<PostingBatch> repository
             Status = batch.Status,
             Description = batch.Description,
             PeriodId = batch.PeriodId,
-            ApprovalStatus = batch.ApprovalStatus,
-            ApprovedBy = batch.ApprovedBy,
-            ApprovedDate = batch.ApprovedDate,
+            ApprovalStatus = batch.Status,
+            ApprovedBy = batch.ApproverName,
+            ApprovedDate = batch.ApprovedOn,
             JournalEntryIds = batch.JournalEntries.Select(j => j.Id).ToList()
         };
     }

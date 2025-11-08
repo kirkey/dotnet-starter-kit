@@ -29,7 +29,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="Accounting.Domain.Events.Accrual.AccrualCreated"/>
 /// <seealso cref="Accounting.Domain.Events.Accrual.AccrualUpdated"/>
 /// <seealso cref="Accounting.Domain.Events.Accrual.AccrualReversed"/>
-public class Accrual : AuditableEntity, IAggregateRoot
+public class Accrual : AuditableEntityWithApproval, IAggregateRoot
 {
     private const int MaxAccrualNumberLength = 50;
     private const int MaxDescriptionLength = 200;
@@ -210,5 +210,47 @@ public class Accrual : AuditableEntity, IAggregateRoot
         ReversalDate = reversalDate;
 
         QueueDomainEvent(new Events.Accrual.AccrualReversed(Id, AccrualNumber, reversalDate, Amount));
+    }
+
+    /// <summary>
+    /// Approve the accrual.
+    /// </summary>
+    /// <param name="approvedBy">Username or identifier of the person approving the accrual.</param>
+    /// <exception cref="AccrualAlreadyApprovedException">Thrown if the accrual is already approved.</exception>
+    /// <exception cref="AccrualAlreadyReversedException">Thrown if the accrual is already reversed.</exception>
+    public void Approve(string approvedBy)
+    {
+        if (IsReversed)
+            throw new AccrualAlreadyReversedException(Id);
+
+        if (Status == "Approved")
+            throw new AccrualAlreadyApprovedException(Id);
+
+        Status = "Approved";
+        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
+        ApproverName = approvedBy.Trim();
+        ApprovedOn = DateTime.UtcNow;
+
+        QueueDomainEvent(new Events.Accrual.AccrualApproved(Id, AccrualNumber, approvedBy, ApprovedOn.Value));
+    }
+
+    /// <summary>
+    /// Reject the accrual.
+    /// </summary>
+    /// <param name="rejectedBy">Username or identifier of the person rejecting the accrual.</param>
+    /// <param name="reason">Optional reason for rejection.</param>
+    /// <exception cref="AccrualAlreadyReversedException">Thrown if the accrual is already reversed.</exception>
+    public void Reject(string rejectedBy, string? reason = null)
+    {
+        if (IsReversed)
+            throw new AccrualAlreadyReversedException(Id);
+
+        Status = "Rejected";
+        ApprovedBy = Guid.TryParse(rejectedBy, out var guidValue) ? guidValue : null;
+        ApproverName = rejectedBy.Trim();
+        ApprovedOn = DateTime.UtcNow;
+        Remarks = reason?.Trim();
+
+        QueueDomainEvent(new Events.Accrual.AccrualRejected(Id, AccrualNumber, rejectedBy, ApprovedOn.Value, reason));
     }
 }

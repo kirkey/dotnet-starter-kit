@@ -17,7 +17,7 @@ public class SearchPostingBatchesSpec : EntitiesByPaginationFilterSpec<PostingBa
         Query
             .Where(x => x.BatchNumber.Contains(request.BatchNumber!), !string.IsNullOrWhiteSpace(request.BatchNumber))
             .Where(x => x.Status == request.Status, !string.IsNullOrWhiteSpace(request.Status))
-            .Where(x => x.ApprovalStatus == request.ApprovalStatus, !string.IsNullOrWhiteSpace(request.ApprovalStatus))
+            .Where(x => x.Status == request.ApprovalStatus, !string.IsNullOrWhiteSpace(request.ApprovalStatus))
             .OrderByDescending(x => x.BatchDate, !request.HasOrderBy())
             .ThenBy(x => x.BatchNumber);
     }

@@ -47,7 +47,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetDisposed"/>
 /// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetTransferred"/>
 /// <seealso cref="Accounting.Domain.Events.FixedAsset.FixedAssetRevalued"/>
-public class FixedAsset : AuditableEntity, IAggregateRoot
+public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
 {
     /// <summary>
     /// Human-readable name of the asset.
@@ -440,6 +440,48 @@ public class FixedAsset : AuditableEntity, IAggregateRoot
 
         QueueDomainEvent(new FixedAssetDisposed(Id, AssetName, DisposalDate!.Value, DisposalAmount, disposalReason));
         return this;
+    }
+
+    /// <summary>
+    /// Approve the fixed asset acquisition.
+    /// </summary>
+    /// <param name="approvedBy">Username or identifier of the person approving the asset.</param>
+    /// <exception cref="FixedAssetAlreadyApprovedException">Thrown if the asset is already approved.</exception>
+    /// <exception cref="FixedAssetAlreadyDisposedException">Thrown if the asset is already disposed.</exception>
+    public void Approve(string approvedBy)
+    {
+        if (IsDisposed)
+            throw new FixedAssetAlreadyDisposedException(Id);
+
+        if (Status == "Approved")
+            throw new FixedAssetAlreadyApprovedException(Id);
+
+        Status = "Approved";
+        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
+        ApproverName = approvedBy.Trim();
+        ApprovedOn = DateTime.UtcNow;
+
+        QueueDomainEvent(new FixedAssetApproved(Id, AssetName, approvedBy, ApprovedOn.Value));
+    }
+
+    /// <summary>
+    /// Reject the fixed asset acquisition.
+    /// </summary>
+    /// <param name="rejectedBy">Username or identifier of the person rejecting the asset.</param>
+    /// <param name="reason">Optional reason for rejection.</param>
+    /// <exception cref="FixedAssetAlreadyDisposedException">Thrown if the asset is already disposed.</exception>
+    public void Reject(string rejectedBy, string? reason = null)
+    {
+        if (IsDisposed)
+            throw new FixedAssetAlreadyDisposedException(Id);
+
+        Status = "Rejected";
+        ApprovedBy = Guid.TryParse(rejectedBy, out var guidValue) ? guidValue : null;
+        ApproverName = rejectedBy.Trim();
+        ApprovedOn = DateTime.UtcNow;
+        Remarks = reason?.Trim();
+
+        QueueDomainEvent(new FixedAssetRejected(Id, AssetName, rejectedBy, ApprovedOn.Value, reason));
     }
 
     private static bool IsValidAssetType(string assetType)

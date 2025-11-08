@@ -6,58 +6,42 @@ namespace Accounting.Domain.Entities;
 /// Represents a single general ledger posting line derived from journal entries for double-entry bookkeeping and financial reporting.
 /// </summary>
 /// <remarks>
-/// Use cases:
-/// - Record individual debit and credit postings to maintain the general ledger trial balance.
-/// - Support double-entry bookkeeping with balanced journal entry distributions.
-/// - Enable financial statement preparation with account-level detail and classifications.
-/// - Track USOA (Uniform System of Accounts) compliance for utility regulatory reporting.
-/// - Provide audit trail linking general ledger postings to source journal entries.
-/// - Support period-end reporting and account reconciliation processes.
-/// - Enable detailed transaction analysis and variance reporting by account.
-/// - Facilitate automated posting from subsidiary ledgers and system integrations.
+/// Accounting Standards Compliance:
+/// - GAAP/IFRS: Complete audit trail with source document linkage
+/// - SOX: Immutability controls and user accountability
+/// - Double-entry bookkeeping: Balanced debits and credits
+/// - USOA: Utility-specific account classification support
 /// 
-/// Default values:
-/// - EntryId: required reference to source journal entry
-/// - AccountId: required reference to chart of accounts
-/// - Debit: 0.00 (either debit or credit will have an amount, not both)
-/// - Credit: 0.00 (either debit or credit will have an amount, not both)
-/// - Memo: null (optional transaction description)
-/// - UsoaClass: required for utility accounting (example: "Generation", "Transmission", "Distribution")
-/// - TransactionDate: required effective date for the posting
-/// - ReferenceNumber: null (optional external reference like invoice number)
-/// 
-/// Business rules:
+/// Business Rules:
 /// - Either Debit OR Credit must have an amount (not both, not neither)
-/// - Debit and Credit amounts must be non-negative
-/// - UsoaClass must be valid for regulatory compliance
-/// - TransactionDate must match the journal entry date
-/// - Cannot modify posted general ledger entries (immutable after posting)
-/// - Account must exist in chart of accounts
-/// - Journal entry must be approved before posting
-/// - Memo should provide meaningful transaction description
+/// - Amounts must be non-negative
+/// - Cannot modify posted entries (immutable after posting)
+/// - Complete audit trail required (who, when, source)
 /// </remarks>
-/// <seealso cref="Accounting.Domain.Events.GeneralLedger.GeneralLedgerPosted"/>
-/// <seealso cref="Accounting.Domain.Events.GeneralLedger.GeneralLedgerReversed"/>
-/// <seealso cref="Accounting.Domain.Events.GeneralLedger.GeneralLedgerAdjusted"/>
 public class GeneralLedger : AuditableEntity, IAggregateRoot
 {
     /// <summary>
-    /// Identifier of the source journal entry that this ledger line is derived from.
+    /// Identifier of the source journal entry.
     /// </summary>
-    public DefaultIdType EntryId { get; private set; } // Foreign Key to Journal Entry
+    public DefaultIdType EntryId { get; private set; }
 
     /// <summary>
     /// Identifier of the account being posted to.
     /// </summary>
-    public DefaultIdType AccountId { get; private set; } // Foreign Key to Chart of Accounts
+    public DefaultIdType AccountId { get; private set; }
 
     /// <summary>
-    /// Debit amount (must be non-negative). Either debit or credit should be set by the posting logic.
+    /// Account code from chart of accounts (denormalized for query performance).
+    /// </summary>
+    public string AccountCode { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// Debit amount (must be non-negative).
     /// </summary>
     public decimal Debit { get; private set; }
 
     /// <summary>
-    /// Credit amount (must be non-negative). Either debit or credit should be set by the posting logic.
+    /// Credit amount (must be non-negative).
     /// </summary>
     public decimal Credit { get; private set; }
 
@@ -67,9 +51,9 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
     public string? Memo { get; private set; }
 
     /// <summary>
-    /// USOA class for reporting (e.g., Generation, Transmission, Distribution).
+    /// USOA class for regulatory reporting (Generation, Transmission, Distribution, etc.).
     /// </summary>
-    public string UsoaClass { get; private set; } // Generation, Transmission, Distribution
+    public string? UsoaClass { get; private set; }
 
     /// <summary>
     /// Transaction effective date for this ledger entry.
@@ -77,9 +61,34 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
     public DateTime TransactionDate { get; private set; }
 
     /// <summary>
-    /// Optional source reference number.
+    /// Optional source reference number (invoice number, check number, etc.).
     /// </summary>
     public string? ReferenceNumber { get; private set; }
+
+    /// <summary>
+    /// Source type of the transaction (JournalEntry, Invoice, Bill, Payment, etc.).
+    /// </summary>
+    public string? Source { get; private set; }
+
+    /// <summary>
+    /// Source document identifier for complete audit trail.
+    /// </summary>
+    public DefaultIdType? SourceId { get; private set; }
+
+    /// <summary>
+    /// Indicates whether this entry has been posted to the general ledger (immutable after posting).
+    /// </summary>
+    public bool IsPosted { get; private set; }
+
+    /// <summary>
+    /// Date when the entry was posted (for audit trail).
+    /// </summary>
+    public DateTime? PostedDate { get; private set; }
+
+    /// <summary>
+    /// User who posted the entry (for audit trail and SOX compliance).
+    /// </summary>
+    public string? PostedBy { get; private set; }
 
     /// <summary>
     /// Optional accounting period identifier associated with this posting.
@@ -88,51 +97,80 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
     
     private GeneralLedger()
     {
-        UsoaClass = string.Empty;
-        // EF Core requires a parameterless constructor for entity instantiation
+        AccountCode = string.Empty;
     }
 
-    private GeneralLedger(DefaultIdType entryId, DefaultIdType accountId,
-        decimal debit, decimal credit, string usoaClass, DateTime transactionDate,
-        string? memo = null, string? referenceNumber = null, DefaultIdType? periodId = null,
+    private GeneralLedger(DefaultIdType entryId, DefaultIdType accountId, string accountCode,
+        decimal debit, decimal credit, DateTime transactionDate,
+        string? usoaClass = null, string? memo = null, string? referenceNumber = null, 
+        string? source = null, DefaultIdType? sourceId = null, DefaultIdType? periodId = null,
         string? description = null, string? notes = null)
     {
         EntryId = entryId;
         AccountId = accountId;
+        AccountCode = accountCode.Trim();
         Debit = debit;
         Credit = credit;
-        UsoaClass = usoaClass.Trim();
+        UsoaClass = usoaClass?.Trim();
         TransactionDate = transactionDate;
         Memo = memo?.Trim();
         ReferenceNumber = referenceNumber?.Trim();
+        Source = source?.Trim();
+        SourceId = sourceId;
         PeriodId = periodId;
+        IsPosted = false;
         Description = description?.Trim();
         Notes = notes?.Trim();
 
-        QueueDomainEvent(new GeneralLedgerEntryCreated(Id, EntryId, AccountId, Debit, Credit, UsoaClass, TransactionDate));
+        QueueDomainEvent(new GeneralLedgerEntryCreated(Id, EntryId, AccountId, Debit, Credit, UsoaClass ?? string.Empty, TransactionDate));
     }
 
     /// <summary>
-    /// Create a general ledger entry line with validation for amounts and USOA class.
+    /// Create a general ledger entry with validation for amounts and required fields.
     /// </summary>
-    public static GeneralLedger Create(DefaultIdType entryId, DefaultIdType accountId,
-        decimal debit, decimal credit, string usoaClass, DateTime transactionDate,
-        string? memo = null, string? referenceNumber = null, DefaultIdType? periodId = null,
+    public static GeneralLedger Create(DefaultIdType entryId, DefaultIdType accountId, string accountCode,
+        decimal debit, decimal credit, DateTime transactionDate,
+        string? usoaClass = null, string? memo = null, string? referenceNumber = null, 
+        string? source = null, DefaultIdType? sourceId = null, DefaultIdType? periodId = null,
         string? description = null, string? notes = null)
     {
         if (debit < 0 || credit < 0)
             throw new InvalidGeneralLedgerAmountException("Debit or credit amount cannot be negative");
 
-        return new GeneralLedger(entryId, accountId, debit, credit, usoaClass,
-            transactionDate, memo, referenceNumber, periodId, description, notes);
+        if (string.IsNullOrWhiteSpace(accountCode))
+            throw new ArgumentException("Account code is required", nameof(accountCode));
+
+        return new GeneralLedger(entryId, accountId, accountCode, debit, credit, transactionDate,
+            usoaClass, memo, referenceNumber, source, sourceId, periodId, description, notes);
     }
 
     /// <summary>
-    /// Update amounts and metadata; validates non-negative amounts and allowed USOA class values.
+    /// Mark the general ledger entry as posted (immutable after this operation).
+    /// </summary>
+    public void Post(string postedBy)
+    {
+        if (IsPosted)
+            throw new InvalidOperationException("General ledger entry is already posted and cannot be modified");
+
+        if (string.IsNullOrWhiteSpace(postedBy))
+            throw new ArgumentException("Posted by user is required", nameof(postedBy));
+
+        IsPosted = true;
+        PostedDate = DateTime.UtcNow;
+        PostedBy = postedBy;
+
+        QueueDomainEvent(new GeneralLedgerPosted(Id, AccountCode, TransactionDate, Debit, Credit));
+    }
+
+    /// <summary>
+    /// Update unposted entry amounts and metadata (cannot update posted entries).
     /// </summary>
     public GeneralLedger Update(decimal? debit = null, decimal? credit = null, string? memo = null,
         string? usoaClass = null, string? referenceNumber = null, string? description = null, string? notes = null)
     {
+        if (IsPosted)
+            throw new InvalidOperationException("Cannot update posted general ledger entries");
+
         bool isUpdated = false;
 
         if (debit.HasValue && Debit != debit.Value)
@@ -159,8 +197,6 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(usoaClass) && UsoaClass != usoaClass.Trim())
         {
-            if (!IsValidUsoaClass(usoaClass))
-                throw new InvalidUsoaClassException($"Invalid USOA class: {usoaClass}");
             UsoaClass = usoaClass.Trim();
             isUpdated = true;
         }
@@ -185,16 +221,10 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
 
         if (isUpdated)
         {
-            QueueDomainEvent(new GeneralLedgerEntryUpdated(Id, EntryId, AccountId, Debit, Credit, UsoaClass));
+            QueueDomainEvent(new GeneralLedgerEntryUpdated(Id, EntryId, AccountId, Debit, Credit, UsoaClass ?? string.Empty));
         }
 
         return this;
     }
-
-    private static bool IsValidUsoaClass(string usoaClass)
-    {
-        var validClasses = new[] { "Generation", "Transmission", "Distribution", "Customer Service", 
-            "Sales", "Administrative", "General", "Maintenance" };
-        return validClasses.Contains(usoaClass.Trim(), StringComparer.OrdinalIgnoreCase);
-    }
 }
+

@@ -49,7 +49,7 @@ public sealed class PostingBatchCreateHandler(
             BatchNumber = batch.BatchNumber,
             BatchDate = batch.BatchDate,
             Status = batch.Status,
-            ApprovalStatus = batch.ApprovalStatus
+            ApprovalStatus = batch.Status
         };
     }
 }

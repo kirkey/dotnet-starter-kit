@@ -237,19 +237,22 @@ internal sealed class AccountingDbInitializer(
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             logger.LogInformation("[{Tenant}] seeded AccountingPeriod {PeriodName}", context.TenantInfo!.Identifier, period.Name);
 
+            // Seed budgets with approval workflow for richer test data
             // Seed multiple budgets for richer test data
             if (!await context.Budgets.AnyAsync(cancellationToken).ConfigureAwait(false))
             {
                 var budgetsToSeed = new List<Budget>
                 {
-                    Budget.Create("Default Operating Budget", period.Id, "Operating Budget", fiscalYear, "Operating", "Auto-created default operating budget"),
-                    Budget.Create("Capital Budget", period.Id, "Capital Budget", fiscalYear, "Capital", "Auto-created capital budget"),
-                    Budget.Create("Cash Flow Budget", period.Id, "Cash Flow Budget", fiscalYear, "Cash Flow", "Auto-created cash flow budget"),
+                    Budget.Create("Default Operating Budget", period.Id, period.Name, fiscalYear, "Operating", "Auto-created default operating budget"),
+                    Budget.Create("Capital Budget", period.Id, period.Name, fiscalYear, "Capital", "Auto-created capital budget"),
+                    Budget.Create("Cash Flow Budget", period.Id, period.Name, fiscalYear, "Cash Flow", "Auto-created cash flow budget"),
                 };
 
+                // Save budgets first before adding details
                 await context.Budgets.AddRangeAsync(budgetsToSeed, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-                // Create details across budgets using available accounts
+                // Now add details after budgets are saved
                 var acctDict = await context.ChartOfAccounts.ToDictionaryAsync(a => a.AccountCode, a => a.Id, cancellationToken).ConfigureAwait(false);
 
                 var details = new List<BudgetDetail>();
@@ -285,8 +288,12 @@ internal sealed class AccountingDbInitializer(
                     }
                 }
 
+                // Approve first budget after details are added
+                budgetsToSeed[0].Approve("cfo");
+                context.Budgets.Update(budgetsToSeed[0]);
+
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-                logger.LogInformation("[{Tenant}] seeded {Count} Budgets with details", context.TenantInfo!.Identifier, budgetsToSeed.Count);
+                logger.LogInformation("[{Tenant}] seeded {Count} Budgets with details (1 approved, 2 pending)", context.TenantInfo!.Identifier, budgetsToSeed.Count);
             }
         }
 
@@ -611,49 +618,75 @@ internal sealed class AccountingDbInitializer(
             }
         }
 
-        // Seed a simple JournalEntry + GeneralLedger and PostingBatch (unchanged)
+        // Seed JournalEntries with approval workflow (mix of Pending, Approved, Posted)
         if (!await context.JournalEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var period = await context.AccountingPeriods.OrderByDescending(p => p.FiscalYear).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
             var cashAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "1120", cancellationToken).ConfigureAwait(false);
             var revenueAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "4110", cancellationToken).ConfigureAwait(false);
-            if (period != null && cashAccount != null && revenueAccount != null)
+            var expenseAccount = await context.ChartOfAccounts.FirstOrDefaultAsync(a => a.AccountCode == "5200", cancellationToken).ConfigureAwait(false);
+            
+            if (period != null && cashAccount != null && revenueAccount != null && expenseAccount != null)
             {
-                var je = JournalEntry.Create(DateTime.UtcNow, "JE-1000", "Seed residential energy sales journal entry", "Seeding", period.Id);
-                await context.JournalEntries.AddAsync(je, cancellationToken).ConfigureAwait(false);
+                // Create first journal entry - Approved and Posted
+                var je1 = JournalEntry.Create(DateTime.UtcNow.AddDays(-10), "JE-1000", "Seed residential energy sales journal entry", "Seeding", period.Id);
+                await context.JournalEntries.AddAsync(je1, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 
-                // Create journal entry lines separately
-                var cashLine = JournalEntryLine.Create(je.Id, cashAccount.Id, 25000m, 0m, "Cash from residential energy sales");
-                var revenueLine = JournalEntryLine.Create(je.Id, revenueAccount.Id, 0m, 25000m, "Residential energy revenue");
-                await context.JournalEntryLines.AddRangeAsync(new[] { cashLine, revenueLine }, cancellationToken).ConfigureAwait(false);
+                var cashLine1 = JournalEntryLine.Create(je1.Id, cashAccount.Id, 25000m, 0m, "Cash from residential energy sales");
+                var revenueLine1 = JournalEntryLine.Create(je1.Id, revenueAccount.Id, 0m, 25000m, "Residential energy revenue");
+                await context.JournalEntryLines.AddRangeAsync(new[] { cashLine1, revenueLine1 }, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 
-                je = je.Post();
-                context.JournalEntries.Update(je);
-
-                // Create corresponding GeneralLedger entries
-                var gl1 = GeneralLedger.Create(je.Id, cashAccount.Id, 25000m, 0m, "General", DateTime.UtcNow, "Seeding", "JE-1000", period.Id, "Cash receipt from residential energy sales");
-                var gl2 = GeneralLedger.Create(je.Id, revenueAccount.Id, 0m, 25000m, "General", DateTime.UtcNow, "Seeding", "JE-1000", period.Id, "Residential energy revenue recognition");
+                je1.Approve("system.admin");
+                je1 = je1.Post();
+                context.JournalEntries.Update(je1);
+                
+                var gl1 = GeneralLedger.Create(je1.Id, cashAccount.Id, cashAccount.AccountCode, 25000m, 0m, DateTime.UtcNow.AddDays(-10), "General", null, "JE-1000", "Seeding", je1.Id, period.Id, "Cash receipt from residential energy sales");
+                var gl2 = GeneralLedger.Create(je1.Id, revenueAccount.Id, revenueAccount.AccountCode, 0m, 25000m, DateTime.UtcNow.AddDays(-10), "General", null, "JE-1000", "Seeding", je1.Id, period.Id, "Residential energy revenue recognition");
                 await context.GeneralLedgers.AddRangeAsync(new[] { gl1, gl2 }, cancellationToken).ConfigureAwait(false);
 
-                // Add a draft PostingBatch containing the journal entry (batch remains draft)
-                var batch = PostingBatch.Create("BATCH-1000", DateTime.UtcNow, "Seed batch", period.Id);
-                batch.AddJournalEntry(je);
+                // Create second journal entry - Approved but not yet Posted
+                var je2 = JournalEntry.Create(DateTime.UtcNow.AddDays(-5), "JE-1001", "Operations expense journal entry", "Seeding", period.Id);
+                await context.JournalEntries.AddAsync(je2, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                var expenseLine = JournalEntryLine.Create(je2.Id, expenseAccount.Id, 5000m, 0m, "Operations expense");
+                var cashLine2 = JournalEntryLine.Create(je2.Id, cashAccount.Id, 0m, 5000m, "Cash payment");
+                await context.JournalEntryLines.AddRangeAsync(new[] { expenseLine, cashLine2 }, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                je2.Approve("finance.manager");
+                context.JournalEntries.Update(je2);
+
+                // Create third journal entry - Pending approval
+                var je3 = JournalEntry.Create(DateTime.UtcNow.AddDays(-2), "JE-1002", "Pending approval journal entry", "Seeding", period.Id);
+                await context.JournalEntries.AddAsync(je3, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                var expenseLine3 = JournalEntryLine.Create(je3.Id, expenseAccount.Id, 3000m, 0m, "Pending expense");
+                var cashLine3 = JournalEntryLine.Create(je3.Id, cashAccount.Id, 0m, 3000m, "Cash payment");
+                await context.JournalEntryLines.AddRangeAsync(new[] { expenseLine3, cashLine3 }, cancellationToken).ConfigureAwait(false);
+
+                // Create PostingBatch with approved journal entry
+                var batch = PostingBatch.Create("BATCH-1000", DateTime.UtcNow, "Seed batch with approved entry", period.Id);
+                batch.AddJournalEntry(je1);
+                batch.Approve("system.admin");
                 await context.PostingBatches.AddAsync(batch, cancellationToken).ConfigureAwait(false);
 
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-                logger.LogInformation("[{Tenant}] seeded JournalEntry {Ref} and PostingBatch {Batch}", context.TenantInfo!.Identifier, je.ReferenceNumber, batch.BatchNumber);
+                logger.LogInformation("[{Tenant}] seeded 3 JournalEntries with approval workflow and 1 PostingBatch", context.TenantInfo!.Identifier);
             }
         }
 
-        // Seed Accruals (10 records)
+        // Seed Accruals (10 records in pending state)
         if (!await context.Accruals.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var accruals = new List<Accrual>();
             for (int i = 1; i <= 10; i++)
             {
-                accruals.Add(Accrual.Create($"ACCR-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 5), 1500m + i * 250m, $"Seeded accrual for expense category {i}"));
+                var accrual = Accrual.Create($"ACCR-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 5), 1500m + i * 250m, $"Seeded accrual for expense category {i}");
+                accruals.Add(accrual);
             }
 
             await context.Accruals.AddRangeAsync(accruals, cancellationToken).ConfigureAwait(false);
@@ -801,7 +834,7 @@ internal sealed class AccountingDbInitializer(
                 };
 
                 await context.TaxCodes.AddRangeAsync(taxCodes, cancellationToken).ConfigureAwait(false);
-                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken). ConfigureAwait(false);
                 logger.LogInformation("[{Tenant}] seeded {Count} TaxCodes", context.TenantInfo!.Identifier, taxCodes.Count);
             }
         }
@@ -879,7 +912,8 @@ internal sealed class AccountingDbInitializer(
                 for (int i = 0; i < Math.Min(10, members.Count); i++)
                 {
                     var member = members[i];
-                    creditMemos.Add(CreditMemo.Create($"CM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 6), 180m + i * 30m, "Member", member.Id, null, "Service credit", $"Seeded credit memo {i + 1}"));
+                    var memo = CreditMemo.Create($"CM-{1000 + i}", DateTime.UtcNow.Date.AddDays(-i * 6), 180m + i * 30m, "Customer", member.Id, null, "Service credit", $"Seeded credit memo {i + 1}");
+                    creditMemos.Add(memo);
                 }
 
                 await context.CreditMemos.AddRangeAsync(creditMemos, cancellationToken).ConfigureAwait(false);
@@ -899,7 +933,8 @@ internal sealed class AccountingDbInitializer(
                 {
                     var statementBalance = 50000m + i * 5000m;
                     var bookBalance = statementBalance - (i * 100m);
-                    reconciliations.Add(BankReconciliation.Create(bankAccount.Id, DateTime.UtcNow.Date.AddMonths(-i), statementBalance, bookBalance, $"STMT-{1000 + i}", $"Seeded bank reconciliation {i}"));
+                    var recon = BankReconciliation.Create(bankAccount.Id, DateTime.UtcNow.Date.AddMonths(-i), statementBalance, bookBalance, $"STMT-{1000 + i}", $"Seeded bank reconciliation {i}");
+                    reconciliations.Add(recon);
                 }
 
                 await context.BankReconciliations.AddRangeAsync(reconciliations, cancellationToken).ConfigureAwait(false);
@@ -938,7 +973,7 @@ internal sealed class AccountingDbInitializer(
         
 
 
-        // Seed Bills with BillLineItems (10 bills with 2-3 line items each)
+        // Seed Bills with approval workflow and BillLineItems (10 bills with 2-3 line items each)
         if (!await context.Bills.AnyAsync(cancellationToken).ConfigureAwait(false))
         {
             var vendors = await context.Vendors.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
@@ -959,14 +994,15 @@ internal sealed class AccountingDbInitializer(
                     var dueDate = billDate.AddDays(30);
                     
                     var bill = Bill.Create(
-                        $"BILL-{2000 + i}", // billNumber
-                        vendor.Id, // vendorId
-                        billDate, // billDate
-                        dueDate, // dueDate
-                        $"Seeded bill {i + 1} from {vendor.Name}", // description
-                        null, // periodId
-                        "Net 30", // paymentTerms
-                        $"PO-{1000 + i}"); // notes
+                        $"BILL-{2000 + i}", 
+                        vendor.Id, 
+                        billDate, 
+                        dueDate, 
+                        $"Seeded bill {i + 1} from {vendor.Name}", 
+                        null, 
+                        "Net 30", 
+                        $"PO-{1000 + i}",
+                        $"Notes for bill {i + 1}");
 
                     bills.Add(bill);
                 }
@@ -974,7 +1010,15 @@ internal sealed class AccountingDbInitializer(
                 await context.Bills.AddRangeAsync(bills, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 
-                logger.LogInformation("[{Tenant}] seeded {Count} Bills", context.TenantInfo!.Identifier, bills.Count);
+                // Approve first bill
+                if (bills.Count > 0)
+                {
+                    bills[0].Approve("ap.manager");
+                    context.Bills.Update(bills[0]);
+                    await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                }
+                
+                logger.LogInformation("[{Tenant}] seeded {Count} Bills (1 approved, 9 pending)", context.TenantInfo!.Identifier, bills.Count);
             }
         }
 

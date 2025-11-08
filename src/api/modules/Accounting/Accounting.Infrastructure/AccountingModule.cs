@@ -301,6 +301,8 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<SecurityDeposit>, AccountingRepository<SecurityDeposit>>();
         builder.Services.AddScoped<IRepository<TaxCode>, AccountingRepository<TaxCode>>();
         builder.Services.AddScoped<IReadRepository<TaxCode>, AccountingRepository<TaxCode>>();
+        builder.Services.AddScoped<IRepository<TrialBalance>, AccountingRepository<TrialBalance>>();
+        builder.Services.AddScoped<IReadRepository<TrialBalance>, AccountingRepository<TrialBalance>>();
         builder.Services.AddScoped<IRepository<Vendor>, AccountingRepository<Vendor>>();
         builder.Services.AddScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>();
         builder.Services.AddScoped<IRepository<WriteOff>, AccountingRepository<WriteOff>>();
@@ -375,6 +377,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<TrialBalance>, AccountingRepository<TrialBalance>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<TrialBalance>, AccountingRepository<TrialBalance>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<WriteOff>, AccountingRepository<WriteOff>>("accounting");
@@ -472,6 +476,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<RegulatoryReport>, AccountingRepository<RegulatoryReport>>("accounting:regulatoryreports");
         builder.Services.AddKeyedScoped<IRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting:retainedearnings");
         builder.Services.AddKeyedScoped<IReadRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting:retainedearnings");
+        builder.Services.AddKeyedScoped<IRepository<TrialBalance>, AccountingRepository<TrialBalance>>("accounting:trialbalances");
+        builder.Services.AddKeyedScoped<IReadRepository<TrialBalance>, AccountingRepository<TrialBalance>>("accounting:trialbalances");
         builder.Services.AddKeyedScoped<IRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IReadRepository<Vendor>, AccountingRepository<Vendor>>("accounting:vendors");
         builder.Services.AddKeyedScoped<IRepository<WriteOff>, AccountingRepository<WriteOff>>("accounting:writeoffs");

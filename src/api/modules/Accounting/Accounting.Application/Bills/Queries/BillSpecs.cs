@@ -26,7 +26,7 @@ public sealed class SearchBillsSpec : Specification<Bill>
             .Where(b => !string.IsNullOrWhiteSpace(billNumber) && b.BillNumber.Contains(billNumber), !string.IsNullOrWhiteSpace(billNumber))
             .Where(b => vendorId.HasValue && b.VendorId == vendorId.Value, vendorId.HasValue)
             .Where(b => !string.IsNullOrWhiteSpace(status) && b.Status == status, !string.IsNullOrWhiteSpace(status))
-            .Where(b => !string.IsNullOrWhiteSpace(approvalStatus) && b.ApprovalStatus == approvalStatus, !string.IsNullOrWhiteSpace(approvalStatus))
+            .Where(b => !string.IsNullOrWhiteSpace(approvalStatus) && b.Status == approvalStatus, !string.IsNullOrWhiteSpace(approvalStatus))
             .Where(b => billDateFrom.HasValue && b.BillDate >= billDateFrom.Value, billDateFrom.HasValue)
             .Where(b => billDateTo.HasValue && b.BillDate <= billDateTo.Value, billDateTo.HasValue)
             .Where(b => dueDateFrom.HasValue && b.DueDate >= dueDateFrom.Value, dueDateFrom.HasValue)

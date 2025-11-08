@@ -19,7 +19,7 @@ public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<Jo
             .Where(e => e.Date >= request.FromDate, request.FromDate.HasValue)
             .Where(e => e.Date <= request.ToDate, request.ToDate.HasValue)
             .Where(e => e.IsPosted == request.IsPosted, request.IsPosted.HasValue)
-            .Where(e => e.ApprovalStatus == request.ApprovalStatus!, !string.IsNullOrEmpty(request.ApprovalStatus))
+            .Where(e => e.Status == request.ApprovalStatus!, !string.IsNullOrEmpty(request.ApprovalStatus))
             .Where(e => e.PeriodId == request.PeriodId, request.PeriodId.HasValue);
     }
 }

@@ -13,8 +13,8 @@ public sealed record BudgetResponse(
     string Status,
     decimal TotalBudgetedAmount,
     decimal TotalActualAmount,
-    DateTime? ApprovedDate,
-    string? ApprovedBy,
+    DateTime? ApprovedOn,
+    string? ApproverName,
     string? Description,
     string? Notes
 );

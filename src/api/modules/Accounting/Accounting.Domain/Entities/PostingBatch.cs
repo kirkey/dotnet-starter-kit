@@ -42,7 +42,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchPosted"/>
 /// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchReversed"/>
 /// <seealso cref="Accounting.Domain.Events.PostingBatch.PostingBatchRejected"/>
-public class PostingBatch : AuditableEntity, IAggregateRoot
+public class PostingBatch : AuditableEntityWithApproval, IAggregateRoot
 {
     /// <summary>
     /// Unique identifier for the batch (human-friendly).
@@ -54,10 +54,6 @@ public class PostingBatch : AuditableEntity, IAggregateRoot
     /// </summary>
     public DateTime BatchDate { get; private set; }
 
-    /// <summary>
-    /// Workflow status: Draft, Posted, Reversed.
-    /// </summary>
-    public string Status { get; private set; } // Draft, Posted, Reversed
 
     // Description property inherited from AuditableEntity base class
 
@@ -66,20 +62,46 @@ public class PostingBatch : AuditableEntity, IAggregateRoot
     /// </summary>
     public DefaultIdType? PeriodId { get; private set; }
 
-    /// <summary>
-    /// Approval workflow state: Pending, Approved, Rejected.
-    /// </summary>
-    public string ApprovalStatus { get; private set; } // Pending, Approved, Rejected
 
     /// <summary>
-    /// Approver/reviewer identity.
+    /// Date when the batch is posted to general ledger (effective date).
     /// </summary>
-    public string? ApprovedBy { get; private set; }
+    public DateTime PostingDate { get; private set; }
 
     /// <summary>
-    /// Timestamp when approved or rejected.
+    /// User who posted the batch to the general ledger.
     /// </summary>
-    public DateTime? ApprovedDate { get; private set; }
+    public string? PostedBy { get; private set; }
+
+    /// <summary>
+    /// Timestamp when the batch was posted.
+    /// </summary>
+    public DateTime? PostedOn { get; private set; }
+
+    /// <summary>
+    /// User who reversed the batch.
+    /// </summary>
+    public string? ReversedBy { get; private set; }
+
+    /// <summary>
+    /// Timestamp when the batch was reversed.
+    /// </summary>
+    public DateTime? ReversedOn { get; private set; }
+
+    /// <summary>
+    /// Total debit amount across all journal entries (for validation).
+    /// </summary>
+    public decimal TotalDebits { get; private set; }
+
+    /// <summary>
+    /// Total credit amount across all journal entries (for validation).
+    /// </summary>
+    public decimal TotalCredits { get; private set; }
+
+    /// <summary>
+    /// Number of journal entries included in this batch.
+    /// </summary>
+    public int EntryCount { get; private set; }
 
     private readonly List<JournalEntry> _journalEntries = new();
     /// <summary>
@@ -88,16 +110,25 @@ public class PostingBatch : AuditableEntity, IAggregateRoot
     public IReadOnlyCollection<JournalEntry> JournalEntries => _journalEntries.AsReadOnly();
 
     // EF Core requires a parameterless constructor
-    private PostingBatch() { }
+    private PostingBatch() 
+    { 
+        BatchNumber = string.Empty;
+        Status = "Pending";
+    }
 
     private PostingBatch(string batchNumber, DateTime batchDate, string? description = null, DefaultIdType? periodId = null)
     {
         BatchNumber = batchNumber.Trim();
         BatchDate = batchDate;
-        Status = "Draft";
+        PostingDate = batchDate; // Default posting date to batch date
+        Status = "Pending";
         Description = description?.Trim();
         PeriodId = periodId;
-        ApprovalStatus = "Pending";
+        TotalDebits = 0;
+        TotalCredits = 0;
+        EntryCount = 0;
+
+        QueueDomainEvent(new Events.PostingBatch.PostingBatchCreated(Id, BatchNumber, BatchDate, Description));
     }
 
     /// <summary>
@@ -115,40 +146,65 @@ public class PostingBatch : AuditableEntity, IAggregateRoot
     /// </summary>
     public void AddJournalEntry(JournalEntry entry)
     {
-        if (Status != "Draft")
-            throw new InvalidOperationException("Can only add entries to a draft batch.");
+        if (Status != "Pending" && Status != "Draft")
+            throw new InvalidOperationException("Can only add entries to a pending or draft batch.");
         _journalEntries.Add(entry);
+        RecalculateTotals();
+    }
+
+    /// <summary>
+    /// Recalculate batch totals from journal entries.
+    /// </summary>
+    private void RecalculateTotals()
+    {
+        EntryCount = _journalEntries.Count;
+        TotalDebits = _journalEntries.Sum(e => e.GetTotalDebits());
+        TotalCredits = _journalEntries.Sum(e => e.GetTotalCredits());
     }
 
     /// <summary>
     /// Post all entries in the batch after approval; transitions status to Posted.
     /// </summary>
-    public void Post()
+    public void Post(string postedBy)
     {
-        if (Status != "Draft")
-            throw new InvalidOperationException("Only draft batches can be posted.");
-        if (ApprovalStatus != "Approved")
+        if (Status == "Posted")
+            throw new InvalidOperationException("Batch is already posted.");
+        if (Status != "Approved")
             throw new InvalidOperationException("Batch must be approved before posting.");
+        
+        RecalculateTotals();
+        if (TotalDebits != TotalCredits)
+            throw new InvalidOperationException($"Batch is not balanced. Debits: {TotalDebits}, Credits: {TotalCredits}");
+
         foreach (var entry in _journalEntries)
         {
             entry.Post();
         }
+        
         Status = "Posted";
+        PostedBy = postedBy;
+        PostedOn = DateTime.UtcNow;
+        
         QueueDomainEvent(new Events.PostingBatch.PostingBatchPosted(Id, BatchNumber, BatchDate));
     }
 
     /// <summary>
     /// Reverse a posted batch by reversing each contained entry; sets status to Reversed.
     /// </summary>
-    public void Reverse(string reason)
+    public void Reverse(string reversedBy, string reason)
     {
         if (Status != "Posted")
             throw new InvalidOperationException("Only posted batches can be reversed.");
+        
         foreach (var entry in _journalEntries)
         {
             entry.Reverse(DateTime.UtcNow, reason);
         }
+        
         Status = "Reversed";
+        ReversedBy = reversedBy;
+        ReversedOn = DateTime.UtcNow;
+        
         QueueDomainEvent(new Events.PostingBatch.PostingBatchReversed(Id, BatchNumber, BatchDate, reason));
     }
 
@@ -157,12 +213,13 @@ public class PostingBatch : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Approve(string approvedBy)
     {
-        if (ApprovalStatus == "Approved")
+        if (Status == "Approved")
             throw new InvalidOperationException("Batch already approved.");
-        ApprovalStatus = "Approved";
-        ApprovedBy = approvedBy;
-        ApprovedDate = DateTime.UtcNow;
-        QueueDomainEvent(new Events.PostingBatch.PostingBatchApproved(Id, BatchNumber, ApprovedBy, ApprovedDate.Value));
+        Status = "Approved";
+        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
+        ApproverName = approvedBy;
+        ApprovedOn = DateTime.UtcNow;
+        QueueDomainEvent(new Events.PostingBatch.PostingBatchApproved(Id, BatchNumber, approvedBy, ApprovedOn.Value));
     }
 
     /// <summary>
@@ -170,11 +227,12 @@ public class PostingBatch : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Reject(string rejectedBy)
     {
-        if (ApprovalStatus == "Rejected")
+        if (Status == "Rejected")
             throw new InvalidOperationException("Batch already rejected.");
-        ApprovalStatus = "Rejected";
-        ApprovedBy = rejectedBy;
-        ApprovedDate = DateTime.UtcNow;
-        QueueDomainEvent(new Events.PostingBatch.PostingBatchRejected(Id, BatchNumber, ApprovedBy, ApprovedDate.Value));
+        Status = "Rejected";
+        ApprovedBy = Guid.TryParse(rejectedBy, out var guidValue) ? guidValue : null;
+        ApproverName = rejectedBy;
+        ApprovedOn = DateTime.UtcNow;
+        QueueDomainEvent(new Events.PostingBatch.PostingBatchRejected(Id, BatchNumber, rejectedBy, ApprovedOn.Value));
     }
 }

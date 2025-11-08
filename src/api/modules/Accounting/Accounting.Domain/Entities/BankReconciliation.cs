@@ -37,7 +37,7 @@ namespace Accounting.Domain.Entities;
 /// - Requires approval workflow before marking as reconciled
 /// - Should link to bank account in chart of accounts
 /// </remarks>
-public class BankReconciliation : AuditableEntity, IAggregateRoot
+public class BankReconciliation : AuditableEntityWithApproval, IAggregateRoot
 {
     /// <summary>
     /// Reference to the bank account in chart of accounts being reconciled.

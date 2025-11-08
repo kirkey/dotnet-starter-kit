@@ -52,7 +52,7 @@ public sealed class GeneralLedgerGetHandler : IRequestHandler<GeneralLedgerGetQu
             Description = entry.Description,
             Notes = entry.Notes,
             CreatedOn = entry.CreatedOn.DateTime,
-            CreatedByUserName = entry.CreatedByUserName
+            CreatedByUserName = entry.CreatedByUserName ?? string.Empty
         };
     }
 }

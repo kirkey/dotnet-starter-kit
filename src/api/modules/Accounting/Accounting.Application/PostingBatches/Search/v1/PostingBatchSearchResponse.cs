@@ -24,7 +24,7 @@ public sealed class PostingBatchSearchHandler(
             BatchNumber = b.BatchNumber,
             BatchDate = b.BatchDate,
             Status = b.Status,
-            ApprovalStatus = b.ApprovalStatus,
+            ApprovalStatus = b.Status,
             Description = b.Description,
             JournalEntryCount = b.JournalEntries.Count,
             CreatedOn = b.CreatedOn.DateTime

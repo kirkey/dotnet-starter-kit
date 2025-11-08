@@ -10,7 +10,7 @@ public sealed class VoidBillCommandValidator : AbstractValidator<VoidBillCommand
         RuleFor(x => x.BillId)
             .NotEmpty()
             .WithMessage("Bill ID is required.")
-            .Must(id => id != Guid.Empty)
+            .Must(id => id != DefaultIdType.Empty)
             .WithMessage("Bill ID must be a valid identifier.");
 
         RuleFor(x => x.Reason)

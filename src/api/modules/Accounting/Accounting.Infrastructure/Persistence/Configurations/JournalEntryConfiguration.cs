@@ -34,15 +34,6 @@ public class JournalEntryConfiguration : IEntityTypeConfiguration<JournalEntry>
             .HasPrecision(18, 2)
             .IsRequired();
 
-        builder.Property(x => x.ApprovalStatus)
-            .HasMaxLength(16)
-            .IsRequired();
-
-        builder.Property(x => x.ApprovedBy)
-            .HasMaxLength(256);
-
-        builder.Property(x => x.ApprovedDate);
-
         // Configure relationship to journal entry lines (one-to-many)
         builder.HasMany(x => x.Lines)
             .WithOne()
@@ -56,10 +47,42 @@ public class JournalEntryConfiguration : IEntityTypeConfiguration<JournalEntry>
         // Note: Property-level configuration for JournalEntryLine is handled in JournalEntryLineConfiguration
 
         // Indexes for foreign keys and query optimization
-        builder.HasIndex(x => x.PeriodId);
-        builder.HasIndex(x => x.Date);
-        builder.HasIndex(x => x.IsPosted);
-        builder.HasIndex(x => x.Source);
-        builder.HasIndex(x => x.ApprovalStatus);
+        builder.HasIndex(x => x.ReferenceNumber)
+            .IsUnique()
+            .HasDatabaseName("IX_JournalEntries_ReferenceNumber");
+
+        builder.HasIndex(x => x.PeriodId)
+            .HasDatabaseName("IX_JournalEntries_PeriodId");
+
+        builder.HasIndex(x => x.Date)
+            .HasDatabaseName("IX_JournalEntries_Date");
+
+        builder.HasIndex(x => x.IsPosted)
+            .HasDatabaseName("IX_JournalEntries_IsPosted");
+
+        builder.HasIndex(x => x.Source)
+            .HasDatabaseName("IX_JournalEntries_Source");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_JournalEntries_Status");
+
+        // Composite indexes for common query patterns
+        builder.HasIndex(x => new { x.Date, x.IsPosted })
+            .HasDatabaseName("IX_JournalEntries_Date_IsPosted");
+
+        builder.HasIndex(x => new { x.IsPosted, x.Date })
+            .HasDatabaseName("IX_JournalEntries_IsPosted_Date");
+
+        builder.HasIndex(x => new { x.Source, x.Date })
+            .HasDatabaseName("IX_JournalEntries_Source_Date");
+
+        builder.HasIndex(x => new { x.Status, x.Date })
+            .HasDatabaseName("IX_JournalEntries_Status_Date");
+
+        builder.HasIndex(x => new { x.PeriodId, x.Date, x.IsPosted })
+            .HasDatabaseName("IX_JournalEntries_Period_Date_IsPosted");
+
+        builder.HasIndex(x => new { x.Date, x.Source, x.IsPosted })
+            .HasDatabaseName("IX_JournalEntries_Date_Source_IsPosted");
     }
 }

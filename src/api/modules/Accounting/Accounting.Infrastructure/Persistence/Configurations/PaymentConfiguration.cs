@@ -87,8 +87,36 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
         builder.HasIndex(p => p.PaymentMethod)
             .HasDatabaseName("IX_Payment_PaymentMethod");
 
+        builder.HasIndex(p => p.ReferenceNumber)
+            .HasDatabaseName("IX_Payment_ReferenceNumber");
+
+        builder.HasIndex(p => p.DepositToAccountCode)
+            .HasDatabaseName("IX_Payment_DepositToAccountCode");
+
+        builder.HasIndex(p => p.UnappliedAmount)
+            .HasDatabaseName("IX_Payment_UnappliedAmount");
+
+        // Composite indexes for common query patterns
         builder.HasIndex(p => new { p.MemberId, p.PaymentDate })
             .HasDatabaseName("IX_Payment_Member_PaymentDate");
+
+        builder.HasIndex(p => new { p.PaymentDate, p.PaymentMethod })
+            .HasDatabaseName("IX_Payment_PaymentDate_Method");
+
+        builder.HasIndex(p => new { p.PaymentDate, p.Amount })
+            .HasDatabaseName("IX_Payment_PaymentDate_Amount");
+
+        // Index for unapplied payments (critical for allocation workflows)
+        builder.HasIndex(p => new { p.UnappliedAmount, p.PaymentDate })
+            .HasDatabaseName("IX_Payment_UnappliedAmount_PaymentDate");
+
+        // Index for deposit account and date (reconciliation)
+        builder.HasIndex(p => new { p.DepositToAccountCode, p.PaymentDate })
+            .HasDatabaseName("IX_Payment_DepositAccount_Date");
+
+        // Index for payment method analytics
+        builder.HasIndex(p => new { p.PaymentMethod, p.PaymentDate, p.Amount })
+            .HasDatabaseName("IX_Payment_Method_Date_Amount");
     }
 }
 

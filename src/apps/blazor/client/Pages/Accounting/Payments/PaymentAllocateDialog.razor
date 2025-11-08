@@ -1,0 +1,232 @@
+@using Accounting.Application.Payments.Commands
+
+<MudDialog>
+    <DialogContent>
+        @if (_payment != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">Allocate Payment</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@_payment.PaymentNumber"
+                                  Label="Payment Number"
+                                  ReadOnly
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField Value="@_payment.UnappliedAmount"
+                                     Label="Available Amount"
+                                     Format="C2"
+                                     ReadOnly
+                                     Variant="Variant.Outlined"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Class="mt-4 mb-2">Allocation Details</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="8">
+                    <AutocompleteInvoice @bind-Value="_invoiceId"
+                                         Label="Invoice"
+                                         TextFormat="NumberAmount"
+                                         Variant="Variant.Outlined"
+                                         Required="true"
+                                         HelperText="Select invoice to allocate payment" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudNumericField @bind-Value="_allocationAmount"
+                                     Label="Allocation Amount"
+                                     Format="N2"
+                                     Variant="Variant.Outlined"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                                     Required="true"
+                                     Min="0.01m"
+                                     Max="@_payment.UnappliedAmount" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="AddAllocation"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               Disabled="@(!CanAddAllocation)">
+                        Add Allocation
+                    </MudButton>
+                </MudItem>
+
+                @if (_allocations.Any())
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="mt-4 mb-2">Allocations to Apply</MudText>
+                        <MudTable Items="@_allocations"
+                                  Hover="true"
+                                  Dense="true"
+                                  Elevation="0">
+                            <HeaderContent>
+                                <MudTh>Invoice</MudTh>
+                                <MudTh Style="text-align: right">Amount</MudTh>
+                                <MudTh Style="text-align: center">Actions</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Invoice">@context.InvoiceId</MudTd>
+                                <MudTd DataLabel="Amount" Style="text-align: right">@context.Amount.ToString("C2")</MudTd>
+                                <MudTd DataLabel="Actions" Style="text-align: center">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                   Size="Size.Small"
+                                                   Color="Color.Error"
+                                                   OnClick="@(() => RemoveAllocation(context))" />
+                                </MudTd>
+                            </RowTemplate>
+                            <FooterContent>
+                                <MudTh Style="font-weight: bold">Total</MudTh>
+                                <MudTh Style="text-align: right; font-weight: bold">@TotalAllocations.ToString("C2")</MudTh>
+                                <MudTh></MudTh>
+                            </FooterContent>
+                        </MudTable>
+
+                        <MudAlert Severity="Severity.Info" Class="mt-2">
+                            Remaining Unapplied: @RemainingUnapplied.ToString("C2")
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   OnClick="SaveAllocations"
+                   Disabled="@(!_allocations.Any() || _processing)">
+            @if (_processing)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                <MudText Class="ml-2">Processing...</MudText>
+            }
+            else
+            {
+                <MudText>Apply Allocations</MudText>
+            }
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public EventCallback OnSave { get; set; }
+
+    [Inject] private IAccountingClient AccountingClient { get; set; } = default!;
+    [Inject] private ISnackbar Snackbar { get; set; } = default!;
+    [Inject] private IDialogService DialogService { get; set; } = default!;
+
+    private PaymentGetResponse? _payment;
+    private bool _processing = false;
+    private DefaultIdType? _invoiceId;
+    private decimal? _allocationAmount;
+    private List<AllocationItem> _allocations = new();
+
+    private decimal TotalAllocations => _allocations.Sum(a => a.Amount);
+    private decimal RemainingUnapplied => (_payment?.UnappliedAmount ?? 0) - TotalAllocations;
+    private bool CanAddAllocation => _invoiceId.HasValue && _allocationAmount > 0 && _allocationAmount <= RemainingUnapplied;
+
+    public async Task ShowAsync(DefaultIdType paymentId)
+    {
+        _allocations.Clear();
+        _invoiceId = null;
+        _allocationAmount = null;
+
+        var dialogOptions = new DialogOptions
+        {
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true,
+            CloseButton = true,
+            CloseOnEscapeKey = true
+        };
+
+        var dialogReference = DialogService.Show<PaymentAllocateDialog>("Allocate Payment", dialogOptions);
+
+        _payment = await ApiHelper.ExecuteCallGuardedAsync(
+            () => AccountingClient.GetPaymentAsync(paymentId),
+            Snackbar);
+
+        StateHasChanged();
+        await dialogReference.Result;
+    }
+
+    private void AddAllocation()
+    {
+        if (!CanAddAllocation || !_invoiceId.HasValue || !_allocationAmount.HasValue) return;
+
+        if (_allocations.Any(a => a.InvoiceId == _invoiceId.Value))
+        {
+            Snackbar.Add("This invoice is already in the allocation list.", Severity.Warning);
+            return;
+        }
+
+        _allocations.Add(new AllocationItem
+        {
+            InvoiceId = _invoiceId.Value,
+            Amount = _allocationAmount.Value
+        });
+
+        _invoiceId = null;
+        _allocationAmount = null;
+
+        StateHasChanged();
+    }
+
+    private void RemoveAllocation(AllocationItem item)
+    {
+        _allocations.Remove(item);
+        StateHasChanged();
+    }
+
+    private async Task SaveAllocations()
+    {
+        if (_payment == null || !_allocations.Any()) return;
+
+        _processing = true;
+
+        foreach (var allocation in _allocations)
+        {
+            var command = new AllocatePaymentCommand(
+                _payment.Id,
+                allocation.InvoiceId,
+                allocation.Amount);
+
+            var success = await ApiHelper.ExecuteCallGuardedAsync(
+                () => AccountingClient.AllocatePaymentAsync(command),
+                Snackbar,
+                $"Allocated {allocation.Amount:C2} to invoice");
+
+            if (!success)
+            {
+                _processing = false;
+                return;
+            }
+        }
+
+        _processing = false;
+        Snackbar.Add($"Payment allocations applied successfully!", Severity.Success);
+        
+        await OnSave.InvokeAsync();
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private class AllocationItem
+    {
+        public DefaultIdType InvoiceId { get; set; }
+        public decimal Amount { get; set; }
+    }
+}
+

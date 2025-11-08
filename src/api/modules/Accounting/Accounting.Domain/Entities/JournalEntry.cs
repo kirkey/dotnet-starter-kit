@@ -18,7 +18,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryPosted"/>
 /// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryApproved"/>
 /// <seealso cref="Accounting.Domain.Events.JournalEntry.JournalEntryRejected"/>
-public class JournalEntry : AuditableEntity, IAggregateRoot
+public class JournalEntry : AuditableEntityWithApproval, IAggregateRoot
 {
     /// <summary>
     /// Effective date of the journal entry.
@@ -55,24 +55,7 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     /// Example: 1500.00 for the original invoice amount before adjustments.
     /// </summary>
     public decimal OriginalAmount { get; private set; }
-    
-    /// <summary>
-    /// Approval state: Pending, Approved, or Rejected.
-    /// Default: "Pending". Must be approved before posting to GL.
-    /// </summary>
-    public string ApprovalStatus { get; private set; } // Pending, Approved, Rejected
 
-    /// <summary>
-    /// Approver identifier/name when approved or rejected.
-    /// Example: "john.doe", "finance.manager". Set during approval workflow.
-    /// </summary>
-    public string? ApprovedBy { get; private set; }
-
-    /// <summary>
-    /// Date/time when approved or rejected.
-    /// Example: 2025-09-19T10:30:00Z. Set during approval workflow.
-    /// </summary>
-    public DateTime? ApprovedDate { get; private set; }
 
     private readonly List<JournalEntryLine> _lines = new();
     /// <summary>
@@ -85,21 +68,20 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
         // EF Core requires a parameterless constructor for entity instantiation
         ReferenceNumber = string.Empty;
         Source = string.Empty;
-        ApprovalStatus = "Pending";
+        Status = "Pending";
     }
 
     private JournalEntry(DateTime date, string referenceNumber, string description, string source,
         DefaultIdType? periodId = null, decimal originalAmount = 0)
     {
         Date = date;
-        ReferenceNumber = referenceNumber.Trim()
-            ;
+        ReferenceNumber = referenceNumber.Trim();
         Description = description.Trim();
         Source = source.Trim();
         IsPosted = false;
         PeriodId = periodId;
         OriginalAmount = originalAmount;
-        ApprovalStatus = "Pending";
+        Status = "Pending";
 
         QueueDomainEvent(new JournalEntryCreated(Id, Date, ReferenceNumber, Description, Source));
     }
@@ -198,12 +180,13 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Approve(string approvedBy)
     {
-        if (ApprovalStatus == "Approved")
+        if (Status == "Approved")
             throw new InvalidOperationException("Journal entry already approved.");
-        ApprovalStatus = "Approved";
-        ApprovedBy = approvedBy;
-        ApprovedDate = DateTime.UtcNow;
-        QueueDomainEvent(new JournalEntryApproved(Id, ApprovedBy, ApprovedDate.Value));
+        Status = "Approved";
+        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
+        ApproverName = approvedBy;
+        ApprovedOn = DateTime.UtcNow;
+        QueueDomainEvent(new JournalEntryApproved(Id, approvedBy, ApprovedOn.Value));
     }
 
     /// <summary>
@@ -211,12 +194,13 @@ public class JournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Reject(string rejectedBy)
     {
-        if (ApprovalStatus == "Rejected")
+        if (Status == "Rejected")
             throw new InvalidOperationException("Journal entry already rejected.");
-        ApprovalStatus = "Rejected";
-        ApprovedBy = rejectedBy;
-        ApprovedDate = DateTime.UtcNow;
-        QueueDomainEvent(new JournalEntryRejected(Id, ApprovedBy, ApprovedDate.Value));
+        Status = "Rejected";
+        ApprovedBy = Guid.TryParse(rejectedBy, out var guidValue) ? guidValue : null;
+        ApproverName = rejectedBy;
+        ApprovedOn = DateTime.UtcNow;
+        QueueDomainEvent(new JournalEntryRejected(Id, rejectedBy, ApprovedOn.Value));
     }
 
     /// <summary>

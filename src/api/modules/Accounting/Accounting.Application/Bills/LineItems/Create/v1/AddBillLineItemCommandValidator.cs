@@ -10,7 +10,7 @@ public sealed class AddBillLineItemCommandValidator : AbstractValidator<AddBillL
         RuleFor(x => x.BillId)
             .NotEmpty()
             .WithMessage("Bill ID is required.")
-            .Must(id => id != Guid.Empty)
+            .Must(id => id != DefaultIdType.Empty)
             .WithMessage("Bill ID must be a valid identifier.");
 
         RuleFor(x => x.LineNumber)
@@ -46,7 +46,7 @@ public sealed class AddBillLineItemCommandValidator : AbstractValidator<AddBillL
         RuleFor(x => x.ChartOfAccountId)
             .NotEmpty()
             .WithMessage("Chart of account is required.")
-            .Must(id => id != Guid.Empty)
+            .Must(id => id != DefaultIdType.Empty)
             .WithMessage("Chart of account must be a valid identifier.");
 
         RuleFor(x => x.TaxAmount)

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20251104002700_InitialAccountingDb")]
+    [Migration("20251108025721_InitialAccountingDb")]
     partial class InitialAccountingDb
     {
         /// <inheritdoc />
@@ -403,6 +403,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasPrecision(16, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid?>("ApprovedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
 
@@ -423,7 +432,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -447,8 +459,44 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Notes")
                         .HasColumnType("VARCHAR(2048)");
 
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<DateTime?>("ReversalDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.HasKey("Id");
 
@@ -573,6 +621,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime?>("ApprovedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<Guid>("BankAccountId")
                         .HasColumnType("uuid");
 
@@ -612,7 +666,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -635,11 +692,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<decimal>("OutstandingChecksTotal")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("ReconciledBy")
                         .HasMaxLength(256)
@@ -650,6 +725,21 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<DateTime>("ReconciliationDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<decimal>("StatementBalance")
                         .HasPrecision(18, 2)
@@ -683,17 +773,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ApprovalStatus")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                    b.Property<Guid?>("ApprovedBy")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("ApprovedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<DateTime?>("ApprovedDate")
+                    b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<DateTime>("BillDate")
                         .HasColumnType("timestamp with time zone");
@@ -728,6 +815,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
@@ -756,7 +846,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<DateTime?>("PaidDate")
                         .HasColumnType("timestamp with time zone");
@@ -768,14 +858,47 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<Guid?>("PeriodId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("PurchaseOrderNumber")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 2)
@@ -785,9 +908,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApprovalStatus")
-                        .HasDatabaseName("IX_Bills_ApprovalStatus");
 
                     b.HasIndex("BillDate")
                         .HasDatabaseName("IX_Bills_BillDate");
@@ -814,11 +934,26 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("VendorId")
                         .HasDatabaseName("IX_Bills_VendorId");
 
+                    b.HasIndex("IsPaid", "DueDate")
+                        .HasDatabaseName("IX_Bills_IsPaid_DueDate");
+
+                    b.HasIndex("IsPosted", "BillDate")
+                        .HasDatabaseName("IX_Bills_IsPosted_BillDate");
+
+                    b.HasIndex("PeriodId", "BillDate")
+                        .HasDatabaseName("IX_Bills_Period_BillDate");
+
                     b.HasIndex("Status", "DueDate")
                         .HasDatabaseName("IX_Bills_Status_DueDate");
 
                     b.HasIndex("VendorId", "BillDate")
                         .HasDatabaseName("IX_Bills_VendorId_BillDate");
+
+                    b.HasIndex("Status", "DueDate", "TotalAmount")
+                        .HasDatabaseName("IX_Bills_Status_DueDate_Amount");
+
+                    b.HasIndex("VendorId", "Status", "DueDate")
+                        .HasDatabaseName("IX_Bills_Vendor_Status_DueDate");
 
                     b.ToTable("Bills", "accounting");
                 });
@@ -863,7 +998,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -886,7 +1021,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Notes")
                         .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uuid");
@@ -938,12 +1073,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ApprovedBy")
+                    b.Property<Guid?>("ApprovedBy")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("ApprovedDate")
+                    b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("BudgetType")
                         .IsRequired()
@@ -971,6 +1109,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<int>("FiscalYear")
                         .HasColumnType("integer");
@@ -1004,10 +1145,43 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<decimal>("TotalActualAmount")
                         .HasPrecision(18, 2)
@@ -1211,15 +1385,38 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasKey("Id");
 
                     b.HasIndex("AccountCode")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_ChartOfAccounts_AccountCode");
 
-                    b.HasIndex("AccountType");
+                    b.HasIndex("AccountType")
+                        .HasDatabaseName("IX_ChartOfAccounts_AccountType");
 
-                    b.HasIndex("IsActive");
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_ChartOfAccounts_IsActive");
 
-                    b.HasIndex("ParentCode");
+                    b.HasIndex("NormalBalance")
+                        .HasDatabaseName("IX_ChartOfAccounts_NormalBalance");
 
-                    b.HasIndex("UsoaCategory");
+                    b.HasIndex("ParentCode")
+                        .HasDatabaseName("IX_ChartOfAccounts_ParentCode");
+
+                    b.HasIndex("UsoaCategory")
+                        .HasDatabaseName("IX_ChartOfAccounts_UsoaCategory");
+
+                    b.HasIndex("AccountType", "IsActive")
+                        .HasDatabaseName("IX_ChartOfAccounts_Type_IsActive");
+
+                    b.HasIndex("IsActive", "AccountType")
+                        .HasDatabaseName("IX_ChartOfAccounts_IsActive_Type");
+
+                    b.HasIndex("ParentCode", "AccountCode")
+                        .HasDatabaseName("IX_ChartOfAccounts_Parent_Code");
+
+                    b.HasIndex("UsoaCategory", "AccountType")
+                        .HasDatabaseName("IX_ChartOfAccounts_Usoa_Type");
+
+                    b.HasIndex("AccountType", "UsoaCategory", "IsActive")
+                        .HasDatabaseName("IX_ChartOfAccounts_Type_Usoa_IsActive");
 
                     b.ToTable("ChartOfAccounts", "accounting");
                 });
@@ -1521,7 +1718,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp with time zone");
@@ -1555,11 +1752,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<Guid?>("ParentCostCenterId")
                         .HasColumnType("uuid");
@@ -1612,6 +1809,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime?>("ApprovedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
 
@@ -1633,6 +1836,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .HasMaxLength(2048)
                         .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -1668,9 +1874,27 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<Guid?>("OriginalDocumentId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("Reason")
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
+
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<Guid>("ReferenceId")
                         .HasColumnType("uuid");
@@ -1683,6 +1907,21 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<decimal>("RefundedAmount")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -2033,7 +2272,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
+                        .HasColumnType("VARCHAR(2048)")
                         .HasComment("Description of the deferred revenue");
 
                     b.Property<string>("ImageUrl")
@@ -2331,14 +2570,42 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CloseInitiatedDate")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_CloseInitiatedDate");
+
                     b.HasIndex("CloseNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_FiscalPeriodCloses_CloseNumber");
 
-                    b.HasIndex("CloseType");
+                    b.HasIndex("CloseType")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_CloseType");
 
-                    b.HasIndex("PeriodId");
+                    b.HasIndex("CompletedBy")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_CompletedBy");
 
-                    b.HasIndex("Status");
+                    b.HasIndex("CompletedDate")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_CompletedDate");
+
+                    b.HasIndex("InitiatedBy")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_InitiatedBy");
+
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_PeriodId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_Status");
+
+                    b.HasIndex("CloseType", "Status")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_CloseType_Status");
+
+                    b.HasIndex("PeriodId", "Status")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_Period_Status");
+
+                    b.HasIndex("PeriodStartDate", "PeriodEndDate")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_PeriodRange");
+
+                    b.HasIndex("Status", "CloseInitiatedDate")
+                        .HasDatabaseName("IX_FiscalPeriodCloses_Status_CloseInitiatedDate");
 
                     b.ToTable("FiscalPeriodCloses", "accounting");
                 });
@@ -2351,6 +2618,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<Guid>("AccumulatedDepreciationAccountId")
                         .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ApprovedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("AssetName")
                         .IsRequired()
@@ -2409,6 +2685,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<DateTime?>("DisposalDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
+
                     b.Property<string>("GpsCoordinates")
                         .HasColumnType("text");
 
@@ -2450,6 +2729,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Notes")
                         .HasColumnType("VARCHAR(2048)");
 
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -2457,11 +2745,35 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("RegulatoryClassification")
                         .HasColumnType("text");
 
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<bool>("RequiresUsoaReporting")
                         .HasColumnType("boolean");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<decimal>("SalvageValue")
                         .HasPrecision(18, 2)
@@ -2473,6 +2785,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<int>("ServiceLife")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("SubstationName")
                         .HasColumnType("text");
@@ -2502,6 +2817,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AccountCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasComment("Chart of account code");
+
                     b.Property<Guid>("AccountId")
                         .HasColumnType("uuid");
 
@@ -2516,11 +2837,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<decimal>("Credit")
                         .HasPrecision(16, 2)
-                        .HasColumnType("numeric(16,2)");
+                        .HasColumnType("numeric(16,2)")
+                        .HasComment("Credit amount");
 
                     b.Property<decimal>("Debit")
                         .HasPrecision(16, 2)
-                        .HasColumnType("numeric(16,2)");
+                        .HasColumnType("numeric(16,2)")
+                        .HasComment("Debit amount");
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uuid");
@@ -2532,13 +2855,19 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("VARCHAR(2048)");
+                        .HasMaxLength(500)
+                        .HasColumnType("VARCHAR(2048)")
+                        .HasComment("Transaction description");
 
                     b.Property<Guid>("EntryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsPosted")
+                        .HasColumnType("boolean")
+                        .HasComment("Whether the entry has been posted");
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid");
@@ -2550,31 +2879,106 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Memo")
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasComment("Transaction memo or description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("VARCHAR(2048)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("VARCHAR(2048)")
+                        .HasComment("Additional notes");
 
                     b.Property<Guid?>("PeriodId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasComment("Accounting period ID");
+
+                    b.Property<string>("PostedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasComment("User who posted the entry");
+
+                    b.Property<DateTime?>("PostedDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Date when the entry was posted");
 
                     b.Property<string>("ReferenceNumber")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasComment("Reference number or document number");
+
+                    b.Property<string>("Source")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasComment("Source of the transaction (Invoice, Bill, JournalEntry, etc.)");
+
+                    b.Property<Guid?>("SourceId")
+                        .HasColumnType("uuid")
+                        .HasComment("ID of the source document");
 
                     b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Date of the transaction");
 
                     b.Property<string>("UsoaClass")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasComment("USOA classification for regulatory reporting");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeneralLedgers", "accounting");
+                    b.HasIndex("AccountCode")
+                        .HasDatabaseName("IX_GeneralLedger_AccountCode");
+
+                    b.HasIndex("IsPosted")
+                        .HasDatabaseName("IX_GeneralLedger_IsPosted");
+
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("IX_GeneralLedger_PeriodId");
+
+                    b.HasIndex("PostedBy")
+                        .HasDatabaseName("IX_GeneralLedger_PostedBy");
+
+                    b.HasIndex("PostedDate")
+                        .HasDatabaseName("IX_GeneralLedger_PostedDate");
+
+                    b.HasIndex("ReferenceNumber")
+                        .HasDatabaseName("IX_GeneralLedger_ReferenceNumber");
+
+                    b.HasIndex("Source")
+                        .HasDatabaseName("IX_GeneralLedger_Source");
+
+                    b.HasIndex("TransactionDate")
+                        .HasDatabaseName("IX_GeneralLedger_TransactionDate");
+
+                    b.HasIndex("AccountCode", "TransactionDate")
+                        .HasDatabaseName("IX_GeneralLedger_Account_Date");
+
+                    b.HasIndex("IsPosted", "TransactionDate")
+                        .HasDatabaseName("IX_GeneralLedger_IsPosted_Date");
+
+                    b.HasIndex("PeriodId", "TransactionDate")
+                        .HasDatabaseName("IX_GeneralLedger_Period_Date");
+
+                    b.HasIndex("Source", "SourceId")
+                        .HasDatabaseName("IX_GeneralLedger_Source_SourceId");
+
+                    b.HasIndex("TransactionDate", "AccountCode")
+                        .HasDatabaseName("IX_GeneralLedger_Date_Account");
+
+                    b.HasIndex("AccountCode", "PeriodId", "TransactionDate")
+                        .HasDatabaseName("IX_GeneralLedger_Account_Period_Date");
+
+                    b.HasIndex("TransactionDate", "IsPosted", "AccountCode")
+                        .HasDatabaseName("IX_GeneralLedger_Date_IsPosted_Account");
+
+                    b.HasIndex("AccountCode", "TransactionDate", "Debit", "Credit")
+                        .HasDatabaseName("IX_GeneralLedger_Account_Date_Amounts");
+
+                    b.ToTable("GeneralLedger", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.InterCompanyTransaction", b =>
@@ -3093,6 +3497,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("BillingPeriod")
                         .HasDatabaseName("IX_Invoices_BillingPeriod");
 
+                    b.HasIndex("ConsumptionId")
+                        .HasDatabaseName("IX_Invoices_ConsumptionId");
+
                     b.HasIndex("DueDate")
                         .HasDatabaseName("IX_Invoices_DueDate");
 
@@ -3105,6 +3512,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.HasIndex("MemberId")
                         .HasDatabaseName("IX_Invoices_MemberId");
 
+                    b.HasIndex("PaidDate")
+                        .HasDatabaseName("IX_Invoices_PaidDate");
+
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_Invoices_Status");
 
@@ -3116,6 +3526,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasIndex("Status", "DueDate")
                         .HasDatabaseName("IX_Invoices_Status_DueDate");
+
+                    b.HasIndex("InvoiceDate", "Status", "MemberId")
+                        .HasDatabaseName("IX_Invoices_Date_Status_Member");
+
+                    b.HasIndex("Status", "DueDate", "TotalAmount")
+                        .HasDatabaseName("IX_Invoices_Status_DueDate_Amount");
+
+                    b.HasIndex("Status", "MemberId", "InvoiceDate")
+                        .HasDatabaseName("IX_Invoices_Status_Member_Date");
 
                     b.ToTable("Invoices", "accounting");
                 });
@@ -3150,7 +3569,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -3209,17 +3628,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ApprovalStatus")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
+                    b.Property<Guid?>("ApprovedBy")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("ApprovedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<DateTime?>("ApprovedDate")
+                    b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
@@ -3244,6 +3660,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -3277,15 +3696,51 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<Guid?>("PostingBatchId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("ReferenceNumber")
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
 
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("Source")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -3294,20 +3749,44 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApprovalStatus");
+                    b.HasIndex("Date")
+                        .HasDatabaseName("IX_JournalEntries_Date");
 
-                    b.HasIndex("Date");
+                    b.HasIndex("IsPosted")
+                        .HasDatabaseName("IX_JournalEntries_IsPosted");
 
-                    b.HasIndex("IsPosted");
-
-                    b.HasIndex("PeriodId");
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("IX_JournalEntries_PeriodId");
 
                     b.HasIndex("PostingBatchId");
 
                     b.HasIndex("ReferenceNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_JournalEntries_ReferenceNumber");
 
-                    b.HasIndex("Source");
+                    b.HasIndex("Source")
+                        .HasDatabaseName("IX_JournalEntries_Source");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_JournalEntries_Status");
+
+                    b.HasIndex("Date", "IsPosted")
+                        .HasDatabaseName("IX_JournalEntries_Date_IsPosted");
+
+                    b.HasIndex("IsPosted", "Date")
+                        .HasDatabaseName("IX_JournalEntries_IsPosted_Date");
+
+                    b.HasIndex("Source", "Date")
+                        .HasDatabaseName("IX_JournalEntries_Source_Date");
+
+                    b.HasIndex("Status", "Date")
+                        .HasDatabaseName("IX_JournalEntries_Status_Date");
+
+                    b.HasIndex("Date", "Source", "IsPosted")
+                        .HasDatabaseName("IX_JournalEntries_Date_Source_IsPosted");
+
+                    b.HasIndex("PeriodId", "Date", "IsPosted")
+                        .HasDatabaseName("IX_JournalEntries_Period_Date_IsPosted");
 
                     b.ToTable("JournalEntries", "accounting");
 
@@ -3920,6 +4399,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepositToAccountCode")
+                        .HasDatabaseName("IX_Payment_DepositToAccountCode");
+
                     b.HasIndex("MemberId")
                         .HasDatabaseName("IX_Payment_MemberId");
 
@@ -3933,8 +4415,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .IsUnique()
                         .HasDatabaseName("IX_Payment_PaymentNumber");
 
+                    b.HasIndex("ReferenceNumber")
+                        .HasDatabaseName("IX_Payment_ReferenceNumber");
+
+                    b.HasIndex("UnappliedAmount")
+                        .HasDatabaseName("IX_Payment_UnappliedAmount");
+
+                    b.HasIndex("DepositToAccountCode", "PaymentDate")
+                        .HasDatabaseName("IX_Payment_DepositAccount_Date");
+
                     b.HasIndex("MemberId", "PaymentDate")
                         .HasDatabaseName("IX_Payment_Member_PaymentDate");
+
+                    b.HasIndex("PaymentDate", "Amount")
+                        .HasDatabaseName("IX_Payment_PaymentDate_Amount");
+
+                    b.HasIndex("PaymentDate", "PaymentMethod")
+                        .HasDatabaseName("IX_Payment_PaymentDate_Method");
+
+                    b.HasIndex("UnappliedAmount", "PaymentDate")
+                        .HasDatabaseName("IX_Payment_UnappliedAmount_PaymentDate");
+
+                    b.HasIndex("PaymentMethod", "PaymentDate", "Amount")
+                        .HasDatabaseName("IX_Payment_Method_Date_Amount");
 
                     b.ToTable("Payment", "accounting");
                 });
@@ -4020,22 +4523,23 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ApprovalStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid?>("ApprovedBy")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("ApprovedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("ApprovedDate")
+                    b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ApproverName")
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<DateTime>("BatchDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("BatchNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasComment("Unique batch number for tracking");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
@@ -4056,7 +4560,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("VARCHAR(2048)")
+                        .HasComment("Description of the posting batch");
+
+                    b.Property<int>("EntryCount")
+                        .HasColumnType("integer")
+                        .HasComment("Number of journal entries in the batch");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
@@ -4075,18 +4588,115 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                         .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("VARCHAR(2048)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("VARCHAR(2048)")
+                        .HasComment("Additional notes about the batch");
 
                     b.Property<Guid?>("PeriodId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("PostedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasComment("User who posted the batch");
+
+                    b.Property<DateTime?>("PostedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Timestamp when the batch was posted");
+
+                    b.Property<DateTime>("PostingDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Date when the batch is posted to general ledger");
+
+                    b.Property<Guid?>("PreparedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("PreparedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PreparerName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<Guid?>("RecommendedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("RecommendedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecommenderName")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Request")
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("ReversedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasComment("User who reversed the batch");
+
+                    b.Property<DateTime?>("ReversedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Timestamp when the batch was reversed");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReviewerName")
+                        .HasColumnType("VARCHAR(1024)");
+
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR(32)")
+                        .HasComment("Batch status: Draft, Posted, Reversed");
+
+                    b.Property<decimal>("TotalCredits")
+                        .HasPrecision(16, 2)
+                        .HasColumnType("numeric(16,2)")
+                        .HasComment("Total credit amount in the batch");
+
+                    b.Property<decimal>("TotalDebits")
+                        .HasPrecision(16, 2)
+                        .HasColumnType("numeric(16,2)")
+                        .HasComment("Total debit amount in the batch");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PostingBatches", "accounting");
+                    b.HasIndex("BatchNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_PostingBatch_BatchNumber");
+
+                    b.HasIndex("PostedBy")
+                        .HasDatabaseName("IX_PostingBatch_PostedBy");
+
+                    b.HasIndex("PostedOn")
+                        .HasDatabaseName("IX_PostingBatch_PostedOn");
+
+                    b.HasIndex("PostingDate")
+                        .HasDatabaseName("IX_PostingBatch_PostingDate");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_PostingBatch_Status");
+
+                    b.HasIndex("PostedBy", "PostedOn")
+                        .HasDatabaseName("IX_PostingBatch_PostedBy_PostedOn");
+
+                    b.HasIndex("Status", "PostingDate")
+                        .HasDatabaseName("IX_PostingBatch_Status_PostingDate");
+
+                    b.HasIndex("PostingDate", "Status", "BatchNumber")
+                        .HasDatabaseName("IX_PostingBatch_PostingDate_Status_BatchNumber");
+
+                    b.HasIndex("Status", "TotalDebits", "TotalCredits")
+                        .HasDatabaseName("IX_PostingBatch_Status_Amounts");
+
+                    b.ToTable("PostingBatch", "accounting");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Entities.PowerPurchaseAgreement", b =>
@@ -4762,7 +5372,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp with time zone");
@@ -4806,7 +5416,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<Guid?>("PostingBatchId")
                         .HasColumnType("uuid");
@@ -5256,7 +5866,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<DateTime>("EffectiveDate")
                         .HasColumnType("timestamp with time zone");
@@ -5289,7 +5899,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("VARCHAR(1024)");
 
                     b.Property<string>("Notes")
                         .HasColumnType("VARCHAR(2048)");
@@ -5458,12 +6068,39 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PeriodId");
+                    b.HasIndex("FinalizedBy")
+                        .HasDatabaseName("IX_TrialBalances_FinalizedBy");
 
-                    b.HasIndex("Status");
+                    b.HasIndex("FinalizedDate")
+                        .HasDatabaseName("IX_TrialBalances_FinalizedDate");
+
+                    b.HasIndex("PeriodEndDate")
+                        .HasDatabaseName("IX_TrialBalances_PeriodEndDate");
+
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("IX_TrialBalances_PeriodId");
+
+                    b.HasIndex("PeriodStartDate")
+                        .HasDatabaseName("IX_TrialBalances_PeriodStartDate");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_TrialBalances_Status");
 
                     b.HasIndex("TrialBalanceNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_TrialBalances_TrialBalanceNumber");
+
+                    b.HasIndex("PeriodId", "Status")
+                        .HasDatabaseName("IX_TrialBalances_Period_Status");
+
+                    b.HasIndex("PeriodStartDate", "PeriodEndDate")
+                        .HasDatabaseName("IX_TrialBalances_PeriodRange");
+
+                    b.HasIndex("Status", "FinalizedDate")
+                        .HasDatabaseName("IX_TrialBalances_Status_FinalizedDate");
+
+                    b.HasIndex("Status", "PeriodEndDate")
+                        .HasDatabaseName("IX_TrialBalances_Status_PeriodEnd");
 
                     b.ToTable("TrialBalances", "accounting");
                 });
@@ -5618,7 +6255,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Description")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<Guid>("ExpenseAccountId")
                         .HasColumnType("uuid");
@@ -5654,7 +6291,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("VARCHAR(2048)");
 
                     b.Property<string>("Reason")
                         .HasMaxLength(512)
@@ -5763,7 +6400,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                             b1.HasKey("Id");
 
-                            b1.HasIndex("FiscalPeriodCloseId");
+                            b1.HasIndex("FiscalPeriodCloseId")
+                                .HasDatabaseName("IX_FiscalPeriodCloseTasks_CloseId");
+
+                            b1.HasIndex("IsComplete")
+                                .HasDatabaseName("IX_FiscalPeriodCloseTasks_IsComplete");
+
+                            b1.HasIndex("TaskName")
+                                .HasDatabaseName("IX_FiscalPeriodCloseTasks_TaskName");
 
                             b1.ToTable("FiscalPeriodCloseTasks", "accounting");
 
@@ -5804,7 +6448,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                             b1.HasKey("Id");
 
-                            b1.HasIndex("FiscalPeriodCloseId");
+                            b1.HasIndex("FiscalPeriodCloseId")
+                                .HasDatabaseName("IX_FiscalPeriodCloseValidationIssues_CloseId");
+
+                            b1.HasIndex("IsResolved")
+                                .HasDatabaseName("IX_FiscalPeriodCloseValidationIssues_IsResolved");
+
+                            b1.HasIndex("Severity")
+                                .HasDatabaseName("IX_FiscalPeriodCloseValidationIssues_Severity");
 
                             b1.ToTable("FiscalPeriodCloseValidationIssues", "accounting");
 
@@ -5970,7 +6621,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Accounting
 
                             b1.HasKey("Id");
 
-                            b1.HasIndex("TrialBalanceId");
+                            b1.HasIndex("AccountCode")
+                                .HasDatabaseName("IX_TrialBalanceLineItems_AccountCode");
+
+                            b1.HasIndex("AccountType")
+                                .HasDatabaseName("IX_TrialBalanceLineItems_AccountType");
+
+                            b1.HasIndex("TrialBalanceId")
+                                .HasDatabaseName("IX_TrialBalanceLineItems_TrialBalanceId");
 
                             b1.ToTable("TrialBalanceLineItems", "accounting");
 

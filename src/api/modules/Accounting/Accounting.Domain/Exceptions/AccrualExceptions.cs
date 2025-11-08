@@ -41,3 +41,14 @@ public sealed class InvalidAccrualDateException() : ForbiddenException("accrual 
 /// Exception thrown when the accrual number format is invalid.
 /// </summary>
 public sealed class InvalidAccrualNumberFormatException() : ForbiddenException("accrual number cannot be empty or contain only whitespace");
+
+/// <summary>
+/// Exception thrown when trying to approve an already approved accrual.
+/// </summary>
+public sealed class AccrualAlreadyApprovedException(DefaultIdType id) : ForbiddenException($"accrual with id {id} is already approved");
+
+/// <summary>
+/// Exception thrown when trying to post an unapproved accrual.
+/// </summary>
+public sealed class AccrualNotApprovedException(DefaultIdType id) : ForbiddenException($"accrual with id {id} must be approved before posting");
+

@@ -31,7 +31,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="Accounting.Domain.Events.Bill.BillUpdated"/>
 /// <seealso cref="Accounting.Domain.Events.Bill.BillPosted"/>
 /// <seealso cref="Accounting.Domain.Events.Bill.BillApproved"/>
-public class Bill : AuditableEntity, IAggregateRoot
+public class Bill : AuditableEntityWithApproval, IAggregateRoot
 {
     private const int MaxBillNumberLength = 50;
     private const int MaxDescriptionLength = 500;
@@ -68,13 +68,6 @@ public class Bill : AuditableEntity, IAggregateRoot
     public decimal TotalAmount { get; private set; }
 
     /// <summary>
-    /// Current status of the bill.
-    /// Values: "Draft", "Submitted", "Approved", "Posted", "Paid", "Void".
-    /// Default: "Draft".
-    /// </summary>
-    public string Status { get; private set; }
-
-    /// <summary>
     /// Indicates whether the bill has been posted to the general ledger.
     /// Default: false. Once posted, the bill becomes largely immutable.
     /// </summary>
@@ -92,24 +85,6 @@ public class Bill : AuditableEntity, IAggregateRoot
     /// </summary>
     public DateTime? PaidDate { get; private set; }
 
-    /// <summary>
-    /// Approval status of the bill.
-    /// Values: "Pending", "Approved", "Rejected".
-    /// Default: "Pending". Must be approved before posting.
-    /// </summary>
-    public string ApprovalStatus { get; private set; }
-
-    /// <summary>
-    /// User identifier who approved or rejected the bill.
-    /// Example: "john.doe@company.com". Set during approval workflow.
-    /// </summary>
-    public string? ApprovedBy { get; private set; }
-
-    /// <summary>
-    /// Date/time when the bill was approved or rejected.
-    /// Set during approval workflow.
-    /// </summary>
-    public DateTime? ApprovedDate { get; private set; }
 
     /// <summary>
     /// Optional accounting period identifier to which this bill belongs.
@@ -143,7 +118,6 @@ public class Bill : AuditableEntity, IAggregateRoot
     {
         BillNumber = string.Empty;
         Status = "Draft";
-        ApprovalStatus = "Pending";
     }
 
     // Private constructor with required parameters
@@ -196,7 +170,6 @@ public class Bill : AuditableEntity, IAggregateRoot
         Status = "Draft";
         IsPosted = false;
         IsPaid = false;
-        ApprovalStatus = "Pending";
 
         QueueDomainEvent(new BillCreated(Id, BillNumber, VendorId, BillDate, DueDate));
     }
@@ -343,16 +316,16 @@ public class Bill : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(approvedBy))
             throw new ArgumentException("Approver is required", nameof(approvedBy));
 
-        if (ApprovalStatus == "Approved")
+        if (Status == "Approved")
             throw new BillAlreadyApprovedException(Id);
 
         if (IsPosted)
             throw new BillCannotBeModifiedException(Id, "Bill is already posted");
 
-        ApprovalStatus = "Approved";
-        ApprovedBy = approvedBy.Trim();
-        ApprovedDate = DateTime.UtcNow;
         Status = "Approved";
+        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
+        ApproverName = approvedBy.Trim();
+        ApprovedOn = DateTime.UtcNow;
 
         QueueDomainEvent(new BillApproved(Id, approvedBy));
         return this;
@@ -371,10 +344,11 @@ public class Bill : AuditableEntity, IAggregateRoot
         if (IsPosted)
             throw new BillCannotBeModifiedException(Id, "Bill is already posted");
 
-        ApprovalStatus = "Rejected";
-        ApprovedBy = rejectedBy.Trim();
-        ApprovedDate = DateTime.UtcNow;
         Status = "Rejected";
+        ApprovedBy = Guid.TryParse(rejectedBy, out var guidValue) ? guidValue : null;
+        ApproverName = rejectedBy.Trim();
+        ApprovedOn = DateTime.UtcNow;
+        Remarks = reason?.Trim();
         Notes = string.IsNullOrWhiteSpace(Notes)
             ? $"Rejected: {reason}"
             : $"{Notes}\nRejected: {reason}";
@@ -392,7 +366,7 @@ public class Bill : AuditableEntity, IAggregateRoot
         if (IsPosted)
             throw new BillAlreadyPostedException(Id);
 
-        if (ApprovalStatus != "Approved")
+        if (Status != "Approved")
             throw new BillNotApprovedException(Id);
 
         if (TotalAmount <= 0)

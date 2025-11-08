@@ -28,7 +28,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="Accounting.Domain.Events.Budget.BudgetApproved"/>
 /// <seealso cref="Accounting.Domain.Events.Budget.BudgetActivated"/>
 /// <seealso cref="Accounting.Domain.Events.Budget.BudgetClosed"/>
-public class Budget : AuditableEntity, IAggregateRoot
+public class Budget : AuditableEntityWithApproval, IAggregateRoot
 {
     private const int MaxNameLength = 256;
     private const int MaxBudgetTypeLength = 32;
@@ -62,13 +62,6 @@ public class Budget : AuditableEntity, IAggregateRoot
     public string BudgetType { get; private set; } = string.Empty; // Operating, Capital, Cash Flow
 
     /// <summary>
-    /// Current workflow status of the budget with lifecycle management.
-    /// Example: "Draft" (editable), "Approved" (finalized), "Active" (in use), "Closed" (period ended).
-    /// Default: "Draft" on creation. Allowed values: Draft, Approved, Active, Closed.
-    /// </summary>
-    public string Status { get; private set; } = string.Empty; // Draft, Approved, Active, Closed
-
-    /// <summary>
     /// Sum of all budgeted amounts across all budget lines.
     /// Example: 1500000.00 for total annual operating budget of $1.5M.
     /// Default: 0.00. Automatically recalculated when budget lines are added/updated/removed.
@@ -82,19 +75,6 @@ public class Budget : AuditableEntity, IAggregateRoot
     /// </summary>
     public decimal TotalActualAmount { get; private set; }
 
-    /// <summary>
-    /// Date and time when the budget was approved for execution.
-    /// Example: 2025-01-15T09:30:00Z for budget approved on January 15th, 2025.
-    /// Default: null until budget approval occurs.
-    /// </summary>
-    public DateTime? ApprovedDate { get; private set; }
-
-    /// <summary>
-    /// Username or identifier of the person who approved the budget.
-    /// Example: "john.smith" or "CFO" for the approving authority.
-    /// Default: null until budget approval occurs.
-    /// </summary>
-    public string? ApprovedBy { get; private set; }
 
     private readonly List<BudgetDetail> _budgetDetails = new();
     /// <summary>
@@ -273,10 +253,11 @@ public class Budget : AuditableEntity, IAggregateRoot
             throw new EmptyBudgetCannotBeApprovedException(Id);
 
         Status = "Approved";
-        ApprovedDate = DateTime.UtcNow;
-        ApprovedBy = approvedBy.Trim();
+        ApprovedOn = DateTime.UtcNow;
+        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
+        ApproverName = approvedBy.Trim();
 
-        QueueDomainEvent(new BudgetApproved(Id, ApprovedDate.Value, ApprovedBy));
+        QueueDomainEvent(new BudgetApproved(Id, ApprovedOn.Value, ApproverName));
         return this;
     }
 

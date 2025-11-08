@@ -44,16 +44,6 @@ public class BillConfiguration : IEntityTypeConfiguration<Bill>
         builder.Property(x => x.PaidDate)
             .IsRequired(false);
 
-        builder.Property(x => x.ApprovalStatus)
-            .IsRequired()
-            .HasMaxLength(20);
-
-        builder.Property(x => x.ApprovedBy)
-            .HasMaxLength(256);
-
-        builder.Property(x => x.ApprovedDate)
-            .IsRequired(false);
-
         builder.Property(x => x.PeriodId)
             .IsRequired(false);
 
@@ -92,9 +82,6 @@ public class BillConfiguration : IEntityTypeConfiguration<Bill>
         builder.HasIndex(x => x.IsPaid)
             .HasDatabaseName("IX_Bills_IsPaid");
 
-        builder.HasIndex(x => x.ApprovalStatus)
-            .HasDatabaseName("IX_Bills_ApprovalStatus");
-
         builder.HasIndex(x => x.PeriodId)
             .HasDatabaseName("IX_Bills_PeriodId");
 
@@ -104,6 +91,22 @@ public class BillConfiguration : IEntityTypeConfiguration<Bill>
 
         builder.HasIndex(x => new { x.Status, x.DueDate })
             .HasDatabaseName("IX_Bills_Status_DueDate");
+
+        builder.HasIndex(x => new { x.IsPaid, x.DueDate })
+            .HasDatabaseName("IX_Bills_IsPaid_DueDate");
+
+        builder.HasIndex(x => new { x.IsPosted, x.BillDate })
+            .HasDatabaseName("IX_Bills_IsPosted_BillDate");
+
+
+        builder.HasIndex(x => new { x.VendorId, x.Status, x.DueDate })
+            .HasDatabaseName("IX_Bills_Vendor_Status_DueDate");
+
+        builder.HasIndex(x => new { x.PeriodId, x.BillDate })
+            .HasDatabaseName("IX_Bills_Period_BillDate");
+
+        builder.HasIndex(x => new { x.Status, x.DueDate, x.TotalAmount })
+            .HasDatabaseName("IX_Bills_Status_DueDate_Amount");
 
         // Configure one-to-many relationship with BillLineItems
         builder.HasMany(x => x.LineItems)

@@ -10,3 +10,6 @@ public sealed class InvalidDepreciationAmountException() : ForbiddenException("d
 public sealed class InvalidAssetPurchasePriceException() : ForbiddenException("asset purchase price must be positive");
 public sealed class InvalidAssetServiceLifeException() : ForbiddenException("asset service life must be positive");
 public sealed class InvalidAssetSalvageValueException() : ForbiddenException("salvage value cannot be negative or greater than purchase price");
+public sealed class FixedAssetAlreadyApprovedException(DefaultIdType id) : ForbiddenException($"fixed asset with id {id} is already approved");
+public sealed class FixedAssetNotApprovedException(DefaultIdType id) : ForbiddenException($"fixed asset with id {id} must be approved before depreciation");
+public sealed class NegativeBookValueException(DefaultIdType id) : ForbiddenException($"fixed asset with id {id} cannot have negative book value");

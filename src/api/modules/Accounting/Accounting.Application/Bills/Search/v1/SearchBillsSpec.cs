@@ -61,7 +61,7 @@ public sealed class SearchBillsSpec : Specification<Bill>
 
         if (!string.IsNullOrWhiteSpace(filter.ApprovalStatus))
         {
-            Query.Where(b => b.ApprovalStatus == filter.ApprovalStatus);
+            Query.Where(b => b.Status == filter.ApprovalStatus);
         }
 
         // Ordering
