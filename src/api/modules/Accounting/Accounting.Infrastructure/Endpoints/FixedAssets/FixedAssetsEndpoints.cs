@@ -16,12 +16,17 @@ public static class FixedAssetsEndpoints
             .WithTags("Fixed-Assets")
             .WithDescription("Endpoints for managing fixed assets");
 
-        // Version 1 endpoints
+        // CRUD operations
         fixedAssetsGroup.MapFixedAssetCreateEndpoint();
         fixedAssetsGroup.MapFixedAssetGetEndpoint();
         fixedAssetsGroup.MapFixedAssetUpdateEndpoint();
         fixedAssetsGroup.MapFixedAssetDeleteEndpoint();
         fixedAssetsGroup.MapFixedAssetSearchEndpoint();
+
+        // Workflow operations
+        fixedAssetsGroup.MapFixedAssetDepreciateEndpoint();
+        fixedAssetsGroup.MapFixedAssetDisposeEndpoint();
+        fixedAssetsGroup.MapFixedAssetUpdateMaintenanceEndpoint();
 
         return app;
     }

@@ -16,11 +16,16 @@ public static class DepreciationMethodsEndpoints
             .WithTags("Depreciation-Methods")
             .WithDescription("Endpoints for managing depreciation methods");
 
-        // Version 1 endpoints
+        // CRUD operations
         depreciationMethodsGroup.MapDepreciationMethodCreateEndpoint();
+        depreciationMethodsGroup.MapDepreciationMethodGetEndpoint();
         depreciationMethodsGroup.MapDepreciationMethodUpdateEndpoint();
         depreciationMethodsGroup.MapDepreciationMethodDeleteEndpoint();
-        depreciationMethodsGroup.MapDepreciationMethodGetEndpoint();
+        depreciationMethodsGroup.MapDepreciationMethodSearchEndpoint();
+
+        // Workflow operations
+        depreciationMethodsGroup.MapDepreciationMethodActivateEndpoint();
+        depreciationMethodsGroup.MapDepreciationMethodDeactivateEndpoint();
 
         return app;
     }

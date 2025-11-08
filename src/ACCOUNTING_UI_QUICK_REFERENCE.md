@@ -67,8 +67,8 @@ Core operations needed soon:
 Asset and expense management:
 
 ```
-❌ FixedAsset              - Asset tracking & depreciation
-❌ DepreciationMethod      - Depreciation calculation
+❌ FixedAsset              - Asset tracking & depreciation ✅ API Complete
+❌ DepreciationMethod      - Depreciation calculation ✅ API Complete
 ❌ PrepaidExpense          - Expense amortization
 ❌ DeferredRevenue         - Revenue recognition
 ❌ WriteOff                - Bad debt management
@@ -160,6 +160,6 @@ See **ACCOUNTING_UI_IMPLEMENTATION_STATUS.md** for:
 
 ---
 
-**Last Updated:** November 7, 2025  
+**Last Updated:** November 8, 2025  
 **Status:** ✅ Review Complete
 
