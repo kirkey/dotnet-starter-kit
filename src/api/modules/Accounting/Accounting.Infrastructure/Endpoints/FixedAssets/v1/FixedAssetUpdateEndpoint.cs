@@ -7,7 +7,7 @@ public static class FixedAssetUpdateEndpoint
     internal static RouteHandlerBuilder MapFixedAssetUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateFixedAssetRequest request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateFixedAssetCommand request, ISender mediator) =>
             {
                 if (id != request.Id) return Results.BadRequest();
                 var response = await mediator.Send(request).ConfigureAwait(false);

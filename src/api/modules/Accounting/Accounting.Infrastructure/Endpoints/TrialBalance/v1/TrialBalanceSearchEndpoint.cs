@@ -10,7 +10,7 @@ public static class TrialBalanceSearchEndpoint
     internal static RouteHandlerBuilder MapTrialBalanceSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (TrialBalanceSearchQuery request, ISender mediator) =>
+            .MapPost("/search", async (TrialBalanceSearchRequest request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

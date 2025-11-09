@@ -74,9 +74,9 @@ public record GetTaxCodeRequest(DefaultIdType Id) : IRequest<TaxCodeResponse>;
 | Budgets | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | BankReconciliations | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | CostCenters | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
-| AccountingPeriods | ? | ? | ? | 🔄 Pending |
-| FiscalPeriodCloses | ? | ? | ? | 🔄 Pending |
-| TrialBalance | ? | ? | ? | 🔄 Pending |
+| AccountingPeriods | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| FiscalPeriodCloses | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| TrialBalance | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | Accruals | ? | ? | ? | 🔄 Pending |
 | PrepaidExpenses | ? | ? | ? | 🔄 Pending |
 | DeferredRevenues | ? | ? | ? | 🔄 Pending |

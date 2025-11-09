@@ -14,9 +14,9 @@ public static class SearchBankReconciliationsEndpoint
     internal static RouteHandlerBuilder MapSearchBankReconciliationsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchBankReconciliationsCommand command, ISender mediator) =>
+            .MapPost("/search", async (SearchBankReconciliationsRequest request, ISender mediator) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchBankReconciliationsEndpoint))

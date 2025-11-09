@@ -8,9 +8,9 @@ public static class BudgetSearchEndpoint
     internal static RouteHandlerBuilder MapBudgetSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] SearchBudgetsQuery command) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchBudgetsRequest request) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(BudgetSearchEndpoint))

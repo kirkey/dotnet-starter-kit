@@ -6,12 +6,12 @@ namespace Accounting.Application.TrialBalance.Search.v1;
 public sealed class TrialBalanceSearchHandler(
     IReadRepository<Domain.Entities.TrialBalance> repository,
     ILogger<TrialBalanceSearchHandler> logger)
-    : IRequestHandler<TrialBalanceSearchQuery, PagedList<TrialBalanceSearchResponse>>
+    : IRequestHandler<TrialBalanceSearchRequest, PagedList<TrialBalanceSearchResponse>>
 {
     private readonly IReadRepository<Domain.Entities.TrialBalance> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     private readonly ILogger<TrialBalanceSearchHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-    public async Task<PagedList<TrialBalanceSearchResponse>> Handle(TrialBalanceSearchQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<TrialBalanceSearchResponse>> Handle(TrialBalanceSearchRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

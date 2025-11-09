@@ -6,12 +6,12 @@ namespace Accounting.Application.TrialBalance.Get.v1;
 public sealed class TrialBalanceGetHandler(
     IReadRepository<Domain.Entities.TrialBalance> repository,
     ILogger<TrialBalanceGetHandler> logger)
-    : IRequestHandler<TrialBalanceGetQuery, TrialBalanceGetResponse>
+    : IRequestHandler<TrialBalanceGetRequest, TrialBalanceGetResponse>
 {
     private readonly IReadRepository<Domain.Entities.TrialBalance> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     private readonly ILogger<TrialBalanceGetHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-    public async Task<TrialBalanceGetResponse> Handle(TrialBalanceGetQuery request, CancellationToken cancellationToken)
+    public async Task<TrialBalanceGetResponse> Handle(TrialBalanceGetRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

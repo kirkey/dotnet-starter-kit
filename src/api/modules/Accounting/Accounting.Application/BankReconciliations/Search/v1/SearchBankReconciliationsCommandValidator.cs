@@ -1,10 +1,10 @@
 namespace Accounting.Application.BankReconciliations.Search.v1;
 
 /// <summary>
-/// Validator for SearchBankReconciliationsCommand.
+/// Validator for SearchBankReconciliationsRequest.
 /// Validates search filters and pagination parameters.
 /// </summary>
-public sealed class SearchBankReconciliationsCommandValidator : AbstractValidator<SearchBankReconciliationsCommand>
+public sealed class SearchBankReconciliationsCommandValidator : AbstractValidator<SearchBankReconciliationsRequest>
 {
     public SearchBankReconciliationsCommandValidator()
     {

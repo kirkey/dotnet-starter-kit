@@ -9,7 +9,7 @@ namespace Accounting.Application.AccountingPeriods.Specs;
 /// </summary>
 public sealed class SearchAccountingPeriodsSpec : EntitiesByPaginationFilterSpec<AccountingPeriod, AccountingPeriodResponse>
 {
-    public SearchAccountingPeriodsSpec(SearchAccountingPeriodsQuery request) : base(request)
+    public SearchAccountingPeriodsSpec(SearchAccountingPeriodsRequest request) : base(request)
     {
         Query
             .OrderBy(p => p.Name!, !request.HasOrderBy())

@@ -1,6 +1,6 @@
 namespace Accounting.Application.FixedAssets.Update;
 
-public class UpdateFixedAssetRequestValidator : AbstractValidator<UpdateFixedAssetRequest>
+public class UpdateFixedAssetRequestValidator : AbstractValidator<UpdateFixedAssetCommand>
 {
     public UpdateFixedAssetRequestValidator()
     {

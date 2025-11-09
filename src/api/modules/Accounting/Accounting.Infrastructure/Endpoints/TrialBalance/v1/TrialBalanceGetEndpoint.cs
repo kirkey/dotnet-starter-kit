@@ -12,7 +12,7 @@ public static class TrialBalanceGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new TrialBalanceGetQuery(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new TrialBalanceGetRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(TrialBalanceGetEndpoint))

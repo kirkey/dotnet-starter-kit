@@ -5,45 +5,47 @@ namespace Accounting.Application.TrialBalance.Search.v1;
 /// </summary>
 public sealed class TrialBalanceSearchSpec : Specification<Domain.Entities.TrialBalance>
 {
-    public TrialBalanceSearchSpec(TrialBalanceSearchQuery query)
+    public TrialBalanceSearchSpec(TrialBalanceSearchRequest request)
     {
-        ArgumentNullException.ThrowIfNull(query);
+        ArgumentNullException.ThrowIfNull(request);
 
-        if (query.PeriodId.HasValue && query.PeriodId.Value != DefaultIdType.Empty)
+        if (request.PeriodId.HasValue && request.PeriodId.Value != DefaultIdType.Empty)
         {
-            Query.Where(tb => tb.PeriodId == query.PeriodId.Value);
+            Query.Where(tb => tb.PeriodId == request.PeriodId.Value);
         }
 
-        if (query.StartDate.HasValue)
+        if (request.StartDate.HasValue)
         {
-            Query.Where(tb => tb.PeriodStartDate >= query.StartDate.Value);
+            Query.Where(tb => tb.PeriodStartDate >= request.StartDate.Value);
         }
 
-        if (query.EndDate.HasValue)
+        if (request.EndDate.HasValue)
         {
-            Query.Where(tb => tb.PeriodEndDate <= query.EndDate.Value);
+            Query.Where(tb => tb.PeriodEndDate <= request.EndDate.Value);
         }
 
-        if (!string.IsNullOrWhiteSpace(query.Status))
+        if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            Query.Where(tb => tb.Status == query.Status);
+            Query.Where(tb => tb.Status == request.Status);
         }
 
-        if (query.IsBalanced.HasValue)
+        if (request.IsBalanced.HasValue)
         {
-            Query.Where(tb => tb.IsBalanced == query.IsBalanced.Value);
+            Query.Where(tb => tb.IsBalanced == request.IsBalanced.Value);
         }
 
-        if (!string.IsNullOrWhiteSpace(query.TrialBalanceNumber))
+        if (!string.IsNullOrWhiteSpace(request.TrialBalanceNumber))
         {
-            Query.Where(tb => tb.TrialBalanceNumber.Contains(query.TrialBalanceNumber));
+            Query.Where(tb => tb.TrialBalanceNumber.Contains(request.TrialBalanceNumber));
         }
 
-        Query.Skip(query.PageNumber * query.PageSize)
-             .Take(query.PageSize);
+        Query.Skip(request.PageNumber * request.PageSize)
+             .Take(request.PageSize);
 
         Query.OrderByDescending(tb => tb.GeneratedDate)
              .ThenBy(tb => tb.TrialBalanceNumber);
     }
 }
+
+
 

@@ -4,9 +4,9 @@ namespace Accounting.Application.FixedAssets.Update;
 
 public sealed class UpdateFixedAssetHandler(
     [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
-    : IRequestHandler<UpdateFixedAssetRequest, DefaultIdType>
+    : IRequestHandler<UpdateFixedAssetCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(UpdateFixedAssetRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateFixedAssetCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

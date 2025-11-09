@@ -5,9 +5,9 @@ namespace Accounting.Application.AccountingPeriods.Search.v1;
 
 public sealed class SearchAccountingPeriodsHandler(
     [FromKeyedServices("accounting:periods")] IReadRepository<AccountingPeriod> repository)
-    : IRequestHandler<SearchAccountingPeriodsQuery, PagedList<AccountingPeriodResponse>>
+    : IRequestHandler<SearchAccountingPeriodsRequest, PagedList<AccountingPeriodResponse>>
 {
-    public async Task<PagedList<AccountingPeriodResponse>> Handle(SearchAccountingPeriodsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<AccountingPeriodResponse>> Handle(SearchAccountingPeriodsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

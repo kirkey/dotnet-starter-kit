@@ -3,13 +3,13 @@ using Accounting.Application.AccountingPeriods.Responses;
 namespace Accounting.Application.AccountingPeriods.Search.v1;
 
 /// <summary>
-/// Query model for searching accounting periods with pagination and filters.
+/// Request model for searching accounting periods with pagination and filters.
 /// </summary>
 /// <remarks>
-/// Use this query to request a paged list of <see cref="AccountingPeriodResponse"/> based on
+/// Use this request to get a paged list of <see cref="AccountingPeriodResponse"/> based on
 /// optional filters like name, fiscal year, and closed state.
 /// </remarks>
-public class SearchAccountingPeriodsQuery : PaginationFilter, IRequest<PagedList<AccountingPeriodResponse>>
+public class SearchAccountingPeriodsRequest : PaginationFilter, IRequest<PagedList<AccountingPeriodResponse>>
 {
     /// <summary>
     /// Optional partial name to match accounting period names.
