@@ -36,8 +36,8 @@ public partial class Banks
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<BankSearchCommand>();
-                var result = await Client.BankSearchEndpointAsync("1", paginationFilter);
+                var request = new BankSearchRequest();
+                var result = await Client.BankSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<BankResponse>>();
             },
             createFunc: async viewModel =>

@@ -34,7 +34,6 @@ public partial class Warehouses
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<SearchWarehousesCommand>();
-
                 var result = await Client.SearchWarehousesEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<WarehouseResponse>>();
             },

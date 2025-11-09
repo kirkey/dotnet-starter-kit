@@ -43,7 +43,7 @@ public class AutocompleteCustomerId : AutocompleteBase<CustomerDetailsDto, IClie
     /// </summary>
     protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
-        var request = new CustomerSearchQuery
+        var request = new CustomerSearchRequest
         {
             PageNumber = 1,
             PageSize = 10,

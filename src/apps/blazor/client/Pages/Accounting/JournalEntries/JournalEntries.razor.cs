@@ -90,15 +90,21 @@ public partial class JournalEntries
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var searchQuery = filter.Adapt<SearchJournalEntriesQuery>();
-                searchQuery.ReferenceNumber = ReferenceNumber;
-                searchQuery.Source = Source;
-                searchQuery.FromDate = FromDate;
-                searchQuery.ToDate = ToDate;
-                searchQuery.IsPosted = IsPosted;
-                searchQuery.ApprovalStatus = ApprovalStatus;
+                var request = new SearchJournalEntriesRequest
+                {
+                    ReferenceNumber = ReferenceNumber,
+                    Source = Source,
+                    FromDate = FromDate,
+                    ToDate = ToDate,
+                    IsPosted = IsPosted,
+                    ApprovalStatus = ApprovalStatus,
+                    
+                    
+                    
+                    
+                };
 
-                var result = await Client.JournalEntrySearchEndpointAsync("1", searchQuery);
+                var result = await Client.JournalEntrySearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<JournalEntryResponse>>();
             },
             createFunc: async viewModel =>

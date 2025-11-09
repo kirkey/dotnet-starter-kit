@@ -160,7 +160,7 @@ public partial class Invoices
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchInvoicesCommand>();
+                var paginationFilter = filter.Adapt<SearchInvoicesRequest>();
                 var result = await Client.SearchInvoicesEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<InvoiceResponse>>();
             },

@@ -45,10 +45,6 @@ public partial class InventoryReservations
             {
                 var command = new SearchInventoryReservationsCommand
                 {
-                    PageNumber = filter.PageNumber,
-                    PageSize = filter.PageSize,
-                    Keyword = filter.Keyword,
-                    OrderBy = filter.OrderBy ?? ["ReservationNumber"],
                     ItemId = SearchItemId,
                     WarehouseId = SearchWarehouseId,
                     Status = SearchStatus,

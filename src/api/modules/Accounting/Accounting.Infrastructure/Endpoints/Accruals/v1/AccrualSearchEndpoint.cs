@@ -9,9 +9,9 @@ public static class AccrualSearchEndpoint
     internal static RouteHandlerBuilder MapAccrualSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchAccrualsQuery query, ISender mediator) =>
+            .MapPost("/search", async (SearchAccrualsRequest request, ISender mediator) =>
             {
-                var response = await mediator.Send(query).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(AccrualSearchEndpoint))

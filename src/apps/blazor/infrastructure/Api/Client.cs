@@ -153,7 +153,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsCommand body);
+        System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -165,7 +165,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Approve a bill
@@ -406,7 +406,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body);
+        System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -418,7 +418,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create AP account
@@ -889,7 +889,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body);
+        System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -901,7 +901,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new bank reconciliation
@@ -1004,7 +1004,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body);
+        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1016,7 +1016,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Start a bank reconciliation
@@ -1211,7 +1211,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchCommand body);
+        System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1223,7 +1223,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Add a line item to a bill
@@ -1717,7 +1717,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body);
+        System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1729,7 +1729,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// get a budget by id
@@ -1939,10 +1939,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<System.Guid> ChartOfAccountCreateEndpointAsync(string version, CreateChartOfAccountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// update a chart of account
+        /// Update a chart of account
         /// </summary>
         /// <remarks>
-        /// update a chart of account
+        /// Updates an existing chart of account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -1951,10 +1951,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update a chart of account
+        /// Update a chart of account
         /// </summary>
         /// <remarks>
-        /// update a chart of account
+        /// Updates an existing chart of account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -1985,10 +1985,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task ChartOfAccountDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// get a chart of account by id
+        /// Get a chart of account by ID
         /// </summary>
         /// <remarks>
-        /// get a chart of account by id
+        /// Retrieves a chart of account by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -1997,10 +1997,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// get a chart of account by id
+        /// Get a chart of account by ID
         /// </summary>
         /// <remarks>
-        /// get a chart of account by id
+        /// Retrieves a chart of account by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -2008,27 +2008,27 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<ChartOfAccountResponse> ChartOfAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a list of chart of accounts
+        /// Search chart of accounts
         /// </summary>
         /// <remarks>
-        /// Gets a list of chart of accounts with pagination and filtering support
+        /// Searches chart of accounts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body);
+        System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of chart of accounts
+        /// Search chart of accounts
         /// </summary>
         /// <remarks>
-        /// Gets a list of chart of accounts with pagination and filtering support
+        /// Searches chart of accounts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Import chart of accounts from Excel file
@@ -2913,7 +2913,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body);
+        System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2925,7 +2925,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new cycle count
@@ -3879,7 +3879,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetRequest body);
+        System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3891,7 +3891,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// delete fixed asset by id
@@ -5121,7 +5121,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesCommand body);
+        System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5133,7 +5133,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Send an invoice
@@ -5711,27 +5711,27 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task JournalEntryDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a list of journal entries
+        /// Search journal entries
         /// </summary>
         /// <remarks>
-        /// Gets a list of journal entries with pagination and filtering support
+        /// Searches journal entries with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body);
+        System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of journal entries
+        /// Search journal entries
         /// </summary>
         /// <remarks>
-        /// Gets a list of journal entries with pagination and filtering support
+        /// Searches journal entries with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new journal entry
@@ -6570,7 +6570,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchQuery body);
+        System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -6582,7 +6582,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Allocate a payment
@@ -9687,7 +9687,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchQuery body);
+        System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -9699,7 +9699,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Finalize a trial balance
@@ -10107,10 +10107,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<VendorCreateResponse> VendorCreateEndpointAsync(string version, VendorCreateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// update a vendor
+        /// Update a vendor
         /// </summary>
         /// <remarks>
-        /// update a vendor
+        /// Updates an existing vendor
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -10119,10 +10119,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update a vendor
+        /// Update a vendor
         /// </summary>
         /// <remarks>
-        /// update a vendor
+        /// Updates an existing vendor
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -10153,10 +10153,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task VendorDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// get a vendor by id
+        /// Get a vendor by ID
         /// </summary>
         /// <remarks>
-        /// get a vendor by id
+        /// Retrieves a vendor by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -10165,10 +10165,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// get a vendor by id
+        /// Get a vendor by ID
         /// </summary>
         /// <remarks>
-        /// get a vendor by id
+        /// Retrieves a vendor by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -10176,27 +10176,27 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<VendorGetResponse> VendorGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a list of vendors
+        /// Search vendors
         /// </summary>
         /// <remarks>
-        /// Gets a list of vendors with pagination and filtering support
+        /// Searches vendors with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body);
+        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of vendors
+        /// Search vendors
         /// </summary>
         /// <remarks>
-        /// Gets a list of vendors with pagination and filtering support
+        /// Searches vendors with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new warehouse location
@@ -10986,16 +10986,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -11266,7 +11256,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsCommand body)
+        public virtual System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsRequest body)
         {
             return SearchBillsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -11281,7 +11271,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BillResponsePagedList> SearchBillsEndpointAsync(string version, SearchBillsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -12531,7 +12521,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body)
+        public virtual System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body)
         {
             return AccountingPeriodSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -12546,7 +12536,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AccountingPeriodResponsePagedList> AccountingPeriodSearchEndpointAsync(string version, SearchAccountingPeriodsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15005,7 +14995,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body)
+        public virtual System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsRequest body)
         {
             return AccrualSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -15020,7 +15010,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AccrualResponsePagedList> AccrualSearchEndpointAsync(string version, SearchAccrualsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -15591,7 +15581,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body)
+        public virtual System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsRequest body)
         {
             return SearchBankReconciliationsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -15606,7 +15596,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BankReconciliationResponsePagedList> SearchBankReconciliationsEndpointAsync(string version, SearchBankReconciliationsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -16425,16 +16415,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -16715,7 +16695,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchCommand body)
+        public virtual System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchRequest body)
         {
             return BankSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -16730,7 +16710,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BankResponsePagedList> BankSearchEndpointAsync(string version, BankSearchRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -19088,7 +19068,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body)
+        public virtual System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body)
         {
             return BudgetSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -19103,7 +19083,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<BudgetResponsePagedList> BudgetSearchEndpointAsync(string version, SearchBudgetsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -20104,10 +20084,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// update a chart of account
+        /// Update a chart of account
         /// </summary>
         /// <remarks>
-        /// update a chart of account
+        /// Updates an existing chart of account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -20119,10 +20099,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update a chart of account
+        /// Update a chart of account
         /// </summary>
         /// <remarks>
-        /// update a chart of account
+        /// Updates an existing chart of account
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -20190,6 +20170,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -20307,10 +20297,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// get a chart of account by id
+        /// Get a chart of account by ID
         /// </summary>
         /// <remarks>
-        /// get a chart of account by id
+        /// Retrieves a chart of account by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -20322,10 +20312,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// get a chart of account by id
+        /// Get a chart of account by ID
         /// </summary>
         /// <remarks>
-        /// get a chart of account by id
+        /// Retrieves a chart of account by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -20388,6 +20378,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         {
                             var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
@@ -20408,30 +20408,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Gets a list of chart of accounts
+        /// Search chart of accounts
         /// </summary>
         /// <remarks>
-        /// Gets a list of chart of accounts with pagination and filtering support
+        /// Searches chart of accounts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body)
+        public virtual System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body)
         {
             return ChartOfAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of chart of accounts
+        /// Search chart of accounts
         /// </summary>
         /// <remarks>
-        /// Gets a list of chart of accounts with pagination and filtering support
+        /// Searches chart of accounts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ChartOfAccountResponsePagedList> ChartOfAccountSearchEndpointAsync(string version, SearchChartOfAccountRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -20490,6 +20490,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -24707,16 +24717,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -24866,7 +24866,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body)
+        public virtual System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchRequest body)
         {
             return CustomerSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -24881,7 +24881,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomerSearchResponsePagedList> CustomerSearchEndpointAsync(string version, CustomerSearchRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -29536,7 +29536,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetRequest body)
+        public virtual System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetCommand body)
         {
             return FixedAssetUpdateEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -29551,7 +29551,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Guid> FixedAssetUpdateEndpointAsync(string version, System.Guid id, UpdateFixedAssetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -35540,7 +35540,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesCommand body)
+        public virtual System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesRequest body)
         {
             return SearchInvoicesEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -35555,7 +35555,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<InvoiceResponsePagedList> SearchInvoicesEndpointAsync(string version, SearchInvoicesRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -38403,16 +38403,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -38568,30 +38558,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Gets a list of journal entries
+        /// Search journal entries
         /// </summary>
         /// <remarks>
-        /// Gets a list of journal entries with pagination and filtering support
+        /// Searches journal entries with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body)
+        public virtual System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body)
         {
             return JournalEntrySearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of journal entries
+        /// Search journal entries
         /// </summary>
         /// <remarks>
-        /// Gets a list of journal entries with pagination and filtering support
+        /// Searches journal entries with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<JournalEntryResponsePagedList> JournalEntrySearchEndpointAsync(string version, SearchJournalEntriesRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -38650,6 +38640,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -42663,16 +42663,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -42826,7 +42816,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchQuery body)
+        public virtual System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchRequest body)
         {
             return PaymentSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -42841,7 +42831,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PaymentSearchResponsePagedList> PaymentSearchEndpointAsync(string version, PaymentSearchRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -57590,7 +57580,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchQuery body)
+        public virtual System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchRequest body)
         {
             return TrialBalanceSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -57605,7 +57595,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TrialBalanceSearchResponsePagedList> TrialBalanceSearchEndpointAsync(string version, TrialBalanceSearchRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -59563,10 +59553,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// update a vendor
+        /// Update a vendor
         /// </summary>
         /// <remarks>
-        /// update a vendor
+        /// Updates an existing vendor
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -59578,10 +59568,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update a vendor
+        /// Update a vendor
         /// </summary>
         /// <remarks>
-        /// update a vendor
+        /// Updates an existing vendor
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -59649,6 +59639,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -59766,10 +59766,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// get a vendor by id
+        /// Get a vendor by ID
         /// </summary>
         /// <remarks>
-        /// get a vendor by id
+        /// Retrieves a vendor by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -59781,10 +59781,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// get a vendor by id
+        /// Get a vendor by ID
         /// </summary>
         /// <remarks>
-        /// get a vendor by id
+        /// Retrieves a vendor by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -59847,6 +59847,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         {
                             var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
@@ -59867,30 +59877,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Gets a list of vendors
+        /// Search vendors
         /// </summary>
         /// <remarks>
-        /// Gets a list of vendors with pagination and filtering support
+        /// Searches vendors with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body)
+        public virtual System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchRequest body)
         {
             return VendorSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of vendors
+        /// Search vendors
         /// </summary>
         /// <remarks>
-        /// Gets a list of vendors with pagination and filtering support
+        /// Searches vendors with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<VendorSearchResponsePagedList> VendorSearchEndpointAsync(string version, VendorSearchRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -59949,6 +59959,16 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -63463,7 +63483,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BankSearchCommand
+    public partial class BankSearchRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -67438,7 +67458,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CustomerSearchQuery
+    public partial class CustomerSearchRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -71171,7 +71191,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PaymentSearchQuery
+    public partial class PaymentSearchRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -73451,7 +73471,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchAccountingPeriodsQuery
+    public partial class SearchAccountingPeriodsRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -73484,7 +73504,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchAccrualsQuery
+    public partial class SearchAccrualsRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -73520,7 +73540,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBankReconciliationsCommand
+    public partial class SearchBankReconciliationsRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -73559,7 +73579,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBillsCommand
+    public partial class SearchBillsRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -73679,7 +73699,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBudgetsQuery
+    public partial class SearchBudgetsRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -73745,7 +73765,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchChartOfAccountQuery
+    public partial class SearchChartOfAccountRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -74285,7 +74305,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchInvoicesCommand
+    public partial class SearchInvoicesRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -74444,7 +74464,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchJournalEntriesQuery
+    public partial class SearchJournalEntriesRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -76106,7 +76126,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TrialBalanceSearchQuery
+    public partial class TrialBalanceSearchRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -76838,7 +76858,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateFixedAssetRequest
+    public partial class UpdateFixedAssetCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -78434,7 +78454,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class VendorSearchQuery
+    public partial class VendorSearchRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]

@@ -39,8 +39,9 @@ public class AutocompleteParentAccountId : AutocompleteBase<ChartOfAccountRespon
     /// <returns>Enumerable of category ids matching the search.</returns>
     protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
-        var request = new SearchChartOfAccountQuery
+        var request = new SearchChartOfAccountRequest
         {
+            PageNumber = 1,
             PageSize = 10,
             AdvancedSearch = new Search
             {

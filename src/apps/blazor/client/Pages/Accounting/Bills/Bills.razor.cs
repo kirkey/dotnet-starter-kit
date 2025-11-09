@@ -152,7 +152,7 @@ public partial class Bills
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchBillsCommand>();
+                var paginationFilter = filter.Adapt<SearchBillsRequest>();
                 var result = await Client.SearchBillsEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<BillSearchResponse>>();
             },

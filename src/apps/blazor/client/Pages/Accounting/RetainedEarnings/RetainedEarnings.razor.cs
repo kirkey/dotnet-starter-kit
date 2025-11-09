@@ -71,7 +71,6 @@ public partial class RetainedEarnings
                 };
 
                 var result = await Client.RetainedEarningsSearchEndpointAsync("1", request);
-                
                 return result.Adapt<PaginationResponse<RetainedEarningsResponse>>();
             },
             createFunc: async viewModel =>

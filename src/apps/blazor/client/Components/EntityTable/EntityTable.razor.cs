@@ -197,7 +197,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
         filter.AdvancedSearch = new Search
         {
             Fields = Context.SearchFields,
-            Keyword = filter.Keyword
+            
         };
         filter.Keyword = null;
 
@@ -518,7 +518,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
             filter.AdvancedSearch = new Search
             {
                 Fields = Context.SearchFields,
-                Keyword = filter.Keyword
+                
             };
             filter.Keyword = null;
         }

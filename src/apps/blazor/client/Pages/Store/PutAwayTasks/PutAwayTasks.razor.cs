@@ -45,10 +45,6 @@ public partial class PutAwayTasks
             {
                 var command = new SearchPutAwayTasksCommand
                 {
-                    PageNumber = filter.PageNumber,
-                    PageSize = filter.PageSize,
-                    Keyword = filter.Keyword,
-                    OrderBy = filter.OrderBy ?? ["Priority desc", "CreatedOn desc"],
                     WarehouseId = SearchWarehouseId,
                     Status = SearchStatus,
                     PutAwayStrategy = SearchPutAwayStrategy,

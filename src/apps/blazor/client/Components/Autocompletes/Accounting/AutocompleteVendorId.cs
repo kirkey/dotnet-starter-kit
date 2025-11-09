@@ -28,11 +28,11 @@ public class AutocompleteVendorId : MudAutocomplete<DefaultIdType?>
     {
         try
         {
-            var filter = new VendorSearchQuery
+            var filter = new VendorSearchRequest
             {
                 Keyword = value,
                 PageNumber = 1,
-                PageSize = 50
+                PageSize = 10
             };
 
             var response = await ApiHelper.ExecuteCallGuardedAsync(

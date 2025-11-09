@@ -29,10 +29,10 @@ public class AutocompleteChartOfAccountCode : AutocompleteBase<ChartOfAccountRes
         if (_cache.TryGetValue(code, out var cached)) return cached;
 
         // There is no dedicated get-by-code endpoint; use search with AccountCode filter and take the first match.
-        var request = new SearchChartOfAccountQuery
+        var request = new SearchChartOfAccountRequest
         {
             PageNumber = 1,
-            PageSize = 1,
+            PageSize = 10,
             AdvancedSearch = new Search
             {
                 // Include accountCode explicitly to allow quick exact/starts-with lookups.
@@ -59,7 +59,7 @@ public class AutocompleteChartOfAccountCode : AutocompleteBase<ChartOfAccountRes
     /// </summary>
     protected override async Task<IEnumerable<string?>> SearchText(string? value, CancellationToken token)
     {
-        var request = new SearchChartOfAccountQuery
+        var request = new SearchChartOfAccountRequest
         {
             PageNumber = 1,
             PageSize = 10,

@@ -52,7 +52,7 @@ public class AutocompleteBank : AutocompleteBase<BankResponse, IClient, DefaultI
     /// </summary>
     protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
-        var request = new BankSearchCommand
+        var request = new BankSearchRequest
         {
             PageNumber = 1,
             PageSize = 10,

@@ -52,12 +52,8 @@ public partial class TrialBalance
             idFunc: tb => tb.Id,
             searchFunc: async filter =>
             {
-                var searchQuery = new TrialBalanceSearchQuery
+                var searchQuery = new TrialBalanceSearchRequest
                 {
-                    PageNumber = filter.PageNumber,
-                    PageSize = filter.PageSize,
-                    Keyword = filter.Keyword,
-                    OrderBy = filter.OrderBy,
                     TrialBalanceNumber = TrialBalanceNumber,
                     PeriodId = SearchPeriodId,
                     Status = SearchStatus,

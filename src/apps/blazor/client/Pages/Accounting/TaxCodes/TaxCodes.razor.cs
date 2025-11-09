@@ -33,8 +33,8 @@ public partial class TaxCodes
             ],
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchTaxCodesCommand>();
-                var result = await Client.TaxCodeSearchEndpointAsync("1", paginationFilter);
+                var request = new SearchTaxCodesCommand();
+                var result = await Client.TaxCodeSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<TaxCodeResponse>>();
             },
             enableAdvancedSearch: true,

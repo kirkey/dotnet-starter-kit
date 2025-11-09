@@ -35,7 +35,7 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
     /// </summary>
     protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
-        var request = new SearchAccountingPeriodsQuery
+        var request = new SearchAccountingPeriodsRequest
         {
             PageNumber = 1,
             PageSize = 10,

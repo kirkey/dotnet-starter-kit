@@ -43,7 +43,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
     /// </summary>
     protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
-        var request = new SearchChartOfAccountQuery
+        var request = new SearchChartOfAccountRequest
         {
             PageNumber = 1,
             PageSize = 10,

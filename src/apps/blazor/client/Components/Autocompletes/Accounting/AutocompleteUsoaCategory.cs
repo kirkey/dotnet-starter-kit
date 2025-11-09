@@ -21,10 +21,14 @@ public class AutocompleteUsoaCategory : MudAutocomplete<string>
 
     private async Task<IEnumerable<string>>? SearchText(string? value, CancellationToken cancellationToken)
     {
-        var filter = new SearchChartOfAccountQuery
+        var filter = new SearchChartOfAccountRequest
         {
-            AdvancedSearch = new Search { Fields = ["usoaCategory", "description", "notes"], Keyword = value },
-            PageSize = 10
+            PageNumber = 1,
+            PageSize = 10,
+            AdvancedSearch = new Search
+            {
+                Fields = ["usoaCategory", "description", "notes"], Keyword = value
+            },
         };
 
         if (await ApiHelper.ExecuteCallGuardedAsync(

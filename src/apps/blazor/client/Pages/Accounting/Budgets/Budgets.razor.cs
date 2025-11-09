@@ -29,8 +29,7 @@ public partial class Budgets
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchBudgetsQuery>();
-
+                var paginationFilter = filter.Adapt<SearchBudgetsRequest>();
                 var result = await Client.BudgetSearchEndpointAsync("1", paginationFilter);
                 return result.Adapt<PaginationResponse<BudgetResponse>>();
             },
