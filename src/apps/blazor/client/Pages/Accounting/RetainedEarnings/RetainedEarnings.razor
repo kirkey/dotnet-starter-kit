@@ -1,0 +1,129 @@
+@page "/accounting/retained-earnings"
+
+<PageHeader Title="Retained Earnings" Header="Retained Earnings" SubHeader="Manage annual retained earnings with tracking of net income, distributions, and equity changes." />
+
+<EntityTable @ref="_table" TEntity="RetainedEarningsResponse" TId="DefaultIdType" TRequest="RetainedEarningsViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="@SearchFiscalYear"
+                             Label="Fiscal Year"
+                             Variant="Variant.Outlined"
+                             Min="1900"
+                             Max="2100"
+                             HideSpinButtons="false" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Open")">Open</MudSelectItem>
+                <MudSelectItem Value="@("Closed")">Closed</MudSelectItem>
+                <MudSelectItem Value="@("Locked")">Locked</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox T="bool" @bind-Checked="@SearchOnlyOpen" Label="Show Open Years Only" Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="retainedEarnings">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" 
+                     OnClick="@(() => OnViewDetails(retainedEarnings.Id))">
+            View Details
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.TrendingUp" 
+                     OnClick="@(() => OnUpdateNetIncome(retainedEarnings.Id))"
+                     Disabled="@(retainedEarnings.IsClosed)">
+            Update Net Income
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.MonetizationOn" 
+                     OnClick="@(() => OnRecordDistribution(retainedEarnings.Id))"
+                     Disabled="@(retainedEarnings.IsClosed)">
+            Record Distribution
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Lock" 
+                     OnClick="@(() => OnClose(retainedEarnings.Id))"
+                     Disabled="@(retainedEarnings.IsClosed)">
+            Close Year
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.LockOpen" 
+                     OnClick="@(() => OnReopen(retainedEarnings.Id))"
+                     Disabled="@(!retainedEarnings.IsClosed)">
+            Reopen Year
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Assessment" 
+                     OnClick="@(() => OnViewStatement(retainedEarnings.Id))">
+            View Statement
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" sm="6" md="6">
+            <MudNumericField @bind-Value="context.FiscalYear"
+                             For="@(() => context.FiscalYear)"
+                             Label="Fiscal Year"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Min="1900"
+                             Max="2100"
+                             HideSpinButtons="false"
+                             HelperText="Calendar year for retained earnings" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudNumericField @bind-Value="context.OpeningBalance"
+                             For="@(() => context.OpeningBalance)"
+                             Label="Opening Balance"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2"
+                             HelperText="Beginning balance (from prior year)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudDatePicker @bind-Date="context.FiscalYearStartDate"
+                           For="@(() => context.FiscalYearStartDate)"
+                           Label="Fiscal Year Start Date"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudDatePicker @bind-Date="context.FiscalYearEndDate"
+                           For="@(() => context.FiscalYearEndDate)"
+                           Label="Fiscal Year End Date"
+                           DateFormat="yyyy-MM-dd"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <AutocompleteChartOfAccountId @bind-Value="context.RetainedEarningsAccountId"
+                                          For="@(() => context.RetainedEarningsAccountId)"
+                                          Label="Retained Earnings Account"
+                                          Variant="Variant.Filled"
+                                          HelperText="GL account for retained earnings (optional)" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Brief description of the fiscal year" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes or comments" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

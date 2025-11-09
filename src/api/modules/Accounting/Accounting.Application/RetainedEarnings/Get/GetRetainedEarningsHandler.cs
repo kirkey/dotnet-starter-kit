@@ -4,14 +4,14 @@ using Accounting.Application.RetainedEarnings.Responses;
 namespace Accounting.Application.RetainedEarnings.Get;
 
 /// <summary>
-/// Handler for retrieving retained earnings by ID.
+/// Handler for retrieving detailed retained earnings information by ID.
 /// </summary>
 public sealed class GetRetainedEarningsHandler(
     ILogger<GetRetainedEarningsHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<Domain.Entities.RetainedEarnings> repository)
-    : IRequestHandler<GetRetainedEarningsRequest, RetainedEarningsResponse>
+    : IRequestHandler<GetRetainedEarningsRequest, RetainedEarningsDetailsResponse>
 {
-    public async Task<RetainedEarningsResponse> Handle(GetRetainedEarningsRequest request, CancellationToken cancellationToken)
+    public async Task<RetainedEarningsDetailsResponse> Handle(GetRetainedEarningsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -25,7 +25,7 @@ public sealed class GetRetainedEarningsHandler(
 
         logger.LogInformation("Retrieved retained earnings {RetainedEarningsId}", retainedEarnings.Id);
 
-        return new RetainedEarningsResponse
+        return new RetainedEarningsDetailsResponse
         {
             Id = retainedEarnings.Id,
             FiscalYear = retainedEarnings.FiscalYear,
@@ -35,7 +35,19 @@ public sealed class GetRetainedEarningsHandler(
             EndingBalance = retainedEarnings.ClosingBalance,
             Status = retainedEarnings.Status,
             IsClosed = retainedEarnings.IsClosed,
-            Description = retainedEarnings.Description
+            Description = retainedEarnings.Description,
+            CapitalContributions = retainedEarnings.CapitalContributions,
+            OtherEquityChanges = retainedEarnings.OtherEquityChanges,
+            ApproprietedAmount = retainedEarnings.ApproprietedAmount,
+            UnappropriatedAmount = retainedEarnings.UnappropriatedAmount,
+            FiscalYearStartDate = retainedEarnings.FiscalYearStartDate,
+            FiscalYearEndDate = retainedEarnings.FiscalYearEndDate,
+            ClosedDate = retainedEarnings.ClosedDate,
+            ClosedBy = retainedEarnings.ClosedBy,
+            RetainedEarningsAccountId = retainedEarnings.RetainedEarningsAccountId,
+            DistributionCount = retainedEarnings.DistributionCount,
+            LastDistributionDate = retainedEarnings.LastDistributionDate,
+            Notes = retainedEarnings.Notes
         };
     }
 }

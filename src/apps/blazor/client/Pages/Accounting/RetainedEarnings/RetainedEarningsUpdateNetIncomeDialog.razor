@@ -1,0 +1,54 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">Update Net Income - FY @_fiscalYear</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        Record or update the net income for the fiscal year
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        Net income is typically transferred from the income statement at year-end.
+                    </MudAlert>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudNumericField @bind-Value="_netIncome"
+                                     Label="Net Income"
+                                     Variant="Variant.Outlined"
+                                     Required="true"
+                                     Format="N2"
+                                     HelperText="Enter net income (positive for profit, negative for loss)"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.TrendingUp" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_notes"
+                                  Label="Notes"
+                                  Variant="Variant.Outlined"
+                                  Lines="3"
+                                  HelperText="Optional notes about this update" />
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" 
+                   Color="Color.Primary" 
+                   OnClick="Submit"
+                   Disabled="@_loading">
+            Update
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

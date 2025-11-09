@@ -7,9 +7,9 @@ public static class RetainedEarningsReopenEndpoint
     internal static RouteHandlerBuilder MapRetainedEarningsReopenEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reopen", async (DefaultIdType id, ReopenRetainedEarningsCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/reopen", async (DefaultIdType id, ReopenRetainedEarningsCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var reId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = reId, Message = "Fiscal year reopened successfully" });
             })
@@ -17,7 +17,6 @@ public static class RetainedEarningsReopenEndpoint
             .WithSummary("Reopen fiscal year")
             .WithDescription("Reopens a closed fiscal year for retained earnings")
             .Produces<object>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);

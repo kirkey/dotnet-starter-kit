@@ -1,0 +1,203 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else if (_retainedEarnings != null)
+        {
+            <MudGrid>
+                <!-- Header -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h5">Retained Earnings - FY @_retainedEarnings.FiscalYear</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        @_retainedEarnings.FiscalYearStartDate.ToString("MMM dd, yyyy") - @_retainedEarnings.FiscalYearEndDate.ToString("MMM dd, yyyy")
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <!-- Status Card -->
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Status</MudText>
+                            <MudChip T="string"
+                                     Color="@GetStatusColor(_retainedEarnings.Status)" 
+                                     Size="Size.Small">
+                                @_retainedEarnings.Status
+                            </MudChip>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Distributions Count</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Primary">@_retainedEarnings.DistributionCount</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                @if (_retainedEarnings.IsClosed)
+                {
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudCard Elevation="0" Class="pa-4">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.caption">Closed Date</MudText>
+                                <MudText Typo="Typo.body2">@_retainedEarnings.ClosedDate?.ToString("MMM dd, yyyy")</MudText>
+                            </MudStack>
+                        </MudCard>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudCard Elevation="0" Class="pa-4">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.caption">Closed By</MudText>
+                                <MudText Typo="Typo.body2">@_retainedEarnings.ClosedBy</MudText>
+                            </MudStack>
+                        </MudCard>
+                    </MudItem>
+                }
+
+                <!-- Financial Summary -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Financial Summary</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_retainedEarnings.BeginningBalance.ToString("N2")"
+                                  Label="Opening Balance"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.AccountBalance" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_retainedEarnings.NetIncome.ToString("N2")"
+                                  Label="Net Income"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.TrendingUp"
+                                  Style="@GetIncomeColor(_retainedEarnings.NetIncome)" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_retainedEarnings.Dividends.ToString("N2")"
+                                  Label="Distributions"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.MonetizationOn" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_retainedEarnings.CapitalContributions.ToString("N2")"
+                                  Label="Capital Contributions"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.AddCircle" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_retainedEarnings.OtherEquityChanges.ToString("N2")"
+                                  Label="Other Equity Changes"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.SwapHoriz" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="@_retainedEarnings.EndingBalance.ToString("N2")"
+                                  Label="Closing Balance"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.AccountBalanceWallet"
+                                  Style="font-weight: bold;" />
+                </MudItem>
+
+                <!-- Appropriation Details -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4 mb-2">Appropriation</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@_retainedEarnings.ApproprietedAmount.ToString("N2")"
+                                  Label="Appropriated Amount"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  HelperText="Reserved for specific purposes" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@_retainedEarnings.UnappropriatedAmount.ToString("N2")"
+                                  Label="Unappropriated Amount"
+                                  ReadOnly
+                                  Variant="Variant.Outlined"
+                                  HelperText="Available for distribution" />
+                </MudItem>
+
+                <!-- Calculation Display -->
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        <strong>Calculation:</strong> Opening Balance (@_retainedEarnings.BeginningBalance.ToString("N2")) 
+                        + Net Income (@_retainedEarnings.NetIncome.ToString("N2")) 
+                        - Distributions (@_retainedEarnings.Dividends.ToString("N2")) 
+                        + Capital Contributions (@_retainedEarnings.CapitalContributions.ToString("N2")) 
+                        + Other Changes (@_retainedEarnings.OtherEquityChanges.ToString("N2")) 
+                        = Closing Balance (@_retainedEarnings.EndingBalance.ToString("N2"))
+                    </MudAlert>
+                </MudItem>
+
+                <!-- Distribution History -->
+                @if (_retainedEarnings.LastDistributionDate.HasValue)
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Distribution History</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Normal">
+                            Last distribution recorded: @_retainedEarnings.LastDistributionDate.Value.ToString("MMM dd, yyyy")
+                        </MudAlert>
+                    </MudItem>
+                }
+
+                <!-- Description and Notes -->
+                @if (!string.IsNullOrEmpty(_retainedEarnings.Description))
+                {
+                    <MudItem xs="12">
+                        <MudTextField Value="@_retainedEarnings.Description"
+                                      Label="Description"
+                                      ReadOnly
+                                      Variant="Variant.Outlined"
+                                      Lines="2" />
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(_retainedEarnings.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudTextField Value="@_retainedEarnings.Notes"
+                                      Label="Notes"
+                                      ReadOnly
+                                      Variant="Variant.Outlined"
+                                      Lines="3" />
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

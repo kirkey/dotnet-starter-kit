@@ -1,0 +1,126 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else if (_retainedEarnings != null)
+        {
+            <MudGrid>
+                <!-- Header -->
+                <MudItem xs="12" Class="text-center">
+                    <MudText Typo="Typo.h5">Statement of Retained Earnings</MudText>
+                    <MudText Typo="Typo.h6">For the Fiscal Year Ended @_retainedEarnings.FiscalYearEndDate.ToString("MMMM dd, yyyy")</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <!-- Statement Items -->
+                <MudItem xs="12">
+                    <MudSimpleTable Hover="true" Dense="true" Class="statement-table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Retained Earnings, Beginning of Year</strong></td>
+                                <td class="text-right">@_retainedEarnings.BeginningBalance.ToString("N2")</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 2rem;">Add: Net Income for the Year</td>
+                                <td class="text-right" style="@GetIncomeColor(_retainedEarnings.NetIncome)">
+                                    @_retainedEarnings.NetIncome.ToString("N2")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 2rem;">Add: Capital Contributions</td>
+                                <td class="text-right">@_retainedEarnings.CapitalContributions.ToString("N2")</td>
+                            </tr>
+                            @if (_retainedEarnings.OtherEquityChanges != 0)
+                            {
+                                <tr>
+                                    <td style="padding-left: 2rem;">@(_retainedEarnings.OtherEquityChanges > 0 ? "Add" : "Less"): Other Equity Changes</td>
+                                    <td class="text-right">@_retainedEarnings.OtherEquityChanges.ToString("N2")</td>
+                                </tr>
+                            }
+                            <tr style="border-top: 1px solid #ddd;">
+                                <td><strong>Subtotal</strong></td>
+                                <td class="text-right"><strong>@GetSubtotal().ToString("N2")</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 2rem;">Less: Distributions to Members</td>
+                                <td class="text-right">(@_retainedEarnings.Dividends.ToString("N2"))</td>
+                            </tr>
+                            <tr style="border-top: 2px solid #333; border-bottom: 3px double #333;">
+                                <td><strong>Retained Earnings, End of Year</strong></td>
+                                <td class="text-right"><strong>@_retainedEarnings.EndingBalance.ToString("N2")</strong></td>
+                            </tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+
+                <!-- Appropriation Breakdown -->
+                @if (_retainedEarnings.ApproprietedAmount > 0 || _retainedEarnings.UnappropriatedAmount > 0)
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mb-2">Appropriation of Retained Earnings</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudSimpleTable Hover="true" Dense="true">
+                            <tbody>
+                                <tr>
+                                    <td>Appropriated for specific purposes</td>
+                                    <td class="text-right">@_retainedEarnings.ApproprietedAmount.ToString("N2")</td>
+                                </tr>
+                                <tr>
+                                    <td>Unappropriated (available for distribution)</td>
+                                    <td class="text-right">@_retainedEarnings.UnappropriatedAmount.ToString("N2")</td>
+                                </tr>
+                                <tr style="border-top: 2px solid #333; border-bottom: 3px double #333;">
+                                    <td><strong>Total Retained Earnings</strong></td>
+                                    <td class="text-right"><strong>@_retainedEarnings.EndingBalance.ToString("N2")</strong></td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+                }
+
+                <!-- Notes -->
+                @if (!string.IsNullOrEmpty(_retainedEarnings.Description))
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-4" />
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2">Notes:</MudText>
+                        <MudText Typo="Typo.body2">@_retainedEarnings.Description</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton Variant="Variant.Filled" 
+                   Color="Color.Primary" 
+                   StartIcon="@Icons.Material.Filled.Print"
+                   OnClick="Print">
+            Print
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+<style>
+    .statement-table td {
+        padding: 8px 16px;
+    }
+    .text-right {
+        text-align: right;
+    }
+</style>
+

@@ -1,0 +1,71 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">Record Distribution - FY @_fiscalYear</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        Record dividends, patronage distributions, or capital returns
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        Available for distribution: @_availableAmount.ToString("N2")
+                    </MudAlert>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudNumericField @bind-Value="_amount"
+                                     Label="Distribution Amount"
+                                     Variant="Variant.Outlined"
+                                     Required="true"
+                                     Format="N2"
+                                     Min="0"
+                                     HelperText="Amount to distribute"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.MonetizationOn" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDatePicker @bind-Date="_distributionDate"
+                                   Label="Distribution Date"
+                                   DateFormat="yyyy-MM-dd"
+                                   Variant="Variant.Outlined"
+                                   Required="true" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_description"
+                                  Label="Description"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  HelperText="e.g., Annual dividend payment, Patronage distribution" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_notes"
+                                  Label="Notes"
+                                  Variant="Variant.Outlined"
+                                  Lines="3"
+                                  HelperText="Optional notes about this distribution" />
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" 
+                   Color="Color.Primary" 
+                   OnClick="Submit"
+                   Disabled="@_loading">
+            Record Distribution
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

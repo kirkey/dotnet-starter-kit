@@ -17,7 +17,7 @@ public sealed class RecordDistributionHandler(
         var re = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (re == null) throw new NotFoundException($"Retained earnings with ID {request.Id} not found");
 
-        re.RecordDistribution(request.Amount, request.DistributionDate, request.DistributionType);
+        re.RecordDistribution(request.Amount, request.DistributionDate, request.Description ?? "Distribution");
         await _repository.UpdateAsync(re, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 

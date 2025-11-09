@@ -8373,7 +8373,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<RetainedEarningsCreateResponse> RetainedEarningsCreateEndpointAsync(string version, RetainedEarningsCreateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get retained earnings by ID
+        /// Get retained earnings details by ID
         /// </summary>
         /// <remarks>
         /// Endpoints for managing retained earnings
@@ -8381,11 +8381,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RetainedEarningsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<RetainedEarningsDetailsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get retained earnings by ID
+        /// Get retained earnings details by ID
         /// </summary>
         /// <remarks>
         /// Endpoints for managing retained earnings
@@ -8393,7 +8393,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RetainedEarningsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<RetainedEarningsDetailsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search retained earnings
@@ -51450,7 +51450,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Get retained earnings by ID
+        /// Get retained earnings details by ID
         /// </summary>
         /// <remarks>
         /// Endpoints for managing retained earnings
@@ -51458,14 +51458,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<RetainedEarningsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<RetainedEarningsDetailsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id)
         {
             return RetainedEarningsGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get retained earnings by ID
+        /// Get retained earnings details by ID
         /// </summary>
         /// <remarks>
         /// Endpoints for managing retained earnings
@@ -51473,7 +51473,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<RetainedEarningsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<RetainedEarningsDetailsResponse> RetainedEarningsGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -51523,7 +51523,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<RetainedEarningsResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<RetainedEarningsDetailsResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -51764,16 +51764,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -51891,16 +51881,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -52022,16 +52002,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -52149,16 +52119,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -72676,8 +72636,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("distributionDate")]
         public System.DateTime DistributionDate { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("distributionType")]
-        public string? DistributionType { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
@@ -73299,6 +73262,75 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RetainedEarningsDetailsResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
+        public int FiscalYear { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("beginningBalance")]
+        public decimal BeginningBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("netIncome")]
+        public decimal NetIncome { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dividends")]
+        public decimal Dividends { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endingBalance")]
+        public decimal EndingBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isClosed")]
+        public bool IsClosed { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("capitalContributions")]
+        public decimal CapitalContributions { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("otherEquityChanges")]
+        public decimal OtherEquityChanges { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("approprietedAmount")]
+        public decimal ApproprietedAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("unappropriatedAmount")]
+        public decimal UnappropriatedAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYearStartDate")]
+        public System.DateTime FiscalYearStartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("fiscalYearEndDate")]
+        public System.DateTime FiscalYearEndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("closedDate")]
+        public System.DateTime? ClosedDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("closedBy")]
+        public string? ClosedBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("retainedEarningsAccountId")]
+        public System.Guid? RetainedEarningsAccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("distributionCount")]
+        public int DistributionCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastDistributionDate")]
+        public System.DateTime? LastDistributionDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
 
     }
 
@@ -74899,6 +74931,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial class SearchRetainedEarningsRequest
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("fiscalYear")]
         public int? FiscalYear { get; set; } = default!;
 
@@ -74907,6 +74957,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("isClosed")]
         public bool? IsClosed { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("onlyOpen")]
+        public bool OnlyOpen { get; set; } = default!;
 
     }
 

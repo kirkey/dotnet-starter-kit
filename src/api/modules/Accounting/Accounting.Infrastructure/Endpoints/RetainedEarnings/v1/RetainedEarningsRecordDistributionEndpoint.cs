@@ -7,9 +7,9 @@ public static class RetainedEarningsRecordDistributionEndpoint
     internal static RouteHandlerBuilder MapRetainedEarningsRecordDistributionEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/distributions", async (DefaultIdType id, RecordDistributionCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/distributions", async (DefaultIdType id, RecordDistributionCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var reId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = reId, Message = "Distribution recorded successfully" });
             })
@@ -17,7 +17,6 @@ public static class RetainedEarningsRecordDistributionEndpoint
             .WithSummary("Record distribution")
             .WithDescription("Records a distribution to members or shareholders")
             .Produces<object>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.Create")
             .MapToApiVersion(1);

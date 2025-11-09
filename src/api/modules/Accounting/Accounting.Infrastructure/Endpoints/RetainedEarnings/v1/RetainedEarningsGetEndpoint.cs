@@ -14,8 +14,8 @@ public static class RetainedEarningsGetEndpoint
                 return Results.Ok(response);
             })
             .WithName(nameof(RetainedEarningsGetEndpoint))
-            .WithSummary("Get retained earnings by ID")
-            .Produces<RetainedEarningsResponse>()
+            .WithSummary("Get retained earnings details by ID")
+            .Produces<RetainedEarningsDetailsResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
