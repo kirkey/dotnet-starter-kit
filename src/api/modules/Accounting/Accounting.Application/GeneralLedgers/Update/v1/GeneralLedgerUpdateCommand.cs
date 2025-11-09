@@ -16,13 +16,45 @@ namespace Accounting.Application.GeneralLedgers.Update.v1;
 /// - USOA class must be valid
 /// - At least one field must be provided for update
 /// </remarks>
-public sealed record GeneralLedgerUpdateCommand(
-    DefaultIdType Id,
-    decimal? Debit = null,
-    decimal? Credit = null,
-    string? Memo = null,
-    string? UsoaClass = null,
-    string? ReferenceNumber = null,
-    string? Description = null,
-    string? Notes = null
-) : IRequest<DefaultIdType>;
+public sealed record GeneralLedgerUpdateCommand : IRequest<DefaultIdType>
+{
+    /// <summary>
+    /// The ID of the general ledger entry to update.
+    /// </summary>
+    public DefaultIdType Id { get; init; }
+    
+    /// <summary>
+    /// Updated debit amount (if applicable).
+    /// </summary>
+    public decimal? Debit { get; init; }
+    
+    /// <summary>
+    /// Updated credit amount (if applicable).
+    /// </summary>
+    public decimal? Credit { get; init; }
+    
+    /// <summary>
+    /// Updated memo/description.
+    /// </summary>
+    public string? Memo { get; init; }
+    
+    /// <summary>
+    /// Updated USOA classification.
+    /// </summary>
+    public string? UsoaClass { get; init; }
+    
+    /// <summary>
+    /// Updated reference number.
+    /// </summary>
+    public string? ReferenceNumber { get; init; }
+    
+    /// <summary>
+    /// Updated description.
+    /// </summary>
+    public string? Description { get; init; }
+    
+    /// <summary>
+    /// Updated notes.
+    /// </summary>
+    public string? Notes { get; init; }
+}

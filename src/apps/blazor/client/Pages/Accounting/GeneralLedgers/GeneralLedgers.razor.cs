@@ -56,7 +56,7 @@ public partial class GeneralLedgers
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var searchQuery = new GeneralLedgerSearchQuery
+                var searchQuery = new GeneralLedgerSearchRequest
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,

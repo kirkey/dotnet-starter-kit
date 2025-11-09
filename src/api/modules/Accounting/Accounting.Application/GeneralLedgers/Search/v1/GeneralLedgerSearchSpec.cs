@@ -8,76 +8,76 @@ public sealed class GeneralLedgerSearchSpec : Specification<GeneralLedger>
     /// <summary>
     /// Initializes a new instance of the <see cref="GeneralLedgerSearchSpec"/> class.
     /// </summary>
-    public GeneralLedgerSearchSpec(GeneralLedgerSearchQuery query)
+    public GeneralLedgerSearchSpec(GeneralLedgerSearchRequest request)
     {
-        ArgumentNullException.ThrowIfNull(query);
+        ArgumentNullException.ThrowIfNull(request);
 
         // Filter by journal entry ID
-        if (query.EntryId.HasValue && query.EntryId.Value != DefaultIdType.Empty)
+        if (request.EntryId.HasValue && request.EntryId.Value != DefaultIdType.Empty)
         {
-            Query.Where(gl => gl.EntryId == query.EntryId.Value);
+            Query.Where(gl => gl.EntryId == request.EntryId.Value);
         }
 
         // Filter by account ID
-        if (query.AccountId.HasValue && query.AccountId.Value != DefaultIdType.Empty)
+        if (request.AccountId.HasValue && request.AccountId.Value != DefaultIdType.Empty)
         {
-            Query.Where(gl => gl.AccountId == query.AccountId.Value);
+            Query.Where(gl => gl.AccountId == request.AccountId.Value);
         }
 
         // Filter by period ID
-        if (query.PeriodId.HasValue && query.PeriodId.Value != DefaultIdType.Empty)
+        if (request.PeriodId.HasValue && request.PeriodId.Value != DefaultIdType.Empty)
         {
-            Query.Where(gl => gl.PeriodId == query.PeriodId.Value);
+            Query.Where(gl => gl.PeriodId == request.PeriodId.Value);
         }
 
         // Filter by USOA class
-        if (!string.IsNullOrWhiteSpace(query.UsoaClass))
+        if (!string.IsNullOrWhiteSpace(request.UsoaClass))
         {
-            Query.Where(gl => gl.UsoaClass == query.UsoaClass);
+            Query.Where(gl => gl.UsoaClass == request.UsoaClass);
         }
 
         // Filter by transaction date range
-        if (query.StartDate.HasValue)
+        if (request.StartDate.HasValue)
         {
-            Query.Where(gl => gl.TransactionDate >= query.StartDate.Value);
+            Query.Where(gl => gl.TransactionDate >= request.StartDate.Value);
         }
 
-        if (query.EndDate.HasValue)
+        if (request.EndDate.HasValue)
         {
-            Query.Where(gl => gl.TransactionDate <= query.EndDate.Value);
+            Query.Where(gl => gl.TransactionDate <= request.EndDate.Value);
         }
 
         // Filter by debit amount range
-        if (query.MinDebit.HasValue)
+        if (request.MinDebit.HasValue)
         {
-            Query.Where(gl => gl.Debit >= query.MinDebit.Value);
+            Query.Where(gl => gl.Debit >= request.MinDebit.Value);
         }
 
-        if (query.MaxDebit.HasValue)
+        if (request.MaxDebit.HasValue)
         {
-            Query.Where(gl => gl.Debit <= query.MaxDebit.Value);
+            Query.Where(gl => gl.Debit <= request.MaxDebit.Value);
         }
 
         // Filter by credit amount range
-        if (query.MinCredit.HasValue)
+        if (request.MinCredit.HasValue)
         {
-            Query.Where(gl => gl.Credit >= query.MinCredit.Value);
+            Query.Where(gl => gl.Credit >= request.MinCredit.Value);
         }
 
-        if (query.MaxCredit.HasValue)
+        if (request.MaxCredit.HasValue)
         {
-            Query.Where(gl => gl.Credit <= query.MaxCredit.Value);
+            Query.Where(gl => gl.Credit <= request.MaxCredit.Value);
         }
 
         // Filter by reference number (partial match)
-        if (!string.IsNullOrWhiteSpace(query.ReferenceNumber))
+        if (!string.IsNullOrWhiteSpace(request.ReferenceNumber))
         {
-            Query.Where(gl => gl.ReferenceNumber != null && gl.ReferenceNumber.Contains(query.ReferenceNumber));
+            Query.Where(gl => gl.ReferenceNumber != null && gl.ReferenceNumber.Contains(request.ReferenceNumber));
         }
 
         // Apply pagination
-        Query.Skip(query.PageNumber * query.PageSize)
-             .Take(query.PageSize);
+        Query.Skip(request.PageNumber * request.PageSize)
+             .Take(request.PageSize);
 
         // Order by transaction date descending, then by account ID
         Query.OrderByDescending(gl => gl.TransactionDate)

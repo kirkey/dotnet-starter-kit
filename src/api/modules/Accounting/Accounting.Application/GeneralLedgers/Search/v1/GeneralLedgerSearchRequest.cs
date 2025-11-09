@@ -1,9 +1,9 @@
 namespace Accounting.Application.GeneralLedgers.Search.v1;
 
 /// <summary>
-/// Query to search general ledger entries with filtering and pagination.
+/// Request to search general ledger entries with filtering and pagination.
 /// </summary>
-public sealed class GeneralLedgerSearchQuery : PaginationFilter, IRequest<PagedList<GeneralLedgerSearchResponse>>
+public sealed class GeneralLedgerSearchRequest : PaginationFilter, IRequest<PagedList<GeneralLedgerSearchResponse>>
 {
     /// <summary>
     /// Optional journal entry ID filter.

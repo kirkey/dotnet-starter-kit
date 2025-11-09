@@ -60,10 +60,10 @@ public record GetTaxCodeRequest(DefaultIdType Id) : IRequest<TaxCodeResponse>;
 | Module | Commands | Requests | Endpoints | Status |
 |--------|----------|----------|-----------|--------|
 | RetainedEarnings | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
-| TaxCodes | ❌ Positional | ? | ❌ ID in body | 🔄 Pending |
+| GeneralLedgers | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| TaxCodes | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | ChartOfAccounts | ? | ? | ? | 🔄 Pending |
 | JournalEntries | ? | ? | ? | 🔄 Pending |
-| GeneralLedgers | ? | ? | ? | 🔄 Pending |
 | Banks | ? | ? | ? | 🔄 Pending |
 | Vendors | ? | ? | ? | 🔄 Pending |
 | Customers | ? | ? | ? | 🔄 Pending |

@@ -13,7 +13,7 @@ public static class GeneralLedgerSearchEndpoint
     internal static RouteHandlerBuilder MapGeneralLedgerSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (GeneralLedgerSearchQuery request, ISender mediator) =>
+            .MapPost("/search", async (GeneralLedgerSearchRequest request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

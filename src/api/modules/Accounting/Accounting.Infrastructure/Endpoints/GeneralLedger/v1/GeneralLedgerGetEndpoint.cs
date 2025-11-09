@@ -15,7 +15,7 @@ public static class GeneralLedgerGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GeneralLedgerGetQuery(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GeneralLedgerGetRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GeneralLedgerGetEndpoint))

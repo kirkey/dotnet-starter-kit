@@ -4063,7 +4063,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchQuery body);
+        System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4075,7 +4075,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a new goods receipt
@@ -30421,16 +30421,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -30469,7 +30459,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchQuery body)
+        public virtual System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchRequest body)
         {
             return GeneralLedgerSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -30484,7 +30474,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GeneralLedgerSearchResponsePagedList> GeneralLedgerSearchEndpointAsync(string version, GeneralLedgerSearchRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -68675,7 +68665,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GeneralLedgerSearchQuery
+    public partial class GeneralLedgerSearchRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]

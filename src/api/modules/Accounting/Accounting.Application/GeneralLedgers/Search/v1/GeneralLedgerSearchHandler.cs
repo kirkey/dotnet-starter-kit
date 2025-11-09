@@ -3,7 +3,7 @@ namespace Accounting.Application.GeneralLedgers.Search.v1;
 /// <summary>
 /// Handler for searching general ledger entries.
 /// </summary>
-public sealed class GeneralLedgerSearchHandler : IRequestHandler<GeneralLedgerSearchQuery, PagedList<GeneralLedgerSearchResponse>>
+public sealed class GeneralLedgerSearchHandler : IRequestHandler<GeneralLedgerSearchRequest, PagedList<GeneralLedgerSearchResponse>>
 {
     private readonly IReadRepository<GeneralLedger> _repository;
     private readonly ILogger<GeneralLedgerSearchHandler> _logger;
@@ -20,9 +20,9 @@ public sealed class GeneralLedgerSearchHandler : IRequestHandler<GeneralLedgerSe
     }
 
     /// <summary>
-    /// Handles the general ledger search query.
+    /// Handles the general ledger search request.
     /// </summary>
-    public async Task<PagedList<GeneralLedgerSearchResponse>> Handle(GeneralLedgerSearchQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<GeneralLedgerSearchResponse>> Handle(GeneralLedgerSearchRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

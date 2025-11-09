@@ -3,7 +3,7 @@ namespace Accounting.Application.GeneralLedgers.Get.v1;
 /// <summary>
 /// Handler for retrieving a general ledger entry by ID.
 /// </summary>
-public sealed class GeneralLedgerGetHandler : IRequestHandler<GeneralLedgerGetQuery, GeneralLedgerGetResponse>
+public sealed class GeneralLedgerGetHandler : IRequestHandler<GeneralLedgerGetRequest, GeneralLedgerGetResponse>
 {
     private readonly IReadRepository<GeneralLedger> _repository;
     private readonly ILogger<GeneralLedgerGetHandler> _logger;
@@ -20,9 +20,9 @@ public sealed class GeneralLedgerGetHandler : IRequestHandler<GeneralLedgerGetQu
     }
 
     /// <summary>
-    /// Handles the general ledger entry retrieval query.
+    /// Handles the general ledger entry retrieval request.
     /// </summary>
-    public async Task<GeneralLedgerGetResponse> Handle(GeneralLedgerGetQuery request, CancellationToken cancellationToken)
+    public async Task<GeneralLedgerGetResponse> Handle(GeneralLedgerGetRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
