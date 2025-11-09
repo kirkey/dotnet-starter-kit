@@ -1,45 +1,97 @@
 namespace Accounting.Application.FixedAssets.Update;
 
 /// <summary>
-/// Request to update an existing Fixed Asset.
+/// Command to update an existing Fixed Asset.
 /// </summary>
-public class UpdateFixedAssetRequest(
-    DefaultIdType id,
-    string? assetName = null,
-    DefaultIdType? depreciationMethodId = null,
-    int? serviceLife = null,
-    decimal? salvageValue = null,
-    string? serialNumber = null,
-    string? location = null,
-    string? department = null,
-    string? gpsCoordinates = null,
-    string? substationName = null,
-    string? regulatoryClassification = null,
-    decimal? voltageRating = null,
-    decimal? capacity = null,
-    string? manufacturer = null,
-    string? modelNumber = null,
-    bool requiresUsoaReporting = false,
-    string? description = null,
-    string? notes = null)
-    : IRequest<DefaultIdType>
+public class UpdateFixedAssetCommand : IRequest<DefaultIdType>
 {
-    public DefaultIdType Id { get; set; } = id;
-    public string? AssetName { get; set; } = assetName;
-    public DefaultIdType? DepreciationMethodId { get; set; } = depreciationMethodId;
-    public int? ServiceLife { get; set; } = serviceLife;
-    public decimal? SalvageValue { get; set; } = salvageValue;
-    public string? SerialNumber { get; set; } = serialNumber;
-    public string? Location { get; set; } = location;
-    public string? Department { get; set; } = department;
-    public string? GpsCoordinates { get; set; } = gpsCoordinates;
-    public string? SubstationName { get; set; } = substationName;
-    public string? RegulatoryClassification { get; set; } = regulatoryClassification;
-    public decimal? VoltageRating { get; set; } = voltageRating;
-    public decimal? Capacity { get; set; } = capacity;
-    public string? Manufacturer { get; set; } = manufacturer;
-    public string? ModelNumber { get; set; } = modelNumber;
-    public bool RequiresUsoaReporting { get; set; } = requiresUsoaReporting;
-    public string? Description { get; set; } = description;
-    public string? Notes { get; set; } = notes;
+    /// <summary>
+    /// Asset identifier.
+    /// </summary>
+    public DefaultIdType Id { get; set; }
+    
+    /// <summary>
+    /// Asset name.
+    /// </summary>
+    public string? AssetName { get; set; }
+    
+    /// <summary>
+    /// Depreciation method identifier.
+    /// </summary>
+    public DefaultIdType? DepreciationMethodId { get; set; }
+    
+    /// <summary>
+    /// Service life in years.
+    /// </summary>
+    public int? ServiceLife { get; set; }
+    
+    /// <summary>
+    /// Salvage value.
+    /// </summary>
+    public decimal? SalvageValue { get; set; }
+    
+    /// <summary>
+    /// Serial number.
+    /// </summary>
+    public string? SerialNumber { get; set; }
+    
+    /// <summary>
+    /// Location.
+    /// </summary>
+    public string? Location { get; set; }
+    
+    /// <summary>
+    /// Department.
+    /// </summary>
+    public string? Department { get; set; }
+    
+    /// <summary>
+    /// GPS coordinates.
+    /// </summary>
+    public string? GpsCoordinates { get; set; }
+    
+    /// <summary>
+    /// Substation name.
+    /// </summary>
+    public string? SubstationName { get; set; }
+    
+    /// <summary>
+    /// Regulatory classification.
+    /// </summary>
+    public string? RegulatoryClassification { get; set; }
+    
+    /// <summary>
+    /// Voltage rating.
+    /// </summary>
+    public decimal? VoltageRating { get; set; }
+    
+    /// <summary>
+    /// Capacity.
+    /// </summary>
+    public decimal? Capacity { get; set; }
+    
+    /// <summary>
+    /// Manufacturer.
+    /// </summary>
+    public string? Manufacturer { get; set; }
+    
+    /// <summary>
+    /// Model number.
+    /// </summary>
+    public string? ModelNumber { get; set; }
+    
+    /// <summary>
+    /// Requires USOA reporting.
+    /// </summary>
+    public bool RequiresUsoaReporting { get; set; }
+    
+    /// <summary>
+    /// Description.
+    /// </summary>
+    public string? Description { get; set; }
+    
+    /// <summary>
+    /// Notes.
+    /// </summary>
+    public string? Notes { get; set; }
 }

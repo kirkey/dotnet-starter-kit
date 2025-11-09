@@ -70,10 +70,10 @@ public record GetTaxCodeRequest(DefaultIdType Id) : IRequest<TaxCodeResponse>;
 | Bills | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | Invoices | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | Payments | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
-| BankReconciliations | ? | ? | ? | 🔄 Pending |
-| FixedAssets | ? | ? | ? | 🔄 Pending |
-| Budgets | ? | ? | ? | 🔄 Pending |
-| CostCenters | ? | ? | ? | 🔄 Pending |
+| FixedAssets | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| Budgets | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| BankReconciliations | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| CostCenters | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | AccountingPeriods | ? | ? | ? | 🔄 Pending |
 | FiscalPeriodCloses | ? | ? | ? | 🔄 Pending |
 | TrialBalance | ? | ? | ? | 🔄 Pending |

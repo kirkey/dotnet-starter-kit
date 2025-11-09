@@ -4,9 +4,9 @@ namespace Accounting.Application.Budgets.Search;
 
 public sealed class SearchBudgetsHandler(
     [FromKeyedServices("accounting:budgets")] IReadRepository<Budget> repository)
-    : IRequestHandler<SearchBudgetsQuery, PagedList<BudgetResponse>>
+    : IRequestHandler<SearchBudgetsRequest, PagedList<BudgetResponse>>
 {
-    public async Task<PagedList<BudgetResponse>> Handle(SearchBudgetsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<BudgetResponse>> Handle(SearchBudgetsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

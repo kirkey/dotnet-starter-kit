@@ -4,9 +4,9 @@ namespace Accounting.Application.BankReconciliations.Search.v1;
 
 public sealed class SearchBankReconciliationsHandler(
     IReadRepository<BankReconciliation> repository)
-    : IRequestHandler<SearchBankReconciliationsCommand, PagedList<BankReconciliationResponse>>
+    : IRequestHandler<SearchBankReconciliationsRequest, PagedList<BankReconciliationResponse>>
 {
-    public async Task<PagedList<BankReconciliationResponse>> Handle(SearchBankReconciliationsCommand request, CancellationToken cancellationToken)
+    public async Task<PagedList<BankReconciliationResponse>> Handle(SearchBankReconciliationsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

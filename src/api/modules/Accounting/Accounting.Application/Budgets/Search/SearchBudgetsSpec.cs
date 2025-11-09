@@ -4,7 +4,7 @@ namespace Accounting.Application.Budgets.Search;
 
 public sealed class SearchBudgetsSpec : EntitiesByPaginationFilterSpec<Budget, BudgetResponse>
 {
-    public SearchBudgetsSpec(SearchBudgetsQuery request) : base(request)
+    public SearchBudgetsSpec(SearchBudgetsRequest request) : base(request)
     {
         Query
             .OrderBy(b => b.Name!, !request.HasOrderBy())

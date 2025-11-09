@@ -11,7 +11,7 @@ public class SearchBankReconciliationsSpec : EntitiesByPaginationFilterSpec<Bank
     /// Initializes a new instance of the <see cref="SearchBankReconciliationsSpec"/> class.
     /// </summary>
     /// <param name="request">The search bank reconciliations command containing filter criteria and pagination parameters.</param>
-    public SearchBankReconciliationsSpec(SearchBankReconciliationsCommand request)
+    public SearchBankReconciliationsSpec(SearchBankReconciliationsRequest request)
         : base(request)
     {
         Query
