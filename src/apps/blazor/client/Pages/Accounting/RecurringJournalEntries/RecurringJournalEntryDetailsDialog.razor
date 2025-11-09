@@ -1,0 +1,77 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Recurring Template Details</MudText>
+            <MudDivider />
+            
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Template Code</MudText>
+                    <MudText>@Template.TemplateCode</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(Template.Status)" Size="Size.Small">
+                        @Template.Status
+                    </MudChip>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Description</MudText>
+                    <MudText>@Template.Description</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Frequency</MudText>
+                    <MudText>@Template.Frequency</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Amount</MudText>
+                    <MudText><strong>@Template.Amount.ToString("C2")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Start Date</MudText>
+                    <MudText>@Template.StartDate.ToString("MMM dd, yyyy")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">End Date</MudText>
+                    <MudText>@(Template.EndDate?.ToString("MMM dd, yyyy") ?? "No end date")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Next Run Date</MudText>
+                    <MudText Color="Color.Info">@Template.NextRunDate.ToString("MMM dd, yyyy")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Last Generated</MudText>
+                    <MudText>@(Template.LastGeneratedDate?.ToString("MMM dd, yyyy") ?? "Never")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Generated Count</MudText>
+                    <MudText>@Template.GeneratedCount entries</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Active</MudText>
+                    <MudChip T="string" Color="@(Template.IsActive ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(Template.IsActive ? "Yes" : "No")
+                    </MudChip>
+                </MudItem>
+                @if (!string.IsNullOrWhiteSpace(Template.Memo))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Memo</MudText>
+                        <MudText>@Template.Memo</MudText>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrWhiteSpace(Template.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Notes</MudText>
+                        <MudText>@Template.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => Cancel())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

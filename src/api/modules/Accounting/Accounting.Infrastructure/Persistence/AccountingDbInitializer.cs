@@ -987,12 +987,64 @@ internal sealed class AccountingDbInitializer(
             }
         }
 
-        // Seed RecurringJournalEntries - TODO: Fix parameter signature
-        // Requires verification of correct RecurringJournalEntry.Create signature
-        // if (!await context.RecurringJournalEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
-        // {
-        //     // Add recurring journal entry seeding here
-        // }
+        // Seed RecurringJournalEntries (10 records for monthly recurring transactions)
+        if (!await context.RecurringJournalEntries.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var debitAccounts = await context.ChartOfAccounts
+                .Where(a => a.AccountType == "Expense" && a.IsActive)
+                .Take(5)
+                .ToListAsync(cancellationToken).ConfigureAwait(false);
+            var creditAccounts = await context.ChartOfAccounts
+                .Where(a => a.AccountCode == "1120" || a.AccountCode == "2110") // Cash or AP
+                .Take(2)
+                .ToListAsync(cancellationToken).ConfigureAwait(false);
+
+            if (debitAccounts.Count > 0 && creditAccounts.Count > 0)
+            {
+                var recurringEntries = new List<RecurringJournalEntry>();
+                var frequencies = new[] { RecurrenceFrequency.Monthly, RecurrenceFrequency.Quarterly, RecurrenceFrequency.Annually };
+                var descriptions = new[]
+                {
+                    "Monthly Rent Payment",
+                    "Quarterly Insurance Premium",
+                    "Annual Software License",
+                    "Monthly Utility Payment",
+                    "Monthly Depreciation Entry",
+                    "Quarterly Tax Provision",
+                    "Monthly Service Fee",
+                    "Annual Membership Dues",
+                    "Monthly Maintenance Contract",
+                    "Quarterly Marketing Expense"
+                };
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var debitAccount = debitAccounts[i % debitAccounts.Count];
+                    var creditAccount = creditAccounts[i % creditAccounts.Count];
+                    var frequency = frequencies[i % frequencies.Length];
+                    var amount = 1000m + (i * 500m);
+                    
+                    var entry = RecurringJournalEntry.Create(
+                        $"RJE-{1000 + i}", // templateCode
+                        descriptions[i], // description
+                        frequency, // frequency
+                        amount, // amount
+                        debitAccount.Id, // debitAccountId
+                        creditAccount.Id, // creditAccountId
+                        DateTime.UtcNow.Date.AddMonths(-3), // startDate
+                        DateTime.UtcNow.Date.AddYears(1), // endDate
+                        null, // customIntervalDays
+                        $"Automatic {descriptions[i]}", // memo
+                        $"Seeded recurring entry {i + 1}"); // notes
+
+                    recurringEntries.Add(entry);
+                }
+
+                await context.RecurringJournalEntries.AddRangeAsync(recurringEntries, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                logger.LogInformation("[{Tenant}] seeded {Count} RecurringJournalEntries", context.TenantInfo!.Identifier, recurringEntries.Count);
+            }
+        }
 
         // Seed Bills with approval workflow and BillLineItems (10 bills with 2-3 line items each)
         if (!await context.Bills.AnyAsync(cancellationToken).ConfigureAwait(false))
@@ -1165,6 +1217,87 @@ internal sealed class AccountingDbInitializer(
                 await context.Customers.AddRangeAsync(customers, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 logger.LogInformation("[{Tenant}] seeded {Count} Customers", context.TenantInfo!.Identifier, customers.Count);
+            }
+        }
+
+        // Seed Invoices and InvoiceLineItems (10 invoices with 2-4 line items each)
+        if (!await context.Invoices.AnyAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var customers = await context.Customers.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var revenueAccounts = await context.ChartOfAccounts
+                .Where(a => a.AccountType == "Revenue" && a.IsActive)
+                .Take(10)
+                .ToListAsync(cancellationToken).ConfigureAwait(false);
+            
+            if (customers.Count > 0 && revenueAccounts.Count > 0)
+            {
+                var invoices = new List<Invoice>();
+                
+                for (int i = 0; i < customers.Count; i++)
+                {
+                    var customer = customers[i];
+                    var invoiceDate = DateTime.UtcNow.Date.AddDays(-45 + i * 4);
+                    var dueDate = invoiceDate.AddDays(30);
+                    
+                    // Invoice.Create has 18 parameters:
+                    // invoiceNumber, memberId, invoiceDate, dueDate, consumptionId, usageCharge, 
+                    // basicServiceCharge, taxAmount, otherCharges, kWhUsed, billingPeriod,
+                    // lateFee, reconnectionFee, depositAmount, rateSchedule, demandCharge, description, notes
+                    var invoice = Invoice.Create(
+                        $"INV-{5000 + i}", // invoiceNumber
+                        customer.Id, // memberId (using customer as member)
+                        invoiceDate, // invoiceDate
+                        dueDate, // dueDate
+                        null, // consumptionId
+                        150m + (i * 25m), // usageCharge
+                        50m, // basicServiceCharge
+                        20m + (i * 2m), // taxAmount
+                        10m, // otherCharges
+                        1000m + (i * 100m), // kWhUsed
+                        invoiceDate.ToString("yyyy-MM"), // billingPeriod
+                        null, // lateFee
+                        null, // reconnectionFee
+                        null, // depositAmount
+                        "Standard Rate", // rateSchedule
+                        null, // demandCharge
+                        $"Services rendered for {customer.Name}", // description
+                        $"Invoice for services {i + 1}"); // notes
+
+                    invoices.Add(invoice);
+                }
+
+                await context.Invoices.AddRangeAsync(invoices, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                // Add line items to invoices
+                var invoiceLineItems = new List<InvoiceLineItem>();
+                for (int invIndex = 0; invIndex < invoices.Count; invIndex++)
+                {
+                    var invoice = invoices[invIndex];
+                    var lineItemsCount = 2 + (invIndex % 3); // 2-4 line items per invoice
+                    
+                    for (int j = 1; j <= lineItemsCount; j++)
+                    {
+                        var revenueAccount = revenueAccounts[(invIndex + j) % revenueAccounts.Count];
+                        var quantity = j;
+                        var unitPrice = 800m + (invIndex * 150m) / j;
+                        
+                        // InvoiceLineItem.Create has 5 parameters:
+                        // invoiceId, description, quantity, unitPrice, accountId
+                        invoiceLineItems.Add(InvoiceLineItem.Create(
+                            invoice.Id, // invoiceId
+                            $"Service item {j} for {invoice.InvoiceNumber}", // description
+                            quantity, // quantity
+                            unitPrice, // unitPrice
+                            revenueAccount.Id)); // accountId
+                    }
+                }
+                
+                await context.InvoiceLineItems.AddRangeAsync(invoiceLineItems, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                
+                logger.LogInformation("[{Tenant}] seeded {Count} Invoices with {LineItems} line items", 
+                    context.TenantInfo!.Identifier, invoices.Count, invoiceLineItems.Count);
             }
         }
 
@@ -1432,7 +1565,6 @@ internal sealed class AccountingDbInitializer(
                 logger.LogInformation("[{Tenant}] seeded {Count} PaymentAllocations", context.TenantInfo!.Identifier, paymentAllocations.Count);
             }
         }
-
 
         logger.LogInformation("[{Tenant}] completed seeding all accounting entities", context.TenantInfo!.Identifier);
     }

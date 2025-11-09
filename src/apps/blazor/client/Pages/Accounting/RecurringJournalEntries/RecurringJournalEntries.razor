@@ -1,0 +1,70 @@
+@page "/accounting/recurring-journal-entries"
+
+<PageHeader Title="Recurring Journal Entries" Header="Recurring Journal Entries" SubHeader="Manage recurring journal entry templates and automation." />
+
+<EntityTable @ref="_table" TEntity="RecurringJournalEntryResponse" TId="DefaultIdType" TRequest="RecurringJournalEntryViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchTemplateCode"
+                          Label="Template Code"
+                          Placeholder="Search by template code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="@SearchFrequency"
+                       Label="Frequency"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                <MudSelectItem Value="@("Annually")">Annually</MudSelectItem>
+                <MudSelectItem Value="@("Custom")">Custom</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("Suspended")">Suspended</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchActiveOnly"
+                       Label="Active Only"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="template">
+        @if (template.Status == "Draft")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnApprove(template))">
+                Approve Template
+            </MudMenuItem>
+        }
+        @if (template.Status == "Approved" && template.IsActive)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Pause" OnClick="@(() => OnSuspend(template))">
+                Suspend
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.PlayArrow" OnClick="@(() => OnGenerate(template))">
+                Generate Entry Now
+            </MudMenuItem>
+        }
+        @if (template.Status == "Suspended")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PlayCircle" OnClick="@(() => OnReactivate(template))">
+                Reactivate
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OnViewDetails(template))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>
+

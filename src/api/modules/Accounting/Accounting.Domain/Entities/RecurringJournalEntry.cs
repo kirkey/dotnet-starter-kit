@@ -165,6 +165,7 @@ public class RecurringJournalEntry : AuditableEntityWithApproval, IAggregateRoot
         GeneratedCount = 0;
         IsActive = true;
         RecurringStatus = RecurringEntryStatus.Draft;
+        Status = "Pending"; // Initialize workflow status from AuditableEntityWithApproval base class
         Memo = memo?.Trim();
         Notes = notes?.Trim();
 
@@ -241,6 +242,7 @@ public class RecurringJournalEntry : AuditableEntityWithApproval, IAggregateRoot
             throw new RecurringJournalEntryExpiredException(Id);
 
         RecurringStatus = RecurringEntryStatus.Approved;
+        Status = "Approved"; // Update workflow status from base class
         ApprovedBy = approvedById;
         ApproverName = approverName?.Trim();
         ApprovedOn = DateTime.UtcNow;
