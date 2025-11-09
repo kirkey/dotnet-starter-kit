@@ -22,6 +22,9 @@ public static class BudgetsEndpoints
         budgetsGroup.MapBudgetGetEndpoint();
         budgetsGroup.MapBudgetUpdateEndpoint();
         budgetsGroup.MapBudgetDeleteEndpoint();
+        // Workflow endpoints
+        budgetsGroup.MapBudgetApproveEndpoint();
+        budgetsGroup.MapBudgetCloseEndpoint();
 
         return app;
     }

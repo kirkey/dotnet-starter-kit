@@ -22,6 +22,9 @@ public static class AccountingPeriodsEndpoints
         accountingPeriodsGroup.MapAccountingPeriodDeleteEndpoint();
         accountingPeriodsGroup.MapAccountingPeriodGetEndpoint();
         accountingPeriodsGroup.MapAccountingPeriodSearchEndpoint();
+        // Added workflow endpoints
+        accountingPeriodsGroup.MapAccountingPeriodCloseEndpoint();
+        accountingPeriodsGroup.MapAccountingPeriodReopenEndpoint();
 
         return app;
     }

@@ -23,6 +23,9 @@ public static class AccrualsEndpoints
         accrualsGroup.MapAccrualGetEndpoint();
         accrualsGroup.MapAccrualReverseEndpoint();
         accrualsGroup.MapAccrualSearchEndpoint();
+        // Workflow endpoints
+        accrualsGroup.MapAccrualApproveEndpoint();
+        accrualsGroup.MapAccrualRejectEndpoint();
 
         return app;
     }

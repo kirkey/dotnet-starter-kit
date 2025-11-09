@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Accounting.Application.FixedAssets.Reject;
 
 /// <summary>

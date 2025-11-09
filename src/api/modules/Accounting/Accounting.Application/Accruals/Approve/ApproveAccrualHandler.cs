@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Accounting.Application.Accruals.Approve;
 
 /// <summary>

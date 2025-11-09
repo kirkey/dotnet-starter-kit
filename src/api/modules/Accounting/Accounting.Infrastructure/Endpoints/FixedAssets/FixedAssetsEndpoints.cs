@@ -28,6 +28,10 @@ public static class FixedAssetsEndpoints
         fixedAssetsGroup.MapFixedAssetDisposeEndpoint();
         fixedAssetsGroup.MapFixedAssetUpdateMaintenanceEndpoint();
 
+        // Workflow endpoints
+        fixedAssetsGroup.MapFixedAssetApproveEndpoint();
+        fixedAssetsGroup.MapFixedAssetRejectEndpoint();
+
         return app;
     }
 }

@@ -14,7 +14,6 @@ public static class AccountsReceivableAccountsEndpoints
         // CRUD operations
         group.MapArAccountCreateEndpoint();
         group.MapArAccountGetEndpoint();
-        group.MapArAccountUpdateEndpoint();
         group.MapArAccountSearchEndpoint();
 
         // Workflow operations
@@ -27,4 +26,3 @@ public static class AccountsReceivableAccountsEndpoints
         return app;
     }
 }
-

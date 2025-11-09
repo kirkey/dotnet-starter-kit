@@ -14,7 +14,6 @@ public static class AccountsPayableAccountsEndpoints
         // CRUD operations
         group.MapApAccountCreateEndpoint();
         group.MapApAccountGetEndpoint();
-        group.MapApAccountUpdateEndpoint();
         group.MapApAccountSearchEndpoint();
 
         // Workflow operations
@@ -26,4 +25,3 @@ public static class AccountsPayableAccountsEndpoints
         return app;
     }
 }
-

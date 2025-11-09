@@ -30,7 +30,7 @@
 
 ---
 
-## ✅ Already Complete (23 features)
+## ✅ Already Complete (24 features)
 
 **Core Financial:**
 - Accounting Periods
@@ -225,4 +225,3 @@ Before marking a feature "complete":
 
 **Last Updated:** November 8, 2025  
 **Version:** 1.0
-
