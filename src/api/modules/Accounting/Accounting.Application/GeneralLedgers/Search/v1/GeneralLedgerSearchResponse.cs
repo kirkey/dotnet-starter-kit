@@ -61,9 +61,9 @@ public sealed record GeneralLedgerSearchResponse
     public string? Description { get; init; }
 
     /// <summary>
-    /// When created.
+    /// When created (UTC).
     /// </summary>
-    public DateTime CreatedOn { get; init; }
+    public DateTimeOffset CreatedOn { get; init; }
 
     /// <summary>
     /// Indicates whether this entry has been posted to the general ledger.

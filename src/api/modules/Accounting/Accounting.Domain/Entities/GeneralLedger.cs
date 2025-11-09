@@ -33,7 +33,7 @@ public class GeneralLedger : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Account code from chart of accounts (denormalized for query performance).
     /// </summary>
-    public string AccountCode { get; private set; } = string.Empty;
+    public string AccountCode { get; private set; }
 
     /// <summary>
     /// Debit amount (must be non-negative).
