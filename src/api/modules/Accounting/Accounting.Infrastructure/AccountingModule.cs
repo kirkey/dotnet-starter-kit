@@ -373,6 +373,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<PrepaidExpense>, AccountingRepository<PrepaidExpense>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<PostingBatch>, AccountingRepository<PostingBatch>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Project>, AccountingRepository<Project>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<RecurringJournalEntry>, AccountingRepository<RecurringJournalEntry>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<RecurringJournalEntry>, AccountingRepository<RecurringJournalEntry>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<RetainedEarnings>, AccountingRepository<RetainedEarnings>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<TrialBalance>, AccountingRepository<TrialBalance>>("accounting");

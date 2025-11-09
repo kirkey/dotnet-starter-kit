@@ -8,9 +8,9 @@ public static class RecurringJournalEntrySearchEndpoint
     internal static RouteHandlerBuilder MapRecurringJournalEntrySearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchRecurringJournalEntriesCommand command, ISender mediator) =>
+            .MapPost("/search", async (SearchRecurringJournalEntriesRequest request, ISender mediator) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(RecurringJournalEntrySearchEndpoint))

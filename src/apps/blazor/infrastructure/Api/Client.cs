@@ -8364,7 +8364,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesCommand body);
+        System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -8376,7 +8376,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Approve a recurring journal entry template
@@ -51636,7 +51636,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesCommand body)
+        public virtual System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesRequest body)
         {
             return RecurringJournalEntrySearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -51651,7 +51651,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<RecurringJournalEntryResponsePagedList> RecurringJournalEntrySearchEndpointAsync(string version, SearchRecurringJournalEntriesRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -76427,7 +76427,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchRecurringJournalEntriesCommand
+    public partial class SearchRecurringJournalEntriesRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
