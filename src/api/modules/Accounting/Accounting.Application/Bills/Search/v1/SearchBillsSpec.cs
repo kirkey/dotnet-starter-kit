@@ -66,13 +66,5 @@ public sealed class SearchBillsSpec : Specification<Bill>
 
         // Ordering
         Query.OrderByDescending(b => b.BillDate);
-
-        // Pagination
-        if (filter.PageNumber > 0 && filter.PageSize > 0)
-        {
-            Query
-                .Skip((filter.PageNumber - 1) * filter.PageSize)
-                .Take(filter.PageSize);
-        }
     }
 }

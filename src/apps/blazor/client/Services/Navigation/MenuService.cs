@@ -128,11 +128,13 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Retained Earnings", Icon = Icons.Material.Filled.TrendingUp, Href = "/accounting/retained-earnings", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Accounting Periods", Icon = Icons.Material.Filled.CalendarMonth, Href = "/accounting/periods", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.Schedule, Href = "/accounting/accruals", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Deferred Revenue", Icon = Icons.Material.Filled.AccountBalance, Href = "/accounting/deferred-revenue", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         
                         // ========== CONFIGURATION ==========
                         new MenuSectionSubItemModel { Title = "Configuration", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Tax Codes", Icon = Icons.Material.Filled.Percent, Href = "/accounting/tax-codes", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Depreciation Methods", Icon = Icons.Material.Filled.Timeline, Href = "/accounting/depreciation-methods", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Inventory Items", Icon = Icons.Material.Filled.Inventory, Href = "/accounting/inventory-items", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                     ]
                 },
                 

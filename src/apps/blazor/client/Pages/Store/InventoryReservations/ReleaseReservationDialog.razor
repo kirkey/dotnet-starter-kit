@@ -76,7 +76,7 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel" Variant="Variant.Filled">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Filled">Cancel</MudButton>
         <MudButton OnClick="Release" 
                    Color="Color.Primary" 
                    Variant="Variant.Filled" 

@@ -10,12 +10,12 @@ public sealed class ReduceStockHandler(IRepository<InventoryItem> repository, IL
     public async Task<DefaultIdType> Handle(ReduceStockCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        _logger.LogInformation("Reducing stock from inventory item {Id}: {Amount}", request.Id, request.Amount);
+        _logger.LogInformation("Reducing stock from inventory item {Id}: {Quantity}", request.Id, request.Quantity);
 
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
-        item.ReduceStock(request.Amount);
+        item.ReduceStock(request.Quantity);
         await _repository.UpdateAsync(item, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 

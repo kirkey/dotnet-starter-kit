@@ -29,7 +29,7 @@ public sealed class PaymentCreateHandler : IRequestHandler<PaymentCreateCommand,
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        _logger.LogInformation("Creating payment {PaymentNumber} for amount {Amount}", 
+        _logger.LogInformation("Creating payment {PaymentNumber} for quantity {Amount}", 
             request.PaymentNumber, request.Amount);
 
         // Check if payment number already exists

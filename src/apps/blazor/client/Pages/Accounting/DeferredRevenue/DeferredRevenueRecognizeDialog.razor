@@ -1,0 +1,25 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Recognize Deferred Revenue</MudText>
+            <MudAlert Severity="Severity.Info">
+                Recognize revenue for <strong>@DeferredRevenueNumber</strong>. This action cannot be undone.
+            </MudAlert>
+            <MudDatePicker @bind-Date="_recognizedDate" 
+                           Label="Recognition Date (Required)" 
+                           Variant="Variant.Outlined"
+                           Required="true"
+                           Editable="true" />
+            <MudText Typo="Typo.caption" Color="Color.Warning">
+                Once recognized, this deferred revenue entry cannot be modified or deleted.
+            </MudText>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Recognize" Color="Color.Success" Variant="Variant.Filled" Disabled="@(!_recognizedDate.HasValue)">
+            Recognize Revenue
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

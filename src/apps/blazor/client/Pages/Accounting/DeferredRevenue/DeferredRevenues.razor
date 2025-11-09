@@ -1,0 +1,46 @@
+@page "/accounting/deferred-revenue"
+
+<PageHeader Title="Deferred Revenue" Header="Deferred Revenue" SubHeader="Manage deferred revenue entries and recognition schedules." />
+
+<EntityTable @ref="_table" TEntity="DeferredRevenueResponse" TId="DefaultIdType" TRequest="DeferredRevenueViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchNumber"
+                          Label="Revenue Number"
+                          Placeholder="Search by number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchUnrecognizedOnly"
+                       Label="Unrecognized Only"
+                       Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchDateFrom"
+                           Label="Recognition Date From"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchDateTo"
+                           Label="Recognition Date To"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="revenue">
+        @if (!revenue.IsRecognized)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnRecognize(revenue))">
+                Recognize Revenue
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OnViewDetails(revenue))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>
+

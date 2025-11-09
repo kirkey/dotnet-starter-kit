@@ -84,9 +84,6 @@ public class SearchInvoicesSpec : Specification<Invoice>
             Query.Where(i => i.PaidAmount < i.TotalAmount);
         }
 
-        // Pagination
-        Query.Skip((request.PageNumber - 1) * request.PageSize)
-             .Take(request.PageSize);
 
         // Default ordering by invoice date descending
         Query.OrderByDescending(i => i.InvoiceDate)

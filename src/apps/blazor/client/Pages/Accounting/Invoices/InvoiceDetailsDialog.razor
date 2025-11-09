@@ -236,7 +236,7 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Close</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Close</MudButton>
         @if (_invoice is not null && _invoice.Status == "Draft")
         {
             <MudButton Color="Color.Info" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Send" OnClick="OnSendInvoice">

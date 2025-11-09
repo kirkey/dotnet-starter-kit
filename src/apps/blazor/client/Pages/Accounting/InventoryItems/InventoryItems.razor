@@ -1,0 +1,48 @@
+@page "/accounting/inventory-items"
+
+<PageHeader Title="Inventory Items" Header="Inventory Items" SubHeader="Manage inventory items, track stock levels, and adjust quantities." />
+
+<EntityTable @ref="_table" TEntity="InventoryItemResponse" TId="DefaultIdType" TRequest="InventoryItemViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchSku"
+                          Label="SKU"
+                          Placeholder="Search by SKU"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Item Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchActiveOnly"
+                       Label="Active Only"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="item">
+        <MudMenuItem Icon="@Icons.Material.Filled.Add" OnClick="@(() => OnAddStock(item))">
+            Add Stock
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Remove" OnClick="@(() => OnReduceStock(item))">
+            Reduce Stock
+        </MudMenuItem>
+        @if (item.IsActive)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => OnDeactivate(item))">
+                Deactivate
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OnViewDetails(item))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>
+

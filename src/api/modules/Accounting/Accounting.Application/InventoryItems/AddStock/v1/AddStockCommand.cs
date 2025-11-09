@@ -1,4 +1,8 @@
 namespace Accounting.Application.InventoryItems.AddStock.v1;
 
-public sealed record AddStockCommand(DefaultIdType Id, decimal Amount) : IRequest<DefaultIdType>;
-
+/// <summary>
+/// Command to add stock to an inventory item.
+/// </summary>
+public sealed record AddStockCommand(
+    DefaultIdType Id, 
+    decimal Quantity) : IRequest<DefaultIdType>;

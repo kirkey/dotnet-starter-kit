@@ -36,8 +36,6 @@ public sealed class PostingBatchSearchSpec : Specification<PostingBatch>
             Query.Where(b => b.BatchDate <= query.EndDate.Value);
         }
 
-        Query.Skip(query.PageNumber * query.PageSize)
-             .Take(query.PageSize);
 
         Query.OrderByDescending(b => b.BatchDate)
              .ThenBy(b => b.BatchNumber);

@@ -136,7 +136,7 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton Color="Color.Primary" OnClick="@OnSubmit" Disabled="@(!IsBalanced)">
             Update Items
         </MudButton>

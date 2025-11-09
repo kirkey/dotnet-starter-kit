@@ -39,8 +39,6 @@ public sealed class TrialBalanceSearchSpec : Specification<Domain.Entities.Trial
             Query.Where(tb => tb.TrialBalanceNumber.Contains(request.TrialBalanceNumber));
         }
 
-        Query.Skip(request.PageNumber * request.PageSize)
-             .Take(request.PageSize);
 
         Query.OrderByDescending(tb => tb.GeneratedDate)
              .ThenBy(tb => tb.TrialBalanceNumber);

@@ -1,6 +1,4 @@
 using Accounting.Application.AccountingPeriods.Responses;
-using Accounting.Domain.Entities;
-using MediatR;
 
 namespace Accounting.Application.AccountingPeriods.Reopen.v1;
 

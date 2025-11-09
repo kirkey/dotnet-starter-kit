@@ -1,32 +1,31 @@
 namespace Accounting.Application.DeferredRevenues.Recognize;
 
-/// <summary>
-/// Handler for recognizing deferred revenue.
-/// </summary>
 public sealed class RecognizeDeferredRevenueHandler(
-    ILogger<RecognizeDeferredRevenueHandler> logger,
-    [FromKeyedServices("accounting:deferredrevenues")] IRepository<DeferredRevenue> repository)
+    IRepository<DeferredRevenue> repository,
+    ILogger<RecognizeDeferredRevenueHandler> logger)
     : IRequestHandler<RecognizeDeferredRevenueCommand, DefaultIdType>
 {
+    private readonly IRepository<DeferredRevenue> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    private readonly ILogger<RecognizeDeferredRevenueHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
     public async Task<DefaultIdType> Handle(RecognizeDeferredRevenueCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var deferredRevenue = await repository.GetByIdAsync(request.DeferredRevenueId, cancellationToken);
-        
+        _logger.LogInformation("Recognizing deferred revenue: {Id}", request.Id);
+
+        var deferredRevenue = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (deferredRevenue == null)
-        {
-            throw new NotFoundException($"Deferred revenue with id {request.DeferredRevenueId} not found");
-        }
+            throw new DeferredRevenueByIdNotFoundException(request.Id);
 
-        deferredRevenue.Recognize(request.RecognitionDate);
+        deferredRevenue.Recognize(request.RecognizedDate);
 
-        await repository.UpdateAsync(deferredRevenue, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
+        await _repository.UpdateAsync(deferredRevenue, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
 
-        logger.LogInformation("Deferred revenue {DeferredRevenueId} recognized on {RecognitionDate}", 
-            request.DeferredRevenueId, request.RecognitionDate);
-
+        _logger.LogInformation("Deferred revenue recognized: {Id} on {Date}", 
+            deferredRevenue.Id, request.RecognizedDate);
+        
         return deferredRevenue.Id;
     }
 }

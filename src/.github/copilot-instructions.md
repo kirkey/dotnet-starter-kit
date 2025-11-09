@@ -15,6 +15,8 @@ Only use string as enums.
 5. **ID in URL** - Not in request body for single-resource operations
 6. **Property-based** - Not positional parameters (for NSwag compatibility)
 
+Pagination is handled by the repository layer, not specifications.
+
 Refer or review the md files if there are any related to the feature or functionality being implemented.
 
 Do not add builder.HasCheckConstraint on database configuration.

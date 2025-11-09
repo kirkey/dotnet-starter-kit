@@ -1,0 +1,24 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Add Stock</MudText>
+            <MudAlert Severity="Severity.Info">
+                Add inventory stock for <strong>@ItemName</strong>
+            </MudAlert>
+            <MudNumericField @bind-Value="_quantity" 
+                             Label="Quantity to Add (Required)" 
+                             Variant="Variant.Outlined"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.Add"
+                             Required="true"
+                             Min="0.01m" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="AddStock" Color="Color.Success" Variant="Variant.Filled" Disabled="@(_quantity <= 0)">
+            Add Stock
+        </MudButton>
+    </DialogActions>
+</MudDialog>

@@ -65,9 +65,6 @@ public sealed class PaymentSearchSpec : Specification<Payment>
             }
         }
 
-        // Apply pagination
-        Query.Skip(query.PageNumber * query.PageSize)
-             .Take(query.PageSize);
 
         // Order by payment date descending, then by payment number
         Query.OrderByDescending(p => p.PaymentDate)

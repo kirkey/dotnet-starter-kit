@@ -13,7 +13,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
         <MudButton OnClick="Reject" Color="Color.Error" Variant="Variant.Filled">Reject Write-Off</MudButton>
     </DialogActions>
 </MudDialog>

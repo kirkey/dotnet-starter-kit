@@ -75,9 +75,6 @@ public sealed class GeneralLedgerSearchSpec : Specification<GeneralLedger>
             Query.Where(gl => gl.ReferenceNumber != null && gl.ReferenceNumber.Contains(request.ReferenceNumber));
         }
 
-        // Apply pagination
-        Query.Skip(request.PageNumber * request.PageSize)
-             .Take(request.PageSize);
 
         // Order by transaction date descending, then by account ID
         Query.OrderByDescending(gl => gl.TransactionDate)

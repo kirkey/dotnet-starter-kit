@@ -22,7 +22,7 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="Submit">
             Reject Entry
         </MudButton>

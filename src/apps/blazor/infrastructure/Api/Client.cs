@@ -3480,56 +3480,56 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task DebitMemoVoidEndpointAsync(string version, System.Guid id, VoidDebitMemoCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Create deferred revenue
+        /// Create a new deferred revenue entry
         /// </summary>
         /// <remarks>
-        /// Creates a new deferred revenue entry
+        /// Creates a new deferred revenue entry for revenue recognition tracking
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body);
+        System.Threading.Tasks.Task<object> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create deferred revenue
+        /// Create a new deferred revenue entry
         /// </summary>
         /// <remarks>
-        /// Creates a new deferred revenue entry
+        /// Creates a new deferred revenue entry for revenue recognition tracking
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get deferred revenue by ID
         /// </summary>
         /// <remarks>
-        /// Gets the details of a deferred revenue entry by its ID
+        /// Retrieves a deferred revenue entry by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeferredRevenueGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<DeferredRevenueResponse> DeferredRevenueGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get deferred revenue by ID
         /// </summary>
         /// <remarks>
-        /// Gets the details of a deferred revenue entry by its ID
+        /// Retrieves a deferred revenue entry by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeferredRevenueGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<DeferredRevenueResponse> DeferredRevenueGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update deferred revenue
         /// </summary>
         /// <remarks>
-        /// Updates a deferred revenue entry details
+        /// Updates an existing deferred revenue entry (cannot update recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -3541,7 +3541,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Update deferred revenue
         /// </summary>
         /// <remarks>
-        /// Updates a deferred revenue entry details
+        /// Updates an existing deferred revenue entry (cannot update recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -3552,53 +3552,53 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete deferred revenue
         /// </summary>
         /// <remarks>
-        /// Deletes an unrecognized deferred revenue entry
+        /// Deletes a deferred revenue entry (cannot delete recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeferredRevenueDeleteEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<object> DeferredRevenueDeleteEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Delete deferred revenue
         /// </summary>
         /// <remarks>
-        /// Deletes an unrecognized deferred revenue entry
+        /// Deletes a deferred revenue entry (cannot delete recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeferredRevenueDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> DeferredRevenueDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search deferred revenues
         /// </summary>
         /// <remarks>
-        /// Searches deferred revenue entries with filters and pagination
+        /// Searches deferred revenue entries with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesQuery body);
+        System.Threading.Tasks.Task<DeferredRevenueResponsePagedList> DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Search deferred revenues
         /// </summary>
         /// <remarks>
-        /// Searches deferred revenue entries with filters and pagination
+        /// Searches deferred revenue entries with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<DeferredRevenueResponsePagedList> DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Recognize deferred revenue
         /// </summary>
         /// <remarks>
-        /// Marks deferred revenue as recognized
+        /// Marks deferred revenue as recognized, preventing further modifications
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -3610,7 +3610,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Recognize deferred revenue
         /// </summary>
         /// <remarks>
-        /// Marks deferred revenue as recognized
+        /// Marks deferred revenue as recognized, preventing further modifications
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -27797,30 +27797,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Create deferred revenue
+        /// Create a new deferred revenue entry
         /// </summary>
         /// <remarks>
-        /// Creates a new deferred revenue entry
+        /// Creates a new deferred revenue entry for revenue recognition tracking
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Guid> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body)
+        public virtual System.Threading.Tasks.Task<object> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body)
         {
             return DeferredRevenueCreateEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create deferred revenue
+        /// Create a new deferred revenue entry
         /// </summary>
         /// <remarks>
-        /// Creates a new deferred revenue entry
+        /// Creates a new deferred revenue entry for revenue recognition tracking
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> DeferredRevenueCreateEndpointAsync(string version, CreateDeferredRevenueCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -27843,10 +27843,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/deferred-revenue"
+                    // Operation Path: "api/v{version}/accounting/deferred-revenues"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/deferred-revenue");
+                    urlBuilder_.Append("/accounting/deferred-revenues");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -27871,14 +27871,34 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Guid>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 409)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Conflict", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -27904,12 +27924,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Get deferred revenue by ID
         /// </summary>
         /// <remarks>
-        /// Gets the details of a deferred revenue entry by its ID
+        /// Retrieves a deferred revenue entry by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeferredRevenueGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<DeferredRevenueResponse> DeferredRevenueGetEndpointAsync(string version, System.Guid id)
         {
             return DeferredRevenueGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -27919,12 +27939,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Get deferred revenue by ID
         /// </summary>
         /// <remarks>
-        /// Gets the details of a deferred revenue entry by its ID
+        /// Retrieves a deferred revenue entry by its unique identifier
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeferredRevenueGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<DeferredRevenueResponse> DeferredRevenueGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -27939,13 +27959,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/deferred-revenue/{id}"
+                    // Operation Path: "api/v{version}/accounting/deferred-revenues/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/deferred-revenue/");
+                    urlBuilder_.Append("/accounting/deferred-revenues/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -27973,7 +27994,22 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<DeferredRevenueResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -27999,7 +28035,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Update deferred revenue
         /// </summary>
         /// <remarks>
-        /// Updates a deferred revenue entry details
+        /// Updates an existing deferred revenue entry (cannot update recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28014,7 +28050,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Update deferred revenue
         /// </summary>
         /// <remarks>
-        /// Updates a deferred revenue entry details
+        /// Updates an existing deferred revenue entry (cannot update recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28045,10 +28081,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/deferred-revenue/{id}"
+                    // Operation Path: "api/v{version}/accounting/deferred-revenues/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/deferred-revenue/");
+                    urlBuilder_.Append("/accounting/deferred-revenues/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -28127,12 +28163,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete deferred revenue
         /// </summary>
         /// <remarks>
-        /// Deletes an unrecognized deferred revenue entry
+        /// Deletes a deferred revenue entry (cannot delete recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeferredRevenueDeleteEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<object> DeferredRevenueDeleteEndpointAsync(string version, System.Guid id)
         {
             return DeferredRevenueDeleteEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -28142,12 +28178,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Delete deferred revenue
         /// </summary>
         /// <remarks>
-        /// Deletes an unrecognized deferred revenue entry
+        /// Deletes a deferred revenue entry (cannot delete recognized revenue)
         /// </remarks>
         /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeferredRevenueDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> DeferredRevenueDeleteEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28162,13 +28198,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/deferred-revenue/{id}"
+                    // Operation Path: "api/v{version}/accounting/deferred-revenues/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/deferred-revenue/");
+                    urlBuilder_.Append("/accounting/deferred-revenues/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -28194,9 +28231,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
+                        if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ == 400)
@@ -28242,12 +28284,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search deferred revenues
         /// </summary>
         /// <remarks>
-        /// Searches deferred revenue entries with filters and pagination
+        /// Searches deferred revenue entries with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesQuery body)
+        public virtual System.Threading.Tasks.Task<DeferredRevenueResponsePagedList> DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesRequest body)
         {
             return DeferredRevenueSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -28257,12 +28299,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search deferred revenues
         /// </summary>
         /// <remarks>
-        /// Searches deferred revenue entries with filters and pagination
+        /// Searches deferred revenue entries with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<DeferredRevenueResponsePagedList> DeferredRevenueSearchEndpointAsync(string version, SearchDeferredRevenuesRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -28281,13 +28323,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/deferred-revenue/search"
+                    // Operation Path: "api/v{version}/accounting/deferred-revenues/search"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/deferred-revenue/search");
+                    urlBuilder_.Append("/accounting/deferred-revenues/search");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -28314,7 +28357,22 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<DeferredRevenueResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -28340,7 +28398,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Recognize deferred revenue
         /// </summary>
         /// <remarks>
-        /// Marks deferred revenue as recognized
+        /// Marks deferred revenue as recognized, preventing further modifications
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28355,7 +28413,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Recognize deferred revenue
         /// </summary>
         /// <remarks>
-        /// Marks deferred revenue as recognized
+        /// Marks deferred revenue as recognized, preventing further modifications
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
@@ -28386,10 +28444,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/accounting/deferred-revenue/{id}/recognize"
+                    // Operation Path: "api/v{version}/accounting/deferred-revenues/{id}/recognize"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/accounting/deferred-revenue/");
+                    urlBuilder_.Append("/accounting/deferred-revenues/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/recognize");
 
@@ -64035,8 +64093,8 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public decimal Amount { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
+        public decimal Quantity { get; set; } = default!;
 
     }
 
@@ -69189,6 +69247,60 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DeferredRevenueResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("deferredRevenueNumber")]
+        public string? DeferredRevenueNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("recognitionDate")]
+        public System.DateTime RecognitionDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isRecognized")]
+        public bool IsRecognized { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("recognizedDate")]
+        public System.DateTime? RecognizedDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DeferredRevenueResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<DeferredRevenueResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class DeleteBillLineItemResponse
     {
 
@@ -73681,11 +73793,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial class RecognizeDeferredRevenueCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("deferredRevenueId")]
-        public System.Guid DeferredRevenueId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("recognitionDate")]
-        public System.DateTime RecognitionDate { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("recognizedDate")]
+        public System.DateTime RecognizedDate { get; set; } = default!;
 
     }
 
@@ -74071,8 +74183,8 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public decimal Amount { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("quantity")]
+        public decimal Quantity { get; set; } = default!;
 
     }
 
@@ -75250,20 +75362,38 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchDeferredRevenuesQuery
+    public partial class SearchDeferredRevenuesRequest
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("deferredRevenueNumber")]
         public string? DeferredRevenueNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("isRecognized")]
+        public bool? IsRecognized { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("skip")]
-        public int? Skip { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("recognitionDateFrom")]
+        public System.DateTime? RecognitionDateFrom { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("take")]
-        public int? Take { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("recognitionDateTo")]
+        public System.DateTime? RecognitionDateTo { get; set; } = default!;
 
     }
 
@@ -78145,11 +78275,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("recognitionDate")]
         public System.DateTime? RecognitionDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal? Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
 
     }
 

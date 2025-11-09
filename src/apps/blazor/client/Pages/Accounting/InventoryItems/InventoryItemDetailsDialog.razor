@@ -1,0 +1,48 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Inventory Item Details</MudText>
+            <MudDivider />
+            
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">SKU</MudText>
+                    <MudText>@Item.Sku</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Item Name</MudText>
+                    <MudText>@Item.Name</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Quantity on Hand</MudText>
+                    <MudText><strong>@Item.Quantity.ToString("N2")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Unit Price</MudText>
+                    <MudText>@Item.UnitPrice.ToString("C2")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Total Value</MudText>
+                    <MudText><strong>@((Item.Quantity * Item.UnitPrice).ToString("C2"))</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status</MudText>
+                    <MudChip T="string" Color="@(Item.IsActive ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(Item.IsActive ? "Active" : "Inactive")
+                    </MudChip>
+                </MudItem>
+                @if (!string.IsNullOrWhiteSpace(Item.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Description</MudText>
+                        <MudText>@Item.Description</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => Cancel())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

@@ -24,7 +24,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
         <MudButton OnClick="Dispose" Color="Color.Error" Variant="Variant.Filled" Disabled="@(_disposalDate == null)">
             Dispose Asset
         </MudButton>

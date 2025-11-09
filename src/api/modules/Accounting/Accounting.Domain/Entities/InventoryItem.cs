@@ -160,23 +160,26 @@ public class InventoryItem : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Increase stock on hand by the specified amount; must be positive.
+    /// Increase stock on hand by the specified quantity; must be positive.
     /// </summary>
-    public void AddStock(decimal amount)
+    /// <param name="quantity">The quantity to add to inventory.</param>
+    public void AddStock(decimal quantity)
     {
-        if (amount <= 0) throw new InvalidInventoryQuantityException();
-        Quantity += amount;
+        if (quantity <= 0) throw new InvalidInventoryQuantityException();
+        Quantity += quantity;
         QueueDomainEvent(new InventoryItemUpdated(Id, Sku, Name, Quantity, UnitPrice, Description));
     }
 
     /// <summary>
-    /// Reduce stock on hand by the specified amount; must be positive and not exceed quantity on hand.
+    /// Reduce stock on hand by the specified quantity; must be positive and not exceed quantity on hand.
     /// </summary>
-    public void ReduceStock(decimal amount)
+    /// <param name="quantity">The quantity to reduce from inventory.</param>
+    public void ReduceStock(decimal quantity)
     {
-        if (amount <= 0) throw new InvalidInventoryQuantityException();
-        if (Quantity - amount < 0) throw new InsufficientStockException(Id, amount, Quantity);
-        Quantity -= amount;
+        if (quantity <= 0) throw new InvalidInventoryQuantityException();
+        if (Quantity - quantity < 0) throw new InsufficientStockException(Id, quantity, Quantity);
+        Quantity -= quantity;
+        
         QueueDomainEvent(new InventoryItemUpdated(Id, Sku, Name, Quantity, UnitPrice, Description));
     }
 }

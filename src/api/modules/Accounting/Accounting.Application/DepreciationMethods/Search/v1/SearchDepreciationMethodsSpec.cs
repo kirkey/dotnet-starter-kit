@@ -21,8 +21,6 @@ public sealed class SearchDepreciationMethodsSpec : Specification<DepreciationMe
             Query.Where(dm => dm.IsActive == request.IsActive.Value);
         }
 
-        Query.Skip(request.PageNumber * request.PageSize)
-             .Take(request.PageSize);
 
         Query.OrderBy(dm => dm.MethodCode);
     }

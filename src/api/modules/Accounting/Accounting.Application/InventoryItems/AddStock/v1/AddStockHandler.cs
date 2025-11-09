@@ -10,12 +10,12 @@ public sealed class AddStockHandler(IRepository<InventoryItem> repository, ILogg
     public async Task<DefaultIdType> Handle(AddStockCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        _logger.LogInformation("Adding stock to inventory item {Id}: {Amount}", request.Id, request.Amount);
+        _logger.LogInformation("Adding stock to inventory item {Id}: {Quantity}", request.Id, request.Quantity);
 
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
-        item.AddStock(request.Amount);
+        item.AddStock(request.Quantity);
         await _repository.UpdateAsync(item, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 

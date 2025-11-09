@@ -28,7 +28,7 @@
         </MudGrid>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton Variant="Variant.Filled" 
                    Color="Color.Warning" 
                    OnClick="Reopen"

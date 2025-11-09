@@ -21,8 +21,6 @@ public sealed class SearchInventoryItemsSpec : Specification<InventoryItem>
             Query.Where(i => i.IsActive == request.IsActive.Value);
         }
 
-        Query.Skip(request.PageNumber * request.PageSize)
-             .Take(request.PageSize);
 
         Query.OrderBy(i => i.Sku);
     }

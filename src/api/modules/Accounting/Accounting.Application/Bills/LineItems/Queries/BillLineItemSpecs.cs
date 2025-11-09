@@ -1,3 +1,3 @@
-namespace Accounting.Application.Bills.LineItems.Commands;
+namespace Accounting.Application.Bills.LineItems.Queries;
 
 

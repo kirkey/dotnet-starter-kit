@@ -19,7 +19,7 @@ using Accounting.Infrastructure.Endpoints.CostCenters;
 using Accounting.Infrastructure.Endpoints.CreditMemos;
 using Accounting.Infrastructure.Endpoints.Customers;
 using Accounting.Infrastructure.Endpoints.DebitMemos;
-using Accounting.Infrastructure.Endpoints.DeferredRevenue;
+using Accounting.Infrastructure.Endpoints.DeferredRevenues;
 using Accounting.Infrastructure.Endpoints.DepreciationMethods;
 using Accounting.Infrastructure.Endpoints.FinancialStatements;
 using Accounting.Infrastructure.Endpoints.FiscalPeriodCloses;
@@ -124,7 +124,7 @@ public static class AccountingModule
         // DEFERRALS & ACCRUALS
         // ============================================================================
         accountingGroup.MapAccrualsEndpoints();
-        accountingGroup.MapDeferredRevenueEndpoints();
+        accountingGroup.MapDeferredRevenuesEndpoints();
         accountingGroup.MapPrepaidExpensesEndpoints();
 
         // ============================================================================

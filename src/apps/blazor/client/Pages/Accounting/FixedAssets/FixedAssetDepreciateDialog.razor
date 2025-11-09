@@ -24,7 +24,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
         <MudButton OnClick="Record" Color="Color.Primary" Variant="Variant.Filled" Disabled="@(_depreciationAmount <= 0 || _depreciationDate == null)">
             Record Depreciation
         </MudButton>

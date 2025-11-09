@@ -1,0 +1,47 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Deferred Revenue Details</MudText>
+            <MudDivider />
+            
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Revenue Number</MudText>
+                    <MudText>@Revenue.DeferredRevenueNumber</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Recognition Date</MudText>
+                    <MudText>@Revenue.RecognitionDate.ToString("MMM dd, yyyy")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Amount</MudText>
+                    <MudText><strong>@Revenue.Amount.ToString("C2")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status</MudText>
+                    <MudChip T="string" Color="@(Revenue.IsRecognized ? Color.Success : Color.Warning)" Size="Size.Small">
+                        @(Revenue.IsRecognized ? "Recognized" : "Pending")
+                    </MudChip>
+                </MudItem>
+                @if (Revenue.IsRecognized && Revenue.RecognizedDate.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Recognized Date</MudText>
+                        <MudText>@Revenue.RecognizedDate.Value.ToString("MMM dd, yyyy")</MudText>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrWhiteSpace(Revenue.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Description</MudText>
+                        <MudText>@Revenue.Description</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => Cancel())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
