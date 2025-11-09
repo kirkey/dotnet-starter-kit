@@ -13,9 +13,9 @@ public static class TaxCodeUpdateEndpoint
     internal static RouteHandlerBuilder MapTaxCodeUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateTaxCodeCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateTaxCodeCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest();
+                var command = request with { Id = id };
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
