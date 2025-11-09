@@ -272,18 +272,14 @@ public partial class JournalEntries
     {
         var confirmed = await DialogService.ShowMessageBox(
             "Confirm Approval",
-            "Are you sure you want to approve this journal entry?",
+            "Are you sure you want to approve this journal entry? Your approval will be recorded automatically.",
             yesText: "Approve", cancelText: "Cancel");
 
         if (confirmed == true)
         {
             try
             {
-                var request = new ApproveJournalEntryRequest
-                {
-                    ApprovedBy = "CurrentUser" // TODO: Get actual user
-                };
-                await Client.JournalEntryApproveEndpointAsync("1", id, request);
+                await Client.JournalEntryApproveEndpointAsync("1", id);
                 Snackbar.Add("Journal entry approved successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }

@@ -5,25 +5,21 @@
         <MudText Typo="Typo.h6">Approve Reconciliation</MudText>
     </TitleContent>
     <DialogContent>
-        <EditForm Model="@Command" OnValidSubmit="@OnSubmit">
-            <FluentValidationValidator />
-            <MudStack Spacing="3">
-                <MudAlert Severity="Severity.Success" Variant="Variant.Filled">
-                    This will mark the reconciliation as approved and finalize it.
-                </MudAlert>
+        <MudStack Spacing="3">
+            <MudAlert Severity="Severity.Success" Variant="Variant.Filled">
+                This will mark the reconciliation as approved and finalize it.
+            </MudAlert>
 
-                <MudTextField @bind-Value="Command.ApprovedBy"
-                             Label="Approved By"
-                             For="@(() => Command.ApprovedBy)"
-                             HelperText="Your name or email"
-                             Variant="Variant.Outlined"
-                             Required="true" />
-
-                <MudText Typo="Typo.caption" Color="Color.Secondary">
-                    <ValidationMessage For="@(() => Command.ApprovedBy)" />
+            <MudAlert Severity="Severity.Info" Variant="Variant.Text">
+                <MudText Typo="Typo.body2">
+                    <strong>Note:</strong> Your approval will be recorded automatically using your current user session.
                 </MudText>
-            </MudStack>
-        </EditForm>
+            </MudAlert>
+
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                Are you sure you want to approve this bank reconciliation?
+            </MudText>
+        </MudStack>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
@@ -36,17 +32,14 @@
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
-    public ApproveBankReconciliationCommand Command { get; set; } = new();
-
-    [Parameter]
     public DefaultIdType ReconciliationId { get; set; }
 
     private async Task OnSubmit()
     {
         try
         {
-            Command.Id = ReconciliationId;
-            await Client.ApproveBankReconciliationEndpointAsync("1", ReconciliationId, Command);
+            var command = new ApproveBankReconciliationCommand { Id = ReconciliationId };
+            await Client.ApproveBankReconciliationEndpointAsync("1", ReconciliationId, command);
             Snackbar.Add("Reconciliation approved successfully.", Severity.Success);
             MudDialog.Close(true);
         }

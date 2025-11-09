@@ -145,8 +145,7 @@ public partial class RecurringJournalEntries
         {
             try
             {
-                var cmd = new ReactivateRecurringJournalEntryCommand { Id = template.Id };
-                await Client.RecurringJournalEntryReactivateEndpointAsync("1", template.Id, cmd);
+                await Client.RecurringJournalEntryReactivateEndpointAsync("1", template.Id);
                 Snackbar.Add("Template reactivated successfully", Severity.Success);
                 if (_table is not null)
                     await _table.ReloadDataAsync();

@@ -107,7 +107,6 @@ public partial class FixedAssets
         var cmd = new ApproveFixedAssetCommand
         {
             FixedAssetId = asset.Id,
-            ApprovedBy = UserId
         };
         await Client.FixedAssetApproveEndpointAsync("1", asset.Id, cmd);
         Snackbar.Add("Fixed asset approved successfully", Severity.Success);

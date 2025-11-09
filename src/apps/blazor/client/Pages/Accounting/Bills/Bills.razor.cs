@@ -243,7 +243,7 @@ public partial class Bills
     // Approve Bill Dialog
     private void OnApproveBill(DefaultIdType billId)
     {
-        _approveCommand = new ApproveBillCommand { BillId = billId, ApprovedBy = string.Empty };
+        _approveCommand = new ApproveBillCommand { BillId = billId };
         _approveDialogVisible = true;
     }
 
@@ -251,12 +251,8 @@ public partial class Bills
     {
         try
         {
-            var command = new ApproveBillRequest
-            {
-                ApprovedBy = _approveCommand.ApprovedBy
-            };
-            await Client.ApproveBillEndpointAsync("1", _approveCommand.BillId, command);
-            Snackbar.Add("Bill approved successfully", Severity.Success);
+            await Client.ApproveBillEndpointAsync("1", _approveCommand.BillId);
+            Snackbar.Add("Bill approved successfully. Your approval has been recorded.", Severity.Success);
             _approveDialogVisible = false;
             await _table.ReloadDataAsync();
         }

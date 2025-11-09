@@ -96,7 +96,6 @@ public partial class WriteOffs
         var cmd = new ApproveWriteOffCommand
         {
             Id = w.Id,
-            ApprovedBy = UserId
         };
         await Client.WriteOffApproveEndpointAsync("1", w.Id, cmd);
         Snackbar.Add("Write-off approved successfully", Severity.Success);

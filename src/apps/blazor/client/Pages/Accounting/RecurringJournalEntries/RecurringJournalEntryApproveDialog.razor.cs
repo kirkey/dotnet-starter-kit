@@ -15,7 +15,6 @@ public partial class RecurringJournalEntryApproveDialog
             var cmd = new ApproveRecurringJournalEntryCommand
             {
                 Id = TemplateId,
-                ApproverNotes = _approverNotes
             };
             await Client.RecurringJournalEntryApproveEndpointAsync("1", TemplateId, cmd);
             Snackbar.Add("Template approved successfully", Severity.Success);

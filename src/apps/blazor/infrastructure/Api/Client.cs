@@ -171,24 +171,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a bill
         /// </summary>
         /// <remarks>
-        /// Approves a bill for payment processing.
+        /// Approves a bill for payment processing. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id, ApproveBillRequest body);
+        System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Approve a bill
         /// </summary>
         /// <remarks>
-        /// Approves a bill for payment processing.
+        /// Approves a bill for payment processing. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id, ApproveBillRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reject a bill
@@ -5990,24 +5990,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a journal entry
         /// </summary>
         /// <remarks>
-        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger.
+        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id, ApproveJournalEntryRequest body);
+        System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Approve a journal entry
         /// </summary>
         /// <remarks>
-        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger.
+        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id, ApproveJournalEntryRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Reject a journal entry
@@ -11572,14 +11572,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a bill
         /// </summary>
         /// <remarks>
-        /// Approves a bill for payment processing.
+        /// Approves a bill for payment processing. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id, ApproveBillRequest body)
+        public virtual System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id)
         {
-            return ApproveBillEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return ApproveBillEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -11587,12 +11587,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a bill
         /// </summary>
         /// <remarks>
-        /// Approves a bill for payment processing.
+        /// Approves a bill for payment processing. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id, ApproveBillRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApproveBillResponse> ApproveBillEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -11600,20 +11600,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
@@ -40208,14 +40202,14 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a journal entry
         /// </summary>
         /// <remarks>
-        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger.
+        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id, ApproveJournalEntryRequest body)
+        public virtual System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id)
         {
-            return JournalEntryApproveEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return JournalEntryApproveEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -40223,12 +40217,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Approve a journal entry
         /// </summary>
         /// <remarks>
-        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger.
+        /// Approve a pending journal entry. Approved entries can then be posted to the general ledger. The approver is automatically determined from the current user session.
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id, ApproveJournalEntryRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> JournalEntryApproveEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -40236,19 +40230,13 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -64219,9 +64207,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("accrualId")]
         public System.Guid AccrualId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -64246,18 +64231,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
         public string? Notes { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApproveBillRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -64275,9 +64248,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("budgetId")]
         public System.Guid BudgetId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
 
     }
 
@@ -64311,9 +64281,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("fixedAssetId")]
         public System.Guid FixedAssetId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
 
     }
 
@@ -64360,15 +64327,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApproveJournalEntryRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ApprovePurchaseOrderRequest
     {
 
@@ -64395,9 +64353,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
 
     }
 
@@ -64431,9 +64386,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
 
     }
 
@@ -72916,9 +72868,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
-        public string? ApprovedBy { get; set; } = default!;
 
     }
 
