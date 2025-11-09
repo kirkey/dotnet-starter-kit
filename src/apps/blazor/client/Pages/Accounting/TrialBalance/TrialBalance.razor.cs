@@ -8,17 +8,17 @@ public partial class TrialBalance
     /// <summary>
     /// The entity table context for managing trial balance reports.
     /// </summary>
-    protected EntityServerTableContext<TrialBalanceSearchResponse, DefaultIdType, TrialBalanceViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<TrialBalanceSearchResponse, DefaultIdType, TrialBalanceViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component.
     /// </summary>
-    private EntityTable<TrialBalanceSearchResponse, DefaultIdType, TrialBalanceViewModel> _table = default!;
+    private EntityTable<TrialBalanceSearchResponse, DefaultIdType, TrialBalanceViewModel> _table = null!;
 
     /// <summary>
     /// Reference to the details dialog.
     /// </summary>
-    private TrialBalanceDetailsDialog _detailsDialog = default!;
+    private TrialBalanceDetailsDialog _detailsDialog = null!;
 
     // Search filters
     private string? TrialBalanceNumber { get; set; }

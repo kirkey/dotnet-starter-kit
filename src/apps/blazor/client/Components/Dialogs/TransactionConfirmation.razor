@@ -16,7 +16,7 @@
 
 @code {
 
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter] public string TransactionIcon { get; set; } = Icons.Material.Filled.Work;
     [Parameter] public string TransactionTitle { get; set; } = "Transaction";

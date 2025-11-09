@@ -3,15 +3,15 @@
 public partial class RolePermissions
 {
     [Parameter]
-    public string Id { get; set; } = default!; // from route
+    public string Id { get; set; } = null!; // from route
     [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Inject]
-    protected IAuthorizationService AuthService { get; set; } = default!;
+    protected IAuthorizationService AuthService { get; set; } = null!;
     [Inject]
-    protected IClient RolesClient { get; set; } = default!;
+    protected IClient RolesClient { get; set; } = null!;
 
-    private Dictionary<string, List<PermissionViewModel>> _groupedRoleClaims = default!;
+    private Dictionary<string, List<PermissionViewModel>> _groupedRoleClaims = null!;
 
     public string _title = string.Empty;
     public string _description = string.Empty;

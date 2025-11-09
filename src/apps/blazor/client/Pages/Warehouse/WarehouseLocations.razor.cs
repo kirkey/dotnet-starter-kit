@@ -14,7 +14,7 @@ public partial class WarehouseLocations
 
     private DefaultIdType? _filterWarehouseId;
 
-    protected EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> Context { get; set; } = null!;
 
     protected override Task OnInitializedAsync()
     {
@@ -98,7 +98,7 @@ public class WarehouseLocationViewModel
     /// </summary>
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// Optional description providing additional location details.
@@ -114,7 +114,7 @@ public class WarehouseLocationViewModel
     /// </summary>
     [Required]
     [MaxLength(50)]
-    public string Code { get; set; } = default!;
+    public string Code { get; set; } = null!;
 
     /// <summary>
     /// Aisle identifier within the warehouse.
@@ -123,7 +123,7 @@ public class WarehouseLocationViewModel
     /// </summary>
     [Required]
     [MaxLength(20)]
-    public string Aisle { get; set; } = default!;
+    public string Aisle { get; set; } = null!;
 
     /// <summary>
     /// Section identifier within the aisle.
@@ -132,7 +132,7 @@ public class WarehouseLocationViewModel
     /// </summary>
     [Required]
     [MaxLength(20)]
-    public string Section { get; set; } = default!;
+    public string Section { get; set; } = null!;
 
     /// <summary>
     /// Shelf identifier within the section.
@@ -141,7 +141,7 @@ public class WarehouseLocationViewModel
     /// </summary>
     [Required]
     [MaxLength(20)]
-    public string Shelf { get; set; } = default!;
+    public string Shelf { get; set; } = null!;
 
     /// <summary>
     /// Bin identifier within the shelf (optional).

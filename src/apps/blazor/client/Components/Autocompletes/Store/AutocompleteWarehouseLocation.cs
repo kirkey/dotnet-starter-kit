@@ -65,7 +65,7 @@ public class AutocompleteWarehouseLocation : AutocompleteBase<GetWarehouseLocati
         {
             // Overwrite cache with latest page of results; guard against null Ids.
             _cache = items
-                .Where(x => x.Id != default)
+                .Where(x => x.Id != Guid.Empty)
                 .GroupBy(x => x.Id)
                 .Select(g => g.First())
                 .ToDictionary(x => x.Id);

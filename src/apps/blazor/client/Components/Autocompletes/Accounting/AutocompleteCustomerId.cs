@@ -12,7 +12,7 @@ public class AutocompleteCustomerId : AutocompleteBase<CustomerDetailsDto, IClie
     // Local cache for id -> dto lookups
     private readonly Dictionary<DefaultIdType, CustomerDetailsDto> _cache = new();
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
+    [Inject] protected NavigationManager Navigation { get; set; } = null!;
 
     /// <summary>
     /// Controls how the selected text is displayed.

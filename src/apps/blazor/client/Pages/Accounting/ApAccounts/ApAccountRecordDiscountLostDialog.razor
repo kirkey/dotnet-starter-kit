@@ -1,0 +1,25 @@
+@inject IClient Client
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <MudText>Record Discount Lost Dialog - Coming Soon</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public DefaultIdType ApAccountId { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdated { get; set; }
+
+    private void Close() => MudDialog.Close();
+}
+

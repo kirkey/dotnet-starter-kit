@@ -9,9 +9,9 @@ public partial class TaxCodes
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>
-    protected EntityServerTableContext<TaxCodeResponse, DefaultIdType, TaxCodeViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<TaxCodeResponse, DefaultIdType, TaxCodeViewModel> Context { get; set; } = null!;
 
-    private EntityTable<TaxCodeResponse, DefaultIdType, TaxCodeViewModel> _table = default!;
+    private EntityTable<TaxCodeResponse, DefaultIdType, TaxCodeViewModel> _table = null!;
 
     /// <summary>
     /// Initializes the table context with tax code-specific configuration including fields, CRUD operations, and search functionality.

@@ -6,10 +6,10 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers;
 /// </summary>
 public partial class Suppliers
 {
-    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
 
-    protected EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> Context { get; set; } = default!;
-    private EntityTable<SupplierResponse, DefaultIdType, SupplierViewModel> _table = default!;
+    protected EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> Context { get; set; } = null!;
+    private EntityTable<SupplierResponse, DefaultIdType, SupplierViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

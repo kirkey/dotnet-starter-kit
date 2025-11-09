@@ -8,22 +8,22 @@ public partial class FiscalPeriodClose
     /// <summary>
     /// The entity table context for managing fiscal period closes.
     /// </summary>
-    protected EntityServerTableContext<FiscalPeriodCloseResponse, DefaultIdType, FiscalPeriodCloseViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<FiscalPeriodCloseResponse, DefaultIdType, FiscalPeriodCloseViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component.
     /// </summary>
-    private EntityTable<FiscalPeriodCloseResponse, DefaultIdType, FiscalPeriodCloseViewModel> _table = default!;
+    private EntityTable<FiscalPeriodCloseResponse, DefaultIdType, FiscalPeriodCloseViewModel> _table = null!;
 
     /// <summary>
     /// Reference to the checklist dialog.
     /// </summary>
-    private FiscalPeriodCloseChecklistDialog _checklistDialog = default!;
+    private FiscalPeriodCloseChecklistDialog _checklistDialog = null!;
 
     /// <summary>
     /// Reference to the reopen dialog.
     /// </summary>
-    private FiscalPeriodCloseReopenDialog _reopenDialog = default!;
+    private FiscalPeriodCloseReopenDialog _reopenDialog = null!;
 
     /// <summary>
     /// Search filter for close number.

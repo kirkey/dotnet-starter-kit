@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PutAwayTasks;
 public partial class PutAwayTaskDetailsDialog
 {
     [Parameter] public DefaultIdType PutAwayTaskId { get; set; }
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private GetPutAwayTaskResponse? _putAwayTask;
     private bool _loading = true;

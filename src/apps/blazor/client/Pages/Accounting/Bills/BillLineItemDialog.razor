@@ -84,7 +84,7 @@
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
         <MudButton Color="Color.Primary" OnClick="SaveAsync" Variant="Variant.Filled">
-            @(Model.Id == default ? "Add" : "Update")
+            @(Model.Id == null ? "Add" : "Update")
         </MudButton>
     </DialogActions>
 </MudDialog>
@@ -94,7 +94,7 @@
     /// Cascading dialog instance from MudBlazor.
     /// </summary>
     [CascadingParameter] 
-    IMudDialogInstance MudDialog { get; set; } = default!;
+    IMudDialogInstance MudDialog { get; set; } = null!;
     
     /// <summary>
     /// Bill identifier for the line item.
@@ -111,7 +111,7 @@
     /// <summary>
     /// Reference to the MudForm for validation.
     /// </summary>
-    private MudForm _form = default!;
+    private MudForm _form = null!;
 
     /// <summary>
     /// Handles quantity changes and recalculates the amount.
@@ -152,7 +152,7 @@
 
         try
         {
-            if (Model.Id == default)
+            if (Model.Id == null)
             {
                 // Add new line item
                 var command = new AddBillLineItemCommand

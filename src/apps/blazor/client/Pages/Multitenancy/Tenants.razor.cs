@@ -3,13 +3,13 @@
 public partial class Tenants
 {
     private string? _searchString;
-    protected EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand> Context { get; set; } = default!;
+    protected EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand> Context { get; set; } = null!;
     private List<TenantViewModel> _tenants = [];
-    public EntityTable<TenantViewModel, DefaultIdType, CreateTenantCommand> EntityTable { get; set; } = default!;
+    public EntityTable<TenantViewModel, DefaultIdType, CreateTenantCommand> EntityTable { get; set; } = null!;
     [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Inject]
-    protected IAuthorizationService AuthService { get; set; } = default!;
+    protected IAuthorizationService AuthService { get; set; } = null!;
 
     private bool _canUpgrade;
     private bool _canModify;

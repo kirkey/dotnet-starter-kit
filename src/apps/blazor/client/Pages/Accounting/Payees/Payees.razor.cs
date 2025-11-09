@@ -6,14 +6,14 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 /// </summary>
 public partial class Payees
 {
-    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
 
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>
-    protected EntityServerTableContext<PayeeResponse, DefaultIdType, PayeeViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<PayeeResponse, DefaultIdType, PayeeViewModel> Context { get; set; } = null!;
 
-    private EntityTable<PayeeResponse, DefaultIdType, PayeeViewModel> _table = default!;
+    private EntityTable<PayeeResponse, DefaultIdType, PayeeViewModel> _table = null!;
 
     protected override void OnInitialized() =>
         Context = new EntityServerTableContext<PayeeResponse, DefaultIdType, PayeeViewModel>(

@@ -6,14 +6,14 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Banks;
 /// </summary>
 public partial class Banks
 {
-    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
 
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>
-    protected EntityServerTableContext<BankResponse, DefaultIdType, BankViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<BankResponse, DefaultIdType, BankViewModel> Context { get; set; } = null!;
 
-    private EntityTable<BankResponse, DefaultIdType, BankViewModel> _table = default!;
+    private EntityTable<BankResponse, DefaultIdType, BankViewModel> _table = null!;
 
     protected override void OnInitialized() =>
         Context = new EntityServerTableContext<BankResponse, DefaultIdType, BankViewModel>(

@@ -112,6 +112,16 @@ public class GeneralLedgerViewModel
     public string? CreatedByUserName { get; set; }
 
     /// <summary>
+    /// When the entry was last modified.
+    /// </summary>
+    public DateTime? LastModifiedOn { get; set; }
+
+    /// <summary>
+    /// Who last modified the entry.
+    /// </summary>
+    public string? LastModifiedByUserName { get; set; }
+
+    /// <summary>
     /// Gets the transaction amount (debit or credit, whichever is non-zero).
     /// </summary>
     public decimal Amount => Debit > 0 ? Debit : Credit;

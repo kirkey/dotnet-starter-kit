@@ -3,9 +3,9 @@
 public class FshTable<T> : MudTable<T>
 {
     [Inject]
-    private IClientPreferenceManager ClientPreferences { get; set; } = default!;
+    private IClientPreferenceManager ClientPreferences { get; set; } = null!;
     [Inject]
-    protected ICourier Courier { get; set; } = default!;
+    protected ICourier Courier { get; set; } = null!;
 
 
     protected override async Task OnInitializedAsync()

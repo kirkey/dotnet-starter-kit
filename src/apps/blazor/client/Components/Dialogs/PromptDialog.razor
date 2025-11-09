@@ -10,7 +10,7 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter] public string ContentText { get; set; } = string.Empty;
     [Parameter] public string ButtonText { get; set; } = "OK";

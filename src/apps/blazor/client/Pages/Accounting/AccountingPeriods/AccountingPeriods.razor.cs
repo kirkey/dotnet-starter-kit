@@ -4,9 +4,9 @@ public partial class AccountingPeriods
 {
     
 
-    protected EntityServerTableContext<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> Context { get; set; } = null!;
 
-    private EntityTable<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> _table = default!;
+    private EntityTable<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> _table = null!;
 
     protected override Task OnInitializedAsync()
     {

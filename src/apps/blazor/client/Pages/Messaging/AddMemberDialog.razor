@@ -38,7 +38,7 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter] public DefaultIdType ConversationId { get; set; }
     [Parameter] public List<DefaultIdType>? ExistingMembers { get; set; }
     [Parameter] public List<UserDto>? AllUsers { get; set; }

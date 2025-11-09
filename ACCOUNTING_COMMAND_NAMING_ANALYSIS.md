@@ -17,8 +17,8 @@ After scanning all 400+ commands in the Accounting module, here are the commands
 |--------------|-------|----------------|
 | `RecordCollectionCommand` | Doesn't specify AR context | `RecordARCollectionCommand` |
 | `RecordWriteOffCommand` | Doesn't specify AR context | `RecordARWriteOffCommand` |
-| `ReconcileARAccountCommand` | ✅ Already has AR | No change needed |
-| `UpdateARBalanceCommand` | ✅ Already has AR | No change needed |
+| `ReconcileArAccountCommand` | ✅ Already has AR | No change needed |
+| `UpdateArBalanceCommand` | ✅ Already has AR | No change needed |
 | `UpdateARAllowanceCommand` | ✅ Already has AR | No change needed |
 
 ### 2. ❌ AccountsPayableAccounts - Ambiguous Commands

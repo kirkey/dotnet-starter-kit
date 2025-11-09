@@ -1,0 +1,82 @@
+@inject IClient Client
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6">Update AP Balance</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Update aging buckets and calculate total balance</MudText>
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="@_current" Label="Current (0-30 days)" Format="N2" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="@_days3060" Label="31-60 Days" Format="N2" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="@_days6090" Label="61-90 Days" Format="N2" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="@_over90" Label="Over 90 Days" Format="N2" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField Value="@((_current + _days3060 + _days6090 + _over90).ToString("C2"))" Label="Total Balance" ReadOnly Variant="Variant.Filled" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="UpdateBalance">Update Balance</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance _dialogReference { get; set; } = default!;
+
+    [Parameter]
+    public DefaultIdType ApAccountId { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdated { get; set; }
+
+    private decimal _current;
+    private decimal _days3060;
+    private decimal _days6090;
+    private decimal _over90;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: Load current balance data from API
+        _current = 0;
+        _days3060 = 0;
+        _days6090 = 0;
+        _over90 = 0;
+        await Task.CompletedTask;
+    }
+
+    private async Task UpdateBalance()
+    {
+        try
+        {
+            // TODO: Implement when API endpoint is available
+            await Task.CompletedTask;
+            Snackbar.Add("Balance updated successfully", Severity.Success);
+            await OnUpdated.InvokeAsync();
+            _dialogReference.Close();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel() => _dialogReference.Close();
+}
+

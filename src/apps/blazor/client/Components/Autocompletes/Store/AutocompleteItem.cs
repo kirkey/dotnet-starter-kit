@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultIdType>
 {
-    private readonly ISnackbar _snackbar = default!;
+    private readonly ISnackbar _snackbar = null!;
     
     protected override async Task<ItemResponse?> GetItem(DefaultIdType id)
     {

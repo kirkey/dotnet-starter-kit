@@ -61,14 +61,14 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
-    [Inject] private HttpClient HttpClient { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Inject] private HttpClient HttpClient { get; set; } = null!;
 
     [Parameter] public DefaultIdType ProjectId { get; set; }
     [Parameter] public ProjectCostingViewModel? Entry { get; set; }
     [Parameter] public bool IsEdit { get; set; }
 
-    private MudForm _form = default!;
+    private MudForm _form = null!;
     private ProjectCostingViewModel _model = new();
 
     protected override void OnInitialized()

@@ -8,12 +8,12 @@ public partial class Bills
     /// <summary>
     /// The entity table context for managing bills with server-side operations.
     /// </summary>
-    protected EntityServerTableContext<BillSearchResponse, DefaultIdType, BillViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<BillSearchResponse, DefaultIdType, BillViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component for bills.
     /// </summary>
-    private EntityTable<BillSearchResponse, DefaultIdType, BillViewModel> _table = default!;
+    private EntityTable<BillSearchResponse, DefaultIdType, BillViewModel> _table = null!;
 
     /// <summary>
     /// Search filter for bill number.

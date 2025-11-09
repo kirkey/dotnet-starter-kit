@@ -2,11 +2,11 @@
 
 public partial class Products
 {
-    [Inject] protected IClient _client { get; set; } = default!;
+    [Inject] protected IClient _client { get; set; } = null!;
 
-    protected EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel> Context { get; set; } = null!;
 
-    private EntityTable<ProductResponse, DefaultIdType, ProductViewModel> _table = default!;
+    private EntityTable<ProductResponse, DefaultIdType, ProductViewModel> _table = null!;
 
     private List<BrandResponse> _brands = [];
 

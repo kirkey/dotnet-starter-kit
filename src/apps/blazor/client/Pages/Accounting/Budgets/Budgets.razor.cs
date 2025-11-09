@@ -4,9 +4,9 @@ public partial class Budgets
 {
     
 
-    protected EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel> Context { get; set; } = null!;
 
-    private EntityTable<BudgetResponse, DefaultIdType, BudgetViewModel> _table = default!;
+    private EntityTable<BudgetResponse, DefaultIdType, BudgetViewModel> _table = null!;
 
     protected override Task OnInitializedAsync()
     {

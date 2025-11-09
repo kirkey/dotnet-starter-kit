@@ -10,12 +10,12 @@ public static class ArAccountGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetARAccountRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetArAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ArAccountGetEndpoint))
             .WithSummary("Get AR account by ID")
-            .Produces<ARAccountResponse>()
+            .Produces<ArAccountResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);

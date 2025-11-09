@@ -8,12 +8,12 @@ public partial class JournalEntries
     /// <summary>
     /// The entity table context for managing journal entries with server-side operations.
     /// </summary>
-    protected EntityServerTableContext<JournalEntryResponse, DefaultIdType, JournalEntryViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<JournalEntryResponse, DefaultIdType, JournalEntryViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component for journal entries.
     /// </summary>
-    private EntityTable<JournalEntryResponse, DefaultIdType, JournalEntryViewModel> _table = default!;
+    private EntityTable<JournalEntryResponse, DefaultIdType, JournalEntryViewModel> _table = null!;
 
     /// <summary>
     /// Search filter for reference number.

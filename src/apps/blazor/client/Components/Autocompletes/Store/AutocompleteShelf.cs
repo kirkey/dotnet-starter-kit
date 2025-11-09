@@ -7,8 +7,8 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteShelf : MudAutocomplete<string>
 {
-    [Inject] protected IClient Client { get; set; } = default!;
-    [Inject] protected ApiHelper ApiHelper { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = null!;
+    [Inject] protected ApiHelper ApiHelper { get; set; } = null!;
     
     private HashSet<string> _shelves = [];
 

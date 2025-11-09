@@ -3,9 +3,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.ItemSuppliers;
 public partial class ItemSuppliers
 {
     private EntityServerTableContext<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> Context { get; set; } =
-        default!;
+        null!;
 
-    private EntityTable<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> _table = default!;
+    private EntityTable<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryReservations;
 public partial class ReservationDetailsDialog
 {
     [Parameter] public DefaultIdType ReservationId { get; set; }
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private InventoryReservationResponse? _reservation;
     private bool _loading = true;

@@ -49,7 +49,7 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter] public List<UserDto>? AllUsers { get; set; }
     [Parameter] public HashSet<string>? OnlineUserIds { get; set; }
 

@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PickLists;
 public partial class PickListDetailsDialog
 {
     [Parameter] public DefaultIdType PickListId { get; set; }
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private GetPickListResponse? _pickList;
     private bool _loading = true;

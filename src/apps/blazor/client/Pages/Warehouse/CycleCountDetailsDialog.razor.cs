@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 public partial class CycleCountDetailsDialog
 {
 
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter] public DefaultIdType CycleCountId { get; set; }
 

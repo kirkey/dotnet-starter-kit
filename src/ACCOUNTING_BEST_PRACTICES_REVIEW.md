@@ -83,11 +83,11 @@ All operations return proper Response types
 25. ✅ AccountingPeriodUpdateEndpoint.cs
 
 ### AccountsReceivable Module (6) ✅
-26. ✅ ARAccountRecordCollectionEndpoint.cs
-27. ✅ ARAccountUpdateAllowanceEndpoint.cs
-28. ✅ ARAccountUpdateBalanceEndpoint.cs
-29. ✅ ARAccountReconcileEndpoint.cs
-30. ✅ ARAccountRecordWriteOffEndpoint.cs
+26. ✅ ArAccountRecordCollectionEndpoint.cs
+27. ✅ ArAccountUpdateAllowanceEndpoint.cs
+28. ✅ ArAccountUpdateBalanceEndpoint.cs
+29. ✅ ArAccountReconcileEndpoint.cs
+30. ✅ ArAccountRecordWriteOffEndpoint.cs
 
 ---
 

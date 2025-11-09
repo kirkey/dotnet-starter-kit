@@ -13,19 +13,19 @@ public sealed partial class MessagingConnection : IDisposable, IAsyncDisposable
     /// Gets or sets the child content to render within the cascading value.
     /// </summary>
     [Parameter]
-    public RenderFragment ChildContent { get; set; } = default!;
+    public RenderFragment ChildContent { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the connection hub service.
     /// </summary>
     [Inject]
-    private IConnectionHubService ConnectionHub { get; set; } = default!;
+    private IConnectionHubService ConnectionHub { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the logger instance.
     /// </summary>
     [Inject]
-    private ILogger<MessagingConnection> Logger { get; set; } = default!;
+    private ILogger<MessagingConnection> Logger { get; set; } = null!;
 
     /// <summary>
     /// Gets the current connection state.

@@ -3,11 +3,11 @@
 public partial class UserProfile
 {
     [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Inject]
-    protected IAuthorizationService AuthService { get; set; } = default!;
+    protected IAuthorizationService AuthService { get; set; } = null!;
     [Inject]
-    protected IClient UsersClient { get; set; } = default!;
+    protected IClient UsersClient { get; set; } = null!;
 
     [Parameter]
     public string? Id { get; set; }

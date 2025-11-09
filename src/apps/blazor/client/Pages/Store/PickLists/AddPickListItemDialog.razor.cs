@@ -9,7 +9,7 @@ public partial class AddPickListItemDialog
     [Parameter] public DefaultIdType PickListId { get; set; }
     [Parameter] public string PickListNumber { get; set; } = string.Empty;
     
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private bool _loading = true;
     private bool _saving;

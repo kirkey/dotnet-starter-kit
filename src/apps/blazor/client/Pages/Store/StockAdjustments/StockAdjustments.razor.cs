@@ -5,8 +5,8 @@ public partial class StockAdjustments
     
     
 
-    protected EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> Context { get; set; } = default!;
-    private EntityTable<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> _table = default!;
+    protected EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> Context { get; set; } = null!;
+    private EntityTable<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

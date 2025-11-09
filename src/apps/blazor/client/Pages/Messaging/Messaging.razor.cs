@@ -6,11 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Messaging;
 /// </summary>
 public partial class Messaging : IDisposable
 {
-    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
-    [Inject] private IClient UsersClient { get; set; } = default!;
+    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+    [Inject] private IClient UsersClient { get; set; } = null!;
     
     [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
 
     // State
     private List<ConversationDto>? _conversations;
@@ -661,6 +661,6 @@ public partial class Messaging : IDisposable
 public class UserDto
 {
     public DefaultIdType Id { get; set; }
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 }
 

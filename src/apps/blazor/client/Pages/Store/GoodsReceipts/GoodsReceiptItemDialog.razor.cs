@@ -6,11 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts;
 /// </summary>
 public partial class GoodsReceiptItemDialog
 {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter] public DefaultIdType GoodsReceiptId { get; set; }
     [Parameter] public DefaultIdType? PurchaseOrderId { get; set; }
 
-    private MudForm _form = default!;
+    private MudForm _form = null!;
     private AddGoodsReceiptItemModel _model = new();
     private bool _hasVariance => _model.QuantityOrdered.HasValue && 
                                   _model.QuantityOrdered != _model.QuantityReceived;

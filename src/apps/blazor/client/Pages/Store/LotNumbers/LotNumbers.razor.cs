@@ -4,8 +4,8 @@ public partial class LotNumbers
 {
     
 
-    private EntityServerTableContext<LotNumberResponse, DefaultIdType, LotNumberViewModel> Context { get; set; } = default!;
-    private EntityTable<LotNumberResponse, DefaultIdType, LotNumberViewModel> _table = default!;
+    private EntityServerTableContext<LotNumberResponse, DefaultIdType, LotNumberViewModel> Context { get; set; } = null!;
+    private EntityTable<LotNumberResponse, DefaultIdType, LotNumberViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

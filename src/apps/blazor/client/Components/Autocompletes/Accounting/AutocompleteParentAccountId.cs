@@ -10,7 +10,7 @@ public class AutocompleteParentAccountId : AutocompleteBase<ChartOfAccountRespon
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
     private Dictionary<DefaultIdType, ChartOfAccountResponse> _cache = [];
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
+    [Inject] protected NavigationManager Navigation { get; set; } = null!;
 
     /// <summary>
     /// Gets a single Category item by identifier.

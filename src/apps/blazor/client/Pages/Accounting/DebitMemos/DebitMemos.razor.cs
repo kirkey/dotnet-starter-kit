@@ -2,9 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.DebitMemos;
 
 public partial class DebitMemos
 {
-    protected EntityServerTableContext<DebitMemoResponse, DefaultIdType, DebitMemoViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<DebitMemoResponse, DefaultIdType, DebitMemoViewModel> Context { get; set; } = null!;
 
-    private EntityTable<DebitMemoResponse, DefaultIdType, DebitMemoViewModel> _table = default!;
+    private EntityTable<DebitMemoResponse, DefaultIdType, DebitMemoViewModel> _table = null!;
 
     // Dialog visibility flags
     private bool _approveDialogVisible;

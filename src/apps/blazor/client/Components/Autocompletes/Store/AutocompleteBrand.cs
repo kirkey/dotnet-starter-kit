@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteBrand : MudAutocomplete<string>
 {
-    [Inject] protected IClient Client { get; set; } = default!;
+    [Inject] protected IClient Client { get; set; } = null!;
     
     private HashSet<string> _brands = [];
 

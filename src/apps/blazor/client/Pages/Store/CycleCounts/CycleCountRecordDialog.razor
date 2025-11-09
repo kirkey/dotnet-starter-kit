@@ -72,7 +72,7 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
     
     /// <summary>
     /// The cycle count ID.
@@ -82,9 +82,9 @@
     /// <summary>
     /// The cycle count item to record.
     /// </summary>
-    [Parameter] public CycleCountItemResponse Item { get; set; } = default!;
+    [Parameter] public CycleCountItemResponse Item { get; set; } = null!;
 
-    private MudForm _form = default!;
+    private MudForm _form = null!;
     private CycleCountRecordModel _model = new();
     private int? _variance;
 

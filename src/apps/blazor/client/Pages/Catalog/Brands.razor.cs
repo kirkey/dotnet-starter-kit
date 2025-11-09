@@ -3,11 +3,11 @@
 public partial class Brands
 {
     [Inject]
-    protected IClient _client { get; set; } = default!;
+    protected IClient _client { get; set; } = null!;
 
-    protected EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel> Context { get; set; } = null!;
 
-    private EntityTable<BrandResponse, DefaultIdType, BrandViewModel> _table = default!;
+    private EntityTable<BrandResponse, DefaultIdType, BrandViewModel> _table = null!;
 
     protected override void OnInitialized() =>
         Context = new EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel>(

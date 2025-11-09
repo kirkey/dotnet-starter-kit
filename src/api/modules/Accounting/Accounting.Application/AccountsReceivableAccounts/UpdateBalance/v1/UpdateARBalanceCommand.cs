@@ -1,6 +1,6 @@
 namespace Accounting.Application.AccountsReceivableAccounts.UpdateBalance.v1;
 
-public sealed record UpdateARBalanceCommand(
+public sealed record UpdateArBalanceCommand(
     DefaultIdType Id,
     decimal Current0to30,
     decimal Days31to60,

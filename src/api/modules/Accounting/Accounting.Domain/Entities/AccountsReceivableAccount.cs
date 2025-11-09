@@ -39,7 +39,7 @@ namespace Accounting.Domain.Entities;
 /// </remarks>
 /// <seealso cref="ArAccountCreated"/>
 /// <seealso cref="ArAccountBalanceUpdated"/>
-/// <seealso cref="Accounting.Domain.Events.AccountsReceivableAccount.ARAccountAgingUpdated"/>
+/// <seealso cref="Accounting.Domain.Events.AccountsReceivableAccount.ArAccountAgingUpdated"/>
 /// <seealso cref="ArAccountReconciled"/>
 public class AccountsReceivableAccount : AuditableEntity, IAggregateRoot
 {

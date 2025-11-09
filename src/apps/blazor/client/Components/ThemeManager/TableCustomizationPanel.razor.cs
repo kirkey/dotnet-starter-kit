@@ -11,7 +11,7 @@ public partial class TableCustomizationPanel
     [Parameter]
     public bool IsHoverable { get; set; }
     [Inject]
-    protected INotificationPublisher Notifications { get; set; } = default!;
+    protected INotificationPublisher Notifications { get; set; } = null!;
 
     private FshTablePreference _tablePreference = new();
 

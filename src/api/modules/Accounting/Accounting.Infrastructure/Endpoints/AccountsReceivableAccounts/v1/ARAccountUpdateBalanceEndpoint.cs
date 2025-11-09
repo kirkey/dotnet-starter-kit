@@ -7,7 +7,7 @@ public static class ArAccountUpdateBalanceEndpoint
     internal static RouteHandlerBuilder MapArAccountUpdateBalanceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/balance", async (DefaultIdType id, UpdateARBalanceCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}/balance", async (DefaultIdType id, UpdateArBalanceCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var accountId = await mediator.Send(command).ConfigureAwait(false);

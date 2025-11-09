@@ -1,8 +1,8 @@
 namespace Accounting.Application.AccountsReceivableAccounts.UpdateBalance.v1;
 
-public sealed class UpdateARBalanceCommandValidator : AbstractValidator<UpdateARBalanceCommand>
+public sealed class UpdateArBalanceCommandValidator : AbstractValidator<UpdateArBalanceCommand>
 {
-    public UpdateARBalanceCommandValidator()
+    public UpdateArBalanceCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("AR account ID is required.");
         RuleFor(x => x.Current0to30).GreaterThanOrEqualTo(0).WithMessage("Current 0-30 days must be non-negative.")

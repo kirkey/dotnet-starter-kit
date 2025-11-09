@@ -1,0 +1,123 @@
+@page "/accounting/ar-accounts"
+
+<PageHeader Title="AR Accounts" Header="Accounts Receivable" SubHeader="Manage accounts receivable subsidiary ledger with aging, collections, and write-off tracking." />
+
+<EntityTable @ref="_table" TEntity="ArAccountResponse" TId="DefaultIdType" TRequest="ArAccountViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchAccountNumber"
+                          Label="Account Number"
+                          Placeholder="Search by account number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteCustomerId @bind-Value="@SearchCustomerId"
+                                    Label="Customer"
+                                    Placeholder="Select customer"
+                                    Variant="Variant.Outlined"
+                                    Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox T="bool" 
+                         @bind-Checked="@SearchActiveOnly" 
+                         Label="Active Accounts Only" 
+                         Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="arAccount">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" 
+                     OnClick="@(() => OnViewDetails(arAccount.Id))">
+            View Details
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.AccountBalance" 
+                     OnClick="@(() => OnUpdateBalance(arAccount.Id))"
+                     Disabled="@(!arAccount.IsActive)">
+            Update Balance
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Payments" 
+                     OnClick="@(() => OnRecordCollection(arAccount.Id))"
+                     Disabled="@(!arAccount.IsActive)">
+            Record Collection
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.MoneyOff" 
+                     OnClick="@(() => OnRecordWriteOff(arAccount.Id))"
+                     Disabled="@(!arAccount.IsActive)">
+            Record Write-Off
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Assessment" 
+                     OnClick="@(() => OnUpdateAllowance(arAccount.Id))"
+                     Disabled="@(!arAccount.IsActive)">
+            Update Allowance
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" 
+                     OnClick="@(() => OnReconcile(arAccount.Id))"
+                     Disabled="@(!arAccount.IsActive)">
+            Reconcile
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.AccountNumber"
+                          For="@(() => context.AccountNumber)"
+                          Label="Account Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique identifier for AR account" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.AccountName"
+                          For="@(() => context.AccountName)"
+                          Label="Account Name"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Descriptive name for the account" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <AutocompleteCustomerId @bind-Value="context.CustomerId"
+                                    For="@(() => context.CustomerId)"
+                                    Label="Customer"
+                                    Variant="Variant.Filled"
+                                    HelperText="Associated customer (optional)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <AutocompleteChartOfAccountId @bind-Value="context.GeneralLedgerAccountId"
+                                          For="@(() => context.GeneralLedgerAccountId)"
+                                          Label="GL Control Account"
+                                          Variant="Variant.Filled"
+                                          HelperText="General ledger control account" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <AutocompleteAccountingPeriodId @bind-Value="context.PeriodId"
+                                            For="@(() => context.PeriodId)"
+                                            Label="Accounting Period"
+                                            Variant="Variant.Filled"
+                                            HelperText="Current accounting period" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Brief description of the AR account" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes or comments" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

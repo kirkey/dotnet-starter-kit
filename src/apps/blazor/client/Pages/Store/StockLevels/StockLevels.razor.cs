@@ -2,8 +2,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.StockLevels;
 
 public partial class StockLevels
 {
-    private EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel> Context { get; set; } = default!;
-    private EntityTable<StockLevelResponse, DefaultIdType, StockLevelViewModel> _table = default!;
+    private EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel> Context { get; set; } = null!;
+    private EntityTable<StockLevelResponse, DefaultIdType, StockLevelViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

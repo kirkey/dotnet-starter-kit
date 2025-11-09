@@ -11,7 +11,7 @@ public class AutocompleteChartOfAccountCode : AutocompleteBase<ChartOfAccountRes
     // Local cache for code -> dto lookups. We don't rely on base's private cache.
     private readonly Dictionary<string, ChartOfAccountResponse> _cache = new();
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
+    [Inject] protected NavigationManager Navigation { get; set; } = null!;
 
     /// <summary>
     /// Controls how the selected text is displayed.

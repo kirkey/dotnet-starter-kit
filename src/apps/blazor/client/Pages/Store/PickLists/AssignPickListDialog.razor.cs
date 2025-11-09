@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PickLists;
 public partial class AssignPickListDialog
 {
     [Parameter] public DefaultIdType PickListId { get; set; }
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private GetPickListResponse? _pickList;
     private string _assignedTo = string.Empty;

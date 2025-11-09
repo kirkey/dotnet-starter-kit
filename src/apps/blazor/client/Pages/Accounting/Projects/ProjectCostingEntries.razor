@@ -1,4 +1,4 @@
-@if (ProjectId != default)
+@if (ProjectId != Guid.Empty)
 {
     <MudTable Items="@_items" Hover="true" Dense="true" Bordered="true" Striped="true" Loading="@_loading">
         <ToolBarContent>
@@ -63,7 +63,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (ProjectId != default)
+        if (ProjectId != Guid.Empty)
         {
             await LoadEntriesAsync();
         }
@@ -71,7 +71,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (ProjectId != default)
+        if (ProjectId != Guid.Empty)
         {
             await LoadEntriesAsync();
         }

@@ -44,10 +44,10 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter] public DefaultIdType CycleCountId { get; set; }
 
-    private MudForm _form = default!;
+    private MudForm _form = null!;
     private CycleCountAddItemModel _model = new();
     private int? _systemQuantity;
 

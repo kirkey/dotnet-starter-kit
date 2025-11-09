@@ -3,7 +3,7 @@
 public partial class MainLayout
 {
     [Parameter]
-    public RenderFragment ChildContent { get; set; } = default!;
+    public RenderFragment ChildContent { get; set; } = null!;
     [Parameter]
     public EventCallback<bool> OnDarkModeToggle { get; set; }
     [Parameter]

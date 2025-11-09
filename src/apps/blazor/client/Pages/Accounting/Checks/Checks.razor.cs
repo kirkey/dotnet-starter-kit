@@ -2,9 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Checks;
 
 public partial class Checks
 {
-    protected EntityServerTableContext<CheckSearchResponse, DefaultIdType, CheckViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<CheckSearchResponse, DefaultIdType, CheckViewModel> Context { get; set; } = null!;
 
-    private EntityTable<CheckSearchResponse, DefaultIdType, CheckViewModel> _table = default!;
+    private EntityTable<CheckSearchResponse, DefaultIdType, CheckViewModel> _table = null!;
 
     // Dialog visibility flags
     private bool _issueDialogVisible;

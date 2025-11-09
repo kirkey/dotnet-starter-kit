@@ -9,7 +9,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
 {
     [Parameter]
     [EditorRequired]
-    public EntityTableContext<TEntity, TId, TRequest> Context { get; set; } = default!;
+    public EntityTableContext<TEntity, TId, TRequest> Context { get; set; } = null!;
 
     [Parameter] public bool Exporting { get; set; }
     [Parameter] public bool Importing { get; set; }
@@ -23,8 +23,8 @@ public partial class EntityTable<TEntity, TId, TRequest>
     [Parameter] public RenderFragment<TEntity>? ChildRowContent { get; set; }
     [Parameter] public RenderFragment<TRequest>? EditFormContent { get; set; }
 
-    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
-    [Inject] protected IAuthorizationService AuthService { get; set; } = default!;
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = null!;
+    [Inject] protected IAuthorizationService AuthService { get; set; } = null!;
 
     private bool _canSearch;
     private bool _canCreate;
@@ -35,7 +35,7 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
     private bool _advancedSearchExpanded;
 
-    private MudTable<TEntity> _table = default!;
+    private MudTable<TEntity> _table = null!;
     private IEnumerable<TEntity>? _entityList;
     private int _totalItems;
 

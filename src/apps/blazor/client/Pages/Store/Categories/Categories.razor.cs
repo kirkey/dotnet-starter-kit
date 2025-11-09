@@ -6,10 +6,10 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Categories;
 public partial class Categories
 {
     
-    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
 
-    protected EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = default!;
-    private EntityTable<CategoryResponse, DefaultIdType, CategoryViewModel> _table = default!;
+    protected EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = null!;
+    private EntityTable<CategoryResponse, DefaultIdType, CategoryViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

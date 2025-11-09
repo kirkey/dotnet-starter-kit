@@ -613,7 +613,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<ArAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -625,7 +625,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ArAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Search AR accounts
@@ -636,7 +636,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ArAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchArAccountsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -648,7 +648,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ArAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchArAccountsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update AR aging balance
@@ -659,7 +659,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body);
+        System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateArBalanceCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -671,7 +671,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateArBalanceCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update allowance for doubtful accounts
@@ -751,7 +751,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body);
+        System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileArAccountCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -763,7 +763,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileArAccountCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create an accrual
@@ -13617,7 +13617,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ArAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id)
         {
             return ArAccountGetEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
@@ -13632,7 +13632,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ARAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ArAccountResponse> ArAccountGetEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13682,7 +13682,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ARAccountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ArAccountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -13728,7 +13728,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ArAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchArAccountsRequest body)
         {
             return ArAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -13743,7 +13743,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ARAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchARAccountsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ArAccountResponse>> ArAccountSearchEndpointAsync(string version, SearchArAccountsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -13796,7 +13796,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ARAccountResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ArAccountResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -13842,7 +13842,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body)
+        public virtual System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateArBalanceCommand body)
         {
             return ArAccountUpdateBalanceEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -13857,7 +13857,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateARBalanceCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ArAccountUpdateBalanceEndpointAsync(string version, System.Guid id, UpdateArBalanceCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -14358,7 +14358,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body)
+        public virtual System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileArAccountCommand body)
         {
             return ArAccountReconcileEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
@@ -14373,7 +14373,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileARAccountCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> ArAccountReconcileEndpointAsync(string version, System.Guid id, ReconcileArAccountCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -62415,30 +62415,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ARAccountResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountNumber")]
-        public string? AccountNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
-        public string? AccountName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
-        public System.Guid? CustomerId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("balance")]
-        public decimal Balance { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
-        public bool IsActive { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AccountingPeriodResponse
     {
 
@@ -63269,6 +63245,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("approvedBy")]
         public string? ApprovedBy { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ArAccountResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountNumber")]
+        public string? AccountNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid? CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("balance")]
+        public decimal Balance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isActive")]
+        public bool IsActive { get; set; } = default!;
 
     }
 
@@ -72568,7 +72568,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReconcileARAccountCommand
+    public partial class ReconcileArAccountCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -73621,15 +73621,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchARAccountsRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountNumber")]
-        public string? AccountNumber { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SearchAccountingPeriodsRequest
     {
 
@@ -73695,6 +73686,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("isReversed")]
         public bool? IsReversed { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchArAccountsRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountNumber")]
+        public string? AccountNumber { get; set; } = default!;
 
     }
 
@@ -76438,27 +76438,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateARBalanceCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("current0to30")]
-        public decimal Current0to30 { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("days31to60")]
-        public decimal Days31to60 { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("days61to90")]
-        public decimal Days61to90 { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("over90Days")]
-        public decimal Over90Days { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateAccountingPeriodCommand
     {
 
@@ -76509,6 +76488,27 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateArBalanceCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("current0to30")]
+        public decimal Current0to30 { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("days31to60")]
+        public decimal Days31to60 { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("days61to90")]
+        public decimal Days61to90 { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("over90Days")]
+        public decimal Over90Days { get; set; } = default!;
 
     }
 

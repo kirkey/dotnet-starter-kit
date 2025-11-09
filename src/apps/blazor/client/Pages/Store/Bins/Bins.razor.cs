@@ -5,8 +5,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Bins;
 /// </summary>
 public partial class Bins
 {
-    private EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> Context = default!;
-    private EntityTable<BinResponse, DefaultIdType, BinViewModel> _table = default!;
+    private EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> Context = null!;
+    private EntityTable<BinResponse, DefaultIdType, BinViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

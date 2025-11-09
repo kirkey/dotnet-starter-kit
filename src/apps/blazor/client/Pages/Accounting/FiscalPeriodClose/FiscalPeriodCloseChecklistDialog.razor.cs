@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.FiscalPeriodClose;
 /// </summary>
 public partial class FiscalPeriodCloseChecklistDialog
 {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
     
     /// <summary>
     /// Event callback triggered when a task is completed.

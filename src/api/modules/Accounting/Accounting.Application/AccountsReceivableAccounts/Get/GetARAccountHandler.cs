@@ -6,12 +6,12 @@ namespace Accounting.Application.AccountsReceivableAccounts.Get;
 /// <summary>
 /// Handler for retrieving an accounts receivable account by ID.
 /// </summary>
-public sealed class GetARAccountHandler(
-    ILogger<GetARAccountHandler> logger,
+public sealed class GetArAccountHandler(
+    ILogger<GetArAccountHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<AccountsReceivableAccount> repository)
-    : IRequestHandler<GetARAccountRequest, ARAccountResponse>
+    : IRequestHandler<GetArAccountRequest, ArAccountResponse>
 {
-    public async Task<ARAccountResponse> Handle(GetARAccountRequest request, CancellationToken cancellationToken)
+    public async Task<ArAccountResponse> Handle(GetArAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -23,9 +23,9 @@ public sealed class GetARAccountHandler(
             throw new NotFoundException($"AR Account with ID {request.Id} was not found.");
         }
 
-        logger.LogInformation("Retrieved AR account {ARAccountId}", account.Id);
+        logger.LogInformation("Retrieved AR account {ArAccountId}", account.Id);
 
-        return new ARAccountResponse
+        return new ArAccountResponse
         {
             Id = account.Id,
             AccountNumber = account.AccountNumber,

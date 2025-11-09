@@ -33,7 +33,7 @@
 
 @code {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = default!;
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
     public ApproveBankReconciliationCommand Command { get; set; } = new();

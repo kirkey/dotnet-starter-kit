@@ -8,12 +8,12 @@ public partial class Todos
     /// <summary>
     /// The entity table context for managing todos with server-side operations.
     /// </summary>
-    protected EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component for todos.
     /// </summary>
-    private EntityTable<GetTodoResponse, DefaultIdType, TodoViewModel> _table = default!;
+    private EntityTable<GetTodoResponse, DefaultIdType, TodoViewModel> _table = null!;
 
     /// <summary>
     /// Initializes the component and sets up the entity table context with CRUD operations.

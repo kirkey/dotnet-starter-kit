@@ -51,8 +51,8 @@ All command, handler, validator, and endpoint files have been renamed to match t
 
 **Note:** The following endpoint files already had correct names matching their class names:
 - ✅ `APAccountRecordDiscountLostEndpoint.cs` → `APAccountRecordDiscountLostEndpoint`
-- ✅ `ARAccountRecordCollectionEndpoint.cs` → `ARAccountRecordCollectionEndpoint`
-- ✅ `ARAccountRecordWriteOffEndpoint.cs` → `ARAccountRecordWriteOffEndpoint`
+- ✅ `ArAccountRecordCollectionEndpoint.cs` → `ArAccountRecordCollectionEndpoint`
+- ✅ `ArAccountRecordWriteOffEndpoint.cs` → `ArAccountRecordWriteOffEndpoint`
 - ✅ `CostCenterRecordActualEndpoint.cs` → `CostCenterRecordActualEndpoint`
 
 ---
@@ -88,11 +88,11 @@ All command, handler, validator, and endpoint files have been renamed to match t
 ✅ RecordARCollectionCommand.cs
 ✅ RecordARCollectionHandler.cs
 ✅ RecordARCollectionCommandValidator.cs
-(Endpoint already correct: ARAccountRecordCollectionEndpoint.cs)
+(Endpoint already correct: ArAccountRecordCollectionEndpoint.cs)
 ✅ RecordARWriteOffCommand.cs
 ✅ RecordARWriteOffHandler.cs
 ✅ RecordARWriteOffCommandValidator.cs
-(Endpoint already correct: ARAccountRecordWriteOffEndpoint.cs)
+(Endpoint already correct: ArAccountRecordWriteOffEndpoint.cs)
 ```
 
 ### AP Accounts (3 files)

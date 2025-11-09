@@ -3,11 +3,11 @@
 public partial class Profile
 {
     [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Inject]
-    protected IAuthenticationService AuthService { get; set; } = default!;
+    protected IAuthenticationService AuthService { get; set; } = null!;
     [Inject]
-    protected IClient PersonalClient { get; set; } = default!;
+    protected IClient PersonalClient { get; set; } = null!;
 
     private readonly UpdateUserCommand _profileModel = new();
 

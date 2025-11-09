@@ -6,8 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 /// </summary>
 public partial class PurchaseOrders
 {
-    private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> Context = default!;
-    private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = default!;
+    private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> Context = null!;
+    private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = null!;
 
     private List<SupplierResponse> _suppliers = [];
     private DefaultIdType? SearchSupplierId { get; set; }

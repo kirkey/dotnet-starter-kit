@@ -2,9 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.CreditMemos;
 
 public partial class CreditMemos
 {
-    protected EntityServerTableContext<CreditMemoResponse, DefaultIdType, CreditMemoViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<CreditMemoResponse, DefaultIdType, CreditMemoViewModel> Context { get; set; } = null!;
 
-    private EntityTable<CreditMemoResponse, DefaultIdType, CreditMemoViewModel> _table = default!;
+    private EntityTable<CreditMemoResponse, DefaultIdType, CreditMemoViewModel> _table = null!;
 
     // Dialog visibility flags
     private bool _approveDialogVisible;

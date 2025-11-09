@@ -8,8 +8,8 @@ public partial class InventoryTransactions
     
     
 
-    protected EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> Context { get; set; } = default!;
-    private EntityTable<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> _table = default!;
+    protected EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> Context { get; set; } = null!;
+    private EntityTable<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

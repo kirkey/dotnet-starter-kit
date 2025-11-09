@@ -7,9 +7,9 @@ public partial class BudgetDetails
 
     
 
-    protected EntityClientTableContext<BudgetDetailResponse, DefaultIdType, BudgetDetailViewModel> Context { get; set; } = default!;
+    protected EntityClientTableContext<BudgetDetailResponse, DefaultIdType, BudgetDetailViewModel> Context { get; set; } = null!;
 
-    private EntityTable<BudgetDetailResponse, DefaultIdType, BudgetDetailViewModel> _table = default!;
+    private EntityTable<BudgetDetailResponse, DefaultIdType, BudgetDetailViewModel> _table = null!;
 
     protected override Task OnInitializedAsync()
     {

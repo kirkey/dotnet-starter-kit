@@ -8,7 +8,7 @@ public partial class PersonCard
     public string? Style { get; set; }
 
     [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
 
     private string? UserId { get; set; }
     private string? Email { get; set; }

@@ -8,12 +8,12 @@ public partial class RetainedEarnings
     /// <summary>
     /// The entity table context for managing retained earnings.
     /// </summary>
-    protected EntityServerTableContext<RetainedEarningsResponse, DefaultIdType, RetainedEarningsViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<RetainedEarningsResponse, DefaultIdType, RetainedEarningsViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component.
     /// </summary>
-    private EntityTable<RetainedEarningsResponse, DefaultIdType, RetainedEarningsViewModel> _table = default!;
+    private EntityTable<RetainedEarningsResponse, DefaultIdType, RetainedEarningsViewModel> _table = null!;
     
     /// <summary>
     /// Search filter for fiscal year.

@@ -3,7 +3,7 @@
 public partial class Login
 {
     [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; } = default!;
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
 
     private FshValidation? _customValidation;
 

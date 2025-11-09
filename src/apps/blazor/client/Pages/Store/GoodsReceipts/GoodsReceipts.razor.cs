@@ -6,8 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts;
 /// </summary>
 public partial class GoodsReceipts
 {
-    private EntityServerTableContext<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> Context = default!;
-    private EntityTable<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> _table = default!;
+    private EntityServerTableContext<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> Context = null!;
+    private EntityTable<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> _table = null!;
 
     private List<WarehouseResponse> _warehouses = [];
     private List<PurchaseOrderResponse> _purchaseOrders = [];

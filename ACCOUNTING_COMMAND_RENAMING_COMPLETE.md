@@ -78,7 +78,7 @@ After scanning all 400+ commands in the Accounting module, **6 ambiguous command
 
 **Benefits:**
 - Clear context: This is for Accounts Receivable collections
-- Matches pattern of other AR commands (`RecordARPaymentCommand`, `UpdateARBalanceCommand`)
+- Matches pattern of other AR commands (`RecordARPaymentCommand`, `UpdateArBalanceCommand`)
 - **Files now match class names**
 
 ---
@@ -139,7 +139,7 @@ After scanning all 400+ commands in the Accounting module, **6 ambiguous command
 
 **Benefits:**
 - Clear context: This reconciles a General Ledger account (Chart of Account)
-- Distinguishes from `ReconcileAPAccountCommand` and `ReconcileARAccountCommand`
+- Distinguishes from `ReconcileAPAccountCommand` and `ReconcileArAccountCommand`
 - Prevents confusion about which type of account is being reconciled
 - **Files now match class names**
 
@@ -171,9 +171,9 @@ All renamed commands now follow consistent patterns:
 - ✅ `RecordARCollectionCommand` ⭐ RENAMED
 - ✅ `RecordARWriteOffCommand` ⭐ RENAMED
 - ✅ `RecordARPaymentCommand` (already correct)
-- ✅ `UpdateARBalanceCommand` (already correct)
+- ✅ `UpdateArBalanceCommand` (already correct)
 - ✅ `UpdateARAllowanceCommand` (already correct)
-- ✅ `ReconcileARAccountCommand` (already correct)
+- ✅ `ReconcileArAccountCommand` (already correct)
 
 ### AP Commands
 - ✅ `RecordAPDiscountLostCommand` ⭐ RENAMED
@@ -184,7 +184,7 @@ All renamed commands now follow consistent patterns:
 ### Account Reconciliation Commands
 - ✅ `ReconcileGeneralLedgerAccountCommand` ⭐ RENAMED (for GL accounts)
 - ✅ `ReconcileAPAccountCommand` (for AP sub-ledger)
-- ✅ `ReconcileARAccountCommand` (for AR sub-ledger)
+- ✅ `ReconcileArAccountCommand` (for AR sub-ledger)
 
 ---
 

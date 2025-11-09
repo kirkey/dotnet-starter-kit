@@ -8,12 +8,12 @@ public partial class Invoices
     /// <summary>
     /// The entity table context for managing invoices with server-side operations.
     /// </summary>
-    protected EntityServerTableContext<InvoiceResponse, DefaultIdType, InvoiceViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<InvoiceResponse, DefaultIdType, InvoiceViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component for invoices.
     /// </summary>
-    private EntityTable<InvoiceResponse, DefaultIdType, InvoiceViewModel> _table = default!;
+    private EntityTable<InvoiceResponse, DefaultIdType, InvoiceViewModel> _table = null!;
 
     /// <summary>
     /// Search filter for invoice number.

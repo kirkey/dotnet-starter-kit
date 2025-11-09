@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.RetainedEarnings;
 public partial class RetainedEarningsUpdateNetIncomeDialog
 {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = default!;
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
     public DefaultIdType RetainedEarningsId { get; set; }

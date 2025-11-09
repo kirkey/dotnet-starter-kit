@@ -1,0 +1,226 @@
+<MudDialog>
+    <DialogContent>
+        @if (_isLoading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_entry != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">General Ledger Entry Details</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Entry ID</MudText>
+                    <MudText>@_entry.Id</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Journal Entry ID</MudText>
+                    <MudText>@_entry.EntryId</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Account</MudText>
+                    <MudText>@_entry.AccountCode - @_entry.AccountName</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Transaction Date</MudText>
+                    <MudText>@_entry.TransactionDate?.ToString("yyyy-MM-dd")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Reference Number</MudText>
+                    <MudText>@(_entry.ReferenceNumber ?? "N/A")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">USOA Class</MudText>
+                    <MudText>@(_entry.UsoaClass ?? "N/A")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Debit Amount</MudText>
+                    <MudText>@_entry.Debit.ToString("C2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Credit Amount</MudText>
+                    <MudText>@_entry.Credit.ToString("C2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.caption">Balance</MudText>
+                    <MudText>@((_entry.Debit - _entry.Credit).ToString("C2"))</MudText>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(_entry.Memo))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption">Memo</MudText>
+                        <MudText>@_entry.Memo</MudText>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(_entry.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption">Description</MudText>
+                        <MudText>@_entry.Description</MudText>
+                    </MudItem>
+                }
+
+                @if (_entry.IsPosted)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            Posted on @_entry.PostedDate?.ToString("yyyy-MM-dd HH:mm") by @_entry.PostedBy
+                        </MudAlert>
+                    </MudItem>
+                }
+                else
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            This entry has not been posted yet
+                        </MudAlert>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(_entry.Source))
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Source System</MudText>
+                        <MudText>@_entry.Source</MudText>
+                    </MudItem>
+                }
+
+                @if (_entry.SourceId.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Source Document ID</MudText>
+                        <MudText>@_entry.SourceId</MudText>
+                    </MudItem>
+                }
+
+                @if (_entry.PeriodId.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Accounting Period</MudText>
+                        <MudText>@_entry.PeriodId</MudText>
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.caption">Created</MudText>
+                    <MudText>@_entry.CreatedOn.ToString("yyyy-MM-dd HH:mm") by @_entry.CreatedByUserName</MudText>
+                </MudItem>
+
+                @if (_entry.LastModifiedOn.HasValue)
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption">Last Modified</MudText>
+                        <MudText>@_entry.LastModifiedOn?.ToString("yyyy-MM-dd HH:mm") by @_entry.LastModifiedByUserName</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else if (_error != null)
+        {
+            <MudAlert Severity="Severity.Error">@_error</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+        @if (_entry?.EntryId != null)
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ViewJournalEntry">
+                View Journal Entry
+            </MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+
+@code {
+    /// <summary>
+    /// Gets or sets whether the dialog is open.
+    /// </summary>
+    [Parameter] 
+    public bool IsOpen { get; set; }
+
+    /// <summary>
+    /// Event callback when IsOpen changes.
+    /// </summary>
+    [Parameter] 
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets the general ledger entry ID to display.
+    /// </summary>
+    [Parameter] 
+    public DefaultIdType GeneralLedgerId { get; set; }
+
+    /// <summary>
+    /// Event callback when the dialog closes.
+    /// </summary>
+    [Parameter] 
+    public EventCallback OnClose { get; set; }
+
+    private GeneralLedgerViewModel? _entry;
+    private bool _isLoading = true;
+    private string? _error;
+
+    /// <summary>
+    /// Load details when parameters change.
+    /// </summary>
+    protected override async Task OnParametersSetAsync()
+    {
+        if (IsOpen && GeneralLedgerId != Guid.Empty)
+        {
+            await LoadDetailsAsync();
+        }
+    }
+
+    private async Task LoadDetailsAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            _error = null;
+            StateHasChanged();
+
+            var result = await Client.GeneralLedgerGetEndpointAsync("1", GeneralLedgerId);
+            _entry = result.Adapt<GeneralLedgerViewModel>();
+        }
+        catch (Exception ex)
+        {
+            _error = $"Failed to load general ledger entry: {ex.Message}";
+            Snackbar.Add(_error, Severity.Error);
+        }
+        finally
+        {
+            _isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task Close()
+    {
+        await IsOpenChanged.InvokeAsync(false);
+        await OnClose.InvokeAsync();
+    }
+
+    private void ViewJournalEntry()
+    {
+        if (_entry?.EntryId != null && _entry.EntryId != Guid.Empty)
+        {
+            Navigation.NavigateTo($"/accounting/journal-entries?entryId={_entry.EntryId}");
+        }
+    }
+}

@@ -95,33 +95,36 @@ public class MenuService : IMenuService
                         
                         // ========== ACCOUNTS RECEIVABLE ==========
                         new MenuSectionSubItemModel { Title = "Accounts Receivable", IsGroupHeader = true },
+                        new MenuSectionSubItemModel { Title = "AR Accounts", Icon = Icons.Material.Filled.AccountBalanceWallet, Href = "/accounting/ar-accounts", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Customers", Icon = Icons.Material.Filled.People, Href = "/accounting/customers", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Invoices", Icon = Icons.Material.Filled.Description, Href = "/accounting/invoices", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Credit Memos", Icon = Icons.Material.Filled.RemoveCircleOutline, Href = "/accounting/credit-memos", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Credit Memos", Icon = Icons.Material.Filled.RemoveCircleOutline, Href = "/accounting/credit-memos", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
                         // ========== ACCOUNTS PAYABLE ==========
                         new MenuSectionSubItemModel { Title = "Accounts Payable", IsGroupHeader = true },
+                        new MenuSectionSubItemModel { Title = "AP Accounts", Icon = Icons.Material.Filled.AccountBalanceWallet, Href = "/accounting/ap-accounts", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Vendors", Icon = Icons.Material.Filled.Business, Href = "/accounting/vendors", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Bills", Icon = Icons.Material.Filled.ReceiptLong, Href = "/accounting/bills", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
-                        new MenuSectionSubItemModel { Title = "Debit Memos", Icon = Icons.Material.Filled.AddCircleOutline, Href = "/accounting/debit-memos", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Debit Memos", Icon = Icons.Material.Filled.AddCircleOutline, Href = "/accounting/debit-memos", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Payees", Icon = Icons.Material.Filled.Groups, Href = "/accounting/payees", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
                         // ========== BANKING & PAYMENTS ==========
                         new MenuSectionSubItemModel { Title = "Banking & Cash", IsGroupHeader = true },
-                        new MenuSectionSubItemModel { Title = "Banks", Icon = Icons.Material.Filled.AccountBalance, Href = "/accounting/banks", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Bank Reconciliations", Icon = Icons.Material.Filled.AccountBalanceWallet, Href = "/accounting/bank-reconciliations", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Banks", Icon = Icons.Material.Filled.AccountBalance, Href = "/accounting/banks", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Bank Reconciliations", Icon = Icons.Material.Filled.AccountBalanceWallet, Href = "/accounting/bank-reconciliations", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Checks", Icon = Icons.Material.Filled.Payment, Href = "/accounting/checks", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
                         // ========== BUDGETING & PROJECTS ==========
                         new MenuSectionSubItemModel { Title = "Planning & Tracking", IsGroupHeader = true },
-                        new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.MonetizationOn, Href = "/accounting/budgets", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.Work, Href = "/accounting/projects", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.MonetizationOn, Href = "/accounting/budgets", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.Work, Href = "/accounting/projects", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         
                         // ========== PERIOD MANAGEMENT & REPORTING ==========
                         new MenuSectionSubItemModel { Title = "Period Close & Accruals", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Trial Balance", Icon = Icons.Material.Filled.Balance, Href = "/accounting/trial-balance", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Fiscal Period Close", Icon = Icons.Material.Filled.Lock, Href = "/accounting/fiscal-period-close", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
-                        new MenuSectionSubItemModel { Title = "Accounting Periods", Icon = Icons.Material.Filled.CalendarMonth, Href = "/accounting/periods", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Retained Earnings", Icon = Icons.Material.Filled.TrendingUp, Href = "/accounting/retained-earnings", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Accounting Periods", Icon = Icons.Material.Filled.CalendarMonth, Href = "/accounting/periods", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.Schedule, Href = "/accounting/accruals", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
                         // ========== CONFIGURATION ==========

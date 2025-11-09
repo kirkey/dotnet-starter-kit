@@ -117,7 +117,7 @@
             <MudDatePicker @bind-Date="context.ExpectedDeliveryDate" DateFormat="MMMM dd, yyyy" Label="Expected Delivery Date" Variant="Variant.Text" />
         </MudItem>
 
-        @if (context.Id != default)
+        @if (context.Id != Guid.Empty)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudDatePicker @bind-Date="context.ActualDeliveryDate" DateFormat="MMMM dd, yyyy" Label="Actual Delivery Date" ReadOnly Variant="Variant.Text" />
@@ -151,7 +151,7 @@
             <MudSwitch Class="mt-3" T="bool?" @bind-Value="context.IsUrgent" Color="Color.Primary">Mark as Urgent</MudSwitch>
         </MudItem>
 
-        @if (context.Id != default)
+        @if (context.Id != Guid.Empty)
         {
             <MudItem xs="12">
                 <MudDivider Class="my-4" />

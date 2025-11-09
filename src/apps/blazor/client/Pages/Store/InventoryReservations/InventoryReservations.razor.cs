@@ -6,8 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryReservations;
 /// </summary>
 public partial class InventoryReservations
 {
-    private EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> Context { get; set; } = default!;
-    private EntityTable<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> _table = default!;
+    private EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> Context { get; set; } = null!;
+    private EntityTable<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> _table = null!;
 
     private List<ItemResponse> _items = [];
     private List<WarehouseResponse> _warehouses = [];

@@ -39,7 +39,7 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter] public EventCallback OnReopened { get; set; }
 
     private DefaultIdType _periodCloseId;

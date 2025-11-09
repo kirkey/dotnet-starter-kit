@@ -207,6 +207,10 @@
                 }
             </MudGrid>
         }
+        else if (_error != null)
+        {
+            <MudAlert Severity="Severity.Error">@_error</MudAlert>
+        }
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Close">Close</MudButton>
@@ -223,51 +227,92 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
-    [Parameter] public DefaultIdType TrialBalanceId { get; set; }
+    /// <summary>
+    /// Gets or sets the trial balance ID to display.
+    /// </summary>
+    [Parameter]
+    public DefaultIdType TrialBalanceId { get; set; }
 
     private TrialBalanceGetResponse? _trialBalance;
-    private bool _loading = false;
+    private bool _loading;
+    private string? _error;
+    private IDialogReference? _dialogReference;
 
+    /// <summary>
+    /// Shows the dialog for the specified trial balance.
+    /// </summary>
     public async Task ShowAsync(DefaultIdType trialBalanceId)
     {
         TrialBalanceId = trialBalanceId;
-        _loading = true;
-        _trialBalance = null;
-
+        
         var dialogOptions = new DialogOptions
         {
-            MaxWidth = MaxWidth.Large,
+            MaxWidth = MaxWidth.ExtraLarge,
             FullWidth = true,
             CloseButton = true,
             CloseOnEscapeKey = true
         };
 
-        var dialog = DialogService.Show<TrialBalanceDetailsDialog>("Trial Balance Details", dialogOptions);
+        var parameters = new DialogParameters
+        {
+            { nameof(TrialBalanceId), trialBalanceId }
+        };
 
+        _dialogReference = await DialogService.ShowAsync<TrialBalanceDetailsDialog>("Trial Balance Details", parameters, dialogOptions);
+        await _dialogReference.Result;
+    }
+
+    /// <summary>
+    /// Load data when dialog opens.
+    /// </summary>
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TrialBalanceId != default(DefaultIdType))
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
         try
         {
-            _trialBalance = await Client.TrialBalanceGetEndpointAsync("1", trialBalanceId);
+            _loading = true;
+            _error = null;
+            StateHasChanged();
+
+            _trialBalance = await Client.TrialBalanceGetEndpointAsync("1", TrialBalanceId);
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading trial balance: {ex.Message}", Severity.Error);
+            _error = $"Failed to load trial balance: {ex.Message}";
+            Snackbar.Add(_error, Severity.Error);
         }
         finally
         {
             _loading = false;
             StateHasChanged();
         }
-
-        await dialog.Result;
     }
 
-    private void Close() => MudDialog.Close();
+    private void Close()
+    {
+        _dialogReference?.Close();
+    }
 
     private async Task OnExport()
     {
-        Snackbar.Add("Export feature coming soon", Severity.Info);
-        await Task.CompletedTask;
+        try
+        {
+            Snackbar.Add("Exporting trial balance to Excel...", Severity.Info);
+            // TODO: Implement export functionality
+            await Task.Delay(500);
+            Snackbar.Add("Export feature coming soon", Severity.Warning);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error exporting: {ex.Message}", Severity.Error);
+        }
     }
 }
 

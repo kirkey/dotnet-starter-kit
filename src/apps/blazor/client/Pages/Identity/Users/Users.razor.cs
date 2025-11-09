@@ -2,12 +2,12 @@
 
 public partial class Users : ComponentBase
 {
-    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
-    [Inject] protected IAuthorizationService AuthService { get; set; } = default!;
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = null!;
+    [Inject] protected IAuthorizationService AuthService { get; set; } = null!;
 
-    [Inject] protected IClient UsersClient { get; set; } = default!;
+    [Inject] protected IClient UsersClient { get; set; } = null!;
 
-    protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = default!;
+    protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = null!;
 
     private bool _canExportUsers;
     private bool _canViewAuditTrails;
@@ -87,6 +87,6 @@ public partial class Users : ComponentBase
 
     public class UserDetailViewModel : RegisterUserCommand
     {
-        public DefaultIdType Id { get; set; } = default!;
+        public DefaultIdType Id { get; set; } = Guid.Empty!;
     }
 }

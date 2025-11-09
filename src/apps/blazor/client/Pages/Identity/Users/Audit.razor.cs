@@ -2,14 +2,14 @@
 
 public partial class Audit
 {
-    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Parameter] public DefaultIdType Id { get; set; }
 
-    protected EntityClientTableContext<AuditTrailExtension, DefaultIdType, object> Context { get; set; } = default!;
+    protected EntityClientTableContext<AuditTrailExtension, DefaultIdType, object> Context { get; set; } = null!;
 
     private readonly string? _searchString;
     private string? _subHeader;
-    private readonly MudDateRangePicker _dateRangePicker = default!;
+    private readonly MudDateRangePicker _dateRangePicker = null!;
     private readonly DateRange? _dateRange;
     private readonly bool _searchInOldValues;
     private readonly bool _searchInNewValues;

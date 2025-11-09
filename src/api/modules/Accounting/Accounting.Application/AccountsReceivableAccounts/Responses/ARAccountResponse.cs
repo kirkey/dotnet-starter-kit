@@ -3,7 +3,7 @@ namespace Accounting.Application.AccountsReceivableAccounts.Responses;
 /// <summary>
 /// Response containing accounts receivable account details.
 /// </summary>
-public record ARAccountResponse
+public record ArAccountResponse
 {
     public DefaultIdType Id { get; init; }
     public string AccountNumber { get; init; } = string.Empty;

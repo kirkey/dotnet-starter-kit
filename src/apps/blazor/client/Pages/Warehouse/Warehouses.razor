@@ -150,7 +150,7 @@
         </MudItem>
 
         @* Read-only capacity utilization info: only visible when editing an existing warehouse *@
-        @if (context.Id != default(DefaultIdType))
+        @if (context.Id != Guid.Empty)
         {
             <MudDivider />
             <MudItem xs="12" Class="mb-n4">

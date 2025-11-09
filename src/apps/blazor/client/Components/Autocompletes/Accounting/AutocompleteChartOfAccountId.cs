@@ -12,7 +12,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
     // Local cache for id -> dto lookups. We don't rely on base's private cache.
     private Dictionary<DefaultIdType, ChartOfAccountResponse> _cache = new();
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
+    [Inject] protected NavigationManager Navigation { get; set; } = null!;
 
     /// <summary>
     /// Controls how the selected text is displayed.
@@ -33,7 +33,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
                 () => Client.ChartOfAccountGetEndpointAsync("1", id.Value))
             .ConfigureAwait(false);
 
-        if (dto is not null && dto.Id != default) _cache[dto.Id] = dto;
+        if (dto is not null && dto.Id != Guid.Empty) _cache[dto.Id] = dto;
 
         return dto;
     }
@@ -64,7 +64,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
         _cache.Clear();
         foreach (var it in items)
         {
-            if (it != null && it.Id != default)
+            if (it != null && it.Id != Guid.Empty)
                 _cache[it.Id] = it;
         }
 

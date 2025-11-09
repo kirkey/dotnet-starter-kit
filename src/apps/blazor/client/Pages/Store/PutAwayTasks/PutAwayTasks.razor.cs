@@ -6,8 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PutAwayTasks;
 /// </summary>
 public partial class PutAwayTasks
 {
-    private EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> Context { get; set; } = default!;
-    private EntityTable<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> _table = default!;
+    private EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> Context { get; set; } = null!;
+    private EntityTable<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> _table = null!;
 
     private List<WarehouseResponse> _warehouses = [];
 

@@ -6,8 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 public partial class CycleCounts : ComponentBase
 {
 
-    protected EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context { get; set; } = default!;
-    private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = default!;
+    protected EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context { get; set; } = null!;
+    private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = null!;
 
     private List<WarehouseResponse> _warehouses = [];
     private List<GetWarehouseLocationListResponse> _warehouseLocations = [];

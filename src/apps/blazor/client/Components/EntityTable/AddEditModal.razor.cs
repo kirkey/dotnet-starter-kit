@@ -4,18 +4,18 @@ public partial class AddEditModal<TRequest> : IAddEditModal<TRequest>
 {
     [Parameter]
     [EditorRequired]
-    public RenderFragment<TRequest> ChildContent { get; set; } = default!;
+    public RenderFragment<TRequest> ChildContent { get; set; } = null!;
     [Parameter]
     [EditorRequired]
     public TRequest RequestModel { get; set; } = default!;
     [Parameter]
     [EditorRequired]
-    public Func<TRequest, Task> SaveFunc { get; set; } = default!;
+    public Func<TRequest, Task> SaveFunc { get; set; } = null!;
     [Parameter]
     public Func<Task>? OnInitializedFunc { get; set; }
     [Parameter]
     [EditorRequired]
-    public string Title { get; set; } = default!;
+    public string Title { get; set; } = null!;
     [Parameter]
     public bool IsCreate { get; set; }
     [Parameter]
@@ -24,7 +24,7 @@ public partial class AddEditModal<TRequest> : IAddEditModal<TRequest>
     public string? SuccessMessage { get; set; }
 
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = default!;
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private FshValidation? _customValidation;
 

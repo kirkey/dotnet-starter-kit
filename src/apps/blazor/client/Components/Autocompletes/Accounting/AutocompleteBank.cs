@@ -11,7 +11,7 @@ public class AutocompleteBank : AutocompleteBase<BankResponse, IClient, DefaultI
     // Local cache for id -> dto lookups.
     private readonly Dictionary<DefaultIdType, BankResponse> _cache = new();
 
-    [Inject] protected NavigationManager Navigation { get; set; } = default!;
+    [Inject] protected NavigationManager Navigation { get; set; } = null!;
 
     /// <summary>
     /// Controls how the selected text is displayed.

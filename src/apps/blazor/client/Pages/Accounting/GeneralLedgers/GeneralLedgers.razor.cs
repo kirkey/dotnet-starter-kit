@@ -9,12 +9,12 @@ public partial class GeneralLedgers
     /// <summary>
     /// The entity table context for managing general ledger entries.
     /// </summary>
-    protected EntityServerTableContext<GeneralLedgerSearchResponse, DefaultIdType, GeneralLedgerViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<GeneralLedgerSearchResponse, DefaultIdType, GeneralLedgerViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component.
     /// </summary>
-    private EntityTable<GeneralLedgerSearchResponse, DefaultIdType, GeneralLedgerViewModel> _table = default!;
+    private EntityTable<GeneralLedgerSearchResponse, DefaultIdType, GeneralLedgerViewModel> _table = null!;
 
     // Search filters
     private DefaultIdType? SearchAccountId { get; set; }

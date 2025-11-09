@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts;
 /// </summary>
 public partial class CreateReceiptFromPODialog
 {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private List<PurchaseOrderResponse> _purchaseOrders = [];
     private List<SupplierResponse> _suppliers = [];

@@ -15,7 +15,7 @@ public partial class InvoiceDetailsDialog
     /// Dialog instance reference.
     /// </summary>
     [CascadingParameter]
-    public IMudDialogInstance MudDialog { get; set; } = default!;
+    public IMudDialogInstance MudDialog { get; set; } = null!;
 
     private InvoiceResponse? _invoice;
     private List<InvoiceLineItemViewModel> _lineItems = [];

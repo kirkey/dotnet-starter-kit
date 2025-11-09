@@ -7,9 +7,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 /// </summary>
 public partial class Warehouses
 {
-    protected EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel> Context { get; set; } = null!;
 
-    private EntityTable<WarehouseResponse, DefaultIdType, WarehouseViewModel> _table = default!;
+    private EntityTable<WarehouseResponse, DefaultIdType, WarehouseViewModel> _table = null!;
 
     protected override Task OnInitializedAsync()
     {
@@ -67,7 +67,7 @@ public class WarehouseViewModel
     /// Warehouse name for identification and display purposes.
     /// Required field with maximum length of 200 characters.
     /// </summary>
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// Optional description providing additional warehouse details.
@@ -80,31 +80,31 @@ public class WarehouseViewModel
     /// Required field with a maximum length of 50 characters.
     /// Examples: "WH-MAIN", "WH-NYC-01", "WH-SEA"
     /// </summary>
-    public string Code { get; set; } = default!;
+    public string Code { get; set; } = null!;
 
     /// <summary>
     /// Street address of the warehouse facility.
     /// Required field with a maximum length of 500 characters.
     /// </summary>
-    public string Address { get; set; } = default!;
+    public string Address { get; set; } = null!;
 
     /// <summary>
     /// Name of the warehouse manager responsible for operations.
     /// Required field with a maximum length of 100 characters.
     /// </summary>
-    public string ManagerName { get; set; } = default!;
+    public string ManagerName { get; set; } = null!;
 
     /// <summary>
     /// Email address of the warehouse manager.
     /// Required field with a maximum length of 255 characters and valid email format.
     /// </summary>
-    public string ManagerEmail { get; set; } = default!;
+    public string ManagerEmail { get; set; } = null!;
 
     /// <summary>
     /// Phone number of the warehouse manager.
     /// Required field with a maximum length of 50 characters.
     /// </summary>
-    public string ManagerPhone { get; set; } = default!;
+    public string ManagerPhone { get; set; } = null!;
 
     /// <summary>
     /// Total storage capacity of the warehouse.

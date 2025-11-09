@@ -1,0 +1,22 @@
+<MudDialog>
+    <DialogContent>
+        <MudText>Record Collection Dialog - Coming Soon</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public DefaultIdType ArAccountId { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdated { get; set; }
+
+    private void Close() => MudDialog.Close();
+}
+

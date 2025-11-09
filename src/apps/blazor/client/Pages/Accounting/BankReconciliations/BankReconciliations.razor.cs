@@ -9,12 +9,12 @@ public partial class BankReconciliations
     /// <summary>
     /// The entity table context for managing bank reconciliations with server-side operations.
     /// </summary>
-    protected EntityServerTableContext<BankReconciliationResponse, DefaultIdType, BankReconciliationViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<BankReconciliationResponse, DefaultIdType, BankReconciliationViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component for bank reconciliations.
     /// </summary>
-    private EntityTable<BankReconciliationResponse, DefaultIdType, BankReconciliationViewModel> _table = default!;
+    private EntityTable<BankReconciliationResponse, DefaultIdType, BankReconciliationViewModel> _table = null!;
 
     /// <summary>
     /// Search filter for bank account.

@@ -1,14 +1,14 @@
 namespace Accounting.Application.AccountsReceivableAccounts.UpdateBalance.v1;
 
-public sealed class UpdateARBalanceHandler(
+public sealed class UpdateArBalanceHandler(
     IRepository<AccountsReceivableAccount> repository,
-    ILogger<UpdateARBalanceHandler> logger)
-    : IRequestHandler<UpdateARBalanceCommand, DefaultIdType>
+    ILogger<UpdateArBalanceHandler> logger)
+    : IRequestHandler<UpdateArBalanceCommand, DefaultIdType>
 {
     private readonly IRepository<AccountsReceivableAccount> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-    private readonly ILogger<UpdateARBalanceHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly ILogger<UpdateArBalanceHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-    public async Task<DefaultIdType> Handle(UpdateARBalanceCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateArBalanceCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         _logger.LogInformation("Updating AR balance for account {Id}", request.Id);

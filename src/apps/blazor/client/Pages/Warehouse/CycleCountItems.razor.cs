@@ -18,7 +18,7 @@ public partial class CycleCountItems
 
     protected override async Task OnParametersSetAsync()
     {
-        if (CycleCountId != default)
+        if (CycleCountId != Guid.Empty)
         {
             await LoadItemsAsync();
             await LoadItemsCacheAsync();
@@ -106,7 +106,7 @@ public partial class CycleCountItems
     {
         var model = new CycleCountItemModel
         {
-            Id = item.Id ?? default,
+            Id = item.Id ?? Guid.Empty,
             ItemId = item.ItemId,
             SystemQuantity = item.SystemQuantity,
             CountedQuantity = item.CountedQuantity,

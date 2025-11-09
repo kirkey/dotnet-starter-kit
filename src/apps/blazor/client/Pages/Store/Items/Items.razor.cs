@@ -6,10 +6,10 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Items;
 /// </summary>
 public partial class Items
 {
-    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
 
-    protected EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = default!;
-    private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = default!;
+    protected EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = null!;
+    private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

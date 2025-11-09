@@ -69,7 +69,7 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter] public GetConversationResponse? Conversation { get; set; }
 
     private string GetTitle() =>

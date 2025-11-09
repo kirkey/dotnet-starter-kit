@@ -23,7 +23,7 @@
 
     [Parameter] public Color Color { get; set; }
 
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
 
     async Task Submit()
     {

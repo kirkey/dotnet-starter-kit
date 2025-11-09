@@ -1,0 +1,119 @@
+@inject IClient Client
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else if (_account != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">@_account.AccountName</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">Account #@_account.AccountNumber</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Account Type</MudText>
+                            <MudText Typo="Typo.body1">@_account.AccountType</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Current Balance</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Primary">@_account.CurrentBalance.ToString("C2")</MudText>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCard Elevation="0" Class="pa-4">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">Status</MudText>
+                            <MudChip T="string"
+                                     Color="@(_account.IsActive ? Color.Success : Color.Default)" 
+                                     Size="Size.Small">
+                                @(_account.IsActive ? "Active" : "Inactive")
+                            </MudChip>
+                        </MudStack>
+                    </MudCard>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(_account.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body2"><strong>Description:</strong> @_account.Description</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else if (_error != null)
+        {
+            <MudAlert Severity="Severity.Error">@_error</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the AP account ID to display.
+    /// </summary>
+    [Parameter]
+    public DefaultIdType ApAccountId { get; set; }
+
+    private APAccountResponse? _account;
+    private bool _loading;
+    private string? _error;
+
+    /// <summary>
+    /// Load data when dialog opens.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    /// <summary>
+    /// Loads the AP account data.
+    /// </summary>
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            _loading = true;
+            _error = null;
+            StateHasChanged();
+
+            _account = await Client.ApAccountGetEndpointAsync("1", ApAccountId);
+        }
+        catch (Exception ex)
+        {
+            _error = $"Failed to load AP account: {ex.Message}";
+            Snackbar.Add(_error, Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void Close()
+    {
+        MudDialog.Close();
+    }
+}
+

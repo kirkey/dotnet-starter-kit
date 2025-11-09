@@ -8,14 +8,14 @@ public static class ArAccountSearchEndpoint
     internal static RouteHandlerBuilder MapArAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (SearchARAccountsRequest request, ISender mediator) =>
+            .MapPost("/search", async (SearchArAccountsRequest request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ArAccountSearchEndpoint))
             .WithSummary("Search AR accounts")
-            .Produces<List<ARAccountResponse>>()
+            .Produces<List<ArAccountResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);

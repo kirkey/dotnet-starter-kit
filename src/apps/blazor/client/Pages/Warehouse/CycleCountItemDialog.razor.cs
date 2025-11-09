@@ -7,13 +7,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Warehouse;
 public partial class CycleCountItemDialog
 {
 
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter] public DefaultIdType CycleCountId { get; set; }
     [Parameter] public CycleCountItemModel Model { get; set; } = new();
     [Parameter] public bool IsRecording { get; set; }
 
-    private MudForm _form = default!;
+    private MudForm _form = null!;
 
     /// <summary>
     /// Saves the cycle count item (add or record count).

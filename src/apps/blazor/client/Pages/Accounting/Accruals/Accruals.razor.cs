@@ -11,9 +11,9 @@ public partial class Accruals
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>
-    protected EntityServerTableContext<AccrualResponse, DefaultIdType, AccrualViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<AccrualResponse, DefaultIdType, AccrualViewModel> Context { get; set; } = null!;
 
-    private EntityTable<AccrualResponse, DefaultIdType, AccrualViewModel> _table = default!;
+    private EntityTable<AccrualResponse, DefaultIdType, AccrualViewModel> _table = null!;
 
     protected override Task OnInitializedAsync()
     {

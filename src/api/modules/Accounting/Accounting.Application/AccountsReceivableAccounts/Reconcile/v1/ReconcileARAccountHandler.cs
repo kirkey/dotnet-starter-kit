@@ -1,14 +1,14 @@
 namespace Accounting.Application.AccountsReceivableAccounts.Reconcile.v1;
 
-public sealed class ReconcileARAccountHandler(
+public sealed class ReconcileArAccountHandler(
     IRepository<AccountsReceivableAccount> repository,
-    ILogger<ReconcileARAccountHandler> logger)
-    : IRequestHandler<ReconcileARAccountCommand, DefaultIdType>
+    ILogger<ReconcileArAccountHandler> logger)
+    : IRequestHandler<ReconcileArAccountCommand, DefaultIdType>
 {
     private readonly IRepository<AccountsReceivableAccount> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-    private readonly ILogger<ReconcileARAccountHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly ILogger<ReconcileArAccountHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-    public async Task<DefaultIdType> Handle(ReconcileARAccountCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(ReconcileArAccountCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         _logger.LogInformation("Reconciling AR account {Id} with subsidiary ledger balance {Balance}", 

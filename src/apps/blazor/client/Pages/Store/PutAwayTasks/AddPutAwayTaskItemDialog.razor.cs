@@ -8,7 +8,7 @@ public partial class AddPutAwayTaskItemDialog
 {
     [Parameter] public DefaultIdType PutAwayTaskId { get; set; }
     [Parameter] public string TaskNumber { get; set; } = string.Empty;
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private ItemResponse? _selectedItem;
     private BinResponse? _selectedToBin;

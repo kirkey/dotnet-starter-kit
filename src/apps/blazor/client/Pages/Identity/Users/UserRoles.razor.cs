@@ -5,13 +5,13 @@ public partial class UserRoles
     [Parameter]
     public string? Id { get; set; }
     [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Inject]
-    protected IAuthorizationService AuthService { get; set; } = default!;
+    protected IAuthorizationService AuthService { get; set; } = null!;
     [Inject]
-    protected IClient UsersClient { get; set; } = default!;
+    protected IClient UsersClient { get; set; } = null!;
 
-    private List<UserRoleDetail> _userRolesList = default!;
+    private List<UserRoleDetail> _userRolesList = null!;
 
     private string _title = string.Empty;
     private string _description = string.Empty;

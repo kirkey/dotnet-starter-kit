@@ -6,12 +6,12 @@ namespace Accounting.Application.AccountsReceivableAccounts.Search.v1;
 /// <summary>
 /// Handler for searching accounts receivable accounts with filters.
 /// </summary>
-public sealed class SearchARAccountsHandler(
-    ILogger<SearchARAccountsHandler> logger,
+public sealed class SearchArAccountsHandler(
+    ILogger<SearchArAccountsHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<AccountsReceivableAccount> repository)
-    : IRequestHandler<SearchARAccountsRequest, List<ARAccountResponse>>
+    : IRequestHandler<SearchArAccountsRequest, List<ArAccountResponse>>
 {
-    public async Task<List<ARAccountResponse>> Handle(SearchARAccountsRequest request, CancellationToken cancellationToken)
+    public async Task<List<ArAccountResponse>> Handle(SearchArAccountsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -20,7 +20,7 @@ public sealed class SearchARAccountsHandler(
 
         logger.LogInformation("Retrieved {Count} AR accounts", accounts.Count);
 
-        return accounts.Select(account => new ARAccountResponse
+        return accounts.Select(account => new ArAccountResponse
         {
             Id = account.Id,
             AccountNumber = account.AccountNumber,

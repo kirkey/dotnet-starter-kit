@@ -1,0 +1,97 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else if (_account != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h5">@_account.AccountNumber</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@_account.AccountName</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@_account.AccountNumber" Label="Account Number" ReadOnly Variant="Variant.Outlined" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@_account.Balance.ToString("C2")" Label="Balance" ReadOnly Variant="Variant.Outlined" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Value="@(_account.CustomerId?.ToString() ?? "N/A")" Label="Customer ID" ReadOnly Variant="Variant.Outlined" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudChip T="string" Color="@(_account.IsActive ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(_account.IsActive ? "Active" : "Inactive")
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        }
+        else if (_error != null)
+        {
+            <MudAlert Severity="Severity.Error">@_error</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the AR account ID to display.
+    /// </summary>
+    [Parameter]
+    public DefaultIdType ArAccountId { get; set; }
+
+    private ArAccountResponse? _account;
+    private bool _loading;
+    private string? _error;
+
+    /// <summary>
+    /// Load data when dialog opens.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            _loading = true;
+            _error = null;
+            StateHasChanged();
+
+            _account = await Client.ArAccountGetEndpointAsync("1", ArAccountId);
+        }
+        catch (Exception ex)
+        {
+            _error = $"Failed to load AR account: {ex.Message}";
+            Snackbar.Add(_error, Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void Close()
+    {
+        MudDialog.Close();
+    }
+}
+

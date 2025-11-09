@@ -6,8 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PickLists;
 /// </summary>
 public partial class PickLists
 {
-    private EntityServerTableContext<PickListResponse, DefaultIdType, PickListViewModel> Context { get; set; } = default!;
-    private EntityTable<PickListResponse, DefaultIdType, PickListViewModel> _table = default!;
+    private EntityServerTableContext<PickListResponse, DefaultIdType, PickListViewModel> Context { get; set; } = null!;
+    private EntityTable<PickListResponse, DefaultIdType, PickListViewModel> _table = null!;
 
     private List<WarehouseResponse> _warehouses = [];
 

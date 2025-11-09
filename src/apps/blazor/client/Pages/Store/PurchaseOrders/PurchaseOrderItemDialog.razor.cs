@@ -6,12 +6,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 /// </summary>
 public partial class PurchaseOrderItemDialog
 {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
     [Parameter] public PurchaseOrderItemModel Model { get; set; } = new();
 
-    private MudForm _form = default!;
+    private MudForm _form = null!;
 
     /// <summary>
     /// Saves the purchase order item (add or update).

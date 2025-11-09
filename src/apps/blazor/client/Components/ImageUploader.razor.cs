@@ -11,7 +11,7 @@ public partial class ImageUploader : ComponentBase
     /// <summary>
     /// Gets or sets the image URL service for constructing absolute image URLs using the API base URI.
     /// </summary>
-    [Inject] private ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] private ImageUrlService ImageUrlService { get; set; } = null!;
     
     #endregion
 

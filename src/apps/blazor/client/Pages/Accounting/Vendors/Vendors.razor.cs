@@ -8,12 +8,12 @@ public partial class Vendors
     /// <summary>
     /// The entity table context for managing vendors.
     /// </summary>
-    protected EntityServerTableContext<VendorSearchResponse, DefaultIdType, VendorViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<VendorSearchResponse, DefaultIdType, VendorViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component.
     /// </summary>
-    private EntityTable<VendorSearchResponse, DefaultIdType, VendorViewModel> _table = default!;
+    private EntityTable<VendorSearchResponse, DefaultIdType, VendorViewModel> _table = null!;
 
     // Search filters
     private string? VendorCode { get; set; }

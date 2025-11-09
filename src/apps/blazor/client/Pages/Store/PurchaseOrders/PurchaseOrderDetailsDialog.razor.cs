@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 /// </summary>
 public partial class PurchaseOrderDetailsDialog
 {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     /// <summary>
     /// The purchase order ID to display details for.

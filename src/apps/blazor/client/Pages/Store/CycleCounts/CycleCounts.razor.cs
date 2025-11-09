@@ -9,8 +9,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts;
 /// </remarks>
 public partial class CycleCounts
 {
-    private EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context = default!;
-    private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = default!;
+    private EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context = null!;
+    private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = null!;
 
     private List<WarehouseResponse> _warehouses = [];
     
@@ -236,7 +236,7 @@ public class CycleCountViewModel
     public DefaultIdType Id { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
-    public string CountNumber { get; set; } = default!;
+    public string CountNumber { get; set; } = null!;
     public DefaultIdType WarehouseId { get; set; }
     public DefaultIdType? WarehouseLocationId { get; set; }
     public DateTime? CountDate { get; set; }

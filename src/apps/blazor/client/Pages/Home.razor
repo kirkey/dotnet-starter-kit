@@ -785,7 +785,7 @@
     /// Gets or sets the cascading authentication state parameter for the current user.
     /// </summary>
     [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; } = default!;
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the collection of claims for the currently authenticated user.

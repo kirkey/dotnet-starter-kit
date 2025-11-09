@@ -9,9 +9,9 @@ public partial class Customers
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>
-    protected EntityServerTableContext<CustomerSearchResponse, DefaultIdType, CustomerViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<CustomerSearchResponse, DefaultIdType, CustomerViewModel> Context { get; set; } = null!;
 
-    private EntityTable<CustomerSearchResponse, DefaultIdType, CustomerViewModel> _table = default!;
+    private EntityTable<CustomerSearchResponse, DefaultIdType, CustomerViewModel> _table = null!;
 
     /// <summary>
     /// Initializes the table context with customer-specific configuration including fields, CRUD operations, and search functionality.

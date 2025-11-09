@@ -4,8 +4,8 @@ public partial class SerialNumbers
 {
     
 
-    private EntityServerTableContext<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> Context { get; set; } = default!;
-    private EntityTable<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> _table = default!;
+    private EntityServerTableContext<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> Context { get; set; } = null!;
+    private EntityTable<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

@@ -6,8 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransfers;
 /// </summary>
 public partial class InventoryTransfers
 {
-    protected EntityServerTableContext<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> Context { get; set; } = default!;
-    private EntityTable<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> _table = default!;
+    protected EntityServerTableContext<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> Context { get; set; } = null!;
+    private EntityTable<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {

@@ -6,11 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Projects;
 /// </summary>
 public partial class Projects
 {
-    [Inject] protected ImageUrlService ImageUrlService { get; set; } = default!;
+    [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
 
-    protected EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel> Context { get; set; } = default!;
+    protected EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel> Context { get; set; } = null!;
 
-    private EntityTable<ProjectResponse, DefaultIdType, ProjectViewModel> _table = default!;
+    private EntityTable<ProjectResponse, DefaultIdType, ProjectViewModel> _table = null!;
 
     /// <summary>
     /// Configure the EntityTable context: fields, search, create, update and delete functions.
