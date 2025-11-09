@@ -27,27 +27,9 @@ public sealed class SearchInventoryReservationsHandler(
 
         var spec = new SearchInventoryReservationsSpec(request);
 
-        var inventoryReservations = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var inventoryReservationResponses = inventoryReservations.Select(ir => new InventoryReservationResponse
-        {
-            Id = ir.Id,
-            ReservationNumber = ir.ReservationNumber,
-            ItemId = ir.ItemId,
-            WarehouseId = ir.WarehouseId,
-            WarehouseLocationId = ir.WarehouseLocationId,
-            BinId = ir.BinId,
-            LotNumberId = ir.LotNumberId,
-            ReservedQuantity = ir.QuantityReserved,
-            ReservationDate = ir.ReservationDate,
-            ExpirationDate = ir.ExpirationDate,
-            Status = ir.Status,
-            ReferenceType = ir.ReservationType,
-            ReferenceId = null, // This property doesn't exist in domain model, setting to null
-            Notes = null // This property doesn't exist in domain model, setting to null
-        }).ToList();
-
-        return new PagedList<InventoryReservationResponse>(inventoryReservationResponses, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<InventoryReservationResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

@@ -24,58 +24,41 @@ public class InterCompanyTransactionByIdSpec : Specification<InterCompanyTransac
 }
 
 /// <summary>
-/// Specification for searching inter-company transactions with filters.
+/// Specification for searching inter-company transactions with filters and pagination.
 /// </summary>
-public class InterCompanyTransactionSearchSpec : Specification<InterCompanyTransaction>
+public class InterCompanyTransactionSearchSpec : EntitiesByPaginationFilterSpec<InterCompanyTransaction, Responses.InterCompanyTransactionResponse>
 {
-    public InterCompanyTransactionSearchSpec(
-        string? transactionNumber = null,
-        DefaultIdType? fromEntityId = null,
-        DefaultIdType? toEntityId = null,
-        string? transactionType = null,
-        string? status = null,
-        bool? isReconciled = null,
-        DateTime? fromDate = null,
-        DateTime? toDate = null)
+    public InterCompanyTransactionSearchSpec(Search.v1.SearchInterCompanyTransactionsRequest request)
+        : base(request)
     {
-        if (!string.IsNullOrWhiteSpace(transactionNumber))
+        if (!string.IsNullOrWhiteSpace(request.TransactionNumber))
         {
-            Query.Where(t => t.TransactionNumber.Contains(transactionNumber));
+            Query.Where(t => t.TransactionNumber.Contains(request.TransactionNumber));
         }
 
-        if (fromEntityId.HasValue)
+        if (request.FromEntityId.HasValue)
         {
-            Query.Where(t => t.FromEntityId == fromEntityId.Value);
+            Query.Where(t => t.FromEntityId == request.FromEntityId.Value);
         }
 
-        if (toEntityId.HasValue)
+        if (request.ToEntityId.HasValue)
         {
-            Query.Where(t => t.ToEntityId == toEntityId.Value);
+            Query.Where(t => t.ToEntityId == request.ToEntityId.Value);
         }
 
-        if (!string.IsNullOrWhiteSpace(transactionType))
+        if (!string.IsNullOrWhiteSpace(request.TransactionType))
         {
-            Query.Where(t => t.TransactionType == transactionType);
+            Query.Where(t => t.TransactionType == request.TransactionType);
         }
 
-        if (!string.IsNullOrWhiteSpace(status))
+        if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            Query.Where(t => t.Status == status);
+            Query.Where(t => t.Status == request.Status);
         }
 
-        if (isReconciled.HasValue)
+        if (request.IsReconciled.HasValue)
         {
-            Query.Where(t => t.IsReconciled == isReconciled.Value);
-        }
-
-        if (fromDate.HasValue)
-        {
-            Query.Where(t => t.TransactionDate >= fromDate.Value);
-        }
-
-        if (toDate.HasValue)
-        {
-            Query.Where(t => t.TransactionDate <= toDate.Value);
+            Query.Where(t => t.IsReconciled == request.IsReconciled.Value);
         }
 
         Query.OrderByDescending(t => t.TransactionDate);

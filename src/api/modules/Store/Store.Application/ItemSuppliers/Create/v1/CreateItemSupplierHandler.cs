@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Specs;
 using Store.Domain.Exceptions.ItemSupplier;
 
 namespace FSH.Starter.WebApi.Store.Application.ItemSuppliers.Create.v1;
@@ -14,7 +15,7 @@ public sealed class CreateItemSupplierHandler(
     {
         // Check for duplicate item-supplier relationship
         var existing = await readRepository.FirstOrDefaultAsync(
-            new Specs.ItemSupplierByItemAndSupplierSpec(request.ItemId, request.SupplierId),
+            new ItemSupplierByItemAndSupplierSpec(request.ItemId, request.SupplierId),
             cancellationToken);
 
         if (existing is not null)

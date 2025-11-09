@@ -1,8 +1,9 @@
+using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Get.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransactions.Specs;
 
-public class SearchInventoryTransactionsSpec : EntitiesByPaginationFilterSpec<InventoryTransaction, InventoryTransactionDto>
+public class SearchInventoryTransactionsSpec : EntitiesByPaginationFilterSpec<InventoryTransaction, InventoryTransactionResponse>
 {
     public SearchInventoryTransactionsSpec(SearchInventoryTransactionsCommand request)
         : base(request)

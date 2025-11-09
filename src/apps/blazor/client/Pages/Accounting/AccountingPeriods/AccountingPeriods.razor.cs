@@ -29,8 +29,14 @@ public partial class AccountingPeriods
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchAccountingPeriodsRequest>();
-                var result = await Client.AccountingPeriodSearchEndpointAsync("1", paginationFilter);
+                var request = new SearchAccountingPeriodsRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.AccountingPeriodSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<AccountingPeriodResponse>>();
             },
             createFunc: async period =>

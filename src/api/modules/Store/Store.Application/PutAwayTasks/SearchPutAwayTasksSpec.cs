@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.Store.Application.PutAwayTasks;
 /// <summary>
 /// Specification for searching put away tasks with various filters and pagination support.
 /// </summary>
-public sealed class SearchPutAwayTasksSpec : EntitiesByPaginationFilterSpec<PutAwayTask>
+public sealed class SearchPutAwayTasksSpec : EntitiesByPaginationFilterSpec<PutAwayTask, PutAwayTaskResponse>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchPutAwayTasksSpec"/> class.

@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.Bins.Get.v1;
 using FSH.Starter.WebApi.Store.Application.Bins.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.Bins.Specs;
@@ -5,7 +6,7 @@ namespace FSH.Starter.WebApi.Store.Application.Bins.Specs;
 /// <summary>
 /// Specification for searching bins with various filters and pagination support.
 /// </summary>
-public sealed class SearchBinsSpec : EntitiesByPaginationFilterSpec<Bin>
+public sealed class SearchBinsSpec : EntitiesByPaginationFilterSpec<Bin, BinResponse>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchBinsSpec"/> class.
@@ -15,6 +16,7 @@ public sealed class SearchBinsSpec : EntitiesByPaginationFilterSpec<Bin>
         : base(request)
     {
         Query
+            .Include(b => b.WarehouseLocation)
             .Where(b => b.Name.Contains(request.SearchTerm!), !string.IsNullOrWhiteSpace(request.SearchTerm))
             .Where(b => b.WarehouseLocationId == request.WarehouseLocationId, request.WarehouseLocationId.HasValue)
             .Where(b => b.IsActive == request.IsActive!.Value, request.IsActive.HasValue)

@@ -37,7 +37,13 @@ public partial class Suppliers
             // }
             searchFunc: async filter =>
             {
-                var command = filter.Adapt<SearchSuppliersCommand>();
+                var command = new SearchSuppliersCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<SupplierResponse>>();
             },

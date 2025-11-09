@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Create.v1;
 
 public class CreatePurchaseOrderCommandValidator : AbstractValidator<CreatePurchaseOrderCommand>
@@ -28,7 +30,7 @@ public class CreatePurchaseOrderCommandValidator : AbstractValidator<CreatePurch
         RuleFor(x => x.OrderNumber).MustAsync(async (orderNumber, ct) =>
         {
             if (string.IsNullOrWhiteSpace(orderNumber)) return true;
-            var existing = await readRepository.FirstOrDefaultAsync(new Specs.PurchaseOrderByNumberSpec(orderNumber), ct).ConfigureAwait(false);
+            var existing = await readRepository.FirstOrDefaultAsync(new PurchaseOrderByNumberSpec(orderNumber), ct).ConfigureAwait(false);
             return existing is null;
         }).WithMessage("A purchase order with the same OrderNumber already exists.");
 

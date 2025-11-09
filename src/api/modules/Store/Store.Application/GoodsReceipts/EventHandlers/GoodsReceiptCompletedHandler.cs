@@ -1,6 +1,6 @@
-using Store.Domain.Events;
-using FSH.Starter.WebApi.Store.Application.StockLevels.Specs;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
+using FSH.Starter.WebApi.Store.Application.StockLevels.Specs;
+using Store.Domain.Events;
 
 namespace FSH.Starter.WebApi.Store.Application.GoodsReceipts.EventHandlers;
 

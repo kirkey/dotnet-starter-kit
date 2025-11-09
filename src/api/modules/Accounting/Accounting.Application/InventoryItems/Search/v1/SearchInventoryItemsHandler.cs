@@ -17,20 +17,9 @@ public sealed class SearchInventoryItemsHandler(
 
         var spec = new SearchInventoryItemsSpec(request);
         var items = await _repository.ListAsync(spec, cancellationToken);
-        var totalCount = await _repository.CountAsync(cancellationToken);
+        var totalCount = await _repository.CountAsync(spec, cancellationToken);
 
-        var response = items.Select(item => new InventoryItemResponse
-        {
-            Id = item.Id,
-            Sku = item.Sku,
-            Name = item.Name,
-            Quantity = item.Quantity,
-            UnitPrice = item.UnitPrice,
-            Description = item.Description,
-            IsActive = item.IsActive
-        }).ToList();
-
-        return new PagedList<InventoryItemResponse>(response, totalCount, request.PageNumber, request.PageSize);
+        return new PagedList<InventoryItemResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

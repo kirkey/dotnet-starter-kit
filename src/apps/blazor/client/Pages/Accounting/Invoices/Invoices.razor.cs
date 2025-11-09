@@ -160,8 +160,14 @@ public partial class Invoices
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchInvoicesRequest>();
-                var result = await Client.SearchInvoicesEndpointAsync("1", paginationFilter);
+                var request = new SearchInvoicesRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.SearchInvoicesEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<InvoiceResponse>>();
             },
             createFunc: async invoice =>

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.Store.Application.GoodsReceipts;
 /// <summary>
 /// Specification for searching goods receipts with various filters and pagination support.
 /// </summary>
-public sealed class SearchGoodsReceiptsSpec : EntitiesByPaginationFilterSpec<GoodsReceipt>
+public sealed class SearchGoodsReceiptsSpec : EntitiesByPaginationFilterSpec<GoodsReceipt, GoodsReceiptResponse>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchGoodsReceiptsSpec"/> class.

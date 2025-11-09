@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.Bins.Specs;
 using Store.Domain.Exceptions.Bin;
 
 namespace FSH.Starter.WebApi.Store.Application.Bins.Create.v1;
@@ -14,7 +15,7 @@ public sealed class CreateBinHandler(
 
         // Check for duplicate code within the warehouse location
         var existingByCode = await readRepository.FirstOrDefaultAsync(
-            new Specs.BinByCodeSpec(request.Code!, request.WarehouseLocationId!.Value), 
+            new BinByCodeSpec(request.Code!, request.WarehouseLocationId!.Value), 
             cancellationToken).ConfigureAwait(false);
         
         if (existingByCode is not null)

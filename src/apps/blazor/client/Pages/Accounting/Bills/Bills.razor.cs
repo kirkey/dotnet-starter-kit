@@ -152,8 +152,14 @@ public partial class Bills
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchBillsRequest>();
-                var result = await Client.SearchBillsEndpointAsync("1", paginationFilter);
+                var request = new SearchBillsRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.SearchBillsEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<BillSearchResponse>>();
             },
             createFunc: async bill =>

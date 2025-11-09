@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.ItemSuppliers.Search.v1;
 
 /// <summary>
@@ -9,7 +11,7 @@ public sealed class SearchItemSuppliersHandler(
 {
     public async Task<PagedList<ItemSupplierResponse>> Handle(SearchItemSuppliersCommand request, CancellationToken cancellationToken)
     {
-        var spec = new Specs.SearchItemSuppliersSpec(request);
+        var spec = new SearchItemSuppliersSpec(request);
 
         var itemSuppliers = await repository.ListAsync(spec, cancellationToken);
         var totalCount = await repository.CountAsync(spec, cancellationToken);

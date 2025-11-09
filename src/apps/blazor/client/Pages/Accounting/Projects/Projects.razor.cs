@@ -40,7 +40,13 @@ public partial class Projects
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var request = filter.Adapt<SearchProjectsCommand>();
+                var request = new SearchProjectsCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.ProjectSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<ProjectResponse>>();
             },

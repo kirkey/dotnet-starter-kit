@@ -34,49 +34,36 @@ public class FiscalPeriodCloseByIdSpec : Specification<FiscalPeriodClose>
 }
 
 /// <summary>
-/// Specification for searching fiscal period closes with filters.
+/// Specification for searching fiscal period closes with filters and pagination.
 /// </summary>
 public class FiscalPeriodCloseSearchSpec : Specification<FiscalPeriodClose>
 {
-    public FiscalPeriodCloseSearchSpec(
-        string? closeNumber = null,
-        string? closeType = null,
-        string? status = null,
-        bool? isComplete = null,
-        DateTime? fromDate = null,
-        DateTime? toDate = null)
+    public FiscalPeriodCloseSearchSpec(Search.SearchFiscalPeriodClosesRequest request)
     {
-        if (!string.IsNullOrWhiteSpace(closeNumber))
+        if (!string.IsNullOrWhiteSpace(request.CloseNumber))
         {
-            Query.Where(fpc => fpc.CloseNumber.Contains(closeNumber));
+            Query.Where(fpc => fpc.CloseNumber.Contains(request.CloseNumber));
         }
 
-        if (!string.IsNullOrWhiteSpace(closeType))
+        if (!string.IsNullOrWhiteSpace(request.CloseType))
         {
-            Query.Where(fpc => fpc.CloseType == closeType);
+            Query.Where(fpc => fpc.CloseType == request.CloseType);
         }
 
-        if (!string.IsNullOrWhiteSpace(status))
+        if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            Query.Where(fpc => fpc.Status == status);
+            Query.Where(fpc => fpc.Status == request.Status);
         }
 
-        if (isComplete.HasValue)
+        // Apply sorting
+        if (request.OrderBy?.Any() == true)
         {
-            Query.Where(fpc => fpc.IsComplete == isComplete.Value);
+            // Handle ordering if provided
         }
-
-        if (fromDate.HasValue)
+        else
         {
-            Query.Where(fpc => fpc.PeriodStartDate >= fromDate.Value);
+            Query.OrderByDescending(fpc => fpc.PeriodEndDate);
         }
-
-        if (toDate.HasValue)
-        {
-            Query.Where(fpc => fpc.PeriodEndDate <= toDate.Value);
-        }
-
-        Query.OrderByDescending(fpc => fpc.PeriodEndDate);
     }
 }
 

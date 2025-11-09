@@ -38,11 +38,17 @@ public partial class GoodsReceipts
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var command = filter.Adapt<SearchGoodsReceiptsCommand>();
-                command.PurchaseOrderId = SearchPurchaseOrderId;
-                command.Status = SearchStatus;
-                command.ReceivedDateFrom = SearchReceivedDateFrom;
-                command.ReceivedDateTo = SearchReceivedDateTo;
+                var command = new SearchGoodsReceiptsCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
+                    PurchaseOrderId = SearchPurchaseOrderId,
+                    Status = SearchStatus,
+                    ReceivedDateFrom = SearchReceivedDateFrom,
+                    ReceivedDateTo = SearchReceivedDateTo
+                };
                 var result = await Client.SearchGoodsReceiptsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<GoodsReceiptResponse>>();
             },

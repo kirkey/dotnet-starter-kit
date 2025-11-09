@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.Categories.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.Categories.Create.v1;
 
 public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
@@ -13,7 +15,7 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
             .MustAsync(async (name, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(name)) return true;
-                return await categories.FirstOrDefaultAsync(new Specs.CategoryByNameSpec(name), ct) is null;
+                return await categories.FirstOrDefaultAsync(new CategoryByNameSpec(name), ct) is null;
             })
             .WithMessage("A category with the same name already exists.");
 
@@ -25,7 +27,7 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
             .MustAsync(async (code, ct) =>
             {
                 if (string.IsNullOrWhiteSpace(code)) return true;
-                return await categories.FirstOrDefaultAsync(new Specs.CategoryByCodeSpec(code), ct) is null;
+                return await categories.FirstOrDefaultAsync(new CategoryByCodeSpec(code), ct) is null;
             })
             .WithMessage("A category with the same code already exists.");
 

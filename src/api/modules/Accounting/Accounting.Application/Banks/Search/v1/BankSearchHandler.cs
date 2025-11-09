@@ -21,26 +21,10 @@ public sealed class BankSearchHandler(
 
         var spec = new BankSearchSpecs(request);
 
-        var banks = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var bankResponses = banks.Select(bank => new BankResponse(
-            bank.Id,
-            bank.BankCode,
-            bank.Name,
-            bank.RoutingNumber,
-            bank.SwiftCode,
-            bank.Address,
-            bank.ContactPerson,
-            bank.PhoneNumber,
-            bank.Email,
-            bank.Website,
-            bank.Description,
-            bank.Notes,
-            bank.IsActive,
-            bank.ImageUrl)).ToList();
-
-        return new PagedList<BankResponse>(bankResponses, totalCount, request.PageNumber, request.PageSize);
+        return new PagedList<BankResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

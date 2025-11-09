@@ -23,40 +23,26 @@ public class AccountsPayableAccountByIdSpec : Specification<AccountsPayableAccou
 }
 
 /// <summary>
-/// Specification for searching accounts payable accounts with filters.
+/// Specification for searching accounts payable accounts with filters and pagination.
 /// </summary>
-public class AccountsPayableAccountSearchSpec : Specification<AccountsPayableAccount>
+public class AccountsPayableAccountSearchSpec : EntitiesByPaginationFilterSpec<AccountsPayableAccount, Responses.APAccountResponse>
 {
-    public AccountsPayableAccountSearchSpec(
-        string? accountNumber = null,
-        string? accountName = null,
-        bool? isReconciled = null,
-        decimal? minBalance = null,
-        decimal? maxBalance = null)
+    public AccountsPayableAccountSearchSpec(Search.v1.SearchApAccountsRequest request)
+        : base(request)
     {
-        if (!string.IsNullOrWhiteSpace(accountNumber))
+        if (!string.IsNullOrWhiteSpace(request.AccountNumber))
         {
-            Query.Where(a => a.AccountNumber.Contains(accountNumber));
+            Query.Where(a => a.AccountNumber.Contains(request.AccountNumber));
         }
 
-        if (!string.IsNullOrWhiteSpace(accountName))
+        if (!string.IsNullOrWhiteSpace(request.AccountName))
         {
-            Query.Where(a => a.AccountName.Contains(accountName));
+            Query.Where(a => a.AccountName.Contains(request.AccountName));
         }
 
-        if (isReconciled.HasValue)
+        if (request.IsReconciled.HasValue)
         {
-            Query.Where(a => a.IsReconciled == isReconciled.Value);
-        }
-
-        if (minBalance.HasValue)
-        {
-            Query.Where(a => a.CurrentBalance >= minBalance.Value);
-        }
-
-        if (maxBalance.HasValue)
-        {
-            Query.Where(a => a.CurrentBalance <= maxBalance.Value);
+            Query.Where(a => a.IsReconciled == request.IsReconciled.Value);
         }
 
         Query.OrderBy(a => a.AccountNumber);

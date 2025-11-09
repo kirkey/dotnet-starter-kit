@@ -34,8 +34,14 @@ public partial class Accruals
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var query = filter.Adapt<SearchAccrualsRequest>();
-                var result = await Client.AccrualSearchEndpointAsync("1", query).ConfigureAwait(false);
+                var request = new SearchAccrualsRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.AccrualSearchEndpointAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<AccrualResponse>>();
             },
             createFunc: async viewModel =>

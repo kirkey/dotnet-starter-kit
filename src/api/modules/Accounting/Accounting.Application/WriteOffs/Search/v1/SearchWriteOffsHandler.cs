@@ -20,7 +20,7 @@ public sealed class SearchWriteOffsHandler(
         var writeOffs = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Retrieved {Count} write-offs out of {Total}", writeOffs.Count, totalCount);
+        logger.LogInformation("Retrieved {Count} write-offs out of {Total}", writeOffs.Count, request.PageNumber, request.PageSize, totalCount);
 
         var items = writeOffs.Select(w => new WriteOffResponse
         {

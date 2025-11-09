@@ -3,12 +3,13 @@ namespace Accounting.Application.GeneralLedgers.Search.v1;
 /// <summary>
 /// Specification for searching general ledger entries.
 /// </summary>
-public sealed class GeneralLedgerSearchSpec : Specification<GeneralLedger>
+public sealed class GeneralLedgerSearchSpec : EntitiesByPaginationFilterSpec<GeneralLedger, GeneralLedgerSearchResponse>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GeneralLedgerSearchSpec"/> class.
     /// </summary>
     public GeneralLedgerSearchSpec(GeneralLedgerSearchRequest request)
+        : base(request)
     {
         ArgumentNullException.ThrowIfNull(request);
 

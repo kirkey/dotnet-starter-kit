@@ -4,31 +4,23 @@ using Accounting.Application.AccountsPayableAccounts.Responses;
 namespace Accounting.Application.AccountsPayableAccounts.Search.v1;
 
 /// <summary>
-/// Handler for searching accounts payable accounts with filters.
+/// Handler for searching accounts payable accounts with filters and pagination.
 /// </summary>
-public sealed class SearchAPAccountsHandler(
-    ILogger<SearchAPAccountsHandler> logger,
+public sealed class SearchApAccountsHandler(
+    ILogger<SearchApAccountsHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<AccountsPayableAccount> repository)
-    : IRequestHandler<SearchAPAccountsRequest, List<APAccountResponse>>
+    : IRequestHandler<SearchApAccountsRequest, PagedList<APAccountResponse>>
 {
-    public async Task<List<APAccountResponse>> Handle(SearchAPAccountsRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<APAccountResponse>> Handle(SearchApAccountsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new AccountsPayableAccountSearchSpec(request.AccountNumber);
-        var accounts = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var spec = new AccountsPayableAccountSearchSpec(request);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Retrieved {Count} AP accounts", accounts.Count);
+        logger.LogInformation("Retrieved {Count} of {Total} AP accounts", items.Count, totalCount);
 
-        return accounts.Select(account => new APAccountResponse
-        {
-            Id = account.Id,
-            AccountNumber = account.AccountNumber,
-            AccountName = account.AccountName,
-            AccountType = "AccountsPayable",
-            IsActive = account.IsActive,
-            CurrentBalance = account.CurrentBalance,
-            Description = account.Description
-        }).ToList();
+        return new PagedList<APAccountResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

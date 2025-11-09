@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
 using Store.Domain.Exceptions.PurchaseOrder;
 
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Get.v1;
@@ -11,7 +12,7 @@ public sealed class GetPurchaseOrderHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new Specs.GetPurchaseOrderSpecification(request.Id);
+        var spec = new GetPurchaseOrderSpecification(request.Id);
         var po = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
         _ = po ?? throw new PurchaseOrderNotFoundException(request.Id);
 

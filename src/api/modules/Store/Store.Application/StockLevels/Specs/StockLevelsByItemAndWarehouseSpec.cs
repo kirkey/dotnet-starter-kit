@@ -1,5 +1,3 @@
-using Store.Domain.Entities;
-
 namespace FSH.Starter.WebApi.Store.Application.StockLevels.Specs;
 
 /// <summary>

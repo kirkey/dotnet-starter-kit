@@ -12,10 +12,11 @@ public sealed class SearchWarehouseLocationsHandler(
         ArgumentNullException.ThrowIfNull(request);
         
         var spec = new GetWarehouseLocationListSpecification(request);
-        var paged = await repository.PaginatedListAsync(spec, new PaginationFilter { PageNumber = request.PageNumber, PageSize = request.PageSize }, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
         
-        logger.LogInformation("Retrieved {Count} warehouse locations", paged.TotalCount);
+        logger.LogInformation("Retrieved {Count} warehouse locations", totalCount);
         
-        return paged;
+        return new PagedList<GetWarehouseLocationListResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

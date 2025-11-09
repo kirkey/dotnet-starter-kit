@@ -64,8 +64,14 @@ public partial class CreditMemos
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchCreditMemosQuery>();
-                var result = await Client.CreditMemoSearchEndpointAsync("1", paginationFilter);
+                var request = new SearchCreditMemosQuery
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.CreditMemoSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<CreditMemoResponse>>();
             },
             createFunc: async creditMemo =>

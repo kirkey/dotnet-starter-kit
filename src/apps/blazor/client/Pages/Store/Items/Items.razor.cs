@@ -39,8 +39,13 @@ public partial class Items
             // },
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = paginationFilter.Adapt<SearchItemsCommand>();
+                var command = new SearchItemsCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.SearchItemsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<ItemResponse>>();
             },

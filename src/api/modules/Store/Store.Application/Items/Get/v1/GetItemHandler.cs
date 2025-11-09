@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.Items.Specs;
 using Store.Domain.Exceptions.Items;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Get.v1;
@@ -11,7 +12,7 @@ public sealed class GetItemHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var item = await repository.FirstOrDefaultAsync(
-            new Specs.GetItemByIdSpec(request.Id), 
+            new GetItemByIdSpec(request.Id), 
             cancellationToken).ConfigureAwait(false);
 
         if (item is null)

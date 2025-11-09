@@ -1,5 +1,6 @@
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.Commands;
+using Npgsql;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Import.v1;
 
@@ -241,7 +242,7 @@ public sealed class ImportItemsHandler(
     /// </summary>
     private static string GetDetailedErrorMessage(Exception ex)
     {
-        if (ex.InnerException is Npgsql.PostgresException pgEx)
+        if (ex.InnerException is PostgresException pgEx)
         {
             return $"{pgEx.MessageText} (Field: {pgEx.ColumnName ?? "unknown"}, SqlState: {pgEx.SqlState})";
         }

@@ -1,11 +1,12 @@
 namespace Accounting.Application.PrepaidExpenses.Search.v1;
 
 /// <summary>
-/// Specification for searching prepaid expenses with filters.
+/// Specification for searching prepaid expenses with filters and pagination.
 /// </summary>
-public sealed class SearchPrepaidExpensesSpec : Specification<PrepaidExpense>
+public sealed class SearchPrepaidExpensesSpec : EntitiesByPaginationFilterSpec<PrepaidExpense, Responses.PrepaidExpenseResponse>
 {
     public SearchPrepaidExpensesSpec(SearchPrepaidExpensesRequest request)
+        : base(request)
     {
         Query
             .Where(p => p.PrepaidNumber.Contains(request.PrepaidNumber!), !string.IsNullOrWhiteSpace(request.PrepaidNumber))

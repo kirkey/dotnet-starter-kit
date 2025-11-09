@@ -60,8 +60,14 @@ public partial class DebitMemos
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchDebitMemosQuery>();
-                var result = await Client.DebitMemoSearchEndpointAsync("1", paginationFilter);
+                var request = new SearchDebitMemosQuery
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.DebitMemoSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<DebitMemoResponse>>();
             },
             createFunc: async debitMemo =>

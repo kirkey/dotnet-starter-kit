@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.Store.Application.PickLists;
 /// <summary>
 /// Specification for searching and filtering pick lists with pagination.
 /// </summary>
-public sealed class SearchPickListsSpec : EntitiesByPaginationFilterSpec<PickList>
+public sealed class SearchPickListsSpec : EntitiesByPaginationFilterSpec<PickList, PickListResponse>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchPickListsSpec"/> class.

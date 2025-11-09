@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.LotNumbers.Specs;
 using Store.Domain.Exceptions.LotNumber;
 
 namespace FSH.Starter.WebApi.Store.Application.LotNumbers.Create.v1;
@@ -14,7 +15,7 @@ public sealed class CreateLotNumberHandler(
     {
         // Check for duplicate lot number for this item
         var existing = await readRepository.FirstOrDefaultAsync(
-            new Specs.LotNumberByCodeAndItemSpec(request.LotCode, request.ItemId),
+            new LotNumberByCodeAndItemSpec(request.LotCode, request.ItemId),
             cancellationToken);
 
         if (existing is not null)

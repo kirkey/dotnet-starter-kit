@@ -13,27 +13,9 @@ public sealed class SearchBinsHandler(
 
         var spec = new SearchBinsSpec(request);
 
-        var bins = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var binResponses = bins.Select(b => new BinResponse
-        {
-            Id = b.Id,
-            Name = b.Name,
-            Code = b.Code,
-            WarehouseLocationId = b.WarehouseLocationId,
-            WarehouseLocationName = b.WarehouseLocation?.Name,
-            Capacity = b.Capacity,
-            UsedCapacity = b.CurrentUtilization,
-            CapacityUnit = "Units",
-            IsActive = b.IsActive,
-            Notes = b.Description,
-            Aisle = b.WarehouseLocation?.Aisle,
-            Section = b.WarehouseLocation?.Section,
-            Shelf = b.WarehouseLocation?.Shelf,
-            LocationType = b.BinType
-        }).ToList();
-
-        return new PagedList<BinResponse>(binResponses, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<BinResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

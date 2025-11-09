@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Specs;
 using Store.Domain.Events;
 
 namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.EventHandlers;
@@ -35,7 +36,7 @@ public sealed class StockAdjustmentApprovedHandler(
         try
         {
             // Find the transaction created for this adjustment (by reference number)
-            var spec = new FSH.Starter.WebApi.Store.Application.InventoryTransactions.Specs.InventoryTransactionByNumberSpec(adjustment.AdjustmentNumber);
+            var spec = new InventoryTransactionByNumberSpec(adjustment.AdjustmentNumber);
             var transactions = await readTransactionRepository.ListAsync(spec, cancellationToken);
             
             if (transactions.Count > 0)

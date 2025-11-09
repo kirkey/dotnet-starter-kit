@@ -1,8 +1,10 @@
+using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1;
+
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
 
-public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, Search.v1.GetPurchaseOrderListResponse>
+public class GetPurchaseOrderListSpecification : Specification<PurchaseOrder, GetPurchaseOrderListResponse>
 {
-    public GetPurchaseOrderListSpecification(Search.v1.SearchPurchaseOrdersCommand request)
+    public GetPurchaseOrderListSpecification(SearchPurchaseOrdersCommand request)
     {
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {

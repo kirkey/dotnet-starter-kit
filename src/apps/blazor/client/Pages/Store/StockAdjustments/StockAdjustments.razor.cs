@@ -30,8 +30,13 @@ public partial class StockAdjustments
             // },
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = paginationFilter.Adapt<SearchStockAdjustmentsCommand>();
+                var command = new SearchStockAdjustmentsCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.SearchStockAdjustmentsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<StockAdjustmentResponse>>();
             },

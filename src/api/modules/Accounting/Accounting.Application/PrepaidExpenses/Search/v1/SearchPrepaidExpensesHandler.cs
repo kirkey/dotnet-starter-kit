@@ -15,32 +15,12 @@ public sealed class SearchPrepaidExpensesHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var spec = new SearchPrepaidExpensesSpec(request);
-        var expenses = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Retrieved {Count} of {Total} prepaid expenses", expenses.Count, totalCount);
+        logger.LogInformation("Retrieved {Count} of {Total} prepaid expenses", items.Count, totalCount);
 
-        var responses = expenses.Select(e => new PrepaidExpenseResponse
-        {
-            Id = e.Id,
-            PrepaidNumber = e.PrepaidNumber,
-            TotalAmount = e.TotalAmount,
-            AmortizedAmount = e.AmortizedAmount,
-            RemainingAmount = e.RemainingAmount,
-            StartDate = e.StartDate,
-            EndDate = e.EndDate,
-            AmortizationSchedule = e.AmortizationSchedule,
-            Status = e.Status,
-            PrepaidAssetAccountId = e.PrepaidAssetAccountId,
-            ExpenseAccountId = e.ExpenseAccountId,
-            VendorId = e.VendorId,
-            VendorName = e.VendorName,
-            IsFullyAmortized = e.IsFullyAmortized,
-            Description = e.Description,
-            Notes = e.Notes
-        }).ToList();
-
-        return new PagedList<PrepaidExpenseResponse>(responses, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<PrepaidExpenseResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

@@ -33,8 +33,14 @@ public partial class Warehouses
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchWarehousesRequest>();
-                var result = await Client.SearchWarehousesEndpointAsync("1", paginationFilter);
+                var request = new SearchWarehousesRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.SearchWarehousesEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<WarehouseResponse>>();
             },
             createFunc: async warehouse =>

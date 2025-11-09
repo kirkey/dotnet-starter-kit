@@ -6,25 +6,9 @@ public sealed class SearchGoodsReceiptsHandler([FromKeyedServices("store:goodsre
     public async Task<PagedList<GoodsReceiptResponse>> Handle(SearchGoodsReceiptsCommand request, CancellationToken cancellationToken)
     {
         var spec = new SearchGoodsReceiptsSpec(request);
-        var goodsReceipts = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var goodsReceiptResponses = goodsReceipts.Select(gr => new GoodsReceiptResponse
-        {
-            Id = gr.Id,
-            ReceiptNumber = gr.ReceiptNumber,
-            PurchaseOrderId = gr.PurchaseOrderId,
-            ReceivedDate = gr.ReceivedDate,
-            Status = gr.Status,
-            TotalLines = gr.Items?.Count ?? 0,
-            ReceivedLines = gr.Items?.Count(i => i.Quantity > 0) ?? 0,
-            Notes = null // GoodsReceipt entity doesn't have Notes property
-        }).ToList();
-
-        return new PagedList<GoodsReceiptResponse>(
-            goodsReceiptResponses,
-            request.PageNumber,
-            request.PageSize,
-            totalCount);
+        return new PagedList<GoodsReceiptResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

@@ -25,39 +25,27 @@ public class RetainedEarningsByIdSpec : Specification<Accounting.Domain.Entities
 /// <summary>
 /// Specification for searching retained earnings with filters.
 /// </summary>
-public class RetainedEarningsSearchSpec : Specification<Accounting.Domain.Entities.RetainedEarnings>
+public class RetainedEarningsSearchSpec : EntitiesByPaginationFilterSpec<Accounting.Domain.Entities.RetainedEarnings, Responses.RetainedEarningsResponse>
 {
-    public RetainedEarningsSearchSpec(
-        int? fiscalYear = null,
-        string? status = null,
-        bool? isClosed = null,
-        int? fromYear = null,
-        int? toYear = null)
+    public RetainedEarningsSearchSpec(Search.v1.SearchRetainedEarningsRequest request)
+        : base(request)
     {
-        if (fiscalYear.HasValue)
+        if (request.FiscalYear.HasValue)
         {
-            Query.Where(re => re.FiscalYear == fiscalYear.Value);
+            Query.Where(re => re.FiscalYear == request.FiscalYear.Value);
         }
 
-        if (!string.IsNullOrWhiteSpace(status))
+        if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            Query.Where(re => re.Status == status);
+            Query.Where(re => re.Status == request.Status);
         }
 
+        var isClosed = request.OnlyOpen ? false : request.IsClosed;
         if (isClosed.HasValue)
         {
             Query.Where(re => re.IsClosed == isClosed.Value);
         }
 
-        if (fromYear.HasValue)
-        {
-            Query.Where(re => re.FiscalYear >= fromYear.Value);
-        }
-
-        if (toYear.HasValue)
-        {
-            Query.Where(re => re.FiscalYear <= toYear.Value);
-        }
 
         Query.OrderByDescending(re => re.FiscalYear);
     }

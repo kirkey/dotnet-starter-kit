@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Specs;
 using Store.Domain.Exceptions.ItemSupplier;
 
 namespace FSH.Starter.WebApi.Store.Application.ItemSuppliers.Get.v1;
@@ -12,7 +13,7 @@ public sealed class GetItemSupplierHandler(
     public async Task<ItemSupplierResponse> Handle(GetItemSupplierCommand request, CancellationToken cancellationToken)
     {
         var itemSupplier = await repository.FirstOrDefaultAsync(
-            new Specs.GetItemSupplierByIdSpec(request.Id),
+            new GetItemSupplierByIdSpec(request.Id),
             cancellationToken);
 
         if (itemSupplier is null)

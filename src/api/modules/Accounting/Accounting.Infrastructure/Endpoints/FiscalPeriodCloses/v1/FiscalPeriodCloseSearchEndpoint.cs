@@ -15,7 +15,7 @@ public static class FiscalPeriodCloseSearchEndpoint
             })
             .WithName(nameof(FiscalPeriodCloseSearchEndpoint))
             .WithSummary("Search fiscal period closes")
-            .Produces<List<FiscalPeriodCloseResponse>>()
+            .Produces<PagedList<FiscalPeriodCloseResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);

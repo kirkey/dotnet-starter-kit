@@ -14,20 +14,9 @@ public sealed class SearchDeferredRevenuesHandler(IRepository<DeferredRevenue> r
 
         var spec = new SearchDeferredRevenuesSpec(request);
         
-        var deferredRevenues = await _repository.ListAsync(spec, cancellationToken);
+        var items = await _repository.ListAsync(spec, cancellationToken);
         var totalCount = await _repository.CountAsync(spec, cancellationToken);
 
-        var responses = deferredRevenues.Select(d => new DeferredRevenueResponse
-        {
-            Id = d.Id,
-            DeferredRevenueNumber = d.DeferredRevenueNumber,
-            RecognitionDate = d.RecognitionDate,
-            Amount = d.Amount,
-            Description = d.Description,
-            IsRecognized = d.IsRecognized,
-            RecognizedDate = d.RecognizedDate
-        }).ToList();
-
-        return new PagedList<DeferredRevenueResponse>(responses, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<DeferredRevenueResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

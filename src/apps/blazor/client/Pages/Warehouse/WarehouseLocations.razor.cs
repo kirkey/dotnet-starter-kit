@@ -56,15 +56,21 @@ public partial class WarehouseLocations
             },
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchWarehouseLocationsCommand>();
+                var command = new SearchWarehouseLocationsCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 
                 // Apply warehouse filter if specified
                 if (_filterWarehouseId.HasValue)
                 {
-                    paginationFilter.WarehouseId = _filterWarehouseId;
+                    command.WarehouseId = _filterWarehouseId;
                 }
 
-                var result = await Client.SearchWarehouseLocationsEndpointAsync("1", paginationFilter);
+                var result = await Client.SearchWarehouseLocationsEndpointAsync("1", command);
                 return result.Adapt<PaginationResponse<GetWarehouseLocationListResponse>>();
             },
             createFunc: async location =>

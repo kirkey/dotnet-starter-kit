@@ -28,26 +28,9 @@ public sealed class SearchSerialNumbersHandler(
 
         var spec = new SearchSerialNumbersSpec(request);
 
-        var serialNumbers = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var serialNumberResponses = serialNumbers.Select(sn => new SerialNumberResponse
-        {
-            Id = sn.Id,
-            SerialNumberValue = sn.SerialNumberValue,
-            ItemId = sn.ItemId,
-            WarehouseId = sn.WarehouseId,
-            WarehouseLocationId = sn.WarehouseLocationId,
-            BinId = sn.BinId,
-            LotNumberId = sn.LotNumberId,
-            Status = sn.Status,
-            ReceiptDate = sn.ReceiptDate, // Matches the domain model property name
-            ManufactureDate = sn.ManufactureDate,
-            WarrantyExpirationDate = sn.WarrantyExpirationDate,
-            ExternalReference = sn.ExternalReference,
-            CreatedOn = sn.CreatedOn // From AuditableEntity base class
-        }).ToList();
-
-        return new PagedList<SerialNumberResponse>(serialNumberResponses, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<SerialNumberResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

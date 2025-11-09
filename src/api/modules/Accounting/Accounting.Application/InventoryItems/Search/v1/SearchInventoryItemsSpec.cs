@@ -1,8 +1,9 @@
 namespace Accounting.Application.InventoryItems.Search.v1;
 
-public sealed class SearchInventoryItemsSpec : Specification<InventoryItem>
+public sealed class SearchInventoryItemsSpec : EntitiesByPaginationFilterSpec<InventoryItem, Responses.InventoryItemResponse>
 {
     public SearchInventoryItemsSpec(SearchInventoryItemsRequest request)
+        : base(request)
     {
         ArgumentNullException.ThrowIfNull(request);
 

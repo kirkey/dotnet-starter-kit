@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.StockLevels.Specs;
 using Store.Domain.Exceptions.StockLevel;
 
 namespace FSH.Starter.WebApi.Store.Application.StockLevels.Get.v1;
@@ -12,7 +13,7 @@ public sealed class GetStockLevelHandler(
     public async Task<StockLevelResponse> Handle(GetStockLevelCommand request, CancellationToken cancellationToken)
     {
         var stockLevel = await repository.FirstOrDefaultAsync(
-            new Specs.GetStockLevelByIdSpec(request.Id),
+            new GetStockLevelByIdSpec(request.Id),
             cancellationToken);
 
         if (stockLevel is null)

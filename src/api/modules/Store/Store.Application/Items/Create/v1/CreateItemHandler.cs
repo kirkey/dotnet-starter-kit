@@ -1,5 +1,6 @@
 using FSH.Framework.Core.Storage;
 using FSH.Framework.Core.Storage.File;
+using FSH.Starter.WebApi.Store.Application.Items.Specs;
 using Store.Domain.Exceptions.Items;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Create.v1;
@@ -20,7 +21,7 @@ public sealed class CreateItemHandler(
 
         // Check for duplicate SKU
         var existingBySku = await readRepository.FirstOrDefaultAsync(
-            new Specs.ItemBySkuSpec(request.Sku!), 
+            new ItemBySkuSpec(request.Sku!), 
             cancellationToken).ConfigureAwait(false);
         
         if (existingBySku is not null)
@@ -28,7 +29,7 @@ public sealed class CreateItemHandler(
 
         // Check for duplicate Barcode
         var existingByBarcode = await readRepository.FirstOrDefaultAsync(
-            new Specs.ItemByBarcodeSpec(request.Barcode!), 
+            new ItemByBarcodeSpec(request.Barcode!), 
             cancellationToken).ConfigureAwait(false);
         
         if (existingByBarcode is not null)

@@ -17,31 +17,9 @@ public sealed class SearchPutAwayTasksHandler(
     {
         var spec = new SearchPutAwayTasksSpec(request);
 
-        var putAwayTasks = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var putAwayTaskResponses = putAwayTasks.Select(p => new PutAwayTaskResponse
-        {
-            Id = p.Id,
-            TaskNumber = p.TaskNumber,
-            WarehouseId = p.WarehouseId,
-            WarehouseName = p.Warehouse.Name,
-            GoodsReceiptId = p.GoodsReceiptId,
-            Status = p.Status,
-            Priority = p.Priority,
-            AssignedTo = p.AssignedTo,
-            StartDate = p.StartDate,
-            CompletedDate = p.CompletedDate,
-            PutAwayStrategy = p.PutAwayStrategy,
-            Notes = p.Notes,
-            TotalLines = p.TotalLines,
-            CompletedLines = p.CompletedLines
-        }).ToList();
-
-        return new PagedList<PutAwayTaskResponse>(
-            putAwayTaskResponses,
-            request.PageNumber,
-            request.PageSize,
-            totalCount);
+        return new PagedList<PutAwayTaskResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

@@ -2,7 +2,7 @@ using FSH.Starter.WebApi.Store.Application.InventoryReservations.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.InventoryReservations.Specs;
 
-public class SearchInventoryReservationsSpec : EntitiesByPaginationFilterSpec<InventoryReservation, InventoryReservationDto>
+public class SearchInventoryReservationsSpec : EntitiesByPaginationFilterSpec<InventoryReservation, InventoryReservationResponse>
 {
     public SearchInventoryReservationsSpec(SearchInventoryReservationsCommand request)
         : base(request)

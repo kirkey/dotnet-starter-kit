@@ -1,4 +1,5 @@
 using FSH.Framework.Core.Exceptions;
+using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Specs;
 using Store.Domain.Exceptions.PurchaseOrder;
 
 namespace FSH.Starter.WebApi.Store.Application.PurchaseOrders.Delete.v1;
@@ -16,7 +17,7 @@ public sealed class DeletePurchaseOrderHandler(
         _ = po ?? throw new PurchaseOrderNotFoundException(request.Id);
 
         // Guard: prevent deleting a PO that has related inventory transactions (receipts, adjustments)
-        var hasTx = await txReadRepository.AnyAsync(new Specs.InventoryTransactionsByPurchaseOrderIdSpec(request.Id), cancellationToken).ConfigureAwait(false);
+        var hasTx = await txReadRepository.AnyAsync(new InventoryTransactionsByPurchaseOrderIdSpec(request.Id), cancellationToken).ConfigureAwait(false);
         if (hasTx)
             throw new ConflictException($"Purchase order '{request.Id}' cannot be deleted because related inventory transactions exist.");
 

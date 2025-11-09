@@ -73,8 +73,14 @@ public partial class FiscalPeriodClose
             idFunc: pc => pc.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchFiscalPeriodClosesRequest>();
-                var result = await Client.FiscalPeriodCloseSearchEndpointAsync("1", paginationFilter);
+                var request = new SearchFiscalPeriodClosesRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.FiscalPeriodCloseSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<FiscalPeriodCloseResponse>>();
             },
             createFunc: async viewModel =>

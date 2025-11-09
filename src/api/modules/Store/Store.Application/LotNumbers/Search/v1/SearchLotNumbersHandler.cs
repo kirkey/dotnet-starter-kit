@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.LotNumbers.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.LotNumbers.Search.v1;
 
 /// <summary>
@@ -23,7 +25,7 @@ public sealed class SearchLotNumbersHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new Specs.SearchLotNumbersSpec(request);
+        var spec = new SearchLotNumbersSpec(request);
 
         var lotNumbers = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);

@@ -45,6 +45,9 @@ public partial class PickLists
             {
                 var command = new SearchPickListsCommand
                 {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
                     OrderBy = filter.OrderBy ?? ["Priority desc", "CreatedOn desc"],
                     WarehouseId = SearchWarehouseId,
                     Status = SearchStatus,

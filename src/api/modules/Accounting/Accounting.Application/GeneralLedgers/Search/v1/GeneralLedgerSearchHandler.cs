@@ -29,35 +29,12 @@ public sealed class GeneralLedgerSearchHandler : IRequestHandler<GeneralLedgerSe
         _logger.LogInformation("Searching general ledger entries with filters");
 
         var spec = new GeneralLedgerSearchSpec(request);
-        var entries = await _repository.ListAsync(spec, cancellationToken);
-        var totalCount = await _repository.CountAsync(cancellationToken);
+        var items = await _repository.ListAsync(spec, cancellationToken);
+        var totalCount = await _repository.CountAsync(spec, cancellationToken);
 
-        var response = entries.Select(e => new GeneralLedgerSearchResponse
-        {
-            Id = e.Id,
-            EntryId = e.EntryId,
-            AccountId = e.AccountId,
-            Debit = e.Debit,
-            Credit = e.Credit,
-            Memo = e.Memo,
-            UsoaClass = e.UsoaClass ?? string.Empty,
-            TransactionDate = e.TransactionDate,
-            ReferenceNumber = e.ReferenceNumber,
-            PeriodId = e.PeriodId,
-            Description = e.Description,
-            CreatedOn = e.CreatedOn.DateTime,
-            IsPosted = e.IsPosted,
-            Source = e.Source,
-            SourceId = e.SourceId
-        }).ToList();
+        _logger.LogInformation("Found {Count} general ledger entries", items.Count);
 
-        _logger.LogInformation("Found {Count} general ledger entries", response.Count);
-
-        return new PagedList<GeneralLedgerSearchResponse>(
-            response,
-            totalCount,
-            request.PageNumber,
-            request.PageSize);
+        return new PagedList<GeneralLedgerSearchResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

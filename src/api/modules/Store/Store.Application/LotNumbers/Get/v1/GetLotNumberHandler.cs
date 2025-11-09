@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.Store.Application.LotNumbers.Specs;
 using Store.Domain.Exceptions.LotNumber;
 
 namespace FSH.Starter.WebApi.Store.Application.LotNumbers.Get.v1;
@@ -12,7 +13,7 @@ public sealed class GetLotNumberHandler(
     public async Task<LotNumberResponse> Handle(GetLotNumberCommand request, CancellationToken cancellationToken)
     {
         var lotNumber = await repository.FirstOrDefaultAsync(
-            new Specs.GetLotNumberByIdSpec(request.Id),
+            new GetLotNumberByIdSpec(request.Id),
             cancellationToken);
 
         if (lotNumber is null)

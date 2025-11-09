@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.StockLevels.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.StockLevels.Search.v1;
 
 /// <summary>
@@ -23,7 +25,7 @@ public sealed class SearchStockLevelsHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new Specs.SearchStockLevelsSpec(request);
+        var spec = new SearchStockLevelsSpec(request);
 
         var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);

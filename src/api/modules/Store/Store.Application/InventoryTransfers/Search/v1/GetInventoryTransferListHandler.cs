@@ -11,12 +11,13 @@ public sealed class SearchInventoryTransfersHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        logger.LogInformation("Searching inventory transfers - Page {Page} Size {Size} Term {Term}", request.PageNumber, request.PageSize, request.SearchTerm ?? string.Empty);
+        logger.LogInformation("Searching inventory transfers - Page {Page} Size {Size} Term {Term}", request.SearchTerm ?? string.Empty);
         
         var spec = new SearchInventoryTransfersSpecs(request);
-        var paged = await repository.PaginatedListAsync(spec, new PaginationFilter { PageNumber = request.PageNumber, PageSize = request.PageSize }, cancellationToken).ConfigureAwait(false);
+        var list = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Search complete: retrieved {Count} inventory transfers", paged.TotalCount);
-        return paged;
+        logger.LogInformation("Search complete: retrieved {Count} inventory transfers", request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<GetInventoryTransferListResponse>(list, request.PageNumber, request.PageSize, totalCount);
     }
 }

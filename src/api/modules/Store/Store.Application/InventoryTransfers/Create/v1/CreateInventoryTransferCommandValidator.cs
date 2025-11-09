@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Specs;
+
 namespace FSH.Starter.WebApi.Store.Application.InventoryTransfers.Create.v1;
 
 public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateInventoryTransferCommand>
@@ -16,7 +18,7 @@ public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateI
         RuleFor(x => x.TransferNumber).MustAsync(async (transferNumber, ct) =>
         {
             if (string.IsNullOrWhiteSpace(transferNumber)) return true;
-            var existing = await readRepository.FirstOrDefaultAsync(new Specs.InventoryTransferByNumberSpec(transferNumber), ct).ConfigureAwait(false);
+            var existing = await readRepository.FirstOrDefaultAsync(new InventoryTransferByNumberSpec(transferNumber), ct).ConfigureAwait(false);
             return existing is null;
         }).WithMessage("An inventory transfer with the same TransferNumber already exists.");
 

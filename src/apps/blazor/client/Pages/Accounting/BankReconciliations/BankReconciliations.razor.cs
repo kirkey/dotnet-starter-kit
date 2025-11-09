@@ -89,8 +89,14 @@ public partial class BankReconciliations
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<SearchBankReconciliationsRequest>();
-                var result = await Client.SearchBankReconciliationsEndpointAsync("1", paginationFilter);
+                var request = new SearchBankReconciliationsRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.SearchBankReconciliationsEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<BankReconciliationResponse>>();
             },
             createFunc: async reconciliation =>

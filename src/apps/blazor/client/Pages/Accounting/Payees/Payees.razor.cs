@@ -36,8 +36,14 @@ public partial class Payees
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<PayeeSearchCommand>();
-                var result = await Client.PayeeSearchEndpointAsync("1", paginationFilter);
+                var request = new PayeeSearchCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                var result = await Client.PayeeSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<PayeeResponse>>();
             },
             createFunc: async viewModel =>

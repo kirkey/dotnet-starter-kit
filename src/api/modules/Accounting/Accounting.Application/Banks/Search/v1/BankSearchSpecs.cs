@@ -1,9 +1,11 @@
+using Accounting.Application.Banks.Get.v1;
+
 namespace Accounting.Application.Banks.Search.v1;
 
 /// <summary>
 /// Specification for searching banks with filtering and pagination.
 /// </summary>
-public class BankSearchSpecs : EntitiesByPaginationFilterSpec<Bank>
+public class BankSearchSpecs : EntitiesByPaginationFilterSpec<Bank, BankResponse>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="BankSearchSpecs"/> class.

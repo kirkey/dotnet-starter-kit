@@ -15,41 +15,13 @@ public sealed class SearchRetainedEarningsHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Apply OnlyOpen filter if specified
-        var isClosed = request.OnlyOpen ? false : request.IsClosed;
+        var spec = new RetainedEarningsSearchSpec(request);
 
-        var spec = new RetainedEarningsSearchSpec(
-            request.FiscalYear,
-            request.Status,
-            isClosed);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var retainedEarningsList = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        logger.LogInformation("Retrieved {Count} retained earnings records", items.Count);
 
-        logger.LogInformation("Retrieved {Count} retained earnings records", retainedEarningsList.Count);
-
-        var responseList = retainedEarningsList.Select(re => new RetainedEarningsResponse
-        {
-            Id = re.Id,
-            FiscalYear = re.FiscalYear,
-            BeginningBalance = re.OpeningBalance,
-            NetIncome = re.NetIncome,
-            Dividends = re.Distributions,
-            EndingBalance = re.ClosingBalance,
-            Status = re.Status,
-            IsClosed = re.IsClosed,
-            Description = re.Description
-        }).ToList();
-
-        // Apply pagination
-        var pagedList = responseList
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize)
-            .ToList();
-
-        return new PagedList<RetainedEarningsResponse>(
-            pagedList,
-            responseList.Count,
-            request.PageNumber,
-            request.PageSize);
+        return new PagedList<RetainedEarningsResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

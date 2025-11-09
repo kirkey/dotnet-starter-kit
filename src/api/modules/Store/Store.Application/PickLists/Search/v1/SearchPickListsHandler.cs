@@ -15,33 +15,9 @@ public sealed class SearchPickListsHandler([FromKeyedServices("store:picklists")
     public async Task<PagedList<PickListResponse>> Handle(SearchPickListsCommand request, CancellationToken cancellationToken)
     {
         var spec = new SearchPickListsSpec(request);
-        var pickLists = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var pickListResponses = pickLists.Select(p => new PickListResponse
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Notes = p.Notes,
-            PickListNumber = p.PickListNumber,
-            WarehouseId = p.WarehouseId,
-            WarehouseName = p.Warehouse.Name,
-            Status = p.Status,
-            PickingType = p.PickingType,
-            Priority = p.Priority,
-            AssignedTo = p.AssignedTo,
-            StartDate = p.StartDate,
-            CompletedDate = p.CompletedDate,
-            ReferenceNumber = p.ReferenceNumber,
-            TotalLines = p.TotalLines,
-            CompletedLines = p.CompletedLines
-        }).ToList();
-
-        return new PagedList<PickListResponse>(
-            pickListResponses,
-            request.PageNumber,
-            request.PageSize,
-            totalCount);
+        return new PagedList<PickListResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

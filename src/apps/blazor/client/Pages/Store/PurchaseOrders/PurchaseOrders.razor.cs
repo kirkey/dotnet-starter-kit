@@ -36,11 +36,17 @@ public partial class PurchaseOrders
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var command = filter.Adapt<SearchPurchaseOrdersCommand>();
-                command.SupplierId = SearchSupplierId;
-                command.Status = SearchStatus;
-                command.FromDate = SearchFromDate;
-                command.ToDate = SearchToDate;
+                var command = new SearchPurchaseOrdersCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
+                    SupplierId = SearchSupplierId,
+                    Status = SearchStatus,
+                    FromDate = SearchFromDate,
+                    ToDate = SearchToDate
+                };
                 var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PurchaseOrderResponse>>();
             },

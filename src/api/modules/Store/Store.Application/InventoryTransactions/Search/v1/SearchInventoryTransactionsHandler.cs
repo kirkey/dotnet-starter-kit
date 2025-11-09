@@ -28,24 +28,9 @@ public sealed class SearchInventoryTransactionsHandler(
 
         var spec = new SearchInventoryTransactionsSpec(request);
 
-        var inventoryTransactions = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var inventoryTransactionResponses = inventoryTransactions.Select(it => new InventoryTransactionResponse
-        {
-            Id = it.Id,
-            TransactionNumber = it.TransactionNumber,
-            ItemId = it.ItemId,
-            WarehouseId = it.WarehouseId ?? DefaultIdType.Empty, // Handle nullable WarehouseId by providing default value
-            Quantity = it.Quantity,
-            TransactionDate = it.TransactionDate,
-            TransactionType = it.TransactionType,
-            ReferenceType = it.TransactionType, // Using TransactionType as ReferenceType since ReferenceType doesn't exist in domain model
-            ReferenceId = null, // ReferenceId property doesn't exist in domain model, setting to null
-            UnitCost = it.UnitCost,
-            Notes = it.Reason // Domain model uses Reason instead of Description
-        }).ToList();
-
-        return new PagedList<InventoryTransactionResponse>(inventoryTransactionResponses, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<InventoryTransactionResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

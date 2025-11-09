@@ -521,7 +521,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchApAccountsRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -533,7 +533,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchApAccountsRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Update AP aging balance
@@ -3902,7 +3902,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FiscalPeriodCloseResponse>> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body);
+        System.Threading.Tasks.Task<FiscalPeriodCloseResponsePagedList> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3914,7 +3914,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FiscalPeriodCloseResponse>> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<FiscalPeriodCloseResponsePagedList> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Complete a fiscal period close task
@@ -13338,7 +13338,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchApAccountsRequest body)
         {
             return ApAccountSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -13353,7 +13353,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchAPAccountsRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<APAccountResponse>> ApAccountSearchEndpointAsync(string version, SearchApAccountsRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -29894,7 +29894,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FiscalPeriodCloseResponse>> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body)
+        public virtual System.Threading.Tasks.Task<FiscalPeriodCloseResponsePagedList> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body)
         {
             return FiscalPeriodCloseSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -29909,7 +29909,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FiscalPeriodCloseResponse>> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<FiscalPeriodCloseResponsePagedList> FiscalPeriodCloseSearchEndpointAsync(string version, SearchFiscalPeriodClosesRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -29962,7 +29962,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<FiscalPeriodCloseResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<FiscalPeriodCloseResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -70375,6 +70375,33 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FiscalPeriodCloseResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<FiscalPeriodCloseResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class FixedAssetResponse
     {
 
@@ -75635,15 +75662,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchAPAccountsRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("accountNumber")]
-        public string? AccountNumber { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SearchAccountingPeriodsRequest
     {
 
@@ -75709,6 +75727,39 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("isReversed")]
         public bool? IsReversed { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchApAccountsRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountNumber")]
+        public string? AccountNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isReconciled")]
+        public bool? IsReconciled { get; set; } = default!;
 
     }
 
@@ -76181,6 +76232,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial class SearchFiscalPeriodClosesRequest
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("closeNumber")]
         public string? CloseNumber { get; set; } = default!;
 
@@ -76270,6 +76339,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SearchInterCompanyTransactionsRequest
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transactionNumber")]
         public string? TransactionNumber { get; set; } = default!;

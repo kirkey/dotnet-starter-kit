@@ -16,7 +16,7 @@ public sealed class SearchRecurringJournalEntriesHandler(
         var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Retrieved {Count} of {Total} recurring journal entries", items.Count, totalCount);
+        logger.LogInformation("Retrieved {Count} of {Total} recurring journal entries", items.Count, request.PageNumber, request.PageSize, totalCount);
 
         return new PagedList<RecurringJournalEntryResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }

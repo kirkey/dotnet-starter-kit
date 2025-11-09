@@ -34,8 +34,13 @@ public partial class InventoryTransfers
             // },
             searchFunc: async filter =>
             {
-                var paginationFilter = filter.Adapt<PaginationFilter>();
-                var command = paginationFilter.Adapt<SearchInventoryTransfersCommand>();
+                var command = new SearchInventoryTransfersCommand
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.SearchInventoryTransfersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<GetInventoryTransferListResponse>>();
             },

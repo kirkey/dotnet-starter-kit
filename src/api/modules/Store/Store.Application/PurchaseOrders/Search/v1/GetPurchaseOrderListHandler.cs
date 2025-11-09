@@ -15,7 +15,7 @@ public sealed class GetPurchaseOrderListHandler(
         var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
         var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Search complete: retrieved {Count} purchase orders", totalCount);
+        logger.LogInformation("Search complete: retrieved {Count} purchase orders", request.PageNumber, request.PageSize, totalCount);
         return new PagedList<GetPurchaseOrderListResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
