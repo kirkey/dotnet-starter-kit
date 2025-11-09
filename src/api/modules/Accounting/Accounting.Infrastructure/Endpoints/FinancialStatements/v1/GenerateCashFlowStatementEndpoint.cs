@@ -15,7 +15,7 @@ public static class GenerateCashFlowStatementEndpoint
             .WithName(nameof(GenerateCashFlowStatementEndpoint))
             .WithSummary("Generate Cash Flow Statement")
             .WithDescription("Generates a cash flow statement for a given period")
-            .Produces<object>()
+            .Produces<CashFlowStatementDto>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

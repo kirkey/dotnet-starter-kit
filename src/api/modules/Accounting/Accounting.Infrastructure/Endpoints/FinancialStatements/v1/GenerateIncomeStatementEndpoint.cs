@@ -15,7 +15,7 @@ public static class GenerateIncomeStatementEndpoint
             .WithName(nameof(GenerateIncomeStatementEndpoint))
             .WithSummary("Generate Income Statement")
             .WithDescription("Generates an income statement for a given period")
-            .Produces<object>()
+            .Produces<IncomeStatementDto>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

@@ -1,0 +1,255 @@
+<MudGrid>
+    <MudItem xs="12">
+        <MudPaper Class="pa-4">
+            <MudStack Spacing="3">
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudDatePicker Label="As of Date"
+                                       @bind-Date="_asOfDate"
+                                       Required="true"
+                                       Variant="Variant.Outlined"
+                                       MaxDate="DateTime.Today" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudSelect T="string" Label="Report Format"
+                                   @bind-Value="_reportFormat"
+                                   Variant="Variant.Outlined">
+                            <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                            <MudSelectItem Value="@("Detailed")">Detailed</MudSelectItem>
+                            <MudSelectItem Value="@("Summary")">Summary</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudCheckBox @bind-Value="_includeComparative" Label="Include Comparative Period" Color="Color.Primary" />
+                    </MudItem>
+                    @if (_includeComparative)
+                    {
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudDatePicker Label="Comparative Date"
+                                           @bind-Date="_comparativeDate"
+                                           Variant="Variant.Outlined"
+                                           MaxDate="_asOfDate" />
+                        </MudItem>
+                    }
+                </MudGrid>
+
+                <MudStack Row="true" Justify="Justify.FlexEnd">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="@(() => Generate())"
+                               StartIcon="@Icons.Material.Filled.Assessment"
+                               Disabled="_loading">
+                        @if (_loading)
+                        {
+                            <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                            <MudText Class="ml-2">Generating...</MudText>
+                        }
+                        else
+                        {
+                            <span>Generate Balance Sheet</span>
+                        }
+                    </MudButton>
+                    @if (_balanceSheet is not null)
+                    {
+                        <MudButton Variant="Variant.Outlined"
+                                   Color="Color.Secondary"
+                                   StartIcon="@Icons.Material.Filled.Print"
+                                   OnClick="@(() => Print())">
+                            Print
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined"
+                                   Color="Color.Info"
+                                   StartIcon="@Icons.Material.Filled.Download"
+                                   OnClick="@(() => Export())">
+                            Export
+                        </MudButton>
+                    }
+                </MudStack>
+            </MudStack>
+        </MudPaper>
+    </MudItem>
+
+    @if (_balanceSheet is not null)
+    {
+        <MudItem xs="12">
+            <MudPaper Class="pa-4">
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.h4" Align="Align.Center">@_balanceSheet.ReportTitle</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">As of @_balanceSheet.AsOfDate.ToString("MMMM dd, yyyy")</MudText>
+
+                    @if (!_balanceSheet.IsBalanced)
+                    {
+                        <MudAlert Severity="Severity.Warning">
+                            <strong>Warning:</strong> Balance Sheet is not balanced! Total Assets: @_balanceSheet.TotalAssets.ToString("C2"), Total Liabilities & Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("C2")
+                        </MudAlert>
+                    }
+
+                    <!-- Assets Section -->
+                    <MudDivider Class="my-4" />
+                    <MudText Typo="Typo.h5" Color="Color.Primary">@_balanceSheet.Assets.SectionName</MudText>
+                    @foreach (var subsection in _balanceSheet.Assets.SubSections)
+                    {
+                        <MudText Typo="Typo.h6" Class="mt-3">@subsection.SubSectionName</MudText>
+                        <MudSimpleTable Dense="true" Hover="true" Bordered="true">
+                            <thead>
+                                <tr>
+                                    <th>Account Code</th>
+                                    <th>Account Name</th>
+                                    <th class="text-right">Amount</th>
+                                    @if (_includeComparative && _balanceSheet.ComparativePeriod is not null)
+                                    {
+                                        <th class="text-right">Comparative</th>
+                                        <th class="text-right">Change</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var line in subsection.Lines)
+                                {
+                                    <tr>
+                                        <td>@line.AccountCode</td>
+                                        <td>@line.AccountName</td>
+                                        <td class="text-right">@line.Amount.ToString("C2")</td>
+                                        @if (_includeComparative && line.ComparativeAmount.HasValue)
+                                        {
+                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("C2")</td>
+                                            <td class="text-right">
+                                                <span style="color: @(line.Change >= 0 ? "green" : "red")">
+                                                    @line.Change.Value.ToString("C2")
+                                                </span>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                                <tr style="font-weight: bold; background-color: #f5f5f5;">
+                                    <td colspan="2">Total @subsection.SubSectionName</td>
+                                    <td class="text-right">@subsection.Total.ToString("C2")</td>
+                                    @if (_includeComparative)
+                                    {
+                                        <td colspan="2"></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    }
+                    <MudText Typo="Typo.h6" Class="mt-3" Style="font-weight: bold;">
+                        Total Assets: @_balanceSheet.Assets.Total.ToString("C2")
+                    </MudText>
+
+                    <!-- Liabilities Section -->
+                    <MudDivider Class="my-4" />
+                    <MudText Typo="Typo.h5" Color="Color.Primary">@_balanceSheet.Liabilities.SectionName</MudText>
+                    @foreach (var subsection in _balanceSheet.Liabilities.SubSections)
+                    {
+                        <MudText Typo="Typo.h6" Class="mt-3">@subsection.SubSectionName</MudText>
+                        <MudSimpleTable Dense="true" Hover="true" Bordered="true">
+                            <thead>
+                                <tr>
+                                    <th>Account Code</th>
+                                    <th>Account Name</th>
+                                    <th class="text-right">Amount</th>
+                                    @if (_includeComparative && _balanceSheet.ComparativePeriod is not null)
+                                    {
+                                        <th class="text-right">Comparative</th>
+                                        <th class="text-right">Change</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var line in subsection.Lines)
+                                {
+                                    <tr>
+                                        <td>@line.AccountCode</td>
+                                        <td>@line.AccountName</td>
+                                        <td class="text-right">@line.Amount.ToString("C2")</td>
+                                        @if (_includeComparative && line.ComparativeAmount.HasValue)
+                                        {
+                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("C2")</td>
+                                            <td class="text-right">
+                                                <span style="color: @(line.Change >= 0 ? "red" : "green")">
+                                                    @line.Change.Value.ToString("C2")
+                                                </span>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                                <tr style="font-weight: bold; background-color: #f5f5f5;">
+                                    <td colspan="2">Total @subsection.SubSectionName</td>
+                                    <td class="text-right">@subsection.Total.ToString("C2")</td>
+                                    @if (_includeComparative)
+                                    {
+                                        <td colspan="2"></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    }
+                    <MudText Typo="Typo.h6" Class="mt-3" Style="font-weight: bold;">
+                        Total Liabilities: @_balanceSheet.Liabilities.Total.ToString("C2")
+                    </MudText>
+
+                    <!-- Equity Section -->
+                    <MudDivider Class="my-4" />
+                    <MudText Typo="Typo.h5" Color="Color.Primary">@_balanceSheet.Equity.SectionName</MudText>
+                    @foreach (var subsection in _balanceSheet.Equity.SubSections)
+                    {
+                        <MudText Typo="Typo.h6" Class="mt-3">@subsection.SubSectionName</MudText>
+                        <MudSimpleTable Dense="true" Hover="true" Bordered="true">
+                            <thead>
+                                <tr>
+                                    <th>Account Code</th>
+                                    <th>Account Name</th>
+                                    <th class="text-right">Amount</th>
+                                    @if (_includeComparative && _balanceSheet.ComparativePeriod is not null)
+                                    {
+                                        <th class="text-right">Comparative</th>
+                                        <th class="text-right">Change</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var line in subsection.Lines)
+                                {
+                                    <tr>
+                                        <td>@line.AccountCode</td>
+                                        <td>@line.AccountName</td>
+                                        <td class="text-right">@line.Amount.ToString("C2")</td>
+                                        @if (_includeComparative && line.ComparativeAmount.HasValue)
+                                        {
+                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("C2")</td>
+                                            <td class="text-right">
+                                                <span style="color: @(line.Change >= 0 ? "green" : "red")">
+                                                    @line.Change.Value.ToString("C2")
+                                                </span>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                                <tr style="font-weight: bold; background-color: #f5f5f5;">
+                                    <td colspan="2">Total @subsection.SubSectionName</td>
+                                    <td class="text-right">@subsection.Total.ToString("C2")</td>
+                                    @if (_includeComparative)
+                                    {
+                                        <td colspan="2"></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    }
+                    <MudText Typo="Typo.h6" Class="mt-3" Style="font-weight: bold;">
+                        Total Equity: @_balanceSheet.Equity.Total.ToString("C2")
+                    </MudText>
+
+                    <!-- Grand Total -->
+                    <MudDivider Class="my-4" />
+                    <MudPaper Elevation="3" Class="pa-3" Style="background-color: #e3f2fd;">
+                        <MudText Typo="Typo.h5" Style="font-weight: bold;">
+                            Total Liabilities and Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("C2")
+                        </MudText>
+                    </MudPaper>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    }
+</MudGrid>
+

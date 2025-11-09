@@ -3779,6 +3779,75 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<object> DepreciationMethodDeactivateEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Generate Balance Sheet
+        /// </summary>
+        /// <remarks>
+        /// Generates a balance sheet for a given date/period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<BalanceSheetDto> GenerateBalanceSheetEndpointAsync(string version, GenerateBalanceSheetQuery body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Generate Balance Sheet
+        /// </summary>
+        /// <remarks>
+        /// Generates a balance sheet for a given date/period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<BalanceSheetDto> GenerateBalanceSheetEndpointAsync(string version, GenerateBalanceSheetQuery body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Generate Income Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates an income statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<IncomeStatementDto> GenerateIncomeStatementEndpointAsync(string version, GenerateIncomeStatementQuery body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Generate Income Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates an income statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<IncomeStatementDto> GenerateIncomeStatementEndpointAsync(string version, GenerateIncomeStatementQuery body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Generate Cash Flow Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates a cash flow statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CashFlowStatementDto> GenerateCashFlowStatementEndpointAsync(string version, GenerateCashFlowStatementQuery body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Generate Cash Flow Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates a cash flow statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CashFlowStatementDto> GenerateCashFlowStatementEndpointAsync(string version, GenerateCashFlowStatementQuery body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Initiate fiscal period close
         /// </summary>
         /// <remarks>
@@ -29258,6 +29327,318 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Generate Balance Sheet
+        /// </summary>
+        /// <remarks>
+        /// Generates a balance sheet for a given date/period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<BalanceSheetDto> GenerateBalanceSheetEndpointAsync(string version, GenerateBalanceSheetQuery body)
+        {
+            return GenerateBalanceSheetEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Generate Balance Sheet
+        /// </summary>
+        /// <remarks>
+        /// Generates a balance sheet for a given date/period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<BalanceSheetDto> GenerateBalanceSheetEndpointAsync(string version, GenerateBalanceSheetQuery body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/financial-statements/generate/balance-sheet"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/financial-statements/generate/balance-sheet");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<BalanceSheetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Generate Income Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates an income statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<IncomeStatementDto> GenerateIncomeStatementEndpointAsync(string version, GenerateIncomeStatementQuery body)
+        {
+            return GenerateIncomeStatementEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Generate Income Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates an income statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<IncomeStatementDto> GenerateIncomeStatementEndpointAsync(string version, GenerateIncomeStatementQuery body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/financial-statements/generate/income-statement"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/financial-statements/generate/income-statement");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<IncomeStatementDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Generate Cash Flow Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates a cash flow statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CashFlowStatementDto> GenerateCashFlowStatementEndpointAsync(string version, GenerateCashFlowStatementQuery body)
+        {
+            return GenerateCashFlowStatementEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Generate Cash Flow Statement
+        /// </summary>
+        /// <remarks>
+        /// Generates a cash flow statement for a given period
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CashFlowStatementDto> GenerateCashFlowStatementEndpointAsync(string version, GenerateCashFlowStatementQuery body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/accounting/financial-statements/generate/cash-flow"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accounting/financial-statements/generate/cash-flow");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CashFlowStatementDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -64543,6 +64924,96 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BalanceSheetDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("asOfDate")]
+        public System.DateTime AsOfDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reportTitle")]
+        public string? ReportTitle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reportFormat")]
+        public string? ReportFormat { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("assets")]
+        public BalanceSheetSectionDto Assets { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("liabilities")]
+        public BalanceSheetSectionDto Liabilities { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("equity")]
+        public BalanceSheetSectionDto Equity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalAssets")]
+        public decimal TotalAssets { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalLiabilitiesAndEquity")]
+        public decimal TotalLiabilitiesAndEquity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isBalanced")]
+        public bool IsBalanced { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativePeriod")]
+        public BalanceSheetDto ComparativePeriod { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BalanceSheetLineDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountId")]
+        public System.Guid AccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeAmount")]
+        public decimal? ComparativeAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("change")]
+        public decimal? Change { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BalanceSheetSectionDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("sectionName")]
+        public string? SectionName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("subSections")]
+        public System.Collections.Generic.ICollection<BalanceSheetSubSectionDto>? SubSections { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public decimal Total { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BalanceSheetSubSectionDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("subSectionName")]
+        public string? SubSectionName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lines")]
+        public System.Collections.Generic.ICollection<BalanceSheetLineDto>? Lines { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public decimal Total { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class BankCreateCommand
     {
 
@@ -65481,6 +65952,78 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CashFlowLineDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeAmount")]
+        public decimal? ComparativeAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("change")]
+        public decimal? Change { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CashFlowSectionDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("sectionName")]
+        public string? SectionName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lines")]
+        public System.Collections.Generic.ICollection<CashFlowLineDto>? Lines { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public decimal Total { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CashFlowStatementDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reportTitle")]
+        public string? ReportTitle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("method")]
+        public string? Method { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("operatingActivities")]
+        public CashFlowSectionDto OperatingActivities { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("investingActivities")]
+        public CashFlowSectionDto InvestingActivities { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("financingActivities")]
+        public CashFlowSectionDto FinancingActivities { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("netCashFlow")]
+        public decimal NetCashFlow { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("beginningCashBalance")]
+        public decimal BeginningCashBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endingCashBalance")]
+        public decimal EndingCashBalance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativePeriod")]
+        public CashFlowStatementDto ComparativePeriod { get; set; } = default!;
 
     }
 
@@ -70222,6 +70765,135 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GenerateBalanceSheetQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("asOfDate")]
+        public System.DateTime AsOfDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountingPeriodId")]
+        public System.Guid? AccountingPeriodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reportFormat")]
+        public string? ReportFormat { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("includeComparativePeriod")]
+        public bool IncludeComparativePeriod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeAsOfDate")]
+        public System.DateTime? ComparativeAsOfDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GenerateCashFlowStatementQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountingPeriodId")]
+        public System.Guid? AccountingPeriodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("method")]
+        public string? Method { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("includeComparativePeriod")]
+        public bool IncludeComparativePeriod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeStartDate")]
+        public System.DateTime? ComparativeStartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeEndDate")]
+        public System.DateTime? ComparativeEndDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GenerateIncomeStatementQuery
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string? Name { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("remarks")]
+        public string? Remarks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountingPeriodId")]
+        public System.Guid? AccountingPeriodId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reportFormat")]
+        public string? ReportFormat { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("includeComparativePeriod")]
+        public bool IncludeComparativePeriod { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeStartDate")]
+        public System.DateTime? ComparativeStartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeEndDate")]
+        public System.DateTime? ComparativeEndDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GenerateRecurringJournalEntryCommand
     {
 
@@ -70939,6 +71611,90 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("isSuccess")]
         public bool IsSuccess { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class IncomeStatementDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reportTitle")]
+        public string? ReportTitle { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("reportFormat")]
+        public string? ReportFormat { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("revenue")]
+        public IncomeStatementSectionDto Revenue { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("costOfGoodsSold")]
+        public IncomeStatementSectionDto CostOfGoodsSold { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("operatingExpenses")]
+        public IncomeStatementSectionDto OperatingExpenses { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("otherIncome")]
+        public IncomeStatementSectionDto OtherIncome { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("otherExpenses")]
+        public IncomeStatementSectionDto OtherExpenses { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("grossProfit")]
+        public decimal GrossProfit { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("operatingIncome")]
+        public decimal OperatingIncome { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("netIncome")]
+        public decimal NetIncome { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativePeriod")]
+        public IncomeStatementDto ComparativePeriod { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class IncomeStatementLineDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountId")]
+        public System.Guid AccountId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountCode")]
+        public string? AccountCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("accountName")]
+        public string? AccountName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public decimal Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("comparativeAmount")]
+        public decimal? ComparativeAmount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("variance")]
+        public decimal? Variance { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class IncomeStatementSectionDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("sectionName")]
+        public string? SectionName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lines")]
+        public System.Collections.Generic.ICollection<IncomeStatementLineDto>? Lines { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("total")]
+        public decimal Total { get; set; } = default!;
 
     }
 

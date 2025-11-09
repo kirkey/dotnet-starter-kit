@@ -1,0 +1,32 @@
+@page "/accounting/financial-statements"
+
+<PageTitle>Financial Statements</PageTitle>
+
+<FshTitle Title="Financial Statements" Description="Generate and view Balance Sheet, Income Statement, and Cash Flow Statement" />
+
+<MudContainer MaxWidth="MaxWidth.False" Class="pa-6">
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Financial Statements</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Default" OnClick="@(() => RefreshCurrentStatement())" Title="Refresh" />
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTabs Elevation="1" Rounded="true" Color="Color.Primary" @bind-ActivePanelIndex="_activeTab">
+                <MudTabPanel Text="Balance Sheet" Icon="@Icons.Material.Filled.AccountBalance">
+                    <BalanceSheetView @ref="_balanceSheetView" />
+                </MudTabPanel>
+                <MudTabPanel Text="Income Statement" Icon="@Icons.Material.Filled.TrendingUp">
+                    <IncomeStatementView @ref="_incomeStatementView" />
+                </MudTabPanel>
+                <MudTabPanel Text="Cash Flow" Icon="@Icons.Material.Filled.AttachMoney">
+                    <CashFlowStatementView @ref="_cashFlowStatementView" />
+                </MudTabPanel>
+            </MudTabs>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+

@@ -43,7 +43,7 @@ public class CustomerSearchSpecs : EntitiesByPaginationFilterSpec<Customer, Cust
         }
 
         // Default ordering
-        Query.OrderBy(c => c.CustomerName, !request.OrderBy.Any());
+        Query.OrderBy(c => c.CustomerName, request.OrderBy?.Any() != true);
     }
 }
 

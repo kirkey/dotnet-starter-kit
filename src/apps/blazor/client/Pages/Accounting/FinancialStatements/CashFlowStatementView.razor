@@ -1,0 +1,65 @@
+<MudGrid>
+    <MudItem xs="12">
+        <MudPaper Class="pa-4">
+            <MudStack Spacing="3">
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudDatePicker Label="Start Date"
+                                       @bind-Date="_startDate"
+                                       Required="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudDatePicker Label="End Date"
+                                       @bind-Date="_endDate"
+                                       Required="true"
+                                       Variant="Variant.Outlined"
+                                       MaxDate="DateTime.Today" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudSelect T="string" Label="Method"
+                                   @bind-Value="_method"
+                                   Variant="Variant.Outlined">
+                            <MudSelectItem Value="@("Direct")">Direct Method</MudSelectItem>
+                            <MudSelectItem Value="@("Indirect")">Indirect Method</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                </MudGrid>
+
+                <MudStack Row="true" Justify="Justify.FlexEnd">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="@(() => Generate())"
+                               StartIcon="@Icons.Material.Filled.Assessment"
+                               Disabled="_loading">
+                        @if (_loading)
+                        {
+                            <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                            <MudText Class="ml-2">Generating...</MudText>
+                        }
+                        else
+                        {
+                            <span>Generate Cash Flow Statement</span>
+                        }
+                    </MudButton>
+                </MudStack>
+            </MudStack>
+        </MudPaper>
+    </MudItem>
+
+    @if (_cashFlowStatement is not null)
+    {
+        <MudItem xs="12">
+            <MudPaper Class="pa-4">
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.h4" Align="Align.Center">Statement of Cash Flows</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">
+                        For the Period @_cashFlowStatement.StartDate.ToString("MMMM dd, yyyy") to @_cashFlowStatement.EndDate.ToString("MMMM dd, yyyy")
+                    </MudText>
+                    <MudText Typo="Typo.body1" Align="Align.Center">Cash Flow Statement display coming soon...</MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    }
+</MudGrid>
+

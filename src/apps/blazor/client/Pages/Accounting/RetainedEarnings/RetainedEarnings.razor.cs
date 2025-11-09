@@ -65,6 +65,10 @@ public partial class RetainedEarnings
             {
                 var request = new SearchRetainedEarningsRequest
                 {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
                     FiscalYear = SearchFiscalYear,
                     Status = SearchStatus,
                     IsClosed = SearchOnlyOpen ? false : null

@@ -8,5 +8,5 @@ public class VendorSearchSpecs : EntitiesByPaginationFilterSpec<Vendor, VendorSe
     public VendorSearchSpecs(VendorSearchRequest request)
         : base(request) =>
         Query
-            .OrderBy(v => v.Name, !request.OrderBy.Any());
+            .OrderBy(v => v.Name, request.OrderBy?.Any() != true);
 }

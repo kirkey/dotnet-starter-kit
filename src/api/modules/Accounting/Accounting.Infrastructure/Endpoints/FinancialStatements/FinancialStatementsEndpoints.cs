@@ -1,3 +1,5 @@
+using Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
+
 namespace Accounting.Infrastructure.Endpoints.FinancialStatements;
 
 /// <summary>
@@ -12,14 +14,12 @@ public static class FinancialStatementsEndpoints
     {
         var financialStatementsGroup = app.MapGroup("/financial-statements")
             .WithTags("Financial-Statements")
-            .WithDescription("Endpoints for managing financial statements");
+            .WithDescription("Endpoints for generating financial statements");
 
-        // Version 1 endpoints will be added here when implemented
-        // financialStatementsGroup.MapFinancialStatementCreateEndpoint();
-        // financialStatementsGroup.MapFinancialStatementUpdateEndpoint();
-        // financialStatementsGroup.MapFinancialStatementDeleteEndpoint();
-        // financialStatementsGroup.MapFinancialStatementGetEndpoint();
-        // financialStatementsGroup.MapFinancialStatementSearchEndpoint();
+        // Map financial statement generation endpoints
+        financialStatementsGroup.MapGenerateBalanceSheetEndpoint();
+        financialStatementsGroup.MapGenerateIncomeStatementEndpoint();
+        financialStatementsGroup.MapGenerateCashFlowStatementEndpoint();
 
         return app;
     }

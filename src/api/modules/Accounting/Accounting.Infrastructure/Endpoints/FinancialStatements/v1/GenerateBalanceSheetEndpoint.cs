@@ -15,7 +15,7 @@ public static class GenerateBalanceSheetEndpoint
             .WithName(nameof(GenerateBalanceSheetEndpoint))
             .WithSummary("Generate Balance Sheet")
             .WithDescription("Generates a balance sheet for a given date/period")
-            .Produces<object>()
+            .Produces<BalanceSheetDto>()
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

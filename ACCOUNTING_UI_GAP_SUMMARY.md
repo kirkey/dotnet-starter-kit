@@ -11,7 +11,11 @@
 
 **Bottom Line:** 10 features need UI implementation
 
-**Latest Update:** Recurring Journal Entries UI completed (November 9, 2025)
+**Latest Update:** November 9, 2025
+- ✅ Recurring Journal Entries UI completed
+- ✅ Approval workflow refactored (session-based, no UI approver input)
+- ✅ Fixed VendorSearchSpecs and CustomerSearchSpecs null reference issues
+- ✅ RecurringJournalEntry Status field initialization fixed
 
 ---
 
