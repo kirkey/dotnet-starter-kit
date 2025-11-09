@@ -38,8 +38,9 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
     /// <returns>Enumerable of warehouse ids matching the search.</returns>
     protected override async Task<IEnumerable<DefaultIdType?>> SearchText(string? value, CancellationToken token)
     {
-        var request = new SearchWarehousesCommand
+        var request = new SearchWarehousesRequest
         {
+            PageNumber = 1,
             PageSize = 10,
             AdvancedSearch = new Search
             {

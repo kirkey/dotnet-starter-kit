@@ -69,7 +69,7 @@ public partial class CycleCounts : ComponentBase
 
     private async Task LoadWarehousesAsync()
     {
-        var filter = new SearchWarehousesCommand { PageSize = 1000 };
+        var filter = new SearchWarehousesRequest { PageSize = 1000 };
         var result = await Client.SearchWarehousesEndpointAsync("1", filter);
         _warehouses = result.Items?.ToList() ?? [];
     }

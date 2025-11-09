@@ -178,10 +178,10 @@ public partial class StoreDashboard
     {
         try
         {
-            var warehousesResult = await Client.SearchWarehousesEndpointAsync("1", new SearchWarehousesCommand
+            var warehousesResult = await Client.SearchWarehousesEndpointAsync("1", new SearchWarehousesRequest
             {
                 PageNumber = 1,
-                PageSize = 100
+                PageSize = 10,
             });
             _metrics.WarehousesCount = warehousesResult.TotalCount;
         }

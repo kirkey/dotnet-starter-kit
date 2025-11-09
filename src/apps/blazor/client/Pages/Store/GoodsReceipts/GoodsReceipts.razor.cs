@@ -66,10 +66,10 @@ public partial class GoodsReceipts
     {
         try
         {
-            var command = new SearchWarehousesCommand
+            var command = new SearchWarehousesRequest
             {
                 PageNumber = 1,
-                PageSize = 500,
+                PageSize = 100,
                 OrderBy = ["Name"]
             };
             var result = await Client.SearchWarehousesEndpointAsync("1", command).ConfigureAwait(false);
