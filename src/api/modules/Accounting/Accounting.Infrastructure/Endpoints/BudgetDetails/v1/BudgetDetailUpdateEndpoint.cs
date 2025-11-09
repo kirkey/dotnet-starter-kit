@@ -9,8 +9,8 @@ public static class BudgetDetailUpdateEndpoint
         return endpoints
             .MapPut("{id:guid}", async (DefaultIdType id, UpdateBudgetDetailCommand request, ISender mediator) =>
             {
-                if (id != request.Id) return Results.BadRequest();
-                var updatedId = await mediator.Send(request);
+                var command = request with { Id = id };
+                var updatedId = await mediator.Send(command);
                 return Results.Ok(updatedId);
             })
             .WithName(nameof(BudgetDetailUpdateEndpoint))

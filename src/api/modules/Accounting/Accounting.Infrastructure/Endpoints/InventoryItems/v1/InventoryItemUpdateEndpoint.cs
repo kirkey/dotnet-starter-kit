@@ -7,9 +7,9 @@ public static class InventoryItemUpdateEndpoint
     internal static RouteHandlerBuilder MapInventoryItemUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateInventoryItemCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateInventoryItemCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest();
+                var command = request with { Id = id };
                 var itemId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = itemId });
             })

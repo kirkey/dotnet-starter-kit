@@ -7,9 +7,9 @@ public static class WriteOffRejectEndpoint
     internal static RouteHandlerBuilder MapWriteOffRejectEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectWriteOffCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectWriteOffCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = writeOffId, Message = "Write-off rejected successfully" });
             })

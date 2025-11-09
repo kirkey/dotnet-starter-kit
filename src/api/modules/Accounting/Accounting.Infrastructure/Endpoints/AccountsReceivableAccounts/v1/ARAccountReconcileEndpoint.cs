@@ -7,9 +7,9 @@ public static class ArAccountReconcileEndpoint
     internal static RouteHandlerBuilder MapArAccountReconcileEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileARAccountCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileARAccountCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var accountId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = accountId, Message = "Reconciliation completed successfully" });
             })

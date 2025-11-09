@@ -7,9 +7,9 @@ public static class PrepaidExpenseCancelEndpoint
     internal static RouteHandlerBuilder MapPrepaidExpenseCancelEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelPrepaidExpenseCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelPrepaidExpenseCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var expenseId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = expenseId, Message = "Prepaid expense cancelled successfully" });
             })

@@ -7,9 +7,9 @@ public static class PrepaidExpenseUpdateEndpoint
     internal static RouteHandlerBuilder MapPrepaidExpenseUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdatePrepaidExpenseCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdatePrepaidExpenseCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var expenseId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = expenseId });
             })

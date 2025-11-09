@@ -7,9 +7,9 @@ public static class WriteOffUpdateEndpoint
     internal static RouteHandlerBuilder MapWriteOffUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateWriteOffCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateWriteOffCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = writeOffId });
             })

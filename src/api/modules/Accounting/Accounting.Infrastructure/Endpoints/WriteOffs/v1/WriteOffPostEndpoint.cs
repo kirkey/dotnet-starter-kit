@@ -7,9 +7,9 @@ public static class WriteOffPostEndpoint
     internal static RouteHandlerBuilder MapWriteOffPostEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/post", async (DefaultIdType id, PostWriteOffCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/post", async (DefaultIdType id, PostWriteOffCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = writeOffId, Message = "Write-off posted to general ledger successfully" });
             })

@@ -15,7 +15,7 @@ public static class AccrualUpdateEndpoint
         return endpoints
             .MapPut("/{id:guid}", async (DefaultIdType id, UpdateAccrualCommand request, ISender mediator) =>
             {
-                if (id != request.Id) return Results.BadRequest();
+                request.Id = id; // Directly set the ID
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })

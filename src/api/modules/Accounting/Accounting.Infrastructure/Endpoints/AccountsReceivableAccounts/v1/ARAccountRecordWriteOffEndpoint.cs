@@ -10,9 +10,9 @@ public static class ArAccountRecordWriteOffEndpoint
     internal static RouteHandlerBuilder MapArAccountRecordWriteOffEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/write-offs", async (DefaultIdType id, RecordARWriteOffCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/write-offs", async (DefaultIdType id, RecordARWriteOffCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
+                var command = request with { Id = id };
                 var accountId = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = accountId, Message = "Write-off recorded successfully" });
             })

@@ -13,13 +13,9 @@ public static class UpdateInvoiceLineItemEndpoint
     internal static RouteHandlerBuilder MapUpdateInvoiceLineItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/line-items/{lineItemId:guid}", async (DefaultIdType lineItemId, [FromBody] UpdateInvoiceLineItemCommand command, ISender mediator) =>
+            .MapPut("/line-items/{lineItemId:guid}", async (DefaultIdType lineItemId, [FromBody] UpdateInvoiceLineItemCommand request, ISender mediator) =>
             {
-                if (lineItemId != command.LineItemId)
-                {
-                    return Results.BadRequest("Line item ID in URL does not match the request body.");
-                }
-
+                var command = request with { LineItemId = lineItemId };
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })

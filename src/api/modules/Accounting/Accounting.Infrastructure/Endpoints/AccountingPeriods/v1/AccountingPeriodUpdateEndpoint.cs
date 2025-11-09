@@ -9,8 +9,8 @@ public static class AccountingPeriodUpdateEndpoint
         return endpoints
             .MapPut("/{id:guid}", async (DefaultIdType id, UpdateAccountingPeriodCommand request, ISender mediator) =>
             {
-                if (id != request.Id) return Results.BadRequest();
-                var response = await mediator.Send(request).ConfigureAwait(false);
+                var command = request with { Id = id };
+                var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(AccountingPeriodUpdateEndpoint))

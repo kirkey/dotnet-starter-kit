@@ -16,14 +16,8 @@ public static class UpdateBillLineItemEndpoint
                 UpdateBillLineItemCommand request,
                 ISender mediator) =>
             {
-                // Ensure IDs from route match command
-                if (billId != request.BillId)
-                    return Results.BadRequest("Route bill ID does not match command bill ID");
-
-                if (lineItemId != request.LineItemId)
-                    return Results.BadRequest("Route line item ID does not match command line item ID");
-
-                var response = await mediator.Send(request).ConfigureAwait(false);
+                var command = request with { BillId = billId, LineItemId = lineItemId };
+                var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(UpdateBillLineItemEndpoint))

@@ -13,13 +13,9 @@ public static class UpdateInvoiceEndpoint
     internal static RouteHandlerBuilder MapUpdateInvoiceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, [FromBody] UpdateInvoiceCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, [FromBody] UpdateInvoiceCommand request, ISender mediator) =>
             {
-                if (id != command.InvoiceId)
-                {
-                    return Results.BadRequest("Invoice ID in URL does not match the request body.");
-                }
-
+                var command = request with { InvoiceId = id };
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
