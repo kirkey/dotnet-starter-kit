@@ -2,9 +2,13 @@ using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
 
 namespace FSH.Starter.WebApi.Store.Application.WarehouseLocations.Specs;
 
-public class GetWarehouseLocationListSpecification : Specification<WarehouseLocation, GetWarehouseLocationListResponse>
+/// <summary>
+/// Specification for searching warehouse locations with filters and pagination.
+/// </summary>
+public class GetWarehouseLocationListSpecification : EntitiesByPaginationFilterSpec<WarehouseLocation, GetWarehouseLocationListResponse>
 {
     public GetWarehouseLocationListSpecification(SearchWarehouseLocationsCommand request)
+        : base(request)
     {
         Query.Include(wl => wl.Warehouse);
 
@@ -42,6 +46,10 @@ public class GetWarehouseLocationListSpecification : Specification<WarehouseLoca
             Query.Where(wl => wl.RequiresTemperatureControl == request.RequiresTemperatureControl.Value);
         }
 
-        Query.OrderBy(wl => wl.Warehouse.Name).ThenBy(wl => wl.Aisle).ThenBy(wl => wl.Section).ThenBy(wl => wl.Shelf);
+        // Default ordering by warehouse, then location hierarchy
+        Query.OrderBy(wl => wl.Warehouse.Name, !request.HasOrderBy())
+             .ThenBy(wl => wl.Aisle)
+             .ThenBy(wl => wl.Section)
+             .ThenBy(wl => wl.Shelf);
     }
 }
