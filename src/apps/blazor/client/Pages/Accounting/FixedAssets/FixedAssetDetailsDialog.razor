@@ -1,0 +1,129 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate Color="Color.Primary" />
+        }
+        else if (_asset is null)
+        {
+            <MudAlert Severity="Severity.Warning">Fixed asset not found.</MudAlert>
+        }
+        else
+        {
+            <MudStack Spacing="3">
+                <MudText Typo="Typo.h6">Fixed Asset Details</MudText>
+                <MudDivider />
+                
+                <MudText Typo="Typo.h6" Color="Color.Primary">Basic Information</MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Asset Name</MudText>
+                        <MudText>@_asset.AssetName</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Asset Type</MudText>
+                        <MudText>@_asset.AssetType</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Serial Number</MudText>
+                        <MudText>@(_asset.SerialNumber ?? "N/A")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Department</MudText>
+                        <MudText>@(_asset.Department ?? "N/A")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Location</MudText>
+                        <MudText>@(_asset.Location ?? "N/A")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Manufacturer</MudText>
+                        <MudText>@(_asset.Manufacturer ?? "N/A")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Model Number</MudText>
+                        <MudText>@(_asset.ModelNumber ?? "N/A")</MudText>
+                    </MudItem>
+                </MudGrid>
+
+                <MudDivider />
+                <MudText Typo="Typo.h6" Color="Color.Primary">Financial Information</MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Purchase Date</MudText>
+                        <MudText>@_asset.PurchaseDate.ToShortDateString()</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Purchase Price</MudText>
+                        <MudText>@_asset.PurchasePrice.ToString("C2")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Current Book Value</MudText>
+                        <MudText>@_asset.CurrentBookValue.ToString("C2")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Salvage Value</MudText>
+                        <MudText>@_asset.SalvageValue.ToString("C2")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Service Life</MudText>
+                        <MudText>@_asset.ServiceLife years</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status</MudText>
+                        <MudChip T="string" Color="@(_asset.IsDisposed ? Color.Error : Color.Success)" Size="Size.Small">
+                            @(_asset.IsDisposed ? "Disposed" : "Active")
+                        </MudChip>
+                    </MudItem>
+                </MudGrid>
+
+                @if (_asset.IsDisposed)
+                {
+                    <MudDivider />
+                    <MudText Typo="Typo.h6" Color="Color.Error">Disposal Information</MudText>
+                    <MudGrid>
+                        <MudItem xs="12" sm="6">
+                            <MudText Typo="Typo.subtitle2" Color="Color.Primary">Disposal Date</MudText>
+                            <MudText>@_asset.DisposalDate?.ToShortDateString()</MudText>
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudText Typo="Typo.subtitle2" Color="Color.Primary">Disposal Amount</MudText>
+                            <MudText>@(_asset.DisposalAmount?.ToString("C2") ?? "N/A")</MudText>
+                        </MudItem>
+                    </MudGrid>
+                }
+
+                <MudDivider />
+                <MudText Typo="Typo.h6" Color="Color.Primary">Maintenance</MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Last Maintenance</MudText>
+                        <MudText>@(_asset.LastMaintenanceDate?.ToShortDateString() ?? "Never")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Next Maintenance</MudText>
+                        <MudText>@(_asset.NextMaintenanceDate?.ToShortDateString() ?? "Not scheduled")</MudText>
+                    </MudItem>
+                </MudGrid>
+
+                @if (!string.IsNullOrWhiteSpace(_asset.Description))
+                {
+                    <MudDivider />
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Description</MudText>
+                    <MudText>@_asset.Description</MudText>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(_asset.Notes))
+                {
+                    <MudDivider />
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Notes</MudText>
+                    <MudText>@_asset.Notes</MudText>
+                }
+            </MudStack>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

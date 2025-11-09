@@ -1,0 +1,76 @@
+@page "/accounting/fixed-assets"
+
+<PageHeader Title="Fixed Assets Management" Header="Fixed Assets Management" SubHeader="Manage fixed assets, track depreciation, and handle asset lifecycle." />
+
+<EntityTable @ref="_table" TEntity="FixedAssetResponse" TId="DefaultIdType" TRequest="FixedAssetViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchAssetName"
+                          Label="Asset Name"
+                          Placeholder="Search by asset name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchSerialNumber"
+                          Label="Serial Number"
+                          Placeholder="Search by serial"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchAssetType"
+                       Label="Asset Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Transformer")">Transformer</MudSelectItem>
+                <MudSelectItem Value="@("TransmissionLine")">Transmission Line</MudSelectItem>
+                <MudSelectItem Value="@("PowerPlant")">Power Plant</MudSelectItem>
+                <MudSelectItem Value="@("Vehicle")">Vehicle</MudSelectItem>
+                <MudSelectItem Value="@("Equipment")">Equipment</MudSelectItem>
+                <MudSelectItem Value="@("Building")">Building</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchDepartment"
+                          Label="Department"
+                          Placeholder="Search by department"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Business" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchOnlyActive"
+                       Label="Active Only (Not Disposed)"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="asset">
+        @if (!asset.IsDisposed)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Calculate" OnClick="@(() => OnDepreciate(asset))">
+                Record Depreciation
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Build" OnClick="@(() => OnUpdateMaintenance(asset))">
+                Update Maintenance
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.DeleteForever" OnClick="@(() => OnDispose(asset))">
+                Dispose Asset
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Check" OnClick="@(() => OnApprove(asset))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Close" OnClick="@(() => OnReject(asset))">
+                Reject
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OnViewDetails(asset.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>
+

@@ -1,0 +1,33 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Record Depreciation</MudText>
+            <MudAlert Severity="Severity.Info">
+                Record depreciation expense for this fixed asset.
+            </MudAlert>
+            <MudNumericField @bind-Value="_depreciationAmount" 
+                             Label="Depreciation Amount (Required)" 
+                             Variant="Variant.Outlined"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                             Required="true"
+                             Min="0.01m" />
+            <MudDatePicker @bind-Date="_depreciationDate"
+                           Label="Depreciation Date"
+                           Variant="Variant.Outlined"
+                           Required="true" />
+            <MudTextField @bind-Value="_method" 
+                          Label="Method (Optional)" 
+                          Variant="Variant.Outlined"
+                          Placeholder="e.g., Straight-Line, Declining Balance" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Record" Color="Color.Primary" Variant="Variant.Filled" Disabled="@(_depreciationAmount <= 0 || _depreciationDate == null)">
+            Record Depreciation
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

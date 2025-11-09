@@ -1,0 +1,33 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Dispose Fixed Asset</MudText>
+            <MudAlert Severity="Severity.Error">
+                Disposing this asset will mark it as inactive and remove it from the active asset list. This action should only be performed when the asset is sold, scrapped, or otherwise retired.
+            </MudAlert>
+            <MudDatePicker @bind-Date="_disposalDate"
+                           Label="Disposal Date (Required)"
+                           Variant="Variant.Outlined"
+                           Required="true" />
+            <MudNumericField @bind-Value="_disposalAmount" 
+                             Label="Disposal Amount" 
+                             Variant="Variant.Outlined"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                             Placeholder="Amount received from sale (if any)" />
+            <MudTextField @bind-Value="_disposalReason" 
+                          Label="Disposal Reason" 
+                          Variant="Variant.Outlined" 
+                          Lines="3"
+                          Placeholder="Enter reason for disposal (optional)" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Dispose" Color="Color.Error" Variant="Variant.Filled" Disabled="@(_disposalDate == null)">
+            Dispose Asset
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
