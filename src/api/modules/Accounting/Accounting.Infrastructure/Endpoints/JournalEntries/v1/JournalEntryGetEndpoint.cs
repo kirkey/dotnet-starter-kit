@@ -16,8 +16,8 @@ public static class JournalEntryGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var query = new GetJournalEntryQuery(id);
-                var response = await mediator.Send(query).ConfigureAwait(false);
+                var request = new GetJournalEntryRequest(id);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(JournalEntryGetEndpoint))

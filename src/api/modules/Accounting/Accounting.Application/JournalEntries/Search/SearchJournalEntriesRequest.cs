@@ -4,9 +4,9 @@ using PaginationFilter = FSH.Framework.Core.Paging.PaginationFilter;
 namespace Accounting.Application.JournalEntries.Search;
 
 /// <summary>
-/// Query used to search JournalEntries with pagination and common filters.
+/// Request used to search JournalEntries with pagination and common filters.
 /// </summary>
-public sealed class SearchJournalEntriesQuery : PaginationFilter, IRequest<PagedList<JournalEntryResponse>>
+public sealed class SearchJournalEntriesRequest : PaginationFilter, IRequest<PagedList<JournalEntryResponse>>
 {
     /// <summary>
     /// Filter by external reference number (partial match).

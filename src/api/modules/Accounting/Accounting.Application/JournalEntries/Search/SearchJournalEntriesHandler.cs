@@ -2,11 +2,14 @@ using Accounting.Application.JournalEntries.Responses;
 
 namespace Accounting.Application.JournalEntries.Search;
 
+/// <summary>
+/// Handler for searching journal entries.
+/// </summary>
 public sealed class SearchJournalEntriesHandler(
     [FromKeyedServices("accounting:journals")] IReadRepository<JournalEntry> repository)
-    : IRequestHandler<SearchJournalEntriesQuery, PagedList<JournalEntryResponse>>
+    : IRequestHandler<SearchJournalEntriesRequest, PagedList<JournalEntryResponse>>
 {
-    public async Task<PagedList<JournalEntryResponse>> Handle(SearchJournalEntriesQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<JournalEntryResponse>> Handle(SearchJournalEntriesRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -17,5 +20,4 @@ public sealed class SearchJournalEntriesHandler(
         return new PagedList<JournalEntryResponse>(list, request.PageNumber, request.PageSize, totalCount);
     }
 }
-
 

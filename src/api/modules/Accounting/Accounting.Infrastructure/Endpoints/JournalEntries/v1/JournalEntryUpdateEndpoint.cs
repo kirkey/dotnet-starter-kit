@@ -15,13 +15,9 @@ public static class JournalEntryUpdateEndpoint
     internal static RouteHandlerBuilder MapJournalEntryUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateJournalEntryCommand command, ISender mediator) =>
+            .MapPut("/{id}", async (DefaultIdType id, UpdateJournalEntryCommand request, ISender mediator) =>
             {
-                if (id != command.Id)
-                {
-                    return Results.BadRequest("The ID in the URL does not match the ID in the request body.");
-                }
-                
+                var command = request with { Id = id };
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
@@ -29,7 +25,6 @@ public static class JournalEntryUpdateEndpoint
             .WithSummary("Update an unposted journal entry")
             .WithDescription("Update the details of an unposted journal entry. Posted entries cannot be modified - use reverse instead.")
             .Produces<UpdateJournalEntryResponse>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
             .RequirePermission("Permissions.Accounting.Update")

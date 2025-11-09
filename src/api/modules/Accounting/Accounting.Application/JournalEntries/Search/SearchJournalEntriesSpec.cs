@@ -8,7 +8,7 @@ namespace Accounting.Application.JournalEntries.Search;
 /// </summary>
 public sealed class SearchJournalEntriesSpec : EntitiesByPaginationFilterSpec<JournalEntry, JournalEntryResponse>
 {
-    public SearchJournalEntriesSpec(SearchJournalEntriesQuery request) : base(request)
+    public SearchJournalEntriesSpec(SearchJournalEntriesRequest request) : base(request)
     {
         Query
             .Include(e => e.Lines)

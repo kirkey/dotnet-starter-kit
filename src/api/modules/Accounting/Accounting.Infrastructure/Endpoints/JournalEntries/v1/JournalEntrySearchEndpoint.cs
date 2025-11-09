@@ -8,15 +8,16 @@ public static class JournalEntrySearchEndpoint
     internal static RouteHandlerBuilder MapJournalEntrySearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] SearchJournalEntriesQuery command) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchJournalEntriesRequest request) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(JournalEntrySearchEndpoint))
-            .WithSummary("Gets a list of journal entries")
-            .WithDescription("Gets a list of journal entries with pagination and filtering support")
+            .WithSummary("Search journal entries")
+            .WithDescription("Searches journal entries with pagination and filtering support")
             .Produces<PagedList<JournalEntryResponse>>()
+            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

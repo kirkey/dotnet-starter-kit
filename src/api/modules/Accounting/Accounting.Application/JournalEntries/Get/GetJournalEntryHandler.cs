@@ -10,16 +10,16 @@ namespace Accounting.Application.JournalEntries.Get;
 public sealed class GetJournalEntryHandler(
     [FromKeyedServices("accounting:journals")] IReadRepository<JournalEntry> repository,
     ICacheService cache)
-    : IRequestHandler<GetJournalEntryQuery, JournalEntryResponse>
+    : IRequestHandler<GetJournalEntryRequest, JournalEntryResponse>
 {
     /// <summary>
-    /// Handles the get journal entry query.
+    /// Handles the get journal entry request.
     /// </summary>
-    /// <param name="request">The query containing the journal entry ID.</param>
+    /// <param name="request">The request containing the journal entry ID.</param>
     /// <param name="cancellationToken">Cancellation token for async operations.</param>
     /// <returns>The journal entry response.</returns>
     /// <exception cref="JournalEntryNotFoundException">Thrown when journal entry is not found.</exception>
-    public async Task<JournalEntryResponse> Handle(GetJournalEntryQuery request, CancellationToken cancellationToken)
+    public async Task<JournalEntryResponse> Handle(GetJournalEntryRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
