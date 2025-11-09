@@ -2,13 +2,19 @@ using FSH.Starter.WebApi.Store.Application.Suppliers.Update.v1;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
+/// <summary>
+/// Endpoint for updating a supplier.
+/// </summary>
 public static class UpdateSupplierEndpoint
 {
+    /// <summary>
+    /// Maps the update supplier endpoint.
+    /// </summary>
     internal static RouteHandlerBuilder MapUpdateSupplierEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/{id:guid}", async (DefaultIdType id, UpdateSupplierCommand command, ISender sender) =>
+        return endpoints.MapPut("/{id:guid}", async (DefaultIdType id, UpdateSupplierCommand request, ISender sender) =>
         {
-            if (id != command.Id) return Results.BadRequest("ID mismatch");
+            var command = request with { Id = id };
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })

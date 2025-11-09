@@ -22,6 +22,7 @@ public static class WarehousesEndpoints
         warehousesGroup.MapDeleteWarehouseEndpoint();
         warehousesGroup.MapGetWarehouseEndpoint();
         warehousesGroup.MapSearchWarehousesEndpoint();
+        warehousesGroup.MapAssignWarehouseManagerEndpoint();
 
         return app;
     }

@@ -15,9 +15,9 @@ public static class SearchWarehousesEndpoint
     /// <returns>Route handler builder for search warehouses endpoint</returns>
     internal static RouteHandlerBuilder MapSearchWarehousesEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/search", async (SearchWarehousesCommand command, ISender sender) =>
+        return endpoints.MapPost("/search", async (SearchWarehousesRequest request, ISender sender) =>
         {
-            var result = await sender.Send(command).ConfigureAwait(false);
+            var result = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(nameof(SearchWarehousesEndpoint))

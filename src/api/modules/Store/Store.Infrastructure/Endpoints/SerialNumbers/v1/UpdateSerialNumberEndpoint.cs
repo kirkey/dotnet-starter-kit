@@ -2,19 +2,21 @@ using FSH.Starter.WebApi.Store.Application.SerialNumbers.Update.v1;
 
 namespace Store.Infrastructure.Endpoints.SerialNumbers.v1;
 
+/// <summary>
+/// Endpoint for updating a serial number.
+/// </summary>
 public static class UpdateSerialNumberEndpoint
 {
+    /// <summary>
+    /// Maps the update serial number endpoint.
+    /// </summary>
     internal static RouteHandlerBuilder MapUpdateSerialNumberEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPut("/{id:guid}", async (DefaultIdType id, UpdateSerialNumberCommand request, ISender sender) =>
             {
-                if (id != request.Id)
-                {
-                    return Results.BadRequest("ID mismatch between route and body.");
-                }
-
-                var response = await sender.Send(request).ConfigureAwait(false);
+                var command = request with { Id = id };
+                var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(UpdateSerialNumberEndpoint))

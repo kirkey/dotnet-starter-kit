@@ -12,11 +12,7 @@ public static class UpdateInventoryTransactionNotesEndpoint
         return endpoints
             .MapPatch("/{id:guid}/notes", async (DefaultIdType id, UpdateInventoryTransactionNotesCommand request, ISender sender) =>
             {
-                if (id != request.Id)
-                {
-                    return Results.BadRequest("ID mismatch between route and body.");
-                }
-
+                request.Id = id;
                 var response = await sender.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })

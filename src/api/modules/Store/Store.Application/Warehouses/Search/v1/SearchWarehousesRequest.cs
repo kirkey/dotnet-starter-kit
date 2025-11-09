@@ -1,9 +1,9 @@
 namespace FSH.Starter.WebApi.Store.Application.Warehouses.Search.v1;
 
 /// <summary>
-/// Command for searching warehouses with pagination and filtering.
+/// Request for searching warehouses with pagination and filtering.
 /// </summary>
-public class SearchWarehousesCommand : PaginationFilter, IRequest<PagedList<WarehouseResponse>>
+public class SearchWarehousesRequest : PaginationFilter, IRequest<PagedList<WarehouseResponse>>
 {
     /// <summary>
     /// Filter by warehouse name.

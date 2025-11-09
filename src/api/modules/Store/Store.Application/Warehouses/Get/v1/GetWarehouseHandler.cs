@@ -2,12 +2,15 @@ using FSH.Starter.WebApi.Store.Application.Warehouses.Specs;
 
 namespace FSH.Starter.WebApi.Store.Application.Warehouses.Get.v1;
 
+/// <summary>
+/// Handler for getting a warehouse by ID.
+/// </summary>
 public sealed class GetWarehouseHandler(
     [FromKeyedServices("store:warehouses")] IReadRepository<Warehouse> repository,
     ICacheService cache)
-    : IRequestHandler<GetWarehouseQuery, WarehouseResponse>
+    : IRequestHandler<GetWarehouseRequest, WarehouseResponse>
 {
-    public async Task<WarehouseResponse> Handle(GetWarehouseQuery request, CancellationToken cancellationToken)
+    public async Task<WarehouseResponse> Handle(GetWarehouseRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

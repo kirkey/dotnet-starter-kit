@@ -6,9 +6,9 @@ public static class UpdateWarehouseEndpoint
 {
     internal static RouteHandlerBuilder MapUpdateWarehouseEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/{id:guid}", async (DefaultIdType id, UpdateWarehouseCommand command, ISender sender) =>
+        return endpoints.MapPut("/{id:guid}", async (DefaultIdType id, UpdateWarehouseCommand request, ISender sender) =>
         {
-            if (id != command.Id) return Results.BadRequest("ID mismatch");
+            var command = request with { Id = id };
             var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
