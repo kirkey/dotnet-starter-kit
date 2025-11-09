@@ -7,15 +7,15 @@ namespace Accounting.Application.Banks.Search.v1;
 /// </summary>
 public sealed class BankSearchHandler(
     [FromKeyedServices("accounting:banks")] IReadRepository<Bank> repository)
-    : IRequestHandler<BankSearchCommand, PagedList<BankResponse>>
+    : IRequestHandler<BankSearchRequest, PagedList<BankResponse>>
 {
     /// <summary>
     /// Handles the search operation for banks.
     /// </summary>
-    /// <param name="request">The search command containing filter criteria.</param>
+    /// <param name="request">The search request containing filter criteria.</param>
     /// <param name="cancellationToken">Cancellation token for the operation.</param>
     /// <returns>Paged list of banks matching the search criteria.</returns>
-    public async Task<PagedList<BankResponse>> Handle(BankSearchCommand request, CancellationToken cancellationToken)
+    public async Task<PagedList<BankResponse>> Handle(BankSearchRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

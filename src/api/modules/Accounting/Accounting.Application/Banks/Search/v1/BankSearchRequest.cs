@@ -4,10 +4,10 @@ using Accounting.Application.Banks.Get.v1;
 namespace Accounting.Application.Banks.Search.v1;
 
 /// <summary>
-/// Command for searching banks with filtering and pagination.
+/// Request for searching banks with filtering and pagination.
 /// Follows the CQRS pattern for query operations with comprehensive search functionality.
 /// </summary>
-public class BankSearchCommand : PaginationFilter, IRequest<PagedList<BankResponse>>
+public class BankSearchRequest : PaginationFilter, IRequest<PagedList<BankResponse>>
 {
     /// <summary>
     /// Bank code to filter by (partial match).

@@ -8,8 +8,8 @@ public class BankSearchSpecs : EntitiesByPaginationFilterSpec<Bank>
     /// <summary>
     /// Initializes a new instance of the <see cref="BankSearchSpecs"/> class.
     /// </summary>
-    /// <param name="request">The search command containing filter criteria.</param>
-    public BankSearchSpecs(BankSearchCommand request)
+    /// <param name="request">The search request containing filter criteria.</param>
+    public BankSearchSpecs(BankSearchRequest request)
         : base(request)
     {
         // Filter by bank code (partial match)

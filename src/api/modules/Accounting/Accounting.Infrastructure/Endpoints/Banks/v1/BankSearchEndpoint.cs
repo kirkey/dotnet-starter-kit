@@ -17,9 +17,9 @@ public static class BankSearchEndpoint
     internal static RouteHandlerBuilder MapBankSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (BankSearchCommand command, ISender mediator) =>
+            .MapPost("/search", async (BankSearchRequest request, ISender mediator) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(BankSearchEndpoint))
