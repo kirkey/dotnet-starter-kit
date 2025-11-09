@@ -1,0 +1,47 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Record Amortization</MudText>
+            <MudAlert Severity="Severity.Info">
+                Record periodic amortization for <strong>@PrepaidNumber</strong>.
+            </MudAlert>
+            
+            <MudNumericField @bind-Value="_amortizationAmount"
+                             Label="Amortization Amount (Required)"
+                             Variant="Variant.Outlined"
+                             Required="true"
+                             Min="0"
+                             Max="@RemainingAmount"
+                             Format="C2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+            
+            <MudDatePicker @bind-Date="_postingDate"
+                           Label="Posting Date (Required)"
+                           Variant="Variant.Outlined"
+                           Required="true"
+                           Editable="true" />
+            
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                Remaining Balance: <strong>@RemainingAmount.ToString("C2")</strong>
+            </MudText>
+            
+            @if (_amortizationAmount > 0)
+            {
+                <MudText Typo="Typo.body2" Color="Color.Info">
+                    After amortization: <strong>@((RemainingAmount - _amortizationAmount).ToString("C2"))</strong>
+                </MudText>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => RecordAmortization())" 
+                   Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   Disabled="@(!_postingDate.HasValue || _amortizationAmount <= 0)">
+            Record Amortization
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

@@ -113,7 +113,7 @@
                             <MudText Typo="Typo.h6">Put Away Task Items</MudText>
                             @if (_putAwayTask.Status == "Created")
                             {
-                                <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Variant="Variant.Filled" OnClick="AddItem">
+                                <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => AddItem())">
                                     Add Item
                                 </MudButton>
                             }

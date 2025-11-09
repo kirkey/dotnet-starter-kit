@@ -127,7 +127,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => _approveDialogVisible = false)">Cancel</MudButton>
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitApproveMemo">Approve</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => SubmitApproveMemo())">Approve</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -145,7 +145,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => _applyDialogVisible = false)">Cancel</MudButton>
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitApplyMemo">Apply</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => SubmitApplyMemo())">Apply</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -164,6 +164,6 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => _voidDialogVisible = false)">Cancel</MudButton>
-        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="SubmitVoidMemo">Void</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="@(() => SubmitVoidMemo())">Void</MudButton>
     </DialogActions>
 </MudDialog>

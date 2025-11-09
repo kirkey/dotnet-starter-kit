@@ -263,7 +263,7 @@
             <MudButton Variant="Variant.Filled" 
                        Color="Color.Primary" 
                        StartIcon="@Icons.Material.Filled.Refresh"
-                       OnClick="Reload">
+                       OnClick="@(() => Reload())">
                 Refresh
             </MudButton>
         }

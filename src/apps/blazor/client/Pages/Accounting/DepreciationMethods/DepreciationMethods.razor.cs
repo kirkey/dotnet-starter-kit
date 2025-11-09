@@ -1,5 +1,3 @@
-using Mapster;
-
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.DepreciationMethods;
 
 public partial class DepreciationMethods

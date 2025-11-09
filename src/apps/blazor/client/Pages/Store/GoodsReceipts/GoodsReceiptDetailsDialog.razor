@@ -78,7 +78,7 @@
                             {
                                 <MudButton Variant="Variant.Filled" 
                                           Color="Color.Primary" 
-                                          OnClick="AddItem" 
+                                          OnClick="@(() => AddItem())" 
                                           StartIcon="@Icons.Material.Filled.Add"
                                           Size="Size.Small">
                                     Add Item
@@ -133,10 +133,10 @@
     <DialogActions>
         @if (_goodsReceipt?.Status == "Draft")
         {
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="MarkReceived">
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => MarkReceived())">
                 Mark as Received
             </MudButton>
         }
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>

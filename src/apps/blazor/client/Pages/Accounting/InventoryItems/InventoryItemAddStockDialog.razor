@@ -17,7 +17,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
-        <MudButton OnClick="AddStock" Color="Color.Success" Variant="Variant.Filled" Disabled="@(_quantity <= 0)">
+        <MudButton OnClick="@(() => AddStock())" Color="Color.Success" Variant="Variant.Filled" Disabled="@(_quantity <= 0)">
             Add Stock
         </MudButton>
     </DialogActions>

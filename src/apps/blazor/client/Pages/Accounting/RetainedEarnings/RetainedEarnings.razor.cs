@@ -142,7 +142,7 @@ public partial class RetainedEarnings
             options);
 
         var result = await dialog.Result;
-        if (!result.Canceled)
+        if (!result.Canceled && _table is not null)
         {
             await _table.ReloadDataAsync();
         }
@@ -171,7 +171,7 @@ public partial class RetainedEarnings
             options);
 
         var result = await dialog.Result;
-        if (!result.Canceled)
+        if (!result.Canceled && _table is not null)
         {
             await _table.ReloadDataAsync();
         }
@@ -196,7 +196,8 @@ public partial class RetainedEarnings
 
                 await Client.RetainedEarningsCloseEndpointAsync("1", id, command);
                 Snackbar.Add("Fiscal year closed successfully", Severity.Success);
-                await _table.ReloadDataAsync();
+                if (_table is not null)
+                    await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {
@@ -227,7 +228,8 @@ public partial class RetainedEarnings
 
                 await Client.RetainedEarningsReopenEndpointAsync("1", id, command);
                 Snackbar.Add("Fiscal year reopened successfully", Severity.Success);
-                await _table.ReloadDataAsync();
+                if (_table is not null)
+                    await _table.ReloadDataAsync();
             }
             catch (Exception ex)
             {

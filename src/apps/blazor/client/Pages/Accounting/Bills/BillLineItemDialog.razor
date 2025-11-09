@@ -83,7 +83,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="SaveAsync" Variant="Variant.Filled">
+        <MudButton Color="Color.Primary" OnClick="@(() => SaveAsync())" Variant="Variant.Filled">
             @(Model.Id == null ? "Add" : "Update")
         </MudButton>
     </DialogActions>

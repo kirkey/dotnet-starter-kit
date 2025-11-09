@@ -51,7 +51,7 @@
     </ExtraActions>
     
     <ActionsContent>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateFromPurchaseOrder" StartIcon="@Icons.Material.Filled.AddBox">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => CreateFromPurchaseOrder())" StartIcon="@Icons.Material.Filled.AddBox">
             Create from PO
         </MudButton>
     </ActionsContent>

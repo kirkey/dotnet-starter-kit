@@ -1,0 +1,30 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Close Prepaid Expense</MudText>
+            <MudAlert Severity="Severity.Warning">
+                Close prepaid expense <strong>@PrepaidNumber</strong>. This action marks it as closed and prevents further amortization.
+            </MudAlert>
+            
+            <MudDatePicker @bind-Date="_closeDate"
+                           Label="Close Date (Required)"
+                           Variant="Variant.Outlined"
+                           Required="true"
+                           Editable="true" />
+            
+            <MudTextField @bind-Value="_reason"
+                          Label="Reason (Optional)"
+                          Variant="Variant.Outlined"
+                          Lines="3" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => ClosePrepaidExpense())" 
+                   Color="Color.Warning" 
+                   Variant="Variant.Filled" 
+                   Disabled="@(!_closeDate.HasValue)">
+            Close Prepaid Expense
+        </MudButton>
+    </DialogActions>
+</MudDialog>

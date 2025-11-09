@@ -1,0 +1,73 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Prepaid Expense Details</MudText>
+            <MudDivider />
+            
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Prepaid Number</MudText>
+                    <MudText>@Expense.PrepaidNumber</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(Expense.Status)" Size="Size.Small">
+                        @Expense.Status
+                    </MudChip>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Description</MudText>
+                    <MudText>@Expense.Description</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Total Amount</MudText>
+                    <MudText><strong>@Expense.TotalAmount.ToString("C2")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Amortized Amount</MudText>
+                    <MudText Color="Color.Info">@Expense.AmortizedAmount.ToString("C2")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Remaining Amount</MudText>
+                    <MudText Color="Color.Success">@Expense.RemainingAmount.ToString("C2")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Start Date</MudText>
+                    <MudText>@Expense.StartDate.ToString("MMM dd, yyyy")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">End Date</MudText>
+                    <MudText>@Expense.EndDate.ToString("MMM dd, yyyy")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Amortization Schedule</MudText>
+                    <MudText>@Expense.AmortizationSchedule</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Fully Amortized</MudText>
+                    <MudChip T="string" Color="@(Expense.IsFullyAmortized ? Color.Success : Color.Warning)" Size="Size.Small">
+                        @(Expense.IsFullyAmortized ? "Yes" : "No")
+                    </MudChip>
+                </MudItem>
+                @if (!string.IsNullOrWhiteSpace(Expense.VendorName))
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Vendor</MudText>
+                        <MudText>@Expense.VendorName</MudText>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrWhiteSpace(Expense.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Notes</MudText>
+                        <MudText>@Expense.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => Cancel())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

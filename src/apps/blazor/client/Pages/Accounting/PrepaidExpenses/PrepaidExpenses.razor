@@ -1,0 +1,69 @@
+@page "/accounting/prepaid-expenses"
+
+<PageHeader Title="Prepaid Expenses" Header="Prepaid Expenses" SubHeader="Manage prepaid expenses and amortization schedules." />
+
+<EntityTable @ref="_table" TEntity="PrepaidExpenseResponse" TId="DefaultIdType" TRequest="PrepaidExpenseViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchNumber"
+                          Label="Prepaid Number"
+                          Placeholder="Search by number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@("FullyAmortized")">Fully Amortized</MudSelectItem>
+                <MudSelectItem Value="@("Closed")">Closed</MudSelectItem>
+                <MudSelectItem Value="@("Cancelled")">Cancelled</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchActiveOnly"
+                       Label="Active Only"
+                       Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchStartDateFrom"
+                           Label="Start Date From"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchStartDateTo"
+                           Label="Start Date To"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="expense">
+        @if (expense.Status == "Active" && !expense.IsFullyAmortized)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Calculate" OnClick="@(() => OnAmortize(expense))">
+                Record Amortization
+            </MudMenuItem>
+        }
+        @if (expense.IsFullyAmortized && expense.Status != "Closed")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Lock" OnClick="@(() => OnClose(expense))">
+                Close Prepaid Expense
+            </MudMenuItem>
+        }
+        @if (expense.Status == "Active" && expense.AmortizedAmount == 0)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnCancel(expense))">
+                Cancel
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OnViewDetails(expense))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>
+

@@ -1,5 +1,3 @@
-using Mapster;
-
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.DeferredRevenue;
 
 public partial class DeferredRevenues
@@ -54,22 +52,26 @@ public partial class DeferredRevenues
 
     private async Task CreateDeferredRevenueAsync(DeferredRevenueViewModel vm)
     {
-        var cmd = new CreateDeferredRevenueCommand(
-            vm.DeferredRevenueNumber!,
-            vm.RecognitionDate!.Value,
-            vm.Amount,
-            vm.Description);
+        var cmd = new CreateDeferredRevenueCommand()
+        {
+            DeferredRevenueNumber = vm.DeferredRevenueNumber!,
+            RecognitionDate = vm.RecognitionDate!.Value,
+            Amount = vm.Amount,
+            Description = vm.Description
+        };
         await Client.DeferredRevenueCreateEndpointAsync("1", cmd);
         Snackbar.Add("Deferred revenue created successfully", Severity.Success);
     }
 
     private async Task UpdateDeferredRevenueAsync(DefaultIdType id, DeferredRevenueViewModel vm)
     {
-        var cmd = new UpdateDeferredRevenueCommand(
-            id,
-            vm.RecognitionDate,
-            vm.Amount,
-            vm.Description);
+        var cmd = new UpdateDeferredRevenueCommand
+        {
+            Id = id,
+            RecognitionDate = vm.RecognitionDate,
+            Amount = vm.Amount,
+            Description = vm.Description
+       };
         await Client.DeferredRevenueUpdateEndpointAsync("1", id, cmd);
         Snackbar.Add("Deferred revenue updated successfully", Severity.Success);
     }
@@ -90,7 +92,8 @@ public partial class DeferredRevenues
         var options = new DialogOptions { MaxWidth = MaxWidth.Small, FullWidth = true, CloseButton = true };
         var dialog = await DialogService.ShowAsync<DeferredRevenueRecognizeDialog>("Recognize Revenue", parameters, options);
         var result = await dialog.Result;
-        if (!result.Canceled && _table is not null) await _table.ReloadDataAsync();
+        if (!result.Canceled && _table is not null) 
+            await _table.ReloadDataAsync();
     }
 
     private async Task OnViewDetails(DeferredRevenueResponse revenue)

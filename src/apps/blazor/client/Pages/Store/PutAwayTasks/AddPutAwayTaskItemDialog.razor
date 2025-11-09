@@ -139,7 +139,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())" Variant="Variant.Filled">Cancel</MudButton>
-        <MudButton OnClick="AddItem" 
+        <MudButton OnClick="@(() => AddItem())" 
                    Color="Color.Primary" 
                    Variant="Variant.Filled" 
                    Disabled="@(_adding || _selectedItem == null || _selectedToBin == null || _quantityToPutAway <= 0)">

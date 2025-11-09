@@ -1,33 +1,11 @@
-namespace Accounting.Application.PrepaidExpenses.Queries;
-
-/// <summary>
-/// Specification to find prepaid expense by prepaid number.
-/// </summary>
-public class PrepaidExpenseByNumberSpec : Specification<PrepaidExpense>
-{
-    public PrepaidExpenseByNumberSpec(string prepaidNumber)
-    {
-        Query.Where(p => p.PrepaidNumber == prepaidNumber);
-    }
-}
-
-/// <summary>
-/// Specification to find prepaid expense by ID.
-/// </summary>
-public class PrepaidExpenseByIdSpec : Specification<PrepaidExpense>
-{
-    public PrepaidExpenseByIdSpec(DefaultIdType id)
-    {
-        Query.Where(p => p.Id == id);
-    }
-}
+namespace Accounting.Application.PrepaidExpenses.Search.v1;
 
 /// <summary>
 /// Specification for searching prepaid expenses with filters.
 /// </summary>
-public class PrepaidExpenseSearchSpec : Specification<PrepaidExpense>
+public sealed class SearchPrepaidExpensesSpec : Specification<PrepaidExpense>
 {
-    public PrepaidExpenseSearchSpec(Search.v1.SearchPrepaidExpensesRequest request)
+    public SearchPrepaidExpensesSpec(SearchPrepaidExpensesRequest request)
     {
         Query
             .Where(p => p.PrepaidNumber.Contains(request.PrepaidNumber!), !string.IsNullOrWhiteSpace(request.PrepaidNumber))
@@ -40,5 +18,4 @@ public class PrepaidExpenseSearchSpec : Specification<PrepaidExpense>
         Query.OrderByDescending(p => p.StartDate).ThenBy(p => p.PrepaidNumber);
     }
 }
-
 

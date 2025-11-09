@@ -7255,24 +7255,24 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search prepaid expenses
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing prepaid expenses
+        /// Search prepaid expenses with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PrepaidExpenseResponse>> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body);
+        System.Threading.Tasks.Task<PrepaidExpenseResponsePagedList> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Search prepaid expenses
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing prepaid expenses
+        /// Search prepaid expenses with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PrepaidExpenseResponse>> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PrepaidExpenseResponsePagedList> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Record amortization
@@ -7306,7 +7306,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id, ClosePrepaidExpenseCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -7318,7 +7318,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id, ClosePrepaidExpenseCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Cancel prepaid expense
@@ -46486,12 +46486,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search prepaid expenses
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing prepaid expenses
+        /// Search prepaid expenses with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PrepaidExpenseResponse>> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body)
+        public virtual System.Threading.Tasks.Task<PrepaidExpenseResponsePagedList> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body)
         {
             return PrepaidExpenseSearchEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -46501,12 +46501,12 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// Search prepaid expenses
         /// </summary>
         /// <remarks>
-        /// Endpoints for managing prepaid expenses
+        /// Search prepaid expenses with filtering and pagination
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PrepaidExpenseResponse>> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PrepaidExpenseResponsePagedList> PrepaidExpenseSearchEndpointAsync(string version, SearchPrepaidExpensesRequest body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -46559,7 +46559,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<PrepaidExpenseResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PrepaidExpenseResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -46734,9 +46734,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id, ClosePrepaidExpenseCommand body)
         {
-            return PrepaidExpenseCloseEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return PrepaidExpenseCloseEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -46749,7 +46749,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> PrepaidExpenseCloseEndpointAsync(string version, System.Guid id, ClosePrepaidExpenseCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -46757,13 +46757,19 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -66199,6 +66205,15 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClosePrepaidExpenseCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CloseRetainedEarningsCommand
     {
 
@@ -73232,6 +73247,33 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PrepaidExpenseResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<PrepaidExpenseResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProblemDetails
     {
 
@@ -76103,11 +76145,41 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial class SearchPrepaidExpensesRequest
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("prepaidNumber")]
         public string? PrepaidNumber { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string? Status { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDateFrom")]
+        public System.DateTime? StartDateFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDateTo")]
+        public System.DateTime? StartDateTo { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("vendorId")]
+        public System.Guid? VendorId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isFullyAmortized")]
+        public bool? IsFullyAmortized { get; set; } = default!;
 
     }
 

@@ -11,7 +11,7 @@
         <MudButton StartIcon="@Icons.Material.Filled.Add"
                    Color="Color.Primary"
                    Size="Size.Small"
-                   OnClick="AddLine"
+                   OnClick="@(() => AddLine())"
                    Disabled="@IsReadOnly">
             Add Line Item
         </MudButton>

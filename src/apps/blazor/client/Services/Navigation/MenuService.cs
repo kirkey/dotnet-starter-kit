@@ -129,6 +129,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Accounting Periods", Icon = Icons.Material.Filled.CalendarMonth, Href = "/accounting/periods", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Accruals", Icon = Icons.Material.Filled.Schedule, Href = "/accounting/accruals", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Deferred Revenue", Icon = Icons.Material.Filled.AccountBalance, Href = "/accounting/deferred-revenue", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Prepaid Expenses", Icon = Icons.Material.Filled.Payment, Href = "/accounting/prepaid-expenses", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         
                         // ========== CONFIGURATION ==========
                         new MenuSectionSubItemModel { Title = "Configuration", IsGroupHeader = true },

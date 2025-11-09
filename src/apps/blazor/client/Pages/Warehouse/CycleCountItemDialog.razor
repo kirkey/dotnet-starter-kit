@@ -97,7 +97,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="SaveAsync" Variant="Variant.Filled">
+        <MudButton Color="Color.Primary" OnClick="@(() => SaveAsync())" Variant="Variant.Filled">
             @(IsRecording ? "Record Count" : "Add Item")
         </MudButton>
     </DialogActions>

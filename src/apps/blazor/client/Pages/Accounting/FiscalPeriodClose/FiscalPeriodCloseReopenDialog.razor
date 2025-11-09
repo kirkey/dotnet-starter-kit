@@ -31,7 +31,7 @@
         <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton Variant="Variant.Filled" 
                    Color="Color.Warning" 
-                   OnClick="Reopen"
+                   OnClick="@(() => Reopen())"
                    StartIcon="@Icons.Material.Filled.LockOpen">
             Reopen Period
         </MudButton>
