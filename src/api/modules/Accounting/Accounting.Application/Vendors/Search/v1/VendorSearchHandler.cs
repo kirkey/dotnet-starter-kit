@@ -1,9 +1,13 @@
 namespace Accounting.Application.Vendors.Search.v1;
+
+/// <summary>
+/// Handler for searching vendors.
+/// </summary>
 public sealed class VendorSearchHandler(
     [FromKeyedServices("accounting:vendors")] IReadRepository<Vendor> repository)
-    : IRequestHandler<VendorSearchQuery, PagedList<VendorSearchResponse>>
+    : IRequestHandler<VendorSearchRequest, PagedList<VendorSearchResponse>>
 {
-    public async Task<PagedList<VendorSearchResponse>> Handle(VendorSearchQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<VendorSearchResponse>> Handle(VendorSearchRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var spec = new VendorSearchSpecs(request);

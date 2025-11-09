@@ -8,11 +8,30 @@ namespace Accounting.Application.Payments.Update.v1;
 /// Cannot update Amount or Allocations through this command.
 /// Use AllocatePayment, RefundPayment, or VoidPayment for those operations.
 /// </remarks>
-public sealed record PaymentUpdateCommand(
-    DefaultIdType Id,
-    string? ReferenceNumber,
-    string? DepositToAccountCode,
-    string? Description,
-    string? Notes
-) : IRequest<PaymentUpdateResponse>;
-
+public sealed record PaymentUpdateCommand : IRequest<PaymentUpdateResponse>
+{
+    /// <summary>
+    /// Payment identifier.
+    /// </summary>
+    public DefaultIdType Id { get; init; }
+    
+    /// <summary>
+    /// Reference number.
+    /// </summary>
+    public string? ReferenceNumber { get; init; }
+    
+    /// <summary>
+    /// Deposit to account code.
+    /// </summary>
+    public string? DepositToAccountCode { get; init; }
+    
+    /// <summary>
+    /// Description.
+    /// </summary>
+    public string? Description { get; init; }
+    
+    /// <summary>
+    /// Additional notes.
+    /// </summary>
+    public string? Notes { get; init; }
+}

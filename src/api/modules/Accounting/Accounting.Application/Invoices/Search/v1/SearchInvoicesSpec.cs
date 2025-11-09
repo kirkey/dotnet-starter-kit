@@ -5,7 +5,7 @@ namespace Accounting.Application.Invoices.Search.v1;
 /// </summary>
 public class SearchInvoicesSpec : Specification<Invoice>
 {
-    public SearchInvoicesSpec(SearchInvoicesCommand request)
+    public SearchInvoicesSpec(SearchInvoicesRequest request)
     {
         Query.Include(i => i.LineItems);
 

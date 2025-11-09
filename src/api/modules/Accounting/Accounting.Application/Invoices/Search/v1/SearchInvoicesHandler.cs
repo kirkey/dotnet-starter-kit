@@ -7,9 +7,9 @@ namespace Accounting.Application.Invoices.Search.v1;
 /// </summary>
 public sealed class SearchInvoicesHandler(
     [FromKeyedServices("accounting:invoices")] IReadRepository<Invoice> repository)
-    : IRequestHandler<SearchInvoicesCommand, PagedList<InvoiceResponse>>
+    : IRequestHandler<SearchInvoicesRequest, PagedList<InvoiceResponse>>
 {
-    public async Task<PagedList<InvoiceResponse>> Handle(SearchInvoicesCommand request, CancellationToken cancellationToken)
+    public async Task<PagedList<InvoiceResponse>> Handle(SearchInvoicesRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

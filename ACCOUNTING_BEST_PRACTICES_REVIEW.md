@@ -65,11 +65,11 @@ public record GetTaxCodeRequest(DefaultIdType Id) : IRequest<TaxCodeResponse>;
 | ChartOfAccounts | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | JournalEntries | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | Banks | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
-| Vendors | ? | ? | ? | 🔄 Pending |
-| Customers | ? | ? | ? | 🔄 Pending |
-| Bills | ? | ? | ? | 🔄 Pending |
-| Invoices | ? | ? | ? | 🔄 Pending |
-| Payments | ? | ? | ? | 🔄 Pending |
+| Vendors | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| Customers | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| Bills | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| Invoices | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
+| Payments | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | BankReconciliations | ? | ? | ? | 🔄 Pending |
 | FixedAssets | ? | ? | ? | 🔄 Pending |
 | Budgets | ? | ? | ? | 🔄 Pending |

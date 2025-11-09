@@ -8,7 +8,7 @@ public sealed class PaymentSearchSpec : Specification<Payment>
     /// <summary>
     /// Initializes a new instance of the <see cref="PaymentSearchSpec"/> class.
     /// </summary>
-    public PaymentSearchSpec(PaymentSearchQuery query)
+    public PaymentSearchSpec(PaymentSearchRequest query)
     {
         ArgumentNullException.ThrowIfNull(query);
 

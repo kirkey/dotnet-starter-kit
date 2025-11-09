@@ -7,9 +7,9 @@ namespace Accounting.Application.Bills.Search.v1;
 /// </summary>
 public sealed class SearchBillsHandler(
     [FromKeyedServices("accounting:bills")] IRepository<Bill> repository)
-    : IRequestHandler<SearchBillsCommand, PagedList<BillResponse>>
+    : IRequestHandler<SearchBillsRequest, PagedList<BillResponse>>
 {
-    public async Task<PagedList<BillResponse>> Handle(SearchBillsCommand request, CancellationToken cancellationToken)
+    public async Task<PagedList<BillResponse>> Handle(SearchBillsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

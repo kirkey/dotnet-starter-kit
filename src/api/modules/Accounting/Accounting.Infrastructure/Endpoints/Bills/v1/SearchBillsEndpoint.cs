@@ -11,9 +11,9 @@ public static class SearchBillsEndpoint
     internal static RouteHandlerBuilder MapSearchBillsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async ([FromBody] SearchBillsCommand command, ISender mediator) =>
+            .MapPost("/search", async ([FromBody] SearchBillsRequest request, ISender mediator) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(SearchBillsEndpoint))

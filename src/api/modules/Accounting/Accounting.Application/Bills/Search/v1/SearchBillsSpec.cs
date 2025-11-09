@@ -5,7 +5,7 @@ namespace Accounting.Application.Bills.Search.v1;
 /// </summary>
 public sealed class SearchBillsSpec : Specification<Bill>
 {
-    public SearchBillsSpec(SearchBillsCommand filter)
+    public SearchBillsSpec(SearchBillsRequest filter)
     {
         Query.Include(b => b.LineItems);
 

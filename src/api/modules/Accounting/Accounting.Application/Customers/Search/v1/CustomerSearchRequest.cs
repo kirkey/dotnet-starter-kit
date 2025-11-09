@@ -1,10 +1,10 @@
 namespace Accounting.Application.Customers.Search.v1;
 
 /// <summary>
-/// Query to search customers with pagination support.
+/// Request to search customers with pagination support.
 /// Includes filtering by customer number, name, type, status, and active state.
 /// </summary>
-public class CustomerSearchQuery : PaginationFilter, IRequest<PagedList<CustomerSearchResponse>>
+public class CustomerSearchRequest : PaginationFilter, IRequest<PagedList<CustomerSearchResponse>>
 {
     /// <summary>
     /// Filter by customer number (partial match).

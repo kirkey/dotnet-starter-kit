@@ -3,7 +3,7 @@ namespace Accounting.Application.Payments.Search.v1;
 /// <summary>
 /// Handler for searching payments.
 /// </summary>
-public sealed class PaymentSearchHandler : IRequestHandler<PaymentSearchQuery, PagedList<PaymentSearchResponse>>
+public sealed class PaymentSearchHandler : IRequestHandler<PaymentSearchRequest, PagedList<PaymentSearchResponse>>
 {
     private readonly IReadRepository<Payment> _repository;
     private readonly ILogger<PaymentSearchHandler> _logger;
@@ -22,7 +22,7 @@ public sealed class PaymentSearchHandler : IRequestHandler<PaymentSearchQuery, P
     /// <summary>
     /// Handles the payment search query.
     /// </summary>
-    public async Task<PagedList<PaymentSearchResponse>> Handle(PaymentSearchQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<PaymentSearchResponse>> Handle(PaymentSearchRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

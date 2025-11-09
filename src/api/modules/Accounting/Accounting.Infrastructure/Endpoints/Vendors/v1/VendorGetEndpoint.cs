@@ -9,13 +9,14 @@ public static class VendorGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new VendorGetQuery(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new VendorGetRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(VendorGetEndpoint))
-            .WithSummary("get a vendor by id")
-            .WithDescription("get a vendor by id")
+            .WithSummary("Get a vendor by ID")
+            .WithDescription("Retrieves a vendor by its unique identifier")
             .Produces<VendorGetResponse>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

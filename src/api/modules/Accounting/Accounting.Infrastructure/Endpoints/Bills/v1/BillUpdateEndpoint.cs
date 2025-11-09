@@ -13,13 +13,9 @@ public static class BillUpdateEndpoint
     internal static RouteHandlerBuilder MapBillUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, BillUpdateCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, BillUpdateCommand request, ISender mediator) =>
             {
-                if (id != command.BillId)
-                {
-                    return Results.BadRequest("Route ID does not match command ID");
-                }
-
+                var command = request with { BillId = id };
                 var result = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(result);
             })
@@ -27,7 +23,6 @@ public static class BillUpdateEndpoint
             .WithSummary("Update an existing bill")
             .WithDescription("Updates an existing bill in the accounts payable system with validation.")
             .Produces<UpdateBillResponse>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.Edit")
             .MapToApiVersion(new ApiVersion(1, 0));

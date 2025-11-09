@@ -3,9 +3,9 @@ using Accounting.Application.Bills.Get.v1;
 namespace Accounting.Application.Bills.Search.v1;
 
 /// <summary>
-/// Query used to search bills with pagination and filters.
+/// Request used to search bills with pagination and filters.
 /// </summary>
-public class SearchBillsCommand : PaginationFilter, IRequest<PagedList<BillResponse>>
+public class SearchBillsRequest : PaginationFilter, IRequest<PagedList<BillResponse>>
 {
     /// <summary>
     /// Filter by vendor identifier.
@@ -62,3 +62,4 @@ public class SearchBillsCommand : PaginationFilter, IRequest<PagedList<BillRespo
     /// </summary>
     public string? ApprovalStatus { get; set; }
 }
+

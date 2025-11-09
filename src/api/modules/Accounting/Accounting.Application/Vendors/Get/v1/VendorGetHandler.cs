@@ -1,10 +1,14 @@
 namespace Accounting.Application.Vendors.Get.v1;
+
+/// <summary>
+/// Handler for retrieving a vendor by ID.
+/// </summary>
 public sealed class VendorGetHandler(
     [FromKeyedServices("accounting:vendors")] IReadRepository<Vendor> repository,
     ICacheService cache)
-    : IRequestHandler<VendorGetQuery, VendorGetResponse>
+    : IRequestHandler<VendorGetRequest, VendorGetResponse>
 {
-    public async Task<VendorGetResponse> Handle(VendorGetQuery request, CancellationToken cancellationToken)
+    public async Task<VendorGetResponse> Handle(VendorGetRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

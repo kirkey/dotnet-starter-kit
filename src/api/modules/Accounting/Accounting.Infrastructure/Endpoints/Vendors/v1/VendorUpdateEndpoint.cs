@@ -7,16 +7,17 @@ public static class VendorUpdateEndpoint
     internal static RouteHandlerBuilder MapVendorUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, VendorUpdateCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, VendorUpdateCommand request, ISender mediator) =>
             {
-                if (id != command.Id) return Results.BadRequest();
+                var command = request with { Id = id };
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(VendorUpdateEndpoint))
-            .WithSummary("update a vendor")
-            .WithDescription("update a vendor")
+            .WithSummary("Update a vendor")
+            .WithDescription("Updates an existing vendor")
             .Produces<VendorUpdateResponse>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

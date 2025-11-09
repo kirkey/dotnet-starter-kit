@@ -1,9 +1,9 @@
 namespace Accounting.Application.Payments.Search.v1;
 
 /// <summary>
-/// Query to search payments with filtering and pagination.
+/// Request to search payments with filtering and pagination.
 /// </summary>
-public sealed class PaymentSearchQuery : PaginationFilter, IRequest<PagedList<PaymentSearchResponse>>
+public class PaymentSearchRequest : PaginationFilter, IRequest<PagedList<PaymentSearchResponse>>
 {
     /// <summary>
     /// Optional payment number filter.

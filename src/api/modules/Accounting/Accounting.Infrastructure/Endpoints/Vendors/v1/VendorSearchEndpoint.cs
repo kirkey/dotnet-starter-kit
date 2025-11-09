@@ -7,15 +7,16 @@ public static class VendorSearchEndpoint
     internal static RouteHandlerBuilder MapVendorSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] VendorSearchQuery command) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] VendorSearchRequest request) =>
             {
-                var response = await mediator.Send(command).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(VendorSearchEndpoint))
-            .WithSummary("Gets a list of vendors")
-            .WithDescription("Gets a list of vendors with pagination and filtering support")
+            .WithSummary("Search vendors")
+            .WithDescription("Searches vendors with pagination and filtering support")
             .Produces<PagedList<VendorSearchResponse>>()
+            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

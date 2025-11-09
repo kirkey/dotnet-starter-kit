@@ -9,7 +9,7 @@ public class CustomerSearchSpecs : EntitiesByPaginationFilterSpec<Customer, Cust
     /// Creates a specification for searching customers with optional filters.
     /// Supports filtering by customer number, name, type, status, active state, credit hold, and tax exempt status.
     /// </summary>
-    public CustomerSearchSpecs(CustomerSearchQuery request)
+    public CustomerSearchSpecs(CustomerSearchRequest request)
         : base(request)
     {
         // Filter by customer number (partial match)

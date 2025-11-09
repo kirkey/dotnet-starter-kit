@@ -13,11 +13,9 @@ public static class CustomerUpdateEndpoint
     internal static RouteHandlerBuilder MapCustomerUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, CustomerUpdateCommand command, ISender mediator) =>
+            .MapPut("/{id}", async (DefaultIdType id, CustomerUpdateCommand request, ISender mediator) =>
             {
-                if (id != command.Id)
-                    return Results.BadRequest("ID mismatch");
-
+                var command = request with { Id = id };
                 await mediator.Send(command).ConfigureAwait(false);
                 return Results.NoContent();
             })
@@ -25,7 +23,6 @@ public static class CustomerUpdateEndpoint
             .WithSummary("Update a customer")
             .WithDescription("Updates an existing customer's information.")
             .Produces(StatusCodes.Status204NoContent)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);

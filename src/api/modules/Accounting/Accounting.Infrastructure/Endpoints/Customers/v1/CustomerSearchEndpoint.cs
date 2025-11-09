@@ -9,12 +9,12 @@ public static class CustomerSearchEndpoint
 {
     /// <summary>
     /// Maps the customer search endpoint to the route builder.
-    /// Supports both paginated search (CustomerSearchQuery) and simple search (SearchCustomersRequest).
+    /// Supports paginated search with filtering.
     /// </summary>
     internal static RouteHandlerBuilder MapCustomerSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (CustomerSearchQuery request, ISender mediator) =>
+            .MapPost("/search", async (CustomerSearchRequest request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

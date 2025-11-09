@@ -3,9 +3,9 @@ using Accounting.Application.Invoices.Get.v1;
 namespace Accounting.Application.Invoices.Search.v1;
 
 /// <summary>
-/// Query used to search invoices with pagination and filters.
+/// Request to search invoices with filtering and pagination.
 /// </summary>
-public class SearchInvoicesCommand : PaginationFilter, IRequest<PagedList<InvoiceResponse>>
+public class SearchInvoicesRequest : PaginationFilter, IRequest<PagedList<InvoiceResponse>>
 {
     /// <summary>
     /// Filter by member identifier.

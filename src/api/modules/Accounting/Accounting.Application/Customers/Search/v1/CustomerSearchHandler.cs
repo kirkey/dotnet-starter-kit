@@ -7,15 +7,15 @@ namespace Accounting.Application.Customers.Search.v1;
 public sealed class CustomerSearchHandler(
     ILogger<CustomerSearchHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<Customer> repository)
-    : IRequestHandler<CustomerSearchQuery, PagedList<CustomerSearchResponse>>
+    : IRequestHandler<CustomerSearchRequest, PagedList<CustomerSearchResponse>>
 {
     /// <summary>
-    /// Handles the customer search query with pagination.
+    /// Handles the customer search request with pagination.
     /// </summary>
-    /// <param name="request">The search query with filters and pagination parameters.</param>
+    /// <param name="request">The search request with filters and pagination parameters.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paginated list of customer search results.</returns>
-    public async Task<PagedList<CustomerSearchResponse>> Handle(CustomerSearchQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<CustomerSearchResponse>> Handle(CustomerSearchRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
