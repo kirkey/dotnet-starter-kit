@@ -1,12 +1,15 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
 namespace Accounting.Application.Accruals.Approve;
 
 /// <summary>
 /// Handler for approving an accrual.
 /// Validates the accrual exists and is in a state that can be approved,
-/// then marks it as approved with the approver's information.
+/// then marks it as approved with the approver's information from the current user session.
 /// </summary>
 public sealed class ApproveAccrualHandler(
     ILogger<ApproveAccrualHandler> logger,
+    ICurrentUser currentUser,
     [FromKeyedServices("accounting:accruals")] IRepository<Accrual> repository)
     : IRequestHandler<ApproveAccrualCommand, DefaultIdType>
 {
@@ -26,8 +29,11 @@ public sealed class ApproveAccrualHandler(
         var accrual = await repository.GetByIdAsync(request.AccrualId, cancellationToken)
             ?? throw new AccrualByIdNotFoundException(request.AccrualId);
 
+        var approverId = currentUser.GetUserId();
+        var approverName = currentUser.GetUserName();
+        
         // Approve the accrual using domain method
-        accrual.Approve(request.ApprovedBy);
+        accrual.Approve(approverId, approverName);
 
         await repository.UpdateAsync(accrual, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
@@ -36,7 +42,7 @@ public sealed class ApproveAccrualHandler(
             "Accrual {AccrualNumber} (ID: {AccrualId}) approved by {ApprovedBy}",
             accrual.AccrualNumber,
             accrual.Id,
-            request.ApprovedBy);
+            approverName);
 
         return accrual.Id;
     }

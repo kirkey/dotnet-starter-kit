@@ -310,12 +310,10 @@ public class Bill : AuditableEntityWithApproval, IAggregateRoot
     /// <summary>
     /// Approve the bill for payment processing.
     /// </summary>
-    /// <param name="approvedBy">User who approved the bill.</param>
-    public Bill Approve(string approvedBy)
+    /// <param name="approverId">User ID who approved the bill.</param>
+    /// <param name="approverName">Optional name/email of the approver for display purposes.</param>
+    public Bill Approve(DefaultIdType approverId, string? approverName = null)
     {
-        if (string.IsNullOrWhiteSpace(approvedBy))
-            throw new ArgumentException("Approver is required", nameof(approvedBy));
-
         if (Status == "Approved")
             throw new BillAlreadyApprovedException(Id);
 
@@ -323,11 +321,11 @@ public class Bill : AuditableEntityWithApproval, IAggregateRoot
             throw new BillCannotBeModifiedException(Id, "Bill is already posted");
 
         Status = "Approved";
-        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
-        ApproverName = approvedBy.Trim();
+        ApprovedBy = approverId;
+        ApproverName = approverName?.Trim();
         ApprovedOn = DateTime.UtcNow;
 
-        QueueDomainEvent(new BillApproved(Id, approvedBy));
+        QueueDomainEvent(new BillApproved(Id, approverId.ToString()));
         return this;
     }
 

@@ -178,15 +178,15 @@ public class JournalEntry : AuditableEntityWithApproval, IAggregateRoot
     /// <summary>
     /// Approve the journal entry, setting approver and timestamp.
     /// </summary>
-    public void Approve(string approvedBy)
+    public void Approve(DefaultIdType approverId, string? approverName = null)
     {
         if (Status == "Approved")
             throw new InvalidOperationException("Journal entry already approved.");
         Status = "Approved";
-        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
-        ApproverName = approvedBy;
+        ApprovedBy = approverId;
+        ApproverName = approverName?.Trim();
         ApprovedOn = DateTime.UtcNow;
-        QueueDomainEvent(new JournalEntryApproved(Id, approvedBy, ApprovedOn.Value));
+        QueueDomainEvent(new JournalEntryApproved(Id, approverId.ToString(), ApprovedOn.Value));
     }
 
     /// <summary>

@@ -2,6 +2,7 @@ namespace Accounting.Application.Bills.Approve.v1;
 
 /// <summary>
 /// Validator for ApproveBillCommand.
+/// The approver is automatically determined from the current user session.
 /// </summary>
 public sealed class ApproveBillCommandValidator : AbstractValidator<ApproveBillCommand>
 {
@@ -12,11 +13,5 @@ public sealed class ApproveBillCommandValidator : AbstractValidator<ApproveBillC
             .WithMessage("Bill ID is required.")
             .Must(id => id != DefaultIdType.Empty)
             .WithMessage("Bill ID must be a valid identifier.");
-
-        RuleFor(x => x.ApprovedBy)
-            .NotEmpty()
-            .WithMessage("Approved by is required.")
-            .MaximumLength(100)
-            .WithMessage("Approved by cannot exceed 100 characters.");
     }
 }

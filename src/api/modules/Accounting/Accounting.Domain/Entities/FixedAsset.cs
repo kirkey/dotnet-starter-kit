@@ -445,10 +445,11 @@ public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
     /// <summary>
     /// Approve the fixed asset acquisition.
     /// </summary>
-    /// <param name="approvedBy">Username or identifier of the person approving the asset.</param>
+    /// <param name="approverId">User ID of the person approving the asset.</param>
+    /// <param name="approverName">Optional name/email of the approver for display purposes.</param>
     /// <exception cref="FixedAssetAlreadyApprovedException">Thrown if the asset is already approved.</exception>
     /// <exception cref="FixedAssetAlreadyDisposedException">Thrown if the asset is already disposed.</exception>
-    public void Approve(string approvedBy)
+    public void Approve(DefaultIdType approverId, string? approverName = null)
     {
         if (IsDisposed)
             throw new FixedAssetAlreadyDisposedException(Id);
@@ -457,11 +458,11 @@ public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
             throw new FixedAssetAlreadyApprovedException(Id);
 
         Status = "Approved";
-        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
-        ApproverName = approvedBy.Trim();
+        ApprovedBy = approverId;
+        ApproverName = approverName?.Trim();
         ApprovedOn = DateTime.UtcNow;
 
-        QueueDomainEvent(new FixedAssetApproved(Id, AssetName, approvedBy, ApprovedOn.Value));
+        QueueDomainEvent(new FixedAssetApproved(Id, AssetName, approverId.ToString(), ApprovedOn.Value));
     }
 
     /// <summary>

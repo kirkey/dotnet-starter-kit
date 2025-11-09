@@ -34,8 +34,14 @@ namespace Accounting.Domain.Entities;
 /// - Template must be approved before generating entries
 /// - Generated entries link back to this template
 /// - Can be suspended temporarily without deleting
+/// 
+/// Approval workflow:
+/// - Uses AuditableEntityWithApproval for proper approval tracking
+/// - ApprovedBy stores the user ID (Guid) of the approver
+/// - ApproverName stores the readable name for display
+/// - ApprovedOn stores the approval timestamp
 /// </remarks>
-public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
+public class RecurringJournalEntry : AuditableEntityWithApproval, IAggregateRoot
 {
     /// <summary>
     /// Template code/identifier for this recurring entry.
@@ -101,18 +107,12 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Template status: Draft, Approved, Suspended, Expired.
+    /// Note: Status is also inherited from AuditableEntityWithApproval for workflow tracking.
+    /// This RecurringEntryStatus provides domain-specific states.
     /// </summary>
-    public RecurringEntryStatus Status { get; private set; }
+    public RecurringEntryStatus RecurringStatus { get; private set; }
 
-    /// <summary>
-    /// User who approved the template.
-    /// </summary>
-    public string? ApprovedBy { get; private set; }
-
-    /// <summary>
-    /// Date when template was approved.
-    /// </summary>
-    public DateTime? ApprovedDate { get; private set; }
+    // ApprovedBy, ApproverName, and ApprovedOn are inherited from AuditableEntityWithApproval
 
     /// <summary>
     /// Optional reference to account posting batch.
@@ -164,7 +164,7 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
         NextRunDate = startDate;
         GeneratedCount = 0;
         IsActive = true;
-        Status = RecurringEntryStatus.Draft;
+        RecurringStatus = RecurringEntryStatus.Draft;
         Memo = memo?.Trim();
         Notes = notes?.Trim();
 
@@ -201,7 +201,7 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
         string? memo = null,
         string? notes = null)
     {
-        if (Status == RecurringEntryStatus.Expired)
+        if (RecurringStatus == RecurringEntryStatus.Expired)
             throw new RecurringJournalEntryExpiredException(Id);
 
         if (!string.IsNullOrWhiteSpace(description))
@@ -230,19 +230,22 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Approve the template to allow entry generation.
     /// </summary>
-    public void Approve(string approvedBy)
+    /// <param name="approvedById">The user ID of the approver.</param>
+    /// <param name="approverName">Optional readable name of the approver.</param>
+    public void Approve(DefaultIdType approvedById, string? approverName = null)
     {
-        if (Status == RecurringEntryStatus.Approved)
+        if (RecurringStatus == RecurringEntryStatus.Approved)
             throw new RecurringJournalEntryAlreadyApprovedException(Id);
 
-        if (Status == RecurringEntryStatus.Expired)
+        if (RecurringStatus == RecurringEntryStatus.Expired)
             throw new RecurringJournalEntryExpiredException(Id);
 
-        Status = RecurringEntryStatus.Approved;
-        ApprovedBy = approvedBy?.Trim();
-        ApprovedDate = DateTime.UtcNow;
+        RecurringStatus = RecurringEntryStatus.Approved;
+        ApprovedBy = approvedById;
+        ApproverName = approverName?.Trim();
+        ApprovedOn = DateTime.UtcNow;
 
-        QueueDomainEvent(new RecurringJournalEntryApproved(Id, approvedBy ?? string.Empty, ApprovedDate.Value));
+        QueueDomainEvent(new RecurringJournalEntryApproved(Id, approvedById.ToString(), ApprovedOn.Value));
     }
 
     /// <summary>
@@ -250,10 +253,10 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Suspend(string? reason = null)
     {
-        if (Status == RecurringEntryStatus.Expired)
+        if (RecurringStatus == RecurringEntryStatus.Expired)
             throw new RecurringJournalEntryExpiredException(Id);
 
-        Status = RecurringEntryStatus.Suspended;
+        RecurringStatus = RecurringEntryStatus.Suspended;
         IsActive = false;
 
         if (!string.IsNullOrWhiteSpace(reason))
@@ -271,10 +274,10 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public void Reactivate()
     {
-        if (Status != RecurringEntryStatus.Suspended)
-            throw new InvalidRecurringEntryStatusException($"Cannot reactivate template with status {Status}");
+        if (RecurringStatus != RecurringEntryStatus.Suspended)
+            throw new InvalidRecurringEntryStatusException($"Cannot reactivate template with status {RecurringStatus}");
 
-        Status = RecurringEntryStatus.Approved;
+        RecurringStatus = RecurringEntryStatus.Approved;
         IsActive = true;
 
         QueueDomainEvent(new RecurringJournalEntryReactivated(Id));
@@ -285,8 +288,8 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
     /// </summary>
     public void RecordGeneration(DefaultIdType journalEntryId, DateTime generatedDate)
     {
-        if (Status != RecurringEntryStatus.Approved)
-            throw new InvalidRecurringEntryStatusException($"Cannot generate entries with status {Status}");
+        if (RecurringStatus != RecurringEntryStatus.Approved)
+            throw new InvalidRecurringEntryStatusException($"Cannot generate entries with status {RecurringStatus}");
 
         if (!IsActive)
             throw new RecurringJournalEntryInactiveException(Id);
@@ -298,7 +301,7 @@ public class RecurringJournalEntry : AuditableEntity, IAggregateRoot
         // Check if template should expire
         if (EndDate.HasValue && NextRunDate > EndDate.Value)
         {
-            Status = RecurringEntryStatus.Expired;
+            RecurringStatus = RecurringEntryStatus.Expired;
             IsActive = false;
             QueueDomainEvent(new RecurringJournalEntryExpired(Id));
         }

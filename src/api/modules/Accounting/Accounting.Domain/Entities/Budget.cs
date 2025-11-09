@@ -244,7 +244,7 @@ public class Budget : AuditableEntityWithApproval, IAggregateRoot
     /// <summary>
     /// Mark the budget as approved; records approver and timestamp. Requires at least one detail.
     /// </summary>
-    public Budget Approve(string approvedBy)
+    public Budget Approve(DefaultIdType approverId, string? approverName = null)
     {
         if (Status == "Approved")
             throw new BudgetAlreadyApprovedException(Id);
@@ -254,10 +254,10 @@ public class Budget : AuditableEntityWithApproval, IAggregateRoot
 
         Status = "Approved";
         ApprovedOn = DateTime.UtcNow;
-        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
-        ApproverName = approvedBy.Trim();
+        ApprovedBy = approverId;
+        ApproverName = approverName?.Trim();
 
-        QueueDomainEvent(new BudgetApproved(Id, ApprovedOn.Value, ApproverName));
+        QueueDomainEvent(new BudgetApproved(Id, ApprovedOn.Value, ApproverName ?? approverId.ToString()));
         return this;
     }
 

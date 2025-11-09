@@ -218,7 +218,7 @@ public class WriteOff : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Approve the write-off.
     /// </summary>
-    public void Approve(string approvedBy)
+    public void Approve(DefaultIdType approverId, string? approverName = null)
     {
         if (Status != WriteOffStatus.Pending)
             throw new InvalidWriteOffStatusException($"Cannot approve write-off with status {Status}");
@@ -228,10 +228,10 @@ public class WriteOff : AuditableEntity, IAggregateRoot
 
         ApprovalStatus = ApprovalStatus.Approved;
         Status = WriteOffStatus.Approved;
-        ApprovedBy = approvedBy?.Trim();
+        ApprovedBy = approverName?.Trim() ?? approverId.ToString();
         ApprovedDate = DateTime.UtcNow;
 
-        QueueDomainEvent(new WriteOffApproved(Id, approvedBy ?? string.Empty, ApprovedDate.Value));
+        QueueDomainEvent(new WriteOffApproved(Id, approverId.ToString(), ApprovedDate.Value));
     }
 
     /// <summary>

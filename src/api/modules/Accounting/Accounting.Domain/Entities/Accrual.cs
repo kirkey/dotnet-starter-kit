@@ -215,10 +215,11 @@ public class Accrual : AuditableEntityWithApproval, IAggregateRoot
     /// <summary>
     /// Approve the accrual.
     /// </summary>
-    /// <param name="approvedBy">Username or identifier of the person approving the accrual.</param>
+    /// <param name="approverId">User ID of the person approving the accrual.</param>
+    /// <param name="approverName">Optional name/email of the approver for display purposes.</param>
     /// <exception cref="AccrualAlreadyApprovedException">Thrown if the accrual is already approved.</exception>
     /// <exception cref="AccrualAlreadyReversedException">Thrown if the accrual is already reversed.</exception>
-    public void Approve(string approvedBy)
+    public void Approve(DefaultIdType approverId, string? approverName = null)
     {
         if (IsReversed)
             throw new AccrualAlreadyReversedException(Id);
@@ -227,11 +228,11 @@ public class Accrual : AuditableEntityWithApproval, IAggregateRoot
             throw new AccrualAlreadyApprovedException(Id);
 
         Status = "Approved";
-        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
-        ApproverName = approvedBy.Trim();
+        ApprovedBy = approverId;
+        ApproverName = approverName?.Trim();
         ApprovedOn = DateTime.UtcNow;
 
-        QueueDomainEvent(new Events.Accrual.AccrualApproved(Id, AccrualNumber, approvedBy, ApprovedOn.Value));
+        QueueDomainEvent(new Events.Accrual.AccrualApproved(Id, AccrualNumber, approverId.ToString(), ApprovedOn.Value));
     }
 
     /// <summary>

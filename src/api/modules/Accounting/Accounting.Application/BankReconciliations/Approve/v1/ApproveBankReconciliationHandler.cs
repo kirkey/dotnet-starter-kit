@@ -1,7 +1,10 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
 namespace Accounting.Application.BankReconciliations.Approve.v1;
 
 public sealed class ApproveBankReconciliationHandler(
     ILogger<ApproveBankReconciliationHandler> logger,
+    ICurrentUser currentUser,
     IRepository<BankReconciliation> repository)
     : IRequestHandler<ApproveBankReconciliationCommand>
 {
@@ -13,11 +16,14 @@ public sealed class ApproveBankReconciliationHandler(
         if (reconciliation == null)
             throw new BankReconciliationNotFoundException(command.Id);
 
-        reconciliation.Approve(command.ApprovedBy);
+        var approverId = currentUser.GetUserId();
+        var approverName = currentUser.GetUserName();
+        
+        reconciliation.Approve(approverId, approverName);
 
         await repository.UpdateAsync(reconciliation, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
-        logger.LogInformation("Bank reconciliation approved {ReconciliationId}", command.Id);
+        logger.LogInformation("Bank reconciliation {ReconciliationId} approved by user {ApproverId}", command.Id, approverId);
     }
 }

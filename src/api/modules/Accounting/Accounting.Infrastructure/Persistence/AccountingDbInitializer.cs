@@ -289,7 +289,8 @@ internal sealed class AccountingDbInitializer(
                 }
 
                 // Approve first budget after details are added
-                budgetsToSeed[0].Approve("cfo");
+                var cfoUserId = DefaultIdType.NewGuid(); // In production, this would be actual user ID
+                budgetsToSeed[0].Approve(cfoUserId, "CFO");
                 context.Budgets.Update(budgetsToSeed[0]);
 
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -645,7 +646,8 @@ internal sealed class AccountingDbInitializer(
                 await context.JournalEntryLines.AddRangeAsync(new[] { cashLine1, revenueLine1 }, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 
-                je1.Approve("system.admin");
+                var systemAdminId = DefaultIdType.NewGuid(); // In production, this would be actual user ID
+                je1.Approve(systemAdminId, "system.admin");
                 je1 = je1.Post();
                 context.JournalEntries.Update(je1);
                 
@@ -663,7 +665,8 @@ internal sealed class AccountingDbInitializer(
                 await context.JournalEntryLines.AddRangeAsync(new[] { expenseLine, cashLine2 }, cancellationToken).ConfigureAwait(false);
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 
-                je2.Approve("finance.manager");
+                var financeManagerId = Guid.NewGuid(); // In production, this would be actual user ID
+                je2.Approve(financeManagerId, "finance.manager");
                 context.JournalEntries.Update(je2);
 
                 // Create third journal entry - Pending approval
@@ -678,7 +681,7 @@ internal sealed class AccountingDbInitializer(
                 // Create PostingBatch with approved journal entry
                 var batch = PostingBatch.Create("BATCH-1000", DateTime.UtcNow, "Seed batch with approved entry", period.Id);
                 batch.AddJournalEntry(je1);
-                batch.Approve("system.admin");
+                batch.Approve(systemAdminId, "system.admin"); // Reuse systemAdminId from earlier
                 await context.PostingBatches.AddAsync(batch, cancellationToken).ConfigureAwait(false);
 
                 await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -1072,7 +1075,7 @@ internal sealed class AccountingDbInitializer(
                 // Approve first bill
                 if (bills.Count > 0)
                 {
-                    bills[0].Approve("ap.manager");
+                    bills[0].Approve(Guid.NewGuid(), "ap.manager");
                     context.Bills.Update(bills[0]);
                     await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 }

@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
 namespace Accounting.Application.Budgets.Approve;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace Accounting.Application.Budgets.Approve;
 /// </summary>
 public sealed class ApproveBudgetHandler(
     ILogger<ApproveBudgetHandler> logger,
+    ICurrentUser currentUser,
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> repository)
     : IRequestHandler<ApproveBudgetCommand, DefaultIdType>
 {
@@ -19,18 +22,16 @@ public sealed class ApproveBudgetHandler(
             throw new BudgetNotFoundException(request.BudgetId);
         }
 
-        if (string.IsNullOrWhiteSpace(request.ApprovedBy))
-        {
-            throw new ArgumentException("ApprovedBy is required for budget approval.");
-        }
+        var approverId = currentUser.GetUserId();
+        var approverName = currentUser.GetUserName();
 
-        budget.Approve(request.ApprovedBy);
+        budget.Approve(approverId, approverName);
 
         await repository.UpdateAsync(budget, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
-        logger.LogInformation("Budget {BudgetId} approved by {ApprovedBy}", 
-            request.BudgetId, request.ApprovedBy);
+        logger.LogInformation("Budget {BudgetId} approved by user {ApproverId}", 
+            request.BudgetId, approverId);
 
         return budget.Id;
     }

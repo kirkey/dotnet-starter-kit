@@ -20,7 +20,7 @@ public sealed class PostingBatchReverseHandler(
         var batch = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (batch == null) throw new NotFoundException($"Posting batch with ID {request.Id} not found");
 
-        var reversedBy = _currentUser.GetUserEmail() ?? _currentUser.Name ?? "System";
+        var reversedBy = _currentUser.GetUserName() ?? _currentUser.Name ?? "System";
         batch.Reverse(reversedBy, request.Reason);
         await _repository.UpdateAsync(batch, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);

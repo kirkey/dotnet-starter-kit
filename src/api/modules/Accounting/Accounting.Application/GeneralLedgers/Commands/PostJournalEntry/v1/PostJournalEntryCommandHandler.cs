@@ -50,7 +50,7 @@ public sealed class PostJournalEntryCommandHandler(
         }
 
         // Get posted by user
-        var postedBy = currentUser.GetUserEmail() ?? currentUser.Name ?? "System";
+        var postedBy = currentUser.GetUserName() ?? currentUser.Name ?? "System";
 
         // Create general ledger entries
         foreach (var line in lines)

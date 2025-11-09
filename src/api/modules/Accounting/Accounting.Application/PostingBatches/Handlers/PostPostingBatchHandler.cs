@@ -13,7 +13,7 @@ public class PostingBatchHandler(
         var batch = await repository.GetByIdAsync(request.Id, cancellationToken);
         _ = batch ?? throw new PostingBatchByIdNotFoundException(request.Id);
         
-        var postedBy = currentUser.GetUserEmail() ?? currentUser.Name ?? "System";
+        var postedBy = currentUser.GetUserName() ?? currentUser.Name ?? "System";
         batch.Post(postedBy);
         await repository.UpdateAsync(batch, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

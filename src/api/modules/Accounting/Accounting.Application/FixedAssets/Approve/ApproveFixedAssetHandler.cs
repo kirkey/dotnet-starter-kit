@@ -1,12 +1,15 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
 namespace Accounting.Application.FixedAssets.Approve;
 
 /// <summary>
 /// Handler for approving a fixed asset acquisition.
 /// Validates the asset exists and is in a state that can be approved,
-/// then marks it as approved with the approver's information.
+/// then marks it as approved with the approver's information from the current user session.
 /// </summary>
 public sealed class ApproveFixedAssetHandler(
     ILogger<ApproveFixedAssetHandler> logger,
+    ICurrentUser currentUser,
     [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
     : IRequestHandler<ApproveFixedAssetCommand, DefaultIdType>
 {
@@ -26,8 +29,11 @@ public sealed class ApproveFixedAssetHandler(
         var fixedAsset = await repository.GetByIdAsync(request.FixedAssetId, cancellationToken)
             ?? throw new FixedAssetNotFoundException(request.FixedAssetId);
 
+        var approverId = currentUser.GetUserId();
+        var approverName = currentUser.GetUserName();
+        
         // Approve the fixed asset using domain method
-        fixedAsset.Approve(request.ApprovedBy);
+        fixedAsset.Approve(approverId, approverName);
 
         await repository.UpdateAsync(fixedAsset, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
@@ -36,7 +42,7 @@ public sealed class ApproveFixedAssetHandler(
             "Fixed Asset {AssetName} (ID: {AssetId}) approved by {ApprovedBy}",
             fixedAsset.AssetName,
             fixedAsset.Id,
-            request.ApprovedBy);
+            approverName);
 
         return fixedAsset.Id;
     }

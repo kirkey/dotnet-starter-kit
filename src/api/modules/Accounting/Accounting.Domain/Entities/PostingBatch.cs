@@ -211,15 +211,15 @@ public class PostingBatch : AuditableEntityWithApproval, IAggregateRoot
     /// <summary>
     /// Approve the batch for posting and set approver metadata.
     /// </summary>
-    public void Approve(string approvedBy)
+    public void Approve(DefaultIdType approverId, string? approverName = null)
     {
         if (Status == "Approved")
             throw new InvalidOperationException("Batch already approved.");
         Status = "Approved";
-        ApprovedBy = Guid.TryParse(approvedBy, out var guidValue) ? guidValue : null;
-        ApproverName = approvedBy;
+        ApprovedBy = approverId;
+        ApproverName = approverName?.Trim();
         ApprovedOn = DateTime.UtcNow;
-        QueueDomainEvent(new Events.PostingBatch.PostingBatchApproved(Id, BatchNumber, approvedBy, ApprovedOn.Value));
+        QueueDomainEvent(new Events.PostingBatch.PostingBatchApproved(Id, BatchNumber, approverId.ToString(), ApprovedOn.Value));
     }
 
     /// <summary>

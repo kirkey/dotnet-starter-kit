@@ -1,23 +1,28 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
 namespace Accounting.Application.RecurringJournalEntries.Approve.v1;
 
 public sealed class ApproveRecurringJournalEntryHandler(
     ILogger<ApproveRecurringJournalEntryHandler> logger,
-    IRepository<RecurringJournalEntry> repository)
+    ICurrentUser currentUser,
+    [FromKeyedServices("accounting")] IRepository<RecurringJournalEntry> repository)
     : IRequestHandler<ApproveRecurringJournalEntryCommand>
 {
     public async Task Handle(ApproveRecurringJournalEntryCommand command, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(command);
 
-        var entry = await repository.GetByIdAsync(command.Id, cancellationToken);
+        var entry = await repository.GetByIdAsync(command.Id, cancellationToken).ConfigureAwait(false);
         if (entry == null)
             throw new RecurringJournalEntryNotFoundException(command.Id);
 
-        entry.Approve(command.ApprovedBy);
+        var approverId = currentUser.GetUserId();
+        var approverName = currentUser.GetUserName(); // or GetUserName() if available
+        entry.Approve(approverId, approverName);
 
-        await repository.UpdateAsync(entry, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
+        await repository.UpdateAsync(entry, cancellationToken).ConfigureAwait(false);
+        await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Recurring journal entry approved {EntryId}", command.Id);
+        logger.LogInformation("Recurring journal entry {EntryId} approved by user {ApproverId}", command.Id, approverId);
     }
 }

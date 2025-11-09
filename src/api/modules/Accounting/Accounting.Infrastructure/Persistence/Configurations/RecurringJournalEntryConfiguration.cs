@@ -56,11 +56,6 @@ public class RecurringJournalEntryConfiguration : IEntityTypeConfiguration<Recur
             .HasMaxLength(20)
             .IsRequired();
 
-        builder.Property(x => x.ApprovedBy)
-            .HasMaxLength(256);
-
-        builder.Property(x => x.ApprovedDate);
-
         builder.Property(x => x.PostingBatchId);
 
         builder.Property(x => x.Memo)

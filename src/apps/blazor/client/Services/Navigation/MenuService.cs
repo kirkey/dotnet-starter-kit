@@ -92,6 +92,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Chart Of Accounts", Icon = Icons.Material.Filled.AccountTree, Href = "/accounting/chart-of-accounts", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "General Ledger", Icon = Icons.Material.Filled.Book, Href = "/accounting/general-ledger", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Journal Entries", Icon = Icons.Material.Filled.Receipt, Href = "/accounting/journal-entries", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Recurring Entries", Icon = Icons.Material.Filled.Repeat, Href = "/accounting/recurring-journal-entries", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         
                         // ========== ACCOUNTS RECEIVABLE ==========
                         new MenuSectionSubItemModel { Title = "Accounts Receivable", IsGroupHeader = true },

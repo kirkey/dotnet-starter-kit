@@ -20,7 +20,7 @@ public sealed class PostingBatchPostHandler(
         var batch = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (batch == null) throw new NotFoundException($"Posting batch with ID {request.Id} not found");
 
-        var postedBy = _currentUser.GetUserEmail() ?? _currentUser.Name ?? "System";
+        var postedBy = _currentUser.GetUserName() ?? _currentUser.Name ?? "System";
         batch.Post(postedBy);
         await _repository.UpdateAsync(batch, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);

@@ -241,7 +241,7 @@ public class BankReconciliation : AuditableEntityWithApproval, IAggregateRoot
     /// <summary>
     /// Approve the completed reconciliation.
     /// </summary>
-    public void Approve(string approvedBy)
+    public void Approve(DefaultIdType approverId, string? approverName = null)
     {
         if (Status != ReconciliationStatuses.Completed)
             throw new InvalidReconciliationStatusException($"Cannot approve reconciliation with status {Status}");
@@ -251,10 +251,10 @@ public class BankReconciliation : AuditableEntityWithApproval, IAggregateRoot
 
         Status = ReconciliationStatuses.Approved;
         IsReconciled = true;
-        ApprovedBy = approvedBy?.Trim();
+        ApprovedBy = approverName?.Trim() ?? approverId.ToString();
         ApprovedDate = DateTime.UtcNow;
 
-        QueueDomainEvent(new BankReconciliationApproved(Id, approvedBy ?? string.Empty, ApprovedDate.Value));
+        QueueDomainEvent(new BankReconciliationApproved(Id, approverId.ToString(), ApprovedDate.Value));
     }
 
     /// <summary>

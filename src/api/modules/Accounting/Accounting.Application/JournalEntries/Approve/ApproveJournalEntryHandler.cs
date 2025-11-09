@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
 namespace Accounting.Application.JournalEntries.Approve;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace Accounting.Application.JournalEntries.Approve;
 /// </summary>
 public sealed class ApproveJournalEntryHandler(
     ILogger<ApproveJournalEntryHandler> logger,
+    ICurrentUser currentUser,
     [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
     : IRequestHandler<ApproveJournalEntryCommand, DefaultIdType>
 {
@@ -21,21 +24,19 @@ public sealed class ApproveJournalEntryHandler(
             throw new JournalEntryNotFoundException(request.JournalEntryId);
         }
 
-        if (string.IsNullOrWhiteSpace(request.ApprovedBy))
-        {
-            throw new ArgumentException("ApprovedBy is required for journal entry approval.");
-        }
+        var approverId = currentUser.GetUserId();
+        var approverName = currentUser.GetUserName();
 
         // Validate that the entry is balanced before approving
         journalEntry.ValidateBalance();
 
-        journalEntry.Approve(request.ApprovedBy);
+        journalEntry.Approve(approverId, approverName);
 
         await repository.UpdateAsync(journalEntry, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
         logger.LogInformation("Journal entry {JournalEntryId} approved by {ApprovedBy}", 
-            request.JournalEntryId, request.ApprovedBy);
+            request.JournalEntryId, approverName);
 
         return journalEntry.Id;
     }

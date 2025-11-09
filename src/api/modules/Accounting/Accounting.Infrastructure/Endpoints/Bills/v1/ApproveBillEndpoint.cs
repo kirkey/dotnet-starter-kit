@@ -13,15 +13,15 @@ public static class ApproveBillEndpoint
     internal static RouteHandlerBuilder MapApproveBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/approve", async (DefaultIdType id, ApproveBillRequest request, ISender mediator) =>
+            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ISender mediator) =>
             {
-                var command = new ApproveBillCommand(id, request.ApprovedBy);
+                var command = new ApproveBillCommand(id);
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ApproveBillEndpoint))
             .WithSummary("Approve a bill")
-            .WithDescription("Approves a bill for payment processing.")
+            .WithDescription("Approves a bill for payment processing. The approver is automatically determined from the current user session.")
             .Produces<ApproveBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
@@ -29,8 +29,3 @@ public static class ApproveBillEndpoint
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }
-
-/// <summary>
-/// Request to approve a bill.
-/// </summary>
-public sealed record ApproveBillRequest(string ApprovedBy);
