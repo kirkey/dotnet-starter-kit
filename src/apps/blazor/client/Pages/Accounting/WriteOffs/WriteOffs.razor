@@ -1,0 +1,89 @@
+@page "/accounting/write-offs"
+
+<PageHeader Title="Write-Off Management" Header="Write-Off Management" SubHeader="Manage write-offs, approve bad debt, and track recoveries." />
+
+<EntityTable @ref="_table" TEntity="WriteOffResponse" TId="DefaultIdType" TRequest="WriteOffViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchReferenceNumber"
+                          Label="Reference Number"
+                          Placeholder="Search by reference"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchWriteOffType"
+                       Label="Write-Off Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("BadDebt")">Bad Debt</MudSelectItem>
+                <MudSelectItem Value="@("CollectionAdjustment")">Collection Adjustment</MudSelectItem>
+                <MudSelectItem Value="@("Discount")">Discount</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchApprovalStatus"
+                       Label="Approval Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("Rejected")">Rejected</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("Posted")">Posted</MudSelectItem>
+                <MudSelectItem Value="@("Reversed")">Reversed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchOnlyRecovered"
+                       Label="Recovered Only"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="writeOff">
+        @if (writeOff.ApprovalStatus == "Pending")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Check" OnClick="@(() => OnApprove(writeOff))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Close" OnClick="@(() => OnReject(writeOff))">
+                Reject
+            </MudMenuItem>
+        }
+        @if (writeOff.ApprovalStatus == "Approved" && writeOff.Status != "Posted")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Send" OnClick="@(() => OnPost(writeOff))">
+                Post
+            </MudMenuItem>
+        }
+        @if (writeOff.Status == "Posted" && !writeOff.IsRecovered)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.MoneyOff" OnClick="@(() => OnRecordRecovery(writeOff))">
+                Record Recovery
+            </MudMenuItem>
+        }
+        @if (writeOff.Status == "Posted")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Undo" OnClick="@(() => OnReverse(writeOff))">
+                Reverse
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OnViewDetails(writeOff.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>
+

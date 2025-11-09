@@ -114,10 +114,11 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Bank Reconciliations", Icon = Icons.Material.Filled.AccountBalanceWallet, Href = "/accounting/bank-reconciliations", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Checks", Icon = Icons.Material.Filled.Payment, Href = "/accounting/checks", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
-                        // ========== BUDGETING & PROJECTS ==========
+                        // ========== PLANNING & TRACKING ==========
                         new MenuSectionSubItemModel { Title = "Planning & Tracking", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Budgets", Icon = Icons.Material.Filled.MonetizationOn, Href = "/accounting/budgets", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Projects", Icon = Icons.Material.Filled.Work, Href = "/accounting/projects", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Write-Offs", Icon = Icons.Material.Filled.MoneyOff, Href = "/accounting/write-offs", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         
                         // ========== PERIOD MANAGEMENT & REPORTING ==========
                         new MenuSectionSubItemModel { Title = "Period Close & Accruals", IsGroupHeader = true },

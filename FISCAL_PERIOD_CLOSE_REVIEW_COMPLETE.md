@@ -79,7 +79,7 @@ new EntityField<FiscalPeriodCloseResponse>(pc => pc.CloseDate, "Close Date", "Cl
 
 **After:**
 ```csharp
-new EntityField<FiscalPeriodCloseResponse>(pc => pc.PeriodStartDate, "Start Date", "PeriodStartDate", typeof(DateTime)),
+new EntityField<FiscalPeriodCloseResponse>(pc => pc.PeriodStartDate, "Start Date", "PeriodStartDate", typeof(DateOnly)),
 new EntityField<FiscalPeriodCloseResponse>(pc => pc.CloseDate, "Close Date", "CloseDate", typeof(DateTime?)),
 ```
 
@@ -99,7 +99,7 @@ private bool _loading = false;
 
 **After:**
 ```csharp
-[CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
+[CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
 
 /// <summary>
 /// Event callback triggered when a task is completed.

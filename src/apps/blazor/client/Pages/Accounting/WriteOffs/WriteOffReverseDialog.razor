@@ -1,0 +1,23 @@
+@inject IClient Client
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Reverse Write-Off</MudText>
+            <MudAlert Severity="Severity.Error">
+                Reversing this write-off will cancel the journal entry and restore the accounts receivable balance. This action should only be performed if the write-off was posted in error.
+            </MudAlert>
+            <MudTextField @bind-Value="_reason" 
+                          Label="Reversal Reason (Optional)" 
+                          Variant="Variant.Outlined" 
+                          Lines="4"
+                          Placeholder="Enter reason for reversing this write-off" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Reverse" Color="Color.Error" Variant="Variant.Filled">Reverse Write-Off</MudButton>
+    </DialogActions>
+</MudDialog>
+

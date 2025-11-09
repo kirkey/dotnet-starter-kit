@@ -1,0 +1,29 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Record Recovery</MudText>
+            <MudAlert Severity="Severity.Success">
+                Record a recovery if the customer has paid back all or part of the previously written-off amount.
+            </MudAlert>
+            <MudNumericField @bind-Value="_recoveryAmount" 
+                             Label="Recovery Amount (Required)" 
+                             Variant="Variant.Outlined"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                             Required="true"
+                             Min="0.01m" />
+            <MudTextField @bind-Value="_journalEntryId" 
+                          Label="Journal Entry ID (Optional)" 
+                          Variant="Variant.Outlined"
+                          Placeholder="Enter the recovery journal entry ID if available" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Record" Color="Color.Success" Variant="Variant.Filled" Disabled="@(_recoveryAmount <= 0)">
+            Record Recovery
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

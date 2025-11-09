@@ -28,7 +28,7 @@ Type 'IMudDialogInstance' not found
 [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
 
 // After
-[CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
+[CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
 ```
 
 ### 2. ✅ All Command Instantiations Updated

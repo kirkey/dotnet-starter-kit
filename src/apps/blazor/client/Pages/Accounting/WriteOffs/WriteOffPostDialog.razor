@@ -1,0 +1,22 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Post Write-Off</MudText>
+            <MudAlert Severity="Severity.Info">
+                Posting this write-off will create a journal entry that debits the bad debt expense account and credits accounts receivable.
+            </MudAlert>
+            <MudTextField @bind-Value="_journalEntryId" 
+                          Label="Journal Entry ID (Required)" 
+                          Variant="Variant.Outlined"
+                          Placeholder="Enter the journal entry ID"
+                          Required="true" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Post" Color="Color.Primary" Variant="Variant.Filled" Disabled="@(_journalEntryId == Guid.Empty)">
+            Post Write-Off
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

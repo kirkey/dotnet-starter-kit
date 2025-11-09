@@ -1,0 +1,20 @@
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Reject Write-Off</MudText>
+            <MudAlert Severity="Severity.Warning">
+                Are you sure you want to reject this write-off? This action will prevent it from being posted to the general ledger.
+            </MudAlert>
+            <MudTextField @bind-Value="_reason" 
+                          Label="Rejection Reason" 
+                          Variant="Variant.Outlined" 
+                          Lines="4"
+                          Placeholder="Enter reason for rejection (optional)" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Reject" Color="Color.Error" Variant="Variant.Filled">Reject Write-Off</MudButton>
+    </DialogActions>
+</MudDialog>
+
