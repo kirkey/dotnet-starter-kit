@@ -125,6 +125,7 @@ public class MenuService : IMenuService
                         // ========== PERIOD MANAGEMENT & REPORTING ==========
                         new MenuSectionSubItemModel { Title = "Period Close & Accruals", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Trial Balance", Icon = Icons.Material.Filled.Balance, Href = "/accounting/trial-balance", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Financial Statements", Icon = Icons.Material.Filled.Assessment, Href = "/accounting/financial-statements", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Fiscal Period Close", Icon = Icons.Material.Filled.Lock, Href = "/accounting/fiscal-period-close", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Retained Earnings", Icon = Icons.Material.Filled.TrendingUp, Href = "/accounting/retained-earnings", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Accounting Periods", Icon = Icons.Material.Filled.CalendarMonth, Href = "/accounting/periods", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },

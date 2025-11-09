@@ -31,9 +31,7 @@ public class FixedAssetResponse(
     string? modelNumber,
     DateTime? lastMaintenanceDate,
     DateTime? nextMaintenanceDate,
-    bool requiresUsoaReporting,
-    string? description,
-    string? notes) : BaseDto
+    bool requiresUsoaReporting) : BaseDto
 {
     /// <summary>
     /// Unique identifier for the fixed asset.
