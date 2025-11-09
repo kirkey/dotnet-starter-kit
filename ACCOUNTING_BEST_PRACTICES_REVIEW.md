@@ -62,7 +62,7 @@ public record GetTaxCodeRequest(DefaultIdType Id) : IRequest<TaxCodeResponse>;
 | RetainedEarnings | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | GeneralLedgers | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | TaxCodes | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
-| ChartOfAccounts | ? | ? | ? | 🔄 Pending |
+| ChartOfAccounts | ✅ Fixed | ✅ Fixed | ✅ Fixed | ✅ Complete |
 | JournalEntries | ? | ? | ? | 🔄 Pending |
 | Banks | ? | ? | ? | 🔄 Pending |
 | Vendors | ? | ? | ? | 🔄 Pending |

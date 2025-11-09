@@ -10,13 +10,14 @@ public static class ChartOfAccountGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetChartOfAccountQuery(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetChartOfAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ChartOfAccountGetEndpoint))
-            .WithSummary("get a chart of account by id")
-            .WithDescription("get a chart of account by id")
+            .WithSummary("Get a chart of account by ID")
+            .WithDescription("Retrieves a chart of account by its unique identifier")
             .Produces<ChartOfAccountResponse>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

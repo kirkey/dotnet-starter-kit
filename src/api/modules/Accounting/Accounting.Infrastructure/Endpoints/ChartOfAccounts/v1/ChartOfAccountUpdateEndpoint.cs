@@ -9,14 +9,15 @@ public static class ChartOfAccountUpdateEndpoint
         return endpoints
             .MapPut("/{id:guid}", async (DefaultIdType id, UpdateChartOfAccountCommand request, ISender mediator) =>
             {
-                if (id != request.Id) return Results.BadRequest();
+                request.Id = id;
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ChartOfAccountUpdateEndpoint))
-            .WithSummary("update a chart of account")
-            .WithDescription("update a chart of account")
+            .WithSummary("Update a chart of account")
+            .WithDescription("Updates an existing chart of account")
             .Produces<DefaultIdType>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission("Permissions.Accounting.Update")
             .MapToApiVersion(1);
     }

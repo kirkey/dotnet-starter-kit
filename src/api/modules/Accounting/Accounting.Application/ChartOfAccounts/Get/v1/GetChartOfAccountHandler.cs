@@ -2,12 +2,16 @@ using Accounting.Application.ChartOfAccounts.Responses;
 using Accounting.Application.ChartOfAccounts.Specs;
 
 namespace Accounting.Application.ChartOfAccounts.Get.v1;
+
+/// <summary>
+/// Handler for retrieving a chart of account by ID.
+/// </summary>
 public sealed class GetChartOfAccountHandler(
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> repository,
     ICacheService cache)
-    : IRequestHandler<GetChartOfAccountQuery, ChartOfAccountResponse>
+    : IRequestHandler<GetChartOfAccountRequest, ChartOfAccountResponse>
 {
-    public async Task<ChartOfAccountResponse> Handle(GetChartOfAccountQuery request, CancellationToken cancellationToken)
+    public async Task<ChartOfAccountResponse> Handle(GetChartOfAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(

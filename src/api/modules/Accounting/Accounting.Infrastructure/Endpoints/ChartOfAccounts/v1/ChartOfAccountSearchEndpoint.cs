@@ -8,15 +8,16 @@ public static class ChartOfAccountSearchEndpoint
     internal static RouteHandlerBuilder MapChartOfAccountSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/search", async (ISender mediator, [FromBody] SearchChartOfAccountQuery query) =>
+            .MapPost("/search", async (ISender mediator, [FromBody] SearchChartOfAccountRequest request) =>
             {
-                var response = await mediator.Send(query).ConfigureAwait(false);
+                var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ChartOfAccountSearchEndpoint))
-            .WithSummary("Gets a list of chart of accounts")
-            .WithDescription("Gets a list of chart of accounts with pagination and filtering support")
+            .WithSummary("Search chart of accounts")
+            .WithDescription("Searches chart of accounts with pagination and filtering support")
             .Produces<PagedList<ChartOfAccountResponse>>()
+            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission("Permissions.Accounting.View")
             .MapToApiVersion(1);
     }

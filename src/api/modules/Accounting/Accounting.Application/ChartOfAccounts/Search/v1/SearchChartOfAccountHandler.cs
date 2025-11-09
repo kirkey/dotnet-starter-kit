@@ -2,11 +2,14 @@ using Accounting.Application.ChartOfAccounts.Responses;
 
 namespace Accounting.Application.ChartOfAccounts.Search.v1;
 
+/// <summary>
+/// Handler for searching chart of accounts.
+/// </summary>
 public sealed class SearchChartOfAccountHandler(
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> repository)
-    : IRequestHandler<SearchChartOfAccountQuery, PagedList<ChartOfAccountResponse>>
+    : IRequestHandler<SearchChartOfAccountRequest, PagedList<ChartOfAccountResponse>>
 {
-    public async Task<PagedList<ChartOfAccountResponse>> Handle(SearchChartOfAccountQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<ChartOfAccountResponse>> Handle(SearchChartOfAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
