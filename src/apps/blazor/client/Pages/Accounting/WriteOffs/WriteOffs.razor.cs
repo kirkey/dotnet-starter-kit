@@ -38,6 +38,10 @@ public partial class WriteOffs
             {
                 var request = new SearchWriteOffsRequest
                 {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
                     ReferenceNumber = SearchReferenceNumber,
                     CustomerId = null,
                     WriteOffType = SearchWriteOffType,
@@ -45,11 +49,7 @@ public partial class WriteOffs
                     IsRecovered = SearchOnlyRecovered ? true : null
                 };
                 var result = await Client.WriteOffSearchEndpointAsync("1", request);
-                return new PaginationResponse<WriteOffResponse>
-                {
-                    Items = result.ToList(),
-                    TotalCount = result.Count
-                };
+                return result.Adapt<PaginationResponse<WriteOffResponse>>();
             },
             createFunc: async vm => await CreateWriteOffAsync(vm),
             updateFunc: async (id, vm) => await UpdateWriteOffAsync(id, vm),

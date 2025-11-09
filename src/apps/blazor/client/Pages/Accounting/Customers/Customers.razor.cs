@@ -34,7 +34,13 @@ public partial class Customers
             ],
             searchFunc: async filter =>
             {
-                var request = new CustomerSearchRequest();
+                var request = new CustomerSearchRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.CustomerSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<CustomerSearchResponse>>();
             },

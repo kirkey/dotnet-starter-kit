@@ -19,11 +19,11 @@
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudText Typo="Typo.subtitle2" Color="Color.Primary">Unit Price</MudText>
-                    <MudText>@Item.UnitPrice.ToString("C2")</MudText>
+                    <MudText>@Item.UnitPrice.ToString("N2")</MudText>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudText Typo="Typo.subtitle2" Color="Color.Primary">Total Value</MudText>
-                    <MudText><strong>@((Item.Quantity * Item.UnitPrice).ToString("C2"))</strong></MudText>
+                    <MudText><strong>@((Item.Quantity * Item.UnitPrice).ToString("N2"))</strong></MudText>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status</MudText>

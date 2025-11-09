@@ -58,6 +58,10 @@ public partial class GeneralLedgers
             {
                 var searchQuery = new GeneralLedgerSearchRequest
                 {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
                     AccountId = SearchAccountId,
                     PeriodId = SearchPeriodId,
                     UsoaClass = SearchUsoaClass,

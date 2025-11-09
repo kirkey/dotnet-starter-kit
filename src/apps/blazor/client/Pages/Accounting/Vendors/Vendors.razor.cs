@@ -44,7 +44,13 @@ public partial class Vendors
             idFunc: vendor => vendor.Id,
             searchFunc: async filter =>
             {
-                var request = new VendorSearchRequest();
+                var request = new VendorSearchRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.VendorSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<VendorSearchResponse>>();
             },

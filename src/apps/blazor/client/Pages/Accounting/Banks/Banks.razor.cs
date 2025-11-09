@@ -36,7 +36,13 @@ public partial class Banks
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var request = new BankSearchRequest();
+                var request = new BankSearchRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.BankSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<BankResponse>>();
             },

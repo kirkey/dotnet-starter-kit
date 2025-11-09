@@ -32,13 +32,14 @@ public partial class DeferredRevenues
             {
                 var request = new SearchDeferredRevenuesRequest
                 {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
                     DeferredRevenueNumber = SearchNumber,
                     IsRecognized = SearchUnrecognizedOnly ? false : null,
                     RecognitionDateFrom = SearchDateFrom,
                     RecognitionDateTo = SearchDateTo,
-                    PageNumber = filter.PageNumber,
-                    PageSize = filter.PageSize,
-                    OrderBy = filter.OrderBy
                 };
                 var result = await Client.DeferredRevenueSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<DeferredRevenueResponse>>();

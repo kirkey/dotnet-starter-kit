@@ -23,13 +23,13 @@
                            Editable="true" />
             
             <MudText Typo="Typo.body2" Color="Color.Secondary">
-                Remaining Balance: <strong>@RemainingAmount.ToString("C2")</strong>
+                Remaining Balance: <strong>@RemainingAmount.ToString("N2")</strong>
             </MudText>
             
             @if (_amortizationAmount > 0)
             {
                 <MudText Typo="Typo.body2" Color="Color.Info">
-                    After amortization: <strong>@((RemainingAmount - _amortizationAmount).ToString("C2"))</strong>
+                    After amortization: <strong>@((RemainingAmount - _amortizationAmount).ToString("N2"))</strong>
                 </MudText>
             }
         </MudStack>

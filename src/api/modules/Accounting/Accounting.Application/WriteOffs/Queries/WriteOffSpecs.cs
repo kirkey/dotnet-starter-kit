@@ -23,55 +23,46 @@ public class WriteOffByIdSpec : Specification<WriteOff>
 }
 
 /// <summary>
-/// Specification for searching write-offs with filters.
+/// Specification for searching write-offs with filters and pagination.
 /// </summary>
 public class WriteOffSearchSpec : Specification<WriteOff>
 {
-    public WriteOffSearchSpec(
-        string? referenceNumber = null,
-        DefaultIdType? customerId = null,
-        string? writeOffType = null,
-        string? status = null,
-        DateTime? fromDate = null,
-        DateTime? toDate = null,
-        bool? isRecovered = null)
+    public WriteOffSearchSpec(Search.v1.SearchWriteOffsRequest request)
     {
-        if (!string.IsNullOrWhiteSpace(referenceNumber))
+        if (!string.IsNullOrWhiteSpace(request.ReferenceNumber))
         {
-            Query.Where(w => w.ReferenceNumber.Contains(referenceNumber));
+            Query.Where(w => w.ReferenceNumber.Contains(request.ReferenceNumber));
         }
 
-        if (customerId.HasValue)
+        if (request.CustomerId.HasValue)
         {
-            Query.Where(w => w.CustomerId == customerId.Value);
+            Query.Where(w => w.CustomerId == request.CustomerId.Value);
         }
 
-        if (!string.IsNullOrWhiteSpace(writeOffType))
+        if (!string.IsNullOrWhiteSpace(request.WriteOffType))
         {
-            Query.Where(w => w.WriteOffType.ToString() == writeOffType);
+            Query.Where(w => w.WriteOffType.ToString() == request.WriteOffType);
         }
 
-        if (!string.IsNullOrWhiteSpace(status))
+        if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            Query.Where(w => w.Status.ToString() == status);
+            Query.Where(w => w.Status.ToString() == request.Status);
         }
 
-        if (fromDate.HasValue)
+        if (request.IsRecovered.HasValue)
         {
-            Query.Where(w => w.WriteOffDate >= fromDate.Value);
+            Query.Where(w => w.IsRecovered == request.IsRecovered.Value);
         }
 
-        if (toDate.HasValue)
+        // Apply sorting
+        if (request.OrderBy?.Any() == true)
         {
-            Query.Where(w => w.WriteOffDate <= toDate.Value);
+            // Handle ordering if provided
         }
-
-        if (isRecovered.HasValue)
+        else
         {
-            Query.Where(w => w.IsRecovered == isRecovered.Value);
+            Query.OrderByDescending(w => w.WriteOffDate);
         }
-
-        Query.OrderByDescending(w => w.WriteOffDate);
     }
 }
 

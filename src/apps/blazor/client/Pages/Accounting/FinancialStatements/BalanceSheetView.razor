@@ -80,7 +80,7 @@
                     @if (!_balanceSheet.IsBalanced)
                     {
                         <MudAlert Severity="Severity.Warning">
-                            <strong>Warning:</strong> Balance Sheet is not balanced! Total Assets: @_balanceSheet.TotalAssets.ToString("C2"), Total Liabilities & Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("C2")
+                            <strong>Warning:</strong> Balance Sheet is not balanced! Total Assets: @_balanceSheet.TotalAssets.ToString("N2"), Total Liabilities & Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("N2")
                         </MudAlert>
                     }
 
@@ -109,13 +109,13 @@
                                     <tr>
                                         <td>@line.AccountCode</td>
                                         <td>@line.AccountName</td>
-                                        <td class="text-right">@line.Amount.ToString("C2")</td>
+                                        <td class="text-right">@line.Amount.ToString("N2")</td>
                                         @if (_includeComparative && line.ComparativeAmount.HasValue)
                                         {
-                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("C2")</td>
+                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("N2")</td>
                                             <td class="text-right">
                                                 <span style="color: @(line.Change >= 0 ? "green" : "red")">
-                                                    @line.Change.Value.ToString("C2")
+                                                    @line.Change.Value.ToString("N2")
                                                 </span>
                                             </td>
                                         }
@@ -123,7 +123,7 @@
                                 }
                                 <tr style="font-weight: bold; background-color: #f5f5f5;">
                                     <td colspan="2">Total @subsection.SubSectionName</td>
-                                    <td class="text-right">@subsection.Total.ToString("C2")</td>
+                                    <td class="text-right">@subsection.Total.ToString("N2")</td>
                                     @if (_includeComparative)
                                     {
                                         <td colspan="2"></td>
@@ -133,7 +133,7 @@
                         </MudSimpleTable>
                     }
                     <MudText Typo="Typo.h6" Class="mt-3" Style="font-weight: bold;">
-                        Total Assets: @_balanceSheet.Assets.Total.ToString("C2")
+                        Total Assets: @_balanceSheet.Assets.Total.ToString("N2")
                     </MudText>
 
                     <!-- Liabilities Section -->
@@ -161,13 +161,13 @@
                                     <tr>
                                         <td>@line.AccountCode</td>
                                         <td>@line.AccountName</td>
-                                        <td class="text-right">@line.Amount.ToString("C2")</td>
+                                        <td class="text-right">@line.Amount.ToString("N2")</td>
                                         @if (_includeComparative && line.ComparativeAmount.HasValue)
                                         {
-                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("C2")</td>
+                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("N2")</td>
                                             <td class="text-right">
                                                 <span style="color: @(line.Change >= 0 ? "red" : "green")">
-                                                    @line.Change.Value.ToString("C2")
+                                                    @line.Change.Value.ToString("N2")
                                                 </span>
                                             </td>
                                         }
@@ -175,7 +175,7 @@
                                 }
                                 <tr style="font-weight: bold; background-color: #f5f5f5;">
                                     <td colspan="2">Total @subsection.SubSectionName</td>
-                                    <td class="text-right">@subsection.Total.ToString("C2")</td>
+                                    <td class="text-right">@subsection.Total.ToString("N2")</td>
                                     @if (_includeComparative)
                                     {
                                         <td colspan="2"></td>
@@ -185,7 +185,7 @@
                         </MudSimpleTable>
                     }
                     <MudText Typo="Typo.h6" Class="mt-3" Style="font-weight: bold;">
-                        Total Liabilities: @_balanceSheet.Liabilities.Total.ToString("C2")
+                        Total Liabilities: @_balanceSheet.Liabilities.Total.ToString("N2")
                     </MudText>
 
                     <!-- Equity Section -->
@@ -213,13 +213,13 @@
                                     <tr>
                                         <td>@line.AccountCode</td>
                                         <td>@line.AccountName</td>
-                                        <td class="text-right">@line.Amount.ToString("C2")</td>
+                                        <td class="text-right">@line.Amount.ToString("N2")</td>
                                         @if (_includeComparative && line.ComparativeAmount.HasValue)
                                         {
-                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("C2")</td>
+                                            <td class="text-right">@line.ComparativeAmount.Value.ToString("N2")</td>
                                             <td class="text-right">
                                                 <span style="color: @(line.Change >= 0 ? "green" : "red")">
-                                                    @line.Change.Value.ToString("C2")
+                                                    @line.Change.Value.ToString("N2")
                                                 </span>
                                             </td>
                                         }
@@ -227,7 +227,7 @@
                                 }
                                 <tr style="font-weight: bold; background-color: #f5f5f5;">
                                     <td colspan="2">Total @subsection.SubSectionName</td>
-                                    <td class="text-right">@subsection.Total.ToString("C2")</td>
+                                    <td class="text-right">@subsection.Total.ToString("N2")</td>
                                     @if (_includeComparative)
                                     {
                                         <td colspan="2"></td>
@@ -237,14 +237,14 @@
                         </MudSimpleTable>
                     }
                     <MudText Typo="Typo.h6" Class="mt-3" Style="font-weight: bold;">
-                        Total Equity: @_balanceSheet.Equity.Total.ToString("C2")
+                        Total Equity: @_balanceSheet.Equity.Total.ToString("N2")
                     </MudText>
 
                     <!-- Grand Total -->
                     <MudDivider Class="my-4" />
                     <MudPaper Elevation="3" Class="pa-3" Style="background-color: #e3f2fd;">
                         <MudText Typo="Typo.h5" Style="font-weight: bold;">
-                            Total Liabilities and Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("C2")
+                            Total Liabilities and Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("N2")
                         </MudText>
                     </MudPaper>
                 </MudStack>

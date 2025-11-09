@@ -92,16 +92,16 @@ public partial class JournalEntries
             {
                 var request = new SearchJournalEntriesRequest
                 {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
                     ReferenceNumber = ReferenceNumber,
                     Source = Source,
                     FromDate = FromDate,
                     ToDate = ToDate,
                     IsPosted = IsPosted,
                     ApprovalStatus = ApprovalStatus,
-                    
-                    
-                    
-                    
                 };
 
                 var result = await Client.JournalEntrySearchEndpointAsync("1", request);

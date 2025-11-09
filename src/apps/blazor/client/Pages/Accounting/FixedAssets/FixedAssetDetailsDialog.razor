@@ -55,15 +55,15 @@
                     </MudItem>
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.subtitle2" Color="Color.Primary">Purchase Price</MudText>
-                        <MudText>@_asset.PurchasePrice.ToString("C2")</MudText>
+                        <MudText>@_asset.PurchasePrice.ToString("N2")</MudText>
                     </MudItem>
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.subtitle2" Color="Color.Primary">Current Book Value</MudText>
-                        <MudText>@_asset.CurrentBookValue.ToString("C2")</MudText>
+                        <MudText>@_asset.CurrentBookValue.ToString("N2")</MudText>
                     </MudItem>
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.subtitle2" Color="Color.Primary">Salvage Value</MudText>
-                        <MudText>@_asset.SalvageValue.ToString("C2")</MudText>
+                        <MudText>@_asset.SalvageValue.ToString("N2")</MudText>
                     </MudItem>
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.subtitle2" Color="Color.Primary">Service Life</MudText>
@@ -88,7 +88,7 @@
                         </MudItem>
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.subtitle2" Color="Color.Primary">Disposal Amount</MudText>
-                            <MudText>@(_asset.DisposalAmount?.ToString("C2") ?? "N/A")</MudText>
+                            <MudText>@(_asset.DisposalAmount?.ToString("N2") ?? "N/A")</MudText>
                         </MudItem>
                     </MudGrid>
                 }
