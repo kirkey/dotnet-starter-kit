@@ -25,7 +25,13 @@ public partial class ChartOfAccounts
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                var request = new SearchChartOfAccountRequest();
+                var request = new SearchChartOfAccountRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
                 var result = await Client.ChartOfAccountSearchEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<ChartOfAccountResponse>>();
             },
