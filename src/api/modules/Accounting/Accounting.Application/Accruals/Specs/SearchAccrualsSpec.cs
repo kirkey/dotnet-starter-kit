@@ -11,17 +11,17 @@ public sealed class SearchAccrualsSpec : Specification<Accrual, AccrualResponse>
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchAccrualsSpec"/> class using the provided query.
     /// </summary>
-    /// <param name="query">The search query containing filter parameters.</param>
-    public SearchAccrualsSpec(SearchAccrualsQuery query)
+    /// <param name="request">The search query containing filter parameters.</param>
+    public SearchAccrualsSpec(SearchAccrualsRequest request)
     {
-        if (!string.IsNullOrWhiteSpace(query.NumberLike))
-            Query.Where(a => a.AccrualNumber.Contains(query.NumberLike));
-        if (query.DateFrom.HasValue)
-            Query.Where(a => a.AccrualDate >= query.DateFrom.Value);
-        if (query.DateTo.HasValue)
-            Query.Where(a => a.AccrualDate <= query.DateTo.Value);
-        if (query.IsReversed.HasValue)
-            Query.Where(a => a.IsReversed == query.IsReversed.Value);
+        if (!string.IsNullOrWhiteSpace(request.NumberLike))
+            Query.Where(a => a.AccrualNumber.Contains(request.NumberLike));
+        if (request.DateFrom.HasValue)
+            Query.Where(a => a.AccrualDate >= request.DateFrom.Value);
+        if (request.DateTo.HasValue)
+            Query.Where(a => a.AccrualDate <= request.DateTo.Value);
+        if (request.IsReversed.HasValue)
+            Query.Where(a => a.IsReversed == request.IsReversed.Value);
 
         Query.OrderByDescending(a => a.AccrualDate).ThenBy(a => a.AccrualNumber);
     }

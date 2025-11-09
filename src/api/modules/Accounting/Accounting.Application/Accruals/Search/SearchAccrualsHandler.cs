@@ -8,7 +8,7 @@ namespace Accounting.Application.Accruals.Search;
 /// </summary>
 public sealed class SearchAccrualsHandler(
     [FromKeyedServices("accounting:accruals")] IReadRepository<Accrual> repository)
-    : IRequestHandler<SearchAccrualsQuery, PagedList<AccrualResponse>>
+    : IRequestHandler<SearchAccrualsRequest, PagedList<AccrualResponse>>
 {
     /// <summary>
     /// Processes the search query, validates input, and returns a paged list of accrual responses.
@@ -17,7 +17,7 @@ public sealed class SearchAccrualsHandler(
     /// <param name="cancellationToken">Token to cancel the operation.</param>
     /// <returns>Paged list of accrual responses matching the query.</returns>
     /// <exception cref="ValidationException">Thrown if query validation fails.</exception>
-    public async Task<PagedList<AccrualResponse>> Handle(SearchAccrualsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<AccrualResponse>> Handle(SearchAccrualsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         request.Validate();

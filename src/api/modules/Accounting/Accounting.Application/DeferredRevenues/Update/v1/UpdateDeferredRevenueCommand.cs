@@ -1,7 +1,22 @@
 namespace Accounting.Application.DeferredRevenues.Update.v1;
 
-public sealed record UpdateDeferredRevenueCommand(
-    DefaultIdType Id,
-    string? Description = null,
-    DateTime? RecognitionDate = null
-) : IRequest<DefaultIdType>;
+/// <summary>
+/// Command to update a deferred revenue.
+/// </summary>
+public sealed record UpdateDeferredRevenueCommand : IRequest<DefaultIdType>
+{
+    /// <summary>
+    /// Deferred revenue identifier.
+    /// </summary>
+    public DefaultIdType Id { get; init; }
+    
+    /// <summary>
+    /// Description.
+    /// </summary>
+    public string? Description { get; init; }
+    
+    /// <summary>
+    /// Recognition date.
+    /// </summary>
+    public DateTime? RecognitionDate { get; init; }
+}
