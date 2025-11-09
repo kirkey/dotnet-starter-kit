@@ -5,13 +5,13 @@
 | Metric | Count | % |
 |--------|-------|---|
 | **Total Features** | 42 | 100% |
-| **✅ Complete (API + UI)** | 26 | 62% |
-| **🔶 API Only (Missing UI)** | 15 | 36% |
-| **⚠️ Needs Work** | 1 | 2% |
+| **✅ Complete (API + UI)** | 27 | 64% |
+| **🔶 API Only (Missing UI)** | 14 | 33% |
+| **⚠️ Needs Work** | 1 | 3% |
 
-**Bottom Line:** 15 features need UI implementation
+**Bottom Line:** 14 features need UI implementation
 
-**Latest Update:** Write-Offs & Fixed Assets UI completed (November 9, 2025)
+**Latest Update:** Depreciation Methods UI completed (November 9, 2025)
 
 ---
 
@@ -63,20 +63,20 @@
 - Projects
 - Accruals
 - Tax Codes
-- Write-Offs ⭐ NEW (Nov 9)
-- Fixed Assets ⭐ NEW (Nov 9)
+- Write-Offs ⭐
+- Fixed Assets ⭐
+- Depreciation Methods ⭐ NEW (Nov 9)
 
 ---
 
-## 🔶 Missing UI Pages (15 features)
+## 🔶 Missing UI Pages (14 features)
 
 ### Critical Priority (1) - Moving to High
 - Financial Statements (Balance Sheet, Income Statement, Cash Flow)
 
 ### High Priority (0) ✅ ALL COMPLETE!
 
-### Medium Priority (9)
-- Depreciation Methods
+### Medium Priority (8)
 - Inventory Items
 - Deferred Revenue
 - Prepaid Expenses
@@ -121,9 +121,9 @@ Each feature should follow this structure:
 |-------|----------|-------|-------|
 | Critical | 1 | 1-2 | 40-80 |
 | High | 0 | 0 | 0 |
-| Medium | 9 | 8-10 | 320-400 |
+| Medium | 8 | 7-9 | 280-360 |
 | Low | 5 | 4-6 | 160-240 |
-| **Total** | **15** | **13-18** | **520-720** |
+| **Total** | **14** | **12-17** | **480-680** |
 
 ---
 

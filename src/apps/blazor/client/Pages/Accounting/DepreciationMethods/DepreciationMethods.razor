@@ -1,0 +1,48 @@
+@page "/accounting/depreciation-methods"
+
+<PageHeader Title="Depreciation Methods" Header="Depreciation Methods" SubHeader="Manage depreciation calculation methods for fixed assets." />
+
+<EntityTable @ref="_table" TEntity="DepreciationMethodResponse" TId="DefaultIdType" TRequest="DepreciationMethodViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchMethodCode"
+                          Label="Method Code"
+                          Placeholder="Search by code (e.g., SL, DB)"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchMethodName"
+                          Label="Method Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchActiveOnly"
+                       Label="Active Only"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="method">
+        @if (method.IsActive)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => OnDeactivate(method))">
+                Deactivate
+            </MudMenuItem>
+        }
+        else
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnActivate(method))">
+                Activate
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OnViewDetails(method))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>
+

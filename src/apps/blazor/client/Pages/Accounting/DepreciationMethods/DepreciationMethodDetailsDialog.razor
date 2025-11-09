@@ -1,0 +1,71 @@
+@inject IClient Client
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate Color="Color.Primary" />
+        }
+        else if (_method is null)
+        {
+            <MudAlert Severity="Severity.Warning">Depreciation method not found.</MudAlert>
+        }
+        else
+        {
+            <MudStack Spacing="3">
+                <MudText Typo="Typo.h6">Depreciation Method Details</MudText>
+                <MudDivider />
+                
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Method Name</MudText>
+                        <MudText>@_method.Name</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Method Code</MudText>
+                        <MudText>@_method.MethodCode</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status</MudText>
+                        <MudChip T="string" Color="@(_method.IsActive ? Color.Success : Color.Default)" Size="Size.Small">
+                            @(_method.IsActive ? "Active" : "Inactive")
+                        </MudChip>
+                    </MudItem>
+                    @if (!string.IsNullOrWhiteSpace(_method.Formula))
+                    {
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle2" Color="Color.Primary">Formula</MudText>
+                            <MudText>@_method.Formula</MudText>
+                        </MudItem>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(_method.Description))
+                    {
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle2" Color="Color.Primary">Description</MudText>
+                            <MudText>@_method.Description</MudText>
+                        </MudItem>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(_method.Notes))
+                    {
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle2" Color="Color.Primary">Notes</MudText>
+                            <MudText>@_method.Notes</MudText>
+                        </MudItem>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(_method.Remarks))
+                    {
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle2" Color="Color.Primary">Remarks</MudText>
+                            <MudText>@_method.Remarks</MudText>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudStack>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
