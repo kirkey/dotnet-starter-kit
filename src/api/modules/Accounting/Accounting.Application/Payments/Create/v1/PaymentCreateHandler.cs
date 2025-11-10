@@ -6,22 +6,11 @@ namespace Accounting.Application.Payments.Create.v1;
 /// Handler for creating a new payment.
 /// Validates uniqueness of payment number and creates the payment record.
 /// </summary>
-public sealed class PaymentCreateHandler : IRequestHandler<PaymentCreateCommand, PaymentCreateResponse>
+public sealed class PaymentCreateHandler(
+    [FromKeyedServices("accounting:payments")] IRepository<Payment> repository,
+    ILogger<PaymentCreateHandler> logger)
+    : IRequestHandler<PaymentCreateCommand, PaymentCreateResponse>
 {
-    private readonly IRepository<Payment> _repository;
-    private readonly ILogger<PaymentCreateHandler> _logger;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PaymentCreateHandler"/> class.
-    /// </summary>
-    public PaymentCreateHandler(
-        IRepository<Payment> repository,
-        ILogger<PaymentCreateHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
-
     /// <summary>
     /// Handles the payment creation command.
     /// </summary>
@@ -29,14 +18,14 @@ public sealed class PaymentCreateHandler : IRequestHandler<PaymentCreateCommand,
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        _logger.LogInformation("Creating payment {PaymentNumber} for quantity {Amount}", 
+        logger.LogInformation("Creating payment {PaymentNumber} for quantity {Amount}", 
             request.PaymentNumber, request.Amount);
 
         // Check if payment number already exists
-        var existingPayments = await _repository.ListAsync(cancellationToken);
+        var existingPayments = await repository.ListAsync(cancellationToken);
         if (existingPayments.Any(p => p.PaymentNumber.Equals(request.PaymentNumber, StringComparison.OrdinalIgnoreCase)))
         {
-            _logger.LogWarning("Payment number {PaymentNumber} already exists", request.PaymentNumber);
+            logger.LogWarning("Payment number {PaymentNumber} already exists", request.PaymentNumber);
             throw new PaymentNumberAlreadyExistsException(request.PaymentNumber);
         }
 
@@ -54,10 +43,10 @@ public sealed class PaymentCreateHandler : IRequestHandler<PaymentCreateCommand,
         );
 
         // Persist the payment
-        await _repository.AddAsync(payment, cancellationToken);
-        await _repository.SaveChangesAsync(cancellationToken);
+        await repository.AddAsync(payment, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("Payment {PaymentNumber} created successfully with ID {PaymentId}", 
+        logger.LogInformation("Payment {PaymentNumber} created successfully with ID {PaymentId}", 
             payment.PaymentNumber, payment.Id);
 
         // Return response

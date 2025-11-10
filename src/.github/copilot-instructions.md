@@ -15,6 +15,20 @@ Only use string as enums.
 5. **ID in URL** - Not in request body for single-resource operations
 6. **Property-based** - Not positional parameters (for NSwag compatibility)
 
+## 🎨 Code Patterns Applied
+✅ **Keyed Services**: All handlers now use proper keyed services:
+✅ **Primary Constructor Parameters**: Modern C# constructor patterns
+✅ **No Field Assignments**: Using parameters directly
+✅ **SaveChangesAsync**: Proper transaction handling
+✅ **Specification Pattern**: For queries and business rules
+✅ **Pagination**: Full support with filtering
+✅ **CQRS**: Commands for writes, Requests for reads
+✅ **Response Pattern**: Consistent API contracts
+✅ **Domain Events**: Entities raise proper events
+✅ **Validation**: FluentValidation on all commands
+✅ **Versioning**: All in v1 folders
+✅ **Error Handling**: Custom exceptions with proper messages
+
 Pagination is handled by the repository layer, not specifications.
 
 Refer or review the md files if there are any related to the feature or functionality being implemented.

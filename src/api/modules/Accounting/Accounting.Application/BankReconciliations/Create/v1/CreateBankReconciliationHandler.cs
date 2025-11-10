@@ -2,7 +2,7 @@ namespace Accounting.Application.BankReconciliations.Create.v1;
 
 public sealed class CreateBankReconciliationHandler(
     ILogger<CreateBankReconciliationHandler> logger,
-    IRepository<BankReconciliation> repository)
+    [FromKeyedServices("accounting:bank-reconciliations")] IRepository<BankReconciliation> repository)
     : IRequestHandler<CreateBankReconciliationCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(CreateBankReconciliationCommand command, CancellationToken cancellationToken)

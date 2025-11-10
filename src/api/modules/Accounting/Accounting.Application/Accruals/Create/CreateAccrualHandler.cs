@@ -1,8 +1,8 @@
 namespace Accounting.Application.Accruals.Create;
 
 public sealed class CreateAccrualHandler(
-    IRepository<Accrual> repository,
-    IReadRepository<Accrual> readRepository)
+    [FromKeyedServices("accounting:accruals")] IRepository<Accrual> repository,
+    [FromKeyedServices("accounting:accruals")] IReadRepository<Accrual> readRepository)
     : IRequestHandler<CreateAccrualCommand, CreateAccrualResponse>
 {
     public async Task<CreateAccrualResponse> Handle(CreateAccrualCommand request, CancellationToken ct)
@@ -16,6 +16,7 @@ public sealed class CreateAccrualHandler(
 
         var entity = Accrual.Create(request.AccrualNumber, request.AccrualDate, request.Amount, request.Description ?? string.Empty);
         await repository.AddAsync(entity, ct);
+        await repository.SaveChangesAsync(ct);
         return new CreateAccrualResponse(entity.Id, entity.AccrualNumber);
     }
 }

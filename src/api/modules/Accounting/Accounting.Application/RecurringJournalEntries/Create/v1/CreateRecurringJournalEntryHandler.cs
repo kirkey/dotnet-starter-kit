@@ -2,7 +2,7 @@ namespace Accounting.Application.RecurringJournalEntries.Create.v1;
 
 public sealed class CreateRecurringJournalEntryHandler(
     ILogger<CreateRecurringJournalEntryHandler> logger,
-    IRepository<RecurringJournalEntry> repository)
+    [FromKeyedServices("accounting:recurring-journal-entries")] IRepository<RecurringJournalEntry> repository)
     : IRequestHandler<CreateRecurringJournalEntryCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(CreateRecurringJournalEntryCommand command, CancellationToken cancellationToken)

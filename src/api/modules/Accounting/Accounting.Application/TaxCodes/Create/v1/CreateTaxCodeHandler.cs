@@ -2,7 +2,7 @@ namespace Accounting.Application.TaxCodes.Create.v1;
 
 public sealed class CreateTaxCodeHandler(
     ILogger<CreateTaxCodeHandler> logger,
-    IRepository<TaxCode> repository)
+    [FromKeyedServices("accounting:tax-codes")] IRepository<TaxCode> repository)
     : IRequestHandler<CreateTaxCodeCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(CreateTaxCodeCommand command, CancellationToken cancellationToken)
