@@ -25,7 +25,7 @@ public sealed class GenerateRecurringJournalEntryHandler(
         var journalEntry = JournalEntry.Create(
             generateDate,
             journalNumber,
-            template.Description,
+            template.Description ?? "Recurring journal entry",
             "RecurringTemplate",
             template.PostingBatchId,
             template.Amount

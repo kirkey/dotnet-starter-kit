@@ -1,4 +1,5 @@
 using Accounting.Application.FiscalPeriodCloses.Queries;
+using FSH.Framework.Core.Identity.Users.Abstractions;
 
 namespace Accounting.Application.FiscalPeriodCloses.Commands.v1;
 
@@ -7,6 +8,7 @@ namespace Accounting.Application.FiscalPeriodCloses.Commands.v1;
 /// </summary>
 public sealed class CompleteFiscalPeriodCloseHandler(
     ILogger<CompleteFiscalPeriodCloseHandler> logger,
+    ICurrentUser currentUser,
     [FromKeyedServices("accounting")] IRepository<FiscalPeriodClose> repository)
     : IRequestHandler<CompleteFiscalPeriodCloseCommand, DefaultIdType>
 {
@@ -22,13 +24,14 @@ public sealed class CompleteFiscalPeriodCloseHandler(
             throw new FiscalPeriodCloseByIdNotFoundException(request.FiscalPeriodCloseId);
         }
 
-        fiscalPeriodClose.Complete(request.CompletedBy);
+        var completedBy = currentUser.GetUserName() ?? "Unknown";
+        fiscalPeriodClose.Complete(completedBy);
 
         await repository.UpdateAsync(fiscalPeriodClose, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
         logger.LogInformation("Fiscal period close completed {CloseId} by {CompletedBy}", 
-            fiscalPeriodClose.Id, request.CompletedBy);
+            fiscalPeriodClose.Id, completedBy);
         return fiscalPeriodClose.Id;
     }
 }

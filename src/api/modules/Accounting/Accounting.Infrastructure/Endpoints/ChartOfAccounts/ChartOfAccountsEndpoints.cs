@@ -16,12 +16,19 @@ public static class ChartOfAccountsEndpoints
             .WithTags("Chart-Of-Accounts")
             .WithDescription("Endpoints for managing chart of accounts");
 
-        // Version 1 endpoints
+        // CRUD endpoints
         chartOfAccountsGroup.MapChartOfAccountCreateEndpoint();
+        chartOfAccountsGroup.MapChartOfAccountGetEndpoint();
         chartOfAccountsGroup.MapChartOfAccountUpdateEndpoint();
         chartOfAccountsGroup.MapChartOfAccountDeleteEndpoint();
-        chartOfAccountsGroup.MapChartOfAccountGetEndpoint();
         chartOfAccountsGroup.MapChartOfAccountSearchEndpoint();
+        
+        // Workflow endpoints
+        chartOfAccountsGroup.MapChartOfAccountActivateEndpoint();
+        chartOfAccountsGroup.MapChartOfAccountDeactivateEndpoint();
+        chartOfAccountsGroup.MapChartOfAccountUpdateBalanceEndpoint();
+        
+        // Import/Export endpoints
         chartOfAccountsGroup.MapChartOfAccountImportEndpoint();
         chartOfAccountsGroup.MapChartOfAccountExportEndpoint();
 

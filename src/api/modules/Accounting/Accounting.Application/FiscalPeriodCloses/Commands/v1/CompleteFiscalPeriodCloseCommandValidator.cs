@@ -2,6 +2,7 @@ namespace Accounting.Application.FiscalPeriodCloses.Commands.v1;
 
 /// <summary>
 /// Validator for CompleteFiscalPeriodCloseCommand.
+/// The completer is automatically determined from the current user session.
 /// </summary>
 public sealed class CompleteFiscalPeriodCloseCommandValidator : AbstractValidator<CompleteFiscalPeriodCloseCommand>
 {
@@ -10,12 +11,6 @@ public sealed class CompleteFiscalPeriodCloseCommandValidator : AbstractValidato
         RuleFor(x => x.FiscalPeriodCloseId)
             .NotEmpty()
             .WithMessage("Fiscal period close ID is required.");
-
-        RuleFor(x => x.CompletedBy)
-            .NotEmpty()
-            .WithMessage("Completer information is required.")
-            .MaximumLength(200)
-            .WithMessage("Completer information must not exceed 200 characters.");
     }
 }
 

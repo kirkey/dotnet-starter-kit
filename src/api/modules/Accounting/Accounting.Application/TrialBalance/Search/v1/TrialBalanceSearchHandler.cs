@@ -4,22 +4,19 @@ namespace Accounting.Application.TrialBalance.Search.v1;
 /// Handler for searching trial balance reports.
 /// </summary>
 public sealed class TrialBalanceSearchHandler(
-    IReadRepository<Domain.Entities.TrialBalance> repository,
+    [FromKeyedServices("accounting:trial-balance")] IReadRepository<Domain.Entities.TrialBalance> repository,
     ILogger<TrialBalanceSearchHandler> logger)
     : IRequestHandler<TrialBalanceSearchRequest, PagedList<TrialBalanceSearchResponse>>
 {
-    private readonly IReadRepository<Domain.Entities.TrialBalance> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-    private readonly ILogger<TrialBalanceSearchHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
     public async Task<PagedList<TrialBalanceSearchResponse>> Handle(TrialBalanceSearchRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        _logger.LogInformation("Searching trial balance reports with filters");
+        logger.LogInformation("Searching trial balance reports with filters");
 
         var spec = new TrialBalanceSearchSpec(request);
-        var trialBalances = await _repository.ListAsync(spec, cancellationToken);
-        var totalCount = await _repository.CountAsync(cancellationToken);
+        var trialBalances = await repository.ListAsync(spec, cancellationToken);
+        var totalCount = await repository.CountAsync(spec, cancellationToken);
 
         var response = trialBalances.Select(tb => new TrialBalanceSearchResponse
         {
@@ -40,7 +37,7 @@ public sealed class TrialBalanceSearchHandler(
             CreatedOn = tb.CreatedOn.DateTime
         }).ToList();
 
-        _logger.LogInformation("Found {Count} trial balance reports", response.Count);
+        logger.LogInformation("Found {Count} trial balance reports", response.Count);
 
         return new PagedList<TrialBalanceSearchResponse>(
             response,

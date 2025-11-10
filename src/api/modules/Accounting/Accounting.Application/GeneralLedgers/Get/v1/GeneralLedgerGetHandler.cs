@@ -3,22 +3,11 @@ namespace Accounting.Application.GeneralLedgers.Get.v1;
 /// <summary>
 /// Handler for retrieving a general ledger entry by ID.
 /// </summary>
-public sealed class GeneralLedgerGetHandler : IRequestHandler<GeneralLedgerGetRequest, GeneralLedgerGetResponse>
+public sealed class GeneralLedgerGetHandler(
+    [FromKeyedServices("accounting:general-ledger")] IReadRepository<GeneralLedger> repository,
+    ILogger<GeneralLedgerGetHandler> logger)
+    : IRequestHandler<GeneralLedgerGetRequest, GeneralLedgerGetResponse>
 {
-    private readonly IReadRepository<GeneralLedger> _repository;
-    private readonly ILogger<GeneralLedgerGetHandler> _logger;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="GeneralLedgerGetHandler"/> class.
-    /// </summary>
-    public GeneralLedgerGetHandler(
-        IReadRepository<GeneralLedger> repository,
-        ILogger<GeneralLedgerGetHandler> logger)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
-
     /// <summary>
     /// Handles the general ledger entry retrieval request.
     /// </summary>
@@ -26,16 +15,16 @@ public sealed class GeneralLedgerGetHandler : IRequestHandler<GeneralLedgerGetRe
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        _logger.LogInformation("Retrieving general ledger entry with ID {LedgerId}", request.Id);
+        logger.LogInformation("Retrieving general ledger entry with ID {LedgerId}", request.Id);
 
-        var entry = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var entry = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (entry == null)
         {
-            _logger.LogWarning("General ledger entry with ID {LedgerId} not found", request.Id);
+            logger.LogWarning("General ledger entry with ID {LedgerId} not found", request.Id);
             throw new NotFoundException($"General ledger entry with ID {request.Id} not found");
         }
 
-        _logger.LogInformation("General ledger entry {LedgerId} retrieved successfully", entry.Id);
+        logger.LogInformation("General ledger entry {LedgerId} retrieved successfully", entry.Id);
 
         return new GeneralLedgerGetResponse
         {

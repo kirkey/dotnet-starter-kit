@@ -9,6 +9,7 @@ public sealed class CreateDepreciationMethodHandler(
         ArgumentNullException.ThrowIfNull(request);
 
         var depreciationMethod = DepreciationMethod.Create(
+            request.MethodCode,
             request.MethodName,
             request.CalculationFormula,
             request.Description,

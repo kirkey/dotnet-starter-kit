@@ -1,3 +1,5 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
 namespace Accounting.Application.JournalEntries.Reject;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace Accounting.Application.JournalEntries.Reject;
 /// </summary>
 public sealed class RejectJournalEntryHandler(
     ILogger<RejectJournalEntryHandler> logger,
+    ICurrentUser currentUser,
     [FromKeyedServices("accounting:journals")] IRepository<JournalEntry> repository)
     : IRequestHandler<RejectJournalEntryCommand, DefaultIdType>
 {
@@ -19,18 +22,15 @@ public sealed class RejectJournalEntryHandler(
             throw new JournalEntryNotFoundException(request.JournalEntryId);
         }
 
-        if (string.IsNullOrWhiteSpace(request.RejectedBy))
-        {
-            throw new ArgumentException("RejectedBy is required for journal entry rejection.");
-        }
+        var rejectorName = currentUser.GetUserName() ?? "Unknown";
 
-        journalEntry.Reject(request.RejectedBy);
+        journalEntry.Reject(rejectorName);
 
         await repository.UpdateAsync(journalEntry, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
         logger.LogInformation("Journal entry {JournalEntryId} rejected by {RejectedBy}. Reason: {Reason}", 
-            request.JournalEntryId, request.RejectedBy, request.RejectionReason ?? "Not specified");
+            request.JournalEntryId, rejectorName, request.RejectionReason ?? "Not specified");
 
         return journalEntry.Id;
     }

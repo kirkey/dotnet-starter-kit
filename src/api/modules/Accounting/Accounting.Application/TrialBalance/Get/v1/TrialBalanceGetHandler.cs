@@ -4,27 +4,24 @@ namespace Accounting.Application.TrialBalance.Get.v1;
 /// Handler for retrieving a trial balance by ID.
 /// </summary>
 public sealed class TrialBalanceGetHandler(
-    IReadRepository<Domain.Entities.TrialBalance> repository,
+    [FromKeyedServices("accounting:trial-balance")] IReadRepository<Domain.Entities.TrialBalance> repository,
     ILogger<TrialBalanceGetHandler> logger)
     : IRequestHandler<TrialBalanceGetRequest, TrialBalanceGetResponse>
 {
-    private readonly IReadRepository<Domain.Entities.TrialBalance> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-    private readonly ILogger<TrialBalanceGetHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
     public async Task<TrialBalanceGetResponse> Handle(TrialBalanceGetRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        _logger.LogInformation("Retrieving trial balance with ID {TrialBalanceId}", request.Id);
+        logger.LogInformation("Retrieving trial balance with ID {TrialBalanceId}", request.Id);
 
-        var trialBalance = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var trialBalance = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (trialBalance == null)
         {
-            _logger.LogWarning("Trial balance with ID {TrialBalanceId} not found", request.Id);
+            logger.LogWarning("Trial balance with ID {TrialBalanceId} not found", request.Id);
             throw new NotFoundException($"Trial balance with ID {request.Id} not found");
         }
 
-        _logger.LogInformation("Trial balance {TrialBalanceNumber} retrieved successfully", trialBalance.TrialBalanceNumber);
+        logger.LogInformation("Trial balance {TrialBalanceNumber} retrieved successfully", trialBalance.TrialBalanceNumber);
 
         return new TrialBalanceGetResponse
         {

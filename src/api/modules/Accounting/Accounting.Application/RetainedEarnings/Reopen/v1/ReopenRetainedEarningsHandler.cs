@@ -16,7 +16,7 @@ public sealed class ReopenRetainedEarningsHandler(
         var re = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (re == null) throw new NotFoundException($"Retained earnings with ID {request.Id} not found");
 
-        re.Reopen(request.Reason);
+        re.Reopen(request.Reason ?? "No reason provided");
         await _repository.UpdateAsync(re, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 
