@@ -23,7 +23,7 @@ public sealed class SubmitPurchaseOrderHandler(
         if (purchaseOrder.Status != PurchaseOrderStatus.Draft)
             throw new ConflictException($"Purchase order '{request.Id}' cannot be submitted. Current status: {purchaseOrder.Status}");
 
-        if (!purchaseOrder.Items.Any())
+        if (purchaseOrder.Items.Count == 0)
             throw new ConflictException($"Purchase order '{request.Id}' cannot be submitted without items");
 
         if (purchaseOrder.Items.All(item => item.Quantity <= 0))

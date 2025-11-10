@@ -23,7 +23,7 @@ public sealed class SendPurchaseOrderHandler(
         if (purchaseOrder.Status != PurchaseOrderStatus.Approved)
             throw new ConflictException($"Purchase order '{request.Id}' cannot be sent. Current status: {purchaseOrder.Status}. Only approved orders can be sent.");
 
-        if (!purchaseOrder.Items.Any())
+        if (purchaseOrder.Items.Count == 0)
             throw new ConflictException($"Purchase order '{request.Id}' cannot be sent without items");
 
         // Send the purchase order

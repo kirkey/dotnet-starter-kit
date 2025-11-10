@@ -1,104 +1,340 @@
-# Purchase Orders - User Guide
+# Purchase Orders - Complete Transaction Guide
 
-**Quick Reference for Using the Purchase Orders UI**
+**Comprehensive Guide for Managing Purchase Orders in the Store Module**
 
 ---
 
 ## Overview
 
-The Purchase Orders module helps you manage procurement from suppliers with workflow operations, item management, and PDF generation.
+The Purchase Orders module manages the complete procurement lifecycle from supplier order creation through goods receipt. It supports approval workflows, item management, financial tracking, and integration with goods receipts.
 
-**Route**: `/store/purchase-orders`
+**Route**: `/store/purchase-orders`  
+**Module**: Store Management  
+**Related Modules**: Suppliers, Items, Goods Receipts, Inventory
 
 ---
 
-## Quick Start
+## Purchase Order Transaction Flow
 
-### Creating a New Purchase Order
+### Complete End-to-End Process
 
-1. Click the **"Add"** button
-2. Fill in the form:
-   - **Order Number**: Unique identifier (e.g., PO-2025-001)
-   - **Supplier**: Select from dropdown (required)
-   - **Order Date**: Date of the order
-   - **Expected Delivery Date**: When you expect delivery
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    PURCHASE ORDER LIFECYCLE                         │
+└─────────────────────────────────────────────────────────────────────┘
+
+1. CREATE ORDER (Draft)
+   ├─ Enter order header information
+   ├─ Select supplier
+   └─ Save as Draft
+
+2. ADD ITEMS (Draft)
+   ├─ Add line items one by one
+   ├─ Specify quantities and prices
+   └─ Totals calculate automatically
+
+3. SUBMIT FOR APPROVAL (Draft → Submitted)
+   ├─ Review all items and totals
+   ├─ Submit to procurement manager
+   └─ Cannot modify after submission
+
+4. APPROVE ORDER (Submitted → Approved)
+   ├─ Manager reviews order details
+   ├─ Approves for sending to supplier
+   └─ Order ready for transmission
+
+5. SEND TO SUPPLIER (Approved → Sent)
+   ├─ Generate PDF purchase order
+   ├─ Send to supplier via email
+   └─ Await goods delivery
+
+6. RECEIVE GOODS (Sent → Received)
+   ├─ Option A: Simple receive (mark entire order)
+   ├─ Option B: Detailed receive (via Goods Receipts)
+   └─ Updates inventory levels
+
+7. COMPLETE (Received)
+   └─ Order archived, goods in inventory
+```
+
+---
+
+## Step-by-Step Transaction Guide
+
+### 1️⃣ Creating a Purchase Order
+
+**When to Use**: You need to procure items from a supplier
+
+1. Navigate to **Store → Purchase Orders**
+2. Click **"Add"** button
+3. Fill in the order header:
+
+   **Required Fields**:
+   - **Order Number**: Unique identifier (e.g., `PO-2025-001`)
+   - **Supplier**: Select from dropdown
+   - **Order Date**: Date placing the order
+
+   **Optional Fields**:
+   - **Expected Delivery Date**: When you expect goods
    - **Delivery Address**: Where goods should be delivered
-   - **Contact Person**: Your receiving contact
-   - **Contact Phone**: Contact phone number
-   - **Is Urgent**: Check if this is a priority order
-   - **Tax Amount**: Tax to be charged
-   - **Discount Amount**: Any discount negotiated
-   - **Notes**: Additional information
-3. Click **"Save"**
-4. Order is created with status: **Draft**
+   - **Contact Person**: Receiving department contact
+   - **Contact Phone**: Contact number
+   - **Is Urgent**: Check if high priority
+   - **Notes**: Any special instructions
+
+4. Click **"Save"**
+5. Order is created with status: **Draft**
+
+**Important**: You cannot add items until the order is saved!
 
 ---
 
-## Adding Items to an Order
+### 2️⃣ Adding Items to the Order
 
-1. Find your order in the list
-2. Click the **⋮** menu icon → **View Details**
-3. In the **Order Items** section, click **"Add Item"**
-4. Fill in the Add Item dialog:
-   - **Item**: Select from dropdown (required)
-   - **Quantity**: How many units (required)
-   - **Unit Price**: Price per unit (required)
-   - **Discount Amount**: Discount for this item (optional)
+**When to Use**: After creating the order header
+
+1. Find your newly created order
+2. Click **⋮** menu → **"View Details"**
+3. In the Order Items section, click **"Add Item"**
+
+4. Fill in the item dialog:
+   - **Item**: Select inventory item from dropdown
+   - **Quantity**: Number of units to order
+   - **Unit Price**: Price per unit from supplier
+   - **Discount Amount**: Item-level discount (optional)
    - **Notes**: Item-specific notes (optional)
+
 5. Click **"Save"**
-6. Item appears in the table
-7. **Order totals update automatically**
-8. Repeat for all items
+6. **Order totals recalculate automatically**:
+   ```
+   Item Total = (Quantity × Unit Price) - Discount
+   ```
+
+7. **Repeat** for each item you want to order
+
+**Editing Items** (Draft status only):
+- Click **Edit** icon (pencil) to modify quantity or price
+- Changes recalculate order totals
+
+**Deleting Items** (Draft status only):
+- Click **Delete** icon (trash)
+- Confirm deletion
+- Order totals update
+
+**⚠️ Important**: Items can only be modified while order is in **Draft** status!
 
 ---
 
-## Purchase Order Workflow
+### 3️⃣ Submitting for Approval
 
-### Step 1: Submit for Approval
+**When to Use**: Order is complete and ready for review
 
-1. Find your **Draft** order
-2. Click the **⋮** menu icon → **Submit for Approval**
-3. Confirm the action
-4. Status changes to **Submitted**
-5. Order is now awaiting approval
+**Prerequisite**: 
+- Order must have at least one item
+- All required fields filled
 
-### Step 2: Approve Order
+**Steps**:
+1. Review order details and all items
+2. Verify quantities and prices
+3. Check total amount
+4. Click **⋮** menu → **"Submit for Approval"**
+5. Confirm the submission
+6. Status changes: **Draft → Submitted**
 
+**What Happens**:
+- Order is locked (no more editing)
+- Notification sent to approver
+- Order awaits manager approval
+
+**⚠️ Cannot Undo**: Once submitted, you cannot edit. Contact approver to cancel if needed.
+
+---
+
+### 4️⃣ Approving the Order
+
+**Who**: Procurement Manager or Authorized Approver  
+**When to Use**: Review submitted purchase orders
+
+**Steps**:
 1. Find the **Submitted** order
-2. Click the **⋮** menu icon → **Approve Order**
-3. Confirm the action
-4. Status changes to **Approved**
-5. Order is now ready to send to supplier
+2. Review all details:
+   - Supplier information
+   - Line items and quantities
+   - Unit prices and totals
+   - Expected delivery date
+   - Budget availability
 
-### Step 3: Send to Supplier
+3. Click **⋮** menu → **"Approve Order"**
+4. Confirm approval
+5. Status changes: **Submitted → Approved**
 
-1. Find the **Approved** order
-2. Click the **⋮** menu icon → **Send to Supplier**
-3. Confirm the action
-4. Status changes to **Sent**
-5. Order has been sent to the supplier
-6. Download and email the PDF to supplier
+**What Happens**:
+- Order is authorized for sending
+- Supplier communication can proceed
+- Budget is committed
 
-### Step 4: Mark as Received
-
-1. When goods arrive, find the **Sent** order
-2. Click the **⋮** menu icon → **Mark as Received**
-3. Confirm the action
-4. Status changes to **Received**
-5. Order is now complete
-
-**Alternative**: Use the Goods Receipts module for detailed receiving with quality control
+**Alternative**: Click **"Cancel Order"** to reject
 
 ---
 
-## Downloading PDF
+### 5️⃣ Sending to Supplier
 
-1. Find any order in the list
-2. Click the **⋮** menu icon → **Download PDF**
-3. System generates a professional PDF report
-4. PDF automatically downloads to your computer
-5. Filename format: `PurchaseOrder_{ID}_{timestamp}.pdf`
-6. PDF includes:
+**Who**: Purchasing Department  
+**When to Use**: After order approval
+
+**Steps**:
+1. Find the **Approved** order
+2. Click **⋮** menu → **"Download PDF"**
+3. PDF is generated with:
+   - Company information
+   - Supplier details
+   - All line items with quantities/prices
+   - Financial summary
+   - Terms and conditions
+   - Authorized signatures
+
+4. Send PDF to supplier via:
+   - Email attachment
+   - Supplier portal
+   - EDI transmission
+
+5. After sending, click **⋮** menu → **"Send to Supplier"**
+6. Confirm the action
+7. Status changes: **Approved → Sent**
+
+**What Happens**:
+- Order is officially transmitted
+- Delivery countdown begins
+- System tracks expected delivery date
+
+---
+
+### 6️⃣ Receiving Goods
+
+**When to Use**: Goods arrive from supplier
+
+#### Option A: Simple Receive (Full Order)
+
+**Use When**: All items arrived, no quality issues
+
+1. Find the **Sent** order
+2. Click **⋮** menu → **"Mark as Received"**
+3. Confirm receipt
+4. Status changes: **Sent → Received**
+5. System automatically:
+   - Sets actual delivery date
+   - Updates received quantities
+   - Completes the order
+
+#### Option B: Detailed Receive (Via Goods Receipts)
+
+**Use When**: Need quality control, partial deliveries, or detailed tracking
+
+1. Navigate to **Warehouse → Goods Receipts**
+2. Click **"Add"** to create new receipt
+3. Link to the purchase order
+4. Inspect and record:
+   - Actual quantities received
+   - Quality status (passed/failed)
+   - Damaged items
+   - Variance from order
+   - Location where goods are stored
+
+5. Complete the goods receipt
+6. System automatically:
+   - Updates purchase order item received quantities
+   - Creates inventory transactions
+   - Updates stock levels
+   - Records put-away locations
+
+**Partial Deliveries**:
+- Goods receipt updates received quantities
+- Order remains in **Sent** status
+- Can create multiple receipts
+- When all items received → **Received** status
+
+**Three-Way Matching**:
+1. Purchase Order (what we ordered)
+2. Goods Receipt (what we received)
+3. Supplier Invoice (what we're billed)
+
+---
+
+## Financial Calculations
+
+### Item Level
+```
+Item Subtotal = Quantity × Unit Price
+Item Discount = Discount Amount (if any)
+Item Total = Item Subtotal - Item Discount
+```
+
+**Example**:
+```
+10 units × $5.00 = $50.00
+Discount: -$2.00
+Item Total: $48.00
+```
+
+### Order Level
+```
+Subtotal = Sum of all Item Totals
+Tax Amount = Subtotal × Tax Rate (or manual entry)
+Order Discount = Overall discount negotiated
+Shipping Cost = Transportation charges
+Net Amount = Subtotal + Tax + Shipping - Discount
+```
+
+**Full Example**:
+```
+ITEMS:
+Item 1: 10 units × $5.00 - $2.00 = $48.00
+Item 2: 5 units × $10.00 - $0.00 = $50.00
+Item 3: 20 units × $2.50 - $5.00 = $45.00
+──────────────────────────────────────────
+Subtotal:                        $143.00
+Tax (10%):                       +$14.30
+Shipping:                        +$10.00
+Order Discount:                  -$15.00
+──────────────────────────────────────────
+NET AMOUNT TO PAY:               $152.30
+```
+
+---
+
+## Searching and Filtering
+
+### Basic Search
+Type in search box to find by:
+- Order Number
+- Contact Person
+- Delivery Address
+- Notes
+
+### Advanced Search
+Click **"Advanced Search"** to filter:
+
+**Supplier Filter**:
+- All Suppliers
+- Specific supplier
+
+**Status Filter**:
+- All Statuses
+- Draft
+- Submitted
+- Approved
+- Sent
+- Received
+- Cancelled
+
+**Date Range**:
+- From Date: Start of range
+- To Date: End of range
+- Filters by Order Date
+
+**Example**: Find all Sent orders from Supplier ABC in December 2025
+
+---
    - Order header information
    - Supplier details
    - All line items with quantities and prices
@@ -158,11 +394,382 @@ Click **"Advanced Search"** to filter by:
 
 | Column | Description |
 |--------|-------------|
-| **Order Number** | Unique order identifier |
-| **Supplier ID** | Supplier identifier |
-| **Order Date** | Date order was created |
-| **Status** | Current status |
-| **Total Amount** | Total order value |
+
+
+## Order Management Features
+
+### Viewing Order Details
+1. Click **⋮** → **"View Details"**
+2. See complete order information:
+   - Header details
+   - All line items
+   - Financial summary
+   - Status history
+   - Related documents
+
+### Downloading PDF
+**Available**: Any status  
+**Use**: Send to supplier, archiving, printing
+
+1. Click **⋮** → **"Download PDF"**
+2. Professional PDF includes:
+   - Company logo and information
+   - Supplier name and address
+   - Order number and date
+   - Item list with descriptions
+   - Quantities and prices
+   - Subtotals and taxes
+   - Net amount
+   - Payment terms
+   - Delivery instructions
+
+### Cancelling Orders
+**Available**: Draft, Submitted, or Approved status only  
+**Cannot Cancel**: Sent or Received orders
+
+1. Click **⋮** → **"Cancel Order"**
+2. Confirm cancellation
+3. Status changes to: **Cancelled**
+4. Order cannot be reactivated
+
+**When to Cancel**:
+- Supplier no longer available
+- Budget constraints
+- Items no longer needed
+- Duplicate order created
+
+---
+
+## Status Workflow Diagram
+
+```
+┌──────────┐
+│  DRAFT   │ ← Create order, add/edit items
+└──────────┘
+     │
+     │ Submit
+     ▼
+┌──────────┐
+│SUBMITTED │ ← Awaiting approval
+└──────────┘
+     │
+     │ Approve
+     ▼
+┌──────────┐
+│ APPROVED │ ← Ready to send
+└──────────┘
+     │
+     │ Send
+     ▼
+┌──────────┐
+│   SENT   │ ← Waiting for delivery
+└──────────┘
+     │
+     │ Receive
+     ▼
+┌──────────┐
+│ RECEIVED │ ← Order complete
+└──────────┘
+
+Cancel allowed from Draft, Submitted, or Approved
+     │
+     ▼
+┌──────────┐
+│CANCELLED │ ← Order cancelled
+└──────────┘
+```
+
+---
+
+## Understanding the Order List Columns
+
+| Column | Description | Example |
+|--------|-------------|---------|
+| **Order Number** | Unique identifier | PO-2025-001 |
+| **Supplier ID** | Supplier reference | acme-corp-123 |
+| **Order Date** | When order was created | Nov 10, 2025 |
+| **Status** | Current order status | Sent |
+| **Total Amount** | Order total value | $152.30 |
+| **Expected Delivery** | When goods should arrive | Nov 17, 2025 |
+| **Urgent** | Priority flag | ✓ |
+
+---
+
+## Context Menu Actions (⋮)
+
+| Action | Available When | What It Does |
+|--------|---------------|-------------|
+| **View Details** | Always | Opens full order details |
+| **Download PDF** | Always | Generates purchase order PDF |
+| **Submit for Approval** | Draft only | Sends for manager approval |
+| **Approve Order** | Submitted only | Authorizes the order |
+| **Send to Supplier** | Approved only | Marks as transmitted |
+| **Mark as Received** | Sent only | Completes order (simple) |
+| **Cancel Order** | Draft/Submitted/Approved | Cancels the order |
+| **Edit** | Draft only (header) | Modify order details |
+| **Delete** | Draft only (if no items) | Remove order |
+
+---
+
+## Best Practices
+
+### Order Creation
+✅ **DO**:
+- Create draft orders first
+- Add all items before submitting
+- Verify supplier information
+- Set realistic delivery dates
+- Include contact information
+- Add notes for special requirements
+
+❌ **DON'T**:
+- Submit incomplete orders
+- Skip approval workflow
+- Forget to add items
+- Use duplicate order numbers
+
+### Item Management
+✅ **DO**:
+- Double-check quantities
+- Verify unit prices with supplier
+- Add item notes for specifications
+- Review line totals before submitting
+
+❌ **DON'T**:
+- Order excessive quantities
+- Skip discount negotiations
+- Forget to remove unwanted items
+- Mix up unit prices
+
+### Workflow Management
+✅ **DO**:
+- Review before submitting
+- Approve promptly to avoid delays
+- Send PDF immediately after approval
+- Track expected delivery dates
+- Use Goods Receipts for quality control
+
+❌ **DON'T**:
+- Skip approval steps
+- Send orders without approval
+- Forget to mark as received
+- Leave orders in limbo
+
+### Financial Control
+✅ **DO**:
+- Verify all calculations
+- Apply negotiated discounts
+- Include taxes correctly
+- Add shipping costs
+- Match against budget
+
+❌ **DON'T**:
+- Ignore cost overruns
+- Skip discount opportunities
+- Forget about taxes
+- Overlook shipping charges
+
+---
+
+## Common Scenarios
+
+### Scenario 1: Regular Inventory Replenishment
+1. Create order with established supplier
+2. Add standard items with negotiated prices
+3. Submit for routine approval
+4. Send to supplier
+5. Use Goods Receipts for detailed receiving
+
+### Scenario 2: Urgent Order
+1. Create order and check **Is Urgent**
+2. Add required items
+3. Submit with urgent flag visible
+4. Fast-track approval
+5. Send immediately
+6. Expedite receiving process
+
+### Scenario 3: Large Capital Purchase
+1. Create order with detailed specifications
+2. Add items with quotes attached
+3. Submit for higher-level approval
+4. Await multiple approvals
+5. Generate formal PO document
+6. Send with payment terms
+7. Use detailed goods receipt with inspection
+
+### Scenario 4: Partial Delivery
+1. Order sent to supplier
+2. First shipment arrives (50% of items)
+3. Create Goods Receipt for partial delivery
+4. Received quantities update
+5. Order remains **Sent** status
+6. Second shipment arrives
+7. Create second Goods Receipt
+8. All items received → **Received** status
+
+### Scenario 5: Order Correction Needed
+1. Order in **Draft** status
+2. Notice error in quantity or price
+3. Edit item directly
+4. Review updated totals
+5. Save changes
+6. Continue with submission
+
+### Scenario 6: Cancel Before Sending
+1. Order is **Submitted** or **Approved**
+2. Situation changes (budget, supplier, needs)
+3. Click **Cancel Order**
+4. Order moves to **Cancelled**
+5. Can create new order if needed
+
+---
+
+## Integration with Other Modules
+
+### Suppliers Module
+- Select supplier from master list
+- View supplier details
+- Track supplier performance
+
+### Items Module
+- Select items from catalog
+- View item specifications
+- Check current stock levels
+
+### Goods Receipts Module
+- Create receipt linked to PO
+- Perform quality inspection
+- Record actual quantities
+- Update inventory levels
+
+### Inventory Module
+- Automatic stock updates
+- Tracks expected inventory
+- Updates on goods receipt
+
+---
+
+## Troubleshooting
+
+### Cannot Add Items
+**Issue**: Add Item button is disabled  
+**Solution**: Save the order header first, then add items
+
+### Cannot Edit Order
+**Issue**: Edit button is grayed out  
+**Solution**: Orders can only be edited in Draft status. If submitted, ask approver to cancel.
+
+### Wrong Total Amount
+**Issue**: Totals don't match expectations  
+**Solution**: Check individual item calculations, verify discount amounts, confirm tax rates
+
+### Cannot Receive Order
+**Issue**: Mark as Received option not showing  
+**Solution**: Order must be in Sent status. Use status workflow to progress order.
+
+### PDF Won't Generate
+**Issue**: Download PDF fails  
+**Solution**: Check that order has items, verify system configuration
+
+---
+
+## Tips and Tricks
+
+### Keyboard Shortcuts
+- **Ctrl/Cmd + Click**: Open details in new tab
+- **Search box**: Start typing to filter instantly
+
+### Quick Actions
+- Use Advanced Search filters for bulk operations
+- Sort columns by clicking headers
+- Export data for external analysis
+
+### Workflow Optimization
+- Create templates for common orders
+- Set up favorite suppliers
+- Use notes field for tracking numbers
+- Batch similar orders together
+
+---
+
+## Summary Checklist
+
+### Creating an Order
+- [ ] Click Add button
+- [ ] Enter order number
+- [ ] Select supplier
+- [ ] Set order date
+- [ ] Add delivery information
+- [ ] Save as Draft
+
+### Adding Items
+- [ ] Open order details
+- [ ] Click Add Item
+- [ ] Select item from list
+- [ ] Enter quantity
+- [ ] Enter unit price
+- [ ] Add discount if applicable
+- [ ] Save item
+- [ ] Verify totals
+
+### Submitting
+- [ ] Review all items
+- [ ] Check total amount
+- [ ] Verify supplier details
+- [ ] Submit for approval
+- [ ] Notify approver if needed
+
+### Approval
+- [ ] Review order details
+- [ ] Verify budget availability
+- [ ] Check supplier status
+- [ ] Approve or reject
+- [ ] Provide feedback if rejected
+
+### Sending
+- [ ] Download PDF
+- [ ] Email to supplier
+- [ ] Confirm supplier receipt
+- [ ] Mark as Sent in system
+- [ ] Note expected delivery
+
+### Receiving
+- [ ] Verify goods arrived
+- [ ] Option A: Mark as Received
+- [ ] Option B: Create Goods Receipt
+- [ ] Update inventory
+- [ ] Notify accounts payable
+
+---
+
+## Quick Reference Card
+
+| Status | Can Add Items | Can Edit | Can Delete | Next Actions |
+|--------|--------------|----------|------------|--------------|
+| **Draft** | ✅ Yes | ✅ Yes | ✅ Yes | Submit, Cancel |
+| **Submitted** | ❌ No | ❌ No | ❌ No | Approve, Cancel |
+| **Approved** | ❌ No | ❌ No | ❌ No | Send, Cancel |
+| **Sent** | ❌ No | ❌ No | ❌ No | Receive |
+| **Received** | ❌ No | ❌ No | ❌ No | View only |
+| **Cancelled** | ❌ No | ❌ No | ❌ No | View only |
+
+---
+
+## Getting Help
+
+**Documentation**: See related guides
+- Goods Receipts User Guide
+- Supplier Management Guide
+- Inventory Management Guide
+
+**Support**: Contact your system administrator
+
+**Training**: Ask for hands-on training sessions
+
+---
+
+**Last Updated**: November 10, 2025  
+**Version**: 2.0
 | **Expected Delivery** | When goods are expected |
 | **Urgent** | Priority indicator (✓) |
 

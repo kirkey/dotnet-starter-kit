@@ -34,6 +34,10 @@ public static class PurchaseOrdersEndpoints
         purchaseOrdersGroup.MapReceivePurchaseOrderItemQuantityEndpoint();
         purchaseOrdersGroup.MapCancelPurchaseOrderEndpoint();
         purchaseOrdersGroup.MapGeneratePurchaseOrderPdfEndpoint();
+        
+        // Auto-add items feature
+        purchaseOrdersGroup.MapAutoAddItemsToPurchaseOrderEndpoint();
+        purchaseOrdersGroup.MapGetItemsNeedingReorderEndpoint();
 
         return app;
     }
