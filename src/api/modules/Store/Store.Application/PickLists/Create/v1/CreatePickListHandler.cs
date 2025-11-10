@@ -26,6 +26,7 @@ public sealed class CreatePickListHandler(
             request.Notes);
 
         await repository.AddAsync(pickList, cancellationToken).ConfigureAwait(false);
+        await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return new CreatePickListResponse
         {

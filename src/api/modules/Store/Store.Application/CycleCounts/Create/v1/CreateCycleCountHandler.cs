@@ -20,6 +20,8 @@ public sealed class CreateCycleCountHandler(
             request.Notes);
 
         await repository.AddAsync(cycleCount, cancellationToken).ConfigureAwait(false);
+        await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        
         logger.LogInformation("cycle count created {CycleCountId}", cycleCount.Id);
         return new CreateCycleCountResponse(cycleCount.Id);
     }

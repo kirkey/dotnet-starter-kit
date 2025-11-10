@@ -26,6 +26,7 @@ public sealed class CreatePutAwayTaskHandler(
             request.Notes);
 
         await repository.AddAsync(putAwayTask, cancellationToken).ConfigureAwait(false);
+        await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return new CreatePutAwayTaskResponse(putAwayTask.Id);
     }
