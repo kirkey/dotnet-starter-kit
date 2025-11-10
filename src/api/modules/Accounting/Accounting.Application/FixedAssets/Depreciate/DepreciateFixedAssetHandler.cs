@@ -5,7 +5,7 @@ namespace Accounting.Application.FixedAssets.Depreciate;
 /// </summary>
 public sealed class DepreciateFixedAssetHandler(
     ILogger<DepreciateFixedAssetHandler> logger,
-    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixed-assets")] IRepository<FixedAsset> repository)
     : IRequestHandler<DepreciateFixedAssetCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(DepreciateFixedAssetCommand request, CancellationToken cancellationToken)

@@ -8,7 +8,7 @@ namespace Accounting.Application.FixedAssets.Get;
 /// Uses database-level projection for optimal performance with caching.
 /// </summary>
 public sealed class GetFixedAssetHandler(
-    [FromKeyedServices("accounting:fixedassets")] IReadRepository<FixedAsset> repository,
+    [FromKeyedServices("accounting:fixed-assets")] IReadRepository<FixedAsset> repository,
     ICacheService cache)
     : IRequestHandler<GetFixedAssetRequest, FixedAssetResponse>
 {

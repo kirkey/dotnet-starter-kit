@@ -6,7 +6,7 @@ namespace Accounting.Application.Bills.LineItems.GetList.v1;
 /// Handler for getting all line items for a specific bill.
 /// </summary>
 public sealed class GetBillLineItemsHandler(
-    [FromKeyedServices("accounting:billlineitems")] IRepository<BillLineItem> repository)
+    [FromKeyedServices("accounting:bill-line-items")] IRepository<BillLineItem> repository)
     : IRequestHandler<GetBillLineItemsRequest, List<BillLineItemResponse>>
 {
     public async Task<List<BillLineItemResponse>> Handle(GetBillLineItemsRequest request, CancellationToken cancellationToken)

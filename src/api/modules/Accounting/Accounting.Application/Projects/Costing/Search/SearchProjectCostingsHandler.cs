@@ -3,7 +3,7 @@ using Accounting.Application.Projects.Costing.Responses;
 namespace Accounting.Application.Projects.Costing.Search;
 
 public sealed class SearchProjectCostingsHandler(
-    [FromKeyedServices("accounting:projectcosting")] IReadRepository<ProjectCostEntry> repository)
+    [FromKeyedServices("accounting:project-costing")] IReadRepository<ProjectCostEntry> repository)
     : IRequestHandler<SearchProjectCostingsQuery, PagedList<ProjectCostingResponse>>
 {
     public async Task<PagedList<ProjectCostingResponse>> Handle(SearchProjectCostingsQuery request, CancellationToken cancellationToken)

@@ -1,0 +1,67 @@
+@using System.ComponentModel.DataAnnotations
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" Model="@_command">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.body1" Class="mb-4">
+                        Assign a new manager to this warehouse.
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.ManagerName"
+                                  Label="Manager Name"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  RequiredError="Manager name is required"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Person" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.ManagerEmail"
+                                  Label="Manager Email"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  RequiredError="Email is required"
+                                  Validation="@(new EmailAddressAttribute())"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Email" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.ManagerPhone"
+                                  Label="Manager Phone"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  RequiredError="Phone is required"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Phone" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" 
+                   Color="Color.Default"
+                   Disabled="@_isProcessing">
+            Cancel
+        </MudButton>
+        <MudButton OnClick="@Submit" 
+                   Color="Color.Primary" 
+                   Variant="Variant.Filled"
+                   Disabled="@_isProcessing">
+            @if (_isProcessing)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                <MudText Class="ml-2">Assigning...</MudText>
+            }
+            else
+            {
+                <MudText>Assign Manager</MudText>
+            }
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+

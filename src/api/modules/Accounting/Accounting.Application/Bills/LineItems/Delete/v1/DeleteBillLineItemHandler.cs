@@ -9,7 +9,7 @@ namespace Accounting.Application.Bills.LineItems.Delete.v1;
 /// </summary>
 public sealed class DeleteBillLineItemHandler(
     [FromKeyedServices("accounting:bills")] IRepository<Bill> billRepository,
-    [FromKeyedServices("accounting:billlineitems")] IRepository<BillLineItem> lineItemRepository,
+    [FromKeyedServices("accounting:bill-line-items")] IRepository<BillLineItem> lineItemRepository,
     ILogger<DeleteBillLineItemHandler> logger)
     : IRequestHandler<DeleteBillLineItemCommand, DeleteBillLineItemResponse>
 {

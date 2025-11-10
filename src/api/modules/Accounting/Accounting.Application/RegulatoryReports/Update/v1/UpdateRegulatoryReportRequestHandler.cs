@@ -4,7 +4,7 @@ namespace Accounting.Application.RegulatoryReports.Update.v1;
 
 public sealed class UpdateRegulatoryReportRequestHandler(
     ILogger<UpdateRegulatoryReportRequestHandler> logger,
-    [FromKeyedServices("accounting:regulatoryreports")] IRepository<RegulatoryReport> repository)
+    [FromKeyedServices("accounting:regulatory-reports")] IRepository<RegulatoryReport> repository)
     : IRequestHandler<UpdateRegulatoryReportRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateRegulatoryReportRequest request, CancellationToken cancellationToken)

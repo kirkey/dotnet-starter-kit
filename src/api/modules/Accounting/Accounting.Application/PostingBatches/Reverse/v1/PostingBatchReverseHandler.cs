@@ -8,7 +8,7 @@ namespace Accounting.Application.PostingBatches.Reverse.v1;
 /// </summary>
 public sealed class PostingBatchReverseHandler(
     ICurrentUser currentUser,
-    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> repository,
     ILogger<PostingBatchReverseHandler> logger)
     : IRequestHandler<PostingBatchReverseCommand, DefaultIdType>
 {

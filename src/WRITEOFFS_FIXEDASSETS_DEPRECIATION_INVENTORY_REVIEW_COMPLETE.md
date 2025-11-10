@@ -268,7 +268,7 @@ Three modules were **already properly implemented**, and one module needed enhan
 
 ✅ **Keyed Services**: All handlers now use proper keyed services:
 - `[FromKeyedServices("accounting")]` (Write-Offs, Fixed Assets, Depreciation Methods)
-- `[FromKeyedServices("accounting:fixedassets")]` (Fixed Assets)
+- `[FromKeyedServices("accounting:fixed-assets")]` (Fixed Assets)
 - `[FromKeyedServices("accounting:inventory-items")]` (Inventory Items - FIXED)
 
 ✅ **Primary Constructor Parameters**: Modern C# constructor patterns (FIXED for Inventory Items)

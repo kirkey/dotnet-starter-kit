@@ -12,8 +12,8 @@ namespace Accounting.Application.Projects.Costing.Create;
 /// </remarks>
 public sealed class CreateProjectCostingHandler(
     [FromKeyedServices("accounting:projects")] IReadRepository<Project> projectRepository,
-    [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> accountRepository,
-    [FromKeyedServices("accounting:projectcosting")] IRepository<ProjectCostEntry> repository)
+    [FromKeyedServices("accounting:chart-of-accounts")] IReadRepository<ChartOfAccount> accountRepository,
+    [FromKeyedServices("accounting:project-costing")] IRepository<ProjectCostEntry> repository)
     : IRequestHandler<CreateProjectCostingCommand, DefaultIdType>
 {
     /// <summary>

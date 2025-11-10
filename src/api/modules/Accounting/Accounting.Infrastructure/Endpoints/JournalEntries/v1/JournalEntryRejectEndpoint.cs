@@ -17,7 +17,7 @@ public static class JournalEntryRejectEndpoint
         return endpoints
             .MapPost("/{id}/reject", async (DefaultIdType id, RejectJournalEntryRequest request, ISender mediator) =>
             {
-                var command = new RejectJournalEntryCommand(id, request.RejectedBy, request.RejectionReason);
+                var command = new RejectJournalEntryCommand(id, request.RejectionReason);
                 var result = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(new { Id = result, Message = "Journal entry rejected" });
             })

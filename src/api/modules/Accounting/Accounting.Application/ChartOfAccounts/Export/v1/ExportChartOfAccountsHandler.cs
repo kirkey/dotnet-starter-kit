@@ -10,7 +10,7 @@ namespace Accounting.Application.ChartOfAccounts.Export.v1;
 public sealed class ExportChartOfAccountsHandler(
     ILogger<ExportChartOfAccountsHandler> logger,
     IDataExport dataExport,
-    [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> repository)
+    [FromKeyedServices("accounting:chart-of-accounts")] IReadRepository<ChartOfAccount> repository)
     : IRequestHandler<ExportChartOfAccountsQuery, ExportChartOfAccountsResponse>
 {
     public async Task<ExportChartOfAccountsResponse> Handle(ExportChartOfAccountsQuery request, CancellationToken cancellationToken)

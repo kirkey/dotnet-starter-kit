@@ -183,7 +183,7 @@ The Fiscal Period Close, Retained Earnings, and Financial Statements modules hav
 ✅ **Keyed Services**: All handlers use proper keyed services:
 - `[FromKeyedServices("accounting")]`
 - `[FromKeyedServices("accounting:retained-earnings")]`
-- `[FromKeyedServices("accounting:generalledger")]`
+- `[FromKeyedServices("accounting:general-ledger")]`
 - `[FromKeyedServices("accounting:accounts")]`
 
 ✅ **Primary Constructor Parameters**: No redundant field assignments

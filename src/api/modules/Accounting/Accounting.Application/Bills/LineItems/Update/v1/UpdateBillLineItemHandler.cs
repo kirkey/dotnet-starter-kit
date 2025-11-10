@@ -9,7 +9,7 @@ namespace Accounting.Application.Bills.LineItems.Update.v1;
 /// </summary>
 public sealed class UpdateBillLineItemHandler(
     [FromKeyedServices("accounting:bills")] IRepository<Bill> billRepository,
-    [FromKeyedServices("accounting:billlineitems")] IRepository<BillLineItem> lineItemRepository,
+    [FromKeyedServices("accounting:bill-line-items")] IRepository<BillLineItem> lineItemRepository,
     ILogger<UpdateBillLineItemHandler> logger)
     : IRequestHandler<UpdateBillLineItemCommand, UpdateBillLineItemResponse>
 {

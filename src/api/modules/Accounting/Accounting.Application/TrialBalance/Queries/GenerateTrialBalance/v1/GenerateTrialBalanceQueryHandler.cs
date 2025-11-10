@@ -4,7 +4,7 @@ namespace Accounting.Application.TrialBalance.Queries.GenerateTrialBalance.v1;
 
 public sealed class GenerateTrialBalanceQueryHandler(
     ILogger<GenerateTrialBalanceQueryHandler> logger,
-    [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository,
+    [FromKeyedServices("accounting:general-ledger")] IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<GenerateTrialBalanceQuery, TrialBalanceDto>
 {

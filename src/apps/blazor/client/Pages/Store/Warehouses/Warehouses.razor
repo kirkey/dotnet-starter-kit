@@ -1,0 +1,117 @@
+@page "/store/warehouses"
+
+<PageHeader Title="Warehouse Management" 
+            Header="Warehouse Management" 
+            SubHeader="Manage warehouses, locations, and storage facilities." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Warehouse" OnClick="@(() => StateHasChanged())">
+                All Warehouses
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Store" OnClick="@(() => { SearchIsMainWarehouse = true; StateHasChanged(); })">
+                Main Warehouses
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => { SearchIsActive = true; StateHasChanged(); })">
+                Active
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Cancel" OnClick="@(() => { SearchIsActive = false; StateHasChanged(); })">
+                Inactive
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.FileDownload">
+                Export
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Settings">
+                Settings
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" 
+             TEntity="WarehouseResponse" 
+             TId="DefaultIdType" 
+             TRequest="WarehouseViewModel" 
+             Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCode"
+                          Label="Warehouse Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Warehouse Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="bool?"
+                       @bind-Value="@SearchIsActive"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((bool?)true)">Active</MudSelectItem>
+                <MudSelectItem Value="@((bool?)false)">Inactive</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="bool?"
+                       @bind-Value="@SearchIsMainWarehouse"
+                       Label="Warehouse Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((bool?)true)">Main Warehouse</MudSelectItem>
+                <MudSelectItem Value="@((bool?)false)">Standard Warehouse</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ActionsContent Context="context">
+        @* View Details *@
+        <MudTooltip Text="View Details">
+            <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                           Size="Size.Small"
+                           Color="Color.Info"
+                           OnClick="@(() => ViewWarehouseDetails(context.Id))" />
+        </MudTooltip>
+
+        @* Assign Manager *@
+        <MudTooltip Text="Assign Manager">
+            <MudIconButton Icon="@Icons.Material.Filled.PersonAdd"
+                           Size="Size.Small"
+                           Color="Color.Secondary"
+                           OnClick="@(() => AssignManager(context.Id))" />
+        </MudTooltip>
+
+        @* Status Chip *@
+        <MudChip Color="@GetStatusColor(context.IsActive)" 
+                 Size="Size.Small" 
+                 Variant="Variant.Filled">
+            @(context.IsActive ? "Active" : "Inactive")
+        </MudChip>
+
+        @* Main Warehouse Badge *@
+        @if (context.IsMainWarehouse)
+        {
+            <MudChip Color="Color.Primary" 
+                     Size="Size.Small" 
+                     Icon="@Icons.Material.Filled.Star">
+                Main
+            </MudChip>
+        }
+    </ActionsContent>
+</EntityTable>
+

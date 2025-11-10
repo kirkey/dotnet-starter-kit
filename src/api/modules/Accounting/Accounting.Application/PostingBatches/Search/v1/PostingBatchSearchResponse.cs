@@ -4,7 +4,7 @@ namespace Accounting.Application.PostingBatches.Search.v1;
 /// Handler for searching posting batches.
 /// </summary>
 public sealed class PostingBatchSearchHandler(
-    [FromKeyedServices("accounting:postingBatches")] IReadRepository<PostingBatch> repository)
+    [FromKeyedServices("accounting:posting-batches")] IReadRepository<PostingBatch> repository)
     : IRequestHandler<PostingBatchSearchQuery, PagedList<PostingBatchSearchResponse>>
 {
     public async Task<PagedList<PostingBatchSearchResponse>> Handle(PostingBatchSearchQuery request, CancellationToken cancellationToken)

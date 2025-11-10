@@ -12,7 +12,7 @@ namespace Accounting.Application.Projects.Costing.Update;
 /// On success, updates the entry and persists changes.
 /// </remarks>
 public sealed class UpdateProjectCostingHandler(
-    [FromKeyedServices("accounting:projectcosting")] IRepository<ProjectCostEntry> repository)
+    [FromKeyedServices("accounting:project-costing")] IRepository<ProjectCostEntry> repository)
     : IRequestHandler<UpdateProjectCostingCommand>
 {
     /// <summary>

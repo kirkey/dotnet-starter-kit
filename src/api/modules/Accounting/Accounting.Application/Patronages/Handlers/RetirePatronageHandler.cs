@@ -3,9 +3,9 @@ using Accounting.Application.Patronages.Commands;
 namespace Accounting.Application.Patronages.Handlers;
 
 public sealed class RetirePatronageHandler(
-    [FromKeyedServices("accounting:patronagecapitals")] IRepository<PatronageCapital> patronageRepo,
+    [FromKeyedServices("accounting:patronage-capitals")] IRepository<PatronageCapital> patronageRepo,
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> accountRepo,
-    [FromKeyedServices("accounting:postingbatches")] IRepository<PostingBatch> postingBatchRepo,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> postingBatchRepo,
     [FromKeyedServices("accounting:journal-lines")] IRepository<JournalEntryLine> journalLineRepo)
     : IRequestHandler<RetirePatronageCommand, DefaultIdType>
 {

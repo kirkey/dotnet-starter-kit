@@ -4,7 +4,7 @@ namespace Accounting.Application.PostingBatches.Create.v1;
 /// Handler for creating a new posting batch.
 /// </summary>
 public sealed class PostingBatchCreateHandler(
-    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> repository,
     ILogger<PostingBatchCreateHandler> logger)
     : IRequestHandler<PostingBatchCreateCommand, PostingBatchCreateResponse>
 {

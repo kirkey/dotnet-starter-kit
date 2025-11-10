@@ -1,0 +1,147 @@
+@page "/warehouse/locations"
+
+<PageHeader Title="Warehouse Location Management" 
+            Header="Warehouse Location Management" 
+            SubHeader="Manage warehouse locations, zones, and storage areas." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.LocationOn" OnClick="@(() => StateHasChanged())">
+                All Locations
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.AcUnit" OnClick="@(() => { SearchRequiresTemperatureControl = true; StateHasChanged(); })">
+                Temperature Controlled
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => { SearchIsActive = true; StateHasChanged(); })">
+                Active
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Cancel" OnClick="@(() => { SearchIsActive = false; StateHasChanged(); })">
+                Inactive
+            </MudButton>
+        </MudButtonGroup>
+
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.FileDownload">
+                Export
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Settings">
+                Settings
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" 
+             TEntity="GetWarehouseLocationListResponse" 
+             TId="DefaultIdType" 
+             TRequest="WarehouseLocationViewModel" 
+             Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCode"
+                          Label="Location Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Location Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteWarehouse @bind-Value="@SearchWarehouseId"
+                                   Label="Warehouse"
+                                   Placeholder="Filter by warehouse"
+                                   Variant="Variant.Outlined"
+                                   Clearable="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchAisle"
+                          Label="Aisle"
+                          Placeholder="Filter by aisle"
+                          Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchLocationType"
+                       Label="Location Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Floor")">Floor</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rack")">Rack</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Cold Storage")">Cold Storage</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Dock")">Dock</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Staging")">Staging</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="bool?"
+                       @bind-Value="@SearchIsActive"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((bool?)true)">Active</MudSelectItem>
+                <MudSelectItem Value="@((bool?)false)">Inactive</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="bool?"
+                       @bind-Value="@SearchRequiresTemperatureControl"
+                       Label="Temperature Control"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((bool?)true)">Required</MudSelectItem>
+                <MudSelectItem Value="@((bool?)false)">Not Required</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ActionsContent>
+        @* View Details *@
+        <MudTooltip Text="View Details">
+            <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                           Size="Size.Small"
+                           Color="Color.Info"
+                           OnClick="@(() => ViewLocationDetails(context.Id))" />
+        </MudTooltip>
+
+        @* Status Chip *@
+        <MudChip Color="@GetStatusColor(context.IsActive)" 
+                 Size="Size.Small" 
+                 Variant="Variant.Filled">
+            @(context.IsActive ? "Active" : "Inactive")
+        </MudChip>
+
+        @* Temperature Control Badge *@
+        @if (context.RequiresTemperatureControl)
+        {
+            <MudChip Color="Color.Info" 
+                     Size="Size.Small" 
+                     Icon="@Icons.Material.Filled.AcUnit">
+                Temp Control
+            </MudChip>
+        }
+
+        @* Capacity Badge *@
+        @if (context.UsedCapacity > 0)
+        {
+            var percentage = (context.UsedCapacity / context.Capacity) * 100;
+            var color = percentage > 90 ? Color.Error : percentage > 75 ? Color.Warning : Color.Success;
+            <MudChip Color="@color" 
+                     Size="Size.Small" 
+                     Icon="@Icons.Material.Filled.Storage">
+                @percentage.ToString("F0")% Full
+            </MudChip>
+        }
+    </ActionsContent>
+</EntityTable>
+

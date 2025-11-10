@@ -316,10 +316,10 @@ All five modules were **already properly implemented** with:
 ✅ **Keyed Services**: All handlers use proper keyed services:
 - `[FromKeyedServices("accounting")]`
 - `[FromKeyedServices("accounting:bills")]`
-- `[FromKeyedServices("accounting:billlineitems")]`
+- `[FromKeyedServices("accounting:bill-line-items")]`
 - `[FromKeyedServices("accounting:debitmemos")]`
 - `[FromKeyedServices("accounting:payees")]`
-- `[FromKeyedServices("accounting:chartofaccounts")]`
+- `[FromKeyedServices("accounting:chart-of-accounts")]`
 
 ✅ **Primary Constructor Parameters**: Modern C# constructor patterns
 ✅ **Specification Pattern**: For queries and business rules

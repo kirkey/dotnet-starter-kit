@@ -4,7 +4,7 @@ namespace Accounting.Application.Bills.LineItems.Get.v1;
 /// Handler for getting a single bill line item by ID.
 /// </summary>
 public sealed class GetBillLineItemHandler(
-    [FromKeyedServices("accounting:billlineitems")] IRepository<BillLineItem> repository)
+    [FromKeyedServices("accounting:bill-line-items")] IRepository<BillLineItem> repository)
     : IRequestHandler<GetBillLineItemRequest, BillLineItemResponse>
 {
     public async Task<BillLineItemResponse> Handle(GetBillLineItemRequest request, CancellationToken cancellationToken)

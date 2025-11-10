@@ -8,7 +8,7 @@ namespace Accounting.Application.AccountReconciliations.Commands.ReconcileAccoun
 public sealed class ReconcileGeneralLedgerAccountCommandHandler(
     ILogger<ReconcileGeneralLedgerAccountCommandHandler> logger,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository,
-    [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository)
+    [FromKeyedServices("accounting:general-ledger")] IRepository<GeneralLedger> ledgerRepository)
     : IRequestHandler<ReconcileGeneralLedgerAccountCommand, DefaultIdType>
 {
     /// <summary>

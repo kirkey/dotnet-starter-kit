@@ -8,7 +8,7 @@ namespace Accounting.Application.PostingBatches.Post.v1;
 /// </summary>
 public sealed class PostingBatchPostHandler(
     ICurrentUser currentUser,
-    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> repository,
     ILogger<PostingBatchPostHandler> logger)
     : IRequestHandler<PostingBatchPostCommand, DefaultIdType>
 {

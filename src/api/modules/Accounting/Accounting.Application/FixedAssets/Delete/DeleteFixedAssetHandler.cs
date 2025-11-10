@@ -4,7 +4,7 @@ using FixedAssetNotFoundException = Accounting.Application.FixedAssets.Exception
 namespace Accounting.Application.FixedAssets.Delete;
 
 public sealed class DeleteFixedAssetHandler(
-    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixed-assets")] IRepository<FixedAsset> repository)
     : IRequestHandler<DeleteFixedAssetRequest>
 {
     public async Task Handle(DeleteFixedAssetRequest request, CancellationToken cancellationToken)

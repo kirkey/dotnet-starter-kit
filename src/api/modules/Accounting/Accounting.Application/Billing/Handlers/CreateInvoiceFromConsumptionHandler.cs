@@ -9,7 +9,7 @@ public sealed class CreateInvoiceFromConsumptionHandler(
     [FromKeyedServices("accounting:rateschedules")] IReadRepository<RateSchedule> rateRepo,
     [FromKeyedServices("accounting:invoices")] IRepository<Invoice> invoiceRepo,
     [FromKeyedServices("accounting:accounts")] IReadRepository<ChartOfAccount> accountRepo,
-    [FromKeyedServices("accounting:postingbatches")] IRepository<PostingBatch> postingBatchRepo,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> postingBatchRepo,
     [FromKeyedServices("accounting:journal-lines")] IRepository<JournalEntryLine> journalLineRepo
 ) : IRequestHandler<CreateInvoiceFromConsumptionCommand, DefaultIdType>
 {

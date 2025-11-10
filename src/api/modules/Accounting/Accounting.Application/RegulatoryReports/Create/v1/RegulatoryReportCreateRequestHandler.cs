@@ -2,7 +2,7 @@ namespace Accounting.Application.RegulatoryReports.Create.v1;
 
 public sealed class RegulatoryReportCreateRequestHandler(
     ILogger<RegulatoryReportCreateRequestHandler> logger,
-    [FromKeyedServices("accounting:regulatoryreports")] IRepository<RegulatoryReport> repository)
+    [FromKeyedServices("accounting:regulatory-reports")] IRepository<RegulatoryReport> repository)
     : IRequestHandler<RegulatoryReportCreateRequest, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(RegulatoryReportCreateRequest request, CancellationToken cancellationToken)

@@ -4,7 +4,7 @@ using Accounting.Application.RegulatoryReports.Specs;
 namespace Accounting.Application.RegulatoryReports.Search.v1;
 
 public sealed class SearchRegulatoryReportsRequestHandler(
-    [FromKeyedServices("accounting:regulatoryreports")] IReadRepository<RegulatoryReport> repository)
+    [FromKeyedServices("accounting:regulatory-reports")] IReadRepository<RegulatoryReport> repository)
     : IRequestHandler<SearchRegulatoryReportsRequest, PagedList<RegulatoryReportResponse>>
 {
     public async Task<PagedList<RegulatoryReportResponse>> Handle(SearchRegulatoryReportsRequest request, CancellationToken cancellationToken)

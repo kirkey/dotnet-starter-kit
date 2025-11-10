@@ -3,7 +3,7 @@ using FixedAssetNotFoundException = Accounting.Application.FixedAssets.Exception
 namespace Accounting.Application.FixedAssets.Update;
 
 public sealed class UpdateFixedAssetHandler(
-    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixed-assets")] IRepository<FixedAsset> repository)
     : IRequestHandler<UpdateFixedAssetCommand, DefaultIdType>
 {
     public async Task<DefaultIdType> Handle(UpdateFixedAssetCommand request, CancellationToken cancellationToken)

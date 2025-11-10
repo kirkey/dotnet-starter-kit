@@ -7,7 +7,7 @@ namespace Accounting.Application.FixedAssets.Reject;
 /// </summary>
 public sealed class RejectFixedAssetHandler(
     ILogger<RejectFixedAssetHandler> logger,
-    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixed-assets")] IRepository<FixedAsset> repository)
     : IRequestHandler<RejectFixedAssetCommand, DefaultIdType>
 {
     /// <summary>

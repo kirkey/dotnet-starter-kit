@@ -12,7 +12,7 @@ namespace Accounting.Application.Projects.Costing.Delete;
 /// On success, deletes the entry and persists changes.
 /// </remarks>
 public sealed class DeleteProjectCostingHandler(
-    [FromKeyedServices("accounting:projectcosting")] IRepository<ProjectCostEntry> repository)
+    [FromKeyedServices("accounting:project-costing")] IRepository<ProjectCostEntry> repository)
     : IRequestHandler<DeleteProjectCostingCommand>
 {
     /// <summary>

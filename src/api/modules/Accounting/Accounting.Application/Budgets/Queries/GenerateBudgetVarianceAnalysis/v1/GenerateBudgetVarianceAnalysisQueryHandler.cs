@@ -5,7 +5,7 @@ namespace Accounting.Application.Budgets.Queries.GenerateBudgetVarianceAnalysis.
 public sealed class GenerateBudgetVarianceAnalysisQueryHandler(
     ILogger<GenerateBudgetVarianceAnalysisQueryHandler> logger,
     [FromKeyedServices("accounting:budgets")] IRepository<Budget> budgetRepository,
-    [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository,
+    [FromKeyedServices("accounting:general-ledger")] IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<GenerateBudgetVarianceAnalysisQuery, BudgetVarianceAnalysisDto>
 {

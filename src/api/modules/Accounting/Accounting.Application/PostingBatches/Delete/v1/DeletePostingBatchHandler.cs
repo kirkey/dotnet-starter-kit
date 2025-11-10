@@ -11,7 +11,7 @@ public sealed record DeletePostingBatchCommand(DefaultIdType Id) : IRequest<Defa
 /// Only draft/pending batches with no journal entries can be deleted.
 /// </summary>
 public sealed class DeletePostingBatchHandler(
-    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> repository,
     ILogger<DeletePostingBatchHandler> logger)
     : IRequestHandler<DeletePostingBatchCommand, DefaultIdType>
 {

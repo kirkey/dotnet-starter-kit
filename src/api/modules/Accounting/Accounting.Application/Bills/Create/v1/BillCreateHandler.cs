@@ -5,7 +5,7 @@ namespace Accounting.Application.Bills.Create.v1;
 /// </summary>
 public sealed class BillCreateHandler(
     [FromKeyedServices("accounting:bills")] IRepository<Bill> billRepository,
-    [FromKeyedServices("accounting:billlineitems")] IRepository<BillLineItem> lineItemRepository,
+    [FromKeyedServices("accounting:bill-line-items")] IRepository<BillLineItem> lineItemRepository,
     ILogger<BillCreateHandler> logger)
     : IRequestHandler<BillCreateCommand, BillCreateResponse>
 {

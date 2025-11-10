@@ -6,7 +6,7 @@ namespace Accounting.Application.Invoices.LineItems.GetList.v1;
 /// Handler for getting all line items for a specific invoice.
 /// </summary>
 public sealed class GetInvoiceLineItemsHandler(
-    [FromKeyedServices("accounting:invoicelineitems")] IReadRepository<InvoiceLineItem> repository)
+    [FromKeyedServices("accounting:invoice-line-items")] IReadRepository<InvoiceLineItem> repository)
     : IRequestHandler<GetInvoiceLineItemsRequest, List<InvoiceLineItemResponse>>
 {
     public async Task<List<InvoiceLineItemResponse>> Handle(GetInvoiceLineItemsRequest request, CancellationToken cancellationToken)

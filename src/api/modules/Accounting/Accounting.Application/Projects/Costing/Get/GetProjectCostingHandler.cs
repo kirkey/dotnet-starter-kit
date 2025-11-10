@@ -8,7 +8,7 @@ namespace Accounting.Application.Projects.Costing.Get;
 /// Uses database-level projection for optimal performance.
 /// </summary>
 public sealed class GetProjectCostingHandler(
-    [FromKeyedServices("accounting:projectcosting")] IReadRepository<ProjectCostEntry> repository)
+    [FromKeyedServices("accounting:project-costing")] IReadRepository<ProjectCostEntry> repository)
     : IRequestHandler<GetProjectCostingQuery, ProjectCostingResponse?>
 {
     /// <summary>

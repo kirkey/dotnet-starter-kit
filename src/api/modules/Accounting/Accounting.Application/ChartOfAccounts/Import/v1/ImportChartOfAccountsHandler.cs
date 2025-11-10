@@ -10,8 +10,8 @@ namespace Accounting.Application.ChartOfAccounts.Import.v1;
 public sealed class ImportChartOfAccountsHandler(
     ILogger<ImportChartOfAccountsHandler> logger,
     IChartOfAccountImportParser parser,
-    [FromKeyedServices("accounting:chartofaccounts")] IRepository<ChartOfAccount> repository,
-    [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> readRepository)
+    [FromKeyedServices("accounting:chart-of-accounts")] IRepository<ChartOfAccount> repository,
+    [FromKeyedServices("accounting:chart-of-accounts")] IReadRepository<ChartOfAccount> readRepository)
     : IRequestHandler<ImportChartOfAccountsCommand, ImportResponse>
 {
     /// <summary>

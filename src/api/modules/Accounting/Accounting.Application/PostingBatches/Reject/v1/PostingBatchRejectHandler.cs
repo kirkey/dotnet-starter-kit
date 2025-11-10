@@ -8,7 +8,7 @@ namespace Accounting.Application.PostingBatches.Reject.v1;
 /// </summary>
 public sealed class PostingBatchRejectHandler(
     ICurrentUser currentUser,
-    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> repository,
     ILogger<PostingBatchRejectHandler> logger)
     : IRequestHandler<PostingBatchRejectCommand, DefaultIdType>
 {

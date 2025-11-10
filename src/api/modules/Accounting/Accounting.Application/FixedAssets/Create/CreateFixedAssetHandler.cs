@@ -1,7 +1,7 @@
 namespace Accounting.Application.FixedAssets.Create;
 
 public sealed class CreateFixedAssetHandler(
-    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixed-assets")] IRepository<FixedAsset> repository)
     : IRequestHandler<CreateFixedAssetCommand, CreateFixedAssetResponse>
 {
     public async Task<CreateFixedAssetResponse> Handle(CreateFixedAssetCommand request, CancellationToken cancellationToken)

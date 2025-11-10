@@ -12,7 +12,7 @@ namespace Accounting.Application.Payees.Update.v1;
 /// </summary>
 public sealed class PayeeUpdateHandler(
     ILogger<PayeeUpdateHandler> logger,
-    [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> repositoryCoa,
+    [FromKeyedServices("accounting:chart-of-accounts")] IReadRepository<ChartOfAccount> repositoryCoa,
     [FromKeyedServices("accounting:payees")] IRepository<Payee> repository,
     IStorageService storageService)
     : IRequestHandler<PayeeUpdateCommand, PayeeUpdateResponse>

@@ -4,7 +4,7 @@ namespace Accounting.Application.Invoices.LineItems.Delete.v1;
 /// Handler for deleting an invoice line item.
 /// </summary>
 public sealed class DeleteInvoiceLineItemHandler(
-    [FromKeyedServices("accounting:invoicelineitems")] IRepository<InvoiceLineItem> repository)
+    [FromKeyedServices("accounting:invoice-line-items")] IRepository<InvoiceLineItem> repository)
     : IRequestHandler<DeleteInvoiceLineItemCommand, DeleteInvoiceLineItemResponse>
 {
     public async Task<DeleteInvoiceLineItemResponse> Handle(DeleteInvoiceLineItemCommand request, CancellationToken cancellationToken)

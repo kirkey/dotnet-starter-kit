@@ -5,7 +5,7 @@ namespace Accounting.Application.PostingBatches.Update.v1;
 /// Only draft/pending batches can be updated.
 /// </summary>
 public sealed class UpdatePostingBatchHandler(
-    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> repository,
     ILogger<UpdatePostingBatchHandler> logger)
     : IRequestHandler<UpdatePostingBatchCommand, DefaultIdType>
 {

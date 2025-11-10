@@ -10,7 +10,7 @@ namespace Accounting.Application.Payees.Create.v1;
 /// </summary>
 public sealed class PayeeCreateHandler(
     ILogger<PayeeCreateHandler> logger,
-    [FromKeyedServices("accounting:chartofaccounts")] IReadRepository<ChartOfAccount> repositoryCoa,
+    [FromKeyedServices("accounting:chart-of-accounts")] IReadRepository<ChartOfAccount> repositoryCoa,
     [FromKeyedServices("accounting:payees")] IRepository<Payee> repository,
     IStorageService storageService)
     : IRequestHandler<PayeeCreateCommand, PayeeCreateResponse>

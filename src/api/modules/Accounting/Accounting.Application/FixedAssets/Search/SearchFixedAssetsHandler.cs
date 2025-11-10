@@ -6,7 +6,7 @@ namespace Accounting.Application.FixedAssets.Search;
 /// Handler for searching fixed assets with filters and pagination.
 /// </summary>
 public sealed class SearchFixedAssetsHandler(
-    [FromKeyedServices("accounting:fixedassets")] IReadRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixed-assets")] IReadRepository<FixedAsset> repository)
     : IRequestHandler<SearchFixedAssetsRequest, PagedList<FixedAssetResponse>>
 {
     public async Task<PagedList<FixedAssetResponse>> Handle(SearchFixedAssetsRequest request, CancellationToken cancellationToken)

@@ -4,7 +4,7 @@ namespace Accounting.Application.Invoices.LineItems.Update.v1;
 /// Handler for updating an invoice line item.
 /// </summary>
 public sealed class UpdateInvoiceLineItemHandler(
-    [FromKeyedServices("accounting:invoicelineitems")] IRepository<InvoiceLineItem> repository)
+    [FromKeyedServices("accounting:invoice-line-items")] IRepository<InvoiceLineItem> repository)
     : IRequestHandler<UpdateInvoiceLineItemCommand, UpdateInvoiceLineItemResponse>
 {
     public async Task<UpdateInvoiceLineItemResponse> Handle(UpdateInvoiceLineItemCommand request, CancellationToken cancellationToken)

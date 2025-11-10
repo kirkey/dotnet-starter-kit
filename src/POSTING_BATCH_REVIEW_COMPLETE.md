@@ -9,7 +9,7 @@ Reviewed and updated the Posting Batches applications, transactions, processes, 
 - **File**: `PostingBatchSearchHandler.cs`
 - **Changes**:
   - Removed unnecessary logger and repository fields
-  - Added `[FromKeyedServices("accounting:postingBatches")]` for dependency injection
+  - Added `[FromKeyedServices("accounting:posting-batches")]` for dependency injection
   - Simplified to follow the pattern used in JournalEntries and other modules
   - Now uses specification for filtering and projecting results
 
@@ -149,7 +149,7 @@ Reviewed and updated the Posting Batches applications, transactions, processes, 
 
 ## Code Patterns Applied
 
-1. **Keyed Services**: `[FromKeyedServices("accounting:postingBatches")]`
+1. **Keyed Services**: `[FromKeyedServices("accounting:posting-batches")]`
 2. **Specification Pattern**: For queries and projections
 3. **CQRS**: Commands for writes, Requests for reads
 4. **Current User Tracking**: Automatic via `ICurrentUser`

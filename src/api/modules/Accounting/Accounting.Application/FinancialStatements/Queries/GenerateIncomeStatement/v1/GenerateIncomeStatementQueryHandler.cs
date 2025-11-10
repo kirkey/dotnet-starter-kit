@@ -4,7 +4,7 @@ namespace Accounting.Application.FinancialStatements.Queries.GenerateIncomeState
 
 public sealed class GenerateIncomeStatementQueryHandler(
     ILogger<GenerateIncomeStatementQueryHandler> logger,
-    [FromKeyedServices("accounting:generalledger")] IRepository<GeneralLedger> ledgerRepository,
+    [FromKeyedServices("accounting:general-ledger")] IRepository<GeneralLedger> ledgerRepository,
     [FromKeyedServices("accounting:accounts")] IRepository<ChartOfAccount> accountRepository)
     : IRequestHandler<GenerateIncomeStatementQuery, IncomeStatementDto>
 {

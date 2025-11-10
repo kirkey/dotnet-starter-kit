@@ -10,7 +10,7 @@ namespace Accounting.Application.FixedAssets.Approve;
 public sealed class ApproveFixedAssetHandler(
     ILogger<ApproveFixedAssetHandler> logger,
     ICurrentUser currentUser,
-    [FromKeyedServices("accounting:fixedassets")] IRepository<FixedAsset> repository)
+    [FromKeyedServices("accounting:fixed-assets")] IRepository<FixedAsset> repository)
     : IRequestHandler<ApproveFixedAssetCommand, DefaultIdType>
 {
     /// <summary>

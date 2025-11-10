@@ -4,7 +4,7 @@ namespace Accounting.Application.PostingBatches.Get.v1;
 /// Handler for retrieving a posting batch by ID.
 /// </summary>
 public sealed class PostingBatchGetHandler(
-    [FromKeyedServices("accounting:postingBatches")] IReadRepository<PostingBatch> repository)
+    [FromKeyedServices("accounting:posting-batches")] IReadRepository<PostingBatch> repository)
     : IRequestHandler<PostingBatchGetQuery, PostingBatchGetResponse>
 {
     public async Task<PostingBatchGetResponse> Handle(PostingBatchGetQuery request, CancellationToken cancellationToken)
