@@ -194,3 +194,23 @@ public partial class Warehouses
     }
 }
 
+/// <summary>
+/// ViewModel used by the Warehouses page for add/edit operations.
+/// </summary>
+public class WarehouseViewModel
+{
+    public DefaultIdType Id { get; set; }
+    public string? Code { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public string? Address { get; set; }
+    public string? ManagerName { get; set; }
+    public string? ManagerEmail { get; set; }
+    public string? ManagerPhone { get; set; }
+    public decimal TotalCapacity { get; set; }
+    public string? CapacityUnit { get; set; }
+    public string? WarehouseType { get; set; }
+    public bool IsActive { get; set; } = true;
+    public bool IsMainWarehouse { get; set; }
+    public string? Notes { get; set; }
+}

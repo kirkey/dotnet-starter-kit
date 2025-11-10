@@ -79,39 +79,163 @@
         </MudItem>
     </AdvancedSearchContent>
 
-    <ActionsContent Context="context">
-        @* View Details *@
-        <MudTooltip Text="View Details">
-            <MudIconButton Icon="@Icons.Material.Filled.Visibility"
-                           Size="Size.Small"
-                           Color="Color.Info"
-                           OnClick="@(() => ViewWarehouseDetails(context.Id))" />
-        </MudTooltip>
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ViewWarehouseDetails(context.Id))" 
+                     Icon="@Icons.Material.Filled.Visibility">
+                View Details
+        </MudMenuItem>
+        
+        <MudMenuItem OnClick="@(() => AssignManager(context.Id))"
+                     Icon="@Icons.Material.Filled.PersonAdd">
+                Assign Manager
+        </MudMenuItem>
+    </ExtraActions>
 
-        @* Assign Manager *@
-        <MudTooltip Text="Assign Manager">
-            <MudIconButton Icon="@Icons.Material.Filled.PersonAdd"
-                           Size="Size.Small"
-                           Color="Color.Secondary"
-                           OnClick="@(() => AssignManager(context.Id))" />
-        </MudTooltip>
-
-        @* Status Chip *@
-        <MudChip T="string" Color="@GetStatusColor(context.IsActive)" 
-                 Size="Size.Small" 
-                 Variant="Variant.Filled">
-            @(context.IsActive ? "Active" : "Inactive")
-        </MudChip>
-
-        @* Main Warehouse Badge *@
-        @if (context.IsMainWarehouse)
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
         {
-            <MudChip T="string" Color="Color.Primary" 
-                     Size="Size.Small" 
-                     Icon="@Icons.Material.Filled.Star">
-                Main
-            </MudChip>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Warehouse Id" />
+            </MudItem>
         }
-    </ActionsContent>
+
+        @* Basic Information *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Label="Code" 
+                          For="@(() => context.Code)" 
+                          @bind-Value="context.Code" 
+                          Required="true"
+                          Placeholder="WH001" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="8">
+            <MudTextField Label="Name" 
+                          For="@(() => context.Name)" 
+                          @bind-Value="context.Name" 
+                          Required="true"
+                          Placeholder="Main Warehouse" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Address" 
+                          For="@(() => context.Address)" 
+                          @bind-Value="context.Address" 
+                          Required="true"
+                          Placeholder="123 Storage Street, New York, NY 10001, USA" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Description" 
+                          For="@(() => context.Description)" 
+                          @bind-Value="context.Description"
+                          Placeholder="Primary storage facility" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.Middle" Class="my-4">
+            <MudText Typo="Typo.subtitle2">Manager Information</MudText>
+        </MudDivider>
+
+        @* Manager Information *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Label="Manager Name" 
+                          For="@(() => context.ManagerName)" 
+                          @bind-Value="context.ManagerName" 
+                          Required="true"
+                          Placeholder="John Manager"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Person" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Label="Manager Email" 
+                          For="@(() => context.ManagerEmail)" 
+                          @bind-Value="context.ManagerEmail" 
+                          Required="true"
+                          Placeholder="john.manager@example.com"
+                          InputType="InputType.Email"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Email" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Label="Manager Phone" 
+                          For="@(() => context.ManagerPhone)" 
+                          @bind-Value="context.ManagerPhone" 
+                          Required="true"
+                          Placeholder="+1-555-123-4567"
+                          InputType="InputType.Telephone"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Phone" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.Middle" Class="my-4">
+            <MudText Typo="Typo.subtitle2">Capacity & Configuration</MudText>
+        </MudDivider>
+
+        @* Capacity Information *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.TotalCapacity" 
+                             For="@(() => context.TotalCapacity)" 
+                             Label="Total Capacity" 
+                             Immediate="true" 
+                             Required
+                             Min="0"
+                             Adornment="Adornment.End"
+                             AdornmentText="@context.CapacityUnit" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Label="Capacity Unit" 
+                          For="@(() => context.CapacityUnit)" 
+                          @bind-Value="context.CapacityUnit" 
+                          Required="true"
+                          Placeholder="sqft" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Label="Warehouse Type" 
+                          For="@(() => context.WarehouseType)" 
+                          @bind-Value="context.WarehouseType" 
+                          Required="true"
+                          Placeholder="Standard" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.Middle" Class="my-4">
+            <MudText Typo="Typo.subtitle2">Status & Settings</MudText>
+        </MudDivider>
+
+        @* Status Switches *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch Class="mt-3" 
+                       T="bool" 
+                       @bind-Value="context.IsActive" 
+                       Color="Color.Success"
+                       Label="Active Status">
+                Active
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch Class="mt-3" 
+                       T="bool" 
+                       @bind-Value="context.IsMainWarehouse" 
+                       Color="Color.Primary"
+                       Label="Main Warehouse">
+                Main Warehouse
+            </MudSwitch>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+
+        @* Notes *@
+        <MudItem xs="12">
+            <MudTextField Label="Notes" 
+                          For="@(() => context.Notes)" 
+                          @bind-Value="context.Notes"
+                          Lines="3"
+                          Placeholder="Additional notes or comments..." />
+        </MudItem>
+    </EditFormContent>
 </EntityTable>
 
