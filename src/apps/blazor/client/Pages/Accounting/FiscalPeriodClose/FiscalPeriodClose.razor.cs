@@ -132,7 +132,6 @@ public partial class FiscalPeriodClose
                 var command = new CompleteFiscalPeriodCloseCommand
                 {
                     FiscalPeriodCloseId = id,
-                    CompletedBy = "Current User" // TODO: Get from auth context
                 };
 
                 await Client.CompleteFiscalPeriodCloseEndpointAsync("1", id, command);

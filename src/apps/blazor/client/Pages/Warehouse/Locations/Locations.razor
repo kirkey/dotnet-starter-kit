@@ -58,11 +58,11 @@
                           AdornmentIcon="@Icons.Material.Filled.Search" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <AutocompleteWarehouse @bind-Value="@SearchWarehouseId"
-                                   Label="Warehouse"
-                                   Placeholder="Filter by warehouse"
-                                   Variant="Variant.Outlined"
-                                   Clearable="true" />
+            <AutocompleteWarehouseId @bind-Value="@SearchWarehouseId"
+                                     Label="Warehouse"
+                                     Placeholder="Filter by warehouse"
+                                     Variant="Variant.Outlined"
+                                     Clearable="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="@SearchAisle"
@@ -105,7 +105,7 @@
         </MudItem>
     </AdvancedSearchContent>
 
-    <ActionsContent>
+    <ActionsContent Context="context">
         @* View Details *@
         <MudTooltip Text="View Details">
             <MudIconButton Icon="@Icons.Material.Filled.Visibility"
@@ -115,7 +115,7 @@
         </MudTooltip>
 
         @* Status Chip *@
-        <MudChip Color="@GetStatusColor(context.IsActive)" 
+        <MudChip T="string" Color="@GetStatusColor(context.IsActive)" 
                  Size="Size.Small" 
                  Variant="Variant.Filled">
             @(context.IsActive ? "Active" : "Inactive")
@@ -124,7 +124,7 @@
         @* Temperature Control Badge *@
         @if (context.RequiresTemperatureControl)
         {
-            <MudChip Color="Color.Info" 
+            <MudChip T="string" Color="Color.Info" 
                      Size="Size.Small" 
                      Icon="@Icons.Material.Filled.AcUnit">
                 Temp Control
@@ -136,7 +136,7 @@
         {
             var percentage = (context.UsedCapacity / context.Capacity) * 100;
             var color = percentage > 90 ? Color.Error : percentage > 75 ? Color.Warning : Color.Success;
-            <MudChip Color="@color" 
+            <MudChip T="string" Color="@color" 
                      Size="Size.Small" 
                      Icon="@Icons.Material.Filled.Storage">
                 @percentage.ToString("F0")% Full

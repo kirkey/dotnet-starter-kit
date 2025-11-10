@@ -732,7 +732,7 @@ private static Color GetStatusColor(string? status) => status switch
 - Keep status text concise
 
 ```razor
-<MudChip Color="@GetStatusColor(context.Status)" 
+<MudChip T="string" Color="@GetStatusColor(context.Status)" 
          Size="Size.Small" 
          Variant="Variant.Filled">
     @context.Status

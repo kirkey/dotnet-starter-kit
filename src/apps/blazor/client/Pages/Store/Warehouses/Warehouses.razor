@@ -97,7 +97,7 @@
         </MudTooltip>
 
         @* Status Chip *@
-        <MudChip Color="@GetStatusColor(context.IsActive)" 
+        <MudChip T="string" Color="@GetStatusColor(context.IsActive)" 
                  Size="Size.Small" 
                  Variant="Variant.Filled">
             @(context.IsActive ? "Active" : "Inactive")
@@ -106,7 +106,7 @@
         @* Main Warehouse Badge *@
         @if (context.IsMainWarehouse)
         {
-            <MudChip Color="Color.Primary" 
+            <MudChip T="string" Color="Color.Primary" 
                      Size="Size.Small" 
                      Icon="@Icons.Material.Filled.Star">
                 Main

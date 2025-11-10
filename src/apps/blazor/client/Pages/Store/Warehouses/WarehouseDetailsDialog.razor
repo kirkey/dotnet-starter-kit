@@ -46,12 +46,12 @@
 
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="2">
-                        <MudChip Color="@GetStatusColor(_warehouse.IsActive)" Size="Size.Small" Variant="Variant.Filled">
+                        <MudChip T="string" Color="@GetStatusColor(_warehouse.IsActive)" Size="Size.Small" Variant="Variant.Filled">
                             @(_warehouse.IsActive ? "Active" : "Inactive")
                         </MudChip>
                         @if (_warehouse.IsMainWarehouse)
                         {
-                            <MudChip Color="Color.Primary" Size="Size.Small" Icon="@Icons.Material.Filled.Star">
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small" Icon="@Icons.Material.Filled.Star">
                                 Main Warehouse
                             </MudChip>
                         }
