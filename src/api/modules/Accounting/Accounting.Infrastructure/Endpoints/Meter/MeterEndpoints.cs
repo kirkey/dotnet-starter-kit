@@ -1,3 +1,5 @@
+using Accounting.Infrastructure.Endpoints.Meter.v1;
+
 namespace Accounting.Infrastructure.Endpoints.Meter;
 
 /// <summary>
@@ -12,14 +14,15 @@ public static class MeterEndpoints
     {
         var meterGroup = app.MapGroup("/meters")
             .WithTags("Meters")
-            .WithDescription("Endpoints for managing meter readings and data");
+            .WithDescription("Endpoints for managing meters")
+            .MapToApiVersion(1);
 
-        // Version 1 endpoints will be added here when implemented
-        // meterGroup.MapMeterCreateEndpoint();
-        // meterGroup.MapMeterUpdateEndpoint();
-        // meterGroup.MapMeterDeleteEndpoint();
-        // meterGroup.MapMeterGetEndpoint();
-        // meterGroup.MapMeterSearchEndpoint();
+        // CRUD operations
+        meterGroup.MapMeterCreateEndpoint();
+        meterGroup.MapMeterGetEndpoint();
+        meterGroup.MapMeterUpdateEndpoint();
+        meterGroup.MapMeterDeleteEndpoint();
+        meterGroup.MapMeterSearchEndpoint();
 
         return app;
     }

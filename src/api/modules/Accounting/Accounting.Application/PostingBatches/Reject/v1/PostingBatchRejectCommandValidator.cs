@@ -4,9 +4,14 @@ public sealed class PostingBatchRejectCommandValidator : AbstractValidator<Posti
 {
     public PostingBatchRejectCommandValidator()
     {
-        RuleFor(x => x.Id).NotEmpty().WithMessage("Posting batch ID is required.");
-        RuleFor(x => x.RejectedBy).NotEmpty().WithMessage("Rejector information is required.")
-            .MaximumLength(200).WithMessage("Rejector information must not exceed 200 characters.");
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Posting batch ID is required.");
+
+        RuleFor(x => x.Reason)
+            .MaximumLength(500)
+            .When(x => !string.IsNullOrWhiteSpace(x.Reason))
+            .WithMessage("Reason must not exceed 500 characters.");
     }
 }
 

@@ -1,3 +1,5 @@
+using Accounting.Infrastructure.Endpoints.Member.v1;
+
 namespace Accounting.Infrastructure.Endpoints.Member;
 
 /// <summary>
@@ -12,14 +14,20 @@ public static class MemberEndpoints
     {
         var memberGroup = app.MapGroup("/members")
             .WithTags("Members")
-            .WithDescription("Endpoints for managing member accounts");
+            .WithDescription("Endpoints for managing member accounts")
+            .MapToApiVersion(1);
 
-        // Version 1 endpoints
-        // memberGroup.MapMemberCreateEndpoint();
-        // memberGroup.MapMemberUpdateEndpoint();
-        // memberGroup.MapMemberDeleteEndpoint();
-        // memberGroup.MapMemberGetEndpoint();
-        // memberGroup.MapMemberSearchEndpoint();
+        // CRUD operations
+        memberGroup.MapMemberCreateEndpoint();
+        memberGroup.MapMemberGetEndpoint();
+        memberGroup.MapMemberUpdateEndpoint();
+        memberGroup.MapMemberDeleteEndpoint();
+        memberGroup.MapMemberSearchEndpoint();
+
+        // Workflow operations
+        memberGroup.MapMemberActivateEndpoint();
+        memberGroup.MapMemberDeactivateEndpoint();
+        memberGroup.MapMemberUpdateBalanceEndpoint();
 
         return app;
     }
