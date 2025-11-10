@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Warehouse.Locations;
+namespace FSH.Starter.Blazor.Client.Pages.Store.Locations;
 
 /// <summary>
 /// Warehouse Locations page logic. Provides CRUD and server-side search over WarehouseLocation entities via the generated API client.
@@ -162,29 +162,6 @@ public partial class Locations
             });
 
         return Task.CompletedTask;
-    }
-
-    /// <summary>
-    /// Views the full details of a warehouse location in a dialog.
-    /// </summary>
-    private async Task ViewLocationDetails(DefaultIdType id)
-    {
-        var parameters = new DialogParameters<LocationDetailsDialog>
-        {
-            { x => x.LocationId, id }
-        };
-
-        var dialog = await DialogService.ShowAsync<LocationDetailsDialog>(
-            "Location Details",
-            parameters,
-            _dialogOptions);
-
-        var result = await dialog.Result;
-
-        if (result is not null && !result.Canceled)
-        {
-            await _table.ReloadDataAsync();
-        }
     }
 }
 

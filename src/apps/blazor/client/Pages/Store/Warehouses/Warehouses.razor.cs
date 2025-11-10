@@ -141,29 +141,6 @@ public partial class Warehouses
     }
 
     /// <summary>
-    /// Views the full details of a warehouse in a dialog.
-    /// </summary>
-    private async Task ViewWarehouseDetails(DefaultIdType id)
-    {
-        var parameters = new DialogParameters<WarehouseDetailsDialog>
-        {
-            { x => x.WarehouseId, id }
-        };
-
-        var dialog = await DialogService.ShowAsync<WarehouseDetailsDialog>(
-            "Warehouse Details",
-            parameters,
-            _dialogOptions);
-
-        var result = await dialog.Result;
-
-        if (!result.Canceled)
-        {
-            await _table.ReloadDataAsync();
-        }
-    }
-
-    /// <summary>
     /// Assigns a manager to the specified warehouse.
     /// </summary>
     private async Task AssignManager(DefaultIdType id)

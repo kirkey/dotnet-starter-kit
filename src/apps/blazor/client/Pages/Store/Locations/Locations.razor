@@ -104,44 +104,5 @@
             </MudSelect>
         </MudItem>
     </AdvancedSearchContent>
-
-    <ActionsContent Context="context">
-        @* View Details *@
-        <MudTooltip Text="View Details">
-            <MudIconButton Icon="@Icons.Material.Filled.Visibility"
-                           Size="Size.Small"
-                           Color="Color.Info"
-                           OnClick="@(() => ViewLocationDetails(context.Id))" />
-        </MudTooltip>
-
-        @* Status Chip *@
-        <MudChip T="string" Color="@GetStatusColor(context.IsActive)" 
-                 Size="Size.Small" 
-                 Variant="Variant.Filled">
-            @(context.IsActive ? "Active" : "Inactive")
-        </MudChip>
-
-        @* Temperature Control Badge *@
-        @if (context.RequiresTemperatureControl)
-        {
-            <MudChip T="string" Color="Color.Info" 
-                     Size="Size.Small" 
-                     Icon="@Icons.Material.Filled.AcUnit">
-                Temp Control
-            </MudChip>
-        }
-
-        @* Capacity Badge *@
-        @if (context.UsedCapacity > 0)
-        {
-            var percentage = (context.UsedCapacity / context.Capacity) * 100;
-            var color = percentage > 90 ? Color.Error : percentage > 75 ? Color.Warning : Color.Success;
-            <MudChip T="string" Color="@color" 
-                     Size="Size.Small" 
-                     Icon="@Icons.Material.Filled.Storage">
-                @percentage.ToString("F0")% Full
-            </MudChip>
-        }
-    </ActionsContent>
 </EntityTable>
 

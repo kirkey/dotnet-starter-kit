@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Pages.Warehouse.Locations;
+namespace FSH.Starter.Blazor.Client.Pages.Store.Locations;
 
 /// <summary>
 /// View model for warehouse location create/edit operations.
