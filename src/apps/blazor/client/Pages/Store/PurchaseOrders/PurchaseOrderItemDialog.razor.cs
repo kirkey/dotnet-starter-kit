@@ -9,6 +9,7 @@ public partial class PurchaseOrderItemDialog
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter] public DefaultIdType PurchaseOrderId { get; set; }
+    [Parameter] public DefaultIdType? SupplierId { get; set; }
     [Parameter] public PurchaseOrderItemModel Model { get; set; } = new();
 
     private MudForm _form = null!;

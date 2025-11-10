@@ -3,10 +3,18 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// <summary>
 /// Autocomplete component for selecting an Item by ID.
 /// Provides search functionality and displays item name and SKU.
+/// Can optionally filter items by supplier.
 /// </summary>
 public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultIdType>
 {
     private readonly ISnackbar _snackbar = null!;
+    
+    /// <summary>
+    /// Optional supplier ID to filter items by supplier.
+    /// When set, only items from this supplier will be shown in search results.
+    /// </summary>
+    [Parameter]
+    public DefaultIdType? SupplierId { get; set; }
     
     protected override async Task<ItemResponse?> GetItem(DefaultIdType id)
     {
@@ -30,7 +38,8 @@ public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultI
                 PageNumber = 1,
                 PageSize = 10,
                 Keyword = value,
-                OrderBy = ["Name"]
+                OrderBy = ["Name"],
+                SupplierId = SupplierId // Filter by supplier if provided
             };
 
             var result = await Client.SearchItemsEndpointAsync("1", command, token).ConfigureAwait(false);

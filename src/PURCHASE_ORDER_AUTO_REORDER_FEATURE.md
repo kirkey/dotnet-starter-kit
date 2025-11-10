@@ -421,7 +421,11 @@ Response: 200 OK
 - [x] AutoAddItemsToPurchaseOrderEndpoint
 - [x] Endpoint registration in PurchaseOrdersEndpoints
 
-### Frontend - TODO 🔄
+### Frontend - COMPLETED ✅
+- [x] Supplier-based item filtering in AutocompleteItem
+- [x] SupplierId parameter added to PurchaseOrderItemDialog
+- [x] SupplierId passed through component hierarchy
+- [x] Items filtered by PO's supplier when adding/editing
 - [ ] Regenerate NSwag client with new endpoints
 - [ ] Add "Auto-Add Items" button to PO form
 - [ ] Create items needing reorder preview component
@@ -432,6 +436,31 @@ Response: 200 OK
 - [ ] Add warehouse filter option
 - [ ] Add toggle for suggested vs. standard quantities
 - [ ] Handle error states and validation
+
+## 🎁 Bonus Feature: Supplier-Based Item Filtering
+
+As part of this implementation, we also added automatic supplier-based filtering for item selection:
+
+### What It Does:
+When adding or editing items on a Purchase Order, the item search autocomplete now **automatically filters items to show only those from the PO's supplier**.
+
+### Why It Matters:
+- ❌ **Before**: Users could accidentally add items from any supplier to a PO
+- ✅ **After**: Users can only select items from the correct supplier
+
+### How It Works:
+1. Purchase Order has a Supplier (e.g., "ABC Wholesale")
+2. When user clicks "Add Item", the item search is filtered by that supplier
+3. Only items belonging to "ABC Wholesale" appear in search results
+4. Impossible to add items from wrong supplier
+
+### Implementation:
+- Added `SupplierId` parameter to `AutocompleteItem` component
+- Pass supplier ID through the component hierarchy
+- API already supported filtering by `SupplierId` in `SearchItemsCommand`
+- Zero backend changes needed!
+
+**See detailed documentation**: `PURCHASE_ORDER_SUPPLIER_FILTERING_FEATURE.md`
 
 ### Testing - TODO 🧪
 - [ ] Unit tests for quantity calculation algorithm

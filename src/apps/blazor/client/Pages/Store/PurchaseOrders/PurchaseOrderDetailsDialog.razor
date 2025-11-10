@@ -95,7 +95,9 @@
                     </MudItem>
 
                     <MudItem Class="pa-2" xs="12">
-                        <PurchaseOrderItems PurchaseOrderId="@PurchaseOrderId" OnItemsChanged="@HandleItemsChanged" />
+                        <PurchaseOrderItems PurchaseOrderId="@PurchaseOrderId" 
+                                          SupplierId="@_purchaseOrder?.SupplierId" 
+                                          OnItemsChanged="@HandleItemsChanged" />
                     </MudItem>
                 </MudGrid>
             }
