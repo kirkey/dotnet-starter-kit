@@ -42,8 +42,15 @@ public partial class CycleCounts
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                // Temporary: Simple search until API client includes SearchCycleCountsCommand
-                var result = await Client.SearchCycleCountsEndpointAsync("1").ConfigureAwait(false);
+                var request = new SearchCycleCountsRequest
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy
+                };
+                
+                var result = await Client.SearchCycleCountsEndpointAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<CycleCountResponse>>();
             },
             createFunc: async viewModel =>
@@ -198,6 +205,14 @@ public partial class CycleCounts
                 Snackbar.Add($"Failed to cancel cycle count: {ex.Message}", Severity.Error);
             }
         }
+    }
+
+    /// <summary>
+    /// Switches to mobile view optimized for handheld devices.
+    /// </summary>
+    private void SwitchToMobileView()
+    {
+        Navigation.NavigateTo("/store/cycle-counts/mobile");
     }
 
     /// <summary>

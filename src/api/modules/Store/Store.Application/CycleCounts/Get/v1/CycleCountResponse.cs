@@ -22,6 +22,12 @@ public sealed record CycleCountResponse
     public int TotalItems { get; init; }
     public int CountedItems { get; init; }
     public int VarianceItems { get; init; }
+    
+    /// <summary>
+    /// Accuracy rate as a percentage (items without variance / total items * 100).
+    /// </summary>
+    public decimal AccuracyRate { get; init; }
+    
     public string? Notes { get; init; }
     public ICollection<CycleCountItemResponse>? Items { get; init; }
 }

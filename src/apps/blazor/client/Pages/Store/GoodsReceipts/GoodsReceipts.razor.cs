@@ -204,7 +204,7 @@ public partial class GoodsReceipts
             MaxWidth = MaxWidth.Large, 
         };
 
-        DialogService.ShowAsync<ReceivingHistoryDialog>("Receiving History", parameters, options);
+        await DialogService.ShowAsync<ReceivingHistoryDialog>("Receiving History", parameters, options);
     }
 }
 

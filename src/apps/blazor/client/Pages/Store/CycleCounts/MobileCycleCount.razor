@@ -1,0 +1,211 @@
+@page "/store/cycle-counts/mobile"
+@using FSH.Starter.Blazor.Client.Pages.Store.CycleCounts.Components
+
+<PageTitle>Mobile Cycle Count</PageTitle>
+
+@if (_isLoading)
+{
+    <MudContainer MaxWidth="MaxWidth.Small" Class="pa-4">
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+        <MudText Align="Align.Center" Class="mt-4">Loading cycle counts...</MudText>
+    </MudContainer>
+}
+else if (_selectedCount != null && _isCountingMode)
+{
+    <MobileCountingInterface 
+        CycleCount="_selectedCount"
+        OnExit="@ExitCountingMode"
+        OnCountCompleted="@HandleCountCompleted" />
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.Small" Class="pa-2">
+        <!-- Header with Layout Switcher -->
+        <MudPaper Elevation="2" Class="pa-3 mb-3">
+            <div class="d-flex justify-space-between align-center">
+                <div>
+                    <MudText Typo="Typo.h6">📱 My Cycle Counts</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Mobile View</MudText>
+                </div>
+                <MudTooltip Text="Switch to Web View">
+                    <MudIconButton Icon="@Icons.Material.Filled.DesktopWindows" 
+                                   Color="Color.Primary" 
+                                   OnClick="@SwitchToWebView" />
+                </MudTooltip>
+            </div>
+        </MudPaper>
+
+        <!-- Today's Counts -->
+        <MudText Typo="Typo.h6" Class="mb-2">📅 Today's Counts (@_todayCounts.Count)</MudText>
+        
+        @if (!_todayCounts.Any())
+        {
+            <MudPaper Elevation="1" Class="pa-4 mb-3">
+                <MudText Align="Align.Center" Color="Color.Secondary">
+                    No counts scheduled for today
+                </MudText>
+            </MudPaper>
+        }
+        else
+        {
+            foreach (var count in _todayCounts)
+            {
+                <MudCard Elevation="2" Class="mb-3">
+                    <MudCardContent>
+                        <div class="d-flex justify-space-between align-center mb-2">
+                            <MudText Typo="Typo.subtitle1" Style="font-weight: 600;">
+                                @count.CountNumber
+                            </MudText>
+                            <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(count.Status ?? "Unknown")">
+                                @GetStatusIcon(count.Status ?? "Unknown") @(count.Status ?? "Unknown")
+                            </MudChip>
+                        </div>
+                        
+                        <div class="mb-2">
+                            <div class="d-flex align-center mb-1">
+                                <MudIcon Icon="@Icons.Material.Filled.Warehouse" Size="Size.Small" Class="mr-2" />
+                                <MudText Typo="Typo.body2">@count.WarehouseName</MudText>
+                            </div>
+                            @if (!string.IsNullOrEmpty(count.Name))
+                            {
+                                <div class="d-flex align-center mb-1">
+                                    <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="Size.Small" Class="mr-2" />
+                                    <MudText Typo="Typo.body2">@count.Name</MudText>
+                                </div>
+                            }
+                            <div class="d-flex align-center mb-1">
+                                <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Small" Class="mr-2" />
+                                <MudText Typo="Typo.body2">Due: @count.CountDate.ToString("h:mm tt")</MudText>
+                            </div>
+                        </div>
+
+                        <MudProgressLinear 
+                            Color="Color.Primary" 
+                            Value="@GetProgressPercentage(count)" 
+                            Size="Size.Small" 
+                            Class="mb-2" />
+                        
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                            📊 @count.CountedItems / @count.TotalItems items
+                            @if (count.VarianceItems > 0)
+                            {
+                                <span class="ml-2" style="color: #ff9800;">
+                                    ⚠️ @count.VarianceItems variances
+                                </span>
+                            }
+                        </MudText>
+                    </MudCardContent>
+                    
+                    <MudCardActions>
+                        @if (count.Status == "Scheduled")
+                        {
+                            <MudButton 
+                                Variant="Variant.Filled" 
+                                Color="Color.Success" 
+                                StartIcon="@Icons.Material.Filled.PlayArrow"
+                                FullWidth="true"
+                                OnClick="@(() => StartCount(count))">
+                                Start Count →
+                            </MudButton>
+                        }
+                        else if (count.Status == "InProgress")
+                        {
+                            <MudButton 
+                                Variant="Variant.Filled" 
+                                Color="Color.Primary" 
+                                StartIcon="@Icons.Material.Filled.Assignment"
+                                FullWidth="true"
+                                OnClick="@(() => ContinueCount(count))">
+                                Continue Count →
+                            </MudButton>
+                        }
+                        else
+                        {
+                            <MudButton 
+                                Variant="Variant.Outlined" 
+                                Color="Color.Default" 
+                                StartIcon="@Icons.Material.Filled.Visibility"
+                                FullWidth="true"
+                                OnClick="@(() => ViewCount(count))">
+                                View Details
+                            </MudButton>
+                        }
+                    </MudCardActions>
+                </MudCard>
+            }
+        }
+
+        <!-- Upcoming Counts -->
+        @if (_upcomingCounts.Any())
+        {
+            <MudExpansionPanels Class="mb-3">
+                <MudExpansionPanel Text="@($"📅 Upcoming Counts ({_upcomingCounts.Count})")" Expanded="false">
+                    @foreach (var count in _upcomingCounts)
+                    {
+                        <MudCard Elevation="1" Class="mb-2">
+                            <MudCardContent Class="pa-3">
+                                <div class="d-flex justify-space-between align-center mb-1">
+                                    <MudText Typo="Typo.body1" Style="font-weight: 600;">@count.CountNumber</MudText>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Default">@count.Status</MudChip>
+                                </div>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    📍 @count.WarehouseName
+                                </MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    📅 @count.CountDate.ToString("MMM dd, yyyy h:mm tt")
+                                </MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        }
+
+        <!-- Completed Counts -->
+        @if (_completedCounts.Any())
+        {
+            <MudExpansionPanels Class="mb-3">
+                <MudExpansionPanel Text="@($"✅ Completed ({_completedCounts.Count})")" IsExpanded="false">
+                    @foreach (var count in _completedCounts.Take(5))
+                    {
+                        <MudCard Elevation="1" Class="mb-2">
+                            <MudCardContent Class="pa-3">
+                                <div class="d-flex justify-space-between align-center mb-1">
+                                    <MudText Typo="Typo.body1" Style="font-weight: 600;">@count.CountNumber</MudText>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Success">Completed</MudChip>
+                                </div>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    📍 @count.WarehouseName
+                                </MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    ✅ Accuracy: @count.AccuracyRate%
+                                </MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton 
+                                    Size="Size.Small" 
+                                    Variant="Variant.Text" 
+                                    StartIcon="@Icons.Material.Filled.Visibility"
+                                    OnClick="@(() => ViewCount(count))">
+                                    View Report
+                                </MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    }
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        }
+
+        <!-- Refresh Button -->
+        <MudButton 
+            Variant="Variant.Outlined" 
+            Color="Color.Primary" 
+            StartIcon="@Icons.Material.Filled.Refresh"
+            FullWidth="true"
+            Class="mt-3"
+            OnClick="@LoadCountsAsync">
+            Refresh
+        </MudButton>
+    </MudContainer>
+}
+

@@ -26,6 +26,9 @@ public class GetCycleCountSpecs : Specification<CycleCount, CycleCountResponse>
                 TotalItems = c.TotalItemsToCount,
                 CountedItems = c.ItemsCountedCorrect,
                 VarianceItems = c.ItemsWithDiscrepancies,
+                AccuracyRate = c.TotalItemsToCount > 0 
+                    ? Math.Round((decimal)(c.TotalItemsToCount - c.ItemsWithDiscrepancies) / c.TotalItemsToCount * 100, 2) 
+                    : 0,
                 Notes = c.Notes,
                 Items = c.Items.Select(i => new CycleCountItemResponse(
                     i.Id,

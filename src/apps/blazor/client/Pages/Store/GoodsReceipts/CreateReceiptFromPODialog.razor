@@ -94,7 +94,7 @@
                                 <MudTable Items="@_poItems" Dense="true" Hover="true">
                                     <HeaderContent>
                                         <MudTh>
-                                            <MudCheckBox T="bool" Checked="@_selectAll" CheckedChanged="@ToggleSelectAll" Color="Color.Primary" />
+                                            <MudCheckBox T="bool" Checked="@_selectAll" ValueChanged="@ToggleSelectAll" Color="Color.Primary" />
                                         </MudTh>
                                         <MudTh>Item</MudTh>
                                         <MudTh Style="text-align: right;">Ordered</MudTh>
@@ -104,7 +104,7 @@
                                     </HeaderContent>
                                     <RowTemplate>
                                         <MudTd>
-                                            <MudCheckBox T="bool" Checked="@IsItemSelected(context.Id)" CheckedChanged="@((bool val) => ToggleItemSelection(context.Id, val))" Color="Color.Primary" />
+                                            <MudCheckBox T="bool" Checked="@IsItemSelected(context.Id)" ValueChanged="@((bool val) => ToggleItemSelection(context.Id, val))" Color="Color.Primary" />
                                         </MudTd>
                                         <MudTd DataLabel="Item">@context.ItemName</MudTd>
                                         <MudTd DataLabel="Ordered" Style="text-align: right;">@context.Quantity</MudTd>

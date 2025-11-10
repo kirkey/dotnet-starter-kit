@@ -1,0 +1,242 @@
+<MudContainer MaxWidth="MaxWidth.Small" Class="pa-0" Style="min-height: 100vh; background-color: #f5f5f5;">
+    
+    <!-- Header with Exit Button -->
+    <MudAppBar Fixed="true" Elevation="1" Dense="true">
+        <MudIconButton Icon="@Icons.Material.Filled.ArrowBack" Color="Color.Inherit" OnClick="@OnExit" />
+        <MudText Typo="Typo.h6">@CycleCount.CountNumber</MudText>
+        <MudSpacer />
+        <MudChip T="string" Size="Size.Small" Color="Color.Info">@_countedItems / @_totalItems</MudChip>
+    </MudAppBar>
+
+    <!-- Main Content Area -->
+    <div style="margin-top: 56px; margin-bottom: 120px;">
+        
+        <!-- Progress Section -->
+        <MudPaper Elevation="0" Class="pa-3 mb-2">
+            <div class="d-flex justify-space-between align-center mb-2">
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Progress</MudText>
+                <MudText Typo="Typo.body1" Style="font-weight: 600;">@_progressPercentage%</MudText>
+            </div>
+            <MudProgressLinear Color="Color.Primary" Value="@_progressPercentage" Size="Size.Large" />
+            
+            @if (_varianceCount > 0)
+            {
+                <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-2">
+                    ⚠️ @_varianceCount items with variances
+                </MudAlert>
+            }
+        </MudPaper>
+
+        <!-- Barcode Scanner Section -->
+        <MudPaper Elevation="2" Class="pa-4 mb-2">
+            <MudText Typo="Typo.h6" Class="mb-3">📱 Scan Item</MudText>
+            
+            @if (_isScanning)
+            {
+                <div class="d-flex flex-column align-center pa-4">
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+                    <MudText Typo="Typo.body2" Class="mt-2">Camera active - Point at barcode</MudText>
+                    <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@StopScanner" Class="mt-2">
+                        Stop Scanner
+                    </MudButton>
+                </div>
+            }
+            else
+            {
+                <MudButton 
+                    Variant="Variant.Filled" 
+                    Color="Color.Primary" 
+                    StartIcon="@Icons.Material.Filled.CameraAlt"
+                    FullWidth="true"
+                    Size="Size.Large"
+                    OnClick="@StartScanner">
+                    Start Camera Scanner
+                </MudButton>
+            }
+            
+            <!-- Manual Entry Option -->
+            <MudDivider Class="my-3" />
+            <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-2">Or enter manually:</MudText>
+            
+            <div class="d-flex gap-2">
+                <MudTextField 
+                    @bind-Value="_manualBarcode" 
+                    Label="Item Barcode/SKU" 
+                    Variant="Variant.Outlined"
+                    Immediate="true"
+                    OnKeyUp="@HandleBarcodeKeyUp"
+                    Adornment="Adornment.Start"
+                    AdornmentIcon="@Icons.Material.Filled.QrCode" />
+                <MudIconButton 
+                    Icon="@Icons.Material.Filled.Search" 
+                    Color="Color.Primary" 
+                    Variant="Variant.Filled"
+                    OnClick="@SearchItem"
+                    Disabled="@string.IsNullOrWhiteSpace(_manualBarcode)" />
+            </div>
+        </MudPaper>
+
+        <!-- Current Item Entry -->
+        @if (_currentItem != null)
+        {
+            <MudPaper Elevation="3" Class="pa-4 mb-2">
+                <MudText Typo="Typo.h6" Class="mb-3">📦 Count This Item</MudText>
+                
+                <div class="mb-3">
+                    <MudText Typo="Typo.body1" Style="font-weight: 600;">@_currentItem.ItemName</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">SKU: @_currentItem.ItemSku</MudText>
+                    @if (!string.IsNullOrEmpty(_currentItem.LocationName))
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">📍 @_currentItem.LocationName</MudText>
+                    }
+                </div>
+
+                <MudDivider Class="mb-3" />
+
+                <div class="d-flex align-center justify-space-between mb-3">
+                    <MudText Typo="Typo.body2">Expected Qty:</MudText>
+                    <MudChip T="string" Color="Color.Default" Size="Size.Small">@_currentItem.ExpectedQuantity</MudChip>
+                </div>
+
+                <!-- Quantity Input with Large Buttons -->
+                <MudText Typo="Typo.body2" Class="mb-2">Actual Quantity:</MudText>
+                <div class="d-flex align-center gap-2 mb-3">
+                    <MudIconButton 
+                        Icon="@Icons.Material.Filled.Remove" 
+                        Color="Color.Primary" 
+                        Variant="Variant.Filled"
+                        Size="Size.Large"
+                        OnClick="@(() => AdjustQuantity(-1))"
+                        Disabled="@(_actualQuantity <= 0)" />
+                    
+                    <MudTextField 
+                        @bind-Value="_actualQuantity" 
+                        Variant="Variant.Outlined"
+                        InputType="InputType.Number"
+                        Style="font-size: 24px; text-align: center; font-weight: 600;"
+                        Immediate="true" />
+                    
+                    <MudIconButton 
+                        Icon="@Icons.Material.Filled.Add" 
+                        Color="Color.Primary" 
+                        Variant="Variant.Filled"
+                        Size="Size.Large"
+                        OnClick="@(() => AdjustQuantity(1))" />
+                </div>
+
+                <!-- Variance Alert -->
+                @if (_showVarianceAlert)
+                {
+                    <MudAlert Severity="Severity.Warning" Dense="true" Class="mb-3">
+                        ⚠️ Variance: @_varianceAmount (@_variancePercentage%)
+                    </MudAlert>
+                }
+
+                <!-- Notes for Variance -->
+                @if (Math.Abs(_varianceAmount) > 0)
+                {
+                    <MudTextField 
+                        @bind-Value="_countNotes" 
+                        Label="Notes (required for variances)" 
+                        Variant="Variant.Outlined"
+                        Lines="2"
+                        Class="mb-3" />
+                }
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2">
+                    <MudButton 
+                        Variant="Variant.Outlined" 
+                        Color="Color.Default"
+                        OnClick="@ClearCurrentItem"
+                        FullWidth="true">
+                        Skip
+                    </MudButton>
+                    <MudButton 
+                        Variant="Variant.Filled" 
+                        Color="Color.Success"
+                        StartIcon="@Icons.Material.Filled.Check"
+                        OnClick="@SaveCount"
+                        Disabled="@(!CanSaveCount())"
+                        FullWidth="true">
+                        Save Count
+                    </MudButton>
+                </div>
+            </MudPaper>
+        }
+
+        <!-- Recent Items List -->
+        @if (_recentItems.Any())
+        {
+            <MudPaper Elevation="1" Class="pa-3 mb-2">
+                <MudText Typo="Typo.subtitle1" Class="mb-2">✅ Recently Counted (@_recentItems.Count)</MudText>
+                <MudList T="string" Dense="true">
+                    @foreach (var item in _recentItems.Take(5))
+                    {
+                        <MudListItem T="string">
+                            <div class="d-flex justify-space-between align-center">
+                                <div>
+                                    <MudText Typo="Typo.body2">@item.ItemName</MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        Expected: @item.ExpectedQuantity → Actual: @item.ActualQuantity
+                                    </MudText>
+                                </div>
+                                @if (item.VarianceAmount != 0)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Warning">
+                                        @(item.VarianceAmount > 0 ? "+" : "")@item.VarianceAmount
+                                    </MudChip>
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                                }
+                            </div>
+                        </MudListItem>
+                        <MudDivider />
+                    }
+                </MudList>
+            </MudPaper>
+        }
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <MudPaper Elevation="8" Class="pa-3" Style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;">
+        <MudButton 
+            Variant="Variant.Filled" 
+            Color="Color.Primary" 
+            StartIcon="@Icons.Material.Filled.CheckCircle"
+            FullWidth="true"
+            Size="Size.Large"
+            OnClick="@CompleteCount"
+            Disabled="@(_countedItems < _totalItems)">
+            @if (_countedItems >= _totalItems)
+            {
+                <text>Complete Count ✓</text>
+            }
+            else
+            {
+                <text>Complete Count (@_countedItems/@_totalItems)</text>
+            }
+        </MudButton>
+        
+        <MudText Typo="Typo.caption" Align="Align.Center" Color="Color.Secondary" Class="mt-2">
+            @if (_countedItems >= _totalItems)
+            {
+                <text>All items counted! Ready to complete.</text>
+            }
+            else
+            {
+                <text>@(_totalItems - _countedItems) items remaining</text>
+            }
+        </MudText>
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+    [Parameter] public CycleCountResponse CycleCount { get; set; } = null!;
+    [Parameter] public EventCallback OnExit { get; set; }
+    [Parameter] public EventCallback OnCountCompleted { get; set; }
+}
+

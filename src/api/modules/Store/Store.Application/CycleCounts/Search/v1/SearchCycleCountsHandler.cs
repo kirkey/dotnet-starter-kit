@@ -4,9 +4,9 @@ namespace FSH.Starter.WebApi.Store.Application.CycleCounts.Search.v1;
 
 public sealed class SearchCycleCountsHandler(
     [FromKeyedServices("store:cycle-counts")] IReadRepository<CycleCount> repository)
-    : IRequestHandler<SearchCycleCountsCommand, PagedList<CycleCountResponse>>
+    : IRequestHandler<SearchCycleCountsRequest, PagedList<CycleCountResponse>>
 {
-    public async Task<PagedList<CycleCountResponse>> Handle(SearchCycleCountsCommand request, CancellationToken cancellationToken)
+    public async Task<PagedList<CycleCountResponse>> Handle(SearchCycleCountsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

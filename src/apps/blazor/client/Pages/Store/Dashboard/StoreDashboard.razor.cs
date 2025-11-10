@@ -506,7 +506,14 @@ public partial class StoreDashboard
     {
         try
         {
-            var result = await Client.SearchCycleCountsEndpointAsync("1");
+            var request = new SearchCycleCountsRequest
+            {
+                PageNumber = 1,
+                PageSize = 100,
+                Status = "InProgress"
+            };
+            
+            var result = await Client.SearchCycleCountsEndpointAsync("1", request);
 
             // Count only "InProgress" status cycle counts
             _metrics.CycleCountsInProgress = result.Items?.Count(c => c.Status == "InProgress") ?? 0;

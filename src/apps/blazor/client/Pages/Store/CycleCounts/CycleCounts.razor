@@ -1,6 +1,14 @@
 @page "/store/cycle-counts"
 
-<PageHeader Title="Cycle Counts" Header="Cycle Counts" SubHeader="Manage inventory cycle counts with workflow operations and variance tracking." />
+<PageHeader Title="Cycle Counts" Header="Cycle Counts" SubHeader="Manage inventory cycle counts with workflow operations and variance tracking.">
+    <Actions>
+        <MudTooltip Text="Switch to Mobile View">
+            <MudIconButton Icon="@Icons.Material.Filled.PhoneAndroid" 
+                          Color="Color.Primary" 
+                          OnClick="@SwitchToMobileView" />
+        </MudTooltip>
+    </Actions>
+</PageHeader>
 
 <EntityTable @ref="_table" TEntity="CycleCountResponse" TId="DefaultIdType" TRequest="CycleCountViewModel" Context="@Context">
     
