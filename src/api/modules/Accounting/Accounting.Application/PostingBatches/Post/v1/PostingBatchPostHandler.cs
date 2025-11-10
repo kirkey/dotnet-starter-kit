@@ -2,30 +2,33 @@ using FSH.Framework.Core.Identity.Users.Abstractions;
 
 namespace Accounting.Application.PostingBatches.Post.v1;
 
+/// <summary>
+/// Handler for posting a batch to the general ledger.
+/// The poster is automatically determined from the current user session.
+/// </summary>
 public sealed class PostingBatchPostHandler(
-    IRepository<PostingBatch> repository,
     ICurrentUser currentUser,
+    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
     ILogger<PostingBatchPostHandler> logger)
     : IRequestHandler<PostingBatchPostCommand, DefaultIdType>
 {
-    private readonly IRepository<PostingBatch> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-    private readonly ICurrentUser _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-    private readonly ILogger<PostingBatchPostHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
     public async Task<DefaultIdType> Handle(PostingBatchPostCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        _logger.LogInformation("Posting batch {BatchId}", request.Id);
+        
+        logger.LogInformation("Posting batch {BatchId}", request.Id);
 
-        var batch = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        if (batch == null) throw new NotFoundException($"Posting batch with ID {request.Id} not found");
+        var batch = await repository.GetByIdAsync(request.Id, cancellationToken);
+        if (batch == null)
+            throw new NotFoundException($"Posting batch with ID {request.Id} not found");
 
-        var postedBy = _currentUser.GetUserName() ?? _currentUser.Name ?? "System";
+        var postedBy = currentUser.GetUserName() ?? currentUser.GetUserId().ToString();
         batch.Post(postedBy);
-        await _repository.UpdateAsync(batch, cancellationToken);
-        await _repository.SaveChangesAsync(cancellationToken);
+        
+        await repository.UpdateAsync(batch, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("Posting batch {BatchNumber} posted successfully by {User}", batch.BatchNumber, postedBy);
+        logger.LogInformation("Posting batch {BatchNumber} posted successfully by {User}", batch.BatchNumber, postedBy);
         return batch.Id;
     }
 }

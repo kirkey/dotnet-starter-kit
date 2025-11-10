@@ -19,6 +19,8 @@ public static class PostingBatchEndpoints
         // CRUD operations
         postingBatchGroup.MapPostingBatchCreateEndpoint();
         postingBatchGroup.MapPostingBatchGetEndpoint();
+        postingBatchGroup.MapPostingBatchUpdateEndpoint();
+        postingBatchGroup.MapPostingBatchDeleteEndpoint();
         postingBatchGroup.MapPostingBatchSearchEndpoint();
 
         // Workflow operations

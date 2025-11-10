@@ -1,3 +1,5 @@
+using Accounting.Application.CostCenters.Responses;
+
 namespace Accounting.Application.CostCenters.Queries;
 
 /// <summary>
@@ -12,9 +14,9 @@ public class CostCenterByCodeSpec : Specification<CostCenter>
 }
 
 /// <summary>
-/// Specification to find cost center by ID.
+/// Specification to find cost center by ID with projection to response.
 /// </summary>
-public class CostCenterByIdSpec : Specification<CostCenter>
+public class CostCenterByIdSpec : Specification<CostCenter, CostCenterResponse>, ISingleResultSpecification<CostCenter>
 {
     public CostCenterByIdSpec(DefaultIdType id)
     {

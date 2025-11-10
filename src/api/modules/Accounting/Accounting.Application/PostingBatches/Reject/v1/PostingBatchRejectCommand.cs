@@ -1,4 +1,11 @@
 namespace Accounting.Application.PostingBatches.Reject.v1;
 
-public sealed record PostingBatchRejectCommand(DefaultIdType Id, string RejectedBy) : IRequest<DefaultIdType>;
+/// <summary>
+/// Command to reject a posting batch.
+/// The rejector is automatically determined from the current user session.
+/// </summary>
+public sealed record PostingBatchRejectCommand(
+    DefaultIdType Id,
+    string? Reason = null
+) : IRequest<DefaultIdType>;
 

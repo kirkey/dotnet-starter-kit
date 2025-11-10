@@ -4,24 +4,21 @@ namespace Accounting.Application.PostingBatches.Create.v1;
 /// Handler for creating a new posting batch.
 /// </summary>
 public sealed class PostingBatchCreateHandler(
-    IRepository<PostingBatch> repository,
+    [FromKeyedServices("accounting:postingBatches")] IRepository<PostingBatch> repository,
     ILogger<PostingBatchCreateHandler> logger)
     : IRequestHandler<PostingBatchCreateCommand, PostingBatchCreateResponse>
 {
-    private readonly IRepository<PostingBatch> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-    private readonly ILogger<PostingBatchCreateHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
     public async Task<PostingBatchCreateResponse> Handle(PostingBatchCreateCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        _logger.LogInformation("Creating posting batch {BatchNumber}", request.BatchNumber);
+        logger.LogInformation("Creating posting batch {BatchNumber}", request.BatchNumber);
 
         // Check if batch number already exists
-        var existing = await _repository.ListAsync(cancellationToken);
+        var existing = await repository.ListAsync(cancellationToken);
         if (existing.Any(b => b.BatchNumber.Equals(request.BatchNumber, StringComparison.OrdinalIgnoreCase)))
         {
-            _logger.LogWarning("Posting batch number {BatchNumber} already exists", request.BatchNumber);
+            logger.LogWarning("Posting batch number {BatchNumber} already exists", request.BatchNumber);
             throw new InvalidOperationException($"Posting batch number '{request.BatchNumber}' already exists.");
         }
 
@@ -37,10 +34,10 @@ public sealed class PostingBatchCreateHandler(
             batch.Notes = request.Notes;
         }
 
-        await _repository.AddAsync(batch, cancellationToken);
-        await _repository.SaveChangesAsync(cancellationToken);
+        await repository.AddAsync(batch, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("Posting batch {BatchNumber} created successfully with ID {BatchId}",
+        logger.LogInformation("Posting batch {BatchNumber} created successfully with ID {BatchId}",
             batch.BatchNumber, batch.Id);
 
         return new PostingBatchCreateResponse

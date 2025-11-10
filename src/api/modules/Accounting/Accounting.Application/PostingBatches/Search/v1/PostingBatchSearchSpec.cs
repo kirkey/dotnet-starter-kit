@@ -1,44 +1,23 @@
 namespace Accounting.Application.PostingBatches.Search.v1;
 
-public sealed class PostingBatchSearchSpec : Specification<PostingBatch>
+/// <summary>
+/// Specification for searching posting batches with filtering and pagination.
+/// Projects results to <see cref="PostingBatchSearchResponse"/>.
+/// </summary>
+public sealed class PostingBatchSearchSpec : EntitiesByPaginationFilterSpec<PostingBatch, PostingBatchSearchResponse>
 {
-    public PostingBatchSearchSpec(PostingBatchSearchQuery query)
+    public PostingBatchSearchSpec(PostingBatchSearchQuery query) : base(query)
     {
-        ArgumentNullException.ThrowIfNull(query);
-
-        if (!string.IsNullOrWhiteSpace(query.BatchNumber))
-        {
-            Query.Where(b => b.BatchNumber.Contains(query.BatchNumber));
-        }
-
-        if (query.PeriodId.HasValue && query.PeriodId.Value != DefaultIdType.Empty)
-        {
-            Query.Where(b => b.PeriodId == query.PeriodId.Value);
-        }
-
-        if (!string.IsNullOrWhiteSpace(query.Status))
-        {
-            Query.Where(b => b.Status == query.Status);
-        }
-
-        if (!string.IsNullOrWhiteSpace(query.ApprovalStatus))
-        {
-            Query.Where(b => b.Status == query.ApprovalStatus);
-        }
-
-        if (query.StartDate.HasValue)
-        {
-            Query.Where(b => b.BatchDate >= query.StartDate.Value);
-        }
-
-        if (query.EndDate.HasValue)
-        {
-            Query.Where(b => b.BatchDate <= query.EndDate.Value);
-        }
-
-
-        Query.OrderByDescending(b => b.BatchDate)
-             .ThenBy(b => b.BatchNumber);
+        Query
+            .Include(b => b.JournalEntries)
+            .OrderByDescending(b => b.BatchDate, !query.HasOrderBy())
+            .ThenBy(b => b.BatchNumber)
+            .Where(b => b.BatchNumber.Contains(query.BatchNumber!), !string.IsNullOrWhiteSpace(query.BatchNumber))
+            .Where(b => b.PeriodId == query.PeriodId!.Value, query.PeriodId.HasValue && query.PeriodId.Value != DefaultIdType.Empty)
+            .Where(b => b.Status == query.Status!, !string.IsNullOrWhiteSpace(query.Status))
+            .Where(b => b.Status == query.ApprovalStatus!, !string.IsNullOrWhiteSpace(query.ApprovalStatus))
+            .Where(b => b.BatchDate >= query.StartDate!.Value, query.StartDate.HasValue)
+            .Where(b => b.BatchDate <= query.EndDate!.Value, query.EndDate.HasValue);
     }
 }
 

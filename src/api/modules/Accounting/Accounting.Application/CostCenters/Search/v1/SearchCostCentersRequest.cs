@@ -3,10 +3,12 @@ using Accounting.Application.CostCenters.Responses;
 namespace Accounting.Application.CostCenters.Search.v1;
 
 /// <summary>
-/// Request to search for cost centers with optional filters.
+/// Request to search for cost centers with optional filters and pagination.
 /// </summary>
-public record SearchCostCentersRequest(
-    string? Code = null,
-    string? Name = null,
-    string? CostCenterType = null,
-    bool? IsActive = null) : IRequest<List<CostCenterResponse>>;
+public sealed class SearchCostCentersRequest : PaginationFilter, IRequest<PagedList<CostCenterResponse>>
+{
+    public string? Code { get; init; }
+    public string? Name { get; init; }
+    public string? CostCenterType { get; init; }
+    public bool? IsActive { get; init; }
+}

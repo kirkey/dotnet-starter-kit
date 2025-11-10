@@ -6,8 +6,8 @@ namespace Accounting.Application.CostCenters.Create.v1;
 /// Handler for creating a new cost center.
 /// </summary>
 public sealed class CostCenterCreateHandler(
-    ILogger<CostCenterCreateHandler> logger,
-    [FromKeyedServices("accounting")] IRepository<CostCenter> repository)
+    [FromKeyedServices("accounting:costCenters")] IRepository<CostCenter> repository,
+    ILogger<CostCenterCreateHandler> logger)
     : IRequestHandler<CostCenterCreateCommand, CostCenterCreateResponse>
 {
     public async Task<CostCenterCreateResponse> Handle(CostCenterCreateCommand request, CancellationToken cancellationToken)

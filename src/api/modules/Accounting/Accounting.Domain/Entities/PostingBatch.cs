@@ -235,4 +235,20 @@ public class PostingBatch : AuditableEntityWithApproval, IAggregateRoot
         ApprovedOn = DateTime.UtcNow;
         QueueDomainEvent(new Events.PostingBatch.PostingBatchRejected(Id, BatchNumber, rejectedBy, ApprovedOn.Value));
     }
+
+    /// <summary>
+    /// Update batch details for draft/pending batches only.
+    /// </summary>
+    public void Update(DateTime batchDate, string? description = null, DefaultIdType? periodId = null)
+    {
+        if (Status != "Pending" && Status != "Draft")
+            throw new InvalidOperationException($"Cannot update batch with status {Status}. Only Pending or Draft batches can be updated.");
+
+        BatchDate = batchDate;
+        Description = description?.Trim();
+        PeriodId = periodId;
+        PostingDate = batchDate; // Update posting date to match batch date
+
+        QueueDomainEvent(new Events.PostingBatch.PostingBatchUpdated(Id, BatchNumber, BatchDate, Description));
+    }
 }

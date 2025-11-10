@@ -2,7 +2,7 @@ namespace Accounting.Domain.Events.PostingBatch;
 
 public record PostingBatchCreated(DefaultIdType Id, string BatchNumber, DateTime BatchDate, string? Description) : DomainEvent;
 
-public record PostingBatchUpdated(DefaultIdType Id, string BatchNumber, DateTime BatchDate) : DomainEvent;
+public record PostingBatchUpdated(DefaultIdType Id, string BatchNumber, DateTime BatchDate, string? Description) : DomainEvent;
 
 public record PostingBatchDeleted(DefaultIdType Id) : DomainEvent;
 

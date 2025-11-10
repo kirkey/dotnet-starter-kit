@@ -1,61 +1,29 @@
-using Accounting.Application.PostingBatches.Commands;
+using Accounting.Application.PostingBatches.Update.v1;
 
-// Endpoint for updating a posting batch
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;
 
+/// <summary>
+/// Endpoint for updating a posting batch.
+/// </summary>
 public static class PostingBatchUpdateEndpoint
 {
-    internal static RouteGroupBuilder MapPostingBatchUpdateEndpoints(this IEndpointRouteBuilder endpoints)
+    internal static RouteGroupBuilder MapPostingBatchUpdateEndpoint(this RouteGroupBuilder group)
     {
-        var group = endpoints.MapGroup("");
-        group.MapPut("/{id}/approve", async (DefaultIdType id, ApprovePostingBatchCommand command, ISender mediator) =>
+        group.MapPut("/{id}", async (DefaultIdType id, UpdatePostingBatchCommand command, ISender mediator) =>
         {
-            command.Id = id;
-            await mediator.Send(command).ConfigureAwait(false);
-            return Results.NoContent();
+            if (id != command.Id)
+                return Results.BadRequest("ID in URL does not match ID in request body");
+
+            var result = await mediator.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
         })
         .WithName(nameof(PostingBatchUpdateEndpoint))
-        .WithSummary("Approve posting batch")
-        .WithDescription("Approves a posting batch")
-        .RequirePermission("Permissions.Accounting.Update")
-        .MapToApiVersion(1);
-
-        group.MapPut("/{id}/post", async (DefaultIdType id, PostingBatchCommand command, ISender mediator) =>
-        {
-            command.Id = id;
-            await mediator.Send(command).ConfigureAwait(false);
-            return Results.NoContent();
-        })
-        .WithName("PostingBatch")
-        .WithSummary("Post posting batch")
-        .WithDescription("Posts a posting batch")
-        .RequirePermission("Permissions.Accounting.Update")
-        .MapToApiVersion(1);
-
-        group.MapPut("/{id}/reject", async (DefaultIdType id, RejectPostingBatchCommand command, ISender mediator) =>
-        {
-            command.Id = id;
-            await mediator.Send(command).ConfigureAwait(false);
-            return Results.NoContent();
-        })
-        .WithName("RejectPostingBatch")
-        .WithSummary("Reject posting batch")
-        .WithDescription("Rejects a posting batch")
-        .RequirePermission("Permissions.Accounting.Update")
-        .MapToApiVersion(1);
-
-        group.MapPut("/{id}/reverse", async (DefaultIdType id, ReversePostingBatchCommand command, ISender mediator) =>
-        {
-            command.Id = id;
-            await mediator.Send(command).ConfigureAwait(false);
-            return Results.NoContent();
-        })
-        .WithName("ReversePostingBatch")
-        .WithSummary("Reverse posting batch")
-        .WithDescription("Reverses a posting batch")
+        .WithSummary("Update posting batch")
+        .WithDescription("Updates a draft or pending posting batch")
         .RequirePermission("Permissions.Accounting.Update")
         .MapToApiVersion(1);
 
         return group;
     }
 }
+
