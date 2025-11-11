@@ -939,7 +939,140 @@ internal sealed class StoreDbInitializer(
             }
         }
 
+        // 26) SalesImports
+        var existingSalesImports = await context.SalesImports.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingSalesImports < 10)
+        {
+            var warehouses = await context.Warehouses.Take(3).ToListAsync(cancellationToken).ConfigureAwait(false);
+            if (warehouses.Count > 0)
+            {
+                var salesImports = new List<SalesImport>();
+                var statuses = new[] { "COMPLETED", "COMPLETED", "COMPLETED", "FAILED", "PENDING" };
+                
+                for (var i = existingSalesImports + 1; i <= 10; i++)
+                {
+                    var warehouse = warehouses[i % warehouses.Count];
+                    var importDate = DateTime.UtcNow.AddDays(-i);
+                    var salesPeriodFrom = importDate.Date;
+                    var salesPeriodTo = salesPeriodFrom.AddDays(1).AddSeconds(-1);
+                    var status = statuses[i % statuses.Length];
+                    var totalRecordsValue = 10 + (i * 5);
+                    int processedRecordsValue;
+                    if (status == "FAILED" || status == "PENDING")
+                    {
+                        processedRecordsValue = 0;
+                    }
+                    else
+                    {
+                        processedRecordsValue = totalRecordsValue - (i % 3);
+                    }
+                    var errorRecordsValue = totalRecordsValue - processedRecordsValue;
+                    
+                    var salesImport = SalesImport.Create(
+                        importNumber: $"IMP-{importDate:yyyyMMdd}-{i:000}",
+                        importDate: importDate,
+                        salesPeriodFrom: salesPeriodFrom,
+                        salesPeriodTo: salesPeriodTo,
+                        warehouseId: warehouse.Id,
+                        fileName: $"pos_sales_{importDate:yyyyMMdd}.csv",
+                        notes: $"Seeded import for testing - Store {warehouse.Name}",
+                        processedBy: $"user{i % 3 + 1}"
+                    );
+                    
+                    // Update status and statistics for completed imports
+                    if (status != "PENDING")
+                    {
+                        salesImport.UpdateStatus("PROCESSING");
+                        salesImport.UpdateStatistics(
+                            totalRecords: totalRecordsValue,
+                            processedRecords: processedRecordsValue,
+                            errorRecords: errorRecordsValue,
+                            totalQuantity: processedRecordsValue * 3,
+                            totalValue: processedRecordsValue * 25.50m
+                        );
+                        salesImport.UpdateStatus(status);
+                    }
+                    
+                    // Add reversal info for some completed imports
+                    if (status == "COMPLETED" && i % 5 == 0)
+                    {
+                        salesImport.Reverse("Incorrect sales data - wrong date", $"user{i % 3 + 1}");
+                    }
+                    
+                    salesImports.Add(salesImport);
+                }
+                
+                await context.SalesImports.AddRangeAsync(salesImports, cancellationToken).ConfigureAwait(false);
+                await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // 27) SalesImportItems
+        var existingSalesImportItems = await context.SalesImportItems.CountAsync(cancellationToken).ConfigureAwait(false);
+        if (existingSalesImportItems < 10)
+        {
+            var salesImports = await context.SalesImports
+                .Where(x => x.Status == "COMPLETED" && !x.IsReversed)
+                .Take(3)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
+            var items = await context.Items.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var transactions = await context.InventoryTransactions.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
+            
+            if (salesImports.Count > 0 && items.Count > 0)
+            {
+                var salesImportItems = new List<SalesImportItem>();
+                var itemsNeeded = 10 - existingSalesImportItems;
+                var itemCount = 0;
+                
+                for (var siIdx = 0; siIdx < salesImports.Count && itemCount < itemsNeeded; siIdx++)
+                {
+                    var salesImport = salesImports[siIdx];
+                    var itemsPerImport = Math.Min(5, itemsNeeded - itemCount);
+                    
+                    for (var i = 0; i < itemsPerImport; i++)
+                    {
+                        var item = items[i % items.Count];
+                        var saleDate = salesImport.SalesPeriodFrom.AddHours(8 + i);
+                        var quantitySold = 2 + (i * 2);
+                        var unitPrice = 5.99m + i;
+                        
+                        var importItem = SalesImportItem.Create(
+                            salesImportId: salesImport.Id,
+                            lineNumber: existingSalesImportItems + itemCount + 1,
+                            saleDate: saleDate,
+                            barcode: item.Barcode,
+                            itemName: item.Name,
+                            quantitySold: quantitySold,
+                            unitPrice: unitPrice
+                        );
+                        
+                        // Mark as processed and link to item and transaction
+                        var transaction = transactions.Count > 0 ? transactions[i % transactions.Count] : null;
+                        if (transaction != null)
+                        {
+                            importItem.MarkAsProcessed(item.Id, transaction.Id);
+                        }
+                        else
+                        {
+                            // If no transaction, just set the item ID
+                            importItem.SetItemId(item.Id);
+                        }
+                        
+                        salesImportItems.Add(importItem);
+                        itemCount++;
+                    }
+                }
+                
+                if (salesImportItems.Count > 0)
+                {
+                    await context.SalesImportItems.AddRangeAsync(salesImportItems, cancellationToken).ConfigureAwait(false);
+                    await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                }
+            }
+        }
+
         logger.LogInformation("[{Tenant}] completed seeding store module data with comprehensive sample data across all {EntityCount} domain entities", 
-            context.TenantInfo!.Identifier, 25);
+            context.TenantInfo!.Identifier, 27);
     }
 }

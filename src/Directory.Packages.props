@@ -62,6 +62,7 @@
     <PackageVersion Include="Mapster" Version="7.4.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.10" />
+    <PackageVersion Include="CsvHelper" Version="33.0.1" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />

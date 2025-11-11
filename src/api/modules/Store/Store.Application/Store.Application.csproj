@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <PackageReference Include="QuestPDF" />
+      <PackageReference Include="CsvHelper" />
     </ItemGroup>
 
 </Project>

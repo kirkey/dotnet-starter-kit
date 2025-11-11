@@ -47,6 +47,10 @@ public sealed class StoreDbContext(
     public DbSet<StockAdjustment> StockAdjustments { get; set; } = null!;
     public DbSet<CycleCount> CycleCounts { get; set; } = null!;
     public DbSet<CycleCountItem> CycleCountItems { get; set; } = null!;
+    
+    // Sales imports
+    public DbSet<SalesImport> SalesImports { get; set; } = null!;
+    public DbSet<SalesImportItem> SalesImportItems { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

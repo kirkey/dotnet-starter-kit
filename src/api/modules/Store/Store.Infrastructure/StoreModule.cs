@@ -20,6 +20,7 @@ using Store.Infrastructure.Endpoints.StockLevels;
 using Store.Infrastructure.Endpoints.Suppliers;
 using Store.Infrastructure.Endpoints.WarehouseLocations;
 using Store.Infrastructure.Endpoints.Warehouses;
+using Store.Infrastructure.Endpoints.SalesImports;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
@@ -61,6 +62,7 @@ public static class StoreModule
         storeGroup.MapSuppliersEndpoints();
         storeGroup.MapWarehouseLocationsEndpoints();
         storeGroup.MapWarehousesEndpoints();
+        storeGroup.MapSalesImportsEndpoints();
 
         return app;
     }
@@ -121,6 +123,10 @@ public static class StoreModule
         builder.Services.AddScoped<IReadRepository<Warehouse>, StoreRepository<Warehouse>>();
         builder.Services.AddScoped<IRepository<WarehouseLocation>, StoreRepository<WarehouseLocation>>();
         builder.Services.AddScoped<IReadRepository<WarehouseLocation>, StoreRepository<WarehouseLocation>>();
+        builder.Services.AddScoped<IRepository<SalesImport>, StoreRepository<SalesImport>>();
+        builder.Services.AddScoped<IReadRepository<SalesImport>, StoreRepository<SalesImport>>();
+        builder.Services.AddScoped<IRepository<SalesImportItem>, StoreRepository<SalesImportItem>>();
+        builder.Services.AddScoped<IReadRepository<SalesImportItem>, StoreRepository<SalesImportItem>>();
         
         // Register with keyed services (for handlers that use specific keys)
         builder.Services.AddKeyedScoped<IRepository<Bin>, StoreRepository<Bin>>("store");
