@@ -181,7 +181,7 @@
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
-        if (IsOpen && GeneralLedgerId != Guid.Empty)
+        if (IsOpen && GeneralLedgerId != DefaultIdType.Empty)
         {
             await LoadDetailsAsync();
         }
@@ -218,7 +218,7 @@
 
     private void ViewJournalEntry()
     {
-        if (_entry?.EntryId != null && _entry.EntryId != Guid.Empty)
+        if (_entry?.EntryId != null && _entry.EntryId != DefaultIdType.Empty)
         {
             Navigation.NavigateTo($"/accounting/journal-entries?entryId={_entry.EntryId}");
         }

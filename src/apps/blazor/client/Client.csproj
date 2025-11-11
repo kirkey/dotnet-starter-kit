@@ -51,8 +51,4 @@
    <ItemGroup>
      <Compile Remove="Pages\Store\Items\ItemResponseExtension.cs" />
    </ItemGroup>
-
-   <ItemGroup>
-     <Content Remove="Pages\Store\SalesImports\SalesImports.razor" />
-   </ItemGroup>
  </Project>

@@ -47,7 +47,7 @@
                                      Format="N2"
                                      Min="0"
                                      Variant="Variant.Filled"
-                                     ReadOnly="@(Model.Id == Guid.Empty)" />
+                                     ReadOnly="@(Model.Id == DefaultIdType.Empty)" />
                 </MudItem>
 
                 <MudItem xs="12">
@@ -63,7 +63,7 @@
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton Color="Color.Primary" OnClick="@(() => SaveAsync())" Variant="Variant.Filled">
-            @(Model.Id == Guid.Empty ? "Add" : "Update")
+            @(Model.Id == DefaultIdType.Empty ? "Add" : "Update")
         </MudButton>
     </DialogActions>
 </MudDialog>

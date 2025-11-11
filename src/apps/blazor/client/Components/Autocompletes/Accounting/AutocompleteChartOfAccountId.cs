@@ -33,7 +33,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
                 () => Client.ChartOfAccountGetEndpointAsync("1", id.Value))
             .ConfigureAwait(false);
 
-        if (dto is not null && dto.Id != Guid.Empty) _cache[dto.Id] = dto;
+        if (dto is not null && dto.Id != DefaultIdType.Empty) _cache[dto.Id] = dto;
 
         return dto;
     }
@@ -64,7 +64,7 @@ public class AutocompleteChartOfAccountId : AutocompleteBase<ChartOfAccountRespo
         _cache.Clear();
         foreach (var it in items)
         {
-            if (it != null && it.Id != Guid.Empty)
+            if (it != null && it.Id != DefaultIdType.Empty)
                 _cache[it.Id] = it;
         }
 

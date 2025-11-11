@@ -121,7 +121,7 @@
                                         }
                                     </tr>
                                 }
-                                <tr style="font-weight: bold; background-color: #f5f5f5;">
+                                <tr style="font-weight: bold; background-color: var(--mud-palette-background-grey);">
                                     <td colspan="2">Total @subsection.SubSectionName</td>
                                     <td class="text-right">@subsection.Total.ToString("N2")</td>
                                     @if (_includeComparative)
@@ -173,7 +173,7 @@
                                         }
                                     </tr>
                                 }
-                                <tr style="font-weight: bold; background-color: #f5f5f5;">
+                                <tr style="font-weight: bold; background-color: var(--mud-palette-background-grey);">
                                     <td colspan="2">Total @subsection.SubSectionName</td>
                                     <td class="text-right">@subsection.Total.ToString("N2")</td>
                                     @if (_includeComparative)
@@ -225,7 +225,7 @@
                                         }
                                     </tr>
                                 }
-                                <tr style="font-weight: bold; background-color: #f5f5f5;">
+                                <tr style="font-weight: bold; background-color: var(--mud-palette-background-grey);">
                                     <td colspan="2">Total @subsection.SubSectionName</td>
                                     <td class="text-right">@subsection.Total.ToString("N2")</td>
                                     @if (_includeComparative)
@@ -242,7 +242,7 @@
 
                     <!-- Grand Total -->
                     <MudDivider Class="my-4" />
-                    <MudPaper Elevation="3" Class="pa-3" Style="background-color: #e3f2fd;">
+                    <MudPaper Elevation="3" Class="pa-3" Style="background-color: var(--mud-palette-info-lighten);">
                         <MudText Typo="Typo.h5" Style="font-weight: bold;">
                             Total Liabilities and Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("N2")
                         </MudText>

@@ -1,0 +1,88 @@
+@page "/store/sales-imports"
+
+<PageHeader Title="Sales Imports" Header="Sales Imports" SubHeader="Import and manage POS sales data to maintain inventory accuracy." />
+
+<EntityTable @ref="_table" TEntity="SalesImportResponse" TId="DefaultIdType" TRequest="SalesImportViewModel" Context="@Context">
+    
+    <AdvancedSearchContent>
+        <MudTextField @bind-Value="SearchImportNumber" Label="Import Number" Variant="Variant.Outlined" />
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("PENDING")">Pending</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("PROCESSING")">Processing</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("COMPLETED")">Completed</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("FAILED")">Failed</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="Import Date From" Date="SearchImportDateFrom" DateChanged="value => SearchImportDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Import Date To" Date="SearchImportDateTo" DateChanged="value => SearchImportDateTo = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ViewDetails(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
+            </div>
+        </MudMenuItem>
+        @if (!context.IsReversed && context.Status == "COMPLETED")
+        {
+            <MudMenuItem OnClick="@(() => ReverseImport(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Undo" Class="mr-2" Color="Color.Warning" />
+                    <span>Reverse Import</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+    
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Import Id" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Status" Underline=false ReadOnly Label="Status" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.ImportNumber" For="@(() => context.ImportNumber)" Label="Import Number" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <AutocompleteWarehouseId @bind-Value="context.WarehouseId" 
+                                     For="@(() => context.WarehouseId)" 
+                                     Label="Warehouse" 
+                                     Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.SalesPeriodFrom" For="@(() => context.SalesPeriodFrom)" Label="Sales Period From" DateFormat="MMMM dd, yyyy" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.SalesPeriodTo" For="@(() => context.SalesPeriodTo)" Label="Sales Period To" DateFormat="MMMM dd, yyyy" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudFileUpload T="IBrowserFile" OnFilesChanged="@OnFileSelected" Accept=".csv" MaximumFileCount="1">
+                <ActivatorContent>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CloudUpload">
+                        Upload CSV File
+                    </MudButton>
+                </ActivatorContent>
+            </MudFileUpload>
+            @if (!string.IsNullOrWhiteSpace(_selectedFileName))
+            {
+                <MudChip T="string" Color="Color.Success" Icon="@Icons.Material.Filled.AttachFile" OnClose="@(() => ClearFile())">
+                    @_selectedFileName (@_fileSize.ToString("N0") bytes)
+                </MudChip>
+            }
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" For="@(() => context.Notes)" Label="Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

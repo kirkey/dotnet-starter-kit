@@ -33,6 +33,16 @@ public class SearchSalesImportsSpec : Specification<SalesImport>
             Query.Where(x => x.SalesPeriodTo <= request.SalesPeriodTo);
         }
 
+        if (request.ImportDateFrom.HasValue)
+        {
+            Query.Where(x => x.ImportDate >= request.ImportDateFrom);
+        }
+
+        if (request.ImportDateTo.HasValue)
+        {
+            Query.Where(x => x.ImportDate <= request.ImportDateTo);
+        }
+
         if (!string.IsNullOrWhiteSpace(request.Status))
         {
             Query.Where(x => x.Status == request.Status.ToUpper());

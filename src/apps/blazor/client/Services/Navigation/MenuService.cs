@@ -160,6 +160,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Item Suppliers", Icon = Icons.Material.Filled.Link, Href = "/store/item-suppliers", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Purchase Orders", Icon = Icons.Material.Filled.ShoppingCart, Href = "/store/purchase-orders", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Goods Receipts", Icon = Icons.Material.Filled.MoveToInbox, Href = "/store/goods-receipts", Action = FshActions.View, Resource = FshResources.Store, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Sales Imports", Icon = Icons.Material.Filled.Upload, Href = "/store/sales-imports", Action = FshActions.View, Resource = FshResources.Store },
                         
                         // ========== INVENTORY MANAGEMENT ==========
                         new MenuSectionSubItemModel { Title = "Inventory", IsGroupHeader = true },

@@ -1,0 +1,181 @@
+<MudDialog>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+        }
+        else if (_import != null)
+        {
+            <MudGrid>
+                <!-- Header with Status -->
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h6">@_import.ImportNumber</MudText>
+                            <MudStack Row="true" Spacing="2">
+                                <MudChip T="string" Color="@GetStatusColor(_import.Status)">@_import.Status</MudChip>
+                                @if (_import.IsReversed)
+                                {
+                                    <MudChip T="string" Color="Color.Warning" Icon="@Icons.Material.Filled.Undo">Reversed</MudChip>
+                                }
+                            </MudStack>
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>
+
+                <!-- Import Information -->
+                <MudItem xs="12" md="6">
+                    <MudPaper Elevation="0" Class="pa-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">Import Information</MudText>
+                        <MudStack Spacing="2">
+                            <MudText Typo="Typo.body2"><strong>Import Date:</strong> @_import.ImportDate.ToString("MMM dd, yyyy HH:mm")</MudText>
+                            <MudText Typo="Typo.body2"><strong>Sales Period:</strong> @_import.SalesPeriodFrom.ToString("MMM dd, yyyy") - @_import.SalesPeriodTo.ToString("MMM dd, yyyy")</MudText>
+                            <MudText Typo="Typo.body2"><strong>Warehouse:</strong> @_import.WarehouseName</MudText>
+                            <MudText Typo="Typo.body2"><strong>File:</strong> @_import.FileName</MudText>
+                            @if (!string.IsNullOrWhiteSpace(_import.ProcessedBy))
+                            {
+                                <MudText Typo="Typo.body2"><strong>Processed By:</strong> @_import.ProcessedBy</MudText>
+                            }
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>
+
+                <!-- Statistics -->
+                <MudItem xs="12" md="6">
+                    <MudPaper Elevation="0" Class="pa-4">
+                        <MudText Typo="Typo.h6" Class="mb-2">Statistics</MudText>
+                        <MudGrid>
+                            <MudItem xs="6">
+                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-info-lighten);">
+                                    <MudCardContent Class="pa-2">
+                                        <MudText Typo="Typo.caption">Total Records</MudText>
+                                        <MudText Typo="Typo.h5">@_import.TotalRecords</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-success-lighten);">
+                                    <MudCardContent Class="pa-2">
+                                        <MudText Typo="Typo.caption">Processed</MudText>
+                                        <MudText Typo="Typo.h5">@_import.ProcessedRecords</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-error-lighten);">
+                                    <MudCardContent Class="pa-2">
+                                        <MudText Typo="Typo.caption">Errors</MudText>
+                                        <MudText Typo="Typo.h5">@_import.ErrorRecords</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-primary-lighten);">
+                                    <MudCardContent Class="pa-2">
+                                        <MudText Typo="Typo.caption">Quantity Sold</MudText>
+                                        <MudText Typo="Typo.h5">@_import.TotalQuantity</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                            @if (_import.TotalValue.HasValue)
+                            {
+                                <MudItem xs="12">
+                                    <MudCard Elevation="0" Style="background-color: var(--mud-palette-secondary-lighten);">
+                                        <MudCardContent Class="pa-2">
+                                            <MudText Typo="Typo.caption">Total Sales Value</MudText>
+                                            <MudText Typo="Typo.h5">@_import.TotalValue.Value.ToString("C")</MudText>
+                                        </MudCardContent>
+                                    </MudCard>
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                <!-- Reversal Information -->
+                @if (_import.IsReversed)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <MudText Typo="Typo.body2"><strong>Reversed:</strong> @_import.ReversalReason</MudText>
+                            <MudText Typo="Typo.caption">Reversed by: @_import.ReversedBy on @_import.ReversedDate?.ToString("MMM dd, yyyy HH:mm")</MudText>
+                        </MudAlert>
+                    </MudItem>
+                }
+
+                <!-- Import Items Table -->
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mb-2">Import Items</MudText>
+                    <MudTable Items="@_import.Items" Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <HeaderContent>
+                            <MudTh>Line</MudTh>
+                            <MudTh>Sale Date</MudTh>
+                            <MudTh>Barcode</MudTh>
+                            <MudTh>Item Name</MudTh>
+                            <MudTh Style="text-align: right">Qty</MudTh>
+                            <MudTh Style="text-align: right">Price</MudTh>
+                            <MudTh Style="text-align: right">Total</MudTh>
+                            <MudTh>Status</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Line">@context.LineNumber</MudTd>
+                            <MudTd DataLabel="Sale Date">@context.SaleDate.ToString("MMM dd, yyyy")</MudTd>
+                            <MudTd DataLabel="Barcode">@context.Barcode</MudTd>
+                            <MudTd DataLabel="Item Name">
+                                @context.ItemName
+                                @if (!string.IsNullOrWhiteSpace(context.ItemSKU))
+                                {
+                                    <MudText Typo="Typo.caption">SKU: @context.ItemSKU</MudText>
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Qty" Style="text-align: right">@context.QuantitySold</MudTd>
+                            <MudTd DataLabel="Price" Style="text-align: right">
+                                @if (context.UnitPrice.HasValue)
+                                {
+                                    @context.UnitPrice.Value.ToString("C")
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Total" Style="text-align: right">
+                                @if (context.TotalAmount.HasValue)
+                                {
+                                    @context.TotalAmount.Value.ToString("C")
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Status">
+                                @if (context.HasError)
+                                {
+                                    <MudTooltip Text="@context.ErrorMessage">
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Error" Icon="@Icons.Material.Filled.Error">Error</MudChip>
+                                    </MudTooltip>
+                                }
+                                else if (context.IsProcessed)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Icon="@Icons.Material.Filled.CheckCircle">Success</MudChip>
+                                }
+                                else
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Default">Pending</MudChip>
+                                }
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudItem>
+
+                <!-- Notes -->
+                @if (!string.IsNullOrWhiteSpace(_import.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudPaper Elevation="0" Class="pa-4">
+                            <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
+                            <MudText Typo="Typo.body2">@_import.Notes</MudText>
+                        </MudPaper>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

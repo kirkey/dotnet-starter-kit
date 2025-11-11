@@ -6,11 +6,11 @@ public partial class WriteOffPostDialog
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
     [Parameter] public DefaultIdType WriteOffId { get; set; }
     
-    private DefaultIdType _journalEntryId = Guid.Empty;
+    private DefaultIdType _journalEntryId = DefaultIdType.Empty;
 
     private async Task Post()
     {
-        if (_journalEntryId == Guid.Empty)
+        if (_journalEntryId == DefaultIdType.Empty)
         {
             Snackbar.Add("Journal Entry ID is required", Severity.Warning);
             return;

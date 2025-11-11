@@ -87,6 +87,6 @@ public partial class Users : ComponentBase
 
     public class UserDetailViewModel : RegisterUserCommand
     {
-        public DefaultIdType Id { get; set; } = Guid.Empty!;
+        public DefaultIdType Id { get; set; } = DefaultIdType.Empty!;
     }
 }

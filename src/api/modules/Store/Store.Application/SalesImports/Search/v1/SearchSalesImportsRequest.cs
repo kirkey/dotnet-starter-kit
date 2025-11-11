@@ -9,6 +9,8 @@ public class SearchSalesImportsRequest : PaginationFilter, IRequest<PagedList<Sa
     public DefaultIdType? WarehouseId { get; set; }
     public DateTime? SalesPeriodFrom { get; set; }
     public DateTime? SalesPeriodTo { get; set; }
+    public DateTime? ImportDateFrom { get; set; }
+    public DateTime? ImportDateTo { get; set; }
     public string? Status { get; set; }
     public bool? IsReversed { get; set; }
 }

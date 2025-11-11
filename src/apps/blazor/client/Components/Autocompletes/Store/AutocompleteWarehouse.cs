@@ -51,7 +51,7 @@ public class AutocompleteWarehouse : AutocompleteBase<WarehouseResponse, IClient
         {
             // Overwrite cache with latest page of results; guard against null Ids.
             _dictionary = items
-                .Where(x => x.Id != Guid.Empty)
+                .Where(x => x.Id != DefaultIdType.Empty)
                 .GroupBy(x => x.Id)
                 .Select(g => g.First())
                 .ToDictionary(x => x.Id);

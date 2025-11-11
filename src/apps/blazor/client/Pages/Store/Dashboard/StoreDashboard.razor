@@ -22,7 +22,7 @@ else
                                 Active inventory items
                             </MudText>
                         </div>
-                        <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudAvatar Size="Size.Large" Style="background: var(--mud-palette-action-default-hover);">
                             <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Medium" Style="color: white;" />
                         </MudAvatar>
                     </div>
@@ -40,7 +40,7 @@ else
                                 Received purchase orders
                             </MudText>
                         </div>
-                        <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudAvatar Size="Size.Large" Style="background: var(--mud-palette-action-default-hover);">
                             <MudIcon Icon="@Icons.Material.Filled.DoneAll" Size="Size.Medium" Style="color: white;" />
                         </MudAvatar>
                     </div>
@@ -58,7 +58,7 @@ else
                                 Below reorder point
                             </MudText>
                         </div>
-                        <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudAvatar Size="Size.Large" Style="background: var(--mud-palette-action-default-hover);">
                             <MudIcon Icon="@Icons.Material.Filled.TrendingDown" Size="Size.Medium" Style="color: white;" />
                         </MudAvatar>
                     </div>
@@ -76,7 +76,7 @@ else
                                 Awaiting approval/action
                             </MudText>
                         </div>
-                        <MudAvatar Size="Size.Large" Style="background: rgba(255,255,255,0.2);">
+                        <MudAvatar Size="Size.Large" Style="background: var(--mud-palette-action-default-hover);">
                             <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Medium" Style="color: white;" />
                         </MudAvatar>
                     </div>
@@ -200,28 +200,28 @@ else
                     <div class="mt-4">
                         <div class="d-flex justify-space-between align-center mb-2">
                             <div class="d-flex align-center">
-                                <div style="width: 12px; height: 12px; background: #43e97b; border-radius: 50%; margin-right: 8px;"></div>
+                                <div style="width: 12px; height: 12px; background: var(--mud-palette-success); border-radius: 50%; margin-right: 8px;"></div>
                                 <MudText Typo="Typo.body2" Color="Color.Default">Pending</MudText>
                             </div>
                             <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">@_metrics.PurchaseOrdersPending</MudText>
                         </div>
                         <div class="d-flex justify-space-between align-center mb-2">
                             <div class="d-flex align-center">
-                                <div style="width: 12px; height: 12px; background: #667eea; border-radius: 50%; margin-right: 8px;"></div>
+                                <div style="width: 12px; height: 12px; background: var(--mud-palette-info); border-radius: 50%; margin-right: 8px;"></div>
                                 <MudText Typo="Typo.body2" Color="Color.Default">Approved/Sent</MudText>
                             </div>
                             <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">@_metrics.PurchaseOrdersApproved</MudText>
                         </div>
                         <div class="d-flex justify-space-between align-center mb-2">
                             <div class="d-flex align-center">
-                                <div style="width: 12px; height: 12px; background: #f093fb; border-radius: 50%; margin-right: 8px;"></div>
+                                <div style="width: 12px; height: 12px; background: var(--mud-palette-secondary); border-radius: 50%; margin-right: 8px;"></div>
                                 <MudText Typo="Typo.body2" Color="Color.Default">Completed</MudText>
                             </div>
                             <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">@_metrics.PurchaseOrdersCompleted</MudText>
                         </div>
                         <div class="d-flex justify-space-between align-center">
                             <div class="d-flex align-center">
-                                <div style="width: 12px; height: 12px; background: #ea4335; border-radius: 50%; margin-right: 8px;"></div>
+                                <div style="width: 12px; height: 12px; background: var(--mud-palette-error); border-radius: 50%; margin-right: 8px;"></div>
                                 <MudText Typo="Typo.body2" Color="Color.Default">Cancelled</MudText>
                             </div>
                             <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">@_metrics.PurchaseOrdersCancelled</MudText>

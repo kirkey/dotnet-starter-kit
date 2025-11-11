@@ -2,7 +2,7 @@
     <ToolBarContent>
         <MudText Typo="Typo.h6">Bill Line Items</MudText>
         <MudSpacer />
-        @if (BillId != Guid.Empty && !IsPosted && !IsPaid)
+        @if (BillId != DefaultIdType.Empty && !IsPosted && !IsPaid)
         {
             <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@AddItemAsync" Variant="Variant.Filled">
                 Add Line Item
@@ -96,7 +96,7 @@
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
-        if (BillId != Guid.Empty)
+        if (BillId != DefaultIdType.Empty)
         {
             await LoadItemsAsync();
         }

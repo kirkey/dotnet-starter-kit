@@ -18,14 +18,14 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
     /// </summary>
     protected override async Task<AccountingPeriodResponse?> GetItem(DefaultIdType? id)
     {
-        if (!id.HasValue || id.Value == Guid.Empty) return null;
+        if (!id.HasValue || id.Value == DefaultIdType.Empty) return null;
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(
                 () => Client.AccountingPeriodGetEndpointAsync("1", id.Value))
             .ConfigureAwait(false);
 
-        if (dto is not null && dto.Id != Guid.Empty) _cache[dto.Id] = dto;
+        if (dto is not null && dto.Id != DefaultIdType.Empty) _cache[dto.Id] = dto;
 
         return dto;
     }
@@ -56,7 +56,7 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
         _cache.Clear();
         foreach (var it in items)
         {
-            if (it != null && it.Id != Guid.Empty)
+            if (it != null && it.Id != DefaultIdType.Empty)
                 _cache[it.Id] = it;
         }
 
@@ -68,6 +68,6 @@ public class AutocompleteAccountingPeriodId : AutocompleteBase<AccountingPeriodR
     /// </summary>
     protected override string GetTextValue(DefaultIdType? id)
     {
-        return (id.HasValue && id.Value != Guid.Empty && _cache.TryGetValue(id.Value, out var dto)) ? dto.Name ?? string.Empty : string.Empty;
+        return (id.HasValue && id.Value != DefaultIdType.Empty && _cache.TryGetValue(id.Value, out var dto)) ? dto.Name ?? string.Empty : string.Empty;
     }
 }
