@@ -7,10 +7,15 @@ public class SerialNumberResponse
     public string? Description { get; set; }
     public string SerialNumberValue { get; set; } = default!;
     public DefaultIdType ItemId { get; set; }
+    public string? ItemName { get; set; }
     public DefaultIdType? WarehouseId { get; set; }
+    public string? WarehouseName { get; set; }
     public DefaultIdType? WarehouseLocationId { get; set; }
+    public string? WarehouseLocationName { get; set; }
     public DefaultIdType? BinId { get; set; }
+    public string? BinName { get; set; }
     public DefaultIdType? LotNumberId { get; set; }
+    public string? LotNumber { get; set; }
     public string Status { get; set; } = default!;
     public DateTime ReceiptDate { get; set; }
     public DateTime? ManufactureDate { get; set; }

@@ -226,6 +226,10 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IReadRepository<Warehouse>, StoreRepository<Warehouse>>("store:warehouses");
         builder.Services.AddKeyedScoped<IRepository<WarehouseLocation>, StoreRepository<WarehouseLocation>>("store:warehouse-locations");
         builder.Services.AddKeyedScoped<IReadRepository<WarehouseLocation>, StoreRepository<WarehouseLocation>>("store:warehouse-locations");
+        builder.Services.AddKeyedScoped<IRepository<SalesImport>, StoreRepository<SalesImport>>("store:sales-imports");
+        builder.Services.AddKeyedScoped<IReadRepository<SalesImport>, StoreRepository<SalesImport>>("store:sales-imports");
+        builder.Services.AddKeyedScoped<IRepository<SalesImportItem>, StoreRepository<SalesImportItem>>("store:sales-import-items");
+        builder.Services.AddKeyedScoped<IReadRepository<SalesImportItem>, StoreRepository<SalesImportItem>>("store:sales-import-items");
 
         // Register PDF service for Purchase Orders
         builder.Services.AddScoped<IPurchaseOrderPdfService, PurchaseOrderPdfService>();

@@ -7,6 +7,7 @@ public record GetPurchaseOrderListResponse(
     string? Notes,
     string OrderNumber,
     DefaultIdType SupplierId,
+    string? SupplierName,
     DateTime OrderDate,
     string Status,
     decimal TotalAmount);

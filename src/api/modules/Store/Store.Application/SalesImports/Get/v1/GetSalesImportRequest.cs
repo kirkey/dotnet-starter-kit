@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.Store.Application.SalesImports.Search.v1;
-
 namespace FSH.Starter.WebApi.Store.Application.SalesImports.Get.v1;
 
 /// <summary>
@@ -13,30 +11,47 @@ public class GetSalesImportRequest(DefaultIdType id) : IRequest<SalesImportDetai
 /// <summary>
 /// Detailed response for a sales import including all import items.
 /// </summary>
-public class SalesImportDetailResponse : SalesImportResponse
-{
-    public List<SalesImportItemResponse> Items { get; set; } = new();
-}
+public sealed record SalesImportDetailResponse(
+    DefaultIdType Id,
+    string ImportNumber,
+    DateTime ImportDate,
+    DateTime SalesPeriodFrom,
+    DateTime SalesPeriodTo,
+    DefaultIdType WarehouseId,
+    string? WarehouseName,
+    string FileName,
+    int TotalRecords,
+    int ProcessedRecords,
+    int ErrorRecords,
+    int TotalQuantity,
+    decimal? TotalValue,
+    string Status,
+    bool IsReversed,
+    DateTime? ReversedDate,
+    string? ReversedBy,
+    string? ReversalReason,
+    string? ProcessedBy,
+    string? ErrorMessage,
+    string? Notes,
+    IReadOnlyCollection<SalesImportItemResponse> Items);
 
 /// <summary>
 /// Response model for individual sales import items.
 /// </summary>
-public class SalesImportItemResponse
-{
-    public DefaultIdType Id { get; set; }
-    public int LineNumber { get; set; }
-    public DateTime SaleDate { get; set; }
-    public string Barcode { get; set; } = default!;
-    public string? ItemName { get; set; }
-    public int QuantitySold { get; set; }
-    public decimal? UnitPrice { get; set; }
-    public decimal? TotalAmount { get; set; }
-    public DefaultIdType? ItemId { get; set; }
-    public string? ItemSKU { get; set; }
-    public DefaultIdType? InventoryTransactionId { get; set; }
-    public string? TransactionNumber { get; set; }
-    public bool IsProcessed { get; set; }
-    public bool HasError { get; set; }
-    public string? ErrorMessage { get; set; }
-}
+public sealed record SalesImportItemResponse(
+    DefaultIdType Id,
+    int LineNumber,
+    DateTime SaleDate,
+    string Barcode,
+    string? ItemName,
+    int QuantitySold,
+    decimal? UnitPrice,
+    decimal? TotalAmount,
+    DefaultIdType? ItemId,
+    string? ItemSKU,
+    DefaultIdType? InventoryTransactionId,
+    string? TransactionNumber,
+    bool IsProcessed,
+    bool HasError,
+    string? ErrorMessage);
 

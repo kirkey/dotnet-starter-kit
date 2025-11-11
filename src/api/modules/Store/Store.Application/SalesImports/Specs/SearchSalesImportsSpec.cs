@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.Store.Application.SalesImports.Specs;
 /// <summary>
 /// Specification for searching sales imports with filters.
 /// </summary>
-public class SearchSalesImportsSpec : Specification<SalesImport>
+public class SearchSalesImportsSpec : Specification<SalesImport, SalesImportResponse>
 {
     public SearchSalesImportsSpec(SearchSalesImportsRequest request)
     {

@@ -9,6 +9,7 @@ public sealed record GetPutAwayTaskResponse
     public DefaultIdType WarehouseId { get; set; }
     public string WarehouseName { get; set; } = default!;
     public DefaultIdType? GoodsReceiptId { get; set; }
+    public string? GoodsReceiptNumber { get; set; }
     public string Status { get; set; } = PutAwayTaskStatus.Created;
     public int Priority { get; set; } = PutAwayTaskPriority.Normal;
     public string? AssignedTo { get; set; }

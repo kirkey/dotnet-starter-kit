@@ -7,6 +7,7 @@ public sealed record PurchaseOrderResponse(
     string? Notes,
     string OrderNumber,
     DefaultIdType SupplierId,
+    string? SupplierName,
     DateTime OrderDate,
     DateTime? ExpectedDeliveryDate,
     DateTime? ActualDeliveryDate,

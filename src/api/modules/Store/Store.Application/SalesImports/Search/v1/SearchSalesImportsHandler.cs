@@ -5,23 +5,24 @@ namespace FSH.Starter.WebApi.Store.Application.SalesImports.Search.v1;
 /// <summary>
 /// Handler for searching sales imports with filtering and pagination.
 /// </summary>
-public class SearchSalesImportsHandler(IReadRepository<SalesImport> repository)
+public sealed class SearchSalesImportsHandler(
+    ILogger<SearchSalesImportsHandler> logger,
+    [FromKeyedServices("store:sales-imports")] IReadRepository<SalesImport> repository)
     : IRequestHandler<SearchSalesImportsRequest, PagedList<SalesImportResponse>>
 {
     public async Task<PagedList<SalesImportResponse>> Handle(SearchSalesImportsRequest request, CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
+
         var spec = new SearchSalesImportsSpec(request);
         
-        var imports = await repository.ListAsync(spec, cancellationToken);
-        var totalCount = await repository.CountAsync(spec, cancellationToken);
+        var imports = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
 
-        var responses = imports.Adapt<List<SalesImportResponse>>();
+        logger.LogInformation("Search complete: retrieved {Count} sales imports (Page {PageNumber}, Size {PageSize})", 
+            totalCount, request.PageNumber, request.PageSize);
 
-        return new PagedList<SalesImportResponse>(
-            responses,
-            totalCount,
-            request.PageNumber,
-            request.PageSize);
+        return new PagedList<SalesImportResponse>(imports, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

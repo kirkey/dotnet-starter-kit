@@ -7,6 +7,7 @@ public sealed record GoodsReceiptResponse
     public string? Description { get; set; }
     public string ReceiptNumber { get; set; } = default!;
     public DefaultIdType? PurchaseOrderId { get; set; }
+    public string? PurchaseOrderNumber { get; set; }
     public DateTime ReceivedDate { get; set; }
     public string Status { get; set; } = default!;
     public int ItemCount { get; set; }
