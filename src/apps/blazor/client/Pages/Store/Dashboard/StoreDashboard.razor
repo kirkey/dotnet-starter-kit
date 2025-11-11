@@ -178,6 +178,55 @@ else
             </MudItem>
         </MudGrid>
 
+        <!-- New Features KPI Row - Sales Imports & Stock Movements -->
+        <MudGrid GutterSize="3" Class="mb-4">
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3" Style="border-left: 4px solid var(--mud-palette-primary);">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.Upload" Color="Color.Primary" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Sales Imports</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.SalesImportsCount</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                        @_metrics.SalesImportsUnprocessed unprocessed
+                    </MudText>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3" Style="border-left: 4px solid var(--mud-palette-success);">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.ShoppingBag" Color="Color.Success" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Total Sold</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.TotalQuantitySold.ToString("N0")</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Units from imports</MudText>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3" Style="border-left: 4px solid var(--mud-palette-warning);">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.Adjust" Color="Color.Warning" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Stock Adjustments</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.StockAdjustmentsCount</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">This month</MudText>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Class="pa-3" Style="border-left: 4px solid var(--mud-palette-tertiary);">
+                    <div class="d-flex align-center mb-2">
+                        <MudIcon Icon="@Icons.Material.Filled.Category" Color="Color.Tertiary" Class="mr-2" />
+                        <MudText Typo="Typo.body1" Style="font-weight: 600;">Categories</MudText>
+                    </div>
+                    <MudText Typo="Typo.h5" Color="Color.Default">@_metrics.TotalCategories</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Item classifications</MudText>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+
         <!-- Main Content Row -->
         <MudGrid GutterSize="3">
             <!-- Purchase Order Status (Donut Chart) -->
@@ -291,6 +340,232 @@ else
                 </MudItem>
             </MudGrid>
         }
+
+        <!-- Analytics Row - Category Distribution & Sales Imports -->
+        <MudGrid GutterSize="3" Class="mt-4">
+            <!-- Category Distribution (Pie Chart) -->
+            <MudItem xs="12" md="5">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600;" Class="mb-3" Color="Color.Default">
+                        Items by Category
+                    </MudText>
+                    
+                    @if (_categoryMetrics.Count > 0)
+                    {
+                        <div style="height: 250px;" class="d-flex justify-center align-center">
+                            <MudChart ChartType="ChartType.Pie" 
+                                      InputData="@_categoryMetrics.Select(c => (double)c.ItemCount).ToArray()" 
+                                      InputLabels="@_categoryMetrics.Select(c => c.CategoryName).ToArray()"
+                                      Width="250px" Height="250px" />
+                        </div>
+                        <MudDivider Class="my-3" />
+                        <div style="height: 120px; overflow-y: auto;">
+                            <MudStack Spacing="2">
+                                @foreach (var category in _categoryMetrics.Take(5))
+                                {
+                                    <div class="d-flex justify-space-between align-center">
+                                        <div class="d-flex align-center">
+                                            <div style="width: 12px; height: 12px; background: @category.Color; border-radius: 50%; margin-right: 8px;"></div>
+                                            <MudText Typo="Typo.body2" Color="Color.Default">@category.CategoryName</MudText>
+                                        </div>
+                                        <MudText Typo="Typo.body2" Style="font-weight: 600;" Color="Color.Default">
+                                            @category.ItemCount.ToString("N0")
+                                        </MudText>
+                                    </div>
+                                }
+                            </MudStack>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-center align-center" style="height: 380px;">
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">No category data available</MudText>
+                        </div>
+                    }
+                </MudCard>
+            </MudItem>
+
+            <!-- Recent Sales Imports -->
+            <MudItem xs="12" md="7">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Recent Sales Imports</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" Color="Color.Primary" OnClick="@LoadDashboardDataAsync" />
+                    </div>
+                    
+                    @if (_salesImports.Count > 0)
+                    {
+                        <div style="height: 380px; overflow-y: auto;">
+                            <MudTable Items="@_salesImports" Dense="true" Hover="true" Striped="true" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Import #</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Date</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Warehouse</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Records</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Processed</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Quantity</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Status</MudText></MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.ImportNumber</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.ImportDate</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.WarehouseName</MudText></MudTd>
+                                    <MudTd><MudText Color="Color.Default">@context.TotalRecords</MudText></MudTd>
+                                    <MudTd>
+                                        <MudText Color="Color.Default">
+                                            @context.ProcessedRecords
+                                            @if (context.ErrorRecords > 0)
+                                            {
+                                                <span style="color: var(--mud-palette-error);"> (@context.ErrorRecords errors)</span>
+                                            }
+                                        </MudText>
+                                    </MudTd>
+                                    <MudTd><MudText Color="Color.Default">@context.TotalQuantity.ToString("N0")</MudText></MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@(context.Status == "Completed" ? Color.Success : context.Status == "Processing" ? Color.Info : Color.Warning)"
+                                               Text="@context.Status" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-center align-center" style="height: 380px;">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudIcon Icon="@Icons.Material.Filled.CloudUpload" Size="Size.Large" Color="Color.Secondary" />
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">No sales imports yet</MudText>
+                            </MudStack>
+                        </div>
+                    }
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Stock Adjustments & Inventory Transactions Row -->
+        <MudGrid GutterSize="3" Class="mt-4">
+            <!-- Recent Stock Adjustments -->
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <MudText Typo="Typo.h6" Style="font-weight: 600;" Color="Color.Default">Stock Adjustments (This Month)</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" Color="Color.Primary" OnClick="@LoadDashboardDataAsync" />
+                    </div>
+                    
+                    @if (_stockAdjustments.Count > 0)
+                    {
+                        <div style="height: 380px; overflow-y: auto;">
+                            <MudTable Items="@_stockAdjustments" Dense="true" Hover="true" Striped="true" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Adjustment #</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Date</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Warehouse</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Type</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Items</MudText></MudTh>
+                                    <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Status</MudText></MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.AdjustmentNumber</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.AdjustmentDate</MudText></MudTd>
+                                    <MudTd><MudText Typo="Typo.caption" Color="Color.Default">@context.WarehouseName</MudText></MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@(context.AdjustmentType == "Increase" ? Color.Success : context.AdjustmentType == "Decrease" ? Color.Error : Color.Info)"
+                                               Text="@context.AdjustmentType" Variant="Variant.Text" />
+                                    </MudTd>
+                                    <MudTd><MudText Color="Color.Default">@context.ItemCount</MudText></MudTd>
+                                    <MudTd>
+                                        <MudChip T="string" Size="Size.Small" 
+                                               Color="@(context.Status == "Approved" ? Color.Success : context.Status == "Pending" ? Color.Warning : Color.Info)"
+                                               Text="@context.Status" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-center align-center" style="height: 380px;">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudIcon Icon="@Icons.Material.Filled.EditNote" Size="Size.Large" Color="Color.Secondary" />
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">No adjustments this month</MudText>
+                            </MudStack>
+                        </div>
+                    }
+                </MudCard>
+            </MudItem>
+
+            <!-- Quick Stats Summary -->
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Style="height: 450px;">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600;" Class="mb-3" Color="Color.Default">
+                        Quick Stats Summary
+                    </MudText>
+                    
+                    <MudStack Spacing="3">
+                        <MudCard Elevation="0" Style="background: var(--mud-palette-surface);" Class="pa-3">
+                            <div class="d-flex justify-space-between align-center">
+                                <div>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Inventory Turnover</MudText>
+                                    <MudText Typo="Typo.h6" Color="Color.Default">
+                                        @(_metrics.TotalQuantitySold > 0 && _metrics.TotalItems > 0 
+                                            ? ((_metrics.TotalQuantitySold / (double)_metrics.TotalItems) * 100).ToString("F1") + "%"
+                                            : "N/A")
+                                    </MudText>
+                                </div>
+                                <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Color="Color.Success" Size="Size.Large" />
+                            </div>
+                        </MudCard>
+
+                        <MudCard Elevation="0" Style="background: var(--mud-palette-surface);" Class="pa-3">
+                            <div class="d-flex justify-space-between align-center">
+                                <div>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">PO Fulfillment Rate</MudText>
+                                    <MudText Typo="Typo.h6" Color="Color.Default">
+                                        @((_metrics.PurchaseOrdersCompleted + _metrics.PurchaseOrdersPending + _metrics.PurchaseOrdersApproved) > 0 
+                                            ? ((_metrics.PurchaseOrdersCompleted / (double)(_metrics.PurchaseOrdersCompleted + _metrics.PurchaseOrdersPending + _metrics.PurchaseOrdersApproved)) * 100).ToString("F1") + "%"
+                                            : "N/A")
+                                    </MudText>
+                                </div>
+                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Info" Size="Size.Large" />
+                            </div>
+                        </MudCard>
+
+                        <MudCard Elevation="0" Style="background: var(--mud-palette-surface);" Class="pa-3">
+                            <div class="d-flex justify-space-between align-center">
+                                <div>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Stock Health Score</MudText>
+                                    <MudText Typo="Typo.h6" Color="Color.Default">
+                                        @(_metrics.TotalItems > 0 
+                                            ? (((double)(_metrics.TotalItems - _metrics.LowStockItems) / _metrics.TotalItems) * 100).ToString("F1") + "%"
+                                            : "N/A")
+                                    </MudText>
+                                </div>
+                                <MudIcon Icon="@Icons.Material.Filled.HealthAndSafety" 
+                                       Color="@(_metrics.LowStockItems > (_metrics.TotalItems * 0.1) ? Color.Warning : Color.Success)" 
+                                       Size="Size.Large" />
+                            </div>
+                        </MudCard>
+
+                        <MudCard Elevation="0" Style="background: var(--mud-palette-surface);" Class="pa-3">
+                            <div class="d-flex justify-space-between align-center">
+                                <div>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Active Operations</MudText>
+                                    <MudText Typo="Typo.h6" Color="Color.Default">
+                                        @(_metrics.ActivePickLists + _metrics.CycleCountsInProgress + _metrics.InventoryTransfersPending)
+                                    </MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @_metrics.ActivePickLists picks · @_metrics.CycleCountsInProgress counts · @_metrics.InventoryTransfersPending transfers
+                                    </MudText>
+                                </div>
+                                <MudIcon Icon="@Icons.Material.Filled.LocalActivity" Color="Color.Primary" Size="Size.Large" />
+                            </div>
+                        </MudCard>
+                    </MudStack>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
 
         <!-- Warehouse Operations Row -->
         <MudGrid GutterSize="3" Class="mt-4">

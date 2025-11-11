@@ -29,6 +29,15 @@ public partial class StoreDashboard
     /// <summary>Active put away tasks.</summary>
     private readonly List<PutAwayTaskItem> _putAwayTasks = [];
 
+    /// <summary>Recent sales imports.</summary>
+    private readonly List<SalesImportItem> _salesImports = [];
+
+    /// <summary>Recent stock adjustments.</summary>
+    private readonly List<StockAdjustmentItem> _stockAdjustments = [];
+
+    /// <summary>Top categories by item count.</summary>
+    private readonly List<CategoryMetric> _categoryMetrics = [];
+
     /// <summary>
     /// Initialize the dashboard - load real data from API.
     /// </summary>
@@ -57,7 +66,10 @@ public partial class StoreDashboard
                 LoadInventoryTransfersAsync(),
                 LoadPickListsAsync(),
                 LoadPutAwayTasksAsync(),
-                LoadCycleCountsAsync()
+                LoadCycleCountsAsync(),
+                LoadSalesImportsAsync(),
+                LoadStockAdjustmentsAsync(),
+                LoadCategoryMetricsAsync()
             );
 
             // Initialize chart data after metrics are loaded
@@ -526,6 +538,147 @@ public partial class StoreDashboard
     }
 
     /// <summary>
+    /// Load sales imports data and metrics.
+    /// </summary>
+    private async Task LoadSalesImportsAsync()
+    {
+        try
+        {
+            // Get recent sales imports (last 30 days)
+            var result = await Client.SearchSalesImportsEndpointAsync("1", new SearchSalesImportsRequest
+            {
+                PageNumber = 1,
+                PageSize = 10,
+                ImportDateFrom = DateTime.UtcNow.AddDays(-30),
+                OrderBy = ["ImportDate desc"]
+            });
+
+            _metrics.SalesImportsCount = result.TotalCount;
+            _metrics.SalesImportsUnprocessed = result.Items?.Count(s => s.Status != "Completed") ?? 0;
+            _metrics.TotalQuantitySold = result.Items?.Sum(s => s.TotalQuantity) ?? 0;
+
+            _salesImports.Clear();
+            if (result.Items != null)
+            {
+                _salesImports.AddRange(result.Items.Take(10).Select(s => new SalesImportItem
+                {
+                    ImportNumber = s.ImportNumber,
+                    ImportDate = s.ImportDate.ToString("MMM dd, yyyy"),
+                    WarehouseName = s.WarehouseName ?? "N/A",
+                    TotalRecords = s.TotalRecords,
+                    ProcessedRecords = s.ProcessedRecords,
+                    ErrorRecords = s.ErrorRecords,
+                    TotalQuantity = s.TotalQuantity,
+                    Status = s.Status
+                }));
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading sales imports: {ex.Message}", Severity.Warning);
+            _metrics.SalesImportsCount = 0;
+            _metrics.SalesImportsUnprocessed = 0;
+            _metrics.TotalQuantitySold = 0;
+        }
+    }
+
+    /// <summary>
+    /// Load stock adjustments data.
+    /// </summary>
+    private async Task LoadStockAdjustmentsAsync()
+    {
+        try
+        {
+            // Get stock adjustments for this month
+            var result = await Client.SearchStockAdjustmentsEndpointAsync("1", new SearchStockAdjustmentsCommand
+            {
+                PageNumber = 1,
+                PageSize = 10,
+                DateFrom = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1, 0, 0, 0, DateTimeKind.Utc)
+            });
+
+            _metrics.StockAdjustmentsCount = result.TotalCount;
+
+            _stockAdjustments.Clear();
+            if (result.Items != null)
+            {
+                _stockAdjustments.AddRange(result.Items.Take(10).Select(s => new StockAdjustmentItem
+                {
+                    AdjustmentNumber = s.Id?.ToString() ?? "N/A",
+                    AdjustmentDate = s.AdjustmentDate.ToString("MMM dd, yyyy"),
+                    WarehouseName = s.WarehouseLocationId.ToString() ?? "N/A",  // TODO: Need to join with WarehouseLocation to get name
+                    AdjustmentType = s.AdjustmentType ?? "Unknown",
+                    ItemCount = s.QuantityAdjusted,
+                    Status = "Processed"  // StockAdjustmentResponse doesn't have Status field
+                }));
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading stock adjustments: {ex.Message}", Severity.Warning);
+            _metrics.StockAdjustmentsCount = 0;
+        }
+    }
+
+    /// <summary>
+    /// Load category metrics.
+    /// </summary>
+    private async Task LoadCategoryMetricsAsync()
+    {
+        try
+        {
+            var result = await Client.SearchCategoriesEndpointAsync("1", new SearchCategoriesCommand
+            {
+                PageNumber = 1,
+                PageSize = 10,
+                OrderBy = ["Name"]
+            });
+
+            _metrics.TotalCategories = result.TotalCount;
+
+            _categoryMetrics.Clear();
+            if (result.Items != null)
+            {
+                foreach (var category in result.Items.Take(10))
+                {
+                    // Get items count for each category
+                    var itemsResult = await Client.SearchItemsEndpointAsync("1", new SearchItemsCommand
+                    {
+                        CategoryId = category.Id,
+                        PageNumber = 1,
+                        PageSize = 1
+                    });
+
+                    _categoryMetrics.Add(new CategoryMetric
+                    {
+                        CategoryName = category.Name ?? "Unknown",
+                        ItemCount = itemsResult.TotalCount,
+                        Color = GetRandomColor()
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading category metrics: {ex.Message}", Severity.Warning);
+            _metrics.TotalCategories = 0;
+        }
+    }
+
+    /// <summary>
+    /// Get a random color for charts.
+    /// </summary>
+    private static string GetRandomColor()
+    {
+        var colors = new[]
+        {
+            "#667eea", "#764ba2", "#f093fb", "#f5576c", "#4facfe", "#00f2fe",
+            "#43e97b", "#38f9d7", "#fa709a", "#fee140", "#30cfd0", "#330867"
+        };
+        return colors[System.Security.Cryptography.RandomNumberGenerator.GetInt32(colors.Length)];
+    }
+
+    /// <summary>
     /// Get color for transfer status.
     /// </summary>
     private static Color GetTransferStatusColor(string status) => status switch
@@ -617,6 +770,21 @@ internal sealed class StoreDashboardMetrics
 
     /// <summary>Number of cycle counts in progress.</summary>
     public int CycleCountsInProgress { get; set; }
+
+    /// <summary>Total sales imports count.</summary>
+    public int SalesImportsCount { get; set; }
+
+    /// <summary>Unprocessed sales imports.</summary>
+    public int SalesImportsUnprocessed { get; set; }
+
+    /// <summary>Total quantity sold (from imports).</summary>
+    public int TotalQuantitySold { get; set; }
+
+    /// <summary>Stock adjustments count (this month).</summary>
+    public int StockAdjustmentsCount { get; set; }
+
+    /// <summary>Total categories count.</summary>
+    public int TotalCategories { get; set; }
 }
 
 /// <summary>
@@ -770,5 +938,74 @@ internal sealed class PutAwayTaskItem
 
     /// <summary>Task status.</summary>
     public string Status { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Sales import item model for dashboard display.
+/// </summary>
+internal sealed class SalesImportItem
+{
+    /// <summary>Import number.</summary>
+    public string ImportNumber { get; set; } = string.Empty;
+
+    /// <summary>Import date.</summary>
+    public string ImportDate { get; set; } = string.Empty;
+
+    /// <summary>Warehouse name.</summary>
+    public string WarehouseName { get; set; } = string.Empty;
+
+    /// <summary>Total records in import.</summary>
+    public int TotalRecords { get; set; }
+
+    /// <summary>Processed records count.</summary>
+    public int ProcessedRecords { get; set; }
+
+    /// <summary>Error records count.</summary>
+    public int ErrorRecords { get; set; }
+
+    /// <summary>Total quantity sold.</summary>
+    public int TotalQuantity { get; set; }
+
+    /// <summary>Import status.</summary>
+    public string Status { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Stock adjustment item model for dashboard display.
+/// </summary>
+internal sealed class StockAdjustmentItem
+{
+    /// <summary>Adjustment number.</summary>
+    public string AdjustmentNumber { get; set; } = string.Empty;
+
+    /// <summary>Adjustment date.</summary>
+    public string AdjustmentDate { get; set; } = string.Empty;
+
+    /// <summary>Warehouse name.</summary>
+    public string WarehouseName { get; set; } = string.Empty;
+
+    /// <summary>Adjustment type (e.g., Increase, Decrease, Cycle Count).</summary>
+    public string AdjustmentType { get; set; } = string.Empty;
+
+    /// <summary>Number of items adjusted.</summary>
+    public int ItemCount { get; set; }
+
+    /// <summary>Adjustment status.</summary>
+    public string Status { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Category metric model for dashboard charts.
+/// </summary>
+internal sealed class CategoryMetric
+{
+    /// <summary>Category name.</summary>
+    public string CategoryName { get; set; } = string.Empty;
+
+    /// <summary>Number of items in category.</summary>
+    public int ItemCount { get; set; }
+
+    /// <summary>Chart color.</summary>
+    public string Color { get; set; } = string.Empty;
 }
 
