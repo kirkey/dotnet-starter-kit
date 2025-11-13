@@ -122,6 +122,36 @@ public class Employee : AuditableEntity, IAggregateRoot
     public ICollection<DesignationAssignment> DesignationAssignments { get; private set; } = new List<DesignationAssignment>();
 
     /// <summary>
+    /// Collection of contacts for this employee (emergency, references, family).
+    /// </summary>
+    public ICollection<EmployeeContact> Contacts { get; private set; } = new List<EmployeeContact>();
+
+    /// <summary>
+    /// Collection of dependents for this employee.
+    /// </summary>
+    public ICollection<EmployeeDependent> Dependents { get; private set; } = new List<EmployeeDependent>();
+
+    /// <summary>
+    /// Collection of documents for this employee.
+    /// </summary>
+    public ICollection<EmployeeDocument> Documents { get; private set; } = new List<EmployeeDocument>();
+
+    /// <summary>
+    /// Collection of attendance records for this employee.
+    /// </summary>
+    public ICollection<Attendance> AttendanceRecords { get; private set; } = new List<Attendance>();
+
+    /// <summary>
+    /// Collection of timesheets for this employee.
+    /// </summary>
+    public ICollection<Timesheet> Timesheets { get; private set; } = new List<Timesheet>();
+
+    /// <summary>
+    /// Collection of shift assignments for this employee.
+    /// </summary>
+    public ICollection<ShiftAssignment> ShiftAssignments { get; private set; } = new List<ShiftAssignment>();
+
+    /// <summary>
     /// Creates a new employee record.
     /// </summary>
     public static Employee Create(

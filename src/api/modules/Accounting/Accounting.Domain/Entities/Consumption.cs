@@ -41,7 +41,7 @@ namespace Accounting.Domain.Entities;
 /// <seealso cref="ConsumptionCreated"/>
 /// <seealso cref="ConsumptionUpdated"/>
 /// <seealso cref="ConsumptionMarkedAsEstimated"/>
-/// <seealso cref="Accounting.Domain.Events.Consumption.ConsumptionValidated"/>
+/// <seealso cref="Consumption.ConsumptionValidated"/>
 public class Consumption : AuditableEntity, IAggregateRoot
 {
     private const int MaxBillingPeriodLength = 64;

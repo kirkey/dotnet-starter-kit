@@ -1,4 +1,4 @@
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Create.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Create.v1;
 
 /// <summary>
 /// Command to assign a plantilla (primary) designation to an employee.

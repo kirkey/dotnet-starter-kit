@@ -1,6 +1,4 @@
-using FSH.Framework.Core.Paging;
-
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Search.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Search.v1;
 
 /// <summary>
 /// Request to search employee designation history with temporal queries.

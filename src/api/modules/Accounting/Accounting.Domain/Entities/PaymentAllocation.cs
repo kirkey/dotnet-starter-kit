@@ -1,3 +1,5 @@
+using Accounting.Domain.Events.PaymentAllocation;
+
 namespace Accounting.Domain.Entities;
 
 /// <summary>
@@ -29,7 +31,7 @@ namespace Accounting.Domain.Entities;
 /// - Must maintain referential integrity with payment and invoice entities
 /// </remarks>
 /// <seealso cref="Accounting.Domain.Events.Payment.PaymentAllocated"/>
-/// <seealso cref="Accounting.Domain.Events.Payment.PaymentAllocationReversed"/>
+/// <seealso cref="PaymentAllocationReversed"/>
 /// <seealso cref="Accounting.Domain.Events.Invoice.InvoicePaymentApplied"/>
 public class PaymentAllocation : AuditableEntity, IAggregateRoot
 {

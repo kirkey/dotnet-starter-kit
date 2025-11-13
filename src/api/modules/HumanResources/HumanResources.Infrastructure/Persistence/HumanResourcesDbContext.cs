@@ -18,6 +18,15 @@ public sealed class HumanResourcesDbContext(
     public DbSet<Designation> Designations { get; set; } = null!;
     public DbSet<Employee> Employees { get; set; } = null!;
     public DbSet<DesignationAssignment> DesignationAssignments { get; set; } = null!;
+    public DbSet<EmployeeContact> EmployeeContacts { get; set; } = null!;
+    public DbSet<EmployeeDependent> EmployeeDependents { get; set; } = null!;
+    public DbSet<EmployeeDocument> EmployeeDocuments { get; set; } = null!;
+    public DbSet<Attendance> Attendance { get; set; } = null!;
+    public DbSet<Timesheet> Timesheets { get; set; } = null!;
+    public DbSet<TimesheetLine> TimesheetLines { get; set; } = null!;
+    public DbSet<Shift> Shifts { get; set; } = null!;
+    public DbSet<ShiftBreak> ShiftBreaks { get; set; } = null!;
+    public DbSet<ShiftAssignment> ShiftAssignments { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

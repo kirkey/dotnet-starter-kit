@@ -1,8 +1,6 @@
-using Ardalis.Specification;
-using FSH.Framework.Core.Specifications;
-using FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Search.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Search.v1;
 
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
 
 /// <summary>
 /// Specification for searching employee designation history with filters.

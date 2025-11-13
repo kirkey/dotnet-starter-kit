@@ -1,6 +1,4 @@
-using System.ComponentModel;
-
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.End.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.End.v1;
 
 /// <summary>
 /// Command to end a designation assignment.

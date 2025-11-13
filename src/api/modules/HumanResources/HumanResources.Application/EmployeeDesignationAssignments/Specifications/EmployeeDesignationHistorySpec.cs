@@ -1,6 +1,4 @@
-using Ardalis.Specification;
-
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
 
 /// <summary>
 /// Specification to get employee designation history (all past and current designations).

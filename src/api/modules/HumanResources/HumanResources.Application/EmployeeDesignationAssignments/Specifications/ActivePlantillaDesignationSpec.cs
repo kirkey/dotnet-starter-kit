@@ -1,4 +1,4 @@
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
 
 /// <summary>
 /// Specification to get active plantilla designation for an employee.

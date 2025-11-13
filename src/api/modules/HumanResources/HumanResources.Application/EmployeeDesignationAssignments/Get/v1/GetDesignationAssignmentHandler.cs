@@ -1,9 +1,6 @@
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
-using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
-using Microsoft.Extensions.DependencyInjection;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
 
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Get.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Get.v1;
 
 /// <summary>
 /// Handler for getting designation assignment by ID.

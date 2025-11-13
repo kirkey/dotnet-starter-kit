@@ -1,4 +1,4 @@
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Get.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Get.v1;
 
 /// <summary>
 /// Request to get designation assignment by ID.

@@ -1,6 +1,6 @@
-using FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
 
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Create.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Create.v1;
 
 /// <summary>
 /// Handler for assigning a plantilla (primary) designation to an employee.

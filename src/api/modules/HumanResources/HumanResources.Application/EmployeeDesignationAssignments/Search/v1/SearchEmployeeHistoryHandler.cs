@@ -1,9 +1,6 @@
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
-using Microsoft.Extensions.DependencyInjection;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
 
-namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Search.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Search.v1;
 
 /// <summary>
 /// Handler for searching employee designation history with temporal queries.

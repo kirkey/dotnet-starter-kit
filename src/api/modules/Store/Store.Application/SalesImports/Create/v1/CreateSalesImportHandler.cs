@@ -5,7 +5,6 @@ using CsvHelper.Configuration;
 using FSH.Framework.Core.Exceptions;
 using FSH.Framework.Core.Identity.Users.Abstractions;
 using FSH.Starter.WebApi.Store.Application.SalesImports.Specs;
-using Store.Domain.Entities;
 
 namespace FSH.Starter.WebApi.Store.Application.SalesImports.Create.v1;
 
