@@ -1,4 +1,5 @@
 using Carter;
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.v1;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 
@@ -16,19 +17,8 @@ public static class HumanResourcesModule
     {
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            var companyGroup = app.MapGroup("companies").WithTags("companies");
-            companyGroup.MapCompanyCreateEndpoint();
-            companyGroup.MapCompanyGetEndpoint();
-            companyGroup.MapCompaniesSearchEndpoint();
-            companyGroup.MapCompanyUpdateEndpoint();
-            companyGroup.MapCompanyDeleteEndpoint();
-
-            var orgUnitGroup = app.MapGroup("organizational-units").WithTags("organizational-units");
-            orgUnitGroup.MapOrganizationalUnitCreateEndpoint();
-            orgUnitGroup.MapOrganizationalUnitGetEndpoint();
-            orgUnitGroup.MapOrganizationalUnitsSearchEndpoint();
-            orgUnitGroup.MapOrganizationalUnitUpdateEndpoint();
-            orgUnitGroup.MapOrganizationalUnitDeleteEndpoint();
+            app.MapOrganizationalUnitEndpoints();
+            app.MapDesignationEndpoints();
         }
     }
 
@@ -46,11 +36,12 @@ public static class HumanResourcesModule
         builder.Services.AddScoped<IDbInitializer, HumanResourcesDbInitializer>();
 
         // Register Repositories with keyed services
-        builder.Services.AddKeyedScoped<IRepository<Company>, HumanResourcesRepository<Company>>("hr:companies");
-        builder.Services.AddKeyedScoped<IReadRepository<Company>, HumanResourcesRepository<Company>>("hr:companies");
 
         builder.Services.AddKeyedScoped<IRepository<OrganizationalUnit>, HumanResourcesRepository<OrganizationalUnit>>("hr:organizationalunits");
         builder.Services.AddKeyedScoped<IReadRepository<OrganizationalUnit>, HumanResourcesRepository<OrganizationalUnit>>("hr:organizationalunits");
+
+        builder.Services.AddKeyedScoped<IRepository<Designation>, HumanResourcesRepository<Designation>>("hr:designations");
+        builder.Services.AddKeyedScoped<IReadRepository<Designation>, HumanResourcesRepository<Designation>>("hr:designations");
 
         return builder;
     }

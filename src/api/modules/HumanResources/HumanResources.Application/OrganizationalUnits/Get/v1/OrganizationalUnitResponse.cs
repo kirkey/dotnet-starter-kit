@@ -6,7 +6,6 @@ namespace FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Get.
 public sealed record OrganizationalUnitResponse
 {
     public DefaultIdType Id { get; init; }
-    public DefaultIdType CompanyId { get; init; }
     public string Code { get; init; } = default!;
     public string Name { get; init; } = default!;
     public OrganizationalUnitType Type { get; init; }

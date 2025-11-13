@@ -7,6 +7,7 @@ global using FSH.Framework.Core.Paging;
 global using FSH.Framework.Core.Persistence;
 global using FSH.Framework.Core.Specifications;
 global using FSH.Starter.WebApi.HumanResources.Domain;
+global using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 global using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;

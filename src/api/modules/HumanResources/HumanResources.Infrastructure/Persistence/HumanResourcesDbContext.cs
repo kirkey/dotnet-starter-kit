@@ -1,5 +1,6 @@
 using Finbuckle.MultiTenant.Abstractions;
 using FSH.Framework.Infrastructure.Tenant;
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Shared.Constants;
 
@@ -14,8 +15,8 @@ public sealed class HumanResourcesDbContext(
     IPublisher publisher,
     IOptions<DatabaseOptions> settings) : FshDbContext(multiTenantContextAccessor, options, publisher, settings)
 {
-    public DbSet<Company> Companies { get; set; } = null!;
     public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; } = null!;
+    public DbSet<Designation> Designations { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

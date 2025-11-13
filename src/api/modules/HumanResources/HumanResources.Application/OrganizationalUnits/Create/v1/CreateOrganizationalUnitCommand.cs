@@ -4,7 +4,6 @@ namespace FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Crea
 /// Command to create a new organizational unit.
 /// </summary>
 public sealed record CreateOrganizationalUnitCommand(
-    [property: DefaultValue("00000000-0000-0000-0000-000000000000")] DefaultIdType CompanyId,
     [property: DefaultValue("HR-001")] string Code,
     [property: DefaultValue("Human Resources Department")] string Name,
     [property: DefaultValue(OrganizationalUnitType.Department)] OrganizationalUnitType Type,

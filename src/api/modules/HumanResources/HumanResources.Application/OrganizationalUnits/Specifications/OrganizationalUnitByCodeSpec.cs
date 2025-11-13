@@ -5,9 +5,9 @@ namespace FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Spec
 /// </summary>
 public class OrganizationalUnitByCodeSpec : Specification<OrganizationalUnit>
 {
-    public OrganizationalUnitByCodeSpec(DefaultIdType companyId, string code)
+    public OrganizationalUnitByCodeSpec(string code)
     {
-        Query.Where(ou => ou.CompanyId == companyId && ou.Code == code);
+        Query.Where(ou => ou.Code == code);
     }
 }
 

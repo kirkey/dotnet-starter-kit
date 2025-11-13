@@ -18,7 +18,7 @@ public sealed class CreateOrganizationalUnitHandler(
         // Check if code already exists
         var existingUnit = await readRepository
             .FirstOrDefaultAsync(
-                new OrganizationalUnitByCodeSpec(request.CompanyId, request.Code), 
+                new OrganizationalUnitByCodeSpec(request.Code), 
                 cancellationToken)
             .ConfigureAwait(false);
 
@@ -54,7 +54,6 @@ public sealed class CreateOrganizationalUnitHandler(
 
         // Create organizational unit using domain factory method
         var organizationalUnit = OrganizationalUnit.Create(
-            request.CompanyId,
             request.Code,
             request.Name,
             request.Type,

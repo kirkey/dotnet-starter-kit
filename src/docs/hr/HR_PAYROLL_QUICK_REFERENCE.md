@@ -2,7 +2,7 @@
 
 **Module:** HumanResources  
 **Timeline:** 10 weeks (Nov 13, 2025 - Jan 26, 2026)  
-**Investment:** $110K  
+**Investment:** $107K  
 **Impact:** SAAS readiness 45% → 70%
 
 ---
@@ -10,37 +10,36 @@
 ## 📋 Module Summary
 
 ### What We're Building
-Complete **Employee, Department, Company Management + Attendance + Payroll** in one integrated module.
+Complete **Employee, Organization, Attendance + Payroll** management in one integrated module.
 
 ### Why Critical for SAAS
 - ❌ **Current:** 0% payroll support (blocks 100% of businesses)
 - ✅ **After:** Complete workforce management (unlocks all businesses)
-- ✅ **Bonus:** Multi-company support (unlocks enterprise market)
+- ✅ **Bonus:** Tenant-based organization (enterprise-ready SAAS)
 
 ---
 
-## 🎯 What You Get (25 Entities)
+## 🎯 What You Get (23 Entities)
 
 | Category | Entities | Key Features |
 |----------|----------|--------------|
-| **Company** | 1 | Multi-entity, consolidation ready |
-| **Organization** | 2 | Flexible hierarchy (Dept/Div/Section), Positions |
+| **Organization** | 2 | OrganizationalUnit (Dept/Div/Section), Position |
 | **Employee** | 4 | Full lifecycle, documents, dependents |
 | **Time & Attendance** | 6 | Clock in/out, timesheets, shifts |
 | **Leave** | 3 | Accrual, requests, approvals |
 | **Payroll** | 5 | Processing, taxes, deductions |
 | **Benefits** | 2 | Enrollment, payroll integration |
 | **Performance** | 1 | Basic reviews |
-| **TOTAL** | **25** | **Complete HR suite** |
+| **TOTAL** | **23** | **Complete HR suite** |
 
 ---
 
 ## 🚀 Implementation Phases
 
 ### Phase 1: Foundation (Week 1-2)
-**Entities:** Company, Department, Position  
-**Cost:** $15K  
-**Delivers:** Multi-company organizational structure
+**Entities:** OrganizationalUnit, Position  
+**Cost:** $12K  
+**Delivers:** Flexible organizational structure with area-specific positions
 
 ### Phase 2: Employees (Week 3-4)
 **Entities:** Employee, Contacts, Dependents, Documents  
@@ -150,23 +149,27 @@ PerformanceReview → TodoItem (reminder)
 
 ## 📊 Entity Breakdown
 
-### 🏢 Company (1 entity)
-```
-Company
-├─ Multi-entity support
-├─ Tax ID management
-├─ Base currency
-├─ Fiscal year configuration
-└─ Parent/subsidiary relationships
-```
 
 ### 🏗️ Organization (2 entities)
 ```
-Department
-├─ Hierarchical structure
-├─ Manager assignment
-├─ Cost center link
-└─ Budget tracking
+OrganizationalUnit (Flexible Hierarchy)
+├─ Department (Level 1)
+│  ├─ No parent
+│  ├─ Manager assignment
+│  ├─ Cost center link
+│  ├─ Budget tracking
+│  └─ Contains Division or employees
+│
+├─ Division (Level 2) - Optional
+│  ├─ Parent = Department
+│  ├─ Manager assignment
+│  ├─ Multiple divisions per department
+│  └─ Contains Sections or employees
+│
+└─ Section (Level 3) - Optional
+   ├─ Parent = Division
+   ├─ Manager assignment
+   └─ Leaf level nodes
 
 Position
 ├─ Job titles
@@ -421,9 +424,8 @@ Automated: 90%
 
 ## 💾 Database Impact
 
-### Tables Added: 25
+### Tables Added: 24
 ### Approximate Records (1000 employees):
-- Companies: 10
 - Departments: 50
 - Positions: 100
 - Employees: 1,000
@@ -507,7 +509,7 @@ Module is **COMPLETE** when:
 
 ## 💰 ROI Analysis
 
-### Investment: $110K (10 weeks)
+### Investment: $107K (10 weeks)
 
 ### Returns:
 - **SAAS Readiness:** 45% → 70% (+25%)

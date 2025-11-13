@@ -20,22 +20,7 @@ public sealed class GetOrganizationalUnitHandler(
             throw new OrganizationalUnitNotFoundException(request.Id);
         }
 
-        return new OrganizationalUnitResponse
-        {
-            Id = unit.Id,
-            CompanyId = unit.CompanyId,
-            Code = unit.Code,
-            Name = unit.Name,
-            Type = unit.Type,
-            ParentId = unit.ParentId,
-            ParentName = unit.Parent?.Name,
-            Level = unit.Level,
-            HierarchyPath = unit.HierarchyPath,
-            ManagerId = unit.ManagerId,
-            CostCenter = unit.CostCenter,
-            Location = unit.Location,
-            IsActive = unit.IsActive
-        };
+        return unit;
     }
 }
 

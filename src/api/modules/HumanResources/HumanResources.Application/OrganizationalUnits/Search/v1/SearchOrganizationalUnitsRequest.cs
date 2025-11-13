@@ -7,7 +7,6 @@ namespace FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Sear
 /// </summary>
 public class SearchOrganizationalUnitsRequest : PaginationFilter, IRequest<PagedList<OrganizationalUnitResponse>>
 {
-    public DefaultIdType? CompanyId { get; set; }
     public OrganizationalUnitType? Type { get; set; }
     public DefaultIdType? ParentId { get; set; }
     public bool? IsActive { get; set; }

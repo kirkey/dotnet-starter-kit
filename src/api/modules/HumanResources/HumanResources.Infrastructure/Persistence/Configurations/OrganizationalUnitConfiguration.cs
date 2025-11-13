@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using Shared.Constants;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence.Configurations;
@@ -14,16 +15,9 @@ public class OrganizationalUnitConfiguration : IEntityTypeConfiguration<Organiza
 
         builder.HasKey(ou => ou.Id);
 
-        builder.Property(ou => ou.CompanyId)
-            .IsRequired();
-
         builder.Property(ou => ou.Code)
             .IsRequired()
             .HasMaxLength(50);
-
-        builder.HasIndex(ou => new { ou.CompanyId, ou.Code })
-            .IsUnique()
-            .HasDatabaseName("IX_OrganizationalUnits_CompanyCode");
 
         builder.Property(ou => ou.Type)
             .IsRequired()
@@ -57,23 +51,10 @@ public class OrganizationalUnitConfiguration : IEntityTypeConfiguration<Organiza
         builder.HasIndex(ou => ou.Type)
             .HasDatabaseName("IX_OrganizationalUnits_Type");
 
-        // Relationships
-        builder.HasOne(ou => ou.Company)
-            .WithMany()
-            .HasForeignKey(ou => ou.CompanyId)
-            .OnDelete(DeleteBehavior.Restrict);
-
         builder.HasOne(ou => ou.Parent)
             .WithMany(ou => ou.Children)
             .HasForeignKey(ou => ou.ParentId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        // Audit fields
-        builder.Property(ou => ou.CreatedBy)
-            .HasMaxLength(256);
-
-        builder.Property(ou => ou.LastModifiedBy)
-            .HasMaxLength(256);
     }
 }
 

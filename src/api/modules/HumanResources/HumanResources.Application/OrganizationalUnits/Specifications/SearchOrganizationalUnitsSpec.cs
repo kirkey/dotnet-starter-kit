@@ -13,7 +13,6 @@ public class SearchOrganizationalUnitsSpec : EntitiesByPaginationFilterSpec<Orga
         Query
             .OrderBy(ou => ou.Level, !request.HasOrderBy())
             .ThenBy(ou => ou.Code)
-            .Where(ou => ou.CompanyId == request.CompanyId, request.CompanyId.HasValue)
             .Where(ou => ou.Type == request.Type, request.Type.HasValue)
             .Where(ou => ou.ParentId == request.ParentId, request.ParentId.HasValue)
             .Where(ou => ou.IsActive == request.IsActive, request.IsActive.HasValue);

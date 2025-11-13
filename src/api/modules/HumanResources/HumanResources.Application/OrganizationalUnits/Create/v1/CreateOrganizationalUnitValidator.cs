@@ -7,8 +7,6 @@ public class CreateOrganizationalUnitValidator : AbstractValidator<CreateOrganiz
 {
     public CreateOrganizationalUnitValidator()
     {
-        RuleFor(x => x.CompanyId)
-            .NotEmpty().WithMessage("Company ID is required.");
 
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Code is required.")
