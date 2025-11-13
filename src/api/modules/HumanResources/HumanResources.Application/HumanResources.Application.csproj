@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FSH.Starter.WebApi.HumanResources.Application</RootNamespace>
+    <AssemblyName>FSH.Starter.WebApi.HumanResources.Application</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\framework\Core\Core.csproj" />
+    <ProjectReference Include="..\HumanResources.Domain\HumanResources.Domain.csproj" />
+  </ItemGroup>
+</Project>
+

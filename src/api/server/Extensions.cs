@@ -14,6 +14,7 @@ public static class Extensions
             typeof(AccountingMetadata).Assembly,
             typeof(StoreMetadata).Assembly,
             typeof(MessagingModule).Assembly,
+            typeof(HumanResourcesMetadata).Assembly,
         };
 
         //register validators
@@ -28,12 +29,14 @@ public static class Extensions
         builder.RegisterTodoServices();
         builder.RegisterAccountingServices();
         builder.RegisterStoreServices();
+        builder.RegisterHumanResourcesServices();
         builder.RegisterMessagingServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
             config.WithModule<CatalogModule.Endpoints>();
+            config.WithModule<HumanResourcesModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
             config.WithModule<MessagingModule.Endpoints>();
         });
@@ -48,6 +51,7 @@ public static class Extensions
         //register modules
         app.UseCatalogModule();
         app.UseTodoModule();
+        app.UseHumanResourcesModule();
         app.UseAccountingModule();
         app.UseStoreModule();
         app.UseMessagingModule();
