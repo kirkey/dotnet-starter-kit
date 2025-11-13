@@ -119,7 +119,7 @@ public class Employee : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Collection of designation assignments for this employee.
     /// </summary>
-    public ICollection<EmployeeDesignationAssignment> DesignationAssignments { get; private set; } = new List<EmployeeDesignationAssignment>();
+    public ICollection<DesignationAssignment> DesignationAssignments { get; private set; } = new List<DesignationAssignment>();
 
     /// <summary>
     /// Creates a new employee record.
@@ -243,17 +243,16 @@ public class Employee : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Gets the current active designation assignment.
     /// </summary>
-    public EmployeeDesignationAssignment? GetCurrentDesignation()
+    public DesignationAssignment? GetCurrentDesignation()
     {
         return DesignationAssignments
-            .Where(d => d.IsPlantilla && d.IsCurrentlyEffective())
-            .FirstOrDefault();
+            .FirstOrDefault(d => d.IsPlantilla && d.IsCurrentlyEffective());
     }
 
     /// <summary>
     /// Gets all current acting as designations.
     /// </summary>
-    public IEnumerable<EmployeeDesignationAssignment> GetCurrentActingDesignations()
+    public IEnumerable<DesignationAssignment> GetCurrentActingDesignations()
     {
         return DesignationAssignments
             .Where(d => d.IsActingAs && d.IsCurrentlyEffective());

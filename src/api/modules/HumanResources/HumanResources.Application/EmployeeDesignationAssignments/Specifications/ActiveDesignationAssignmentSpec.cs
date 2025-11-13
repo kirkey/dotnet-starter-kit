@@ -1,9 +1,9 @@
-namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
+namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
 
 /// <summary>
 /// Specification to check for duplicate active assignments.
 /// </summary>
-public class ActiveDesignationAssignmentSpec : Specification<EmployeeDesignationAssignment>
+public class ActiveDesignationAssignmentSpec : Specification<DesignationAssignment>
 {
     public ActiveDesignationAssignmentSpec(DefaultIdType employeeId, DefaultIdType designationId)
     {

@@ -35,7 +35,7 @@ Comprehensive employee management system with support for:
 ✅ IsActive
 ```
 
-### 2. **EmployeeDesignationAssignment.cs**
+### 2. **DesignationAssignment.cs**
 - Tracks designation assignments (Plantilla and Acting As)
 - Methods: `CreatePlantilla()`, `CreateActingAs()`, `SetEndDate()`, `SetAdjustedSalary()`, `Deactivate()`, `IsCurrentlyEffective()`
 
@@ -61,11 +61,11 @@ Comprehensive employee management system with support for:
 - `EmployeeReturnedFromLeave`
 - `EmployeeTerminated`
 
-**EmployeeDesignationAssignmentEvents.cs:**
-- `EmployeeDesignationAssignmentCreated`
-- `EmployeeDesignationAssignmentUpdated`
-- `EmployeeDesignationAssignmentEnded`
-- `EmployeeDesignationAssignmentDeactivated`
+**DesignationAssignmentEvents.cs:**
+- `DesignationAssignmentCreated`
+- `DesignationAssignmentUpdated`
+- `DesignationAssignmentEnded`
+- `DesignationAssignmentDeactivated`
 
 ### 4. **Domain Exceptions** (2 Files)
 
@@ -76,8 +76,8 @@ Comprehensive employee management system with support for:
 - `TerminatedEmployeeException`
 - `NoCurrentDesignationException`
 
-**EmployeeDesignationAssignmentExceptions.cs:**
-- `EmployeeDesignationAssignmentNotFoundException`
+**DesignationAssignmentExceptions.cs:**
+- `DesignationAssignmentNotFoundException`
 - `MultipleActivePlantillaException`
 - `InvalidDesignationAssignmentDatesException`
 - `DuplicateDesignationAssignmentException`
@@ -188,14 +188,14 @@ employee.Terminate(DateTime.Now, "Resignation");
 ### Designation Management
 ```csharp
 // Assign primary plantilla designation
-var plantilla = EmployeeDesignationAssignment.CreatePlantilla(
+var plantilla = DesignationAssignment.CreatePlantilla(
     employeeId,
     supervisorDesignationId,
     effectiveDate: new DateTime(2025, 1, 1),
     reason: "Initial assignment");
 
 // Assign acting designation temporarily
-var acting = EmployeeDesignationAssignment.CreateActingAs(
+var acting = DesignationAssignment.CreateActingAs(
     employeeId,
     managerDesignationId,
     effectiveDate: new DateTime(2025, 1, 1),
@@ -257,7 +257,7 @@ public static class EmploymentStatus
 ```
 Employee
 ├── OrganizationalUnit (Many-to-One)
-└── EmployeeDesignationAssignment (One-to-Many)
+└── DesignationAssignment (One-to-Many)
     ├── Designation (Many-to-One)
     └── Employee (Many-to-One)
 ```

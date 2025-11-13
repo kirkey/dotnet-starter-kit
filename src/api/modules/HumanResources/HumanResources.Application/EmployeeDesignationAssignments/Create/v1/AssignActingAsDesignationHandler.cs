@@ -1,15 +1,15 @@
-using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
+using FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
 
-namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Create.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Create.v1;
 
 /// <summary>
 /// Handler for assigning an "Acting As" (temporary) designation to an employee.
 /// </summary>
 public sealed class AssignActingAsDesignationHandler(
     ILogger<AssignActingAsDesignationHandler> logger,
-    [FromKeyedServices("hr:designationassignments")] IRepository<EmployeeDesignationAssignment> repository,
+    [FromKeyedServices("hr:designationassignments")] IRepository<DesignationAssignment> repository,
     [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository,
-    [FromKeyedServices("hr:designationassignments")] IReadRepository<EmployeeDesignationAssignment> readRepository)
+    [FromKeyedServices("hr:designationassignments")] IReadRepository<DesignationAssignment> readRepository)
     : IRequestHandler<AssignActingAsDesignationCommand, AssignDesignationResponse>
 {
     public async Task<AssignDesignationResponse> Handle(AssignActingAsDesignationCommand request, CancellationToken cancellationToken)
@@ -46,7 +46,7 @@ public sealed class AssignActingAsDesignationHandler(
         }
 
         // Create new acting assignment
-        var assignment = EmployeeDesignationAssignment.CreateActingAs(
+        var assignment = DesignationAssignment.CreateActingAs(
             request.EmployeeId,
             request.DesignationId,
             request.EffectiveDate,

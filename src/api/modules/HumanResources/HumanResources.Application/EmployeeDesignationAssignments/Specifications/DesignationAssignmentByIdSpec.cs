@@ -1,9 +1,9 @@
-namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
+namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
 
 /// <summary>
 /// Specification to get designation assignment by ID.
 /// </summary>
-public class DesignationAssignmentByIdSpec : Specification<EmployeeDesignationAssignment>
+public class DesignationAssignmentByIdSpec : Specification<DesignationAssignment>
 {
     public DesignationAssignmentByIdSpec(DefaultIdType id)
     {

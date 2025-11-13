@@ -3,9 +3,9 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
 /// <summary>
 /// Exception thrown when an employee designation assignment is not found.
 /// </summary>
-public class EmployeeDesignationAssignmentNotFoundException : NotFoundException
+public class DesignationAssignmentNotFoundException : NotFoundException
 {
-    public EmployeeDesignationAssignmentNotFoundException(DefaultIdType id)
+    public DesignationAssignmentNotFoundException(DefaultIdType id)
         : base($"Employee designation assignment with ID '{id}' was not found.")
     {
     }

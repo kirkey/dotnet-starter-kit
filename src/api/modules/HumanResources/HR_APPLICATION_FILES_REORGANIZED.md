@@ -14,7 +14,7 @@ Reorganized the HR application layer to follow the **one class per file** princi
 
 ## 📁 Files Reorganized
 
-### 1. EmployeeDesignationAssignments/Create/v1
+### 1. DesignationAssignments/Create/v1
 
 **Before:** 4 files (3 with multiple classes)
 ```
@@ -42,7 +42,7 @@ AssignDesignationResponse.cs     (1 class)
 ❌ AssignDesignationHandlers.cs (deleted)
 ```
 
-### 2. EmployeeDesignationAssignments/Specifications
+### 2. DesignationAssignments/Specifications
 
 **Before:** 1 file (3 classes)
 ```
@@ -132,7 +132,7 @@ HumanResources.Application/
 │       ├── EmployeeByNumberSpec.cs
 │       └── SearchEmployeesSpec.cs
 │
-└── EmployeeDesignationAssignments/
+└── DesignationAssignments/
     ├── Create/v1/
     │   ├── AssignPlantillaDesignationCommand.cs
     │   ├── AssignActingAsDesignationCommand.cs

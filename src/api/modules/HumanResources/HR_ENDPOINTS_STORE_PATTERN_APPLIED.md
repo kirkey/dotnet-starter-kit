@@ -60,8 +60,8 @@ HumanResources.Infrastructure/Endpoints/
 │       ├── DeleteEmployeeEndpoint.cs
 │       └── SearchEmployeesEndpoint.cs
 │
-└── EmployeeDesignationAssignments/
-    ├── EmployeeDesignationAssignmentsEndpoints.cs (root configuration)
+└── DesignationAssignments/
+    ├── DesignationAssignmentsEndpoints.cs (root configuration)
     └── v1/
         ├── AssignPlantillaDesignationEndpoint.cs
         └── AssignActingAsDesignationEndpoint.cs
@@ -80,7 +80,7 @@ HumanResources.Infrastructure/Endpoints/
 ✅ NEW: Endpoints/Designations/v1/
 
 ✅ NEW: Endpoints/Employees/v1/
-✅ NEW: Endpoints/EmployeeDesignationAssignments/v1/
+✅ NEW: Endpoints/DesignationAssignments/v1/
 ```
 
 ### 2. **Root Configuration Files Created**
@@ -124,7 +124,7 @@ public override void AddRoutes(IEndpointRouteBuilder app)
     app.MapOrganizationalUnitsEndpoints();
     app.MapDesignationsEndpoints();
     app.MapEmployeesEndpoints();
-    app.MapEmployeeDesignationAssignmentsEndpoints();
+    app.MapDesignationAssignmentsEndpoints();
 }
 ```
 
@@ -136,7 +136,7 @@ public override void AddRoutes(IEndpointRouteBuilder app)
 - OrganizationalUnitsEndpoints.cs
 - DesignationsEndpoints.cs
 - EmployeesEndpoints.cs (root)
-- EmployeeDesignationAssignmentsEndpoints.cs
+- DesignationAssignmentsEndpoints.cs
 - CreateEmployeeEndpoint.cs
 - GetEmployeeEndpoint.cs
 - UpdateEmployeeEndpoint.cs
@@ -149,7 +149,7 @@ public override void AddRoutes(IEndpointRouteBuilder app)
 - OrganizationalUnits (moved v1 up one level)
 - Designations (moved v1 up one level)
 - Employees (new complete structure)
-- EmployeeDesignationAssignments (new complete structure)
+- DesignationAssignments (new complete structure)
 
 ### Old Files/Folders Deleted
 - Endpoints/v1/ (entire folder)

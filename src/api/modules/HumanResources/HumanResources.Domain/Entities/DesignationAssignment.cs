@@ -20,11 +20,11 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 ///   - Acting As: Senior Manager - Jan 1 to Mar 31, 2026
 ///   - Previous: Staff - Historical record
 /// </remarks>
-public class EmployeeDesignationAssignment : AuditableEntity, IAggregateRoot
+public class DesignationAssignment : AuditableEntity, IAggregateRoot
 {
-    private EmployeeDesignationAssignment() { }
+    private DesignationAssignment() { }
 
-    private EmployeeDesignationAssignment(
+    private DesignationAssignment(
         DefaultIdType id,
         DefaultIdType employeeId,
         DefaultIdType designationId,
@@ -40,7 +40,7 @@ public class EmployeeDesignationAssignment : AuditableEntity, IAggregateRoot
         Reason = reason;
         IsActive = true;
 
-        QueueDomainEvent(new EmployeeDesignationAssignmentCreated { Assignment = this });
+        QueueDomainEvent(new DesignationAssignmentCreated { Assignment = this });
     }
 
     /// <summary>
@@ -97,13 +97,13 @@ public class EmployeeDesignationAssignment : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Creates a new primary/plantilla designation assignment.
     /// </summary>
-    public static EmployeeDesignationAssignment CreatePlantilla(
+    public static DesignationAssignment CreatePlantilla(
         DefaultIdType employeeId,
         DefaultIdType designationId,
         DateTime effectiveDate,
         string? reason = null)
     {
-        var assignment = new EmployeeDesignationAssignment(
+        var assignment = new DesignationAssignment(
             DefaultIdType.NewGuid(),
             employeeId,
             designationId,
@@ -117,7 +117,7 @@ public class EmployeeDesignationAssignment : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Creates a new "Acting As" designation assignment.
     /// </summary>
-    public static EmployeeDesignationAssignment CreateActingAs(
+    public static DesignationAssignment CreateActingAs(
         DefaultIdType employeeId,
         DefaultIdType designationId,
         DateTime effectiveDate,
@@ -125,7 +125,7 @@ public class EmployeeDesignationAssignment : AuditableEntity, IAggregateRoot
         decimal? adjustedSalary = null,
         string? reason = null)
     {
-        var assignment = new EmployeeDesignationAssignment(
+        var assignment = new DesignationAssignment(
             DefaultIdType.NewGuid(),
             employeeId,
             designationId,
@@ -144,30 +144,30 @@ public class EmployeeDesignationAssignment : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Updates the assignment with a new end date.
     /// </summary>
-    public EmployeeDesignationAssignment SetEndDate(DateTime endDate)
+    public DesignationAssignment SetEndDate(DateTime endDate)
     {
         EndDate = endDate;
-        QueueDomainEvent(new EmployeeDesignationAssignmentEnded { AssignmentId = Id });
+        QueueDomainEvent(new DesignationAssignmentEnded { AssignmentId = Id });
         return this;
     }
 
     /// <summary>
     /// Updates the assignment salary.
     /// </summary>
-    public EmployeeDesignationAssignment SetAdjustedSalary(decimal salary)
+    public DesignationAssignment SetAdjustedSalary(decimal salary)
     {
         AdjustedSalary = salary;
-        QueueDomainEvent(new EmployeeDesignationAssignmentUpdated { Assignment = this });
+        QueueDomainEvent(new DesignationAssignmentUpdated { Assignment = this });
         return this;
     }
 
     /// <summary>
     /// Deactivates this assignment.
     /// </summary>
-    public EmployeeDesignationAssignment Deactivate()
+    public DesignationAssignment Deactivate()
     {
         IsActive = false;
-        QueueDomainEvent(new EmployeeDesignationAssignmentDeactivated { AssignmentId = Id });
+        QueueDomainEvent(new DesignationAssignmentDeactivated { AssignmentId = Id });
         return this;
     }
 
@@ -178,5 +178,30 @@ public class EmployeeDesignationAssignment : AuditableEntity, IAggregateRoot
     {
         var checkDate = asOfDate ?? DateTime.UtcNow;
         return EffectiveDate <= checkDate && (EndDate == null || EndDate > checkDate) && IsActive;
+    }
+
+    /// <summary>
+    /// Gets the tenure in months for this designation.
+    /// </summary>
+    public int GetTenureMonths()
+    {
+        var endDate = EndDate ?? DateTime.UtcNow;
+        return (int)Math.Round((endDate - EffectiveDate).TotalDays / 30.44);
+    }
+
+    /// <summary>
+    /// Gets the tenure as a formatted string.
+    /// </summary>
+    public string GetTenureDisplay()
+    {
+        var months = GetTenureMonths();
+        var years = months / 12;
+        var remainingMonths = months % 12;
+
+        if (years > 0 && remainingMonths > 0)
+            return $"{years}y {remainingMonths}m";
+        if (years > 0)
+            return $"{years}y";
+        return $"{months}m";
     }
 }

@@ -1,16 +1,16 @@
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDesignationAssignments.v1;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments.v1;
 
-namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDesignationAssignments;
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 
 /// <summary>
-/// Endpoint configuration for EmployeeDesignationAssignments module.
+/// Endpoint configuration for DesignationAssignments module.
 /// </summary>
-public static class EmployeeDesignationAssignmentsEndpoints
+public static class DesignationAssignmentsEndpoints
 {
     /// <summary>
-    /// Maps all EmployeeDesignationAssignments endpoints to the route builder.
+    /// Maps all DesignationAssignments endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapEmployeeDesignationAssignmentsEndpoints(this IEndpointRouteBuilder app)
+    internal static IEndpointRouteBuilder MapDesignationAssignmentsEndpoints(this IEndpointRouteBuilder app)
     {
         var assignmentsGroup = app.MapGroup("/employee-designations")
             .WithTags("Employee Designations")
@@ -19,6 +19,8 @@ public static class EmployeeDesignationAssignmentsEndpoints
         // Version 1 endpoints
         assignmentsGroup.MapAssignPlantillaDesignationEndpoint();
         assignmentsGroup.MapAssignActingAsDesignationEndpoint();
+        assignmentsGroup.MapGetDesignationAssignmentEndpoint();
+        assignmentsGroup.MapEndDesignationAssignmentEndpoint();
 
         return app;
     }

@@ -1,6 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDesignationAssignments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
@@ -22,7 +22,7 @@ public static class HumanResourcesModule
             app.MapOrganizationalUnitsEndpoints();
             app.MapDesignationsEndpoints();
             app.MapEmployeesEndpoints();
-            app.MapEmployeeDesignationAssignmentsEndpoints();
+            app.MapDesignationAssignmentsEndpoints();
         }
     }
 
@@ -46,6 +46,12 @@ public static class HumanResourcesModule
 
         builder.Services.AddKeyedScoped<IRepository<Designation>, HumanResourcesRepository<Designation>>("hr:designations");
         builder.Services.AddKeyedScoped<IReadRepository<Designation>, HumanResourcesRepository<Designation>>("hr:designations");
+
+        builder.Services.AddKeyedScoped<IRepository<Employee>, HumanResourcesRepository<Employee>>("hr:employees");
+        builder.Services.AddKeyedScoped<IReadRepository<Employee>, HumanResourcesRepository<Employee>>("hr:employees");
+
+        builder.Services.AddKeyedScoped<IRepository<DesignationAssignment>, HumanResourcesRepository<DesignationAssignment>>("hr:designationassignments");
+        builder.Services.AddKeyedScoped<IReadRepository<DesignationAssignment>, HumanResourcesRepository<DesignationAssignment>>("hr:designationassignments");
 
         return builder;
     }

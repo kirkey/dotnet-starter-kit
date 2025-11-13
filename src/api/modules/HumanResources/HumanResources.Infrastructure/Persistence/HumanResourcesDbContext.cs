@@ -16,6 +16,8 @@ public sealed class HumanResourcesDbContext(
 {
     public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; } = null!;
     public DbSet<Designation> Designations { get; set; } = null!;
+    public DbSet<Employee> Employees { get; set; } = null!;
+    public DbSet<DesignationAssignment> DesignationAssignments { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

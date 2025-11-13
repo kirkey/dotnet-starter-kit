@@ -1,15 +1,15 @@
-using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Specifications;
+using FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Specifications;
 
-namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Create.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.DesignationAssignments.Create.v1;
 
 /// <summary>
 /// Handler for assigning a plantilla (primary) designation to an employee.
 /// </summary>
 public sealed class AssignPlantillaDesignationHandler(
     ILogger<AssignPlantillaDesignationHandler> logger,
-    [FromKeyedServices("hr:designationassignments")] IRepository<EmployeeDesignationAssignment> repository,
+    [FromKeyedServices("hr:designationassignments")] IRepository<DesignationAssignment> repository,
     [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository,
-    [FromKeyedServices("hr:designationassignments")] IReadRepository<EmployeeDesignationAssignment> readRepository)
+    [FromKeyedServices("hr:designationassignments")] IReadRepository<DesignationAssignment> readRepository)
     : IRequestHandler<AssignPlantillaDesignationCommand, AssignDesignationResponse>
 {
     public async Task<AssignDesignationResponse> Handle(AssignPlantillaDesignationCommand request, CancellationToken cancellationToken)
@@ -48,7 +48,7 @@ public sealed class AssignPlantillaDesignationHandler(
         }
 
         // Create new plantilla assignment
-        var assignment = EmployeeDesignationAssignment.CreatePlantilla(
+        var assignment = DesignationAssignment.CreatePlantilla(
             request.EmployeeId,
             request.DesignationId,
             request.EffectiveDate,
