@@ -1,7 +1,7 @@
 Implement CQRS and DRY principles.
 Each class should have a separate file.
 Implement stricter and tighter validations on each validator and handler.
-Refer to the existing Catalog and Todo Projects for code structure, patterns and guidance as samples.
+Follow Catalog and Todo Projects for code structure, patterns for consistency.
 Add documentation for each Entity, fields, methods, functions and classes.
 Only use string as enums.
 
@@ -28,9 +28,12 @@ Only use string as enums.
 ✅ **Validation**: FluentValidation on all commands
 ✅ **Versioning**: All in v1 folders
 ✅ **Error Handling**: Custom exceptions with proper messages
+✅ **Best Practices:** CQRS, DRY, SOLID principles application
+
+Setup optimal indexing on database for frequently queried fields.
 
 Pagination is handled by the repository layer, not specifications.
 
-Refer or review the md files if there are any related to the feature or functionality being implemented.
+Refer or review the md files if any related to the feature or functionality being implemented.
 
 Do not add builder.HasCheckConstraint on database configuration.
