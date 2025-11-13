@@ -2,7 +2,6 @@ using Finbuckle.MultiTenant.Abstractions;
 using FSH.Framework.Infrastructure.Tenant;
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using Microsoft.Extensions.Options;
-using Shared.Constants;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 

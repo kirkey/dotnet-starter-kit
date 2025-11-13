@@ -1,5 +1,3 @@
-using Ardalis.Specification;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Designations.Specifications;
 
 /// <summary>

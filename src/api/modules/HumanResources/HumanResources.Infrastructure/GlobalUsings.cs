@@ -1,3 +1,4 @@
+global using Carter;
 global using Finbuckle.MultiTenant;
 global using FSH.Framework.Core.Domain;
 global using FSH.Framework.Core.Paging;
@@ -12,4 +13,5 @@ global using Microsoft.AspNetCore.Routing;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.DependencyInjection;
+global using Shared.Constants;
 

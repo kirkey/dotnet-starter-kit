@@ -1,6 +1,3 @@
-using Ardalis.Specification;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Search.v1;
 

@@ -1,7 +1,4 @@
-using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Specifications;
-using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Designations.Get.v1;
 

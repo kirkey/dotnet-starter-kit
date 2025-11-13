@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Designations.Get.v1;
 
 /// <summary>

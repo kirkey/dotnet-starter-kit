@@ -1,6 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.v1;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDesignationAssignments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure;
@@ -17,8 +19,10 @@ public static class HumanResourcesModule
     {
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapOrganizationalUnitEndpoints();
-            app.MapDesignationEndpoints();
+            app.MapOrganizationalUnitsEndpoints();
+            app.MapDesignationsEndpoints();
+            app.MapEmployeesEndpoints();
+            app.MapEmployeeDesignationAssignmentsEndpoints();
         }
     }
 

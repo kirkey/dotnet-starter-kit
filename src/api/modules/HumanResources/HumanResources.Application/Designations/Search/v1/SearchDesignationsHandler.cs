@@ -1,8 +1,5 @@
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Specifications;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Designations.Search.v1;
 

@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-using Shared.Constants;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence.Configurations;
 

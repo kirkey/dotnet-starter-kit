@@ -1,6 +1,4 @@
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Get.v1;
-using MediatR;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Designations.Search.v1;
 
