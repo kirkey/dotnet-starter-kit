@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Companies.Create.v1;
 
 /// <summary>

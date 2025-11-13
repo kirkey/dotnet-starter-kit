@@ -15,6 +15,7 @@ public sealed class HumanResourcesDbContext(
     IOptions<DatabaseOptions> settings) : FshDbContext(multiTenantContextAccessor, options, publisher, settings)
 {
     public DbSet<Company> Companies { get; set; } = null!;
+    public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

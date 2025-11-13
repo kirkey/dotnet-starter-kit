@@ -1,7 +1,3 @@
-using FSH.Framework.Core.Persistence;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Companies.Create.v1;
 
 /// <summary>

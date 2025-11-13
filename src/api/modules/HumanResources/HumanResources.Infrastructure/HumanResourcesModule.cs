@@ -1,7 +1,6 @@
 using Carter;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.v1;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure;
 
@@ -19,6 +18,17 @@ public static class HumanResourcesModule
         {
             var companyGroup = app.MapGroup("companies").WithTags("companies");
             companyGroup.MapCompanyCreateEndpoint();
+            companyGroup.MapCompanyGetEndpoint();
+            companyGroup.MapCompaniesSearchEndpoint();
+            companyGroup.MapCompanyUpdateEndpoint();
+            companyGroup.MapCompanyDeleteEndpoint();
+
+            var orgUnitGroup = app.MapGroup("organizational-units").WithTags("organizational-units");
+            orgUnitGroup.MapOrganizationalUnitCreateEndpoint();
+            orgUnitGroup.MapOrganizationalUnitGetEndpoint();
+            orgUnitGroup.MapOrganizationalUnitsSearchEndpoint();
+            orgUnitGroup.MapOrganizationalUnitUpdateEndpoint();
+            orgUnitGroup.MapOrganizationalUnitDeleteEndpoint();
         }
     }
 
@@ -38,6 +48,9 @@ public static class HumanResourcesModule
         // Register Repositories with keyed services
         builder.Services.AddKeyedScoped<IRepository<Company>, HumanResourcesRepository<Company>>("hr:companies");
         builder.Services.AddKeyedScoped<IReadRepository<Company>, HumanResourcesRepository<Company>>("hr:companies");
+
+        builder.Services.AddKeyedScoped<IRepository<OrganizationalUnit>, HumanResourcesRepository<OrganizationalUnit>>("hr:organizationalunits");
+        builder.Services.AddKeyedScoped<IReadRepository<OrganizationalUnit>, HumanResourcesRepository<OrganizationalUnit>>("hr:organizationalunits");
 
         return builder;
     }

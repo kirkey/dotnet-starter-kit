@@ -24,7 +24,7 @@ Complete **Employee, Department, Company Management + Attendance + Payroll** in 
 | Category | Entities | Key Features |
 |----------|----------|--------------|
 | **Company** | 1 | Multi-entity, consolidation ready |
-| **Organization** | 2 | Department hierarchy, positions |
+| **Organization** | 2 | Flexible hierarchy (Dept/Div/Section), Positions |
 | **Employee** | 4 | Full lifecycle, documents, dependents |
 | **Time & Attendance** | 6 | Clock in/out, timesheets, shifts |
 | **Leave** | 3 | Accrual, requests, approvals |
