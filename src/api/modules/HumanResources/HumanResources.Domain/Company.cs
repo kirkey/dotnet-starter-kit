@@ -10,18 +10,14 @@ namespace FSH.Starter.WebApi.HumanResources.Domain;
 /// - Multi-entity accounting and consolidation
 /// - Separate legal entities per tenant
 /// - Enterprise customer support with multiple companies
-/// - Holding company structures
 /// 
 /// Default values:
 /// - IsActive: true (new companies are active by default)
-/// - BaseCurrency: "USD" (default currency)
-/// - FiscalYearEnd: 12 (December)
 /// 
 /// Business rules:
 /// - CompanyCode must be unique within tenant
-/// - BaseCurrency is required for multi-currency support
 /// - Cannot delete company with active employees
-/// - Parent company must exist if specified
+/// - Name field from AuditableEntity contains the company name
 /// </remarks>
 public class Company : AuditableEntity, IAggregateRoot
 {
@@ -30,23 +26,13 @@ public class Company : AuditableEntity, IAggregateRoot
     private Company(
         DefaultIdType id,
         string companyCode,
-        string legalName,
-        string? tradeName,
-        string? taxId,
-        string baseCurrency,
-        int fiscalYearEnd,
-        string? description,
-        string? notes)
+        string name,
+        string? tin)
     {
         Id = id;
         CompanyCode = companyCode;
-        LegalName = legalName;
-        TradeName = tradeName;
-        TaxId = taxId;
-        BaseCurrency = baseCurrency;
-        FiscalYearEnd = fiscalYearEnd;
-        Description = description;
-        Notes = notes;
+        Name = name;
+        Tin = tin;
         IsActive = true;
 
         QueueDomainEvent(new CompanyCreated { Company = this });
@@ -54,73 +40,32 @@ public class Company : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Unique company code for identification.
-    /// Example: "COMP-001", "US-EAST", "EMEA-HQ"
+    /// Example: "COMP-001", "EC-001", "BRANCH-02"
     /// </summary>
     public string CompanyCode { get; private set; } = default!;
 
     /// <summary>
-    /// Official registered legal name of the company.
-    /// Example: "ABC Corporation Inc.", "XYZ Limited"
+    /// Tax Identification Number (TIN).
+    /// Example: "123-456-789-000"
     /// </summary>
-    public string LegalName { get; private set; } = default!;
+    public string? Tin { get; private set; }
 
     /// <summary>
-    /// Trading name or "doing business as" name.
-    /// Example: "ABC Corp" (when legal name is "ABC Corporation Inc.")
-    /// </summary>
-    public string? TradeName { get; private set; }
-
-    /// <summary>
-    /// Tax identification number (EIN, VAT, etc.).
-    /// Example: "12-3456789" (US EIN)
-    /// </summary>
-    public string? TaxId { get; private set; }
-
-    /// <summary>
-    /// Base currency code for this company (ISO 4217).
-    /// Example: "USD", "EUR", "GBP"
-    /// </summary>
-    public string BaseCurrency { get; private set; } = "USD";
-
-    /// <summary>
-    /// Fiscal year end month (1-12).
-    /// Example: 12 for December 31 year-end, 6 for June 30
-    /// </summary>
-    public int FiscalYearEnd { get; private set; } = 12;
-
-    /// <summary>
-    /// Company address line 1.
-    /// Example: "123 Main Street"
+    /// Complete company address.
+    /// Example: "123 Main Street, Barangay Centro, Municipality"
     /// </summary>
     public string? Address { get; private set; }
 
     /// <summary>
-    /// City name.
-    /// Example: "New York"
-    /// </summary>
-    public string? City { get; private set; }
-
-    /// <summary>
-    /// State or province.
-    /// Example: "NY", "California"
-    /// </summary>
-    public string? State { get; private set; }
-
-    /// <summary>
     /// Postal or ZIP code.
-    /// Example: "10001", "SW1A 1AA"
+    /// Example: "4400"
     /// </summary>
     public string? ZipCode { get; private set; }
 
-    /// <summary>
-    /// Country name or code.
-    /// Example: "United States", "US"
-    /// </summary>
-    public string? Country { get; private set; }
 
     /// <summary>
     /// Primary phone number.
-    /// Example: "+1-555-123-4567"
+    /// Example: "+63-912-345-6789"
     /// </summary>
     public string? Phone { get; private set; }
 
@@ -149,89 +94,38 @@ public class Company : AuditableEntity, IAggregateRoot
     public bool IsActive { get; private set; }
 
     /// <summary>
-    /// Parent company ID for holding company structures.
-    /// Null if this is a top-level company.
-    /// </summary>
-    public DefaultIdType? ParentCompanyId { get; private set; }
-
-    /// <summary>
     /// Creates a new company with required information.
     /// </summary>
     public static Company Create(
         string companyCode,
-        string legalName,
-        string? tradeName,
-        string? taxId,
-        string baseCurrency,
-        int fiscalYearEnd,
-        string? description = null,
-        string? notes = null)
+        string name,
+        string? tin = null)
     {
         return new Company(
             DefaultIdType.NewGuid(),
             companyCode,
-            legalName,
-            tradeName,
-            taxId,
-            baseCurrency,
-            fiscalYearEnd,
-            description,
-            notes);
+            name,
+            tin);
     }
 
     /// <summary>
     /// Updates company information.
     /// </summary>
     public Company Update(
-        string? legalName,
-        string? tradeName,
-        string? taxId,
-        string? baseCurrency,
-        int? fiscalYearEnd,
-        string? description,
-        string? notes)
+        string? name,
+        string? tin)
     {
         bool isUpdated = false;
 
-        if (!string.IsNullOrWhiteSpace(legalName) && !string.Equals(LegalName, legalName, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
-            LegalName = legalName;
+            Name = name;
             isUpdated = true;
         }
 
-        if (!string.Equals(TradeName, tradeName, StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(Tin, tin, StringComparison.OrdinalIgnoreCase))
         {
-            TradeName = tradeName;
-            isUpdated = true;
-        }
-
-        if (!string.Equals(TaxId, taxId, StringComparison.OrdinalIgnoreCase))
-        {
-            TaxId = taxId;
-            isUpdated = true;
-        }
-
-        if (!string.IsNullOrWhiteSpace(baseCurrency) && !string.Equals(BaseCurrency, baseCurrency, StringComparison.OrdinalIgnoreCase))
-        {
-            BaseCurrency = baseCurrency;
-            isUpdated = true;
-        }
-
-        if (fiscalYearEnd.HasValue && fiscalYearEnd.Value != FiscalYearEnd)
-        {
-            FiscalYearEnd = fiscalYearEnd.Value;
-            isUpdated = true;
-        }
-
-        if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
-        {
-            Description = description;
-            isUpdated = true;
-        }
-
-        if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
-        {
-            Notes = notes;
+            Tin = tin;
             isUpdated = true;
         }
 
@@ -248,16 +142,10 @@ public class Company : AuditableEntity, IAggregateRoot
     /// </summary>
     public Company UpdateAddress(
         string? address,
-        string? city,
-        string? state,
-        string? zipCode,
-        string? country)
+        string? zipCode)
     {
         Address = address;
-        City = city;
-        State = state;
         ZipCode = zipCode;
-        Country = country;
 
         QueueDomainEvent(new CompanyUpdated { Company = this });
         return this;
@@ -304,20 +192,7 @@ public class Company : AuditableEntity, IAggregateRoot
         }
         return this;
     }
-
-    /// <summary>
-    /// Sets the parent company for holding company structures.
-    /// </summary>
-    public Company SetParentCompany(DefaultIdType? parentCompanyId)
-    {
-        if (ParentCompanyId != parentCompanyId)
-        {
-            ParentCompanyId = parentCompanyId;
-            QueueDomainEvent(new CompanyUpdated { Company = this });
-        }
-        return this;
-    }
-
+    
     /// <summary>
     /// Updates the company logo URL.
     /// </summary>

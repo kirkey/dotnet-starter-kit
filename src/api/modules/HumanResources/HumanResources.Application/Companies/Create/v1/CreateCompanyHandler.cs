@@ -19,13 +19,8 @@ public sealed class CreateCompanyHandler(
         // Create company using domain factory method
         var company = Company.Create(
             request.CompanyCode,
-            request.LegalName,
-            request.TradeName,
-            request.TaxId,
-            request.BaseCurrency,
-            request.FiscalYearEnd,
-            request.Description,
-            request.Notes);
+            request.Name,
+            request.Tin);
 
         // Persist to database
         await repository.AddAsync(company, cancellationToken).ConfigureAwait(false);

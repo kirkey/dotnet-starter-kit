@@ -6,23 +6,31 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 /// <summary>
 /// Database initializer for HumanResources module.
 /// </summary>
-public class HumanResourcesDbInitializer(
+internal sealed class HumanResourcesDbInitializer(
     ILogger<HumanResourcesDbInitializer> logger,
     HumanResourcesDbContext context) : IDbInitializer
 {
     public async Task MigrateAsync(CancellationToken cancellationToken)
     {
-        if ((await context.Database.GetPendingMigrationsAsync(cancellationToken)).Any())
+        if ((await context.Database.GetPendingMigrationsAsync(cancellationToken).ConfigureAwait(false)).Any())
         {
-            logger.LogInformation("Applying HumanResources module migrations...");
-            await context.Database.MigrateAsync(cancellationToken);
-            logger.LogInformation("HumanResources module migrations applied successfully.");
+            await context.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
+            logger.LogInformation("[{Tenant}] applied database migrations for humanresources module", context.TenantInfo!.Identifier);
         }
     }
 
-    public Task SeedAsync(CancellationToken cancellationToken)
+    public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        logger.LogInformation("HumanResources module seeding completed (no seed data configured).");
-        return Task.CompletedTask;
+        // Seed default company if none exists
+        const string companyCode = "DEFAULT";
+        const string name = "Default Company";
+        
+        if (await context.Companies.FirstOrDefaultAsync(c => c.CompanyCode == companyCode, cancellationToken).ConfigureAwait(false) is null)
+        {
+            var company = Company.Create(companyCode, name);
+            await context.Companies.AddAsync(company, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            logger.LogInformation("[{Tenant}] seeding default human resource data", context.TenantInfo!.Identifier);
+        }
     }
 }
