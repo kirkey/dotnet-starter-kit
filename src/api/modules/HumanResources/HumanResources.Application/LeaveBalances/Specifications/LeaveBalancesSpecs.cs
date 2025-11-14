@@ -11,6 +11,17 @@ public class LeaveBalanceByIdSpec : Specification<LeaveBalance>, ISingleResultSp
     }
 }
 
+public class LeaveBalanceByEmployeeAndYearSpec : Specification<LeaveBalance>, ISingleResultSpecification<LeaveBalance>
+{
+    public LeaveBalanceByEmployeeAndYearSpec(DefaultIdType employeeId, DefaultIdType leaveTypeId, int year)
+    {
+        Query
+            .Where(x => x.EmployeeId == employeeId && x.LeaveTypeId == leaveTypeId && x.Year == year)
+            .Include(x => x.Employee)
+            .Include(x => x.LeaveType);
+    }
+}
+
 public class SearchLeaveBalancesSpec : Specification<LeaveBalance>
 {
     public SearchLeaveBalancesSpec(Search.v1.SearchLeaveBalancesRequest request)
