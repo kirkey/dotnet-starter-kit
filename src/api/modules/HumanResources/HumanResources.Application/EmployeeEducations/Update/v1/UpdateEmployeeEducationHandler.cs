@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Updat
 /// </summary>
 public sealed class UpdateEmployeeEducationHandler(
     ILogger<UpdateEmployeeEducationHandler> logger,
-    [FromKeyedServices("hr:employeeeducations")] IRepository<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation> repository)
+    [FromKeyedServices("hr:employeeeducations")] IRepository<EmployeeEducation> repository)
     : IRequestHandler<UpdateEmployeeEducationCommand, UpdateEmployeeEducationResponse>
 {
     public async Task<UpdateEmployeeEducationResponse> Handle(

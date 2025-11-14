@@ -3,7 +3,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Speci
 /// <summary>
 /// Specification for getting an employee education record by ID.
 /// </summary>
-public class EmployeeEducationByIdSpec : Specification<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation>, ISingleResultSpecification<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation>
+public class EmployeeEducationByIdSpec : Specification<EmployeeEducation>, ISingleResultSpecification<EmployeeEducation>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EmployeeEducationByIdSpec"/> class.
@@ -19,7 +19,7 @@ public class EmployeeEducationByIdSpec : Specification<FSH.Starter.WebApi.HumanR
 /// <summary>
 /// Specification for searching employee education records with filters.
 /// </summary>
-public class SearchEmployeeEducationsSpec : Specification<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation>
+public class SearchEmployeeEducationsSpec : Specification<EmployeeEducation>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchEmployeeEducationsSpec"/> class.

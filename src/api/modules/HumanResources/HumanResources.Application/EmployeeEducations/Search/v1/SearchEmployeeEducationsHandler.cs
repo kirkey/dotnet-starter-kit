@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Searc
 /// Handler for searching employee education records.
 /// </summary>
 public sealed class SearchEmployeeEducationsHandler(
-    [FromKeyedServices("hr:employeeeducations")] IReadRepository<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation> repository)
+    [FromKeyedServices("hr:employeeeducations")] IReadRepository<EmployeeEducation> repository)
     : IRequestHandler<SearchEmployeeEducationsRequest, PagedList<EmployeeEducationResponse>>
 {
     public async Task<PagedList<EmployeeEducationResponse>> Handle(
@@ -23,7 +23,7 @@ public sealed class SearchEmployeeEducationsHandler(
         return new PagedList<EmployeeEducationResponse>(responses, request.PageNumber, request.PageSize, totalCount);
     }
 
-    private static EmployeeEducationResponse MapToResponse(FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation education)
+    private static EmployeeEducationResponse MapToResponse(EmployeeEducation education)
     {
         return new EmployeeEducationResponse
         {

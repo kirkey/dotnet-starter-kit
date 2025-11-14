@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Get.v
 /// Handler for retrieving an employee education record by ID.
 /// </summary>
 public sealed class GetEmployeeEducationHandler(
-    [FromKeyedServices("hr:employeeeducations")] IReadRepository<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation> repository)
+    [FromKeyedServices("hr:employeeeducations")] IReadRepository<EmployeeEducation> repository)
     : IRequestHandler<GetEmployeeEducationRequest, EmployeeEducationResponse>
 {
     public async Task<EmployeeEducationResponse> Handle(
@@ -23,7 +23,7 @@ public sealed class GetEmployeeEducationHandler(
         return MapToResponse(education);
     }
 
-    private static EmployeeEducationResponse MapToResponse(FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation education)
+    private static EmployeeEducationResponse MapToResponse(EmployeeEducation education)
     {
         return new EmployeeEducationResponse
         {

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Delet
 /// </summary>
 public sealed class DeleteEmployeeEducationHandler(
     ILogger<DeleteEmployeeEducationHandler> logger,
-    [FromKeyedServices("hr:employeeeducations")] IRepository<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation> repository)
+    [FromKeyedServices("hr:employeeeducations")] IRepository<EmployeeEducation> repository)
     : IRequestHandler<DeleteEmployeeEducationCommand, DeleteEmployeeEducationResponse>
 {
     public async Task<DeleteEmployeeEducationResponse> Handle(

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Creat
 /// </summary>
 public sealed class CreateEmployeeEducationHandler(
     ILogger<CreateEmployeeEducationHandler> logger,
-    [FromKeyedServices("hr:employeeeducations")] IRepository<FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation> repository,
+    [FromKeyedServices("hr:employeeeducations")] IRepository<EmployeeEducation> repository,
     [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository)
     : IRequestHandler<CreateEmployeeEducationCommand, CreateEmployeeEducationResponse>
 {
@@ -22,7 +22,7 @@ public sealed class CreateEmployeeEducationHandler(
         if (employee is null)
             throw new Exception($"Employee not found: {request.EmployeeId}");
 
-        var education = FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation.Create(
+        var education = EmployeeEducation.Create(
             request.EmployeeId,
             request.EducationLevel,
             request.FieldOfStudy,
