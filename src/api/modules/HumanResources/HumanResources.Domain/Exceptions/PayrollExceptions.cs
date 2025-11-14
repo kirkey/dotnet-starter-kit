@@ -100,6 +100,17 @@ public class TaxBracketNotFoundException : NotFoundException
 }
 
 /// <summary>
+/// Exception thrown when pay component rate is not found.
+/// </summary>
+public class PayComponentRateNotFoundException : NotFoundException
+{
+    public PayComponentRateNotFoundException(DefaultIdType id)
+        : base($"Pay component rate with ID '{id}' was not found.")
+    {
+    }
+}
+
+/// <summary>
 /// Exception thrown when employee has duplicate payroll line.
 /// </summary>
 public class DuplicatePayrollLineException : BadRequestException
