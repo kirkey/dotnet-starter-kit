@@ -27,6 +27,18 @@ public sealed class HumanResourcesDbContext(
     public DbSet<Shift> Shifts { get; set; } = null!;
     public DbSet<ShiftBreak> ShiftBreaks { get; set; } = null!;
     public DbSet<ShiftAssignment> ShiftAssignments { get; set; } = null!;
+    public DbSet<LeaveType> LeaveTypes { get; set; } = null!;
+    public DbSet<LeaveBalance> LeaveBalances { get; set; } = null!;
+    public DbSet<LeaveRequest> LeaveRequests { get; set; } = null!;
+    public DbSet<Holiday> Holidays { get; set; } = null!;
+    public DbSet<Payroll> Payrolls { get; set; } = null!;
+    public DbSet<PayrollLine> PayrollLines { get; set; } = null!;
+    public DbSet<PayComponent> PayComponents { get; set; } = null!;
+    public DbSet<TaxBracket> TaxBrackets { get; set; } = null!;
+    public DbSet<Benefit> Benefits { get; set; } = null!;
+    public DbSet<BenefitEnrollment> BenefitEnrollments { get; set; } = null!;
+    public DbSet<DocumentTemplate> DocumentTemplates { get; set; } = null!;
+    public DbSet<GeneratedDocument> GeneratedDocuments { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

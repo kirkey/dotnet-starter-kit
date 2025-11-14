@@ -152,6 +152,26 @@ public class Employee : AuditableEntity, IAggregateRoot
     public ICollection<ShiftAssignment> ShiftAssignments { get; private set; } = new List<ShiftAssignment>();
 
     /// <summary>
+    /// Collection of leave balances for this employee.
+    /// </summary>
+    public ICollection<LeaveBalance> LeaveBalances { get; private set; } = new List<LeaveBalance>();
+
+    /// <summary>
+    /// Collection of leave requests from this employee.
+    /// </summary>
+    public ICollection<LeaveRequest> LeaveRequests { get; private set; } = new List<LeaveRequest>();
+
+    /// <summary>
+    /// Collection of payroll lines for this employee.
+    /// </summary>
+    public ICollection<PayrollLine> PayrollLines { get; private set; } = new List<PayrollLine>();
+
+    /// <summary>
+    /// Collection of benefit enrollments for this employee.
+    /// </summary>
+    public ICollection<BenefitEnrollment> BenefitEnrollments { get; private set; } = new List<BenefitEnrollment>();
+
+    /// <summary>
     /// Creates a new employee record.
     /// </summary>
     public static Employee Create(

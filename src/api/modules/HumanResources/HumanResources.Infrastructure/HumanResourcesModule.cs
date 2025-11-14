@@ -2,10 +2,12 @@ using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
@@ -35,6 +37,8 @@ public static class HumanResourcesModule
             app.MapAttendanceEndpoints();
             app.MapTimesheetsEndpoints();
             app.MapShiftsEndpoints();
+            app.MapDocumentTemplatesEndpoints();
+            app.MapGeneratedDocumentsEndpoints();
         }
     }
 
@@ -88,6 +92,42 @@ public static class HumanResourcesModule
 
         builder.Services.AddKeyedScoped<IRepository<ShiftAssignment>, HumanResourcesRepository<ShiftAssignment>>("hr:shiftassignments");
         builder.Services.AddKeyedScoped<IReadRepository<ShiftAssignment>, HumanResourcesRepository<ShiftAssignment>>("hr:shiftassignments");
+
+        builder.Services.AddKeyedScoped<IRepository<LeaveType>, HumanResourcesRepository<LeaveType>>("hr:leavetypes");
+        builder.Services.AddKeyedScoped<IReadRepository<LeaveType>, HumanResourcesRepository<LeaveType>>("hr:leavetypes");
+
+        builder.Services.AddKeyedScoped<IRepository<LeaveBalance>, HumanResourcesRepository<LeaveBalance>>("hr:leavebalances");
+        builder.Services.AddKeyedScoped<IReadRepository<LeaveBalance>, HumanResourcesRepository<LeaveBalance>>("hr:leavebalances");
+
+        builder.Services.AddKeyedScoped<IRepository<LeaveRequest>, HumanResourcesRepository<LeaveRequest>>("hr:leaverequests");
+        builder.Services.AddKeyedScoped<IReadRepository<LeaveRequest>, HumanResourcesRepository<LeaveRequest>>("hr:leaverequests");
+
+        builder.Services.AddKeyedScoped<IRepository<Holiday>, HumanResourcesRepository<Holiday>>("hr:holidays");
+        builder.Services.AddKeyedScoped<IReadRepository<Holiday>, HumanResourcesRepository<Holiday>>("hr:holidays");
+
+        builder.Services.AddKeyedScoped<IRepository<Payroll>, HumanResourcesRepository<Payroll>>("hr:payrolls");
+        builder.Services.AddKeyedScoped<IReadRepository<Payroll>, HumanResourcesRepository<Payroll>>("hr:payrolls");
+
+        builder.Services.AddKeyedScoped<IRepository<PayrollLine>, HumanResourcesRepository<PayrollLine>>("hr:payrolllines");
+        builder.Services.AddKeyedScoped<IReadRepository<PayrollLine>, HumanResourcesRepository<PayrollLine>>("hr:payrolllines");
+
+        builder.Services.AddKeyedScoped<IRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
+        builder.Services.AddKeyedScoped<IReadRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
+
+        builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
+        builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
+
+        builder.Services.AddKeyedScoped<IRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");
+        builder.Services.AddKeyedScoped<IReadRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");
+
+        builder.Services.AddKeyedScoped<IRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:benefitenrollments");
+        builder.Services.AddKeyedScoped<IReadRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:benefitenrollments");
+
+        builder.Services.AddKeyedScoped<IRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
+        builder.Services.AddKeyedScoped<IReadRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
+
+        builder.Services.AddKeyedScoped<IRepository<GeneratedDocument>, HumanResourcesRepository<GeneratedDocument>>("hr:generateddocuments");
+        builder.Services.AddKeyedScoped<IReadRepository<GeneratedDocument>, HumanResourcesRepository<GeneratedDocument>>("hr:generateddocuments");
 
         return builder;
     }
