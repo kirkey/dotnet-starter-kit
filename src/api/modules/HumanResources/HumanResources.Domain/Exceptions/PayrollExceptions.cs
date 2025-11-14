@@ -45,6 +45,17 @@ public class BenefitEnrollmentNotFoundException : NotFoundException
 }
 
 /// <summary>
+/// Exception thrown when benefit allocation is not found.
+/// </summary>
+public class BenefitAllocationNotFoundException : NotFoundException
+{
+    public BenefitAllocationNotFoundException(DefaultIdType id)
+        : base($"Benefit allocation with ID '{id}' was not found.")
+    {
+    }
+}
+
+/// <summary>
 /// Exception thrown when holiday is not found.
 /// </summary>
 public class HolidayNotFoundException : NotFoundException
@@ -87,4 +98,3 @@ public class DuplicatePayrollLineException : BadRequestException
     {
     }
 }
-
