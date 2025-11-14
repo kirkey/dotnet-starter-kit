@@ -7,7 +7,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record CycleCountCreated : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
 }
 
 /// <summary>
@@ -15,7 +15,7 @@ public record CycleCountCreated : DomainEvent
 /// </summary>
 public record CycleCountUpdated : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ public record CycleCountUpdated : DomainEvent
 /// </summary>
 public record CycleCountStarted : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
 }
 
 /// <summary>
@@ -31,7 +31,7 @@ public record CycleCountStarted : DomainEvent
 /// </summary>
 public record CycleCountCompleted : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
 }
 
 /// <summary>
@@ -39,8 +39,8 @@ public record CycleCountCompleted : DomainEvent
 /// </summary>
 public record CycleCountCancelled : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 /// <summary>
@@ -48,7 +48,7 @@ public record CycleCountCancelled : DomainEvent
 /// </summary>
 public record CycleCountVarianceDetected : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
     public DefaultIdType ItemId { get; init; }
     public int SystemQuantity { get; init; }
     public int CountedQuantity { get; init; }
@@ -60,8 +60,8 @@ public record CycleCountVarianceDetected : DomainEvent
 /// </summary>
 public record CycleCountItemAdded : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
-    public CycleCountItem Item { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
+    public CycleCountItem Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -69,7 +69,7 @@ public record CycleCountItemAdded : DomainEvent
 /// </summary>
 public record CycleCountAccuracyCalculated : DomainEvent
 {
-    public CycleCount CycleCount { get; init; } = default!;
+    public CycleCount CycleCount { get; init; } = null!;
     public decimal AccuracyPercentage { get; init; }
     public int TotalItems { get; init; }
     public int CorrectItems { get; init; }
@@ -78,16 +78,16 @@ public record CycleCountAccuracyCalculated : DomainEvent
 
 public record CycleCountItemCreated : DomainEvent
 {
-    public CycleCountItem CycleCountItem { get; init; } = default!;
+    public CycleCountItem CycleCountItem { get; init; } = null!;
 }
 
 public record CycleCountItemCounted : DomainEvent
 {
-    public CycleCountItem CycleCountItem { get; init; } = default!;
+    public CycleCountItem CycleCountItem { get; init; } = null!;
 }
 
 public record CycleCountItemMarkedForRecount : DomainEvent
 {
-    public CycleCountItem CycleCountItem { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public CycleCountItem CycleCountItem { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }

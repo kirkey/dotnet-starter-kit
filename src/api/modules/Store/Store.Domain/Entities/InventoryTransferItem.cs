@@ -35,8 +35,8 @@ public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
     /// </summary>
     public decimal LineTotal { get; private set; }
 
-    public InventoryTransfer InventoryTransfer { get; private set; } = default!;
-    public Item Item { get; private set; } = default!;
+    public InventoryTransfer InventoryTransfer { get; private set; } = null!;
+    public Item Item { get; private set; } = null!;
 
     protected InventoryTransferItem() { }
 
@@ -63,8 +63,8 @@ public sealed class InventoryTransferItem : AuditableEntity, IAggregateRoot
     /// <returns>A new <see cref="InventoryTransferItem"/>.</returns>
     public static InventoryTransferItem Create(DefaultIdType inventoryTransferId, DefaultIdType itemId, int quantity, decimal unitPrice)
     {
-        if (inventoryTransferId == default) throw new ArgumentException("InventoryTransferId is required", nameof(inventoryTransferId));
-        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (inventoryTransferId == DefaultIdType.Empty) throw new ArgumentException("InventoryTransferId is required", nameof(inventoryTransferId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
         if (unitPrice < 0) throw new ArgumentException("Unit price cannot be negative", nameof(unitPrice));
         return new InventoryTransferItem(DefaultIdType.NewGuid(), inventoryTransferId, itemId, quantity, unitPrice);

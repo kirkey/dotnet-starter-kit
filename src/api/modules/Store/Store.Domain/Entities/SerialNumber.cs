@@ -38,7 +38,7 @@ public sealed class SerialNumber : AuditableEntity, IAggregateRoot
     /// Example: "SN-12345", "ABC123XYZ789".
     /// Max length: 100.
     /// </summary>
-    public string SerialNumberValue { get; private set; } = default!;
+    public string SerialNumberValue { get; private set; } = null!;
 
     /// <summary>
     /// Item this serial number belongs to.
@@ -100,7 +100,7 @@ public sealed class SerialNumber : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to item.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to warehouse.

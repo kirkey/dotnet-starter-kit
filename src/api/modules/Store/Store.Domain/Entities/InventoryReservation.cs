@@ -40,7 +40,7 @@ public sealed class InventoryReservation : AuditableEntity, IAggregateRoot
     /// Example: "RES-2025-001", "RSV-WH1-001".
     /// Max length: 100.
     /// </summary>
-    public string ReservationNumber { get; private set; } = default!;
+    public string ReservationNumber { get; private set; } = null!;
 
     /// <summary>
     /// Item being reserved.
@@ -76,7 +76,7 @@ public sealed class InventoryReservation : AuditableEntity, IAggregateRoot
     /// Reservation type: Order, Transfer, Production, Assembly, Other.
     /// Max length: 50.
     /// </summary>
-    public string ReservationType { get; private set; } = default!;
+    public string ReservationType { get; private set; } = null!;
 
     /// <summary>
     /// Reservation status: Active, Allocated, Released, Expired, Cancelled.
@@ -119,12 +119,12 @@ public sealed class InventoryReservation : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to item.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to warehouse.
     /// </summary>
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to warehouse location.

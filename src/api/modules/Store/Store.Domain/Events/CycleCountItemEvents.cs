@@ -8,7 +8,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record CycleCountItemUpdated : DomainEvent
 {
-    public CycleCountItem CycleCountItem { get; init; } = default!;
+    public CycleCountItem CycleCountItem { get; init; } = null!;
 }
 
 /// <summary>

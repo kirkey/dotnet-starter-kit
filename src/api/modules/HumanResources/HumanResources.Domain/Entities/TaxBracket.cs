@@ -72,7 +72,7 @@ public class TaxBracket : AuditableEntity, IAggregateRoot
         if (maxIncome <= minIncome)
             throw new ArgumentException("Max income must be greater than min income.", nameof(maxIncome));
 
-        if (rate < 0 || rate > 1)
+        if (rate is < 0 or > 1)
             throw new ArgumentException("Tax rate must be between 0 and 1.", nameof(rate));
 
         var bracket = new TaxBracket(

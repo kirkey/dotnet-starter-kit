@@ -53,31 +53,31 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// Short warehouse code. Example: "WH-SEA", "WH-NYC".
     /// Max length: 50.
     /// </summary>
-    public string Code { get; private set; } = default!;
+    public string Code { get; private set; } = null!;
 
     /// <summary>
     /// Street address for the warehouse.
     /// Example: "1234 Industrial Blvd". Max length: 500.
     /// </summary>
-    public string Address { get; private set; } = default!;
+    public string Address { get; private set; } = null!;
 
     /// <summary>
     /// Manager name responsible for warehouse operations.
     /// Example: "Sarah Johnson". Max length: 100.
     /// </summary>
-    public string ManagerName { get; private set; } = default!;
+    public string ManagerName { get; private set; } = null!;
 
     /// <summary>
     /// Manager email for warehouse communications.
     /// Example: "manager@warehouse.com". Max length: 255.
     /// </summary>
-    public string ManagerEmail { get; private set; } = default!;
+    public string ManagerEmail { get; private set; } = null!;
 
     /// <summary>
     /// Manager phone number for warehouse contact.
     /// Example: "+1-555-0300". Max length: 50.
     /// </summary>
-    public string ManagerPhone { get; private set; } = default!;
+    public string ManagerPhone { get; private set; } = null!;
 
     /// <summary>
     /// Total storage capacity expressed in a unit (e.g., sqft or pallets).
@@ -95,7 +95,7 @@ public sealed class Warehouse : AuditableEntity, IAggregateRoot
     /// Unit used for capacity measurements. Default: "sqft".
     /// Example: "sqft", "pallets", "cubic_meters".
     /// </summary>
-    public string CapacityUnit { get; private set; } = default!;
+    public string CapacityUnit { get; private set; } = null!;
 
     /// <summary>
     /// Indicates if the warehouse is active.

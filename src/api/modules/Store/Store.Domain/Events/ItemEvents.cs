@@ -7,7 +7,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record ItemCreated : DomainEvent
 {
-    public Item Item { get; init; } = default!;
+    public Item Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -15,7 +15,7 @@ public record ItemCreated : DomainEvent
 /// </summary>
 public record ItemUpdated : DomainEvent
 {
-    public Item Item { get; init; } = default!;
+    public Item Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ public record ItemUpdated : DomainEvent
 /// </summary>
 public record ItemPriceChanged : DomainEvent
 {
-    public Item Item { get; init; } = default!;
+    public Item Item { get; init; } = null!;
     public decimal OldPrice { get; init; }
     public decimal NewPrice { get; init; }
 }
@@ -33,7 +33,7 @@ public record ItemPriceChanged : DomainEvent
 /// </summary>
 public record ItemReorderPointReached : DomainEvent
 {
-    public Item Item { get; init; } = default!;
+    public Item Item { get; init; } = null!;
     public int CurrentStock { get; init; }
     public int ReorderPoint { get; init; }
 }
@@ -43,7 +43,7 @@ public record ItemReorderPointReached : DomainEvent
 /// </summary>
 public record ItemExpiring : DomainEvent
 {
-    public Item Item { get; init; } = default!;
+    public Item Item { get; init; } = null!;
     public DateTime ExpiryDate { get; init; }
     public int DaysRemaining { get; init; }
 }
@@ -53,7 +53,7 @@ public record ItemExpiring : DomainEvent
 /// </summary>
 public record ItemActivated : DomainEvent
 {
-    public Item Item { get; init; } = default!;
+    public Item Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -61,7 +61,7 @@ public record ItemActivated : DomainEvent
 /// </summary>
 public record ItemDeactivated : DomainEvent
 {
-    public Item Item { get; init; } = default!;
+    public Item Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -70,5 +70,5 @@ public record ItemDeactivated : DomainEvent
 public record ItemDeleted : DomainEvent
 {
     public DefaultIdType ItemId { get; init; }
-    public string Sku { get; init; } = default!;
+    public string Sku { get; init; } = null!;
 }

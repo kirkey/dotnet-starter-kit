@@ -58,12 +58,12 @@ public sealed class PutAwayTaskItem : AuditableEntity
     /// <summary>
     /// Navigation property to item.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to destination bin.
     /// </summary>
-    public Bin ToBin { get; private set; } = default!;
+    public Bin ToBin { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to lot number.

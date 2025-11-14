@@ -22,7 +22,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// Adjustment reference number. Example: "ADJ-2025-01".
     /// Max length: 50.
     /// </summary>
-    public string AdjustmentNumber { get; private set; } = default!;
+    public string AdjustmentNumber { get; private set; } = null!;
 
     /// <summary>
     /// Item affected by the adjustment.
@@ -52,13 +52,13 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// Type of adjustment (Increase, Decrease, Write-Off, Found).
     /// Allowed values: Physical Count, Damage, Loss, Found, Transfer, Other, Increase, Decrease, Write-Off.
     /// </summary>
-    public string AdjustmentType { get; private set; } = default!;
+    public string AdjustmentType { get; private set; } = null!;
 
     /// <summary>
     /// Reason for the adjustment (e.g., Damage, Theft, Expiry).
     /// Example: "Damaged during shipping", "Expired product". Max length: 200.
     /// </summary>
-    public string Reason { get; private set; } = default!;
+    public string Reason { get; private set; } = null!;
 
     /// <summary>
     /// Quantity prior to adjustment.
@@ -135,12 +135,12 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Related grocery item entity.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Related warehouse entity.
     /// </summary>
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
 
     /// <summary>
     /// Related warehouse location entity, if applicable.
@@ -317,7 +317,7 @@ public sealed class StockAdjustment : AuditableEntity, IAggregateRoot
     {
         bool isUpdated = false;
 
-        if (itemId == default)
+        if (itemId == DefaultIdType.Empty)
             throw new ArgumentException("ItemId is required", nameof(itemId));
 
         if (!AllowedAdjustmentTypes.Contains(adjustmentType))

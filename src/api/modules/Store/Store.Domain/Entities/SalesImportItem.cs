@@ -60,7 +60,7 @@ public sealed class SalesImportItem : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Item barcode from POS system (used for matching inventory items).
     /// </summary>
-    public string Barcode { get; private set; } = default!;
+    public string Barcode { get; private set; } = null!;
 
     /// <summary>
     /// Item name from POS system (for reference and verification).
@@ -110,7 +110,7 @@ public sealed class SalesImportItem : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to parent sales import batch.
     /// </summary>
-    public SalesImport SalesImport { get; private set; } = default!;
+    public SalesImport SalesImport { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to matched inventory item.
@@ -136,7 +136,7 @@ public sealed class SalesImportItem : AuditableEntity, IAggregateRoot
         string? notes)
     {
         // Validations
-        if (salesImportId == default)
+        if (salesImportId == DefaultIdType.Empty)
             throw new ArgumentException("SalesImportId is required", nameof(salesImportId));
 
         if (lineNumber <= 0)
@@ -205,9 +205,9 @@ public sealed class SalesImportItem : AuditableEntity, IAggregateRoot
     /// </summary>
     public SalesImportItem MarkAsProcessed(DefaultIdType itemId, DefaultIdType inventoryTransactionId)
     {
-        if (itemId == default)
+        if (itemId == DefaultIdType.Empty)
             throw new ArgumentException("ItemId is required", nameof(itemId));
-        if (inventoryTransactionId == default)
+        if (inventoryTransactionId == DefaultIdType.Empty)
             throw new ArgumentException("InventoryTransactionId is required", nameof(inventoryTransactionId));
 
         ItemId = itemId;
@@ -241,7 +241,7 @@ public sealed class SalesImportItem : AuditableEntity, IAggregateRoot
     /// </summary>
     public SalesImportItem SetItemId(DefaultIdType itemId)
     {
-        if (itemId == default)
+        if (itemId == DefaultIdType.Empty)
             throw new ArgumentException("ItemId is required", nameof(itemId));
 
         ItemId = itemId;

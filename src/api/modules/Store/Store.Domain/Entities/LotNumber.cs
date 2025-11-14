@@ -40,7 +40,7 @@ public sealed class LotNumber : AuditableEntity, IAggregateRoot
     /// Example: "LOT-2025-001", "BATCH-A1234".
     /// Max length: 100.
     /// </summary>
-    public string LotCode { get; private set; } = default!;
+    public string LotCode { get; private set; } = null!;
 
     /// <summary>
     /// Item this lot belongs to.
@@ -91,7 +91,7 @@ public sealed class LotNumber : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to item.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to supplier.

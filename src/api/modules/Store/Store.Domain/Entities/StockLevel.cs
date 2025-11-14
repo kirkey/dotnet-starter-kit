@@ -114,12 +114,12 @@ public sealed class StockLevel : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to the item.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to the warehouse.
     /// </summary>
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to the warehouse location.

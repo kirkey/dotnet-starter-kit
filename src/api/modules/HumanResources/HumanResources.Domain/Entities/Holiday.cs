@@ -166,10 +166,10 @@ public class Holiday : AuditableEntity, IAggregateRoot
     /// </summary>
     public Holiday SetRecurring(int month, int day)
     {
-        if (month < 1 || month > 12)
+        if (month is < 1 or > 12)
             throw new ArgumentException("Month must be 1-12.", nameof(month));
 
-        if (day < 1 || day > 31)
+        if (day is < 1 or > 31)
             throw new ArgumentException("Day must be 1-31.", nameof(day));
 
         IsRecurringAnnually = true;

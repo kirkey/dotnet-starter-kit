@@ -26,25 +26,25 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
     /// Short location code. Example: "A1-S1-SH1", "COLD-01".
     /// Max length: 50.
     /// </summary>
-    public string Code { get; private set; } = default!;
+    public string Code { get; private set; } = null!;
 
     /// <summary>
     /// Aisle identifier within the warehouse.
     /// Example: "A1", "A2", "COLD". Max length: 20.
     /// </summary>
-    public string Aisle { get; private set; } = default!;
+    public string Aisle { get; private set; } = null!;
 
     /// <summary>
     /// Section identifier within the aisle.
     /// Example: "S1", "S2", "ZONE-A". Max length: 20.
     /// </summary>
-    public string Section { get; private set; } = default!;
+    public string Section { get; private set; } = null!;
 
     /// <summary>
     /// Shelf identifier within the section.
     /// Example: "SH1", "TOP", "BOTTOM". Max length: 20.
     /// </summary>
-    public string Shelf { get; private set; } = default!;
+    public string Shelf { get; private set; } = null!;
 
     /// <summary>
     /// Bin identifier within the shelf (optional).
@@ -62,7 +62,7 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
     /// Type of location (e.g., Floor, Rack, Cold Storage).
     /// Example: "Floor", "Rack", "Cold Storage", "Freezer".
     /// </summary>
-    public string LocationType { get; private set; } = default!;
+    public string LocationType { get; private set; } = null!;
 
     /// <summary>
     /// Capacity of this location (units) and the unit used.
@@ -74,7 +74,7 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
     /// Unit used for capacity measurement.
     /// Example: "items", "pallets", "cubic_feet". Default: "units".
     /// </summary>
-    public string CapacityUnit { get; private set; } = default!;
+    public string CapacityUnit { get; private set; } = null!;
 
     /// <summary>
     /// Used capacity of this location (units).
@@ -115,7 +115,7 @@ public sealed class WarehouseLocation : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to the parent warehouse.
     /// </summary>
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to items stored in this location.

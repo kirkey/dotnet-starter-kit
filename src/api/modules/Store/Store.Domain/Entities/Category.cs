@@ -53,7 +53,7 @@ public sealed class Category : AuditableEntity, IAggregateRoot
     /// Short unique code for the category. Example: "FRUITS" or "CAT-001".
     /// Max length: 50.
     /// </summary>
-    public string Code { get; private set; } = default!;
+    public string Code { get; private set; } = null!;
 
     /// <summary>
     /// Optional parent category id for hierarchical categories. null means top-level.

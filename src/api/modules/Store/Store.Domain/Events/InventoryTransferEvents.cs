@@ -7,7 +7,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record InventoryTransferCreated : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
 }
 
 /// <summary>
@@ -15,62 +15,62 @@ public record InventoryTransferCreated : DomainEvent
 /// </summary>
 public record InventoryTransferItemAdded : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
     public DefaultIdType ItemId { get; init; }
 }
 
 public record InventoryTransferApproved : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
 }
 
 public record InventoryTransferStarted : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
 }
 
 public record InventoryTransferCompleted : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
 }
 
 public record InventoryTransferCancelled : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 public record InventoryTransferUpdated : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
 }
 
 public record InventoryTransferItemCreated : DomainEvent
 {
-    public InventoryTransferItem InventoryTransferItem { get; init; } = default!;
+    public InventoryTransferItem InventoryTransferItem { get; init; } = null!;
 }
 
 public record InventoryTransferItemUpdated : DomainEvent
 {
-    public InventoryTransferItem InventoryTransferItem { get; init; } = default!;
+    public InventoryTransferItem InventoryTransferItem { get; init; } = null!;
 }
 
 public record InventoryTransferInTransit : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
 }
 
 public record InventoryTransferItemShipped : DomainEvent
 {
-    public InventoryTransferItem InventoryTransferItem { get; init; } = default!;
+    public InventoryTransferItem InventoryTransferItem { get; init; } = null!;
 }
 
 public record InventoryTransferItemReceived : DomainEvent
 {
-    public InventoryTransferItem InventoryTransferItem { get; init; } = default!;
+    public InventoryTransferItem InventoryTransferItem { get; init; } = null!;
 }
 
 public record InventoryTransferShipped : DomainEvent
 {
-    public InventoryTransfer InventoryTransfer { get; init; } = default!;
+    public InventoryTransfer InventoryTransfer { get; init; } = null!;
 }

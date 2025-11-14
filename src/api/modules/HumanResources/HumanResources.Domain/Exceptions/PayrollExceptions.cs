@@ -56,6 +56,17 @@ public class HolidayNotFoundException : NotFoundException
 }
 
 /// <summary>
+/// Exception thrown when pay component is not found.
+/// </summary>
+public class PayComponentNotFoundException : NotFoundException
+{
+    public PayComponentNotFoundException(DefaultIdType id)
+        : base($"Pay component with ID '{id}' was not found.")
+    {
+    }
+}
+
+/// <summary>
 /// Exception thrown when employee has duplicate payroll line.
 /// </summary>
 public class DuplicatePayrollLineException : BadRequestException

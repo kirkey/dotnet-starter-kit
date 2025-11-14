@@ -1,4 +1,3 @@
-using FSH.Starter.WebApi.HumanResources.Application.Benefits.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Benefits.Specifications;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Benefits.Get.v1;

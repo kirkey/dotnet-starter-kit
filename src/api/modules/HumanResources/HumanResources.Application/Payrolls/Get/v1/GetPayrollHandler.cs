@@ -1,4 +1,3 @@
-using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Specifications;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Payrolls.Get.v1;

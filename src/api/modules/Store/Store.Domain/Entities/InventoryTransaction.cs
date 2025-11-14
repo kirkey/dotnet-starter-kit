@@ -50,7 +50,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Human-friendly transaction identifier. Example: "TXN-202509-001".
     /// </summary>
-    public string TransactionNumber { get; private set; } = default!;
+    public string TransactionNumber { get; private set; } = null!;
 
     /// <summary>
     /// ID of the item affected by the transaction.
@@ -75,12 +75,12 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Type of transaction: IN, OUT, ADJUSTMENT, TRANSFER.
     /// </summary>
-    public string TransactionType { get; private set; } = default!; // IN, OUT, ADJUSTMENT, TRANSFER
+    public string TransactionType { get; private set; } = null!; // IN, OUT, ADJUSTMENT, TRANSFER
 
     /// <summary>
     /// Short reason text for the transaction. Example: "Sale", "Damage", "Return".
     /// </summary>
-    public string Reason { get; private set; } = default!;
+    public string Reason { get; private set; } = null!;
 
     /// <summary>
     /// Quantity moved. Positive integer; must be non-zero.
@@ -140,7 +140,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Related item details.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Related warehouse details (if applicable).
@@ -181,7 +181,7 @@ public sealed class InventoryTransaction : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(transactionNumber)) throw new ArgumentException("TransactionNumber is required", nameof(transactionNumber));
         if (transactionNumber.Length > 100) throw new ArgumentException("TransactionNumber must not exceed 100 characters", nameof(transactionNumber));
 
-        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
 
         var allowedTypes = new[] { "IN", "OUT", "ADJUSTMENT", "TRANSFER" };
         if (string.IsNullOrWhiteSpace(transactionType) || !allowedTypes.Contains(transactionType)) throw new ArgumentException($"Invalid transaction type: {transactionType}", nameof(transactionType));

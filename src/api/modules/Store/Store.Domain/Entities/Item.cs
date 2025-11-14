@@ -60,13 +60,13 @@ public sealed class Item : AuditableEntity, IAggregateRoot
     /// Stock keeping unit: short unique identifier. Example: "ITEM-1234", "SKU-001".
     /// Max length: 100.
     /// </summary>
-    public string Sku { get; private set; } = default!;
+    public string Sku { get; private set; } = null!;
 
     /// <summary>
     /// Product barcode for scanning. Example: "0123456789012", "EAN-13-CODE".
     /// Max length: 100.
     /// </summary>
-    public string Barcode { get; private set; } = default!;
+    public string Barcode { get; private set; } = null!;
 
     /// <summary>
     /// Standard unit price per unit. Must be &gt;= 0.
@@ -206,12 +206,12 @@ public sealed class Item : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to the item's category.
     /// </summary>
-    public Category Category { get; private set; } = default!;
+    public Category Category { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to the item's primary supplier.
     /// </summary>
-    public Supplier Supplier { get; private set; } = default!;
+    public Supplier Supplier { get; private set; } = null!;
 
     private Item() { }
 

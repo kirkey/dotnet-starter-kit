@@ -36,7 +36,7 @@ public sealed class PutAwayTask : AuditableEntity, IAggregateRoot
     /// Example: "PUT-2025-001", "PA-WH1-001".
     /// Max length: 100.
     /// </summary>
-    public string TaskNumber { get; private set; } = default!;
+    public string TaskNumber { get; private set; } = null!;
 
     /// <summary>
     /// Warehouse where put-away occurs.
@@ -99,7 +99,7 @@ public sealed class PutAwayTask : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to warehouse.
     /// </summary>
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to goods receipt.

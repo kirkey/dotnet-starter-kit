@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Get.v1;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Get.v1;
 
 /// <summary>

@@ -20,7 +20,7 @@ public sealed class GoodsReceipt : AuditableEntity, IAggregateRoot
     /// Unique receipt number for tracking deliveries.
     /// Example: "GR-2025-09-001". Max length: 100.
     /// </summary>
-    public string ReceiptNumber { get; private set; } = default!;
+    public string ReceiptNumber { get; private set; } = null!;
 
     /// <summary>
     /// Optional reference to the purchase order being fulfilled.
@@ -73,7 +73,7 @@ public sealed class GoodsReceipt : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(receiptNumber)) throw new ArgumentException("ReceiptNumber is required", nameof(receiptNumber));
         if (receiptNumber.Length > 100) throw new ArgumentException("ReceiptNumber must not exceed 100 characters", nameof(receiptNumber));
         if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
-        if (warehouseId == default) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (warehouseId == DefaultIdType.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
 
         Id = id;
         ReceiptNumber = receiptNumber;

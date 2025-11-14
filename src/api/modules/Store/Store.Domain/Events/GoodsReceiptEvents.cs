@@ -7,7 +7,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record GoodsReceiptCreated : DomainEvent
 {
-    public GoodsReceipt GoodsReceipt { get; init; } = default!;
+    public GoodsReceipt GoodsReceipt { get; init; } = null!;
 }
 
 /// <summary>
@@ -15,8 +15,8 @@ public record GoodsReceiptCreated : DomainEvent
 /// </summary>
 public record GoodsReceiptItemAdded : DomainEvent
 {
-    public GoodsReceipt GoodsReceipt { get; init; } = default!;
-    public GoodsReceiptItem Item { get; init; } = default!;
+    public GoodsReceipt GoodsReceipt { get; init; } = null!;
+    public GoodsReceiptItem Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -24,7 +24,7 @@ public record GoodsReceiptItemAdded : DomainEvent
 /// </summary>
 public record GoodsReceiptCompleted : DomainEvent
 {
-    public GoodsReceipt GoodsReceipt { get; init; } = default!;
+    public GoodsReceipt GoodsReceipt { get; init; } = null!;
 }
 
 /// <summary>
@@ -32,7 +32,7 @@ public record GoodsReceiptCompleted : DomainEvent
 /// </summary>
 public record GoodsReceiptCancelled : DomainEvent
 {
-    public GoodsReceipt GoodsReceipt { get; init; } = default!;
+    public GoodsReceipt GoodsReceipt { get; init; } = null!;
 }
 
 /// <summary>
@@ -40,8 +40,8 @@ public record GoodsReceiptCancelled : DomainEvent
 /// </summary>
 public record GoodsReceiptStatusChanged : DomainEvent
 {
-    public GoodsReceipt GoodsReceipt { get; init; } = default!;
-    public string PreviousStatus { get; init; } = default!;
-    public string NewStatus { get; init; } = default!;
+    public GoodsReceipt GoodsReceipt { get; init; } = null!;
+    public string PreviousStatus { get; init; } = null!;
+    public string NewStatus { get; init; } = null!;
 }
 

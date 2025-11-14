@@ -7,7 +7,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record WarehouseLocationCreated : DomainEvent
 {
-    public WarehouseLocation WarehouseLocation { get; init; } = default!;
+    public WarehouseLocation WarehouseLocation { get; init; } = null!;
 }
 
 /// <summary>
@@ -15,7 +15,7 @@ public record WarehouseLocationCreated : DomainEvent
 /// </summary>
 public record WarehouseLocationUpdated : DomainEvent
 {
-    public WarehouseLocation WarehouseLocation { get; init; } = default!;
+    public WarehouseLocation WarehouseLocation { get; init; } = null!;
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ public record WarehouseLocationUpdated : DomainEvent
 /// </summary>
 public record WarehouseLocationCapacityUpdated : DomainEvent
 {
-    public WarehouseLocation WarehouseLocation { get; init; } = default!;
+    public WarehouseLocation WarehouseLocation { get; init; } = null!;
     public decimal PreviousUsage { get; init; }
     public decimal NewUsage { get; init; }
 }
@@ -33,7 +33,7 @@ public record WarehouseLocationCapacityUpdated : DomainEvent
 /// </summary>
 public record WarehouseLocationActivated : DomainEvent
 {
-    public WarehouseLocation WarehouseLocation { get; init; } = default!;
+    public WarehouseLocation WarehouseLocation { get; init; } = null!;
 }
 
 /// <summary>
@@ -41,7 +41,7 @@ public record WarehouseLocationActivated : DomainEvent
 /// </summary>
 public record WarehouseLocationDeactivated : DomainEvent
 {
-    public WarehouseLocation WarehouseLocation { get; init; } = default!;
+    public WarehouseLocation WarehouseLocation { get; init; } = null!;
 }
 
 /// <summary>
@@ -49,7 +49,7 @@ public record WarehouseLocationDeactivated : DomainEvent
 /// </summary>
 public record WarehouseLocationTemperatureSettingsUpdated : DomainEvent
 {
-    public WarehouseLocation WarehouseLocation { get; init; } = default!;
+    public WarehouseLocation WarehouseLocation { get; init; } = null!;
     public bool RequiresTemperatureControl { get; init; }
     public decimal? MinTemperature { get; init; }
     public decimal? MaxTemperature { get; init; }

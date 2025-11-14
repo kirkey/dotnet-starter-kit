@@ -42,7 +42,7 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
     /// Example: "PICK-2025-001", "WAVE-001-ZONE-A".
     /// Max length: 100.
     /// </summary>
-    public string PickListNumber { get; private set; } = default!;
+    public string PickListNumber { get; private set; } = null!;
 
     /// <summary>
     /// Warehouse where picking occurs.
@@ -57,7 +57,7 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Type of picking: Order, Wave, Batch, Zone.
     /// </summary>
-    public string PickingType { get; private set; } = default!;
+    public string PickingType { get; private set; } = null!;
 
     /// <summary>
     /// Priority (higher number = higher priority).
@@ -112,7 +112,7 @@ public sealed class PickList : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to warehouse.
     /// </summary>
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
 
     private readonly List<PickListItem> _items = new();
     /// <summary>

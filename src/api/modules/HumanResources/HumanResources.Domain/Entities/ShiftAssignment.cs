@@ -110,7 +110,7 @@ public class ShiftAssignment : AuditableEntity, IAggregateRoot
     /// </summary>
     public ShiftAssignment SetRecurring(int dayOfWeek)
     {
-        if (dayOfWeek < 0 || dayOfWeek > 6)
+        if (dayOfWeek is < 0 or > 6)
             throw new ArgumentException("Day of week must be 0-6 (Sunday=0, Saturday=6).", nameof(dayOfWeek));
 
         IsRecurring = true;

@@ -58,7 +58,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Unique transfer number. Example: "TRF-2025-0001".
     /// </summary>
-    public string TransferNumber { get; private set; } = default!;
+    public string TransferNumber { get; private set; } = null!;
 
     /// <summary>
     /// Source warehouse identifier.
@@ -78,7 +78,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Current status: Pending, Approved, InTransit, Completed, Cancelled.
     /// </summary>
-    public string Status { get; private set; } = default!;
+    public string Status { get; private set; } = null!;
 
     /// <summary>
     /// Total monetary value of items included in this transfer.
@@ -120,12 +120,12 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     /// <summary>
     /// The source warehouse for this transfer.
     /// </summary>
-    public Warehouse FromWarehouse { get; private set; } = default!;
+    public Warehouse FromWarehouse { get; private set; } = null!;
 
     /// <summary>
     /// The destination warehouse for this transfer.
     /// </summary>
-    public Warehouse ToWarehouse { get; private set; } = default!;
+    public Warehouse ToWarehouse { get; private set; } = null!;
 
     /// <summary>
     /// Optional source location within the warehouse.
@@ -155,12 +155,12 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Type of transfer (e.g., Standard, Express).
     /// </summary>
-    public string TransferType { get; private set; } = default!;
+    public string TransferType { get; private set; } = null!;
 
     /// <summary>
     /// Priority of the transfer (Low, Normal, High, Critical).
     /// </summary>
-    public string Priority { get; private set; } = default!;
+    public string Priority { get; private set; } = null!;
 
     /// <summary>
     /// Actual arrival date when the transfer was completed (set on Complete()).
@@ -186,8 +186,8 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     {
         // validations
         if (string.IsNullOrWhiteSpace(transferNumber)) throw new ArgumentException("TransferNumber is required", nameof(transferNumber));
-        if (fromWarehouseId == default) throw new ArgumentException("FromWarehouseId is required", nameof(fromWarehouseId));
-        if (toWarehouseId == default) throw new ArgumentException("ToWarehouseId is required", nameof(toWarehouseId));
+        if (fromWarehouseId == DefaultIdType.Empty) throw new ArgumentException("FromWarehouseId is required", nameof(fromWarehouseId));
+        if (toWarehouseId == DefaultIdType.Empty) throw new ArgumentException("ToWarehouseId is required", nameof(toWarehouseId));
         if (fromWarehouseId == toWarehouseId) throw new ArgumentException("From and To warehouses must be different", nameof(toWarehouseId));
         if (transferDate == default) throw new ArgumentException("TransferDate is required", nameof(transferDate));
         if (string.IsNullOrWhiteSpace(transferType)) throw new ArgumentException("TransferType is required", nameof(transferType));
@@ -251,7 +251,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
 
     public InventoryTransfer AddItem(DefaultIdType itemId, int quantity, decimal unitPrice)
     {
-        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero", nameof(quantity));
 
         // Only allow adding items when transfer is in Pending state.
@@ -482,7 +482,7 @@ public sealed class InventoryTransfer : AuditableEntity, IAggregateRoot
     /// <returns>The current <see cref="InventoryTransfer"/> instance with updated totals.</returns>
     public InventoryTransfer UpdateItem(DefaultIdType itemId, int quantity, decimal unitPrice)
     {
-        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
 
         // Only allow updating items when transfer is in Pending state.
         if (!string.Equals(Status, "Pending", StringComparison.OrdinalIgnoreCase))

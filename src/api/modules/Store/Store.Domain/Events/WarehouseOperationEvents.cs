@@ -11,7 +11,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record StockLevelCreated : DomainEvent
 {
-    public StockLevel StockLevel { get; init; } = default!;
+    public StockLevel StockLevel { get; init; } = null!;
 }
 
 /// <summary>
@@ -19,9 +19,9 @@ public record StockLevelCreated : DomainEvent
 /// </summary>
 public record StockLevelUpdated : DomainEvent
 {
-    public StockLevel StockLevel { get; init; } = default!;
+    public StockLevel StockLevel { get; init; } = null!;
     public int QuantityChange { get; init; }
-    public string ChangeType { get; init; } = default!;
+    public string ChangeType { get; init; } = null!;
 }
 
 /// <summary>
@@ -29,7 +29,7 @@ public record StockLevelUpdated : DomainEvent
 /// </summary>
 public record StockLevelReserved : DomainEvent
 {
-    public StockLevel StockLevel { get; init; } = default!;
+    public StockLevel StockLevel { get; init; } = null!;
     public int ReservedQuantity { get; init; }
 }
 
@@ -38,7 +38,7 @@ public record StockLevelReserved : DomainEvent
 /// </summary>
 public record StockLevelAllocated : DomainEvent
 {
-    public StockLevel StockLevel { get; init; } = default!;
+    public StockLevel StockLevel { get; init; } = null!;
     public int AllocatedQuantity { get; init; }
 }
 
@@ -47,7 +47,7 @@ public record StockLevelAllocated : DomainEvent
 /// </summary>
 public record StockLevelCounted : DomainEvent
 {
-    public StockLevel StockLevel { get; init; } = default!;
+    public StockLevel StockLevel { get; init; } = null!;
     public int CountedQuantity { get; init; }
     public int Variance { get; init; }
 }
@@ -62,7 +62,7 @@ public record StockLevelCounted : DomainEvent
 /// </summary>
 public record LotNumberCreated : DomainEvent
 {
-    public LotNumber LotNumber { get; init; } = default!;
+    public LotNumber LotNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -70,7 +70,7 @@ public record LotNumberCreated : DomainEvent
 /// </summary>
 public record LotNumberUpdated : DomainEvent
 {
-    public LotNumber LotNumber { get; init; } = default!;
+    public LotNumber LotNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -78,7 +78,7 @@ public record LotNumberUpdated : DomainEvent
 /// </summary>
 public record LotNumberExpired : DomainEvent
 {
-    public LotNumber LotNumber { get; init; } = default!;
+    public LotNumber LotNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -86,8 +86,8 @@ public record LotNumberExpired : DomainEvent
 /// </summary>
 public record LotNumberQuarantined : DomainEvent
 {
-    public LotNumber LotNumber { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public LotNumber LotNumber { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 /// <summary>
@@ -95,8 +95,8 @@ public record LotNumberQuarantined : DomainEvent
 /// </summary>
 public record LotNumberRecalled : DomainEvent
 {
-    public LotNumber LotNumber { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public LotNumber LotNumber { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 // ============================================================================
@@ -108,7 +108,7 @@ public record LotNumberRecalled : DomainEvent
 /// </summary>
 public record SerialNumberCreated : DomainEvent
 {
-    public SerialNumber SerialNumber { get; init; } = default!;
+    public SerialNumber SerialNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -116,7 +116,7 @@ public record SerialNumberCreated : DomainEvent
 /// </summary>
 public record SerialNumberUpdated : DomainEvent
 {
-    public SerialNumber SerialNumber { get; init; } = default!;
+    public SerialNumber SerialNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -124,7 +124,7 @@ public record SerialNumberUpdated : DomainEvent
 /// </summary>
 public record SerialNumberAllocated : DomainEvent
 {
-    public SerialNumber SerialNumber { get; init; } = default!;
+    public SerialNumber SerialNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -132,7 +132,7 @@ public record SerialNumberAllocated : DomainEvent
 /// </summary>
 public record SerialNumberShipped : DomainEvent
 {
-    public SerialNumber SerialNumber { get; init; } = default!;
+    public SerialNumber SerialNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -140,7 +140,7 @@ public record SerialNumberShipped : DomainEvent
 /// </summary>
 public record SerialNumberSold : DomainEvent
 {
-    public SerialNumber SerialNumber { get; init; } = default!;
+    public SerialNumber SerialNumber { get; init; } = null!;
 }
 
 /// <summary>
@@ -148,8 +148,8 @@ public record SerialNumberSold : DomainEvent
 /// </summary>
 public record SerialNumberDefective : DomainEvent
 {
-    public SerialNumber SerialNumber { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public SerialNumber SerialNumber { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 // ============================================================================
@@ -161,7 +161,7 @@ public record SerialNumberDefective : DomainEvent
 /// </summary>
 public record PickListCreated : DomainEvent
 {
-    public PickList PickList { get; init; } = default!;
+    public PickList PickList { get; init; } = null!;
 }
 
 /// <summary>
@@ -169,7 +169,7 @@ public record PickListCreated : DomainEvent
 /// </summary>
 public record PickListUpdated : DomainEvent
 {
-    public PickList PickList { get; init; } = default!;
+    public PickList PickList { get; init; } = null!;
 }
 
 /// <summary>
@@ -177,8 +177,8 @@ public record PickListUpdated : DomainEvent
 /// </summary>
 public record PickListItemAdded : DomainEvent
 {
-    public PickList PickList { get; init; } = default!;
-    public PickListItem Item { get; init; } = default!;
+    public PickList PickList { get; init; } = null!;
+    public PickListItem Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -186,8 +186,8 @@ public record PickListItemAdded : DomainEvent
 /// </summary>
 public record PickListAssigned : DomainEvent
 {
-    public PickList PickList { get; init; } = default!;
-    public string AssignedTo { get; init; } = default!;
+    public PickList PickList { get; init; } = null!;
+    public string AssignedTo { get; init; } = null!;
 }
 
 /// <summary>
@@ -195,7 +195,7 @@ public record PickListAssigned : DomainEvent
 /// </summary>
 public record PickListStarted : DomainEvent
 {
-    public PickList PickList { get; init; } = default!;
+    public PickList PickList { get; init; } = null!;
 }
 
 /// <summary>
@@ -203,7 +203,7 @@ public record PickListStarted : DomainEvent
 /// </summary>
 public record PickListCompleted : DomainEvent
 {
-    public PickList PickList { get; init; } = default!;
+    public PickList PickList { get; init; } = null!;
 }
 
 /// <summary>
@@ -211,8 +211,8 @@ public record PickListCompleted : DomainEvent
 /// </summary>
 public record PickListCancelled : DomainEvent
 {
-    public PickList PickList { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public PickList PickList { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 // ============================================================================
@@ -224,7 +224,7 @@ public record PickListCancelled : DomainEvent
 /// </summary>
 public record PutAwayTaskCreated : DomainEvent
 {
-    public PutAwayTask PutAwayTask { get; init; } = default!;
+    public PutAwayTask PutAwayTask { get; init; } = null!;
 }
 
 /// <summary>
@@ -232,7 +232,7 @@ public record PutAwayTaskCreated : DomainEvent
 /// </summary>
 public record PutAwayTaskUpdated : DomainEvent
 {
-    public PutAwayTask PutAwayTask { get; init; } = default!;
+    public PutAwayTask PutAwayTask { get; init; } = null!;
 }
 
 /// <summary>
@@ -240,8 +240,8 @@ public record PutAwayTaskUpdated : DomainEvent
 /// </summary>
 public record PutAwayTaskItemAdded : DomainEvent
 {
-    public PutAwayTask PutAwayTask { get; init; } = default!;
-    public PutAwayTaskItem Item { get; init; } = default!;
+    public PutAwayTask PutAwayTask { get; init; } = null!;
+    public PutAwayTaskItem Item { get; init; } = null!;
 }
 
 /// <summary>
@@ -249,8 +249,8 @@ public record PutAwayTaskItemAdded : DomainEvent
 /// </summary>
 public record PutAwayTaskAssigned : DomainEvent
 {
-    public PutAwayTask PutAwayTask { get; init; } = default!;
-    public string AssignedTo { get; init; } = default!;
+    public PutAwayTask PutAwayTask { get; init; } = null!;
+    public string AssignedTo { get; init; } = null!;
 }
 
 /// <summary>
@@ -258,7 +258,7 @@ public record PutAwayTaskAssigned : DomainEvent
 /// </summary>
 public record PutAwayTaskStarted : DomainEvent
 {
-    public PutAwayTask PutAwayTask { get; init; } = default!;
+    public PutAwayTask PutAwayTask { get; init; } = null!;
 }
 
 /// <summary>
@@ -266,7 +266,7 @@ public record PutAwayTaskStarted : DomainEvent
 /// </summary>
 public record PutAwayTaskCompleted : DomainEvent
 {
-    public PutAwayTask PutAwayTask { get; init; } = default!;
+    public PutAwayTask PutAwayTask { get; init; } = null!;
 }
 
 // ============================================================================
@@ -278,7 +278,7 @@ public record PutAwayTaskCompleted : DomainEvent
 /// </summary>
 public record ItemSupplierCreated : DomainEvent
 {
-    public ItemSupplier ItemSupplier { get; init; } = default!;
+    public ItemSupplier ItemSupplier { get; init; } = null!;
 }
 
 /// <summary>
@@ -286,7 +286,7 @@ public record ItemSupplierCreated : DomainEvent
 /// </summary>
 public record ItemSupplierUpdated : DomainEvent
 {
-    public ItemSupplier ItemSupplier { get; init; } = default!;
+    public ItemSupplier ItemSupplier { get; init; } = null!;
 }
 
 /// <summary>
@@ -294,7 +294,7 @@ public record ItemSupplierUpdated : DomainEvent
 /// </summary>
 public record ItemSupplierActivated : DomainEvent
 {
-    public ItemSupplier ItemSupplier { get; init; } = default!;
+    public ItemSupplier ItemSupplier { get; init; } = null!;
 }
 
 /// <summary>
@@ -302,7 +302,7 @@ public record ItemSupplierActivated : DomainEvent
 /// </summary>
 public record ItemSupplierDeactivated : DomainEvent
 {
-    public ItemSupplier ItemSupplier { get; init; } = default!;
+    public ItemSupplier ItemSupplier { get; init; } = null!;
 }
 
 // ============================================================================
@@ -314,7 +314,7 @@ public record ItemSupplierDeactivated : DomainEvent
 /// </summary>
 public record InventoryReservationCreated : DomainEvent
 {
-    public InventoryReservation InventoryReservation { get; init; } = default!;
+    public InventoryReservation InventoryReservation { get; init; } = null!;
 }
 
 /// <summary>
@@ -322,7 +322,7 @@ public record InventoryReservationCreated : DomainEvent
 /// </summary>
 public record InventoryReservationAllocated : DomainEvent
 {
-    public InventoryReservation InventoryReservation { get; init; } = default!;
+    public InventoryReservation InventoryReservation { get; init; } = null!;
 }
 
 /// <summary>
@@ -330,8 +330,8 @@ public record InventoryReservationAllocated : DomainEvent
 /// </summary>
 public record InventoryReservationReleased : DomainEvent
 {
-    public InventoryReservation InventoryReservation { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public InventoryReservation InventoryReservation { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 /// <summary>
@@ -339,8 +339,8 @@ public record InventoryReservationReleased : DomainEvent
 /// </summary>
 public record InventoryReservationCancelled : DomainEvent
 {
-    public InventoryReservation InventoryReservation { get; init; } = default!;
-    public string Reason { get; init; } = default!;
+    public InventoryReservation InventoryReservation { get; init; } = null!;
+    public string Reason { get; init; } = null!;
 }
 
 /// <summary>
@@ -348,5 +348,5 @@ public record InventoryReservationCancelled : DomainEvent
 /// </summary>
 public record InventoryReservationExpired : DomainEvent
 {
-    public InventoryReservation InventoryReservation { get; init; } = default!;
+    public InventoryReservation InventoryReservation { get; init; } = null!;
 }

@@ -59,12 +59,12 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
     /// <summary>
     /// The parent cycle count aggregate.
     /// </summary>
-    public CycleCount CycleCount { get; private set; } = default!;
+    public CycleCount CycleCount { get; private set; } = null!;
 
     /// <summary>
     /// The item details.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     private CycleCountItem() { }
 
@@ -77,8 +77,8 @@ public sealed class CycleCountItem : AuditableEntity, IAggregateRoot
         string? notes)
     {
         // validations
-        if (cycleCountId == default) throw new ArgumentException("CycleCountId is required", nameof(cycleCountId));
-        if (itemId == default) throw new ArgumentException("ItemId is required", nameof(itemId));
+        if (cycleCountId == DefaultIdType.Empty) throw new ArgumentException("CycleCountId is required", nameof(cycleCountId));
+        if (itemId == DefaultIdType.Empty) throw new ArgumentException("ItemId is required", nameof(itemId));
         if (systemQuantity < 0) throw new ArgumentException("SystemQuantity must be zero or greater", nameof(systemQuantity));
         if (countedQuantity is < 0) throw new ArgumentException("CountedQuantity must be zero or greater when provided", nameof(countedQuantity));
 

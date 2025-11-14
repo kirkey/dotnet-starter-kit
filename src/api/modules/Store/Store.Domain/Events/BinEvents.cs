@@ -7,7 +7,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record BinCreated : DomainEvent
 {
-    public Bin Bin { get; init; } = default!;
+    public Bin Bin { get; init; } = null!;
 }
 
 /// <summary>
@@ -15,7 +15,7 @@ public record BinCreated : DomainEvent
 /// </summary>
 public record BinUpdated : DomainEvent
 {
-    public Bin Bin { get; init; } = default!;
+    public Bin Bin { get; init; } = null!;
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ public record BinUpdated : DomainEvent
 /// </summary>
 public record BinUtilizationUpdated : DomainEvent
 {
-    public Bin Bin { get; init; } = default!;
+    public Bin Bin { get; init; } = null!;
     public decimal PreviousUtilization { get; init; }
     public decimal NewUtilization { get; init; }
 }
@@ -33,7 +33,7 @@ public record BinUtilizationUpdated : DomainEvent
 /// </summary>
 public record BinActivated : DomainEvent
 {
-    public Bin Bin { get; init; } = default!;
+    public Bin Bin { get; init; } = null!;
 }
 
 /// <summary>
@@ -41,6 +41,6 @@ public record BinActivated : DomainEvent
 /// </summary>
 public record BinDeactivated : DomainEvent
 {
-    public Bin Bin { get; init; } = default!;
+    public Bin Bin { get; init; } = null!;
 }
 

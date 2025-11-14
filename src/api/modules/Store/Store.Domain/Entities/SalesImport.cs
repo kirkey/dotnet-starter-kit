@@ -51,7 +51,7 @@ public sealed class SalesImport : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Human-friendly import identifier. Example: "IMP-20251111-001".
     /// </summary>
-    public string ImportNumber { get; private set; } = default!;
+    public string ImportNumber { get; private set; } = null!;
 
     /// <summary>
     /// Date when the import was processed in the system.
@@ -76,7 +76,7 @@ public sealed class SalesImport : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Original CSV filename imported from POS system.
     /// </summary>
-    public string FileName { get; private set; } = default!;
+    public string FileName { get; private set; } = null!;
 
     /// <summary>
     /// Total number of records in the import file.
@@ -106,7 +106,7 @@ public sealed class SalesImport : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Import processing status: PENDING, PROCESSING, COMPLETED, FAILED.
     /// </summary>
-    public string Status { get; private set; } = default!;
+    public string Status { get; private set; } = null!;
 
     /// <summary>
     /// Indicates if this import has been reversed/undone.
@@ -141,7 +141,7 @@ public sealed class SalesImport : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to the warehouse/store.
     /// </summary>
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
 
     /// <summary>
     /// Collection of individual sale records in this import.
@@ -180,7 +180,7 @@ public sealed class SalesImport : AuditableEntity, IAggregateRoot
         if (salesPeriodTo < salesPeriodFrom)
             throw new ArgumentException("SalesPeriodTo must be greater than or equal to SalesPeriodFrom", nameof(salesPeriodTo));
 
-        if (warehouseId == default)
+        if (warehouseId == DefaultIdType.Empty)
             throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
 
         if (string.IsNullOrWhiteSpace(fileName))

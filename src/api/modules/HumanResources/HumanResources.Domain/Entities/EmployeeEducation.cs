@@ -135,7 +135,7 @@ public class EmployeeEducation : AuditableEntity, IAggregateRoot
         if (graduationDate > DateTime.Today)
             throw new ArgumentException("Graduation date cannot be in the future.", nameof(graduationDate));
 
-        if (gpa.HasValue && (gpa < 0 || gpa > 4.0m))
+        if (gpa.HasValue && gpa is < 0 or > 4.0m)
             throw new ArgumentException("GPA must be between 0.0 and 4.0.", nameof(gpa));
 
         var education = new EmployeeEducation(

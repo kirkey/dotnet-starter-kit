@@ -7,7 +7,7 @@ namespace Store.Domain.Events;
 /// </summary>
 public record CategoryCreated : DomainEvent
 {
-    public Category Category { get; init; } = default!;
+    public Category Category { get; init; } = null!;
 }
 
 /// <summary>
@@ -15,7 +15,7 @@ public record CategoryCreated : DomainEvent
 /// </summary>
 public record CategoryUpdated : DomainEvent
 {
-    public Category Category { get; init; } = default!;
+    public Category Category { get; init; } = null!;
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ public record CategoryUpdated : DomainEvent
 /// </summary>
 public record CategoryActivated : DomainEvent
 {
-    public Category Category { get; init; } = default!;
+    public Category Category { get; init; } = null!;
 }
 
 /// <summary>
@@ -31,7 +31,7 @@ public record CategoryActivated : DomainEvent
 /// </summary>
 public record CategoryDeactivated : DomainEvent
 {
-    public Category Category { get; init; } = default!;
+    public Category Category { get; init; } = null!;
 }
 
 /// <summary>
@@ -39,7 +39,7 @@ public record CategoryDeactivated : DomainEvent
 /// </summary>
 public record CategoryHierarchyChanged : DomainEvent
 {
-    public Category Category { get; init; } = default!;
+    public Category Category { get; init; } = null!;
     public DefaultIdType? OldParentCategoryId { get; init; }
     public DefaultIdType? NewParentCategoryId { get; init; }
 }

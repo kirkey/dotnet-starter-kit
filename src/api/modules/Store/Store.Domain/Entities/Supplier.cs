@@ -22,31 +22,31 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// Short supplier code. Example: "SUP-001".
     /// Max length: 50.
     /// </summary>
-    public string Code { get; private set; } = default!;
+    public string Code { get; private set; } = null!;
 
     /// <summary>
     /// Main contact person at the supplier.
     /// Example: "John Smith". Max length: 100.
     /// </summary>
-    public string ContactPerson { get; private set; } = default!;
+    public string ContactPerson { get; private set; } = null!;
 
     /// <summary>
     /// Contact email for supplier communications.
     /// Example: "orders@supplier.com". Max length: 255.
     /// </summary>
-    public string Email { get; private set; } = default!;
+    public string Email { get; private set; } = null!;
 
     /// <summary>
     /// Contact phone number for the supplier.
     /// Example: "+1-555-0200". Max length: 50.
     /// </summary>
-    public string Phone { get; private set; } = default!;
+    public string Phone { get; private set; } = null!;
 
     /// <summary>
     /// Supplier address used for deliveries and billing.
     /// Max length: 500.
     /// </summary>
-    public string Address { get; private set; } = default!;
+    public string Address { get; private set; } = null!;
 
 
     /// <summary>

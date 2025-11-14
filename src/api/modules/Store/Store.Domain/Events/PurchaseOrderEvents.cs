@@ -8,7 +8,7 @@ namespace Store.Domain.Events;
 public record PurchaseOrderCreated : DomainEvent
 {
     /// <summary>The purchase order instance that was created.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
 }
 
 /// <summary>
@@ -17,7 +17,7 @@ public record PurchaseOrderCreated : DomainEvent
 public record PurchaseOrderUpdated : DomainEvent
 {
     /// <summary>The purchase order instance that was updated.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
 }
 
 /// <summary>
@@ -26,11 +26,11 @@ public record PurchaseOrderUpdated : DomainEvent
 public record PurchaseOrderStatusChanged : DomainEvent
 {
     /// <summary>The purchase order whose status changed.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
     /// <summary>The previous status value.</summary>
-    public string PreviousStatus { get; init; } = default!;
+    public string PreviousStatus { get; init; } = null!;
     /// <summary>The new status value.</summary>
-    public string NewStatus { get; init; } = default!;
+    public string NewStatus { get; init; } = null!;
 }
 
 /// <summary>
@@ -39,7 +39,7 @@ public record PurchaseOrderStatusChanged : DomainEvent
 public record PurchaseOrderSubmitted : DomainEvent
 {
     /// <summary>The submitted purchase order.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
 }
 
 /// <summary>
@@ -48,7 +48,7 @@ public record PurchaseOrderSubmitted : DomainEvent
 public record PurchaseOrderApproved : DomainEvent
 {
     /// <summary>The approved purchase order.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
 }
 
 /// <summary>
@@ -57,7 +57,7 @@ public record PurchaseOrderApproved : DomainEvent
 public record PurchaseOrderCancelled : DomainEvent
 {
     /// <summary>The cancelled purchase order.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
 }
 
 /// <summary>
@@ -66,7 +66,7 @@ public record PurchaseOrderCancelled : DomainEvent
 public record PurchaseOrderSentEvent : DomainEvent
 {
     /// <summary>The purchase order that was dispatched.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
 }
 
 /// <summary>
@@ -75,7 +75,7 @@ public record PurchaseOrderSentEvent : DomainEvent
 public record PurchaseOrderItemAdded : DomainEvent
 {
     /// <summary>The affected purchase order.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
     /// <summary>The grocery item identifier of the added line.</summary>
     public DefaultIdType ItemId { get; init; }
 }
@@ -85,7 +85,7 @@ public record PurchaseOrderItemAdded : DomainEvent
 /// </summary>
 public sealed record PurchaseOrderItemRemoved : DomainEvent
 {
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
     public DefaultIdType ItemId { get; init; }
 }
 
@@ -95,7 +95,7 @@ public sealed record PurchaseOrderItemRemoved : DomainEvent
 public record PurchaseOrderDelivered : DomainEvent
 {
     /// <summary>The purchase order that was received.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
 }
 
 /// <summary>
@@ -104,7 +104,7 @@ public record PurchaseOrderDelivered : DomainEvent
 public record PurchaseOrderDiscountApplied : DomainEvent
 {
     /// <summary>The affected purchase order.</summary>
-    public PurchaseOrder PurchaseOrder { get; init; } = default!;
+    public PurchaseOrder PurchaseOrder { get; init; } = null!;
     /// <summary>The new discount amount applied to the order.</summary>
     public decimal DiscountAmount { get; init; }
 }
@@ -115,7 +115,7 @@ public record PurchaseOrderDiscountApplied : DomainEvent
 public record PurchaseOrderItemCreated : DomainEvent
 {
     /// <summary>The created line item.</summary>
-    public PurchaseOrderItem PurchaseOrderItem { get; init; } = default!;
+    public PurchaseOrderItem PurchaseOrderItem { get; init; } = null!;
 }
 
 /// <summary>
@@ -124,7 +124,7 @@ public record PurchaseOrderItemCreated : DomainEvent
 public record PurchaseOrderItemQuantityUpdated : DomainEvent
 {
     /// <summary>The updated line item.</summary>
-    public PurchaseOrderItem PurchaseOrderItem { get; init; } = default!;
+    public PurchaseOrderItem PurchaseOrderItem { get; init; } = null!;
 }
 
 /// <summary>
@@ -133,7 +133,7 @@ public record PurchaseOrderItemQuantityUpdated : DomainEvent
 public record PurchaseOrderItemPriceUpdated : DomainEvent
 {
     /// <summary>The updated line item.</summary>
-    public PurchaseOrderItem PurchaseOrderItem { get; init; } = default!;
+    public PurchaseOrderItem PurchaseOrderItem { get; init; } = null!;
 }
 
 /// <summary>
@@ -142,7 +142,7 @@ public record PurchaseOrderItemPriceUpdated : DomainEvent
 public record PurchaseOrderItemReceived : DomainEvent
 {
     /// <summary>The affected line item.</summary>
-    public PurchaseOrderItem PurchaseOrderItem { get; init; } = default!;
+    public PurchaseOrderItem PurchaseOrderItem { get; init; } = null!;
     /// <summary>The previous received quantity.</summary>
     public int PreviousReceivedQuantity { get; init; }
     /// <summary>The new received quantity value.</summary>

@@ -78,7 +78,7 @@ public sealed class PickListItem : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to item.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to bin.

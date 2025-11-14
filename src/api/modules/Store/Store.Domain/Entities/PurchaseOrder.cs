@@ -54,7 +54,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Purchase order number. Example: "PO-2025-001".
     /// </summary>
-    public string OrderNumber { get; private set; } = default!;
+    public string OrderNumber { get; private set; } = null!;
 
     /// <summary>
     /// Supplier id the order is sent to.
@@ -80,7 +80,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Order status: Draft, Submitted, Approved, Sent, Received, Cancelled.
     /// </summary>
-    public string Status { get; private set; } = default!;
+    public string Status { get; private set; } = null!;
 
     /// <summary>
     /// Computed totals: TotalAmount includes line totals, NetAmount accounts for taxes/discounts.
@@ -95,7 +95,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
     public string? ContactPhone { get; private set; }
     public bool IsUrgent { get; private set; }
     
-    public Supplier Supplier { get; private set; } = default!;
+    public Supplier Supplier { get; private set; } = null!;
     
     private readonly List<PurchaseOrderItem> _items = new();
     /// <summary>
@@ -125,7 +125,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(orderNumber)) throw new ArgumentException("Order number is required", nameof(orderNumber));
         if (orderNumber.Length > 100) throw new ArgumentException("Order number must not exceed 100 characters", nameof(orderNumber));
 
-        if (supplierId == default) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+        if (supplierId == DefaultIdType.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
 
         if (orderDate == default) throw new ArgumentException("OrderDate is required", nameof(orderDate));
 
@@ -356,7 +356,7 @@ public sealed class PurchaseOrder : AuditableEntity, IAggregateRoot
         // validate inputs similar to constructor
         if (string.IsNullOrWhiteSpace(orderNumber)) throw new ArgumentException("Order number is required", nameof(orderNumber));
         if (orderNumber.Length > 100) throw new ArgumentException("Order number must not exceed 100 characters", nameof(orderNumber));
-        if (supplierId == default) throw new ArgumentException("SupplierId is required", nameof(supplierId));
+        if (supplierId == DefaultIdType.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
         if (orderDate == default) throw new ArgumentException("OrderDate is required", nameof(orderDate));
         if (expectedDeliveryDate.HasValue && expectedDeliveryDate.Value.Date < orderDate.Date)
             throw new ArgumentException("Expected delivery date must be on or after the order date", nameof(expectedDeliveryDate));

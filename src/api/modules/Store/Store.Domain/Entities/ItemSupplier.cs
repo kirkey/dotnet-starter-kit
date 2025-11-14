@@ -99,12 +99,12 @@ public sealed class ItemSupplier : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to item.
     /// </summary>
-    public Item Item { get; private set; } = default!;
+    public Item Item { get; private set; } = null!;
 
     /// <summary>
     /// Navigation property to supplier.
     /// </summary>
-    public Supplier Supplier { get; private set; } = default!;
+    public Supplier Supplier { get; private set; } = null!;
 
     private ItemSupplier() { }
 

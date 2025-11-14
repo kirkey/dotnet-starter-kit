@@ -41,7 +41,7 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
     /// Example: "A1-01-01", "RACK-5-SHELF-3", "PALLET-001".
     /// Max length: 50.
     /// </summary>
-    public string Code { get; private set; } = default!;
+    public string Code { get; private set; } = null!;
 
     /// <summary>
     /// Warehouse location this bin belongs to.
@@ -52,7 +52,7 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
     /// Type of bin. Example: "Shelf", "Pallet", "Floor", "Rack", "Drawer".
     /// Max length: 50.
     /// </summary>
-    public string BinType { get; private set; } = default!;
+    public string BinType { get; private set; } = null!;
 
     /// <summary>
     /// Maximum capacity in units or volume.
@@ -90,7 +90,7 @@ public sealed class Bin : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Navigation property to warehouse location.
     /// </summary>
-    public WarehouseLocation WarehouseLocation { get; private set; } = default!;
+    public WarehouseLocation WarehouseLocation { get; private set; } = null!;
 
     private Bin() { }
 

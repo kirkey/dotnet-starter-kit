@@ -55,7 +55,7 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Human-friendly identifier for the count. Example: "CC-2025-09-001".
     /// </summary>
-    public string CountNumber { get; private set; } = default!;
+    public string CountNumber { get; private set; } = null!;
 
     /// <summary>
     /// Warehouse id where the count is taking place.
@@ -85,12 +85,12 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Status of the count (Scheduled, InProgress, Completed, Cancelled). Default: "Scheduled".
     /// </summary>
-    public string Status { get; private set; } = default!; // Scheduled, InProgress, Completed, Cancelled
+    public string Status { get; private set; } = null!; // Scheduled, InProgress, Completed, Cancelled
 
     /// <summary>
     /// Type of count (Full, Partial, ABC, Random). Use to describe scope.
     /// </summary>
-    public string CountType { get; private set; } = default!; // Full, Partial, ABC, Random
+    public string CountType { get; private set; } = null!; // Full, Partial, ABC, Random
 
     /// <summary>
     /// Name of the person who is counting (optional).
@@ -115,7 +115,7 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
     public decimal AccuracyPercentage { get; private set; }
     
     
-    public Warehouse Warehouse { get; private set; } = default!;
+    public Warehouse Warehouse { get; private set; } = null!;
     public WarehouseLocation? WarehouseLocation { get; private set; }
     
     private readonly List<CycleCountItem> _items = new();
@@ -143,7 +143,7 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(countNumber)) throw new ArgumentException("CountNumber is required", nameof(countNumber));
         if (countNumber.Length > 100) throw new ArgumentException("CountNumber must not exceed 100 characters", nameof(countNumber));
 
-        if (warehouseId == default) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (warehouseId == DefaultIdType.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
 
         if (scheduledDate == default) throw new ArgumentException("ScheduledDate is required", nameof(scheduledDate));
 
@@ -222,7 +222,7 @@ public sealed class CycleCount : AuditableEntity, IAggregateRoot
         }
 
         // Validations
-        if (warehouseId == default) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
+        if (warehouseId == DefaultIdType.Empty) throw new ArgumentException("WarehouseId is required", nameof(warehouseId));
         if (scheduledDate == default) throw new ArgumentException("ScheduledDate is required", nameof(scheduledDate));
         if (string.IsNullOrWhiteSpace(countType)) throw new ArgumentException("CountType is required", nameof(countType));
         if (countType.Length > 50) throw new ArgumentException("CountType must not exceed 50 characters", nameof(countType));
