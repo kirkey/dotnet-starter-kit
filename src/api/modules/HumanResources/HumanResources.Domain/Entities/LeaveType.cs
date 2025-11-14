@@ -90,6 +90,53 @@ public class LeaveType : AuditableEntity, IAggregateRoot
     public int? MinimumNoticeDay { get; private set; }
 
     /// <summary>
+    /// Leave classification code per Philippine Labor Code.
+    /// Examples: VacationLeave, SickLeave, MaternityLeave, PaternityLeave, SpecialLeave, SoloParentLeave.
+    /// Maps to PhilippinesLeaveBenefitsConstants.
+    /// </summary>
+    public string? LeaveCode { get; private set; }
+
+    /// <summary>
+    /// Gender requirement for this leave (Both, Female, Male).
+    /// Female: Maternity leave (Art 97, RA 11210) - females only.
+    /// Male: Paternity leave (Art 98) - males only.
+    /// Both: All employees eligible (vacation, sick, special).
+    /// </summary>
+    public string ApplicableGender { get; private set; } = "Both";
+
+    /// <summary>
+    /// Minimum service days before employee can use this leave.
+    /// Example: 30 days for vacation leave, 0 for sick leave.
+    /// </summary>
+    public int MinimumServiceDays { get; private set; } = 0;
+
+    /// <summary>
+    /// Whether medical certificate is required for this leave type.
+    /// Example: Sick leave requires medical cert after 3 consecutive days.
+    /// </summary>
+    public bool RequiresMedicalCertification { get; private set; } = false;
+
+    /// <summary>
+    /// Days/threshold after which medical certificate is required.
+    /// Example: 3 days for sick leave (after 3 consecutive days, cert required).
+    /// </summary>
+    public int MedicalCertificateAfterDays { get; private set; } = 0;
+
+    /// <summary>
+    /// Whether unused leave can be converted to cash.
+    /// Vacation Leave: Yes (convertible at year-end per Labor Code Art 95).
+    /// Sick Leave: No (forfeited if unused per Art 96).
+    /// </summary>
+    public bool IsConvertibleToCash { get; private set; } = false;
+
+    /// <summary>
+    /// Whether this leave is cumulative (carries over to next year).
+    /// Vacation Leave: Yes (cumulative per Art 95).
+    /// Sick Leave: No (non-cumulative per Art 96).
+    /// </summary>
+    public bool IsCumulative { get; private set; } = false;
+
+    /// <summary>
     /// Whether this leave type is active.
     /// </summary>
     public bool IsActive { get; private set; }
@@ -198,6 +245,96 @@ public class LeaveType : AuditableEntity, IAggregateRoot
     {
         IsActive = true;
         return this;
+    }
+
+    /// <summary>
+    /// Sets Philippines-specific leave code.
+    /// </summary>
+    public LeaveType SetLeaveCode(string leaveCode)
+    {
+        LeaveCode = leaveCode;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets gender applicability (Both, Male, Female).
+    /// </summary>
+    public LeaveType SetApplicableGender(string gender)
+    {
+        if (gender != "Both" && gender != "Male" && gender != "Female")
+            throw new ArgumentException("Gender must be 'Both', 'Male', or 'Female'.", nameof(gender));
+
+        ApplicableGender = gender;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets minimum service requirement in days.
+    /// </summary>
+    public LeaveType SetMinimumServiceDays(int days)
+    {
+        if (days < 0)
+            throw new ArgumentException("Minimum service days cannot be negative.", nameof(days));
+
+        MinimumServiceDays = days;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets medical certification requirement.
+    /// </summary>
+    public LeaveType SetMedicalCertificationRequirement(bool required, int afterDays = 0)
+    {
+        RequiresMedicalCertification = required;
+        MedicalCertificateAfterDays = afterDays;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets whether leave can be converted to cash.
+    /// </summary>
+    public LeaveType SetCashConvertibility(bool isConvertible)
+    {
+        IsConvertibleToCash = isConvertible;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets whether leave is cumulative.
+    /// </summary>
+    public LeaveType SetCumulative(bool isCumulative)
+    {
+        IsCumulative = isCumulative;
+        return this;
+    }
+
+    /// <summary>
+    /// Checks if employee is eligible for this leave type based on Philippines Labor Code.
+    /// </summary>
+    public (bool IsEligible, string? Reason) CheckEligibility(
+        string? employeeGender,
+        DateTime? hireDate,
+        DateTime requestDate)
+    {
+        // Check gender requirement (for maternity/paternity)
+        if (ApplicableGender != "Both" && !string.IsNullOrWhiteSpace(employeeGender))
+        {
+            if (ApplicableGender == "Female" && employeeGender != "Female")
+                return (false, $"Leave '{LeaveName}' is only for female employees (Maternity Leave per RA 11210).");
+
+            if (ApplicableGender == "Male" && employeeGender != "Male")
+                return (false, $"Leave '{LeaveName}' is only for male employees (Paternity Leave per Art 98).");
+        }
+
+        // Check minimum service requirement
+        if (hireDate.HasValue && MinimumServiceDays > 0)
+        {
+            var serviceDays = (requestDate - hireDate.Value).Days;
+            if (serviceDays < MinimumServiceDays)
+                return (false, $"Employee has {serviceDays} days of service; minimum {MinimumServiceDays} days required.");
+        }
+
+        return (true, null);
     }
 }
 

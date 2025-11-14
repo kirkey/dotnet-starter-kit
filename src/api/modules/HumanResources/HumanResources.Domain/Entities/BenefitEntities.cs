@@ -340,8 +340,8 @@ public static class BenefitType
 public static class CoverageLevel
 {
     public const string Individual = "Individual";
-    public const string Employee_Plus_Spouse = "Employee_Plus_Spouse";
-    public const string Employee_Plus_Children = "Employee_Plus_Children";
+    public const string EmployeePlusSpouse = "Employee_Plus_Spouse";
+    public const string EmployeePlusChildren = "Employee_Plus_Children";
     public const string Family = "Family";
 }
 

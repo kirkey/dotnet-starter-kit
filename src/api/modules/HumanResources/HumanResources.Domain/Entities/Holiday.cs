@@ -41,6 +41,21 @@ public class Holiday : AuditableEntity, IAggregateRoot
     public bool IsPaid { get; private set; }
 
     /// <summary>
+    /// Holiday type per Philippine regulations.
+    /// RegularPublicHoliday: 100% pay premium if worked (New Year, Labor Day, Christmas, etc).
+    /// SpecialNonWorkingDay: 30% pay premium if worked (Black Saturday, local fiestas).
+    /// </summary>
+    public string Type { get; private set; } = "RegularPublicHoliday";
+
+    /// <summary>
+    /// Pay rate multiplier if employee works on this holiday.
+    /// RegularPublicHoliday: 1.0 (100% additional pay = 200% total).
+    /// SpecialNonWorkingDay: 0.3 (30% additional pay = 130% total).
+    /// DoubleHoliday (Regular + Rest Day): 1.3 (130% additional = 230% total).
+    /// </summary>
+    public decimal PayRateMultiplier { get; private set; } = 1.0m;
+
+    /// <summary>
     /// Whether this is a recurring holiday (annual).
     /// </summary>
     public bool IsRecurringAnnually { get; private set; }
@@ -54,6 +69,32 @@ public class Holiday : AuditableEntity, IAggregateRoot
     /// Month for recurring holidays (1-12).
     /// </summary>
     public int? RecurringMonth { get; private set; }
+
+    /// <summary>
+    /// Whether this holiday's date changes yearly (moveable).
+    /// Examples: Easter (lunar calendar), Holy Week, National Heroes Day (last Monday of August).
+    /// </summary>
+    public bool IsMoveable { get; private set; } = false;
+
+    /// <summary>
+    /// Rule for calculating moveable holiday date.
+    /// Examples: "Easter-based", "Last Monday of August", "Islamic calendar".
+    /// </summary>
+    public string? MoveableRule { get; private set; }
+
+    /// <summary>
+    /// Whether holiday applies nationwide or is regional.
+    /// True: Nationwide (all provinces/cities).
+    /// False: Regional (specific provinces/LGUs only).
+    /// </summary>
+    public bool IsNationwide { get; private set; } = true;
+
+    /// <summary>
+    /// Comma-separated list of regions/provinces where holiday applies (if not nationwide).
+    /// Examples: "BARMM", "NCR,Region IV-A", "Davao City".
+    /// Used for local fiestas, patron saint days, charter days.
+    /// </summary>
+    public string? ApplicableRegions { get; private set; }
 
     /// <summary>
     /// Description or notes about the holiday.
@@ -154,6 +195,75 @@ public class Holiday : AuditableEntity, IAggregateRoot
     {
         IsActive = true;
         return this;
+    }
+
+    /// <summary>
+    /// Sets holiday type and pay rate per Philippine Labor Code.
+    /// </summary>
+    public Holiday SetHolidayType(string type, decimal payRateMultiplier)
+    {
+        if (type != "RegularPublicHoliday" && type != "SpecialNonWorkingDay")
+            throw new ArgumentException("Type must be 'RegularPublicHoliday' or 'SpecialNonWorkingDay'.", nameof(type));
+
+        Type = type;
+        PayRateMultiplier = payRateMultiplier;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets holiday as moveable (date changes yearly based on calendar rules).
+    /// </summary>
+    public Holiday SetMoveable(bool isMoveable, string? moveableRule = null)
+    {
+        IsMoveable = isMoveable;
+        MoveableRule = moveableRule;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets regional applicability (nationwide or specific regions/provinces).
+    /// </summary>
+    public Holiday SetRegionalApplicability(bool isNationwide, string? applicableRegions = null)
+    {
+        IsNationwide = isNationwide;
+        ApplicableRegions = applicableRegions;
+        return this;
+    }
+
+    /// <summary>
+    /// Checks if holiday applies to a specific region/province.
+    /// </summary>
+    public bool AppliesToRegion(string region)
+    {
+        if (IsNationwide)
+            return true;
+
+        if (string.IsNullOrWhiteSpace(ApplicableRegions))
+            return false;
+
+        var regions = ApplicableRegions.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(r => r.Trim().ToUpperInvariant());
+
+        return regions.Contains(region.Trim().ToUpperInvariant());
+    }
+
+    /// <summary>
+    /// Calculates holiday pay premium for employee working on this holiday.
+    /// </summary>
+    public decimal CalculateHolidayPremium(decimal dailyRate, bool isRestDay = false, bool hasOvertime = false)
+    {
+        // Base premium
+        var premium = dailyRate * PayRateMultiplier;
+
+        // Double holiday (regular holiday + rest day)
+        if (Type == "RegularPublicHoliday" && isRestDay)
+            premium = dailyRate * 1.3m; // 130% additional = 230% total
+
+        // Triple holiday (regular holiday + rest day + overtime)
+        if (Type == "RegularPublicHoliday" && isRestDay && hasOvertime)
+            premium = dailyRate * 2.0m; // 200% additional = 300% total
+
+        return premium;
     }
 }
 

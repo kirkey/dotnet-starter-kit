@@ -23,7 +23,7 @@ public sealed record DeductionResponse
     /// <summary>
     /// Gets the GL account code for posting.
     /// </summary>
-    public string GLAccountCode { get; init; } = default!;
+    public string GlAccountCode { get; init; } = default!;
 
     /// <summary>
     /// Gets a value indicating whether the deduction is active.

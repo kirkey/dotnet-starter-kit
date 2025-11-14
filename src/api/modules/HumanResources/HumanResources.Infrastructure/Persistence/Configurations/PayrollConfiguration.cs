@@ -158,7 +158,7 @@ public class PayComponentConfiguration : IEntityTypeConfiguration<PayComponent>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(c => c.GLAccountCode)
+        builder.Property(c => c.GlAccountCode)
             .HasMaxLength(50);
 
         builder.Property(c => c.Description)

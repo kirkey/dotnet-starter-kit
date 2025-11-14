@@ -19,7 +19,7 @@ public sealed class UpdateDeductionHandler(
 
         deduction.Update(
             componentName: request.ComponentName,
-            glAccountCode: request.GLAccountCode,
+            glAccountCode: request.GlAccountCode,
             description: request.Description);
 
         await repository.UpdateAsync(deduction, cancellationToken).ConfigureAwait(false);

@@ -102,14 +102,118 @@ public class Employee : AuditableEntity, IAggregateRoot
     public string Status { get; private set; } = EmploymentStatus.Active;
 
     /// <summary>
+    /// Date the employee was born (for age verification and benefits).
+    /// Required for Philippine government benefits (SSS, PhilHealth, Pag-IBIG).
+    /// </summary>
+    public DateTime? BirthDate { get; private set; }
+
+    /// <summary>
+    /// Gender of the employee (Male, Female).
+    /// Required for maternity/paternity leave eligibility per Philippine Labor Code.
+    /// </summary>
+    public string? Gender { get; private set; }
+
+    /// <summary>
+    /// Civil status (Single, Married, Widowed, Separated, etc.).
+    /// Affects tax computations and dependent benefits.
+    /// </summary>
+    public string? CivilStatus { get; private set; }
+
+    /// <summary>
+    /// Tax Identification Number (TIN) issued by BIR.
+    /// Mandatory for all employees in the Philippines.
+    /// Format: XXX-XXX-XXX-XXX
+    /// </summary>
+    public string? Tin { get; private set; }
+
+    /// <summary>
+    /// SSS (Social Security System) Number.
+    /// Mandatory for all employees earning ₱1,000/month or more.
+    /// Format: XX-XXXXXXX-X
+    /// </summary>
+    public string? SssNumber { get; private set; }
+
+    /// <summary>
+    /// PhilHealth Number (Philippine Health Insurance).
+    /// Mandatory for all employees.
+    /// Format: XX-XXXXXXXXX-X
+    /// </summary>
+    public string? PhilHealthNumber { get; private set; }
+
+    /// <summary>
+    /// Pag-IBIG (HDMF) Number.
+    /// Mandatory for all employees earning ₱1,500/month or more.
+    /// Format: XXXX-XXXX-XXXX
+    /// </summary>
+    public string? PagIbigNumber { get; private set; }
+
+    /// <summary>
+    /// Employment classification per Labor Code Article 280.
+    /// Values: Regular, Probationary, Casual, ProjectBased, Seasonal, Contractual.
+    /// Determines benefits eligibility and security of tenure.
+    /// </summary>
+    public string EmploymentClassification { get; private set; } = "Regular";
+
+    /// <summary>
+    /// Date employee was regularized (if applicable).
+    /// Typically after 6 months probation for general employees.
+    /// </summary>
+    public DateTime? RegularizationDate { get; private set; }
+
+    /// <summary>
+    /// Basic monthly salary in Philippine Peso (₱).
+    /// Used for 13th month pay, separation pay, and mandatory deductions.
+    /// </summary>
+    public decimal? BasicMonthlySalary { get; private set; }
+
+    /// <summary>
     /// Date employee was terminated (if applicable).
     /// </summary>
     public DateTime? TerminationDate { get; private set; }
 
     /// <summary>
-    /// Reason for termination if applicable.
+    /// Reason for termination per Labor Code (if applicable).
+    /// Examples: MisconductJustCause, Redundancy, ResignationVoluntary, Retirement, etc.
     /// </summary>
     public string? TerminationReason { get; private set; }
+
+    /// <summary>
+    /// Termination mode: ByEmployer, ByEmployee, MutualConsent, ByOperationOfLaw.
+    /// </summary>
+    public string? TerminationMode { get; private set; }
+
+    /// <summary>
+    /// Separation pay basis if terminated.
+    /// Examples: HalfMonthPerYear, OneMonthPerYear, None, CustomAmount.
+    /// </summary>
+    public string? SeparationPayBasis { get; private set; }
+
+    /// <summary>
+    /// Computed separation pay amount in PHP.
+    /// </summary>
+    public decimal? SeparationPayAmount { get; private set; }
+
+    /// <summary>
+    /// Whether this employee has PWD (Persons with Disabilities) status.
+    /// Entitled to special benefits per RA 7277.
+    /// </summary>
+    public bool IsPwd { get; private set; }
+
+    /// <summary>
+    /// PWD ID Number if applicable.
+    /// </summary>
+    public string? PwdIdNumber { get; private set; }
+
+    /// <summary>
+    /// Whether employee is a solo parent per RA 7305.
+    /// Entitled to 5 days solo parent leave annually.
+    /// </summary>
+    public bool IsSoloParent { get; private set; }
+
+    /// <summary>
+    /// Solo Parent ID Number if applicable (from DSWD).
+    /// </summary>
+    public string? SoloParentIdNumber { get; private set; }
 
     /// <summary>
     /// Whether this employee record is active.
@@ -275,19 +379,125 @@ public class Employee : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Terminates the employee.
+    /// Terminates the employee per Philippine Labor Code.
     /// </summary>
-    public Employee Terminate(DateTime terminationDate, string? reason = null)
+    public Employee Terminate(
+        DateTime terminationDate,
+        string terminationReason,
+        string terminationMode,
+        string? separationPayBasis = null,
+        decimal? separationPayAmount = null)
     {
         if (Status != EmploymentStatus.Terminated)
         {
             TerminationDate = terminationDate;
-            TerminationReason = reason;
+            TerminationReason = terminationReason;
+            TerminationMode = terminationMode;
+            SeparationPayBasis = separationPayBasis;
+            SeparationPayAmount = separationPayAmount;
             Status = EmploymentStatus.Terminated;
             IsActive = false;
-            QueueDomainEvent(new EmployeeTerminated { EmployeeId = Id, TerminationDate = terminationDate, Reason = reason });
+            QueueDomainEvent(new EmployeeTerminated { EmployeeId = Id, TerminationDate = terminationDate, Reason = terminationReason });
         }
         return this;
+    }
+
+    /// <summary>
+    /// Sets employee government IDs (TIN, SSS, PhilHealth, Pag-IBIG).
+    /// </summary>
+    public Employee SetGovernmentIds(
+        string? tin = null,
+        string? sssNumber = null,
+        string? philHealthNumber = null,
+        string? pagIbigNumber = null)
+    {
+        if (!string.IsNullOrWhiteSpace(tin)) Tin = tin;
+        if (!string.IsNullOrWhiteSpace(sssNumber)) SssNumber = sssNumber;
+        if (!string.IsNullOrWhiteSpace(philHealthNumber)) PhilHealthNumber = philHealthNumber;
+        if (!string.IsNullOrWhiteSpace(pagIbigNumber)) PagIbigNumber = pagIbigNumber;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets employee personal information.
+    /// </summary>
+    public Employee SetPersonalInfo(
+        DateTime? birthDate = null,
+        string? gender = null,
+        string? civilStatus = null)
+    {
+        if (birthDate.HasValue) BirthDate = birthDate;
+        if (!string.IsNullOrWhiteSpace(gender)) Gender = gender;
+        if (!string.IsNullOrWhiteSpace(civilStatus)) CivilStatus = civilStatus;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets employee classification per Labor Code Article 280.
+    /// </summary>
+    public Employee SetEmploymentClassification(string classification)
+    {
+        EmploymentClassification = classification;
+        return this;
+    }
+
+    /// <summary>
+    /// Regularizes employee (from Probationary to Regular).
+    /// </summary>
+    public Employee Regularize(DateTime regularizationDate)
+    {
+        EmploymentClassification = "Regular";
+        RegularizationDate = regularizationDate;
+        Status = EmploymentStatus.Active;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets employee basic monthly salary.
+    /// </summary>
+    public Employee SetBasicSalary(decimal basicMonthlySalary)
+    {
+        BasicMonthlySalary = basicMonthlySalary;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets PWD status and ID.
+    /// </summary>
+    public Employee SetPwdStatus(bool isPwd, string? pwdIdNumber = null)
+    {
+        IsPwd = isPwd;
+        PwdIdNumber = pwdIdNumber;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets solo parent status and ID.
+    /// </summary>
+    public Employee SetSoloParentStatus(bool isSoloParent, string? soloParentIdNumber = null)
+    {
+        IsSoloParent = isSoloParent;
+        SoloParentIdNumber = soloParentIdNumber;
+        return this;
+    }
+
+    /// <summary>
+    /// Calculates separation pay based on years of service and separation pay basis.
+    /// </summary>
+    public decimal CalculateSeparationPay()
+    {
+        if (!HireDate.HasValue || !TerminationDate.HasValue || !BasicMonthlySalary.HasValue)
+            return 0m;
+
+        var yearsOfService = (TerminationDate.Value - HireDate.Value).TotalDays / 365.25;
+
+        return SeparationPayBasis switch
+        {
+            "HalfMonthPerYear" => BasicMonthlySalary.Value * 0.5m * (decimal)yearsOfService,
+            "OneMonthPerYear" => BasicMonthlySalary.Value * (decimal)yearsOfService,
+            "CustomAmount" => SeparationPayAmount ?? 0m,
+            _ => 0m
+        };
     }
 
     /// <summary>

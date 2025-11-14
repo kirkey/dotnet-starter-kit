@@ -32,7 +32,7 @@ public sealed class SearchDeductionsHandler(
             Id = deduction.Id,
             ComponentName = deduction.ComponentName,
             ComponentType = deduction.ComponentType,
-            GLAccountCode = deduction.GLAccountCode,
+            GlAccountCode = deduction.GlAccountCode,
             IsActive = deduction.IsActive,
             IsCalculated = deduction.IsCalculated,
             Description = deduction.Description

@@ -17,7 +17,7 @@ public class PayComponent : AuditableEntity, IAggregateRoot
         Id = id;
         ComponentName = componentName;
         ComponentType = componentType;
-        GLAccountCode = glAccountCode;
+        GlAccountCode = glAccountCode;
         IsActive = true;
         IsCalculated = false;
     }
@@ -35,7 +35,7 @@ public class PayComponent : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Gets the GL account code for posting.
     /// </summary>
-    public string GLAccountCode { get; private set; } = default!;
+    public string GlAccountCode { get; private set; } = default!;
 
     /// <summary>
     /// Gets a value indicating whether the component is active.
@@ -81,7 +81,7 @@ public class PayComponent : AuditableEntity, IAggregateRoot
             ComponentName = componentName;
 
         if (!string.IsNullOrWhiteSpace(glAccountCode))
-            GLAccountCode = glAccountCode;
+            GlAccountCode = glAccountCode;
 
         if (description != null)
             Description = description;

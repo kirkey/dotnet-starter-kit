@@ -17,7 +17,7 @@ public sealed class CreateDeductionHandler(
         var deduction = PayComponent.Create(
             request.ComponentName,
             request.ComponentType,
-            request.GLAccountCode);
+            request.GlAccountCode);
 
         if (!string.IsNullOrWhiteSpace(request.Description))
             deduction.Update(description: request.Description);

@@ -19,10 +19,10 @@ public class UpdateDeductionValidator : AbstractValidator<UpdateDeductionCommand
             .WithMessage("Component name cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ComponentName));
 
-        RuleFor(x => x.GLAccountCode)
+        RuleFor(x => x.GlAccountCode)
             .MaximumLength(20)
             .WithMessage("GL account code cannot exceed 20 characters")
-            .When(x => !string.IsNullOrWhiteSpace(x.GLAccountCode));
+            .When(x => !string.IsNullOrWhiteSpace(x.GlAccountCode));
 
         RuleFor(x => x.Description)
             .MaximumLength(500)

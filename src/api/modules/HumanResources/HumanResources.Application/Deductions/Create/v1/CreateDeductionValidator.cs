@@ -22,10 +22,10 @@ public class CreateDeductionValidator : AbstractValidator<CreateDeductionCommand
             .Must(BeValidComponentType)
             .WithMessage("Component type must be Earnings, Tax, or Deduction");
 
-        RuleFor(x => x.GLAccountCode)
+        RuleFor(x => x.GlAccountCode)
             .MaximumLength(20)
             .WithMessage("GL account code cannot exceed 20 characters")
-            .When(x => !string.IsNullOrWhiteSpace(x.GLAccountCode));
+            .When(x => !string.IsNullOrWhiteSpace(x.GlAccountCode));
 
         RuleFor(x => x.Description)
             .MaximumLength(500)
