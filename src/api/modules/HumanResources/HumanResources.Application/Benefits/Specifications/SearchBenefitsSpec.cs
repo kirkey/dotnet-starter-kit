@@ -1,19 +1,8 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Benefits.Specifications;
 
 using Ardalis.Specification;
-using FSH.Starter.WebApi.HumanResources.Application.Benefits.Search.v1;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-
-/// <summary>
-/// Specification for getting benefit by ID.
-/// </summary>
-public sealed class BenefitByIdSpec : Specification<Benefit>, ISingleResultSpecification<Benefit>
-{
-    public BenefitByIdSpec(DefaultIdType id)
-    {
-        Query.Where(x => x.Id == id);
-    }
-}
+using Search.v1;
+using Domain.Entities;
 
 /// <summary>
 /// Specification for searching benefits with filters.
@@ -40,30 +29,6 @@ public sealed class SearchBenefitsSpec : Specification<Benefit>
         // Pagination
         Query.Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize);
-    }
-}
-
-/// <summary>
-/// Specification for getting mandatory benefits.
-/// </summary>
-public sealed class MandatoryBenefitsSpec : Specification<Benefit>
-{
-    public MandatoryBenefitsSpec()
-    {
-        Query.Where(x => x.IsMandatory && x.IsActive)
-            .OrderBy(x => x.BenefitName);
-    }
-}
-
-/// <summary>
-/// Specification for getting benefits by type.
-/// </summary>
-public sealed class BenefitsByTypeSpec : Specification<Benefit>
-{
-    public BenefitsByTypeSpec(string benefitType)
-    {
-        Query.Where(x => x.BenefitType == benefitType && x.IsActive)
-            .OrderBy(x => x.BenefitName);
     }
 }
 
