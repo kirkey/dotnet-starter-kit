@@ -8,7 +8,7 @@ public static class TimesheetsEndpoints
     {
         var timesheetsGroup = app.MapGroup("/timesheets")
             .WithTags("Timesheets")
-            .WithDescription("Endpoints for managing timesheets (weekly, bi-weekly, monthly periods)");
+            .WithDescription("Endpoints for managing employee timesheets");
 
         timesheetsGroup.MapCreateTimesheetEndpoint();
         timesheetsGroup.MapGetTimesheetEndpoint();

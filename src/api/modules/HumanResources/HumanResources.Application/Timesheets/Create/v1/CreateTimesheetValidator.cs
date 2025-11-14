@@ -8,20 +8,19 @@ public class CreateTimesheetValidator : AbstractValidator<CreateTimesheetCommand
             .NotEmpty().WithMessage("Employee ID is required.");
 
         RuleFor(x => x.StartDate)
-            .NotEmpty().WithMessage("Start date is required.")
-            .LessThanOrEqualTo(DateTime.Today).WithMessage("Start date cannot be in the future.");
+            .LessThanOrEqualTo(DateTime.Today).WithMessage("Start date cannot be in the future.")
+            .GreaterThanOrEqualTo(DateTime.Today.AddYears(-1)).WithMessage("Start date cannot be more than 1 year old.");
 
         RuleFor(x => x.EndDate)
-            .NotEmpty().WithMessage("End date is required.")
-            .LessThanOrEqualTo(DateTime.Today).WithMessage("End date cannot be in the future.")
-            .GreaterThan(x => x.StartDate).WithMessage("End date must be after start date.");
+            .GreaterThan(x => x.StartDate).WithMessage("End date must be after start date.")
+            .LessThanOrEqualTo(DateTime.Today).WithMessage("End date cannot be in the future.");
 
         RuleFor(x => x.PeriodType)
             .NotEmpty().WithMessage("Period type is required.")
             .Must(BeValidPeriodType).WithMessage("Period type must be one of: Weekly, BiWeekly, Monthly.");
     }
 
-    private static bool BeValidPeriodType(string periodType)
+    private static bool BeValidPeriodType(string? periodType)
     {
         return periodType is "Weekly" or "BiWeekly" or "Monthly";
     }

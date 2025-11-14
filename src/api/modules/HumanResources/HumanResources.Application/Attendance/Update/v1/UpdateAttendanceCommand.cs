@@ -7,7 +7,5 @@ public sealed record UpdateAttendanceCommand(
     [property: DefaultValue(null)] string? ClockInLocation = null,
     [property: DefaultValue(null)] string? ClockOutLocation = null,
     [property: DefaultValue(null)] string? Status = null,
-    [property: DefaultValue(null)] int? MinutesLate = null,
-    [property: DefaultValue(null)] string? Reason = null,
-    [property: DefaultValue(null)] string? ManagerComment = null) : IRequest<UpdateAttendanceResponse>;
+    [property: DefaultValue(null)] string? Reason = null) : IRequest<UpdateAttendanceResponse>;
 

@@ -14,9 +14,9 @@ public static class GetAttendanceEndpoint
             })
             .WithName(nameof(GetAttendanceEndpoint))
             .WithSummary("Gets attendance record by ID")
-            .WithDescription("Retrieves attendance record details")
+            .WithDescription("Retrieves attendance details")
             .Produces<AttendanceResponse>()
-            .RequirePermission("Permissions.Employees.View")
+            .RequirePermission("Permissions.Attendance.View")
             .MapToApiVersion(1);
     }
 }

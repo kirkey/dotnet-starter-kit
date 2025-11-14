@@ -3,7 +3,7 @@ using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 namespace FSH.Starter.WebApi.HumanResources.Domain.Events;
 
 /// <summary>
-/// Event raised when attendance is created.
+/// Event raised when attendance record is created.
 /// </summary>
 public record AttendanceCreated : DomainEvent
 {
@@ -43,7 +43,7 @@ public record AttendanceMarkedAsAbsent : DomainEvent
 }
 
 /// <summary>
-/// Event raised when attendance is marked as leave.
+/// Event raised when attendance is marked as leave approved.
 /// </summary>
 public record AttendanceMarkedAsLeave : DomainEvent
 {
@@ -55,7 +55,8 @@ public record AttendanceMarkedAsLeave : DomainEvent
 /// </summary>
 public record AttendanceApproved : DomainEvent
 {
-    public Attendance Attendance { get; init; } = default!;
+    public DefaultIdType AttendanceId { get; init; }
+    public string? ManagerComment { get; init; }
 }
 
 /// <summary>
@@ -63,7 +64,8 @@ public record AttendanceApproved : DomainEvent
 /// </summary>
 public record AttendanceRejected : DomainEvent
 {
-    public Attendance Attendance { get; init; } = default!;
+    public DefaultIdType AttendanceId { get; init; }
+    public string? ManagerComment { get; init; }
 }
 
 /// <summary>
@@ -81,4 +83,5 @@ public record AttendanceActivated : DomainEvent
 {
     public DefaultIdType AttendanceId { get; init; }
 }
+
 

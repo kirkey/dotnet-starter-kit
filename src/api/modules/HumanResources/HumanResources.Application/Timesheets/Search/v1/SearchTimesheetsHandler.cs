@@ -4,7 +4,7 @@ using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Specifications;
 namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Search.v1;
 
 public sealed class SearchTimesheetsHandler(
-    [FromKeyedServices("hr:timesheets")] IReadRepository<Timesheet> repository)
+    [FromKeyedServices("hr:timesheets")] IReadRepository<Domain.Entities.Timesheet> repository)
     : IRequestHandler<SearchTimesheetsRequest, PagedList<TimesheetResponse>>
 {
     public async Task<PagedList<TimesheetResponse>> Handle(

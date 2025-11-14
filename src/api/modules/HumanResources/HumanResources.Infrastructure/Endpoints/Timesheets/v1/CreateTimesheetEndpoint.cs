@@ -14,9 +14,9 @@ public static class CreateTimesheetEndpoint
             })
             .WithName(nameof(CreateTimesheetEndpoint))
             .WithSummary("Creates a new timesheet")
-            .WithDescription("Creates a new timesheet for a pay period")
+            .WithDescription("Creates a timesheet for an employee for a pay period")
             .Produces<CreateTimesheetResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission("Permissions.Timesheets.Create")
             .MapToApiVersion(1);
     }
 }

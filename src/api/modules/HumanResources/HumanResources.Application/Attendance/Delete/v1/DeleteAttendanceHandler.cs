@@ -16,7 +16,7 @@ public sealed class DeleteAttendanceHandler(
 
         await repository.DeleteAsync(attendance, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Attendance {AttendanceId} deleted successfully", attendance.Id);
+        logger.LogInformation("Attendance record {AttendanceId} deleted successfully", attendance.Id);
 
         return new DeleteAttendanceResponse(attendance.Id);
     }

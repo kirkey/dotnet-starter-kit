@@ -16,7 +16,7 @@ public static class GetTimesheetEndpoint
             .WithSummary("Gets timesheet by ID")
             .WithDescription("Retrieves timesheet details")
             .Produces<TimesheetResponse>()
-            .RequirePermission("Permissions.Employees.View")
+            .RequirePermission("Permissions.Timesheets.View")
             .MapToApiVersion(1);
     }
 }

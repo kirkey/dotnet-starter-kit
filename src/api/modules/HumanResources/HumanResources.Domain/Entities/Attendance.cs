@@ -211,7 +211,7 @@ public class Attendance : AuditableEntity, IAggregateRoot
     {
         IsApproved = true;
         ManagerComment = comment;
-        QueueDomainEvent(new AttendanceApproved { Attendance = this });
+        QueueDomainEvent(new AttendanceApproved { AttendanceId = Id, ManagerComment = comment });
         return this;
     }
 
@@ -222,7 +222,7 @@ public class Attendance : AuditableEntity, IAggregateRoot
     {
         IsApproved = false;
         ManagerComment = comment;
-        QueueDomainEvent(new AttendanceRejected { Attendance = this });
+        QueueDomainEvent(new AttendanceRejected { AttendanceId = Id, ManagerComment = comment });
         return this;
     }
 

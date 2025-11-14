@@ -3,7 +3,7 @@ using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Specifications;
 namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Get.v1;
 
 public sealed class GetTimesheetHandler(
-    [FromKeyedServices("hr:timesheets")] IReadRepository<Timesheet> repository)
+    [FromKeyedServices("hr:timesheets")] IReadRepository<Domain.Entities.Timesheet> repository)
     : IRequestHandler<GetTimesheetRequest, TimesheetResponse>
 {
     public async Task<TimesheetResponse> Handle(

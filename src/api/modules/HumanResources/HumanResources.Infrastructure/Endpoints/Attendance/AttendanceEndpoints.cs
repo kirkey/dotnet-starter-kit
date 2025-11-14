@@ -8,7 +8,7 @@ public static class AttendanceEndpoints
     {
         var attendanceGroup = app.MapGroup("/attendance")
             .WithTags("Attendance")
-            .WithDescription("Endpoints for managing employee attendance (clock in/out, daily records)");
+            .WithDescription("Endpoints for managing employee attendance");
 
         attendanceGroup.MapCreateAttendanceEndpoint();
         attendanceGroup.MapGetAttendanceEndpoint();

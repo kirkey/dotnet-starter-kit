@@ -16,7 +16,7 @@ public static class DeleteTimesheetEndpoint
             .WithSummary("Deletes a timesheet")
             .WithDescription("Deletes a timesheet record")
             .Produces<DeleteTimesheetResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission("Permissions.Timesheets.Delete")
             .MapToApiVersion(1);
     }
 }

@@ -12,34 +12,34 @@ public class AttendanceNotFoundException : NotFoundException
 }
 
 /// <summary>
-/// Exception thrown when invalid attendance status is provided.
+/// Exception thrown when duplicate attendance record exists for same date.
+/// </summary>
+public class DuplicateAttendanceException : BadRequestException
+{
+    public DuplicateAttendanceException(DefaultIdType employeeId, DateTime date)
+        : base($"Attendance record already exists for employee '{employeeId}' on {date:yyyy-MM-dd}.")
+    {
+    }
+}
+
+/// <summary>
+/// Exception thrown when clock out time is before clock in time.
+/// </summary>
+public class InvalidClockTimeException : BadRequestException
+{
+    public InvalidClockTimeException(TimeSpan clockIn, TimeSpan clockOut)
+        : base($"Clock out time ({clockOut}) cannot be before clock in time ({clockIn}).")
+    {
+    }
+}
+
+/// <summary>
+/// Exception thrown when attempting invalid attendance status transition.
 /// </summary>
 public class InvalidAttendanceStatusException : BadRequestException
 {
-    public InvalidAttendanceStatusException(string status)
-        : base($"Attendance status '{status}' is not valid. Valid statuses are: Present, Late, Absent, LeaveApproved, HalfDay.")
-    {
-    }
-}
-
-/// <summary>
-/// Exception thrown when employee already has attendance for the date.
-/// </summary>
-public class AttendanceAlreadyExistsException : BadRequestException
-{
-    public AttendanceAlreadyExistsException(DefaultIdType employeeId, DateTime date)
-        : base($"Attendance record already exists for employee '{employeeId}' on {date:MMM d, yyyy}.")
-    {
-    }
-}
-
-/// <summary>
-/// Exception thrown when trying to clock out without clocking in.
-/// </summary>
-public class CannotClockOutWithoutClockInException : BadRequestException
-{
-    public CannotClockOutWithoutClockInException()
-        : base("Cannot clock out without clocking in first.")
+    public InvalidAttendanceStatusException(string currentStatus, string attemptedStatus)
+        : base($"Cannot change status from '{currentStatus}' to '{attemptedStatus}'.")
     {
     }
 }

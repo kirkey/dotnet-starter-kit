@@ -17,9 +17,9 @@ public static class UpdateAttendanceEndpoint
             })
             .WithName(nameof(UpdateAttendanceEndpoint))
             .WithSummary("Updates an attendance record")
-            .WithDescription("Updates attendance record information")
+            .WithDescription("Updates attendance information")
             .Produces<UpdateAttendanceResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission("Permissions.Attendance.Edit")
             .MapToApiVersion(1);
     }
 }

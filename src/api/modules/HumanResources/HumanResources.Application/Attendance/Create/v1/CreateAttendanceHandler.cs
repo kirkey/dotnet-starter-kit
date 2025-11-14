@@ -2,8 +2,8 @@ namespace FSH.Starter.WebApi.HumanResources.Application.Attendance.Create.v1;
 
 public sealed class CreateAttendanceHandler(
     ILogger<CreateAttendanceHandler> logger,
-    [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository,
-    [FromKeyedServices("hr:attendance")] IRepository<Domain.Entities.Attendance> repository)
+    [FromKeyedServices("hr:attendance")] IRepository<Domain.Entities.Attendance> repository,
+    [FromKeyedServices("hr:employees")] IReadRepository<Domain.Entities.Employee> employeeRepository)
     : IRequestHandler<CreateAttendanceCommand, CreateAttendanceResponse>
 {
     public async Task<CreateAttendanceResponse> Handle(
@@ -30,10 +30,10 @@ public sealed class CreateAttendanceHandler(
         await repository.AddAsync(attendance, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Attendance created with ID {AttendanceId}, Employee {EmployeeId}, Date {AttendanceDate}",
+            "Attendance record created with ID {AttendanceId}, Employee {EmployeeId}, Date {Date}",
             attendance.Id,
             attendance.EmployeeId,
-            attendance.AttendanceDate.ToString("MMM d, yyyy"));
+            attendance.AttendanceDate.Date);
 
         return new CreateAttendanceResponse(attendance.Id);
     }

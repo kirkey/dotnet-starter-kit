@@ -14,9 +14,9 @@ public static class CreateAttendanceEndpoint
             })
             .WithName(nameof(CreateAttendanceEndpoint))
             .WithSummary("Creates a new attendance record")
-            .WithDescription("Creates a new attendance record for an employee")
+            .WithDescription("Records employee attendance for a specific date")
             .Produces<CreateAttendanceResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission("Permissions.Attendance.Create")
             .MapToApiVersion(1);
     }
 }

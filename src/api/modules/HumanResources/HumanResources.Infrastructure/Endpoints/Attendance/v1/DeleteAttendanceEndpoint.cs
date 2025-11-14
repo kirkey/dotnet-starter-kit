@@ -16,7 +16,7 @@ public static class DeleteAttendanceEndpoint
             .WithSummary("Deletes an attendance record")
             .WithDescription("Deletes an attendance record")
             .Produces<DeleteAttendanceResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission("Permissions.Attendance.Delete")
             .MapToApiVersion(1);
     }
 }

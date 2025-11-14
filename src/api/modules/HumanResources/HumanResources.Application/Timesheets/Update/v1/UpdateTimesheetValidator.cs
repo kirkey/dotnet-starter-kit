@@ -7,22 +7,18 @@ public class UpdateTimesheetValidator : AbstractValidator<UpdateTimesheetCommand
         RuleFor(x => x.Id)
             .NotEmpty().WithMessage("ID is required.");
 
-        RuleFor(x => x.ManagerComment)
-            .MaximumLength(500).WithMessage("Manager comment must not exceed 500 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.ManagerComment));
-
-        RuleFor(x => x.RejectionReason)
-            .MaximumLength(500).WithMessage("Rejection reason must not exceed 500 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.RejectionReason));
-
         RuleFor(x => x.Status)
-            .Must(BeValidStatus).WithMessage("Status must be one of: Draft, Submitted, Approved, Rejected, Locked.")
+            .Must(BeValidStatus).WithMessage("Status must be one of: Submitted, Approved, Rejected, Locked.")
             .When(x => !string.IsNullOrWhiteSpace(x.Status));
+
+        RuleFor(x => x.ManagerComment)
+            .MaximumLength(1000).WithMessage("Manager comment must not exceed 1000 characters.")
+            .When(x => !string.IsNullOrWhiteSpace(x.ManagerComment));
     }
 
-    private static bool BeValidStatus(string status)
+    private static bool BeValidStatus(string? status)
     {
-        return status is "Draft" or "Submitted" or "Approved" or "Rejected" or "Locked";
+        return status is "Submitted" or "Approved" or "Rejected" or "Locked";
     }
 }
 

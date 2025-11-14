@@ -17,9 +17,9 @@ public static class UpdateTimesheetEndpoint
             })
             .WithName(nameof(UpdateTimesheetEndpoint))
             .WithSummary("Updates a timesheet")
-            .WithDescription("Updates timesheet information and status")
+            .WithDescription("Updates timesheet status and approval information")
             .Produces<UpdateTimesheetResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission("Permissions.Timesheets.Edit")
             .MapToApiVersion(1);
     }
 }

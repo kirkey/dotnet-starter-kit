@@ -2,7 +2,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Update.v1;
 
 public sealed class UpdateTimesheetHandler(
     ILogger<UpdateTimesheetHandler> logger,
-    [FromKeyedServices("hr:timesheets")] IRepository<Timesheet> repository)
+    [FromKeyedServices("hr:timesheets")] IRepository<Domain.Entities.Timesheet> repository)
     : IRequestHandler<UpdateTimesheetCommand, UpdateTimesheetResponse>
 {
     public async Task<UpdateTimesheetResponse> Handle(
@@ -14,31 +14,24 @@ public sealed class UpdateTimesheetHandler(
         if (timesheet is null)
             throw new TimesheetNotFoundException(request.Id);
 
-        if (request.ApproverManagerId.HasValue)
-        {
-            timesheet.Submit(request.ApproverManagerId.Value);
-        }
-
         if (!string.IsNullOrWhiteSpace(request.Status))
         {
             switch (request.Status)
             {
                 case "Submitted":
-                    timesheet.Submit(request.ApproverManagerId);
+                    timesheet.Submit(request.ApproverId);
                     break;
+
                 case "Approved":
                     timesheet.Approve(request.ManagerComment);
                     break;
+
                 case "Rejected":
-                    if (string.IsNullOrWhiteSpace(request.RejectionReason))
-                        throw new ArgumentException("Rejection reason is required for rejection.");
-                    timesheet.Reject(request.RejectionReason);
+                    timesheet.Reject(request.ManagerComment ?? "No reason provided");
                     break;
+
                 case "Locked":
                     timesheet.Lock();
-                    break;
-                case "Draft":
-                    timesheet.ResetToDraft();
                     break;
             }
         }
