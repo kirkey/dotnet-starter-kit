@@ -1,47 +1,44 @@
-using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Get.v1;
-using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Specifications;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Search.v1;
+
+using FSH.Framework.Core.Paging;
+using FSH.Framework.Core.Persistence;
+using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Specifications;
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// Handler for searching bank accounts.
 /// </summary>
 public sealed class SearchBankAccountsHandler(
     [FromKeyedServices("hr:bankaccounts")] IReadRepository<BankAccount> repository)
-    : IRequestHandler<SearchBankAccountsRequest, PagedList<BankAccountResponse>>
+    : IRequestHandler<SearchBankAccountsRequest, PagedList<BankAccountDto>>
 {
-    public async Task<PagedList<BankAccountResponse>> Handle(
+    public async Task<PagedList<BankAccountDto>> Handle(
         SearchBankAccountsRequest request,
         CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
+
         var spec = new SearchBankAccountsSpec(request);
-        var bankAccounts = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
-        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken);
+        var totalCount = await repository.CountAsync(spec, cancellationToken);
 
-        var responses = bankAccounts.Select(MapToResponse).ToList();
+        var dtos = items.Select(a => new BankAccountDto(
+            a.Id,
+            a.EmployeeId,
+            a.BankName,
+            a.Last4Digits,
+            a.AccountType,
+            a.IsPrimary,
+            a.IsActive,
+            a.IsVerified)).ToList();
 
-        return new PagedList<BankAccountResponse>(responses, request.PageNumber, request.PageSize, totalCount);
-    }
-
-    private static BankAccountResponse MapToResponse(BankAccount bankAccount)
-    {
-        return new BankAccountResponse
-        {
-            Id = bankAccount.Id,
-            EmployeeId = bankAccount.EmployeeId,
-            Last4Digits = bankAccount.Last4Digits,
-            BankName = bankAccount.BankName,
-            AccountType = bankAccount.AccountType,
-            AccountHolderName = bankAccount.AccountHolderName,
-            IsPrimary = bankAccount.IsPrimary,
-            IsActive = bankAccount.IsActive,
-            IsVerified = bankAccount.IsVerified,
-            VerificationDate = bankAccount.VerificationDate,
-            SwiftCode = bankAccount.SwiftCode,
-            Iban = bankAccount.Iban,
-            CurrencyCode = bankAccount.CurrencyCode,
-            Notes = bankAccount.Notes
-        };
+        return new PagedList<BankAccountDto>(
+            dtos,
+            request.PageNumber,
+            request.PageSize,
+            totalCount);
     }
 }
 

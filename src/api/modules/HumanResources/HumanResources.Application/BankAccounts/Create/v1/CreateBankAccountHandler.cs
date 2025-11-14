@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Create.v1;
 
 /// <summary>
-/// Handler for creating a bank account.
+/// Handler for creating employee bank account with validation.
 /// </summary>
 public sealed class CreateBankAccountHandler(
     ILogger<CreateBankAccountHandler> logger,
@@ -15,14 +15,13 @@ public sealed class CreateBankAccountHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var employee = await employeeRepository
-            .GetByIdAsync(request.EmployeeId, cancellationToken)
-            .ConfigureAwait(false);
-
+        // Validate employee exists
+        var employee = await employeeRepository.GetByIdAsync(request.EmployeeId, cancellationToken);
         if (employee is null)
-            throw new Exception($"Employee not found: {request.EmployeeId}");
+            throw new EmployeeNotFoundException(request.EmployeeId);
 
-        var bankAccount = BankAccount.Create(
+        // Create bank account
+        var account = BankAccount.Create(
             request.EmployeeId,
             request.AccountNumber,
             request.RoutingNumber,
@@ -30,18 +29,29 @@ public sealed class CreateBankAccountHandler(
             request.AccountType,
             request.AccountHolderName,
             request.SwiftCode,
-            request.Iban,
-            request.CurrencyCode);
+            request.Iban);
 
-        await repository.AddAsync(bankAccount, cancellationToken).ConfigureAwait(false);
+        // Add notes if provided
+        if (!string.IsNullOrWhiteSpace(request.Notes))
+            account.Update(notes: request.Notes);
+
+        await repository.AddAsync(account, cancellationToken);
 
         logger.LogInformation(
-            "Bank account created with ID {BankAccountId}, Employee {EmployeeId}, Bank {BankName}",
-            bankAccount.Id,
-            request.EmployeeId,
-            request.BankName);
+            "Bank account created: ID {Id}, Employee {EmployeeId}, Bank {Bank}, Last4 {Last4}, Type {Type}",
+            account.Id,
+            account.EmployeeId,
+            account.BankName,
+            account.Last4Digits,
+            account.AccountType);
 
-        return new CreateBankAccountResponse(bankAccount.Id);
+        return new CreateBankAccountResponse(
+            account.Id,
+            account.EmployeeId,
+            account.BankName,
+            account.Last4Digits,
+            account.AccountType,
+            account.IsPrimary);
     }
 }
 

@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Get.v1;
 
-using FSH.Starter.WebApi.HumanResources.Application.Taxes.Specifications;
-using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
+using Specifications;
+using Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Framework.Core.Persistence;
+using Domain.Entities;
 
 /// <summary>
 /// Handler for getting tax bracket details.

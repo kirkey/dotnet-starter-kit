@@ -146,7 +146,7 @@ public class DebitMemo : AuditableEntity, IAggregateRoot
 
         var rt = referenceType?.Trim() ?? string.Empty;
         if (!IsValidReferenceType(rt))
-            throw new Accounting.Domain.Exceptions.InvalidDebitMemoReferenceTypeException(referenceType);
+            throw new InvalidDebitMemoReferenceTypeException(referenceType);
 
         var rsn = reason?.Trim();
         if (!string.IsNullOrEmpty(rsn) && rsn.Length > MaxReasonLength)

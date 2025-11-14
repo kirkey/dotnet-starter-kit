@@ -1,9 +1,9 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.PayComponents.Search.v1;
 
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Application.PayComponents.Specifications;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Framework.Core.Paging;
+using Framework.Core.Persistence;
+using Specifications;
+using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

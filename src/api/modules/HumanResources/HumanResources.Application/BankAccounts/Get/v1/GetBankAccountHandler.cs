@@ -1,9 +1,14 @@
-using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Specifications;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Get.v1;
 
+using FSH.Framework.Core.Persistence;
+using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Specifications;
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+
 /// <summary>
-/// Handler for retrieving a bank account by ID.
+/// Handler for getting bank account details.
 /// </summary>
 public sealed class GetBankAccountHandler(
     [FromKeyedServices("hr:bankaccounts")] IReadRepository<BankAccount> repository)
@@ -13,35 +18,29 @@ public sealed class GetBankAccountHandler(
         GetBankAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var bankAccount = await repository
-            .FirstOrDefaultAsync(new BankAccountByIdSpec(request.Id), cancellationToken)
-            .ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(request);
 
-        if (bankAccount is null)
-            throw new Exception($"Bank account not found: {request.Id}");
+        var spec = new BankAccountByIdSpec(request.Id);
+        var account = await repository.FirstOrDefaultAsync(spec, cancellationToken);
 
-        return MapToResponse(bankAccount);
-    }
+        if (account is null)
+            throw new BankAccountNotFoundException(request.Id);
 
-    private static BankAccountResponse MapToResponse(BankAccount bankAccount)
-    {
-        return new BankAccountResponse
-        {
-            Id = bankAccount.Id,
-            EmployeeId = bankAccount.EmployeeId,
-            Last4Digits = bankAccount.Last4Digits,
-            BankName = bankAccount.BankName,
-            AccountType = bankAccount.AccountType,
-            AccountHolderName = bankAccount.AccountHolderName,
-            IsPrimary = bankAccount.IsPrimary,
-            IsActive = bankAccount.IsActive,
-            IsVerified = bankAccount.IsVerified,
-            VerificationDate = bankAccount.VerificationDate,
-            SwiftCode = bankAccount.SwiftCode,
-            Iban = bankAccount.Iban,
-            CurrencyCode = bankAccount.CurrencyCode,
-            Notes = bankAccount.Notes
-        };
+        return new BankAccountResponse(
+            account.Id,
+            account.EmployeeId,
+            account.BankName,
+            account.Last4Digits,
+            account.AccountType,
+            account.AccountHolderName,
+            account.IsPrimary,
+            account.IsActive,
+            account.IsVerified,
+            account.VerificationDate,
+            account.SwiftCode,
+            account.Iban,
+            account.CurrencyCode,
+            account.Notes);
     }
 }
 

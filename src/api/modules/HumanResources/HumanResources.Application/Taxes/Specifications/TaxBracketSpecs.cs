@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Specifications;
 
 using Ardalis.Specification;
-using FSH.Starter.WebApi.HumanResources.Application.Taxes.Search.v1;
+using Search.v1;
 
 /// <summary>
 /// Specification for getting tax bracket by ID.

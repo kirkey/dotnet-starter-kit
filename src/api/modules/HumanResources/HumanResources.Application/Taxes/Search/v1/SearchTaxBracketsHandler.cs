@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Search.v1;
 
-using FSH.Starter.WebApi.HumanResources.Application.Taxes.Specifications;
+using Specifications;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using FSH.Framework.Core.Paging;
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Framework.Core.Paging;
+using Framework.Core.Persistence;
+using Domain.Entities;
 
 /// <summary>
 /// Handler for searching tax brackets.

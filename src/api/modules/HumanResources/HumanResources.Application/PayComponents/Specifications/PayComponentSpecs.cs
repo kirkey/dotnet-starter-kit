@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.PayComponents.Specifications;
 
 using Ardalis.Specification;
-using FSH.Starter.WebApi.HumanResources.Application.PayComponents.Search.v1;
+using Search.v1;
 
 /// <summary>
 /// Specification for getting pay component by ID.

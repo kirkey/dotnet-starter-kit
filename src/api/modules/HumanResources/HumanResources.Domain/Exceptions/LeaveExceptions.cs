@@ -55,3 +55,14 @@ public class MinimumNoticeViolatedException : BadRequestException
     }
 }
 
+/// <summary>
+/// Exception thrown when bank account is not found.
+/// </summary>
+public class BankAccountNotFoundException : NotFoundException
+{
+    public BankAccountNotFoundException(DefaultIdType id)
+        : base($"Bank account with ID '{id}' was not found.")
+    {
+    }
+}
+
