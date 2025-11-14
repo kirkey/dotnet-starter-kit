@@ -3,14 +3,13 @@ using FSH.Starter.WebApi.HumanResources.Application.Employees.Specifications;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Employees.Search.v1;
 
-/// <summary>
-/// Handler for searching employees.
-/// </summary>
 public sealed class SearchEmployeesHandler(
     [FromKeyedServices("hr:employees")] IReadRepository<Employee> repository)
     : IRequestHandler<SearchEmployeesRequest, PagedList<EmployeeResponse>>
 {
-    public async Task<PagedList<EmployeeResponse>> Handle(SearchEmployeesRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<EmployeeResponse>> Handle(
+        SearchEmployeesRequest request,
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

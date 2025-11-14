@@ -61,7 +61,7 @@ public class LeaveRequest : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Reason for leave.
     /// </summary>
-    public string Reason { get; private set; }
+    public string Reason { get; private set; } = string.Empty;
 
     /// <summary>
     /// Status: Draft, Submitted, Approved, Rejected, Cancelled.

@@ -1,8 +1,5 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Employees.Get.v1;
 
-/// <summary>
-/// Response for employee details.
-/// </summary>
 public sealed record EmployeeResponse
 {
     public DefaultIdType Id { get; init; }
@@ -12,7 +9,6 @@ public sealed record EmployeeResponse
     public string LastName { get; init; } = default!;
     public string FullName { get; init; } = default!;
     public DefaultIdType OrganizationalUnitId { get; init; }
-    public string? OrganizationalUnitName { get; init; }
     public string? Email { get; init; }
     public string? PhoneNumber { get; init; }
     public DateTime? HireDate { get; init; }

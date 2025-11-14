@@ -2,9 +2,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Employees.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
-/// <summary>
-/// Endpoint for getting an employee by ID.
-/// </summary>
 public static class GetEmployeeEndpoint
 {
     internal static RouteHandlerBuilder MapGetEmployeeEndpoint(this IEndpointRouteBuilder endpoints)
@@ -17,7 +14,7 @@ public static class GetEmployeeEndpoint
             })
             .WithName(nameof(GetEmployeeEndpoint))
             .WithSummary("Gets employee by ID")
-            .WithDescription("Retrieves employee details by ID")
+            .WithDescription("Retrieves employee details")
             .Produces<EmployeeResponse>()
             .RequirePermission("Permissions.Employees.View")
             .MapToApiVersion(1);

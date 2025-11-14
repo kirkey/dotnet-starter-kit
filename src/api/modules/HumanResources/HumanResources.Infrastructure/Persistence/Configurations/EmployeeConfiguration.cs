@@ -1,32 +1,29 @@
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence.Configurations;
 
-/// <summary>
-/// Entity Framework Core configuration for Employee entity.
-/// </summary>
 public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {
-        // Primary key
         builder.HasKey(e => e.Id);
 
-        // Properties
         builder.Property(e => e.EmployeeNumber)
             .IsRequired()
             .HasMaxLength(50);
 
         builder.Property(e => e.FirstName)
             .IsRequired()
-            .HasMaxLength(256);
+            .HasMaxLength(100);
 
         builder.Property(e => e.MiddleName)
-            .HasMaxLength(256);
+            .HasMaxLength(100);
 
         builder.Property(e => e.LastName)
             .IsRequired()
-            .HasMaxLength(256);
+            .HasMaxLength(100);
 
         builder.Property(e => e.Email)
             .HasMaxLength(256);
@@ -41,32 +38,85 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.TerminationReason)
             .HasMaxLength(500);
 
-        // Foreign key relationship with OrganizationalUnit
         builder.HasOne(e => e.OrganizationalUnit)
             .WithMany()
             .HasForeignKey(e => e.OrganizationalUnitId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Relationship with DesignationAssignments
         builder.HasMany(e => e.DesignationAssignments)
+            .WithOne(d => d.Employee)
+            .HasForeignKey(d => d.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.Contacts)
+            .WithOne(c => c.Employee)
+            .HasForeignKey(c => c.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.Dependents)
+            .WithOne(d => d.Employee)
+            .HasForeignKey(d => d.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.Documents)
+            .WithOne(d => d.Employee)
+            .HasForeignKey(d => d.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.AttendanceRecords)
             .WithOne(a => a.Employee)
             .HasForeignKey(a => a.EmployeeId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Indexes
+        builder.HasMany(e => e.Timesheets)
+            .WithOne(t => t.Employee)
+            .HasForeignKey(t => t.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.ShiftAssignments)
+            .WithOne(s => s.Employee)
+            .HasForeignKey(s => s.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.LeaveBalances)
+            .WithOne(l => l.Employee)
+            .HasForeignKey(l => l.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.LeaveRequests)
+            .WithOne(l => l.Employee)
+            .HasForeignKey(l => l.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.PayrollLines)
+            .WithOne(p => p.Employee)
+            .HasForeignKey(p => p.EmployeeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(e => e.BenefitEnrollments)
+            .WithOne(b => b.Employee)
+            .HasForeignKey(b => b.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.HasIndex(e => e.EmployeeNumber)
-            .IsUnique()
-            .HasDatabaseName("IX_Employees_EmployeeNumber");
+            .HasDatabaseName("IX_Employee_EmployeeNumber")
+            .IsUnique();
 
         builder.HasIndex(e => e.OrganizationalUnitId)
-            .HasDatabaseName("IX_Employees_OrganizationalUnitId");
+            .HasDatabaseName("IX_Employee_OrganizationalUnitId");
 
         builder.HasIndex(e => e.Status)
-            .HasDatabaseName("IX_Employees_Status");
+            .HasDatabaseName("IX_Employee_Status");
+
+        builder.HasIndex(e => e.Email)
+            .HasDatabaseName("IX_Employee_Email");
 
         builder.HasIndex(e => e.IsActive)
-            .HasDatabaseName("IX_Employees_IsActive");
+            .HasDatabaseName("IX_Employee_IsActive");
+
+        builder.HasIndex(e => new { e.FirstName, e.LastName })
+            .HasDatabaseName("IX_Employee_FirstName_LastName");
     }
 }
 

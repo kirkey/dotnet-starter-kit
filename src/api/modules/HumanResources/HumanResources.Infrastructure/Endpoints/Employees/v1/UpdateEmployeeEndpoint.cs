@@ -2,9 +2,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Employees.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
-/// <summary>
-/// Endpoint for updating an employee.
-/// </summary>
 public static class UpdateEmployeeEndpoint
 {
     internal static RouteHandlerBuilder MapUpdateEmployeeEndpoint(this IEndpointRouteBuilder endpoints)
@@ -22,7 +19,7 @@ public static class UpdateEmployeeEndpoint
             .WithSummary("Updates an employee")
             .WithDescription("Updates employee information")
             .Produces<UpdateEmployeeResponse>()
-            .RequirePermission("Permissions.Employees.Update")
+            .RequirePermission("Permissions.Employees.Edit")
             .MapToApiVersion(1);
     }
 }

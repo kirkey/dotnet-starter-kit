@@ -15,7 +15,6 @@ public sealed class UpdateDocumentTemplateHandler(
             throw new DocumentTemplateNotFoundException(request.Id);
 
         template.Update(
-            request.TemplateName,
             request.TemplateContent,
             request.TemplateVariables,
             request.Description);

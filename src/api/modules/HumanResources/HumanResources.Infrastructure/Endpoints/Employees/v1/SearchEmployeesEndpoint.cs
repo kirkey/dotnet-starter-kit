@@ -1,11 +1,9 @@
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Search.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
-/// <summary>
-/// Endpoint for searching employees.
-/// </summary>
 public static class SearchEmployeesEndpoint
 {
     internal static RouteHandlerBuilder MapSearchEmployeesEndpoint(this IEndpointRouteBuilder endpoints)

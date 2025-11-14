@@ -8,7 +8,7 @@ public class SearchDocumentTemplatesSpec : EntitiesByPaginationFilterSpec<Docume
     public SearchDocumentTemplatesSpec(SearchDocumentTemplatesRequest request)
         : base(request) =>
         Query
-            .Where(d => d.TemplateName.Contains(request.SearchString) || d.Description!.Contains(request.SearchString), !string.IsNullOrWhiteSpace(request.SearchString))
+            .Where(d => (d.TemplateName.Contains(request.SearchString!) || d.Description!.Contains(request.SearchString!)), !string.IsNullOrWhiteSpace(request.SearchString))
             .Where(d => d.DocumentType == request.DocumentType, !string.IsNullOrWhiteSpace(request.DocumentType))
             .Where(d => d.IsActive == request.IsActive, request.IsActive.HasValue)
             .OrderBy(d => d.TemplateName, !request.HasOrderBy());

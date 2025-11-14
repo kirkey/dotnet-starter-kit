@@ -2,9 +2,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Employees.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
-/// <summary>
-/// Endpoint for deleting an employee.
-/// </summary>
 public static class DeleteEmployeeEndpoint
 {
     internal static RouteHandlerBuilder MapDeleteEmployeeEndpoint(this IEndpointRouteBuilder endpoints)

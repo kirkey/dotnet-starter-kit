@@ -24,7 +24,7 @@ public class UpdateGeneratedDocumentValidator : AbstractValidator<UpdateGenerate
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 
-    private static bool BeValidStatus(string status)
+    private static bool BeValidStatus(string? status)
     {
         return status is "Draft" or "Finalized" or "Signed" or "Archived";
     }

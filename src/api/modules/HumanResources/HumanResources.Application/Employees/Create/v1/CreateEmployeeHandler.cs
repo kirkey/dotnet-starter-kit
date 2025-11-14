@@ -1,33 +1,24 @@
-using FSH.Starter.WebApi.HumanResources.Application.Employees.Specifications;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Employees.Create.v1;
 
-/// <summary>
-/// Handler for creating a new employee.
-/// </summary>
 public sealed class CreateEmployeeHandler(
     ILogger<CreateEmployeeHandler> logger,
     [FromKeyedServices("hr:employees")] IRepository<Employee> repository,
-    [FromKeyedServices("hr:employees")] IReadRepository<Employee> readRepository)
+    [FromKeyedServices("hr:organizationalunits")] IReadRepository<OrganizationalUnit> organizationalUnitRepository)
     : IRequestHandler<CreateEmployeeCommand, CreateEmployeeResponse>
 {
-    public async Task<CreateEmployeeResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<CreateEmployeeResponse> Handle(
+        CreateEmployeeCommand request,
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Check if employee number already exists
-        var existingEmployee = await readRepository
-            .FirstOrDefaultAsync(
-                new EmployeeByNumberSpec(request.EmployeeNumber),
-                cancellationToken)
+        var organizationalUnit = await organizationalUnitRepository
+            .GetByIdAsync(request.OrganizationalUnitId, cancellationToken)
             .ConfigureAwait(false);
 
-        if (existingEmployee is not null)
-        {
-            throw new EmployeeNumberAlreadyExistsException(request.EmployeeNumber);
-        }
+        if (organizationalUnit is null)
+            throw new OrganizationalUnitNotFoundException(request.OrganizationalUnitId);
 
-        // Create employee using domain factory method
         var employee = Employee.Create(
             request.EmployeeNumber,
             request.FirstName,
@@ -37,11 +28,13 @@ public sealed class CreateEmployeeHandler(
             request.Email,
             request.PhoneNumber);
 
-        // Persist to database
+        if (request.HireDate.HasValue)
+            employee.SetHireDate(request.HireDate.Value);
+
         await repository.AddAsync(employee, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Employee created with ID {EmployeeId}, Number {EmployeeNumber}, Name {EmployeeName}",
+            "Employee created with ID {EmployeeId}, Number {EmployeeNumber}, Name {FullName}",
             employee.Id,
             employee.EmployeeNumber,
             employee.FullName);

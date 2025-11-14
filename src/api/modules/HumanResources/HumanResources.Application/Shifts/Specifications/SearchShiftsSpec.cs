@@ -8,7 +8,7 @@ public class SearchShiftsSpec : EntitiesByPaginationFilterSpec<Shift, ShiftRespo
     public SearchShiftsSpec(SearchShiftsRequest request)
         : base(request) =>
         Query
-            .Where(s => s.ShiftName.Contains(request.SearchString) || s.Description!.Contains(request.SearchString), !string.IsNullOrWhiteSpace(request.SearchString))
+            .Where(s => s.ShiftName.Contains(request.SearchString!) || s.Description!.Contains(request.SearchString!), !string.IsNullOrWhiteSpace(request.SearchString))
             .Where(s => s.IsActive == request.IsActive, request.IsActive.HasValue)
             .OrderBy(s => s.StartTime, !request.HasOrderBy());
 }

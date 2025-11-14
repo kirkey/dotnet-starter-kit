@@ -2,9 +2,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Employees.Create.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
-/// <summary>
-/// Endpoint for creating an employee.
-/// </summary>
 public static class CreateEmployeeEndpoint
 {
     internal static RouteHandlerBuilder MapCreateEmployeeEndpoint(this IEndpointRouteBuilder endpoints)
