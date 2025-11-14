@@ -1,5 +1,4 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Get.v1;
-using MediatR;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
 

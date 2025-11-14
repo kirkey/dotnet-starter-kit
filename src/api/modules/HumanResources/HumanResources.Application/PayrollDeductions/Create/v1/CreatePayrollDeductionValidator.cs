@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Create.v1;
 
 public class CreatePayrollDeductionValidator : AbstractValidator<CreatePayrollDeductionCommand>

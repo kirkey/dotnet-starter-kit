@@ -111,6 +111,17 @@ public class PayComponentRateNotFoundException : NotFoundException
 }
 
 /// <summary>
+/// Exception thrown when employee pay component is not found.
+/// </summary>
+public class EmployeePayComponentNotFoundException : NotFoundException
+{
+    public EmployeePayComponentNotFoundException(DefaultIdType id)
+        : base($"Employee pay component with ID '{id}' was not found.")
+    {
+    }
+}
+
+/// <summary>
 /// Exception thrown when employee has duplicate payroll line.
 /// </summary>
 public class DuplicatePayrollLineException : BadRequestException

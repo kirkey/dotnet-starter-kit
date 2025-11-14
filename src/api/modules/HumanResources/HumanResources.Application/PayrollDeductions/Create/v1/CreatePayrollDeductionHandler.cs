@@ -1,9 +1,3 @@
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Create.v1;
 
 public sealed class CreatePayrollDeductionHandler(

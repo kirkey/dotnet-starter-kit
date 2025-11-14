@@ -7,6 +7,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContact
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
@@ -44,6 +45,7 @@ public static class HumanResourcesModule
             app.MapGeneratedDocumentsEndpoints();
             app.MapPayComponentsEndpoints();
             app.MapPayComponentRatesEndpoints();
+            app.MapEmployeePayComponentsEndpoints();
             app.MapPayrollDeductionsEndpoints();
         }
     }
@@ -155,4 +157,3 @@ public static class HumanResourcesModule
         return app;
     }
 }
-

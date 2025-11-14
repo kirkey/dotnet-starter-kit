@@ -1,9 +1,4 @@
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
 using Mapster;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Get.v1;
 

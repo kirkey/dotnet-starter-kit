@@ -1,6 +1,3 @@
-using System.ComponentModel;
-using MediatR;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Update.v1;
 
 public sealed record UpdatePayComponentRateCommand(

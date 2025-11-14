@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Create.v1;
 
 public class CreatePayComponentRateValidator : AbstractValidator<CreatePayComponentRateCommand>
