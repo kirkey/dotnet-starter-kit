@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Benefits.Update.v1;
 
 /// <summary>
-/// Handler for updating a benefit.
+/// Handler for updating benefit.
 /// </summary>
 public sealed class UpdateBenefitHandler(
     ILogger<UpdateBenefitHandler> logger,
@@ -12,25 +12,37 @@ public sealed class UpdateBenefitHandler(
         UpdateBenefitCommand request,
         CancellationToken cancellationToken)
     {
-        var benefit = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(request);
+
+        var benefit = await repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (benefit is null)
-            throw new Exception($"Benefit not found: {request.Id}");
+            throw new BenefitNotFoundException(request.Id);
 
-        benefit.Update(
-            benefitName: request.BenefitName,
-            employeeContribution: request.EmployeeContribution,
-            employerContribution: request.EmployerContribution,
-            description: request.Description);
-
-        if (request.IsRequired.HasValue)
+        // Update contributions if provided
+        if (request.EmployeeContribution.HasValue || request.EmployerContribution.HasValue)
         {
-            if (request.IsRequired.Value)
-                benefit.MakeRequired();
-            else
-                benefit.MakeOptional();
+            benefit.UpdateContributions(
+                request.EmployeeContribution,
+                request.EmployerContribution);
         }
 
+        // Update coverage details if provided
+        if (!string.IsNullOrWhiteSpace(request.CoverageType) || 
+            !string.IsNullOrWhiteSpace(request.ProviderName) || 
+            request.CoverageAmount.HasValue)
+        {
+            benefit.SetCoverageDetails(
+                request.CoverageType,
+                request.CoverageAmount,
+                request.ProviderName);
+        }
+
+        // Update description if provided
+        if (!string.IsNullOrWhiteSpace(request.Description))
+            benefit.SetDescription(request.Description);
+
+        // Update active status if provided
         if (request.IsActive.HasValue)
         {
             if (request.IsActive.Value)
@@ -39,11 +51,17 @@ public sealed class UpdateBenefitHandler(
                 benefit.Deactivate();
         }
 
-        await repository.UpdateAsync(benefit, cancellationToken).ConfigureAwait(false);
+        await repository.UpdateAsync(benefit, cancellationToken);
 
-        logger.LogInformation("Benefit {BenefitId} updated successfully", benefit.Id);
+        logger.LogInformation(
+            "Benefit {Id} updated: Active {Active}",
+            benefit.Id,
+            benefit.IsActive);
 
-        return new UpdateBenefitResponse(benefit.Id);
+        return new UpdateBenefitResponse(
+            benefit.Id,
+            benefit.BenefitName,
+            benefit.IsActive);
     }
 }
 

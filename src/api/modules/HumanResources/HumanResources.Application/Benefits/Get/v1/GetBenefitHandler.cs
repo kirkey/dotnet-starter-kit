@@ -1,9 +1,14 @@
-using FSH.Starter.WebApi.HumanResources.Application.Benefits.Specifications;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Benefits.Get.v1;
 
+using FSH.Framework.Core.Persistence;
+using FSH.Starter.WebApi.HumanResources.Application.Benefits.Specifications;
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+
 /// <summary>
-/// Handler for retrieving a benefit by ID.
+/// Handler for getting benefit details.
 /// </summary>
 public sealed class GetBenefitHandler(
     [FromKeyedServices("hr:benefits")] IReadRepository<Benefit> repository)
@@ -13,33 +18,29 @@ public sealed class GetBenefitHandler(
         GetBenefitRequest request,
         CancellationToken cancellationToken)
     {
-        var benefit = await repository
-            .FirstOrDefaultAsync(new BenefitByIdSpec(request.Id), cancellationToken)
-            .ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(request);
+
+        var spec = new BenefitByIdSpec(request.Id);
+        var benefit = await repository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (benefit is null)
-            throw new Exception($"Benefit not found: {request.Id}");
+            throw new BenefitNotFoundException(request.Id);
 
-        return MapToResponse(benefit);
-    }
-
-    private static BenefitResponse MapToResponse(Benefit benefit)
-    {
-        return new BenefitResponse
-        {
-            Id = benefit.Id,
-            BenefitName = benefit.BenefitName,
-            BenefitType = benefit.BenefitType,
-            EmployeeContribution = benefit.EmployeeContribution,
-            EmployerContribution = benefit.EmployerContribution,
-            IsRequired = benefit.IsRequired,
-            IsActive = benefit.IsActive,
-            Description = benefit.Description,
-            AnnualLimit = benefit.AnnualLimit,
-            IsCarryoverAllowed = benefit.IsCarryoverAllowed,
-            MinimumEligibleEmployees = benefit.MinimumEligibleEmployees,
-            PayComponentId = benefit.PayComponentId
-        };
+        return new BenefitResponse(
+            benefit.Id,
+            benefit.BenefitName,
+            benefit.BenefitType,
+            benefit.EmployeeContribution,
+            benefit.EmployerContribution,
+            benefit.IsMandatory,
+            benefit.IsActive,
+            benefit.EffectiveStartDate,
+            benefit.EffectiveEndDate,
+            benefit.CoverageType,
+            benefit.ProviderName,
+            benefit.CoverageAmount,
+            benefit.WaitingPeriodDays,
+            benefit.Description);
     }
 }
 
