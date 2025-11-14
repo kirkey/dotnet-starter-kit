@@ -67,6 +67,17 @@ public class PayComponentNotFoundException : NotFoundException
 }
 
 /// <summary>
+/// Exception thrown when tax bracket is not found.
+/// </summary>
+public class TaxBracketNotFoundException : NotFoundException
+{
+    public TaxBracketNotFoundException(DefaultIdType id)
+        : base($"Tax bracket with ID '{id}' was not found.")
+    {
+    }
+}
+
+/// <summary>
 /// Exception thrown when employee has duplicate payroll line.
 /// </summary>
 public class DuplicatePayrollLineException : BadRequestException
