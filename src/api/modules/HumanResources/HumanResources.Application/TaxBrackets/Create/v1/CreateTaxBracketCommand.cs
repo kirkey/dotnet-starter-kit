@@ -1,4 +1,7 @@
-namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Create.v1;
+using System.ComponentModel;
+using MediatR;
+
+namespace FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
 
 /// <summary>
 /// Command to create a new tax bracket for Philippines Income Tax (TRAIN Law).
@@ -13,15 +16,3 @@ public sealed record CreateTaxBracketCommand(
     [property: DefaultValue(null)] string? FilingStatus = null,
     [property: DefaultValue(null)] string? Description = null
 ) : IRequest<CreateTaxBracketResponse>;
-
-/// <summary>
-/// Response for tax bracket creation.
-/// </summary>
-public sealed record CreateTaxBracketResponse(
-    DefaultIdType Id,
-    string TaxType,
-    int Year,
-    decimal MinIncome,
-    decimal MaxIncome,
-    decimal Rate);
-

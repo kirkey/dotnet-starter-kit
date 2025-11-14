@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
+
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Create.v1;
 
 /// <summary>

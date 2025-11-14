@@ -1,18 +1,13 @@
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
 
-namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Create.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
 
-/// <summary>
-/// Handler for creating tax bracket with Philippines Tax Law compliance (TRAIN Law - RA 10963).
-/// </summary>
 public sealed class CreateTaxBracketHandler(
     ILogger<CreateTaxBracketHandler> logger,
     [FromKeyedServices("hr:taxbrackets")] IRepository<TaxBracket> repository)
     : IRequestHandler<CreateTaxBracketCommand, CreateTaxBracketResponse>
 {
-    public async Task<CreateTaxBracketResponse> Handle(
-        CreateTaxBracketCommand request,
-        CancellationToken cancellationToken)
+    public async Task<CreateTaxBracketResponse> Handle(CreateTaxBracketCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -23,23 +18,25 @@ public sealed class CreateTaxBracketHandler(
             request.MaxIncome,
             request.Rate);
 
+        // Update optional properties
         if (!string.IsNullOrWhiteSpace(request.FilingStatus) || !string.IsNullOrWhiteSpace(request.Description))
         {
-            bracket.Update(request.FilingStatus, request.Description);
+            bracket.Update(
+                filingStatus: request.FilingStatus,
+                description: request.Description);
         }
 
-        await repository.AddAsync(bracket, cancellationToken);
+        await repository.AddAsync(bracket, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Tax bracket created: ID {Id}, Type {Type}, Year {Year}, Range {Min}-{Max}, Rate {Rate}%",
+            "Tax bracket created {BracketId} for {TaxType} year {Year}, range {MinIncome}-{MaxIncome}, rate {Rate}%",
             bracket.Id,
-            bracket.TaxType,
-            bracket.Year,
-            bracket.MinIncome,
-            bracket.MaxIncome,
-            bracket.Rate * 100);
+            request.TaxType,
+            request.Year,
+            request.MinIncome,
+            request.MaxIncome,
+            request.Rate * 100);
 
         return new CreateTaxBracketResponse(bracket.Id);
     }
 }
-

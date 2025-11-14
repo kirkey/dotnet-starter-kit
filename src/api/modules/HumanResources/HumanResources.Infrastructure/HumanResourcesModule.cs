@@ -14,6 +14,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRat
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 
@@ -47,6 +48,7 @@ public static class HumanResourcesModule
             app.MapPayComponentRatesEndpoints();
             app.MapEmployeePayComponentsEndpoints();
             app.MapPayrollDeductionsEndpoints();
+            app.MapTaxBracketEndpoints();
         }
     }
 
