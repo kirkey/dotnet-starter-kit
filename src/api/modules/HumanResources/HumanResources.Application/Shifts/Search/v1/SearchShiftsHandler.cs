@@ -23,7 +23,20 @@ public sealed class SearchShiftsHandler(
             .CountAsync(spec, cancellationToken)
             .ConfigureAwait(false);
 
-        return new PagedList<ShiftResponse>(items, request.PageNumber, request.PageSize, totalCount);
+        var responses = items.Select(shift => new ShiftResponse
+        {
+            Id = shift.Id,
+            ShiftName = shift.ShiftName,
+            StartTime = shift.StartTime,
+            EndTime = shift.EndTime,
+            IsOvernight = shift.IsOvernight,
+            BreakDurationMinutes = shift.BreakDurationMinutes,
+            WorkingHours = shift.WorkingHours,
+            Description = shift.Description,
+            IsActive = shift.IsActive
+        }).ToList();
+
+        return new PagedList<ShiftResponse>(responses, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

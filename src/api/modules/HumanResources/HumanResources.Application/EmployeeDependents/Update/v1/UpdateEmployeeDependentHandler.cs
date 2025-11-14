@@ -1,13 +1,16 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Update.v1;
 
 /// <summary>
-/// Handler for updating employee dependent.
+/// Handler for updating an employee dependent.
 /// </summary>
 public sealed class UpdateEmployeeDependentHandler(
     ILogger<UpdateEmployeeDependentHandler> logger,
     [FromKeyedServices("hr:dependents")] IRepository<EmployeeDependent> repository)
     : IRequestHandler<UpdateEmployeeDependentCommand, UpdateEmployeeDependentResponse>
 {
+    /// <summary>
+    /// Handles the request to update an employee dependent.
+    /// </summary>
     public async Task<UpdateEmployeeDependentResponse> Handle(
         UpdateEmployeeDependentCommand request,
         CancellationToken cancellationToken)
@@ -29,9 +32,6 @@ public sealed class UpdateEmployeeDependentHandler(
 
         if (request.IsClaimableDependent.HasValue)
             dependent.SetAsClaimableDependent(request.IsClaimableDependent.Value);
-
-        if (request.EligibilityEndDate.HasValue)
-            dependent.SetEligibilityEndDate(request.EligibilityEndDate.Value);
 
         await repository.UpdateAsync(dependent, cancellationToken).ConfigureAwait(false);
 

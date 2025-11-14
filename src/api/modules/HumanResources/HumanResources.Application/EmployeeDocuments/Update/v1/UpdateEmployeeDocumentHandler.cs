@@ -1,10 +1,16 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Update.v1;
 
+/// <summary>
+/// Handler for updating an employee document.
+/// </summary>
 public sealed class UpdateEmployeeDocumentHandler(
     ILogger<UpdateEmployeeDocumentHandler> logger,
     [FromKeyedServices("hr:documents")] IRepository<EmployeeDocument> repository)
     : IRequestHandler<UpdateEmployeeDocumentCommand, UpdateEmployeeDocumentResponse>
 {
+    /// <summary>
+    /// Handles the request to update an employee document.
+    /// </summary>
     public async Task<UpdateEmployeeDocumentResponse> Handle(
         UpdateEmployeeDocumentCommand request,
         CancellationToken cancellationToken)
@@ -20,9 +26,6 @@ public sealed class UpdateEmployeeDocumentHandler(
             request.IssueNumber,
             request.IssueDate,
             request.Notes);
-
-        if (!string.IsNullOrWhiteSpace(request.FileName) && !string.IsNullOrWhiteSpace(request.FilePath) && request.FileSize.HasValue)
-            document.ReplaceFile(request.FileName, request.FilePath, request.FileSize.Value);
 
         await repository.UpdateAsync(document, cancellationToken).ConfigureAwait(false);
 

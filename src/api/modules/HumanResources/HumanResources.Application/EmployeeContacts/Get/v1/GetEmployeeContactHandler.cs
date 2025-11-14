@@ -3,12 +3,15 @@ using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Specificati
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Get.v1;
 
 /// <summary>
-/// Handler for getting employee contact by ID.
+/// Handler for retrieving an employee contact by ID.
 /// </summary>
 public sealed class GetEmployeeContactHandler(
-    [FromKeyedServices("hr:contacts")] IReadRepository<EmployeeContact> repository)
+    [FromKeyedServices("hr:employeecontacts")] IReadRepository<EmployeeContact> repository)
     : IRequestHandler<GetEmployeeContactRequest, EmployeeContactResponse>
 {
+    /// <summary>
+    /// Handles the request to get an employee contact.
+    /// </summary>
     public async Task<EmployeeContactResponse> Handle(
         GetEmployeeContactRequest request,
         CancellationToken cancellationToken)

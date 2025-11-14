@@ -2,8 +2,11 @@ using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Specifications;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Get.v1;
 
+/// <summary>
+/// Handler for retrieving a timesheet by ID.
+/// </summary>
 public sealed class GetTimesheetHandler(
-    [FromKeyedServices("hr:timesheets")] IReadRepository<Domain.Entities.Timesheet> repository)
+    [FromKeyedServices("hr:timesheets")] IReadRepository<Timesheet> repository)
     : IRequestHandler<GetTimesheetRequest, TimesheetResponse>
 {
     public async Task<TimesheetResponse> Handle(
@@ -31,8 +34,6 @@ public sealed class GetTimesheetHandler(
             ApproverManagerId = timesheet.ApproverManagerId,
             SubmittedDate = timesheet.SubmittedDate,
             ApprovedDate = timesheet.ApprovedDate,
-            ManagerComment = timesheet.ManagerComment,
-            RejectionReason = timesheet.RejectionReason,
             IsLocked = timesheet.IsLocked,
             IsApproved = timesheet.IsApproved
         };

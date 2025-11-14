@@ -21,4 +21,3 @@ public sealed class DeleteShiftHandler(
         return new DeleteShiftResponse(shift.Id);
     }
 }
-

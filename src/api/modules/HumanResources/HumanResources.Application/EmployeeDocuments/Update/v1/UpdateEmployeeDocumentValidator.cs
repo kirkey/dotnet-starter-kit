@@ -1,35 +1,38 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Update.v1;
 
+/// <summary>
+/// Validator for updating an employee document.
+/// </summary>
 public class UpdateEmployeeDocumentValidator : AbstractValidator<UpdateEmployeeDocumentCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateEmployeeDocumentValidator"/> class.
+    /// </summary>
     public UpdateEmployeeDocumentValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("ID is required.");
+            .NotEmpty()
+            .WithMessage("Document ID is required");
 
         RuleFor(x => x.Title)
-            .MaximumLength(500).WithMessage("Title must not exceed 500 characters.")
+            .MaximumLength(250)
+            .WithMessage("Title cannot exceed 250 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Title));
 
         RuleFor(x => x.ExpiryDate)
-            .GreaterThan(DateTime.Today).WithMessage("Expiry date must be in the future.")
-            .When(x => x.ExpiryDate.HasValue);
+            .GreaterThan(DateTime.Today)
+            .When(x => x.ExpiryDate.HasValue)
+            .WithMessage("Expiry date must be in the future");
 
         RuleFor(x => x.IssueNumber)
-            .MaximumLength(100).WithMessage("Issue number must not exceed 100 characters.")
+            .MaximumLength(100)
+            .WithMessage("Issue number cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.IssueNumber));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes must not exceed 1000 characters.")
+            .MaximumLength(1000)
+            .WithMessage("Notes cannot exceed 1000 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
-
-        RuleFor(x => x.FileName)
-            .MaximumLength(256).WithMessage("File name must not exceed 256 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.FileName));
-
-        RuleFor(x => x.FileSize)
-            .GreaterThan(0).WithMessage("File size must be greater than zero.")
-            .When(x => x.FileSize.HasValue);
     }
 }
 

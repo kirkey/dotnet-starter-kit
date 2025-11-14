@@ -15,13 +15,13 @@ public class Holiday : AuditableEntity, IAggregateRoot
         string holidayName,
         DateTime holidayDate,
         bool isPaid = true,
-        bool isRecurring = false)
+        bool isRecurringAnnually = false)
     {
         Id = id;
         HolidayName = holidayName;
         HolidayDate = holidayDate;
         IsPaid = isPaid;
-        IsRecurring = isRecurring;
+        IsRecurringAnnually = isRecurringAnnually;
         IsActive = true;
     }
 
@@ -43,7 +43,7 @@ public class Holiday : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Whether this is a recurring holiday (annual).
     /// </summary>
-    public bool IsRecurring { get; private set; }
+    public bool IsRecurringAnnually { get; private set; }
 
     /// <summary>
     /// Day of month for recurring holidays (1-31).
@@ -72,7 +72,7 @@ public class Holiday : AuditableEntity, IAggregateRoot
         string holidayName,
         DateTime holidayDate,
         bool isPaid = true,
-        bool isRecurring = false)
+        bool isRecurringAnnually = false)
     {
         if (string.IsNullOrWhiteSpace(holidayName))
             throw new ArgumentException("Holiday name is required.", nameof(holidayName));
@@ -82,7 +82,7 @@ public class Holiday : AuditableEntity, IAggregateRoot
             holidayName,
             holidayDate,
             isPaid,
-            isRecurring);
+            isRecurringAnnually);
 
         return holiday;
     }
@@ -92,18 +92,31 @@ public class Holiday : AuditableEntity, IAggregateRoot
     /// </summary>
     public Holiday Update(
         string? holidayName = null,
+        DateTime? holidayDate = null,
         bool? isPaid = null,
-        string? description = null)
+        bool? isRecurringAnnually = null)
     {
         if (!string.IsNullOrWhiteSpace(holidayName))
             HolidayName = holidayName;
 
+        if (holidayDate.HasValue)
+            HolidayDate = holidayDate.Value;
+
         if (isPaid.HasValue)
             IsPaid = isPaid.Value;
 
-        if (description != null)
-            Description = description;
+        if (isRecurringAnnually.HasValue)
+            IsRecurringAnnually = isRecurringAnnually.Value;
 
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the description of the holiday.
+    /// </summary>
+    public Holiday SetDescription(string? description)
+    {
+        Description = description;
         return this;
     }
 
@@ -118,7 +131,7 @@ public class Holiday : AuditableEntity, IAggregateRoot
         if (day < 1 || day > 31)
             throw new ArgumentException("Day must be 1-31.", nameof(day));
 
-        IsRecurring = true;
+        IsRecurringAnnually = true;
         RecurringMonth = month;
         RecurringMonthDay = day;
 

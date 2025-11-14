@@ -32,8 +32,11 @@ public class UpdateEmployeeValidator : AbstractValidator<UpdateEmployeeCommand>
             .When(x => !string.IsNullOrWhiteSpace(x.Status));
     }
 
-    private static bool BeValidStatus(string status)
+    private static bool BeValidStatus(string? status)
     {
+        if (string.IsNullOrWhiteSpace(status))
+            return false;
+
         return status is "Active" or "OnLeave" or "Terminated";
     }
 }

@@ -1,39 +1,41 @@
+using System.Text.RegularExpressions;
+
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Update.v1;
 
 /// <summary>
-/// Validator for UpdateEmployeeDependentCommand.
+/// Validator for updating an employee dependent.
 /// </summary>
 public class UpdateEmployeeDependentValidator : AbstractValidator<UpdateEmployeeDependentCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateEmployeeDependentValidator"/> class.
+    /// </summary>
     public UpdateEmployeeDependentValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("ID is required.");
+            .NotEmpty()
+            .WithMessage("Dependent ID is required");
 
         RuleFor(x => x.FirstName)
-            .MaximumLength(256).WithMessage("First name must not exceed 256 characters.")
+            .MaximumLength(100)
+            .WithMessage("First name cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.FirstName));
 
         RuleFor(x => x.LastName)
-            .MaximumLength(256).WithMessage("Last name must not exceed 256 characters.")
+            .MaximumLength(100)
+            .WithMessage("Last name cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.LastName));
 
-        RuleFor(x => x.Relationship)
-            .MaximumLength(100).WithMessage("Relationship must not exceed 100 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.Relationship));
-
         RuleFor(x => x.Email)
-            .EmailAddress().WithMessage("Email must be a valid email address.")
-            .MaximumLength(256).WithMessage("Email must not exceed 256 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.Email));
+            .EmailAddress()
+            .When(x => !string.IsNullOrWhiteSpace(x.Email))
+            .WithMessage("Email format is invalid");
 
         RuleFor(x => x.PhoneNumber)
-            .MaximumLength(20).WithMessage("Phone number must not exceed 20 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber));
-
-        RuleFor(x => x.EligibilityEndDate)
-            .GreaterThan(DateTime.Today).WithMessage("Eligibility end date must be in the future.")
-            .When(x => x.EligibilityEndDate.HasValue);
+            .MaximumLength(20)
+            .WithMessage("Phone number cannot exceed 20 characters")
+            .Matches(@"^\+?[0-9\s\-\(\)]*$", RegexOptions.IgnoreCase)
+            .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
+            .WithMessage("Phone number format is invalid");
     }
 }
-

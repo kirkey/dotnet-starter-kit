@@ -1,8 +1,9 @@
-using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Get.v1;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Search.v1;
 
-public class SearchTimesheetsRequest : PaginationFilter, IRequest<PagedList<TimesheetResponse>>
+/// <summary>
+/// Request to search timesheets with filtering and pagination.
+/// </summary>
+public class SearchTimesheetsRequest : PaginationFilter, IRequest<PagedList<Get.v1.TimesheetResponse>>
 {
     public DefaultIdType? EmployeeId { get; set; }
     public DateTime? StartDate { get; set; }

@@ -1,13 +1,16 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Delete.v1;
 
 /// <summary>
-/// Handler for deleting employee contact.
+/// Handler for deleting an employee contact.
 /// </summary>
 public sealed class DeleteEmployeeContactHandler(
     ILogger<DeleteEmployeeContactHandler> logger,
-    [FromKeyedServices("hr:contacts")] IRepository<EmployeeContact> repository)
+    [FromKeyedServices("hr:employeecontacts")] IRepository<EmployeeContact> repository)
     : IRequestHandler<DeleteEmployeeContactCommand, DeleteEmployeeContactResponse>
 {
+    /// <summary>
+    /// Handles the request to delete an employee contact.
+    /// </summary>
     public async Task<DeleteEmployeeContactResponse> Handle(
         DeleteEmployeeContactCommand request,
         CancellationToken cancellationToken)

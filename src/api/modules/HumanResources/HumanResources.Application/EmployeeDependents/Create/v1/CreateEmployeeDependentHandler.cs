@@ -1,21 +1,23 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Create.v1;
 
 /// <summary>
-/// Handler for creating an employee dependent.
+/// Handler for creating a new employee dependent.
 /// </summary>
 public sealed class CreateEmployeeDependentHandler(
     ILogger<CreateEmployeeDependentHandler> logger,
-    [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository,
-    [FromKeyedServices("hr:dependents")] IRepository<EmployeeDependent> repository)
+    [FromKeyedServices("hr:dependents")] IRepository<EmployeeDependent> repository,
+    [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository)
     : IRequestHandler<CreateEmployeeDependentCommand, CreateEmployeeDependentResponse>
 {
+    /// <summary>
+    /// Handles the request to create an employee dependent.
+    /// </summary>
     public async Task<CreateEmployeeDependentResponse> Handle(
         CreateEmployeeDependentCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Verify employee exists
         var employee = await employeeRepository
             .GetByIdAsync(request.EmployeeId, cancellationToken)
             .ConfigureAwait(false);
@@ -23,7 +25,6 @@ public sealed class CreateEmployeeDependentHandler(
         if (employee is null)
             throw new EmployeeNotFoundException(request.EmployeeId);
 
-        // Create dependent
         var dependent = EmployeeDependent.Create(
             request.EmployeeId,
             request.FirstName,
@@ -31,19 +32,18 @@ public sealed class CreateEmployeeDependentHandler(
             request.DependentType,
             request.DateOfBirth,
             request.Relationship,
-            request.Ssn,
+            null,
             request.Email,
             request.PhoneNumber);
 
         await repository.AddAsync(dependent, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Employee dependent created with ID {DependentId}, Employee {EmployeeId}, Type {DependentType}",
+            "Employee dependent created with ID {DependentId}, Name {FullName} for Employee {EmployeeId}",
             dependent.Id,
-            dependent.EmployeeId,
-            dependent.DependentType);
+            dependent.FullName,
+            employee.Id);
 
         return new CreateEmployeeDependentResponse(dependent.Id);
     }
 }
-

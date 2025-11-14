@@ -1,4 +1,4 @@
-using FSH.Starter.WebApi.HumanResources.Application.Attendance.Update.v1;
+using FSH.Starter.WebApi.HumanResources.Application.Attendances.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance.v1;
 

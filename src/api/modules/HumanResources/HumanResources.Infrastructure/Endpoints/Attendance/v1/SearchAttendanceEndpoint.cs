@@ -1,6 +1,6 @@
 using FSH.Framework.Core.Paging;
-using FSH.Starter.WebApi.HumanResources.Application.Attendance.Get.v1;
-using FSH.Starter.WebApi.HumanResources.Application.Attendance.Search.v1;
+using FSH.Starter.WebApi.HumanResources.Application.Attendances.Get.v1;
+using FSH.Starter.WebApi.HumanResources.Application.Attendances.Search.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance.v1;
 

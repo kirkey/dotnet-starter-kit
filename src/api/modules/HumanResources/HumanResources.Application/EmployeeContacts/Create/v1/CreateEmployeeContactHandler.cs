@@ -1,21 +1,23 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Create.v1;
 
 /// <summary>
-/// Handler for creating an employee contact.
+/// Handler for creating a new employee contact.
 /// </summary>
 public sealed class CreateEmployeeContactHandler(
     ILogger<CreateEmployeeContactHandler> logger,
-    [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository,
-    [FromKeyedServices("hr:contacts")] IRepository<EmployeeContact> repository)
+    [FromKeyedServices("hr:employeecontacts")] IRepository<EmployeeContact> repository,
+    [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository)
     : IRequestHandler<CreateEmployeeContactCommand, CreateEmployeeContactResponse>
 {
+    /// <summary>
+    /// Handles the request to create an employee contact.
+    /// </summary>
     public async Task<CreateEmployeeContactResponse> Handle(
         CreateEmployeeContactCommand request,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Verify employee exists
         var employee = await employeeRepository
             .GetByIdAsync(request.EmployeeId, cancellationToken)
             .ConfigureAwait(false);
@@ -23,7 +25,6 @@ public sealed class CreateEmployeeContactHandler(
         if (employee is null)
             throw new EmployeeNotFoundException(request.EmployeeId);
 
-        // Create contact
         var contact = EmployeeContact.Create(
             request.EmployeeId,
             request.FirstName,
@@ -37,10 +38,10 @@ public sealed class CreateEmployeeContactHandler(
         await repository.AddAsync(contact, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Employee contact created with ID {ContactId}, Employee {EmployeeId}, Type {ContactType}",
+            "Employee contact created with ID {ContactId}, Name {FullName} for Employee {EmployeeId}",
             contact.Id,
-            contact.EmployeeId,
-            contact.ContactType);
+            contact.FullName,
+            employee.Id);
 
         return new CreateEmployeeContactResponse(contact.Id);
     }

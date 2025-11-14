@@ -1,7 +1,8 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Delete.v1;
 
 /// <summary>
-/// Response returned after deleting employee dependent.
+/// Response for deleting an employee dependent.
 /// </summary>
+/// <param name="Id">The identifier of the deleted dependent.</param>
 public sealed record DeleteEmployeeDependentResponse(DefaultIdType Id);
 

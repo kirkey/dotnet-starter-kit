@@ -1,44 +1,63 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Create.v1;
 
+/// <summary>
+/// Validator for creating an employee document.
+/// </summary>
 public class CreateEmployeeDocumentValidator : AbstractValidator<CreateEmployeeDocumentCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateEmployeeDocumentValidator"/> class.
+    /// </summary>
     public CreateEmployeeDocumentValidator()
     {
         RuleFor(x => x.EmployeeId)
-            .NotEmpty().WithMessage("Employee ID is required.");
+            .NotEmpty()
+            .WithMessage("Employee ID is required");
 
         RuleFor(x => x.DocumentType)
-            .NotEmpty().WithMessage("Document type is required.")
-            .Must(BeValidDocumentType).WithMessage("Document type must be one of: Contract, Certification, License, Identity, Medical, Other.");
+            .NotEmpty()
+            .WithMessage("Document type is required")
+            .Must(BeValidDocumentType)
+            .WithMessage("Document type must be Contract, Certification, License, Identity, Medical, or Other");
 
         RuleFor(x => x.Title)
-            .NotEmpty().WithMessage("Title is required.")
-            .MaximumLength(500).WithMessage("Title must not exceed 500 characters.");
+            .NotEmpty()
+            .WithMessage("Title is required")
+            .MaximumLength(250)
+            .WithMessage("Title cannot exceed 250 characters");
 
         RuleFor(x => x.FileName)
-            .MaximumLength(256).WithMessage("File name must not exceed 256 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.FileName));
+            .MaximumLength(255)
+            .WithMessage("File name cannot exceed 255 characters");
+
+        RuleFor(x => x.FilePath)
+            .MaximumLength(500)
+            .WithMessage("File path cannot exceed 500 characters");
 
         RuleFor(x => x.FileSize)
-            .GreaterThan(0).WithMessage("File size must be greater than zero.")
-            .When(x => x.FileSize.HasValue);
+            .GreaterThan(0)
+            .When(x => x.FileSize.HasValue)
+            .WithMessage("File size must be greater than 0");
 
         RuleFor(x => x.ExpiryDate)
-            .GreaterThan(DateTime.Today).WithMessage("Expiry date must be in the future.")
-            .When(x => x.ExpiryDate.HasValue);
-
-        RuleFor(x => x.IssueNumber)
-            .MaximumLength(100).WithMessage("Issue number must not exceed 100 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.IssueNumber));
+            .GreaterThan(DateTime.Today)
+            .When(x => x.ExpiryDate.HasValue)
+            .WithMessage("Expiry date must be in the future");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes must not exceed 1000 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.Notes));
+            .MaximumLength(1000)
+            .WithMessage("Notes cannot exceed 1000 characters");
     }
 
-    private static bool BeValidDocumentType(string documentType)
+    /// <summary>
+    /// Validates if the document type is valid.
+    /// </summary>
+    private static bool BeValidDocumentType(string? documentType)
     {
-        return documentType is "Contract" or "Certification" or "License" or "Identity" or "Medical" or "Other";
+        if (string.IsNullOrWhiteSpace(documentType))
+            return false;
+
+        var validTypes = new[] { "Contract", "Certification", "License", "Identity", "Medical", "Other" };
+        return validTypes.Contains(documentType);
     }
 }
-

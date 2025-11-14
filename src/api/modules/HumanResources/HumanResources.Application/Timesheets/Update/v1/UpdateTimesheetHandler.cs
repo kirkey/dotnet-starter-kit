@@ -2,7 +2,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Update.v1;
 
 public sealed class UpdateTimesheetHandler(
     ILogger<UpdateTimesheetHandler> logger,
-    [FromKeyedServices("hr:timesheets")] IRepository<Domain.Entities.Timesheet> repository)
+    [FromKeyedServices("hr:timesheets")] IRepository<Timesheet> repository)
     : IRequestHandler<UpdateTimesheetCommand, UpdateTimesheetResponse>
 {
     public async Task<UpdateTimesheetResponse> Handle(
@@ -14,31 +14,36 @@ public sealed class UpdateTimesheetHandler(
         if (timesheet is null)
             throw new TimesheetNotFoundException(request.Id);
 
+        // Update status through appropriate workflow methods
         if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            switch (request.Status)
+            switch (request.Status.ToLower())
             {
-                case "Submitted":
-                    timesheet.Submit(request.ApproverId);
+                case "submitted":
+                    if (timesheet.Status == "Draft")
+                        timesheet.Submit();
                     break;
-
-                case "Approved":
-                    timesheet.Approve(request.ManagerComment);
+                case "approved":
+                    if (timesheet.Status == "Submitted")
+                        timesheet.Approve();
                     break;
-
-                case "Rejected":
-                    timesheet.Reject(request.ManagerComment ?? "No reason provided");
+                case "rejected":
+                    if (timesheet.Status == "Submitted")
+                        timesheet.Reject("Rejected by manager");
                     break;
-
-                case "Locked":
+                case "locked":
                     timesheet.Lock();
+                    break;
+                case "draft":
+                    if (timesheet.Status == "Rejected")
+                        timesheet.ResetToDraft();
                     break;
             }
         }
 
         await repository.UpdateAsync(timesheet, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Timesheet {TimesheetId} updated successfully, Status: {Status}", timesheet.Id, timesheet.Status);
+        logger.LogInformation("Timesheet {TimesheetId} updated successfully", timesheet.Id);
 
         return new UpdateTimesheetResponse(timesheet.Id);
     }

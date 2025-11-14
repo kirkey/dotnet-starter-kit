@@ -2,8 +2,8 @@ namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Create.v1;
 
 public sealed class CreateTimesheetHandler(
     ILogger<CreateTimesheetHandler> logger,
-    [FromKeyedServices("hr:timesheets")] IRepository<Domain.Entities.Timesheet> repository,
-    [FromKeyedServices("hr:employees")] IReadRepository<Domain.Entities.Employee> employeeRepository)
+    [FromKeyedServices("hr:timesheets")] IRepository<Timesheet> repository,
+    [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository)
     : IRequestHandler<CreateTimesheetCommand, CreateTimesheetResponse>
 {
     public async Task<CreateTimesheetResponse> Handle(
@@ -19,7 +19,7 @@ public sealed class CreateTimesheetHandler(
         if (employee is null)
             throw new EmployeeNotFoundException(request.EmployeeId);
 
-        var timesheet = Domain.Entities.Timesheet.Create(
+        var timesheet = Timesheet.Create(
             request.EmployeeId,
             request.StartDate,
             request.EndDate,
@@ -28,11 +28,11 @@ public sealed class CreateTimesheetHandler(
         await repository.AddAsync(timesheet, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Timesheet created with ID {TimesheetId}, Employee {EmployeeId}, Period {StartDate}-{EndDate}",
+            "Timesheet created with ID {TimesheetId} for Employee {EmployeeId}, Period {StartDate}-{EndDate}",
             timesheet.Id,
-            timesheet.EmployeeId,
-            timesheet.StartDate.Date,
-            timesheet.EndDate.Date);
+            employee.Id,
+            request.StartDate,
+            request.EndDate);
 
         return new CreateTimesheetResponse(timesheet.Id);
     }

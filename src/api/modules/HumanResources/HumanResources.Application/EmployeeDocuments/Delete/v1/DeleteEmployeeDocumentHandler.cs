@@ -1,10 +1,16 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Delete.v1;
 
+/// <summary>
+/// Handler for deleting an employee document.
+/// </summary>
 public sealed class DeleteEmployeeDocumentHandler(
     ILogger<DeleteEmployeeDocumentHandler> logger,
     [FromKeyedServices("hr:documents")] IRepository<EmployeeDocument> repository)
     : IRequestHandler<DeleteEmployeeDocumentCommand, DeleteEmployeeDocumentResponse>
 {
+    /// <summary>
+    /// Handles the request to delete an employee document.
+    /// </summary>
     public async Task<DeleteEmployeeDocumentResponse> Handle(
         DeleteEmployeeDocumentCommand request,
         CancellationToken cancellationToken)
@@ -21,4 +27,3 @@ public sealed class DeleteEmployeeDocumentHandler(
         return new DeleteEmployeeDocumentResponse(document.Id);
     }
 }
-

@@ -202,6 +202,28 @@ public class Shift : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
+    /// Sets the break duration for the shift.
+    /// </summary>
+    public Shift SetBreakDuration(int breakDurationMinutes)
+    {
+        if (breakDurationMinutes < 0)
+            throw new ArgumentException("Break duration cannot be negative.", nameof(breakDurationMinutes));
+
+        BreakDurationMinutes = breakDurationMinutes;
+        CalculateWorkingHours();
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the description of the shift.
+    /// </summary>
+    public Shift SetDescription(string? description)
+    {
+        Description = description;
+        return this;
+    }
+
+    /// <summary>
     /// Deactivates the shift.
     /// </summary>
     public Shift Deactivate()

@@ -1,13 +1,16 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Update.v1;
 
 /// <summary>
-/// Handler for updating employee contact.
+/// Handler for updating an employee contact.
 /// </summary>
 public sealed class UpdateEmployeeContactHandler(
     ILogger<UpdateEmployeeContactHandler> logger,
-    [FromKeyedServices("hr:contacts")] IRepository<EmployeeContact> repository)
+    [FromKeyedServices("hr:employeecontacts")] IRepository<EmployeeContact> repository)
     : IRequestHandler<UpdateEmployeeContactCommand, UpdateEmployeeContactResponse>
 {
+    /// <summary>
+    /// Handles the request to update an employee contact.
+    /// </summary>
     public async Task<UpdateEmployeeContactResponse> Handle(
         UpdateEmployeeContactCommand request,
         CancellationToken cancellationToken)
@@ -25,7 +28,7 @@ public sealed class UpdateEmployeeContactHandler(
             request.Email,
             request.Address);
 
-        if (request.Priority.HasValue)
+        if (request.Priority.HasValue && request.Priority > 0)
             contact.SetPriority(request.Priority.Value);
 
         await repository.UpdateAsync(contact, cancellationToken).ConfigureAwait(false);

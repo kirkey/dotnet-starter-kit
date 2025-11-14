@@ -3,12 +3,15 @@ using FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Specifica
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Get.v1;
 
 /// <summary>
-/// Handler for getting employee dependent by ID.
+/// Handler for retrieving an employee dependent by ID.
 /// </summary>
 public sealed class GetEmployeeDependentHandler(
     [FromKeyedServices("hr:dependents")] IReadRepository<EmployeeDependent> repository)
     : IRequestHandler<GetEmployeeDependentRequest, EmployeeDependentResponse>
 {
+    /// <summary>
+    /// Handles the request to get an employee dependent.
+    /// </summary>
     public async Task<EmployeeDependentResponse> Handle(
         GetEmployeeDependentRequest request,
         CancellationToken cancellationToken)

@@ -1,13 +1,16 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Delete.v1;
 
 /// <summary>
-/// Handler for deleting employee dependent.
+/// Handler for deleting an employee dependent.
 /// </summary>
 public sealed class DeleteEmployeeDependentHandler(
     ILogger<DeleteEmployeeDependentHandler> logger,
     [FromKeyedServices("hr:dependents")] IRepository<EmployeeDependent> repository)
     : IRequestHandler<DeleteEmployeeDependentCommand, DeleteEmployeeDependentResponse>
 {
+    /// <summary>
+    /// Handles the request to delete an employee dependent.
+    /// </summary>
     public async Task<DeleteEmployeeDependentResponse> Handle(
         DeleteEmployeeDependentCommand request,
         CancellationToken cancellationToken)
@@ -24,4 +27,3 @@ public sealed class DeleteEmployeeDependentHandler(
         return new DeleteEmployeeDependentResponse(dependent.Id);
     }
 }
-

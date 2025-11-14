@@ -2,7 +2,7 @@ namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Delete.v1;
 
 public sealed class DeleteTimesheetHandler(
     ILogger<DeleteTimesheetHandler> logger,
-    [FromKeyedServices("hr:timesheets")] IRepository<Domain.Entities.Timesheet> repository)
+    [FromKeyedServices("hr:timesheets")] IRepository<Timesheet> repository)
     : IRequestHandler<DeleteTimesheetCommand, DeleteTimesheetResponse>
 {
     public async Task<DeleteTimesheetResponse> Handle(
@@ -21,4 +21,3 @@ public sealed class DeleteTimesheetHandler(
         return new DeleteTimesheetResponse(timesheet.Id);
     }
 }
-

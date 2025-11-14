@@ -1,5 +1,4 @@
-
-using HumanResources.Infrastructure.Endpoints.Shifts.v1;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 
@@ -9,7 +8,7 @@ public static class ShiftsEndpoints
     {
         var shiftsGroup = app.MapGroup("/shifts")
             .WithTags("Shifts")
-            .WithDescription("Endpoints for managing shifts (templates and assignments)");
+            .WithDescription("Endpoints for managing shifts");
 
         shiftsGroup.MapCreateShiftEndpoint();
         shiftsGroup.MapGetShiftEndpoint();

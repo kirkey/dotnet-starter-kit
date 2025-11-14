@@ -2,10 +2,16 @@ using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Specificat
 
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Get.v1;
 
+/// <summary>
+/// Handler for retrieving an employee document by ID.
+/// </summary>
 public sealed class GetEmployeeDocumentHandler(
     [FromKeyedServices("hr:documents")] IReadRepository<EmployeeDocument> repository)
     : IRequestHandler<GetEmployeeDocumentRequest, EmployeeDocumentResponse>
 {
+    /// <summary>
+    /// Handles the request to get an employee document.
+    /// </summary>
     public async Task<EmployeeDocumentResponse> Handle(
         GetEmployeeDocumentRequest request,
         CancellationToken cancellationToken)
@@ -38,4 +44,3 @@ public sealed class GetEmployeeDocumentHandler(
         };
     }
 }
-

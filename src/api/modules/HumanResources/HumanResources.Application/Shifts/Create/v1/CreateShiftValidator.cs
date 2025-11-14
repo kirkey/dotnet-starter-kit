@@ -5,30 +5,29 @@ public class CreateShiftValidator : AbstractValidator<CreateShiftCommand>
     public CreateShiftValidator()
     {
         RuleFor(x => x.ShiftName)
-            .NotEmpty().WithMessage("Shift name is required.")
-            .MaximumLength(100).WithMessage("Shift name must not exceed 100 characters.");
+            .NotEmpty()
+            .WithMessage("Shift name is required")
+            .MaximumLength(100)
+            .WithMessage("Shift name cannot exceed 100 characters");
 
         RuleFor(x => x.StartTime)
-            .Must(BeValidTime).WithMessage("Start time must be valid (00:00:00 - 23:59:59)");
+            .NotEmpty()
+            .WithMessage("Start time is required");
 
         RuleFor(x => x.EndTime)
-            .Must(BeValidTime).WithMessage("End time must be valid (00:00:00 - 23:59:59)")
-            .Custom((endTime, context) =>
-            {
-                var startTime = context.InstanceToValidate.StartTime;
-                var isOvernight = context.InstanceToValidate.IsOvernight;
-                if (startTime >= endTime && !isOvernight)
-                    context.AddFailure("End time must be after start time.");
-            });
+            .NotEmpty()
+            .WithMessage("End time is required")
+            .Must((cmd, endTime) => endTime != cmd.StartTime || cmd.IsOvernight)
+            .WithMessage("End time must be different from start time");
+
+        RuleFor(x => x.BreakDurationMinutes)
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("Break duration cannot be negative");
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(500)
+            .WithMessage("Description cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
-    }
-
-    private static bool BeValidTime(TimeSpan time)
-    {
-        return time >= TimeSpan.Zero && time < TimeSpan.FromHours(24);
     }
 }
 

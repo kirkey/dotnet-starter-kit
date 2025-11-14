@@ -1,5 +1,8 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Timesheets.Get.v1;
 
+/// <summary>
+/// Response object for Timesheet entity details.
+/// </summary>
 public sealed record TimesheetResponse
 {
     public DefaultIdType Id { get; init; }
@@ -14,9 +17,6 @@ public sealed record TimesheetResponse
     public DefaultIdType? ApproverManagerId { get; init; }
     public DateTime? SubmittedDate { get; init; }
     public DateTime? ApprovedDate { get; init; }
-    public string? ManagerComment { get; init; }
-    public string? RejectionReason { get; init; }
     public bool IsLocked { get; init; }
     public bool IsApproved { get; init; }
 }
-

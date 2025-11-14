@@ -17,16 +17,17 @@ public sealed class CreateShiftHandler(
             request.EndTime,
             request.IsOvernight);
 
+        shift.SetBreakDuration(request.BreakDurationMinutes);
+
         if (!string.IsNullOrWhiteSpace(request.Description))
-            shift.Update(description: request.Description);
+            shift.SetDescription(request.Description);
 
         await repository.AddAsync(shift, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Shift created with ID {ShiftId}, Name {ShiftName}, Hours {WorkingHours}",
+            "Shift created with ID {ShiftId}, Name {ShiftName}",
             shift.Id,
-            shift.ShiftName,
-            shift.WorkingHours);
+            shift.ShiftName);
 
         return new CreateShiftResponse(shift.Id);
     }

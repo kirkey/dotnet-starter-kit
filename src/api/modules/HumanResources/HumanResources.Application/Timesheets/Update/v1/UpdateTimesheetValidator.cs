@@ -5,20 +5,32 @@ public class UpdateTimesheetValidator : AbstractValidator<UpdateTimesheetCommand
     public UpdateTimesheetValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("ID is required.");
+            .NotEmpty()
+            .WithMessage("Timesheet ID is required");
+
+        RuleFor(x => x.RegularHours)
+            .GreaterThanOrEqualTo(0)
+            .When(x => x.RegularHours.HasValue)
+            .WithMessage("Regular hours cannot be negative");
+
+        RuleFor(x => x.OvertimeHours)
+            .GreaterThanOrEqualTo(0)
+            .When(x => x.OvertimeHours.HasValue)
+            .WithMessage("Overtime hours cannot be negative");
 
         RuleFor(x => x.Status)
-            .Must(BeValidStatus).WithMessage("Status must be one of: Submitted, Approved, Rejected, Locked.")
-            .When(x => !string.IsNullOrWhiteSpace(x.Status));
-
-        RuleFor(x => x.ManagerComment)
-            .MaximumLength(1000).WithMessage("Manager comment must not exceed 1000 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.ManagerComment));
+            .Must(BeValidStatus)
+            .When(x => !string.IsNullOrWhiteSpace(x.Status))
+            .WithMessage("Status must be Draft, Submitted, Approved, or Rejected");
     }
 
     private static bool BeValidStatus(string? status)
     {
-        return status is "Submitted" or "Approved" or "Rejected" or "Locked";
+        if (string.IsNullOrWhiteSpace(status))
+            return true;
+
+        var validStatuses = new[] { "Draft", "Submitted", "Approved", "Rejected", "Locked" };
+        return validStatuses.Contains(status);
     }
 }
 

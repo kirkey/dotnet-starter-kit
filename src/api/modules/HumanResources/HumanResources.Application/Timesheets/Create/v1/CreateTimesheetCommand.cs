@@ -5,4 +5,3 @@ public sealed record CreateTimesheetCommand(
     [property: DefaultValue("2025-11-10")] DateTime StartDate,
     [property: DefaultValue("2025-11-16")] DateTime EndDate,
     [property: DefaultValue("Weekly")] string PeriodType = "Weekly") : IRequest<CreateTimesheetResponse>;
-
