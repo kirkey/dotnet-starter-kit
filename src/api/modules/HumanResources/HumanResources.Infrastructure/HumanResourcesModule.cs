@@ -9,6 +9,8 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocumen
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
@@ -39,6 +41,8 @@ public static class HumanResourcesModule
             app.MapShiftsEndpoints();
             app.MapDocumentTemplatesEndpoints();
             app.MapGeneratedDocumentsEndpoints();
+            app.MapPayComponentsEndpoints();
+            app.MapPayrollDeductionsEndpoints();
         }
     }
 
@@ -111,8 +115,17 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<PayrollLine>, HumanResourcesRepository<PayrollLine>>("hr:payrolllines");
         builder.Services.AddKeyedScoped<IReadRepository<PayrollLine>, HumanResourcesRepository<PayrollLine>>("hr:payrolllines");
 
+        builder.Services.AddKeyedScoped<IRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("humanresources:payrolldeductions");
+        builder.Services.AddKeyedScoped<IReadRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("humanresources:payrolldeductions");
+
         builder.Services.AddKeyedScoped<IRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
         builder.Services.AddKeyedScoped<IReadRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
+
+        builder.Services.AddKeyedScoped<IRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("hr:paycomponentrates");
+        builder.Services.AddKeyedScoped<IReadRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("hr:paycomponentrates");
+
+        builder.Services.AddKeyedScoped<IRepository<EmployeePayComponent>, HumanResourcesRepository<EmployeePayComponent>>("hr:employeepaycomponents");
+        builder.Services.AddKeyedScoped<IReadRepository<EmployeePayComponent>, HumanResourcesRepository<EmployeePayComponent>>("hr:employeepaycomponents");
 
         builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
         builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");

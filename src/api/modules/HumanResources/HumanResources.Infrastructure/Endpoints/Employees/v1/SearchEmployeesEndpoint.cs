@@ -1,4 +1,3 @@
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Search.v1;
 

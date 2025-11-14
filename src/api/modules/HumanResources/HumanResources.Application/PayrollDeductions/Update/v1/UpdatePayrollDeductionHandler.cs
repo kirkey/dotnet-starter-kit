@@ -1,68 +1,63 @@
+using FSH.Framework.Core.Persistence;
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 namespace FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Update.v1;
 
-/// <summary>
-/// Handler for updating payroll deduction.
-/// </summary>
 public sealed class UpdatePayrollDeductionHandler(
     ILogger<UpdatePayrollDeductionHandler> logger,
-    [FromKeyedServices("hr:payrolldeductions")] IRepository<PayrollDeduction> repository)
+    [FromKeyedServices("humanresources:payrolldeductions")] IRepository<PayrollDeduction> repository)
     : IRequestHandler<UpdatePayrollDeductionCommand, UpdatePayrollDeductionResponse>
 {
-    public async Task<UpdatePayrollDeductionResponse> Handle(
-        UpdatePayrollDeductionCommand request,
-        CancellationToken cancellationToken)
+    public async Task<UpdatePayrollDeductionResponse> Handle(UpdatePayrollDeductionCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var deduction = await repository.GetByIdAsync(request.Id, cancellationToken);
+        var deduction = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+        _ = deduction ?? throw new PayrollDeductionNotFoundException(request.Id);
 
-        if (deduction is null)
-            throw new PayrollDeductionNotFoundException(request.Id);
-
-        // Update deduction amount if provided
+        // Update deduction amounts
         if (request.DeductionAmount.HasValue)
-            deduction.UpdateDeductionAmount(request.DeductionAmount.Value);
-
-        // Update deduction percentage if provided
-        if (request.DeductionPercentage.HasValue)
-            deduction.UpdateDeductionPercentage(request.DeductionPercentage.Value);
-
-        // Update end date if provided
-        if (request.EndDate.HasValue)
-            deduction.UpdateEndDate(request.EndDate.Value);
-        else if (request.EndDate == null && request.EndDate != null)
-            deduction.UpdateEndDate(null);
-
-        // Update max deduction limit if provided
-        if (request.MaxDeductionLimit.HasValue)
-            deduction.SetMaxDeductionLimit(request.MaxDeductionLimit.Value);
-
-        // Update remarks if provided
-        if (!string.IsNullOrWhiteSpace(request.Remarks))
-            deduction.UpdateRemarks(request.Remarks);
-
-        // Update active status if provided
-        if (request.IsActive.HasValue)
         {
-            if (request.IsActive.Value)
-                deduction.Activate();
-            else
-                deduction.Deactivate();
+            deduction.UpdateDeductionAmount(request.DeductionAmount.Value);
         }
 
-        await repository.UpdateAsync(deduction, cancellationToken);
+        if (request.DeductionPercentage.HasValue)
+        {
+            deduction.UpdateDeductionPercentage(request.DeductionPercentage.Value);
+        }
 
-        logger.LogInformation(
-            "Payroll deduction {Id} updated: Amount {Amount}, Active {Active}",
-            deduction.Id,
-            request.DeductionAmount,
-            request.IsActive);
+        // Update authorization and recoverability
+        if (request.IsAuthorized.HasValue)
+        {
+            deduction.SetAsAuthorized(request.IsAuthorized.Value);
+        }
 
-        return new UpdatePayrollDeductionResponse(
-            deduction.Id,
-            deduction.DeductionType,
-            request.DeductionAmount ?? deduction.DeductionAmount,
-            deduction.IsActive);
+        if (request.IsRecoverable.HasValue)
+        {
+            deduction.SetRecoverable(request.IsRecoverable.Value);
+        }
+
+        // Update end date
+        if (request.EndDate.HasValue)
+        {
+            deduction.SetDateRange(deduction.StartDate, request.EndDate.Value);
+        }
+
+        // Update max deduction limit
+        if (request.MaxDeductionLimit.HasValue)
+        {
+            deduction.SetMaxDeductionLimit(request.MaxDeductionLimit.Value);
+        }
+
+        await repository.UpdateAsync(deduction, cancellationToken).ConfigureAwait(false);
+
+        logger.LogInformation("Payroll deduction with id {DeductionId} updated.", deduction.Id);
+
+        return new UpdatePayrollDeductionResponse(deduction.Id);
     }
 }
 

@@ -1,56 +1,32 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.PayComponents.Update.v1;
 
-/// <summary>
-/// Handler for updating pay component.
-/// </summary>
 public sealed class UpdatePayComponentHandler(
     ILogger<UpdatePayComponentHandler> logger,
     [FromKeyedServices("hr:paycomponents")] IRepository<PayComponent> repository)
     : IRequestHandler<UpdatePayComponentCommand, UpdatePayComponentResponse>
 {
-    public async Task<UpdatePayComponentResponse> Handle(
-        UpdatePayComponentCommand request,
-        CancellationToken cancellationToken)
+    public async Task<UpdatePayComponentResponse> Handle(UpdatePayComponentCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var component = await repository.GetByIdAsync(request.Id, cancellationToken);
+        var payComponent = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+        _ = payComponent ?? throw new PayComponentNotFoundException(request.Id);
 
-        if (component is null)
-            throw new PayComponentNotFoundException(request.Id);
+        payComponent.Update(
+            request.ComponentName,
+            request.CalculationMethod,
+            request.CalculationFormula,
+            request.Rate,
+            request.FixedAmount,
+            request.GlAccountCode,
+            request.Description,
+            request.DisplayOrder);
 
-        // Update fields if provided
-        if (!string.IsNullOrWhiteSpace(request.ComponentName) || 
-            !string.IsNullOrWhiteSpace(request.GlAccountCode) || 
-            !string.IsNullOrWhiteSpace(request.Description))
-        {
-            component.Update(
-                request.ComponentName,
-                request.GlAccountCode,
-                request.Description);
-        }
+        await repository.UpdateAsync(payComponent, cancellationToken).ConfigureAwait(false);
 
-        // Update active status if provided
-        if (request.IsActive.HasValue)
-        {
-            if (request.IsActive.Value)
-                component.Activate();
-            else
-                component.Deactivate();
-        }
+        logger.LogInformation("Pay component with id : {PayComponentId} updated.", payComponent.Id);
 
-        await repository.UpdateAsync(component, cancellationToken);
-
-        logger.LogInformation(
-            "Pay component {Id} updated: {Name}, Active: {Active}",
-            component.Id,
-            component.ComponentName,
-            component.IsActive);
-
-        return new UpdatePayComponentResponse(
-            component.Id,
-            component.ComponentName,
-            component.IsActive);
+        return new UpdatePayComponentResponse(payComponent.Id);
     }
 }
 

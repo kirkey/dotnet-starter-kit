@@ -1,39 +1,19 @@
+using Mapster;
+
 namespace FSH.Starter.WebApi.HumanResources.Application.PayComponents.Get.v1;
 
-using Framework.Core.Persistence;
-using Specifications;
-using Domain.Entities;
-using Domain.Exceptions;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-
-/// <summary>
-/// Handler for getting pay component details.
-/// </summary>
 public sealed class GetPayComponentHandler(
-    [FromKeyedServices("hr:paycomponents")] IReadRepository<PayComponent> repository)
+    [FromKeyedServices("hr:paycomponents")] IRepository<PayComponent> repository)
     : IRequestHandler<GetPayComponentRequest, PayComponentResponse>
 {
-    public async Task<PayComponentResponse> Handle(
-        GetPayComponentRequest request,
-        CancellationToken cancellationToken)
+    public async Task<PayComponentResponse> Handle(GetPayComponentRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new PayComponentByIdSpec(request.Id);
-        var component = await repository.FirstOrDefaultAsync(spec, cancellationToken);
+        var payComponent = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+        _ = payComponent ?? throw new PayComponentNotFoundException(request.Id);
 
-        if (component is null)
-            throw new PayComponentNotFoundException(request.Id);
-
-        return new PayComponentResponse(
-            component.Id,
-            component.ComponentName,
-            component.ComponentType,
-            component.GlAccountCode,
-            component.IsActive,
-            component.IsCalculated,
-            component.Description);
+        return payComponent.Adapt<PayComponentResponse>();
     }
 }
 

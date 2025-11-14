@@ -14,9 +14,14 @@ public sealed class CreateDeductionHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        // Generate code from component name if not provided
+        var code = request.ComponentName.Replace(" ", "_", StringComparison.Ordinal).ToUpperInvariant();
+
         var deduction = PayComponent.Create(
+            code,
             request.ComponentName,
             request.ComponentType,
+            calculationMethod: "Manual", // Default to Manual for deductions
             request.GlAccountCode);
 
         if (!string.IsNullOrWhiteSpace(request.Description))
@@ -25,8 +30,9 @@ public sealed class CreateDeductionHandler(
         await repository.AddAsync(deduction, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Deduction created with ID {DeductionId}, Name {ComponentName}, Type {ComponentType}",
+            "Deduction created with ID {DeductionId}, Code {Code}, Name {ComponentName}, Type {ComponentType}",
             deduction.Id,
+            code,
             request.ComponentName,
             request.ComponentType);
 

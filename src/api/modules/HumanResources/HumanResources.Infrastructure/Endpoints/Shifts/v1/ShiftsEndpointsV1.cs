@@ -3,7 +3,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Shifts.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Update.v1;
-using FSH.Framework.Core.Paging;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts.v1;
 

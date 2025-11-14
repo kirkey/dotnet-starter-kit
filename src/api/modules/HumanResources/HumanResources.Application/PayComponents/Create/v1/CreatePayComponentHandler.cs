@@ -1,40 +1,48 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.PayComponents.Create.v1;
 
-/// <summary>
-/// Handler for creating pay component with validation.
-/// </summary>
 public sealed class CreatePayComponentHandler(
     ILogger<CreatePayComponentHandler> logger,
     [FromKeyedServices("hr:paycomponents")] IRepository<PayComponent> repository)
     : IRequestHandler<CreatePayComponentCommand, CreatePayComponentResponse>
 {
-    public async Task<CreatePayComponentResponse> Handle(
-        CreatePayComponentCommand request,
-        CancellationToken cancellationToken)
+    public async Task<CreatePayComponentResponse> Handle(CreatePayComponentCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var component = PayComponent.Create(
+        var payComponent = PayComponent.Create(
+            request.Code,
             request.ComponentName,
             request.ComponentType,
-            request.GlAccountCode);
+            request.CalculationMethod,
+            request.GlAccountCode ?? string.Empty);
 
-        if (!string.IsNullOrWhiteSpace(request.Description))
-            component.Update(description: request.Description);
+        // Set optional properties
+        payComponent.Update(
+            calculationFormula: request.CalculationFormula,
+            rate: request.Rate,
+            fixedAmount: request.FixedAmount,
+            description: request.Description,
+            displayOrder: request.DisplayOrder);
 
-        await repository.AddAsync(component, cancellationToken);
+        if (request.MinValue.HasValue || request.MaxValue.HasValue)
+        {
+            payComponent.SetLimits(request.MinValue, request.MaxValue);
+        }
 
-        logger.LogInformation(
-            "Pay component created: ID {Id}, Name {Name}, Type {Type}",
-            component.Id,
-            component.ComponentName,
-            component.ComponentType);
+        if (request.IsMandatory)
+        {
+            payComponent.SetMandatory(request.LaborLawReference);
+        }
 
-        return new CreatePayComponentResponse(
-            component.Id,
-            component.ComponentName,
-            component.ComponentType,
-            component.IsActive);
+        payComponent.SetTaxTreatment(request.IsSubjectToTax, request.IsTaxExempt);
+        payComponent.SetPayImpact(request.AffectsGrossPay, request.AffectsNetPay);
+        payComponent.SetAutoCalculated(request.IsCalculated);
+
+        await repository.AddAsync(payComponent, cancellationToken).ConfigureAwait(false);
+
+        logger.LogInformation("Pay component created {PayComponentId} with code {Code}", payComponent.Id, payComponent.Code);
+
+        return new CreatePayComponentResponse(payComponent.Id);
     }
 }
 

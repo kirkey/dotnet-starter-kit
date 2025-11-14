@@ -1,31 +1,29 @@
+using FSH.Framework.Core.Persistence;
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 namespace FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Delete.v1;
 
-/// <summary>
-/// Handler for deleting payroll deduction.
-/// </summary>
 public sealed class DeletePayrollDeductionHandler(
     ILogger<DeletePayrollDeductionHandler> logger,
-    [FromKeyedServices("hr:payrolldeductions")] IRepository<PayrollDeduction> repository)
+    [FromKeyedServices("humanresources:payrolldeductions")] IRepository<PayrollDeduction> repository)
     : IRequestHandler<DeletePayrollDeductionCommand, DeletePayrollDeductionResponse>
 {
-    public async Task<DeletePayrollDeductionResponse> Handle(
-        DeletePayrollDeductionCommand request,
-        CancellationToken cancellationToken)
+    public async Task<DeletePayrollDeductionResponse> Handle(DeletePayrollDeductionCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var deduction = await repository.GetByIdAsync(request.Id, cancellationToken);
+        var deduction = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+        _ = deduction ?? throw new PayrollDeductionNotFoundException(request.Id);
 
-        if (deduction is null)
-            throw new PayrollDeductionNotFoundException(request.Id);
+        await repository.DeleteAsync(deduction, cancellationToken).ConfigureAwait(false);
 
-        await repository.DeleteAsync(deduction, cancellationToken);
+        logger.LogInformation("Payroll deduction with id {DeductionId} deleted.", deduction.Id);
 
-        logger.LogInformation(
-            "Payroll deduction {Id} deleted",
-            deduction.Id);
-
-        return new DeletePayrollDeductionResponse(deduction.Id, true);
+        return new DeletePayrollDeductionResponse(deduction.Id);
     }
 }
 

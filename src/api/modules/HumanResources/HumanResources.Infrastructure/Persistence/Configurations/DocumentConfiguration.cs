@@ -1,6 +1,4 @@
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence.Configurations;
 

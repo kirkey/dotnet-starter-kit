@@ -3,7 +3,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Holidays.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Update.v1;
-using FSH.Framework.Core.Paging;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays.v1;
 
