@@ -8,9 +8,9 @@ public static class PayrollDeductionEndpoints
             .WithTags("PayrollDeductions")
             .WithGroupName("Payroll Management");
 
-        CreatePayrollDeductionEndpoint.MapCreatePayrollDeductionEndpoint(group);
-        UpdatePayrollDeductionEndpoint.MapUpdatePayrollDeductionEndpoint(group);
-        GetPayrollDeductionEndpoint.MapGetPayrollDeductionEndpoint(group);
-        DeletePayrollDeductionEndpoint.MapDeletePayrollDeductionEndpoint(group);
+        group.MapCreatePayrollDeductionEndpoint();
+        group.MapUpdatePayrollDeductionEndpoint();
+        group.MapGetPayrollDeductionEndpoint();
+        group.MapDeletePayrollDeductionEndpoint();
     }
 }
