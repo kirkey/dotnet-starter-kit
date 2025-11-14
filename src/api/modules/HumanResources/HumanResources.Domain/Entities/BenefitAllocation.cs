@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 
-using FSH.Starter.WebApi.HumanResources.Domain.Events;
+using Events;
 
 /// <summary>
 /// Represents the allocation or usage of a benefit by an employee.

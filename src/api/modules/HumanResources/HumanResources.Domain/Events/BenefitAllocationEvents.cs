@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.HumanResources.Domain.Events;
 
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Entities;
 
 /// <summary>
 /// Event raised when a benefit allocation is created.

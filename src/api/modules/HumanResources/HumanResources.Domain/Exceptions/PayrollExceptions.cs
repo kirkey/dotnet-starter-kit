@@ -56,6 +56,17 @@ public class BenefitAllocationNotFoundException : NotFoundException
 }
 
 /// <summary>
+/// Exception thrown when performance review is not found.
+/// </summary>
+public class PerformanceReviewNotFoundException : NotFoundException
+{
+    public PerformanceReviewNotFoundException(DefaultIdType id)
+        : base($"Performance review with ID '{id}' was not found.")
+    {
+    }
+}
+
+/// <summary>
 /// Exception thrown when holiday is not found.
 /// </summary>
 public class HolidayNotFoundException : NotFoundException
