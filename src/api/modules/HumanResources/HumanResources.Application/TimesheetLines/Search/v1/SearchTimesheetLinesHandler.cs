@@ -1,8 +1,7 @@
+using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Specifications;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Search.v1;
-
-using Resp = FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Get.v1.TimesheetLineResponse;
 
 /// <summary>
 /// Handler for searching timesheet lines.
@@ -10,12 +9,12 @@ using Resp = FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Get.v1
 public sealed class SearchTimesheetLinesHandler(
     ILogger<SearchTimesheetLinesHandler> logger,
     [FromKeyedServices("hr:timesheetlines")] IReadRepository<TimesheetLine> repository)
-    : IRequestHandler<SearchTimesheetLinesRequest, PagedList<Resp>>
+    : IRequestHandler<SearchTimesheetLinesRequest, PagedList<TimesheetLineResponse>>
 {
     /// <summary>
     /// Handles the request to search timesheet lines.
     /// </summary>
-    public async Task<PagedList<Resp>> Handle(
+    public async Task<PagedList<TimesheetLineResponse>> Handle(
         SearchTimesheetLinesRequest request,
         CancellationToken cancellationToken)
     {
@@ -36,7 +35,7 @@ public sealed class SearchTimesheetLinesHandler(
             request.PageSize,
             totalCount);
 
-        var responses = lines.Select(e => new Resp
+        var responses = lines.Select(e => new TimesheetLineResponse
         {
             Id = e.Id,
             TimesheetId = e.TimesheetId,
@@ -50,7 +49,7 @@ public sealed class SearchTimesheetLinesHandler(
             BillingRate = e.BillingRate
         }).ToList();
 
-        return new PagedList<Resp>(responses, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<TimesheetLineResponse>(responses, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

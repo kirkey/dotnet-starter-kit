@@ -13,6 +13,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalU
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines;
@@ -44,6 +45,7 @@ public static class HumanResourcesModule
             app.MapTimesheetsEndpoints();
             app.MapTimesheetLinesEndpoints();
             app.MapShiftsEndpoints();
+            app.MapShiftAssignmentEndpoints();
             app.MapDocumentTemplatesEndpoints();
             app.MapGeneratedDocumentsEndpoints();
             app.MapPayComponentsEndpoints();

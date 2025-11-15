@@ -44,7 +44,7 @@ public sealed class CreateBenefitEnrollmentHandler(
             request.EmployerContributionAmount);
 
         // Add dependents if provided
-        if (request.DependentIds != null && request.DependentIds.Length > 0)
+        if (request.DependentIds is { Length: > 0 })
         {
             enrollment.AddDependents(request.DependentIds);
         }

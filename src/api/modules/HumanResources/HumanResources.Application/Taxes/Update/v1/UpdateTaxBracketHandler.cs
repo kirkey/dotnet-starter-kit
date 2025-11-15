@@ -20,7 +20,7 @@ public sealed class UpdateTaxBracketHandler(
             throw new TaxBracketNotFoundException(request.Id);
 
         // Validate income range if both provided
-        if (request.MinIncome.HasValue && request.MaxIncome.HasValue)
+        if (request is { MinIncome: not null, MaxIncome: not null })
         {
             if (request.MaxIncome <= request.MinIncome)
                 throw new InvalidOperationException("Maximum income must be greater than minimum income.");

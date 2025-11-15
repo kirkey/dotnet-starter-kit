@@ -107,7 +107,7 @@ public class CreateLeaveTypeValidator : AbstractValidator<CreateLeaveTypeCommand
         if (command.LeaveCode != "VacationLeave")
             return true;
 
-        return command.IsCumulative && command.IsConvertibleToCash && command.AnnualAllowance >= 5;
+        return command is { IsCumulative: true, IsConvertibleToCash: true, AnnualAllowance: >= 5 };
     }
 
     // Philippines-Specific: Sick Leave must be non-cumulative and NOT convertible per Art 96
@@ -116,7 +116,7 @@ public class CreateLeaveTypeValidator : AbstractValidator<CreateLeaveTypeCommand
         if (command.LeaveCode != "SickLeave")
             return true;
 
-        return !command.IsCumulative && !command.IsConvertibleToCash && command.AnnualAllowance >= 5;
+        return command is { IsCumulative: false, IsConvertibleToCash: false, AnnualAllowance: >= 5 };
     }
 
     // Philippines-Specific: Maternity Leave must be Female only, 105 days minimum per RA 11210
@@ -125,7 +125,7 @@ public class CreateLeaveTypeValidator : AbstractValidator<CreateLeaveTypeCommand
         if (command.LeaveCode != "MaternityLeave")
             return true;
 
-        return command.ApplicableGender == "Female" && command.AnnualAllowance >= 105;
+        return command is { ApplicableGender: "Female", AnnualAllowance: >= 105 };
     }
 
     // Philippines-Specific: Paternity Leave must be Male only, 7 days minimum per Art 98
@@ -134,7 +134,7 @@ public class CreateLeaveTypeValidator : AbstractValidator<CreateLeaveTypeCommand
         if (command.LeaveCode != "PaternityLeave")
             return true;
 
-        return command.ApplicableGender == "Male" && command.AnnualAllowance >= 7;
+        return command is { ApplicableGender: "Male", AnnualAllowance: >= 7 };
     }
 }
 

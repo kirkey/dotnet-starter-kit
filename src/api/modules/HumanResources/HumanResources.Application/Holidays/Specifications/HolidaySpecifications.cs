@@ -18,7 +18,7 @@ public class SearchHolidaysSpec : EntitiesByPaginationFilterSpec<Holiday, Holida
         Query
             .Where(h => h.HolidayName.Contains(request.SearchString!), !string.IsNullOrWhiteSpace(request.SearchString))
             .Where(h => h.HolidayDate >= request.StartDate && h.HolidayDate <= request.EndDate, 
-                   request.StartDate.HasValue && request.EndDate.HasValue)
+                   request is { StartDate: not null, EndDate: not null })
             .Where(h => h.IsPaid == request.IsPaid, request.IsPaid.HasValue)
             .Where(h => h.IsActive == request.IsActive, request.IsActive.HasValue)
             .OrderByDescending(h => h.HolidayDate, !request.HasOrderBy());

@@ -1,6 +1,3 @@
-using System.ComponentModel;
-using MediatR;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
 
 /// <summary>

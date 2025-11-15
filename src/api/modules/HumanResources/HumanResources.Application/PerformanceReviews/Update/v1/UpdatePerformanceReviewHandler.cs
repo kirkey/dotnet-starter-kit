@@ -20,7 +20,7 @@ public sealed class UpdatePerformanceReviewHandler(
             throw new PerformanceReviewNotFoundException(request.Id);
 
         // Update fields if provided
-        if (request.OverallRating.HasValue && request.OverallRating.Value > 0)
+        if (request.OverallRating is > 0)
             review.SetRating(request.OverallRating.Value);
 
         if (request.Strengths != null)

@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Specifications;
 
 using Ardalis.Specification;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Domain.Entities;
 
 /// <summary>
 /// Specification for getting pending allocations.

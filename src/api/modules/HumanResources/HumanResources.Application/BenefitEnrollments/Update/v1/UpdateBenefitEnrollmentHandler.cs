@@ -31,7 +31,7 @@ public sealed class UpdateBenefitEnrollmentHandler(
         }
 
         // Add dependents if provided
-        if (request.AddDependentIds != null && request.AddDependentIds.Length > 0)
+        if (request.AddDependentIds is { Length: > 0 })
         {
             enrollment.AddDependents(request.AddDependentIds);
         }

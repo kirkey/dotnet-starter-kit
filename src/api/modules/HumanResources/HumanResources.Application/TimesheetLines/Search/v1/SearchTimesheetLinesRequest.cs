@@ -1,11 +1,11 @@
-namespace FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Search.v1;
+using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Get.v1;
 
-using Resp = FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Get.v1.TimesheetLineResponse;
+namespace FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Search.v1;
 
 /// <summary>
 /// Request to search timesheet lines with pagination and filters.
 /// </summary>
-public sealed class SearchTimesheetLinesRequest : PaginationFilter, IRequest<PagedList<Resp>>
+public sealed class SearchTimesheetLinesRequest : PaginationFilter, IRequest<PagedList<TimesheetLineResponse>>
 {
     /// <summary>Filter by timesheet ID.</summary>
     public DefaultIdType? TimesheetId { get; set; }

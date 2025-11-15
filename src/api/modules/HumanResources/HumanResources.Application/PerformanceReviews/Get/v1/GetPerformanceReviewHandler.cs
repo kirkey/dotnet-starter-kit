@@ -1,9 +1,9 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Get.v1;
 
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Specifications;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-using FSH.Starter.WebApi.HumanResources.Domain.Exceptions;
+using Framework.Core.Persistence;
+using Specifications;
+using Domain.Entities;
+using Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

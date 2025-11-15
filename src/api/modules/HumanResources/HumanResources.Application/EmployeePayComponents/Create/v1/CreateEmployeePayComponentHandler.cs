@@ -12,7 +12,7 @@ public sealed class CreateEmployeePayComponentHandler(
         EmployeePayComponent assignment;
 
         // Determine assignment type and create appropriately
-        if (request.IsOneTime && request.OneTimeDate.HasValue && request.FixedAmount.HasValue)
+        if (request is { IsOneTime: true, OneTimeDate: not null, FixedAmount: not null })
         {
             // One-time payment/deduction
             assignment = EmployeePayComponent.CreateOneTime(
@@ -22,7 +22,7 @@ public sealed class CreateEmployeePayComponentHandler(
                 request.OneTimeDate.Value,
                 request.ReferenceNumber);
         }
-        else if (request.InstallmentCount.HasValue && request.TotalAmount.HasValue)
+        else if (request is { InstallmentCount: not null, TotalAmount: not null })
         {
             // Loan/installment deduction
             assignment = EmployeePayComponent.CreateLoan(
@@ -33,7 +33,7 @@ public sealed class CreateEmployeePayComponentHandler(
                 request.EffectiveStartDate ?? DateTime.UtcNow,
                 request.ReferenceNumber);
         }
-        else if (request.CustomRate.HasValue && request.AssignmentType == "Override")
+        else if (request is { CustomRate: not null, AssignmentType: "Override" })
         {
             // Rate override
             assignment = EmployeePayComponent.CreateRateOverride(

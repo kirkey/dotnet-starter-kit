@@ -36,7 +36,7 @@ public sealed class CreateEnrollmentHandler(
             request.EnrollmentDate,
             request.EffectiveDate);
 
-        if (!string.IsNullOrWhiteSpace(request.CoverageLevel) && request.EmployeeContributionAmount.HasValue && request.EmployerContributionAmount.HasValue)
+        if (!string.IsNullOrWhiteSpace(request.CoverageLevel) && request is { EmployeeContributionAmount: not null, EmployerContributionAmount: not null })
         {
             enrollment.SetCoverage(
                 request.CoverageLevel,

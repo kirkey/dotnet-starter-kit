@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Specifications;
 
 using Ardalis.Specification;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Domain.Entities;
 
 /// <summary>
 /// Specification for getting active enrollments by employee.

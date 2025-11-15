@@ -1,7 +1,7 @@
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Search.v1;
 
-namespace HumanResources.Infrastructure.Endpoints.Shifts.v1;
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts.v1;
 
 public static class SearchShiftsEndpoint
 {

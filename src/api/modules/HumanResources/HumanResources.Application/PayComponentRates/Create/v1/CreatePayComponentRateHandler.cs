@@ -12,7 +12,7 @@ public sealed class CreatePayComponentRateHandler(
         // Determine rate type and create appropriately
         PayComponentRate rate;
 
-        if (request.EmployeeRate.HasValue && request.EmployerRate.HasValue)
+        if (request is { EmployeeRate: not null, EmployerRate: not null })
         {
             // Contribution rate (SSS, PhilHealth, Pag-IBIG)
             rate = PayComponentRate.CreateContributionRate(

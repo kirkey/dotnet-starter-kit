@@ -17,7 +17,7 @@ public sealed class UpdateEnrollmentHandler(
         if (enrollment is null)
             throw new Exception($"Enrollment not found: {request.Id}");
 
-        if (!string.IsNullOrWhiteSpace(request.CoverageLevel) && request.EmployeeContributionAmount.HasValue && request.EmployerContributionAmount.HasValue)
+        if (!string.IsNullOrWhiteSpace(request.CoverageLevel) && request is { EmployeeContributionAmount: not null, EmployerContributionAmount: not null })
         {
             enrollment.SetCoverage(
                 request.CoverageLevel,

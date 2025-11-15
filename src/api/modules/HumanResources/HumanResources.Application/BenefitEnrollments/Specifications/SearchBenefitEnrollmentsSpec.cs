@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Specifications;
 
 using Ardalis.Specification;
-using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Search.v1;
-using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+using Search.v1;
+using Domain.Entities;
 
 /// <summary>
 /// Specification for searching benefit enrollments with filters.

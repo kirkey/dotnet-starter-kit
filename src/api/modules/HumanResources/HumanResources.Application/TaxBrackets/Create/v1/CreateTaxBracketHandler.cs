@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
 
 public sealed class CreateTaxBracketHandler(

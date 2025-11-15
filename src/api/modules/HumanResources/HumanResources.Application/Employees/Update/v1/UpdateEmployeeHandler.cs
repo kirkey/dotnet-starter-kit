@@ -52,7 +52,7 @@ public sealed class UpdateEmployeeHandler(
         }
 
         // Philippines-Specific: Handle regularization
-        if (request.RegularizationDate.HasValue && request.EmploymentClassification == "Regular")
+        if (request is { RegularizationDate: not null, EmploymentClassification: "Regular" })
         {
             employee.Regularize(request.RegularizationDate.Value);
         }

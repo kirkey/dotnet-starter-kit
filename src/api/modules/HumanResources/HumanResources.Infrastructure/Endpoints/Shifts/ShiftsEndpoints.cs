@@ -1,3 +1,4 @@
+
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;

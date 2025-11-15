@@ -28,7 +28,7 @@ public sealed class UpdateEmployeeContactHandler(
             request.Email,
             request.Address);
 
-        if (request.Priority.HasValue && request.Priority > 0)
+        if (request.Priority is > 0)
             contact.SetPriority(request.Priority.Value);
 
         await repository.UpdateAsync(contact, cancellationToken).ConfigureAwait(false);
