@@ -9,6 +9,9 @@ public class EmployeeContactConfiguration : IEntityTypeConfiguration<EmployeeCon
 {
     public void Configure(EntityTypeBuilder<EmployeeContact> builder)
     {
+        // Multi-tenant support
+        builder.IsMultiTenant();
+        
         // Primary key
         builder.HasKey(c => c.Id);
 

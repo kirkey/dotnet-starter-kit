@@ -6,6 +6,9 @@ public class TimesheetConfiguration : IEntityTypeConfiguration<Timesheet>
 {
     public void Configure(EntityTypeBuilder<Timesheet> builder)
     {
+        // Multi-tenant support
+        builder.IsMultiTenant();
+
         builder.HasKey(t => t.Id);
 
         builder.Property(t => t.PeriodType)
@@ -67,6 +70,9 @@ public class TimesheetLineConfiguration : IEntityTypeConfiguration<TimesheetLine
 {
     public void Configure(EntityTypeBuilder<TimesheetLine> builder)
     {
+        // Multi-tenant support
+        builder.IsMultiTenant();
+
         builder.HasKey(l => l.Id);
 
         builder.Property(l => l.RegularHours)

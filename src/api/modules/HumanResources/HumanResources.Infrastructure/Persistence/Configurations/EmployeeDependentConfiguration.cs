@@ -9,6 +9,9 @@ public class EmployeeDependentConfiguration : IEntityTypeConfiguration<EmployeeD
 {
     public void Configure(EntityTypeBuilder<EmployeeDependent> builder)
     {
+        // Multi-tenant support
+        builder.IsMultiTenant();
+        
         // Primary key
         builder.HasKey(d => d.Id);
 

@@ -3,9 +3,9 @@ using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence.Configurations;
 
 /// <summary>
-/// Entity configuration for Position.
+/// Entity configuration for Designation (Position).
 /// </summary>
-public class PositionConfiguration : IEntityTypeConfiguration<Designation>
+public class DesignationConfiguration : IEntityTypeConfiguration<Designation>
 {
     public void Configure(EntityTypeBuilder<Designation> builder)
     {

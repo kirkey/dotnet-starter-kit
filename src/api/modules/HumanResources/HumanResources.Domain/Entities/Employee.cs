@@ -271,10 +271,15 @@ public class Employee : AuditableEntity, IAggregateRoot
     public ICollection<PayrollLine> PayrollLines { get; private set; } = new List<PayrollLine>();
 
     /// <summary>
+    /// Collection of education records for this employee.
+    /// </summary>
+    public ICollection<EmployeeEducation> EducationRecords { get; private set; } = new List<EmployeeEducation>();
+
+    /// <summary>
     /// Collection of benefit enrollments for this employee.
     /// </summary>
     public ICollection<BenefitEnrollment> BenefitEnrollments { get; private set; } = new List<BenefitEnrollment>();
-
+    
     /// <summary>
     /// Creates a new employee record.
     /// </summary>

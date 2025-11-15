@@ -15,6 +15,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 
@@ -41,6 +42,7 @@ public static class HumanResourcesModule
             app.MapEmployeeDocumentsEndpoints();
             app.MapAttendanceEndpoints();
             app.MapTimesheetsEndpoints();
+            app.MapTimesheetLinesEndpoints();
             app.MapShiftsEndpoints();
             app.MapDocumentTemplatesEndpoints();
             app.MapGeneratedDocumentsEndpoints();

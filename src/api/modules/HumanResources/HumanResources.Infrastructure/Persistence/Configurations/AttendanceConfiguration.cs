@@ -6,6 +6,9 @@ public class AttendanceConfiguration : IEntityTypeConfiguration<Attendance>
 {
     public void Configure(EntityTypeBuilder<Attendance> builder)
     {
+        // Multi-tenant support
+        builder.IsMultiTenant();
+
         builder.HasKey(a => a.Id);
 
         builder.Property(a => a.AttendanceDate)

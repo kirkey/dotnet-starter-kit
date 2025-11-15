@@ -22,6 +22,8 @@ public static class EmployeesEndpoints
         employeesGroup.MapDeleteEmployeeEndpoint();
         employeesGroup.MapGetEmployeeEndpoint();
         employeesGroup.MapSearchEmployeesEndpoint();
+        employeesGroup.MapTerminateEmployeeEndpoint();
+        employeesGroup.MapRegularizeEmployeeEndpoint();
 
         return app;
     }
