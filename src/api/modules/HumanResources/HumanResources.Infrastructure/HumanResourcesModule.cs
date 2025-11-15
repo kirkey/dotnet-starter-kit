@@ -9,6 +9,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocumen
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
@@ -44,6 +45,7 @@ public static class HumanResourcesModule
             app.MapAttendanceEndpoints();
             app.MapTimesheetsEndpoints();
             app.MapTimesheetLinesEndpoints();
+            app.MapLeaveTypesEndpoints();
             app.MapShiftsEndpoints();
             app.MapShiftAssignmentEndpoints();
             app.MapDocumentTemplatesEndpoints();
