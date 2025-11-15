@@ -1,5 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
 
+using v1;
+
 public static class TaxBracketEndpoints
 {
     public static void MapTaxBracketEndpoints(this IEndpointRouteBuilder app)
@@ -9,5 +11,8 @@ public static class TaxBracketEndpoints
         group.MapUpdateTaxBracketEndpoint();
         group.MapGetTaxBracketEndpoint();
         group.MapDeleteTaxBracketEndpoint();
+        group.MapSearchTaxBracketsEndpoint();
     }
 }
+
+

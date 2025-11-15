@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
@@ -47,6 +48,7 @@ public static class HumanResourcesModule
             app.MapEmployeeDependentsEndpoints();
             app.MapEmployeeDocumentsEndpoints();
             app.MapAttendanceEndpoints();
+            app.MapBankAccountsEndpoints();
             app.MapTimesheetsEndpoints();
             app.MapTimesheetLinesEndpoints();
             app.MapLeaveTypesEndpoints();
@@ -104,6 +106,9 @@ public static class HumanResourcesModule
 
         builder.Services.AddKeyedScoped<IRepository<Attendance>, HumanResourcesRepository<Attendance>>("hr:attendance");
         builder.Services.AddKeyedScoped<IReadRepository<Attendance>, HumanResourcesRepository<Attendance>>("hr:attendance");
+
+        builder.Services.AddKeyedScoped<IRepository<BankAccount>, HumanResourcesRepository<BankAccount>>("hr:bankaccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<BankAccount>, HumanResourcesRepository<BankAccount>>("hr:bankaccounts");
 
         builder.Services.AddKeyedScoped<IRepository<Timesheet>, HumanResourcesRepository<Timesheet>>("hr:timesheets");
         builder.Services.AddKeyedScoped<IReadRepository<Timesheet>, HumanResourcesRepository<Timesheet>>("hr:timesheets");
