@@ -1,5 +1,8 @@
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
 
+using v1;
+using Microsoft.AspNetCore.Routing;
+
 public static class PayComponentRateEndpoints
 {
     internal static void MapPayComponentRatesEndpoints(this IEndpointRouteBuilder app)
@@ -12,6 +15,7 @@ public static class PayComponentRateEndpoints
         UpdatePayComponentRateEndpoint.MapUpdatePayComponentRateEndpoint(group);
         GetPayComponentRateEndpoint.MapGetPayComponentRateEndpoint(group);
         DeletePayComponentRateEndpoint.MapDeletePayComponentRateEndpoint(group);
+        SearchPayComponentRatesEndpoint.MapSearchPayComponentRatesEndpoint(group);
     }
 }
 

@@ -1,5 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
 
+using v1;
+
 public static class PayrollDeductionEndpoints
 {
     internal static void MapPayrollDeductionsEndpoints(this IEndpointRouteBuilder app)
@@ -12,5 +14,6 @@ public static class PayrollDeductionEndpoints
         group.MapUpdatePayrollDeductionEndpoint();
         group.MapGetPayrollDeductionEndpoint();
         group.MapDeletePayrollDeductionEndpoint();
+        group.MapSearchPayrollDeductionsEndpoint();
     }
 }

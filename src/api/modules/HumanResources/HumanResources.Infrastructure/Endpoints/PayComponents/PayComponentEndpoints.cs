@@ -1,5 +1,7 @@
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
 
+using v1;
+
 public static class PayComponentEndpoints
 {
     internal static void MapPayComponentsEndpoints(this IEndpointRouteBuilder app)
@@ -12,7 +14,7 @@ public static class PayComponentEndpoints
         group.MapUpdatePayComponentEndpoint();
         group.MapGetPayComponentEndpoint();
         group.MapDeletePayComponentEndpoint();
-        // group.MapSearchPayComponentsEndpoint(); // TODO: Implement search
+        group.MapSearchPayComponentsEndpoint();
     }
 }
 
