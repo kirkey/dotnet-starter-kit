@@ -15,6 +15,8 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
@@ -57,6 +59,8 @@ public static class HumanResourcesModule
             app.MapPayComponentsEndpoints();
             app.MapPayComponentRatesEndpoints();
             app.MapEmployeePayComponentsEndpoints();
+            app.MapPayrollsEndpoints();
+            app.MapPayrollLinesEndpoints();
             app.MapPayrollDeductionsEndpoints();
             app.MapTaxBracketEndpoints();
         }
