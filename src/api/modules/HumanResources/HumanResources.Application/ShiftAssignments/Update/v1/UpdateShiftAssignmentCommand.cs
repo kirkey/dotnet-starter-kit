@@ -3,24 +3,11 @@ namespace FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Update.
 /// <summary>
 /// Command to update a shift assignment.
 /// </summary>
-public sealed record UpdateShiftAssignmentCommand : IRequest<UpdateShiftAssignmentResponse>
-{
-    /// <summary>Shift assignment ID.</summary>
-    public DefaultIdType Id { get; init; }
-
-    /// <summary>Updated start date (optional).</summary>
-    public DateTime? StartDate { get; init; }
-
-    /// <summary>Updated end date (optional).</summary>
-    public DateTime? EndDate { get; init; }
-
-    /// <summary>Whether to enable recurring (optional).</summary>
-    public bool? IsRecurring { get; init; }
-
-    /// <summary>Day of week for recurring (optional).</summary>
-    public int? RecurringDayOfWeek { get; init; }
-
-    /// <summary>Updated notes (optional).</summary>
-    public string? Notes { get; init; }
-}
+public sealed record UpdateShiftAssignmentCommand(
+    [property: DefaultValue("00000000-0000-0000-0000-000000000000")] DefaultIdType Id,
+    [property: DefaultValue(null)] DateTime? StartDate = null,
+    [property: DefaultValue(null)] DateTime? EndDate = null,
+    [property: DefaultValue(null)] bool? IsRecurring = null,
+    [property: DefaultValue(null)] int? RecurringDayOfWeek = null,
+    [property: DefaultValue(null)] string? Notes = null) : IRequest<UpdateShiftAssignmentResponse>;
 
