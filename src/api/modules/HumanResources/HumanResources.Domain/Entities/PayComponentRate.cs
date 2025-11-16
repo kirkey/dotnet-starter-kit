@@ -21,13 +21,16 @@ public class PayComponentRate : AuditableEntity, IAggregateRoot
         DefaultIdType payComponentId,
         decimal minAmount,
         decimal maxAmount,
-        int year)
+        DateTime effectiveStartDate,
+        DateTime? effectiveEndDate = null)
     {
         Id = id;
         PayComponentId = payComponentId;
         MinAmount = minAmount;
         MaxAmount = maxAmount;
-        Year = year;
+        EffectiveStartDate = effectiveStartDate;
+        EffectiveEndDate = effectiveEndDate;
+        Year = effectiveStartDate.Year; // Derived from start date
         IsActive = true;
     }
 
@@ -94,19 +97,25 @@ public class PayComponentRate : AuditableEntity, IAggregateRoot
     public decimal? ExcessRate { get; private set; }
 
     /// <summary>
-    /// Year this rate is effective (e.g., 2025).
+    /// Effective start date for this rate (REQUIRED).
+    /// Rate becomes valid from this date forward.
+    /// Example: January 1, 2025 for new SSS contribution table.
     /// </summary>
-    public int Year { get; private set; }
+    public DateTime EffectiveStartDate { get; private set; }
 
     /// <summary>
-    /// Effective start date for this rate.
-    /// </summary>
-    public DateTime? EffectiveStartDate { get; private set; }
-
-    /// <summary>
-    /// Effective end date for this rate.
+    /// Effective end date for this rate (OPTIONAL).
+    /// If null, rate is valid indefinitely until superseded.
+    /// When a new rate is created, the previous rate's EndDate should be set.
+    /// Example: December 31, 2025 when new 2026 rates take effect.
     /// </summary>
     public DateTime? EffectiveEndDate { get; private set; }
+
+    /// <summary>
+    /// Year this rate is effective (DERIVED from EffectiveStartDate).
+    /// Used for quick year-based filtering.
+    /// </summary>
+    public int Year { get; private set; }
 
     /// <summary>
     /// Whether this rate is active.
@@ -119,42 +128,56 @@ public class PayComponentRate : AuditableEntity, IAggregateRoot
     public string? Description { get; private set; }
 
     /// <summary>
-    /// Creates a new pay component rate.
+    /// Creates a new pay component rate with temporal validity.
     /// </summary>
+    /// <param name="payComponentId">The pay component this rate belongs to.</param>
+    /// <param name="minAmount">Minimum bracket amount.</param>
+    /// <param name="maxAmount">Maximum bracket amount.</param>
+    /// <param name="effectiveStartDate">Date when this rate becomes effective (REQUIRED).</param>
+    /// <param name="effectiveEndDate">Date when this rate expires (optional - null means indefinite).</param>
     public static PayComponentRate Create(
         DefaultIdType payComponentId,
         decimal minAmount,
         decimal maxAmount,
-        int year)
+        DateTime effectiveStartDate,
+        DateTime? effectiveEndDate = null)
     {
+        if (effectiveEndDate.HasValue && effectiveEndDate.Value <= effectiveStartDate)
+            throw new ArgumentException("Effective end date must be after start date.", nameof(effectiveEndDate));
+
         var rate = new PayComponentRate(
             DefaultIdType.NewGuid(),
             payComponentId,
             minAmount,
             maxAmount,
-            year);
+            effectiveStartDate,
+            effectiveEndDate);
 
         return rate;
     }
 
     /// <summary>
-    /// Creates a new pay component rate for SSS/PhilHealth/Pag-IBIG.
+    /// Creates a new pay component rate for SSS/PhilHealth/Pag-IBIG contributions with temporal validity.
     /// </summary>
+    /// <param name="payComponentId">The pay component (SSS, PhilHealth, or Pag-IBIG).</param>
+    /// <param name="minAmount">Minimum salary bracket.</param>
+    /// <param name="maxAmount">Maximum salary bracket.</param>
+    /// <param name="employeeRate">Employee contribution rate (e.g., 0.045 for 4.5%).</param>
+    /// <param name="employerRate">Employer contribution rate (e.g., 0.095 for 9.5%).</param>
+    /// <param name="effectiveStartDate">Date when this contribution rate becomes effective.</param>
+    /// <param name="effectiveEndDate">Date when this rate expires (optional).</param>
+    /// <param name="additionalEmployerRate">Additional employer rate like SSS EC (optional).</param>
     public static PayComponentRate CreateContributionRate(
         DefaultIdType payComponentId,
         decimal minAmount,
         decimal maxAmount,
         decimal employeeRate,
         decimal employerRate,
-        int year,
+        DateTime effectiveStartDate,
+        DateTime? effectiveEndDate = null,
         decimal? additionalEmployerRate = null)
     {
-        var rate = new PayComponentRate(
-            DefaultIdType.NewGuid(),
-            payComponentId,
-            minAmount,
-            maxAmount,
-            year);
+        var rate = Create(payComponentId, minAmount, maxAmount, effectiveStartDate, effectiveEndDate);
 
         rate.EmployeeRate = employeeRate;
         rate.EmployerRate = employerRate;
@@ -164,22 +187,25 @@ public class PayComponentRate : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Creates a new pay component rate for graduated income tax.
+    /// Creates a new pay component rate for graduated income tax (BIR tax tables) with temporal validity.
     /// </summary>
+    /// <param name="payComponentId">The tax component.</param>
+    /// <param name="minAmount">Minimum taxable income for this bracket.</param>
+    /// <param name="maxAmount">Maximum taxable income for this bracket.</param>
+    /// <param name="baseAmount">Base tax for this bracket.</param>
+    /// <param name="excessRate">Tax rate on excess over minimum.</param>
+    /// <param name="effectiveStartDate">Date when this tax bracket becomes effective.</param>
+    /// <param name="effectiveEndDate">Date when this bracket expires (optional).</param>
     public static PayComponentRate CreateTaxBracket(
         DefaultIdType payComponentId,
         decimal minAmount,
         decimal maxAmount,
         decimal baseAmount,
         decimal excessRate,
-        int year)
+        DateTime effectiveStartDate,
+        DateTime? effectiveEndDate = null)
     {
-        var rate = new PayComponentRate(
-            DefaultIdType.NewGuid(),
-            payComponentId,
-            minAmount,
-            maxAmount,
-            year);
+        var rate = Create(payComponentId, minAmount, maxAmount, effectiveStartDate, effectiveEndDate);
 
         rate.BaseAmount = baseAmount;
         rate.ExcessRate = excessRate;
@@ -189,22 +215,25 @@ public class PayComponentRate : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Creates a new pay component rate with fixed amounts.
+    /// Creates a new pay component rate with fixed contribution amounts (for flat-rate contributions).
     /// </summary>
+    /// <param name="payComponentId">The pay component.</param>
+    /// <param name="minAmount">Minimum salary bracket.</param>
+    /// <param name="maxAmount">Maximum salary bracket.</param>
+    /// <param name="employeeAmount">Fixed employee contribution amount.</param>
+    /// <param name="employerAmount">Fixed employer contribution amount.</param>
+    /// <param name="effectiveStartDate">Date when this rate becomes effective.</param>
+    /// <param name="effectiveEndDate">Date when this rate expires (optional).</param>
     public static PayComponentRate CreateFixedRate(
         DefaultIdType payComponentId,
         decimal minAmount,
         decimal maxAmount,
         decimal? employeeAmount,
         decimal? employerAmount,
-        int year)
+        DateTime effectiveStartDate,
+        DateTime? effectiveEndDate = null)
     {
-        var rate = new PayComponentRate(
-            DefaultIdType.NewGuid(),
-            payComponentId,
-            minAmount,
-            maxAmount,
-            year);
+        var rate = Create(payComponentId, minAmount, maxAmount, effectiveStartDate, effectiveEndDate);
 
         rate.EmployeeAmount = employeeAmount;
         rate.EmployerAmount = employerAmount;
@@ -257,13 +286,91 @@ public class PayComponentRate : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Sets effective date range.
+    /// Sets effective date range and updates derived year.
     /// </summary>
     public PayComponentRate SetEffectiveDates(DateTime startDate, DateTime? endDate = null)
     {
+        if (endDate.HasValue && endDate.Value <= startDate)
+            throw new ArgumentException("End date must be after start date.", nameof(endDate));
+
         EffectiveStartDate = startDate;
         EffectiveEndDate = endDate;
+        Year = startDate.Year; // Update derived year
+        
         return this;
+    }
+
+    /// <summary>
+    /// Terminates this rate by setting the end date.
+    /// Used when a new rate supersedes this one.
+    /// </summary>
+    /// <param name="endDate">The date this rate becomes invalid.</param>
+    public PayComponentRate Terminate(DateTime endDate)
+    {
+        if (endDate <= EffectiveStartDate)
+            throw new ArgumentException("End date must be after start date.", nameof(endDate));
+
+        EffectiveEndDate = endDate;
+        IsActive = false;
+        
+        return this;
+    }
+
+    /// <summary>
+    /// Checks if this rate is valid/effective for a specific date.
+    /// </summary>
+    /// <param name="date">The date to check.</param>
+    /// <returns>True if the rate is effective on the given date.</returns>
+    public bool IsEffectiveOn(DateTime date)
+    {
+        if (!IsActive)
+            return false;
+
+        // Date must be on or after start date
+        if (date < EffectiveStartDate.Date)
+            return false;
+
+        // If end date is set, date must be before or on end date
+        if (EffectiveEndDate.HasValue && date > EffectiveEndDate.Value.Date)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if this rate's date range overlaps with another date range.
+    /// Used for validation to prevent overlapping rates for the same component/bracket.
+    /// </summary>
+    public bool OverlapsWith(DateTime otherStart, DateTime? otherEnd)
+    {
+        // If this rate has no end date, it's valid indefinitely
+        var thisEnd = EffectiveEndDate ?? DateTime.MaxValue;
+        var compareEnd = otherEnd ?? DateTime.MaxValue;
+
+        // Check for overlap
+        return EffectiveStartDate <= compareEnd && otherStart <= thisEnd;
+    }
+
+    /// <summary>
+    /// Checks if an amount falls within this rate's bracket.
+    /// </summary>
+    /// <param name="amount">The amount to check.</param>
+    /// <returns>True if amount is within MinAmount and MaxAmount.</returns>
+    public bool IsInBracket(decimal amount)
+    {
+        return amount >= MinAmount && amount <= MaxAmount;
+    }
+
+    /// <summary>
+    /// Gets the applicable rate for a specific date and amount.
+    /// Returns null if this rate is not applicable.
+    /// </summary>
+    public PayComponentRate? GetApplicableRate(DateTime date, decimal amount)
+    {
+        if (IsEffectiveOn(date) && IsInBracket(amount))
+            return this;
+        
+        return null;
     }
 
     /// <summary>

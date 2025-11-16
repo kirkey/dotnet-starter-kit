@@ -9,7 +9,11 @@ public sealed class CreatePayComponentRateHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Determine rate type and create appropriately
+        // Derive effective dates from Year if explicit start date not supplied
+        var startDate = request.EffectiveStartDate ?? new DateTime(request.Year, 1, 1);
+        var endDate = request.EffectiveEndDate ?? new DateTime(request.Year, 12, 31);
+
+        // Determine rate type and create appropriately (temporal pattern)
         PayComponentRate rate;
 
         if (request is { EmployeeRate: not null, EmployerRate: not null })
@@ -21,7 +25,8 @@ public sealed class CreatePayComponentRateHandler(
                 request.MaxAmount,
                 request.EmployeeRate.Value,
                 request.EmployerRate.Value,
-                request.Year,
+                startDate,
+                endDate,
                 request.AdditionalEmployerRate);
         }
         else if (request.TaxRate.HasValue)
@@ -33,7 +38,8 @@ public sealed class CreatePayComponentRateHandler(
                 request.MaxAmount,
                 request.BaseAmount ?? 0m,
                 request.ExcessRate ?? request.TaxRate.Value,
-                request.Year);
+                startDate,
+                endDate);
         }
         else
         {
@@ -44,13 +50,14 @@ public sealed class CreatePayComponentRateHandler(
                 request.MaxAmount,
                 request.EmployeeAmount,
                 request.EmployerAmount,
-                request.Year);
+                startDate,
+                endDate);
         }
 
-        // Set optional properties
-        if (request.EffectiveStartDate.HasValue)
+        // Override effective dates if both explicitly provided and differ
+        if (request.EffectiveStartDate.HasValue || request.EffectiveEndDate.HasValue)
         {
-            rate.SetEffectiveDates(request.EffectiveStartDate.Value, request.EffectiveEndDate);
+            rate.SetEffectiveDates(startDate, request.EffectiveEndDate ?? endDate);
         }
 
         if (!string.IsNullOrWhiteSpace(request.Description))
@@ -61,14 +68,14 @@ public sealed class CreatePayComponentRateHandler(
         await repository.AddAsync(rate, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Pay component rate created {RateId} for component {PayComponentId}, range {MinAmount}-{MaxAmount}, year {Year}",
+            "Pay component rate created {RateId} for component {PayComponentId}, range {MinAmount}-{MaxAmount}, effective {StartDate} to {EndDate}",
             rate.Id,
             request.PayComponentId,
             request.MinAmount,
             request.MaxAmount,
-            request.Year);
+            rate.EffectiveStartDate,
+            rate.EffectiveEndDate);
 
         return new CreatePayComponentRateResponse(rate.Id);
     }
 }
-

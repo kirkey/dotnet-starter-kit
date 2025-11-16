@@ -70,7 +70,9 @@ internal sealed class PhilippinePayrollSeeder
 
     /// <summary>
     /// Seeds SSS contribution components and 2025 rate brackets.
-    /// Based on SSS Circular 2024 (RA 11199).
+    /// Based on SSS Circular No. 2024-006 dated December 19, 2024.
+    /// Effective January 2025.
+    /// Reference: RA 11199 (Social Security Act of 2018).
     /// </summary>
     private async Task SeedSssComponentsAndRatesAsync(CancellationToken cancellationToken)
     {
@@ -86,11 +88,11 @@ internal sealed class PhilippinePayrollSeeder
             glAccountCode: "2120");
 
         sssEmployee.Update(
-            description: "Social Security System employee contribution (4.5% of monthly salary credit)",
+            description: "Social Security System employee contribution per SSS Circular No. 2024-006",
             displayOrder: 100);
 
         sssEmployee.SetAutoCalculated();
-        sssEmployee.SetMandatory("SSS Law RA 11199, SSS Circular 2024");
+        sssEmployee.SetMandatory("SSS Law RA 11199, SSS Circular No. 2024-006");
         sssEmployee.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
         sssEmployee.SetPayImpact(affectsGrossPay: false, affectsNetPay: true);
 
@@ -103,11 +105,11 @@ internal sealed class PhilippinePayrollSeeder
             glAccountCode: "6150");
 
         sssEmployer.Update(
-            description: "Social Security System employer contribution (9.5% of monthly salary credit)",
+            description: "Social Security System employer contribution per SSS Circular No. 2024-006",
             displayOrder: 101);
 
         sssEmployer.SetAutoCalculated();
-        sssEmployer.SetMandatory("SSS Law RA 11199, SSS Circular 2024");
+        sssEmployer.SetMandatory("SSS Law RA 11199, SSS Circular No. 2024-006");
         sssEmployer.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
         sssEmployer.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
 
@@ -124,7 +126,7 @@ internal sealed class PhilippinePayrollSeeder
             displayOrder: 102);
 
         sssEC.SetAutoCalculated();
-        sssEC.SetMandatory("SSS Law RA 11199, SSS Circular 2024");
+        sssEC.SetMandatory("SSS Law RA 11199, SSS Circular No. 2024-006");
         sssEC.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
         sssEC.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
 
@@ -135,45 +137,107 @@ internal sealed class PhilippinePayrollSeeder
 
         _logger.LogInformation("[{Tenant}] seeded SSS components", _context.TenantInfo!.Identifier);
 
-        // Seed SSS 2025 Rate Brackets
+        // Seed SSS 2025 Rate Brackets using TEMPORAL PATTERN (date ranges)
+        // Effective: January 1, 2025 - December 31, 2025
+        // Source: SSS Circular No. 2024-006, Schedule of SSS Contributions
+        var effectiveStart = new DateTime(2025, 1, 1);
+        var effectiveEnd = new DateTime(2025, 12, 31);
+
         var sssBrackets = new List<PayComponentRate>();
-        
-        // Bracket 1: ₱4,000 - ₱4,249.99
-        var sssBracket1 = PayComponentRate.Create(sssEmployee.Id, 4000m, 4249.99m, 2025);
-        sssBracket1.Update(employeeRate: 0.045m, employerRate: 0.095m, additionalEmployerRate: 0.01m, description: "MSC ₱4,000");
-        sssBrackets.Add(sssBracket1);
 
-        // Bracket 2: ₱4,250 - ₱4,749.99
-        var sssBracket2 = PayComponentRate.Create(sssEmployee.Id, 4250m, 4749.99m, 2025);
-        sssBracket2.Update(employeeRate: 0.045m, employerRate: 0.095m, additionalEmployerRate: 0.01m, description: "MSC ₱4,250");
-        sssBrackets.Add(sssBracket2);
+        // Complete 2025 SSS Contribution Table from Circular No. 2024-006
+        // Format: (Range Start, Range End, MSC, Employee, Employer, EC, Total)
+        var sssData = new (decimal min, decimal max, decimal msc, decimal ee, decimal er, decimal total)[]
+        {
+            (0m, 4249.99m, 4000m, 180m, 380m, 580m),           // Below ₱4,250
+            (4250m, 4749.99m, 4250m, 191.25m, 403.75m, 595m),
+            (4750m, 5249.99m, 4750m, 213.75m, 451.25m, 665m),
+            (5250m, 5749.99m, 5250m, 236.25m, 498.75m, 735m),
+            (5750m, 6249.99m, 5750m, 258.75m, 546.25m, 805m),
+            (6250m, 6749.99m, 6250m, 281.25m, 593.75m, 875m),
+            (6750m, 7249.99m, 6750m, 303.75m, 641.25m, 945m),
+            (7250m, 7749.99m, 7250m, 326.25m, 688.75m, 1015m),
+            (7750m, 8249.99m, 7750m, 348.75m, 736.25m, 1085m),
+            (8250m, 8749.99m, 8250m, 371.25m, 783.75m, 1155m),
+            (8750m, 9249.99m, 8750m, 393.75m, 831.25m, 1225m),
+            (9250m, 9749.99m, 9250m, 416.25m, 878.75m, 1295m),
+            (9750m, 10249.99m, 9750m, 438.75m, 926.25m, 1365m),
+            (10250m, 10749.99m, 10250m, 461.25m, 973.75m, 1435m),
+            (10750m, 11249.99m, 10750m, 483.75m, 1021.25m, 1505m),
+            (11250m, 11749.99m, 11250m, 506.25m, 1068.75m, 1575m),
+            (11750m, 12249.99m, 11750m, 528.75m, 1116.25m, 1645m),
+            (12250m, 12749.99m, 12250m, 551.25m, 1163.75m, 1715m),
+            (12750m, 13249.99m, 12750m, 573.75m, 1211.25m, 1785m),
+            (13250m, 13749.99m, 13250m, 596.25m, 1258.75m, 1855m),
+            (13750m, 14249.99m, 13750m, 618.75m, 1306.25m, 1925m),
+            (14250m, 14749.99m, 14250m, 641.25m, 1353.75m, 1995m),
+            (14750m, 15249.99m, 14750m, 663.75m, 1401.25m, 2065m),
+            (15250m, 15749.99m, 15250m, 686.25m, 1448.75m, 2135m),
+            (15750m, 16249.99m, 15750m, 708.75m, 1496.25m, 2205m),
+            (16250m, 16749.99m, 16250m, 731.25m, 1543.75m, 2275m),
+            (16750m, 17249.99m, 16750m, 753.75m, 1591.25m, 2345m),
+            (17250m, 17749.99m, 17250m, 776.25m, 1638.75m, 2415m),
+            (17750m, 18249.99m, 17750m, 798.75m, 1686.25m, 2485m),
+            (18250m, 18749.99m, 18250m, 821.25m, 1733.75m, 2555m),
+            (18750m, 19249.99m, 18750m, 843.75m, 1781.25m, 2625m),
+            (19250m, 19749.99m, 19250m, 866.25m, 1828.75m, 2695m),
+            (19750m, 20249.99m, 19750m, 888.75m, 1876.25m, 2765m),
+            (20250m, 20749.99m, 20000m, 900m, 1900m, 2800m),          // MSC starts at ₱20,000
+            (20750m, 21249.99m, 20000m, 900m, 1900m, 2800m),
+            (21250m, 21749.99m, 20000m, 900m, 1900m, 2800m),
+            (21750m, 22249.99m, 20000m, 900m, 1900m, 2800m),
+            (22250m, 22749.99m, 20000m, 900m, 1900m, 2800m),
+            (22750m, 23249.99m, 20000m, 900m, 1900m, 2800m),
+            (23250m, 23749.99m, 20000m, 900m, 1900m, 2800m),
+            (23750m, 24249.99m, 20000m, 900m, 1900m, 2800m),
+            (24250m, 24749.99m, 20000m, 900m, 1900m, 2800m),
+            (24750m, 25249.99m, 20000m, 900m, 1900m, 2800m),
+            (25250m, 25749.99m, 20000m, 900m, 1900m, 2800m),
+            (25750m, 26249.99m, 20000m, 900m, 1900m, 2800m),
+            (26250m, 26749.99m, 20000m, 900m, 1900m, 2800m),
+            (26750m, 27249.99m, 20000m, 900m, 1900m, 2800m),
+            (27250m, 27749.99m, 20000m, 900m, 1900m, 2800m),
+            (27750m, 28249.99m, 20000m, 900m, 1900m, 2800m),
+            (28250m, 28749.99m, 20000m, 900m, 1900m, 2800m),
+            (28750m, 29249.99m, 20000m, 900m, 1900m, 2800m),
+            (29250m, 29749.99m, 20000m, 900m, 1900m, 2800m),
+            (29750m, 30249.99m, 20000m, 900m, 1900m, 2800m),
+            (30250m, 30749.99m, 20000m, 900m, 1900m, 2800m),
+            (30750m, 31249.99m, 20000m, 900m, 1900m, 2800m),
+            (31250m, 31749.99m, 20000m, 900m, 1900m, 2800m),
+            (31750m, 32249.99m, 20000m, 900m, 1900m, 2800m),
+            (32250m, 32749.99m, 20000m, 900m, 1900m, 2800m),
+            (32750m, 33249.99m, 20000m, 900m, 1900m, 2800m),
+            (33250m, 33749.99m, 20000m, 900m, 1900m, 2800m),
+            (33750m, 34249.99m, 20000m, 900m, 1900m, 2800m),
+            (34250m, 999999.99m, 20000m, 900m, 1900m, 2800m)          // ₱35,000 and over
+        };
 
-        // Bracket 3: ₱4,750 - ₱5,249.99
-        var sssBracket3 = PayComponentRate.Create(sssEmployee.Id, 4750m, 5249.99m, 2025);
-        sssBracket3.Update(employeeRate: 0.045m, employerRate: 0.095m, additionalEmployerRate: 0.01m, description: "MSC ₱4,750");
-        sssBrackets.Add(sssBracket3);
+        foreach (var bracket in sssData)
+        {
+            // Create rate using TEMPORAL PATTERN with date ranges
+            var rate = PayComponentRate.CreateFixedRate(
+                payComponentId: sssEmployee.Id,
+                minAmount: bracket.min,
+                maxAmount: bracket.max,
+                employeeAmount: bracket.ee,
+                employerAmount: bracket.er,
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd);
 
-        // Bracket 4: ₱5,250 - ₱5,749.99
-        var sssBracket4 = PayComponentRate.Create(sssEmployee.Id, 5250m, 5749.99m, 2025);
-        sssBracket4.Update(employeeRate: 0.045m, employerRate: 0.095m, additionalEmployerRate: 0.01m, description: "MSC ₱5,250");
-        sssBrackets.Add(sssBracket4);
+            rate.Update(
+                description: $"MSC ₱{bracket.msc:N2} - Employee ₱{bracket.ee:N2}, Employer ₱{bracket.er:N2}, Total ₱{bracket.total:N2}");
 
-        // Bracket 5: ₱5,750 - ₱6,249.99
-        var sssBracket5 = PayComponentRate.Create(sssEmployee.Id, 5750m, 6249.99m, 2025);
-        sssBracket5.Update(employeeRate: 0.045m, employerRate: 0.095m, additionalEmployerRate: 0.01m, description: "MSC ₱5,750");
-        sssBrackets.Add(sssBracket5);
-
-        // Continue pattern up to maximum...
-        // Bracket 30: ₱30,000+
-        var sssBracket30 = PayComponentRate.Create(sssEmployee.Id, 30000m, 999999.99m, 2025);
-        sssBracket30.Update(employeeRate: 0.045m, employerRate: 0.095m, additionalEmployerRate: 0.01m, description: "MSC ₱30,000 (Maximum)");
-        sssBrackets.Add(sssBracket30);
+            sssBrackets.Add(rate);
+        }
 
         await _context.PayComponentRates.AddRangeAsync(sssBrackets, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} SSS rate brackets for 2025", 
-            _context.TenantInfo!.Identifier, sssBrackets.Count);
+        _logger.LogInformation(
+            "[{Tenant}] seeded {Count} SSS rate brackets for 2025 (Circular No. 2024-006) using temporal pattern", 
+            _context.TenantInfo!.Identifier, 
+            sssBrackets.Count);
     }
 
     /// <summary>
@@ -228,7 +292,10 @@ internal sealed class PhilippinePayrollSeeder
 
         _logger.LogInformation("[{Tenant}] seeded PhilHealth components", _context.TenantInfo!.Identifier);
 
-        // PhilHealth 2025 Rate Brackets (5% total, capped at ₱100,000)
+        // PhilHealth 2025 Rate Brackets using TEMPORAL PATTERN
+        var effectiveStart = new DateTime(2025, 1, 1);
+        var effectiveEnd = new DateTime(2025, 12, 31);
+        
         var philHealthBrackets = new List<PayComponentRate>
         {
             // Minimum: ₱10,000 — fixed amount per side
@@ -238,7 +305,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 9999.99m,
                 employeeAmount: 250m,
                 employerAmount: 250m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Below minimum - Fixed ₱500 total (₱250 each)"),
 
             // Standard rate: ₱10,000 - ₱100,000 — 2.5% each
@@ -248,7 +316,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 100000m,
                 employeeRate: 0.025m,
                 employerRate: 0.025m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "2.5% each (5% total)"),
 
             // Maximum: Above ₱100,000 — capped ₱2,500 each
@@ -258,7 +327,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 999999.99m,
                 employeeAmount: 2500m,
                 employerAmount: 2500m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Maximum cap ₱5,000 total (₱2,500 each)")
         };
 
@@ -321,7 +391,10 @@ internal sealed class PhilippinePayrollSeeder
 
         _logger.LogInformation("[{Tenant}] seeded Pag-IBIG components", _context.TenantInfo!.Identifier);
 
-        // Pag-IBIG 2025 Rate Brackets
+        // Pag-IBIG 2025 Rate Brackets using TEMPORAL PATTERN
+        var effectiveStart = new DateTime(2025, 1, 1);
+        var effectiveEnd = new DateTime(2025, 12, 31);
+        
         var pagibigBrackets = new List<PayComponentRate>
         {
             // 1% for salary ₱1,500 and below (EE 1%, ER 2%)
@@ -331,7 +404,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 1500m,
                 employeeRate: 0.01m,
                 employerRate: 0.02m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Employee 1%, Employer 2%"),
 
             // 2% for salary above ₱1,500 (EE 2%, ER 2%)
@@ -341,7 +415,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 999999.99m,
                 employeeRate: 0.02m,
                 employerRate: 0.02m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Employee 2%, Employer 2%")
         };
 
@@ -383,7 +458,10 @@ internal sealed class PhilippinePayrollSeeder
 
         _logger.LogInformation("[{Tenant}] seeded withholding tax component", _context.TenantInfo!.Identifier);
 
-        // TRAIN Law 2025 Tax Brackets (Monthly)
+        // TRAIN Law 2025 Tax Brackets (Monthly) using TEMPORAL PATTERN
+        var effectiveStart = new DateTime(2025, 1, 1);
+        var effectiveEnd = new DateTime(2025, 12, 31);
+        
         var taxBrackets = new List<PayComponentRate>
         {
             // Bracket 1: ₱20,833 and below - EXEMPT
@@ -393,7 +471,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 20833m,
                 baseAmount: 0m,
                 excessRate: 0m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "₱250,000 annual / ₱20,833 monthly and below - TAX EXEMPT"),
 
             // Bracket 2: Over ₱20,833 to ₱33,332 - 15%
@@ -403,7 +482,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 33332m,
                 baseAmount: 0m,
                 excessRate: 0.15m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Over ₱250,000 to ₱400,000 annual - 15% of excess over ₱250,000"),
 
             // Bracket 3: Over ₱33,332 to ₱66,666 - ₱22,500 + 20%
@@ -413,7 +493,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 66666m,
                 baseAmount: 22500m,
                 excessRate: 0.20m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Over ₱400,000 to ₱800,000 annual - ₱22,500 + 20% of excess over ₱400,000"),
 
             // Bracket 4: Over ₱66,666 to ₱166,666 - ₱102,500 + 25%
@@ -423,7 +504,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 166666m,
                 baseAmount: 102500m,
                 excessRate: 0.25m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Over ₱800,000 to ₱2,000,000 annual - ₱102,500 + 25% of excess over ₱800,000"),
 
             // Bracket 5: Over ₱166,666 to ₱666,666 - ₱402,500 + 30%
@@ -433,7 +515,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 666666m,
                 baseAmount: 402500m,
                 excessRate: 0.30m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Over ₱2,000,000 to ₱8,000,000 annual - ₱402,500 + 30% of excess over ₱2,000,000"),
 
             // Bracket 6: Over ₱666,666 - ₱2,202,500 + 35%
@@ -443,7 +526,8 @@ internal sealed class PhilippinePayrollSeeder
                 maxAmount: 999999999.99m,
                 baseAmount: 2202500m,
                 excessRate: 0.35m,
-                year: 2025)
+                effectiveStartDate: effectiveStart,
+                effectiveEndDate: effectiveEnd)
                 .Update(description: "Over ₱8,000,000 annual - ₱2,202,500 + 35% of excess over ₱8,000,000")
         };
 

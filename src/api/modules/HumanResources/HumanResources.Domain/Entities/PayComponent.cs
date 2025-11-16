@@ -309,4 +309,103 @@ public class PayComponent : AuditableEntity, IAggregateRoot
         IsActive = true;
         return this;
     }
+
+    // =====================================================
+    // Temporal Rate Query Methods (Master-Detail Pattern)
+    // =====================================================
+
+    /// <summary>
+    /// Gets all rates effective on a specific date.
+    /// Example: Get SSS contribution table for payroll date December 15, 2025.
+    /// </summary>
+    /// <param name="effectiveDate">The date to check (typically payroll date).</param>
+    /// <returns>All rate brackets effective on that date.</returns>
+    public IEnumerable<PayComponentRate> GetRatesEffectiveOn(DateTime effectiveDate)
+    {
+        return Rates.Where(r => r.IsEffectiveOn(effectiveDate)).OrderBy(r => r.MinAmount);
+    }
+
+    /// <summary>
+    /// Gets the rate for a specific amount on a specific date.
+    /// Example: Get SSS bracket for salary ₱25,000 on December 15, 2025.
+    /// </summary>
+    /// <param name="amount">The salary/income amount.</param>
+    /// <param name="effectiveDate">The date to check.</param>
+    /// <returns>The applicable rate bracket, or null if none found.</returns>
+    public PayComponentRate? GetApplicableRate(decimal amount, DateTime effectiveDate)
+    {
+        return Rates
+            .Where(r => r.IsEffectiveOn(effectiveDate) && r.IsInBracket(amount))
+            .OrderBy(r => r.MinAmount) // In case of overlaps, take first match
+            .FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Gets all rates for a specific year (for reporting/historical data).
+    /// </summary>
+    /// <param name="year">The year to filter by.</param>
+    /// <returns>All rates where EffectiveStartDate is in the specified year.</returns>
+    public IEnumerable<PayComponentRate> GetRatesForYear(int year)
+    {
+        return Rates.Where(r => r.Year == year).OrderBy(r => r.MinAmount);
+    }
+
+    /// <summary>
+    /// Adds a new rate and automatically terminates overlapping rates.
+    /// Use this when implementing new government contribution tables.
+    /// Example: SSS announces new rates effective January 1, 2026 - 
+    /// this will terminate existing 2025 rates on December 31, 2025.
+    /// </summary>
+    /// <param name="newRate">The new rate to add.</param>
+    public PayComponent AddRateAndSupersedePrevious(PayComponentRate newRate)
+    {
+        // Find any overlapping rates
+        var overlappingRates = Rates
+            .Where(r => r.IsActive && 
+                       r.OverlapsWith(newRate.EffectiveStartDate, newRate.EffectiveEndDate))
+            .ToList();
+
+        // Terminate overlapping rates
+        foreach (var existingRate in overlappingRates)
+        {
+            // Set end date to one day before new rate starts
+            existingRate.Terminate(newRate.EffectiveStartDate.AddDays(-1));
+        }
+
+        // Add new rate
+        Rates.Add(newRate);
+        
+        return this;
+    }
+
+    /// <summary>
+    /// Validates that no rates overlap for the same time period.
+    /// Used for data integrity checks.
+    /// </summary>
+    /// <returns>True if all rates have non-overlapping date ranges.</returns>
+    public bool HasNonOverlappingRates()
+    {
+        var activeRates = Rates.Where(r => r.IsActive).ToList();
+        
+        for (int i = 0; i < activeRates.Count; i++)
+        {
+            for (int j = i + 1; j < activeRates.Count; j++)
+            {
+                if (activeRates[i].OverlapsWith(
+                    activeRates[j].EffectiveStartDate, 
+                    activeRates[j].EffectiveEndDate))
+                {
+                    // Check if they're in different brackets (that's OK)
+                    if (activeRates[i].IsInBracket(activeRates[j].MinAmount) ||
+                        activeRates[i].IsInBracket(activeRates[j].MaxAmount))
+                    {
+                        return false; // Overlapping date AND bracket = bad
+                    }
+                }
+            }
+        }
+        
+        return true;
+    }
 }
+

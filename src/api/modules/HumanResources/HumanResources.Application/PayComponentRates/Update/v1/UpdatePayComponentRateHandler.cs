@@ -12,7 +12,7 @@ public sealed class UpdatePayComponentRateHandler(
         var rate = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         _ = rate ?? throw new PayComponentRateNotFoundException(request.Id);
 
-        // Use the Update method to apply changes
+        // Apply updates to numeric/percentage fields
         rate.Update(
             employeeRate: request.EmployeeRate,
             employerRate: request.EmployerRate,
@@ -24,18 +24,16 @@ public sealed class UpdatePayComponentRateHandler(
             excessRate: request.ExcessRate,
             description: request.Description);
 
-        // Update effective end date
+        // Update effective end date if provided (keep existing start date)
         if (request.EffectiveEndDate.HasValue)
         {
-            rate.SetEffectiveDates(rate.EffectiveStartDate ?? DateTime.UtcNow, request.EffectiveEndDate);
+            rate.SetEffectiveDates(rate.EffectiveStartDate, request.EffectiveEndDate);
         }
-
 
         await repository.UpdateAsync(rate, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Pay component rate with id {RateId} updated.", rate.Id);
+        logger.LogInformation("Pay component rate with id {RateId} updated. Effective range: {StartDate} - {EndDate}", rate.Id, rate.EffectiveStartDate, rate.EffectiveEndDate);
 
         return new UpdatePayComponentRateResponse(rate.Id);
     }
 }
-

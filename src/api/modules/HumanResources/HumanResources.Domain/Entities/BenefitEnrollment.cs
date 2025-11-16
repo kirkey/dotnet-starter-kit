@@ -50,7 +50,7 @@ public class BenefitEnrollment : AuditableEntity, IAggregateRoot
     public DateTime EffectiveDate { get; private set; }
 
     /// <summary>
-    /// Coverage level selected (Individual, Family, etc).
+    /// Coverage level selected (Individual, Family, etc.).
     /// </summary>
     public string? CoverageLevel { get; private set; }
 
