@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Deductions.Create.v1;
 
 /// <summary>
-/// Handler for creating a deduction.
+/// Handler for creating a deduction type.
 /// </summary>
 public sealed class CreateDeductionHandler(
     ILogger<CreateDeductionHandler> logger,
-    [FromKeyedServices("hr:deductions")] IRepository<PayComponent> repository)
+    [FromKeyedServices("hr:deductions")] IRepository<Deduction> repository)
     : IRequestHandler<CreateDeductionCommand, CreateDeductionResponse>
 {
     public async Task<CreateDeductionResponse> Handle(
@@ -14,29 +14,41 @@ public sealed class CreateDeductionHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        // Generate code from component name if not provided
-        var code = request.ComponentName.Replace(" ", "_", StringComparison.Ordinal).ToUpperInvariant();
+        var deduction = Deduction.Create(
+            request.DeductionName,
+            request.DeductionType,
+            request.RecoveryMethod);
 
-        var deduction = PayComponent.Create(
-            code,
-            request.ComponentName,
-            request.ComponentType,
-            calculationMethod: "Manual", // Default to Manual for deductions
-            request.GlAccountCode);
+        // Set recovery details if provided
+        deduction.SetRecoveryDetails(
+            request.RecoveryFixedAmount,
+            request.RecoveryPercentage,
+            request.InstallmentCount);
 
-        if (!string.IsNullOrWhiteSpace(request.Description))
-            deduction.Update(description: request.Description);
+        // Set compliance rules
+        deduction.SetMaxRecoveryPercentage(request.MaxRecoveryPercentage);
+        deduction.SetRequiresApproval(request.RequiresApproval);
+        deduction.SetIsRecurring(request.IsRecurring);
+
+        // Set GL account code and description
+        deduction.Update(
+            glAccountCode: request.GlAccountCode,
+            description: request.Description);
 
         await repository.AddAsync(deduction, cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Deduction created with ID {DeductionId}, Code {Code}, Name {ComponentName}, Type {ComponentType}",
+            "Deduction created: ID {Id}, Name {Name}, Type {Type}, Recovery {Method}",
             deduction.Id,
-            code,
-            request.ComponentName,
-            request.ComponentType);
+            deduction.DeductionName,
+            deduction.DeductionType,
+            deduction.RecoveryMethod);
 
-        return new CreateDeductionResponse(deduction.Id);
+        return new CreateDeductionResponse(
+            deduction.Id,
+            deduction.DeductionName,
+            deduction.DeductionType,
+            deduction.IsActive);
     }
 }
 

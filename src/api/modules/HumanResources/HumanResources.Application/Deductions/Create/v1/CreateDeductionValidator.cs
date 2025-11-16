@@ -1,45 +1,58 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Deductions.Create.v1;
 
 /// <summary>
-/// Validator for creating a deduction.
+/// Validator for CreateDeductionCommand.
 /// </summary>
-public class CreateDeductionValidator : AbstractValidator<CreateDeductionCommand>
+public sealed class CreateDeductionValidator : AbstractValidator<CreateDeductionCommand>
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CreateDeductionValidator"/> class.
-    /// </summary>
     public CreateDeductionValidator()
     {
-        RuleFor(x => x.ComponentName)
-            .NotEmpty()
-            .WithMessage("Component name is required")
-            .MaximumLength(100)
-            .WithMessage("Component name cannot exceed 100 characters");
+        RuleFor(x => x.DeductionName)
+            .NotEmpty().WithMessage("Deduction name is required.")
+            .MaximumLength(100).WithMessage("Deduction name must not exceed 100 characters.");
 
-        RuleFor(x => x.ComponentType)
-            .NotEmpty()
-            .WithMessage("Component type is required")
-            .Must(BeValidComponentType)
-            .WithMessage("Component type must be Earnings, Tax, or Deduction");
+        RuleFor(x => x.DeductionType)
+            .NotEmpty().WithMessage("Deduction type is required.")
+            .Must(BeValidDeductionType).WithMessage("Deduction type must be: Loan, CashAdvance, Uniform, Equipment, Damages, or Others.");
+
+        RuleFor(x => x.RecoveryMethod)
+            .NotEmpty().WithMessage("Recovery method is required.")
+            .Must(BeValidRecoveryMethod).WithMessage("Recovery method must be: Manual, FixedAmount, Percentage, or Installment.");
+
+        RuleFor(x => x.RecoveryFixedAmount)
+            .GreaterThan(0).WithMessage("Recovery fixed amount must be greater than 0.")
+            .When(x => x.RecoveryMethod == "FixedAmount");
+
+        RuleFor(x => x.RecoveryPercentage)
+            .InclusiveBetween(0.01m, 100m).WithMessage("Recovery percentage must be between 0.01 and 100.")
+            .When(x => x.RecoveryMethod == "Percentage");
+
+        RuleFor(x => x.InstallmentCount)
+            .GreaterThan(0).WithMessage("Installment count must be greater than 0.")
+            .When(x => x.RecoveryMethod == "Installment");
+
+        RuleFor(x => x.MaxRecoveryPercentage)
+            .InclusiveBetween(1m, 100m).WithMessage("Max recovery percentage must be between 1 and 100.");
 
         RuleFor(x => x.GlAccountCode)
-            .MaximumLength(20)
-            .WithMessage("GL account code cannot exceed 20 characters")
+            .MaximumLength(20).WithMessage("GL account code must not exceed 20 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.GlAccountCode));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
-            .WithMessage("Description cannot exceed 500 characters")
+            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 
-    private static bool BeValidComponentType(string? type)
+    private static bool BeValidDeductionType(string type)
     {
-        if (string.IsNullOrWhiteSpace(type))
-            return false;
+        var validTypes = new[] { "Loan", "CashAdvance", "Uniform", "Equipment", "Damages", "Others" };
+        return validTypes.Contains(type, StringComparer.OrdinalIgnoreCase);
+    }
 
-        var validTypes = new[] { "Earnings", "Tax", "Deduction" };
-        return validTypes.Contains(type);
+    private static bool BeValidRecoveryMethod(string method)
+    {
+        var validMethods = new[] { "Manual", "FixedAmount", "Percentage", "Installment" };
+        return validMethods.Contains(method, StringComparer.OrdinalIgnoreCase);
     }
 }
 

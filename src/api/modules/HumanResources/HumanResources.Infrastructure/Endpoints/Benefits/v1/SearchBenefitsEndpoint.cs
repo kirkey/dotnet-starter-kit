@@ -11,7 +11,7 @@ public static class SearchBenefitsEndpoint
     internal static RouteHandlerBuilder MapSearchBenefitsEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/", async (SearchBenefitsRequest request, ISender mediator) =>
+            .MapPost("/search", async (SearchBenefitsRequest request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);

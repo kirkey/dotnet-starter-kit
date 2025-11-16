@@ -5,23 +5,25 @@ namespace FSH.Starter.WebApi.HumanResources.Application.Deductions.Delete.v1;
 /// </summary>
 public sealed class DeleteDeductionHandler(
     ILogger<DeleteDeductionHandler> logger,
-    [FromKeyedServices("hr:deductions")] IRepository<PayComponent> repository)
+    [FromKeyedServices("hr:deductions")] IRepository<Deduction> repository)
     : IRequestHandler<DeleteDeductionCommand, DeleteDeductionResponse>
 {
     public async Task<DeleteDeductionResponse> Handle(
         DeleteDeductionCommand request,
         CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
+
         var deduction = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (deduction is null)
-            throw new Exception($"Deduction not found: {request.Id}");
+            throw new DeductionNotFoundException(request.Id);
 
         await repository.DeleteAsync(deduction, cancellationToken).ConfigureAwait(false);
 
-        logger.LogInformation("Deduction {DeductionId} deleted successfully", deduction.Id);
+        logger.LogInformation("Deduction {Id} deleted: {Name}", deduction.Id, deduction.DeductionName);
 
-        return new DeleteDeductionResponse(deduction.Id);
+        return new DeleteDeductionResponse(deduction.Id, true);
     }
 }
 

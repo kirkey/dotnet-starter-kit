@@ -1,42 +1,66 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Deductions.Specifications;
 
+using Domain.Entities;
+using Search.v1;
+
 /// <summary>
 /// Specification for getting a deduction by ID.
 /// </summary>
-public class DeductionByIdSpec : Specification<PayComponent>, ISingleResultSpecification<PayComponent>
+public sealed class DeductionByIdSpec : Specification<Deduction>
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DeductionByIdSpec"/> class.
-    /// </summary>
     public DeductionByIdSpec(DefaultIdType id)
     {
-        Query.Where(x => x.Id == id);
+        Query.Where(d => d.Id == id);
     }
 }
 
 /// <summary>
-/// Specification for searching deductions with filters.
+/// Specification for searching deductions.
 /// </summary>
-public class SearchDeductionsSpec : Specification<PayComponent>
+public sealed class SearchDeductionsSpec : Specification<Deduction>
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SearchDeductionsSpec"/> class.
-    /// </summary>
-    public SearchDeductionsSpec(Search.v1.SearchDeductionsRequest request)
+    public SearchDeductionsSpec(SearchDeductionsRequest request)
     {
-        Query.OrderBy(x => x.ComponentName);
+        Query.OrderBy(d => d.DeductionName);
 
-        if (!string.IsNullOrWhiteSpace(request.SearchString))
-            Query.Where(x => x.ComponentName.Contains(request.SearchString));
+        if (!string.IsNullOrWhiteSpace(request.DeductionType))
+            Query.Where(d => d.DeductionType == request.DeductionType);
 
-        if (!string.IsNullOrWhiteSpace(request.ComponentType))
-            Query.Where(x => x.ComponentType == request.ComponentType);
+        if (!string.IsNullOrWhiteSpace(request.RecoveryMethod))
+            Query.Where(d => d.RecoveryMethod == request.RecoveryMethod);
 
         if (request.IsActive.HasValue)
-            Query.Where(x => x.IsActive == request.IsActive);
+            Query.Where(d => d.IsActive == request.IsActive.Value);
 
-        if (request.IsCalculated.HasValue)
-            Query.Where(x => x.IsCalculated == request.IsCalculated);
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+            Query.Search(d => d.DeductionName!, $"%{request.SearchTerm}%");
+
+        Query.Skip((request.PageNumber - 1) * request.PageSize)
+            .Take(request.PageSize);
+    }
+}
+
+/// <summary>
+/// Specification for getting active deductions.
+/// </summary>
+public sealed class ActiveDeductionsSpec : Specification<Deduction>
+{
+    public ActiveDeductionsSpec()
+    {
+        Query.Where(d => d.IsActive)
+            .OrderBy(d => d.DeductionName);
+    }
+}
+
+/// <summary>
+/// Specification for getting deductions by type.
+/// </summary>
+public sealed class DeductionsByTypeSpec : Specification<Deduction>
+{
+    public DeductionsByTypeSpec(string deductionType)
+    {
+        Query.Where(d => d.DeductionType == deductionType)
+            .OrderBy(d => d.DeductionName);
     }
 }
 

@@ -1,30 +1,27 @@
-using FSH.Starter.WebApi.HumanResources.Application.Deductions.Get.v1;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Deductions.Search.v1;
 
 /// <summary>
-/// Request to search deductions with filtering and pagination.
+/// Request to search deductions.
 /// </summary>
-public class SearchDeductionsRequest : PaginationFilter, IRequest<PagedList<DeductionResponse>>
-{
-    /// <summary>
-    /// Gets or sets the search string for deduction name.
-    /// </summary>
-    public string? SearchString { get; set; }
+public sealed record SearchDeductionsRequest(
+    [property: DefaultValue(null)] string? DeductionType = null,
+    [property: DefaultValue(null)] string? RecoveryMethod = null,
+    [property: DefaultValue(null)] bool? IsActive = null,
+    [property: DefaultValue(null)] string? SearchTerm = null,
+    [property: DefaultValue(1)] int PageNumber = 1,
+    [property: DefaultValue(10)] int PageSize = 10
+) : IRequest<PagedList<DeductionDto>>;
 
-    /// <summary>
-    /// Gets or sets the component type filter (Deduction, Tax, Earnings).
-    /// </summary>
-    public string? ComponentType { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to filter by active deductions only.
-    /// </summary>
-    public bool? IsActive { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to filter by calculated deductions.
-    /// </summary>
-    public bool? IsCalculated { get; set; }
-}
+/// <summary>
+/// DTO for deduction search results.
+/// </summary>
+public sealed record DeductionDto(
+    DefaultIdType Id,
+    string DeductionName,
+    string DeductionType,
+    string RecoveryMethod,
+    decimal MaxRecoveryPercentage,
+    bool RequiresApproval,
+    bool IsRecurring,
+    bool IsActive);
 

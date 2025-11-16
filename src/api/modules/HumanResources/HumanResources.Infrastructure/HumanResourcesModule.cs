@@ -5,6 +5,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Benefits; // add benefits endpoints
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Deductions; // add deductions endpoints
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
@@ -58,6 +59,7 @@ public static class HumanResourcesModule
             app.MapBenefitAllocationsEndpoints();
             // Add Benefit master endpoints mapping
             app.MapBenefitEndpoints();
+            app.MapDeductionEndpoints(); // Add Deduction master endpoints
             app.MapTimesheetsEndpoints();
             app.MapTimesheetLinesEndpoints();
             app.MapLeaveTypesEndpoints();
@@ -202,6 +204,10 @@ public static class HumanResourcesModule
         // New: BenefitAllocation repositories to support endpoints
         builder.Services.AddKeyedScoped<IRepository<BenefitAllocation>, HumanResourcesRepository<BenefitAllocation>>("hr:benefitallocations");
         builder.Services.AddKeyedScoped<IReadRepository<BenefitAllocation>, HumanResourcesRepository<BenefitAllocation>>("hr:benefitallocations");
+
+        // New: Deduction repositories to support deductions master endpoints
+        builder.Services.AddKeyedScoped<IRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
+        builder.Services.AddKeyedScoped<IReadRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
 
         builder.Services.AddKeyedScoped<IRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
         builder.Services.AddKeyedScoped<IReadRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
