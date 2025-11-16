@@ -40,10 +40,10 @@ internal sealed class BenefitEnrollmentConfiguration : IEntityTypeConfiguration<
             .HasDatabaseName("IX_BenefitEnrollment_BenefitId");
 
         builder.HasIndex(e => new { e.EmployeeId, e.BenefitId, e.EffectiveDate })
-            .HasDatabaseName("IX_BenefitEnrollment_EmployeeId_BenefitId_EffectiveDate");
+            .IsUnique(false)
+            .HasDatabaseName("IX_BenefitEnrollment_Effective");
 
         builder.HasIndex(e => e.IsActive)
             .HasDatabaseName("IX_BenefitEnrollment_IsActive");
     }
 }
-

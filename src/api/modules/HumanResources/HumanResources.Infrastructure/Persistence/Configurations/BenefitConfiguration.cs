@@ -39,6 +39,11 @@ internal sealed class BenefitConfiguration : IEntityTypeConfiguration<Benefit>
 
         builder.HasIndex(b => b.IsActive)
             .HasDatabaseName("IX_Benefit_IsActive");
+
+        builder.HasIndex(b => b.BenefitType)
+            .HasDatabaseName("IX_Benefit_BenefitType");
+
+        builder.HasIndex(b => new { b.BenefitName, b.BenefitType })
+            .HasDatabaseName("IX_Benefit_Name_Type");
     }
 }
-

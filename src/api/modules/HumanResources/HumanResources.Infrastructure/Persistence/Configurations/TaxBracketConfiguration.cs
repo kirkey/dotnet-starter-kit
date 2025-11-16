@@ -30,6 +30,8 @@ internal sealed class TaxBracketConfiguration : IEntityTypeConfiguration<TaxBrac
 
         builder.HasIndex(t => new { t.TaxType, t.Year })
             .HasDatabaseName("IX_TaxBracket_TaxType_Year");
+
+        builder.HasIndex(t => new { t.TaxType, t.Year, t.MinIncome, t.MaxIncome })
+            .HasDatabaseName("IX_TaxBracket_Type_Year_Range");
     }
 }
-

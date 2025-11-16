@@ -85,6 +85,11 @@ public class BenefitEnrollment : AuditableEntity, IAggregateRoot
     public string? CoveredDependentIds { get; private set; }
 
     /// <summary>
+    /// Allocations/claims/usages tied to this enrollment.
+    /// </summary>
+    public ICollection<BenefitAllocation> Allocations { get; private set; } = new List<BenefitAllocation>();
+
+    /// <summary>
     /// Creates a new benefit enrollment.
     /// </summary>
     public static BenefitEnrollment Create(
@@ -152,4 +157,3 @@ public class BenefitEnrollment : AuditableEntity, IAggregateRoot
         return this;
     }
 }
-

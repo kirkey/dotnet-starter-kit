@@ -151,7 +151,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging", "api\modules\Me
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hr", "Hr", "{942E9F85-8B86-37BE-B991-648BB8660014}"
 	ProjectSection(SolutionItems) = preProject
-		api\modules\HumanResources\README.md = api\modules\HumanResources\README.md
 		api\modules\HumanResources\SETUP_COMPLETE.md = api\modules\HumanResources\SETUP_COMPLETE.md
 	EndProjectSection
 EndProject

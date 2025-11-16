@@ -18,6 +18,10 @@ public class OrganizationalUnitConfiguration : IEntityTypeConfiguration<Organiza
             .IsRequired()
             .HasMaxLength(50);
 
+        builder.HasIndex(ou => ou.Code)
+            .IsUnique()
+            .HasDatabaseName("IX_OrganizationalUnits_Code");
+
         builder.Property(ou => ou.Type)
             .IsRequired()
             .HasConversion<int>();
@@ -56,4 +60,3 @@ public class OrganizationalUnitConfiguration : IEntityTypeConfiguration<Organiza
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
-
