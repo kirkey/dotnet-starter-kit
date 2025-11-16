@@ -20,7 +20,7 @@ public static class UpdateLeaveRequestEndpoint
             .WithName(nameof(UpdateLeaveRequestEndpoint))
             .WithSummary("Updates a leave request")
             .WithDescription("Updates a leave request including status and approver comments. Primarily used for administrative updates.")
-            .Produces<UpdateLeaveRequestResponse>(StatusCodes.Status200OK)
+            .Produces<UpdateLeaveRequestResponse>()
             .RequirePermission("Permissions.LeaveRequests.Update")
             .MapToApiVersion(1);
     }

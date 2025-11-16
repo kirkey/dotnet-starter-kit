@@ -19,7 +19,7 @@ public static class GetPayrollEndpoint
             .WithName(nameof(GetPayrollEndpoint))
             .WithSummary("Gets a payroll period by ID")
             .WithDescription("Retrieves detailed information about a specific payroll period including totals, status, and GL posting details.")
-            .Produces<PayrollResponse>(StatusCodes.Status200OK)
+            .Produces<PayrollResponse>()
             .RequirePermission("Permissions.Payrolls.View")
             .MapToApiVersion(1);
     }

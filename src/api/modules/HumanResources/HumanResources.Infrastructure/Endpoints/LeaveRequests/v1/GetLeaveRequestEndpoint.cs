@@ -19,7 +19,7 @@ public static class GetLeaveRequestEndpoint
             .WithName(nameof(GetLeaveRequestEndpoint))
             .WithSummary("Gets a leave request by ID")
             .WithDescription("Retrieves detailed information about a specific leave request including status, dates, approval details, and attachments")
-            .Produces<LeaveRequestResponse>(StatusCodes.Status200OK)
+            .Produces<LeaveRequestResponse>()
             .RequirePermission("Permissions.LeaveRequests.View")
             .MapToApiVersion(1);
     }

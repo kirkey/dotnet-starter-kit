@@ -9,7 +9,8 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 internal sealed class HumanResourcesDbInitializer(
     ILogger<HumanResourcesDbInitializer> logger,
     HumanResourcesDbContext context,
-    ILogger<PhilippinePayrollSeeder> payrollLogger) : IDbInitializer
+    ILogger<PhilippinePayrollSeeder> payrollLogger,
+    ILogger<HRDemoDataSeeder> demoLogger) : IDbInitializer
 {
     public async Task MigrateAsync(CancellationToken cancellationToken)
     {
@@ -91,5 +92,9 @@ internal sealed class HumanResourcesDbInitializer(
         // Seed Philippine payroll components and rates
         var payrollSeeder = new PhilippinePayrollSeeder(payrollLogger, context);
         await payrollSeeder.SeedAsync(cancellationToken).ConfigureAwait(false);
+
+        // Seed demo/sample data for all HR entities
+        var demoSeeder = new HRDemoDataSeeder(demoLogger, context);
+        await demoSeeder.SeedAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -89,7 +89,7 @@ internal sealed class PhilippinePayrollSeeder
             description: "Social Security System employee contribution (4.5% of monthly salary credit)",
             displayOrder: 100);
 
-        sssEmployee.SetAutoCalculated(true);
+        sssEmployee.SetAutoCalculated();
         sssEmployee.SetMandatory("SSS Law RA 11199, SSS Circular 2024");
         sssEmployee.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
         sssEmployee.SetPayImpact(affectsGrossPay: false, affectsNetPay: true);
@@ -106,7 +106,7 @@ internal sealed class PhilippinePayrollSeeder
             description: "Social Security System employer contribution (9.5% of monthly salary credit)",
             displayOrder: 101);
 
-        sssEmployer.SetAutoCalculated(true);
+        sssEmployer.SetAutoCalculated();
         sssEmployer.SetMandatory("SSS Law RA 11199, SSS Circular 2024");
         sssEmployer.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
         sssEmployer.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
@@ -123,7 +123,7 @@ internal sealed class PhilippinePayrollSeeder
             description: "SSS Employees Compensation contribution (1.0% of monthly salary credit)",
             displayOrder: 102);
 
-        sssEC.SetAutoCalculated(true);
+        sssEC.SetAutoCalculated();
         sssEC.SetMandatory("SSS Law RA 11199, SSS Circular 2024");
         sssEC.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
         sssEC.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
@@ -198,7 +198,7 @@ internal sealed class PhilippinePayrollSeeder
             displayOrder: 110);
 
         philHealthEmployee
-            .SetAutoCalculated(true)
+            .SetAutoCalculated()
             .SetMandatory("PhilHealth Law RA 7875, PhilHealth Circular 2024-0001")
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: true);
@@ -216,7 +216,7 @@ internal sealed class PhilippinePayrollSeeder
             displayOrder: 111);
 
         philHealthEmployer
-            .SetAutoCalculated(true)
+            .SetAutoCalculated()
             .SetMandatory("PhilHealth Law RA 7875, PhilHealth Circular 2024-0001")
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
@@ -291,7 +291,7 @@ internal sealed class PhilippinePayrollSeeder
             displayOrder: 120);
 
         pagibigEmployee
-            .SetAutoCalculated(true)
+            .SetAutoCalculated()
             .SetMandatory("Pag-IBIG Law RA 9679, Pag-IBIG Fund Circular")
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: true);
@@ -309,7 +309,7 @@ internal sealed class PhilippinePayrollSeeder
             displayOrder: 121);
 
         pagibigEmployer
-            .SetAutoCalculated(true)
+            .SetAutoCalculated()
             .SetMandatory("Pag-IBIG Law RA 9679, Pag-IBIG Fund Circular")
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
@@ -373,7 +373,7 @@ internal sealed class PhilippinePayrollSeeder
             displayOrder: 130);
 
         withholdingTax
-            .SetAutoCalculated(true)
+            .SetAutoCalculated()
             .SetMandatory("TRAIN Law RA 10963, BIR Revenue Regulations")
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: true);
@@ -476,7 +476,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 1.25m,
                     description: "Overtime pay at 125% of regular hourly rate",
                     displayOrder: 10)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true),
 
@@ -492,7 +492,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 1.30m,
                     description: "Overtime pay on rest day at 130% of regular hourly rate",
                     displayOrder: 11)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true),
 
@@ -508,7 +508,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 1.30m,
                     description: "Overtime pay on special non-working holiday at 130%",
                     displayOrder: 12)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true),
 
@@ -524,7 +524,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 2.60m,
                     description: "Overtime pay on regular holiday at 260%",
                     displayOrder: 13)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true)
         };
@@ -557,7 +557,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 0.10m,
                     description: "10% additional pay for work between 10PM-6AM",
                     displayOrder: 20)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true),
 
@@ -572,7 +572,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 2.00m,
                     description: "200% pay for work on regular holiday",
                     displayOrder: 21)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true),
 
@@ -587,7 +587,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 1.30m,
                     description: "130% pay for work on special non-working holiday",
                     displayOrder: 22)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true),
 
@@ -602,7 +602,7 @@ internal sealed class PhilippinePayrollSeeder
                     rate: 1.30m,
                     description: "130% pay for work on scheduled rest day",
                     displayOrder: 23)
-                .SetAutoCalculated(true)
+                .SetAutoCalculated()
                 .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false)
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true)
         };
@@ -844,7 +844,7 @@ internal sealed class PhilippinePayrollSeeder
             displayOrder: 40);
 
         thirteenthMonth
-            .SetAutoCalculated(true)
+            .SetAutoCalculated()
             .SetMandatory("Presidential Decree No. 851 (13th Month Pay Law)")
             .SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false) // partial exemption up to ₱90K handled at calc time
             .SetPayImpact(affectsGrossPay: true, affectsNetPay: true)

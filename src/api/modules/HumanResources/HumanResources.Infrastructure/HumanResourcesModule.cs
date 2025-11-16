@@ -104,11 +104,18 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:contacts");
         builder.Services.AddKeyedScoped<IReadRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:contacts");
 
+        // Add alias for handlers that use hr:employeecontacts key
+        builder.Services.AddKeyedScoped<IRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:employeecontacts");
+        builder.Services.AddKeyedScoped<IReadRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:employeecontacts");
+
         builder.Services.AddKeyedScoped<IRepository<EmployeeDependent>, HumanResourcesRepository<EmployeeDependent>>("hr:dependents");
         builder.Services.AddKeyedScoped<IReadRepository<EmployeeDependent>, HumanResourcesRepository<EmployeeDependent>>("hr:dependents");
 
         builder.Services.AddKeyedScoped<IRepository<EmployeeDocument>, HumanResourcesRepository<EmployeeDocument>>("hr:documents");
         builder.Services.AddKeyedScoped<IReadRepository<EmployeeDocument>, HumanResourcesRepository<EmployeeDocument>>("hr:documents");
+
+        builder.Services.AddKeyedScoped<IRepository<EmployeeEducation>, HumanResourcesRepository<EmployeeEducation>>("hr:employeeeducations");
+        builder.Services.AddKeyedScoped<IReadRepository<EmployeeEducation>, HumanResourcesRepository<EmployeeEducation>>("hr:employeeeducations");
 
         builder.Services.AddKeyedScoped<IRepository<Attendance>, HumanResourcesRepository<Attendance>>("hr:attendance");
         builder.Services.AddKeyedScoped<IReadRepository<Attendance>, HumanResourcesRepository<Attendance>>("hr:attendance");
@@ -150,11 +157,23 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("hr:payrolldeductions");
         builder.Services.AddKeyedScoped<IReadRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("hr:payrolldeductions");
 
+        // Add alias for handlers that use humanresources:payrolldeductions key
+        builder.Services.AddKeyedScoped<IRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("humanresources:payrolldeductions");
+        builder.Services.AddKeyedScoped<IReadRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("humanresources:payrolldeductions");
+
         builder.Services.AddKeyedScoped<IRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
         builder.Services.AddKeyedScoped<IReadRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
 
+        // Add alias for Deductions endpoints that use hr:deductions key
+        builder.Services.AddKeyedScoped<IRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:deductions");
+        builder.Services.AddKeyedScoped<IReadRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:deductions");
+
         builder.Services.AddKeyedScoped<IRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("hr:paycomponentrates");
         builder.Services.AddKeyedScoped<IReadRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("hr:paycomponentrates");
+
+        // Add alias for handlers that use humanresources:paycomponentrates key
+        builder.Services.AddKeyedScoped<IRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("humanresources:paycomponentrates");
+        builder.Services.AddKeyedScoped<IReadRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("humanresources:paycomponentrates");
 
         builder.Services.AddKeyedScoped<IRepository<EmployeePayComponent>, HumanResourcesRepository<EmployeePayComponent>>("hr:employeepaycomponents");
         builder.Services.AddKeyedScoped<IReadRepository<EmployeePayComponent>, HumanResourcesRepository<EmployeePayComponent>>("hr:employeepaycomponents");
@@ -162,11 +181,19 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
         builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
 
+        // Add alias for Taxes endpoints that use hr:taxes key
+        builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxes");
+        builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxes");
+
         builder.Services.AddKeyedScoped<IRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");
         builder.Services.AddKeyedScoped<IReadRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");
 
         builder.Services.AddKeyedScoped<IRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:benefitenrollments");
         builder.Services.AddKeyedScoped<IReadRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:benefitenrollments");
+
+        // Add alias for Enrollments endpoints that use hr:enrollments key
+        builder.Services.AddKeyedScoped<IRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:enrollments");
+        builder.Services.AddKeyedScoped<IReadRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:enrollments");
 
         // New: BenefitAllocation repositories to support endpoints
         builder.Services.AddKeyedScoped<IRepository<BenefitAllocation>, HumanResourcesRepository<BenefitAllocation>>("hr:benefitallocations");
