@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates.v1;
 
@@ -15,9 +16,8 @@ public static class CreateDocumentTemplateEndpoint
             .WithName(nameof(CreateDocumentTemplateEndpoint))
             .WithSummary("Creates a new document template")
             .WithDescription("Creates a new document template for document generation")
-            .Produces<CreateDocumentTemplateResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Documents.Manage")
+            .Produces<CreateDocumentTemplateResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

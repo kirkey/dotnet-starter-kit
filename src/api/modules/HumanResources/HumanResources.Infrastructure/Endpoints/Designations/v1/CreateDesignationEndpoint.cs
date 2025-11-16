@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations.v1;
 
@@ -19,8 +20,7 @@ public static class CreateDesignationEndpoint
             .WithSummary("Creates a new designation")
             .WithDescription("Creates a new designation in an organizational unit")
             .Produces<CreateDesignationResponse>()
-            .RequirePermission("Permissions.Designations.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

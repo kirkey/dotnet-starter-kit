@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations.v1;
 
@@ -19,8 +20,7 @@ public static class DeleteDesignationEndpoint
             .WithSummary("Deletes a designation")
             .WithDescription("Deletes a designation")
             .Produces<DeleteDesignationResponse>()
-            .RequirePermission("Permissions.Designations.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

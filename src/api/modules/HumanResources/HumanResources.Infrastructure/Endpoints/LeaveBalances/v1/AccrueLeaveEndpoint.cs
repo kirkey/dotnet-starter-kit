@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Accrue.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances.v1;
 
@@ -16,8 +17,7 @@ public static class AccrueLeaveEndpoint
             .WithSummary("Accrues leave to a balance")
             .WithDescription("Adds accrued leave amount to a leave balance based on accrual frequency")
             .Produces<AccrueLeaveResponse>()
-            .RequirePermission("Permissions.LeaveBalances.Accrue")
+            .RequirePermission(FshPermission.NameFor(FshActions.Accrue, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

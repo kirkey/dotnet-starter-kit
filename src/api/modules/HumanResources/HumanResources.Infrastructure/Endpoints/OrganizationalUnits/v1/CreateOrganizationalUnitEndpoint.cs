@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits.v1;
 
@@ -13,14 +14,13 @@ public static class CreateOrganizationalUnitEndpoint
             .MapPost("/", async (CreateOrganizationalUnitCommand request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
-                return Results.Ok(response);
+                return Results.CreatedAtRoute(nameof(GetOrganizationalUnitEndpoint), new { id = response.Id }, response);
             })
             .WithName(nameof(CreateOrganizationalUnitEndpoint))
             .WithSummary("Creates a new organizational unit")
             .WithDescription("Creates a new organizational unit (Department, Division, or Section)")
             .Produces<CreateOrganizationalUnitResponse>()
-            .RequirePermission("Permissions.OrganizationalUnits.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

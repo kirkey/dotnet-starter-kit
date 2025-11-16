@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates.v1;
 
@@ -16,8 +17,7 @@ public static class DeleteDocumentTemplateEndpoint
             .WithSummary("Deletes a document template")
             .WithDescription("Deletes a document template")
             .Produces<DeleteDocumentTemplateResponse>()
-            .RequirePermission("Permissions.Documents.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

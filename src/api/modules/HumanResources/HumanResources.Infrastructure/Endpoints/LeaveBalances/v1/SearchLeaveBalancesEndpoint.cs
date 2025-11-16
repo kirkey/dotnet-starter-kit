@@ -18,8 +18,7 @@ public static class SearchLeaveBalancesEndpoint
             .WithSummary("Searches leave balances")
             .WithDescription("Searches and filters leave balances by employee, leave type, year with pagination support")
             .Produces<PagedList<LeaveBalanceResponse>>()
-            .RequirePermission("Permissions.LeaveBalances.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

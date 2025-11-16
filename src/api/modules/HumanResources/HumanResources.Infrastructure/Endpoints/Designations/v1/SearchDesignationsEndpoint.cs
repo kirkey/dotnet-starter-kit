@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Search.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations.v1;
 
@@ -20,8 +21,7 @@ public static class SearchDesignationsEndpoint
             .WithSummary("Searches designations")
             .WithDescription("Searches designations with pagination and filters")
             .Produces<PagedList<DesignationResponse>>()
-            .RequirePermission("Permissions.Designations.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

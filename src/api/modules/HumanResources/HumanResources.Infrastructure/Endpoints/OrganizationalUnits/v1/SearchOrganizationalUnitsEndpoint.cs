@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Search.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits.v1;
 
@@ -20,8 +21,7 @@ public static class SearchOrganizationalUnitsEndpoint
             .WithSummary("Searches organizational units")
             .WithDescription("Searches organizational units with pagination and filters")
             .Produces<PagedList<OrganizationalUnitResponse>>()
-            .RequirePermission("Permissions.OrganizationalUnits.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

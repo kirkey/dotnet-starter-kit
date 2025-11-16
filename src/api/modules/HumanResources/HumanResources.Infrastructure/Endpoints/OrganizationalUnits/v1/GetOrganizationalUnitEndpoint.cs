@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits.v1;
 
@@ -19,8 +20,7 @@ public static class GetOrganizationalUnitEndpoint
             .WithSummary("Gets organizational unit by ID")
             .WithDescription("Retrieves organizational unit details by ID")
             .Produces<OrganizationalUnitResponse>()
-            .RequirePermission("Permissions.OrganizationalUnits.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

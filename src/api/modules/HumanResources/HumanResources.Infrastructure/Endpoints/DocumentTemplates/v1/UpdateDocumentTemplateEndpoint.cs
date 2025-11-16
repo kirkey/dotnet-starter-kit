@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates.v1;
 
@@ -19,8 +20,7 @@ public static class UpdateDocumentTemplateEndpoint
             .WithSummary("Updates a document template")
             .WithDescription("Updates document template information")
             .Produces<UpdateDocumentTemplateResponse>()
-            .RequirePermission("Permissions.Documents.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

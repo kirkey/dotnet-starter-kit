@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits.v1;
 
@@ -19,8 +20,7 @@ public static class DeleteOrganizationalUnitEndpoint
             .WithSummary("Deletes an organizational unit")
             .WithDescription("Deletes an organizational unit if it has no children")
             .Produces<DeleteOrganizationalUnitResponse>()
-            .RequirePermission("Permissions.OrganizationalUnits.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

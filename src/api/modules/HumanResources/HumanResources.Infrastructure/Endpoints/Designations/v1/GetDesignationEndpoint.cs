@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations.v1;
 
@@ -19,8 +20,7 @@ public static class GetDesignationEndpoint
             .WithSummary("Gets designation by ID")
             .WithDescription("Retrieves designation details by ID")
             .Produces<DesignationResponse>()
-            .RequirePermission("Permissions.Designations.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-
