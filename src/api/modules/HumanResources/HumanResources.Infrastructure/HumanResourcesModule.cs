@@ -1,6 +1,8 @@
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
@@ -16,6 +18,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
@@ -49,6 +52,8 @@ public static class HumanResourcesModule
             app.MapEmployeeDocumentsEndpoints();
             app.MapAttendanceEndpoints();
             app.MapBankAccountsEndpoints();
+            app.MapBenefitEnrollmentsEndpoints();
+            app.MapBenefitAllocationsEndpoints();
             app.MapTimesheetsEndpoints();
             app.MapTimesheetLinesEndpoints();
             app.MapLeaveTypesEndpoints();
@@ -61,6 +66,7 @@ public static class HumanResourcesModule
             app.MapPayComponentsEndpoints();
             app.MapPayComponentRatesEndpoints();
             app.MapEmployeePayComponentsEndpoints();
+            app.MapPerformanceReviewsEndpoints();
             app.MapPayrollsEndpoints();
             app.MapPayrollLinesEndpoints();
             app.MapPayrollDeductionsEndpoints();
