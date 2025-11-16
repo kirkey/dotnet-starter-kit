@@ -19,33 +19,18 @@ public class EmployeeNotFoundException : NotFoundException
 /// <summary>
 /// Exception thrown when employee number already exists.
 /// </summary>
-public class DuplicateEmployeeNumberException : BadRequestException
-{
-    public DuplicateEmployeeNumberException(string employeeNumber)
-        : base($"Employee number '{employeeNumber}' already exists.")
-    {
-    }
-}
+public class DuplicateEmployeeNumberException(string employeeNumber)
+    : BadRequestException($"Employee number '{employeeNumber}' already exists.");
 
 /// <summary>
 /// Exception thrown when employee cannot be terminated (e.g., already terminated).
 /// </summary>
-public class InvalidEmployeeTerminationException : BadRequestException
-{
-    public InvalidEmployeeTerminationException(DefaultIdType employeeId, string currentStatus)
-        : base($"Cannot terminate employee '{employeeId}' with status '{currentStatus}'.")
-    {
-    }
-}
+public class InvalidEmployeeTerminationException(DefaultIdType employeeId, string currentStatus)
+    : BadRequestException($"Cannot terminate employee '{employeeId}' with status '{currentStatus}'.");
 
 /// <summary>
 /// Exception thrown when invalid employment status is provided.
 /// </summary>
-public class InvalidEmploymentStatusException : BadRequestException
-{
-    public InvalidEmploymentStatusException(string status)
-        : base($"Employment status '{status}' is not valid.")
-    {
-    }
-}
+public class InvalidEmploymentStatusException(string status)
+    : BadRequestException($"Employment status '{status}' is not valid.");
 

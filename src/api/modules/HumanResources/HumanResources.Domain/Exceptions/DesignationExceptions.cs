@@ -19,11 +19,6 @@ public class DesignationNotFoundException : NotFoundException
 /// <summary>
 /// Exception thrown when a designation code already exists in an organizational unit.
 /// </summary>
-public class DesignationCodeAlreadyExistsException : ConflictException
-{
-    public DesignationCodeAlreadyExistsException(string code)
-        : base($"Designation with code '{code}' already exists in this organizational unit.")
-    {
-    }
-}
+public class DesignationCodeAlreadyExistsException(string code)
+    : ConflictException($"Designation with code '{code}' already exists in this organizational unit.");
 

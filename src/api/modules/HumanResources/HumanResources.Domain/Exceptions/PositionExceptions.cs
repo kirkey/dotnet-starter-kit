@@ -19,11 +19,6 @@ public class PositionNotFoundException : NotFoundException
 /// <summary>
 /// Exception thrown when a position code already exists in an organizational unit.
 /// </summary>
-public class PositionCodeAlreadyExistsException : ConflictException
-{
-    public PositionCodeAlreadyExistsException(string code)
-        : base($"Position with code '{code}' already exists in this organizational unit.")
-    {
-    }
-}
+public class PositionCodeAlreadyExistsException(string code)
+    : ConflictException($"Position with code '{code}' already exists in this organizational unit.");
 
