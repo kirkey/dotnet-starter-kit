@@ -1,6 +1,7 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Update.v1;
+using Shared.Authorization;
 
-namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates.v1;
 
 public static class UpdatePayComponentRateEndpoint
 {
@@ -16,7 +17,7 @@ public static class UpdatePayComponentRateEndpoint
         .WithSummary("Update a pay component rate")
         .WithDescription("Updates an existing pay component rate/bracket")
         .Produces<UpdatePayComponentRateResponse>()
-        .RequirePermission("Permissions.PayComponentRates.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

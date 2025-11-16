@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Attendances.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance.v1;
@@ -19,7 +20,7 @@ public static class UpdateAttendanceEndpoint
             .WithSummary("Updates an attendance record")
             .WithDescription("Updates attendance information")
             .Produces<UpdateAttendanceResponse>()
-            .RequirePermission("Permissions.Attendance.Edit")
+            .RequirePermission(FshPermission.NameFor(FshActions.Edit, FshResources.Attendance))
             .MapToApiVersion(1);
     }
 }

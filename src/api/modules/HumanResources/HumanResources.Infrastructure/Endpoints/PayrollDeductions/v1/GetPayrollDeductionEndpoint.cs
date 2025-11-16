@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
@@ -16,7 +17,7 @@ public static class GetPayrollDeductionEndpoint
             .WithSummary("Get a payroll deduction by ID")
             .WithDescription("Retrieves a specific payroll deduction by its unique identifier")
             .Produces<PayrollDeductionResponse>()
-            .RequirePermission("Permissions.PayrollDeductions.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

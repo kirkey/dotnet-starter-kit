@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments.v1;
 
@@ -20,7 +21,7 @@ public static class UpdateBenefitEnrollmentEndpoint
             .WithSummary("Updates a benefit enrollment")
             .WithDescription("Updates a benefit enrollment. Limited updates allowed depending on approval status.")
             .Produces<UpdateBenefitEnrollmentResponse>()
-            .RequirePermission("Permissions.BenefitEnrollments.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
@@ -17,7 +16,7 @@ public static class DeleteTaxBracketEndpoint
         .WithSummary("Delete tax bracket")
         .WithDescription("Deletes tax bracket by its unique identifier")
         .Produces<DeleteTaxBracketResponse>()
-        .RequirePermission("Permissions.TaxBrackets.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

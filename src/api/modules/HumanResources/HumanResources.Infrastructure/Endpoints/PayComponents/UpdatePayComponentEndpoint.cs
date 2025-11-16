@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayComponents.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
 
@@ -17,8 +18,7 @@ public static class UpdatePayComponentEndpoint
             .WithSummary("Update a pay component")
             .WithDescription("Updates an existing pay component")
             .Produces<UpdatePayComponentResponse>()
-            .RequirePermission("Permissions.PayComponents.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }
-

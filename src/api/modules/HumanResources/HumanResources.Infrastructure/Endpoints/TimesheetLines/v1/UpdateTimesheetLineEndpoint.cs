@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines.v1;
 
@@ -22,7 +23,7 @@ public static class UpdateTimesheetLineEndpoint
             .WithSummary("Updates timesheet line")
             .WithDescription("Updates hours, project allocation, or billing information for a timesheet line")
             .Produces<UpdateTimesheetLineResponse>()
-            .RequirePermission("Permissions.TimesheetLines.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments.v1;
 
@@ -19,7 +20,7 @@ public static class UpdateShiftAssignmentEndpoint
             .WithSummary("Updates a shift assignment")
             .WithDescription("Updates the dates, recurrence, or notes for a shift assignment")
             .Produces<UpdateShiftAssignmentResponse>()
-            .RequirePermission("Permissions.ShiftAssignments.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Attendance))
             .MapToApiVersion(1);
     }
 }

@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Search.v1;
 
@@ -17,7 +18,7 @@ public static class SearchTimesheetsEndpoint
             .WithSummary("Searches timesheets")
             .WithDescription("Searches timesheets with pagination and filters")
             .Produces<PagedList<TimesheetResponse>>()
-            .RequirePermission("Permissions.Timesheets.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Get.v1.BenefitAllocationResponse;
+using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations.v1;
 
@@ -19,8 +20,8 @@ public static class SearchBenefitAllocationsEndpoint
             .WithName(nameof(SearchBenefitAllocationsEndpoint))
             .WithSummary("Searches benefit allocations")
             .WithDescription("Searches and filters benefit allocations by employee, benefit, status, year with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.BenefitAllocations.View")
+            .Produces<PagedList<BenefitAllocationResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

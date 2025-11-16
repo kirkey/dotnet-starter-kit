@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines.v1;
 
@@ -19,7 +20,7 @@ public static class DeleteTimesheetLineEndpoint
             .WithSummary("Deletes a timesheet line")
             .WithDescription("Deletes a specific timesheet line entry from the system")
             .Produces<DeleteTimesheetLineResponse>()
-            .RequirePermission("Permissions.TimesheetLines.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

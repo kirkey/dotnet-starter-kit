@@ -1,5 +1,6 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Get.v1.BankAccountResponse;
+using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts.v1;
 
@@ -19,8 +20,8 @@ public static class SearchBankAccountsEndpoint
             .WithName(nameof(SearchBankAccountsEndpoint))
             .WithSummary("Searches bank accounts")
             .WithDescription("Searches and filters bank accounts by employee, bank name, account type with pagination support. Account numbers are masked for security.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.BankAccounts.View")
+            .Produces<PagedList<BankAccountResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

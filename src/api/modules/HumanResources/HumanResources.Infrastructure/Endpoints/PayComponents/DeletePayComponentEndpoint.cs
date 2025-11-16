@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayComponents.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
 
@@ -16,8 +17,7 @@ public static class DeletePayComponentEndpoint
             .WithSummary("Delete a pay component")
             .WithDescription("Deletes a pay component by its unique identifier")
             .Produces<DeletePayComponentResponse>()
-            .RequirePermission("Permissions.PayComponents.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }
-

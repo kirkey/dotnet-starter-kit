@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
@@ -21,7 +22,7 @@ public static class UpdatePayrollEndpoint
             .WithSummary("Updates a payroll period")
             .WithDescription("Updates payroll period details such as notes. Locked payrolls cannot be updated.")
             .Produces<UpdatePayrollResponse>()
-            .RequirePermission("Permissions.Payrolls.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

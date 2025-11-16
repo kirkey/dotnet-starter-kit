@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts.v1;
 
@@ -19,7 +20,7 @@ public static class UpdateShiftEndpoint
             .WithSummary("Updates a shift")
             .WithDescription("Updates shift information")
             .Produces<UpdateShiftResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

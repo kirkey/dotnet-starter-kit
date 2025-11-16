@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteShiftAssignmentEndpoint
             .WithSummary("Deletes a shift assignment")
             .WithDescription("Removes a shift assignment from the system")
             .Produces<DeleteShiftAssignmentResponse>()
-            .RequirePermission("Permissions.ShiftAssignments.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Attendance))
             .MapToApiVersion(1);
     }
 }

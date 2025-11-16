@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews.v1;
@@ -20,7 +21,7 @@ public static class UpdatePerformanceReviewEndpoint
             .WithSummary("Updates a performance review")
             .WithDescription("Updates a performance review. Allowed only before submission. Cannot update submitted reviews.")
             .Produces<UpdatePerformanceReviewResponse>()
-            .RequirePermission("Permissions.PerformanceReviews.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

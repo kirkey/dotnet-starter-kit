@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents.v1;
 
@@ -19,7 +20,7 @@ public static class CreateEmployeeDependentEndpoint
             .WithSummary("Creates a new employee dependent")
             .WithDescription("Creates a new employee dependent (family member, beneficiary)")
             .Produces<CreateEmployeeDependentResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

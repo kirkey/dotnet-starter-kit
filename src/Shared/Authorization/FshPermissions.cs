@@ -93,6 +93,76 @@ public static class FshPermissions
         new("Create Messaging", FshActions.Create, FshResources.Messaging, IsBasic: true),
         new("Update Messaging", FshActions.Update, FshResources.Messaging),
         new("Delete Messaging", FshActions.Delete, FshResources.Messaging),
+
+        //Human Resources - Organization & Setup
+        new("View Organization", FshActions.View, FshResources.Organization),
+        new("Search Organization", FshActions.Search, FshResources.Organization),
+        new("Create Organization", FshActions.Create, FshResources.Organization),
+        new("Update Organization", FshActions.Update, FshResources.Organization),
+        new("Delete Organization", FshActions.Delete, FshResources.Organization),
+        new("Import Organization", FshActions.Import, FshResources.Organization),
+        new("Export Organization", FshActions.Export, FshResources.Organization),
+
+        //Human Resources - Employees
+        new("View Employees", FshActions.View, FshResources.Employees),
+        new("Search Employees", FshActions.Search, FshResources.Employees),
+        new("Create Employees", FshActions.Create, FshResources.Employees),
+        new("Update Employees", FshActions.Update, FshResources.Employees),
+        new("Delete Employees", FshActions.Delete, FshResources.Employees),
+        new("Import Employees", FshActions.Import, FshResources.Employees),
+        new("Export Employees", FshActions.Export, FshResources.Employees),
+
+        //Human Resources - Attendance
+        new("View Attendance", FshActions.View, FshResources.Attendance),
+        new("Search Attendance", FshActions.Search, FshResources.Attendance),
+        new("Create Attendance", FshActions.Create, FshResources.Attendance),
+        new("Update Attendance", FshActions.Update, FshResources.Attendance),
+        new("Delete Attendance", FshActions.Delete, FshResources.Attendance),
+        new("Import Attendance", FshActions.Import, FshResources.Attendance),
+        new("Export Attendance", FshActions.Export, FshResources.Attendance),
+
+        //Human Resources - Timesheets
+        new("View Timesheets", FshActions.View, FshResources.Timesheets),
+        new("Search Timesheets", FshActions.Search, FshResources.Timesheets),
+        new("Create Timesheets", FshActions.Create, FshResources.Timesheets),
+        new("Update Timesheets", FshActions.Update, FshResources.Timesheets),
+        new("Delete Timesheets", FshActions.Delete, FshResources.Timesheets),
+        new("Import Timesheets", FshActions.Import, FshResources.Timesheets),
+        new("Export Timesheets", FshActions.Export, FshResources.Timesheets),
+
+        //Human Resources - Leaves
+        new("View Leaves", FshActions.View, FshResources.Leaves),
+        new("Search Leaves", FshActions.Search, FshResources.Leaves),
+        new("Create Leaves", FshActions.Create, FshResources.Leaves),
+        new("Update Leaves", FshActions.Update, FshResources.Leaves),
+        new("Delete Leaves", FshActions.Delete, FshResources.Leaves),
+        new("Import Leaves", FshActions.Import, FshResources.Leaves),
+        new("Export Leaves", FshActions.Export, FshResources.Leaves),
+
+        //Human Resources - Payroll
+        new("View Payroll", FshActions.View, FshResources.Payroll),
+        new("Search Payroll", FshActions.Search, FshResources.Payroll),
+        new("Create Payroll", FshActions.Create, FshResources.Payroll),
+        new("Update Payroll", FshActions.Update, FshResources.Payroll),
+        new("Delete Payroll", FshActions.Delete, FshResources.Payroll),
+        new("Import Payroll", FshActions.Import, FshResources.Payroll),
+        new("Export Payroll", FshActions.Export, FshResources.Payroll),
+
+        //Human Resources - Benefits
+        new("View Benefits", FshActions.View, FshResources.Benefits),
+        new("Search Benefits", FshActions.Search, FshResources.Benefits),
+        new("Create Benefits", FshActions.Create, FshResources.Benefits),
+        new("Update Benefits", FshActions.Update, FshResources.Benefits),
+        new("Delete Benefits", FshActions.Delete, FshResources.Benefits),
+        new("Import Benefits", FshActions.Import, FshResources.Benefits),
+        new("Export Benefits", FshActions.Export, FshResources.Benefits),
+
+        // Employees - special operations
+        new("Regularize Employees", FshActions.Regularize, FshResources.Employees),
+        new("Terminate Employees", FshActions.Terminate, FshResources.Employees),
+        
+        // Benefit Enrollments - special operation
+        new("Terminate BenefitEnrollments", FshActions.Terminate, FshResources.Benefits),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);

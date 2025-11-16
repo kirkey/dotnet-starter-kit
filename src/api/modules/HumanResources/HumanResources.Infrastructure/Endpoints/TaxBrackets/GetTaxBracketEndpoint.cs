@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
@@ -17,7 +16,7 @@ public static class GetTaxBracketEndpoint
         .WithSummary("Get tax bracket by ID")
         .WithDescription("Retrieves tax bracket by its unique identifier")
         .Produces<TaxBracketResponse>()
-        .RequirePermission("Permissions.TaxBrackets.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

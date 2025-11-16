@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments.v1;
 
@@ -16,7 +17,7 @@ public static class CreateShiftAssignmentEndpoint
             .WithSummary("Creates a new shift assignment")
             .WithDescription("Assigns a shift to an employee for a specified date range")
             .Produces<CreateShiftAssignmentResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.ShiftAssignments.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Attendance))
             .MapToApiVersion(1);
     }
 }

@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Process.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
@@ -11,7 +12,7 @@ public static class ProcessPayrollEndpoint
     internal static RouteHandlerBuilder MapProcessPayrollEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id}/process", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id:guid}/process", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new ProcessPayrollCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -21,7 +22,7 @@ public static class ProcessPayrollEndpoint
             .WithSummary("Processes a payroll period")
             .WithDescription("Initiates processing of a Draft payroll period. Calculates pay totals for all lines. Transitions to Processing status.")
             .Produces<ProcessPayrollResponse>(StatusCodes.Status202Accepted)
-            .RequirePermission("Permissions.Payrolls.Process")
+            .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

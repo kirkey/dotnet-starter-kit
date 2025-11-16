@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts.v1;
@@ -19,7 +20,7 @@ public static class DeleteEmployeeContactEndpoint
             .WithSummary("Deletes an employee contact")
             .WithDescription("Deletes an employee contact record")
             .Produces<DeleteEmployeeContactResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

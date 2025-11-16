@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteShiftEndpoint
             .WithSummary("Deletes a shift")
             .WithDescription("Deletes a shift template")
             .Produces<DeleteShiftResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

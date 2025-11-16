@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances.v1;
 
@@ -19,7 +20,7 @@ public static class UpdateLeaveBalanceEndpoint
             .WithSummary("Updates a leave balance")
             .WithDescription("Updates leave balance opening balance or other details")
             .Produces<UpdateLeaveBalanceResponse>()
-            .RequirePermission("Permissions.LeaveBalances.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }

@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.MarkAsPaid.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
@@ -21,7 +22,7 @@ public static class MarkPayrollAsPaidEndpoint
             .WithSummary("Marks a payroll as paid")
             .WithDescription("Marks a posted payroll as paid. Records payment date and transitions to Paid status.")
             .Produces<MarkPayrollAsPaidResponse>()
-            .RequirePermission("Permissions.Payrolls.MarkAsPaid")
+            .RequirePermission(FshPermission.NameFor(FshActions.MarkAsPaid, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

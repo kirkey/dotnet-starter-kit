@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.Holidays.Get.v1.HolidayResponse;
+using FSH.Starter.WebApi.HumanResources.Application.Holidays.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays.v1;
 
@@ -16,7 +17,7 @@ public static class SearchHolidaysEndpoint
             .WithName(nameof(SearchHolidaysEndpoint))
             .WithSummary("Searches holidays")
             .WithDescription("Searches and filters holidays with pagination support")
-            .Produces<PagedList<Resp>>()
+            .Produces<PagedList<HolidayResponse>>()
             .RequirePermission("Permissions.Holidays.View")
             .MapToApiVersion(1);
     }

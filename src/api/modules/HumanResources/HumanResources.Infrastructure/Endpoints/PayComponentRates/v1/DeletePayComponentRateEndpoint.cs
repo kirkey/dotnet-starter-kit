@@ -1,6 +1,7 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Delete.v1;
+using Shared.Authorization;
 
-namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates.v1;
 
 public static class DeletePayComponentRateEndpoint
 {
@@ -15,7 +16,7 @@ public static class DeletePayComponentRateEndpoint
         .WithSummary("Delete a pay component rate")
         .WithDescription("Deletes a pay component rate/bracket by its unique identifier")
         .Produces<DeletePayComponentRateResponse>()
-        .RequirePermission("Permissions.PayComponentRates.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

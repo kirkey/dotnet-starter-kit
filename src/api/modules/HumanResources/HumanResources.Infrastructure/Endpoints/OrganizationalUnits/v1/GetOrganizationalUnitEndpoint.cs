@@ -10,7 +10,7 @@ public static class GetOrganizationalUnitEndpoint
     internal static RouteHandlerBuilder MapOrganizationalUnitGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetOrganizationalUnitRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

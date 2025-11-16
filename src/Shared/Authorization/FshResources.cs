@@ -18,4 +18,13 @@ public static class FshResources
     public const string Store = nameof(Store);
     public const string Warehouse = nameof(Warehouse);
     public const string Messaging = nameof(Messaging);
+    
+    // Human Resources - Granular Resources
+    public const string Employees = nameof(Employees);
+    public const string Attendance = nameof(Attendance);
+    public const string Timesheets = nameof(Timesheets);
+    public const string Leaves = nameof(Leaves);
+    public const string Payroll = nameof(Payroll);
+    public const string Benefits = nameof(Benefits);
+    public const string Organization = nameof(Organization);
 }

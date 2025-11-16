@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines.v1;
 
@@ -21,7 +22,7 @@ public static class UpdatePayrollLineEndpoint
             .WithSummary("Updates a payroll line")
             .WithDescription("Updates a payroll line's hours and pay information. Only draft payroll lines can be updated.")
             .Produces<UpdatePayrollLineResponse>()
-            .RequirePermission("Permissions.PayrollLines.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

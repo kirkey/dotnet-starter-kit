@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts.v1;
@@ -10,7 +11,7 @@ public static class GetBankAccountEndpoint
     internal static RouteHandlerBuilder MapGetBankAccountEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new GetBankAccountRequest(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -20,7 +21,7 @@ public static class GetBankAccountEndpoint
             .WithSummary("Gets a bank account by ID")
             .WithDescription("Retrieves detailed information about a specific bank account. Account numbers are masked for security.")
             .Produces<BankAccountResponse>()
-            .RequirePermission("Permissions.BankAccounts.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

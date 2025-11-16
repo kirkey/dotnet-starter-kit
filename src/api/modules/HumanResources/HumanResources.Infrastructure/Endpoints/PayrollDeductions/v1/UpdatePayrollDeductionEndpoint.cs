@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
@@ -17,7 +18,7 @@ public static class UpdatePayrollDeductionEndpoint
             .WithSummary("Update a payroll deduction")
             .WithDescription("Updates an existing payroll deduction configuration")
             .Produces<UpdatePayrollDeductionResponse>()
-            .RequirePermission("Permissions.PayrollDeductions.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

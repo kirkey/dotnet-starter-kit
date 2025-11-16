@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts.v1;
@@ -20,7 +21,7 @@ public static class UpdateBankAccountEndpoint
             .WithSummary("Updates a bank account")
             .WithDescription("Updates bank account details. Account numbers are encrypted at rest.")
             .Produces<UpdateBankAccountResponse>()
-            .RequirePermission("Permissions.BankAccounts.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

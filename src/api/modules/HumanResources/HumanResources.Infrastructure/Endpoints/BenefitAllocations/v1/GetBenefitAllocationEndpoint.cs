@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations.v1;
 
@@ -10,7 +11,7 @@ public static class GetBenefitAllocationEndpoint
     internal static RouteHandlerBuilder MapGetBenefitAllocationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new GetBenefitAllocationRequest(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -20,7 +21,7 @@ public static class GetBenefitAllocationEndpoint
             .WithSummary("Gets a benefit allocation by ID")
             .WithDescription("Retrieves detailed information about a specific benefit allocation including amount, status, and approval details.")
             .Produces<BenefitAllocationResponse>()
-            .RequirePermission("Permissions.BenefitAllocations.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

@@ -1,5 +1,6 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Get.v1.LeaveTypeResponse;
+using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes.v1;
 
@@ -16,8 +17,8 @@ public static class SearchLeaveTypesEndpoint
             .WithName(nameof(SearchLeaveTypesEndpoint))
             .WithSummary("Searches leave types")
             .WithDescription("Searches and filters leave types with pagination support")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.LeaveTypes.View")
+            .Produces<PagedList<LeaveTypeResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }

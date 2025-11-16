@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines.v1;
 
@@ -19,7 +20,7 @@ public static class CreateTimesheetLineEndpoint
             .WithSummary("Creates a new timesheet line")
             .WithDescription("Creates a new daily timesheet entry with hours and project allocation")
             .Produces<CreateTimesheetLineResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.TimesheetLines.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

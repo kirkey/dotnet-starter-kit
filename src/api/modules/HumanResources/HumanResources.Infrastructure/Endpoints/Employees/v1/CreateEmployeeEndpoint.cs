@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
@@ -16,8 +17,7 @@ public static class CreateEmployeeEndpoint
             .WithSummary("Creates a new employee")
             .WithDescription("Creates a new employee record in the system")
             .Produces<CreateEmployeeResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Employees.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

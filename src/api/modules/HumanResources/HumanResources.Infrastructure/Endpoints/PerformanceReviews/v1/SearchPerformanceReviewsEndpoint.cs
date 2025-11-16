@@ -1,5 +1,6 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Get.v1.PerformanceReviewResponse;
+using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews.v1;
 
@@ -19,8 +20,8 @@ public static class SearchPerformanceReviewsEndpoint
             .WithName(nameof(SearchPerformanceReviewsEndpoint))
             .WithSummary("Searches performance reviews")
             .WithDescription("Searches and filters performance reviews by employee, period, status, reviewer with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.PerformanceReviews.View")
+            .Produces<PagedList<PerformanceReviewResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

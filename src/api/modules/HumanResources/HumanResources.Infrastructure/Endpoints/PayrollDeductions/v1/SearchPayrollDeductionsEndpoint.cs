@@ -1,5 +1,6 @@
+using FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Get.v1;
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Get.v1.PayrollDeductionResponse;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions.v1;
 
@@ -19,8 +20,8 @@ public static class SearchPayrollDeductionsEndpoint
             .WithName(nameof(SearchPayrollDeductionsEndpoint))
             .WithSummary("Searches payroll deductions")
             .WithDescription("Searches and filters payroll deductions by type, employee, department, authorization status with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.PayrollDeductions.View")
+            .Produces<PagedList<PayrollDeductionResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

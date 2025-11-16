@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents;
 
@@ -15,7 +16,7 @@ public static class CreateEmployeePayComponentEndpoint
         .WithSummary("Create employee pay component")
         .WithDescription("Creates employee-specific pay component assignment")
         .Produces<CreateEmployeePayComponentResponse>()
-        .RequirePermission("Permissions.EmployeePayComponents.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

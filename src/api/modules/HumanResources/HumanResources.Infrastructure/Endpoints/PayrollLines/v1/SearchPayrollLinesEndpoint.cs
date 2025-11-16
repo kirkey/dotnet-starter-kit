@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Get.v1.PayrollLineResponse;
+using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines.v1;
 
@@ -19,8 +20,8 @@ public static class SearchPayrollLinesEndpoint
             .WithName(nameof(SearchPayrollLinesEndpoint))
             .WithSummary("Searches payroll lines")
             .WithDescription("Searches and filters payroll lines by payroll period, employee, and other criteria with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.PayrollLines.View")
+            .Produces<PagedList<PayrollLineResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

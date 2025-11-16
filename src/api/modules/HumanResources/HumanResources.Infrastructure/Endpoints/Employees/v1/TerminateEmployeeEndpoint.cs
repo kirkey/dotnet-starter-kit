@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Terminate.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
@@ -23,8 +24,7 @@ public static class TerminateEmployeeEndpoint
             .WithSummary("Terminates an employee")
             .WithDescription("Terminates an employee per Philippines Labor Code. Computes separation pay.")
             .Produces<TerminateEmployeeResponse>()
-            .RequirePermission("Permissions.Employees.Terminate")
+            .RequirePermission(FshPermission.NameFor(FshActions.Terminate, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

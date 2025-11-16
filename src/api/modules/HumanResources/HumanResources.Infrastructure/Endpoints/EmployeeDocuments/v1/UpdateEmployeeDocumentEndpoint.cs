@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments.v1;
 
@@ -19,7 +20,7 @@ public static class UpdateEmployeeDocumentEndpoint
             .WithSummary("Updates an employee document")
             .WithDescription("Updates employee document information")
             .Produces<UpdateEmployeeDocumentResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Designations.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations.v1;
 
@@ -22,7 +23,7 @@ public static class UpdateDesignationEndpoint
             .WithSummary("Updates a designation")
             .WithDescription("Updates designation information")
             .Produces<UpdateDesignationResponse>()
-            .RequirePermission("Permissions.Designations.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }

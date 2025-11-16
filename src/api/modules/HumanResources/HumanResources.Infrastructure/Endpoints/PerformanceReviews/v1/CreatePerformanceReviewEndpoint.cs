@@ -1,3 +1,4 @@
+using Shared.Authorization;
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews.v1;
             
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Create.v1;
@@ -15,7 +16,7 @@ public static class CreatePerformanceReviewEndpoint
             return Results.CreatedAtRoute(nameof(GetPerformanceReviewEndpoint), new { id = response.Id }, response);
         })
         .MapToApiVersion(1)
-        .RequirePermission("Permissions.PerformanceReviews.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Employees))
         .Produces<CreatePerformanceReviewResponse>(StatusCodes.Status201Created)
         .WithDescription("Creates a new performance review for an employee. Requires manager/reviewer assignment.")
         .WithSummary("Creates a new performance review")

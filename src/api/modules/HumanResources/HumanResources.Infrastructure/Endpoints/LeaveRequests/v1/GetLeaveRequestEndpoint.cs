@@ -10,7 +10,7 @@ public static class GetLeaveRequestEndpoint
     internal static RouteHandlerBuilder MapGetLeaveRequestEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new GetLeaveRequestRequest(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);

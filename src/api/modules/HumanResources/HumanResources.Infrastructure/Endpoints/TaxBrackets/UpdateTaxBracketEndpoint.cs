@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
@@ -18,7 +17,7 @@ public static class UpdateTaxBracketEndpoint
         .WithSummary("Update tax bracket")
         .WithDescription("Updates tax bracket details")
         .Produces<UpdateTaxBracketResponse>()
-        .RequirePermission("Permissions.TaxBrackets.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines.v1;
 
@@ -21,7 +22,7 @@ public static class DeletePayrollLineEndpoint
             .WithSummary("Deletes a payroll line")
             .WithDescription("Deletes a payroll line. Only lines from draft payrolls can be deleted. Processed payroll lines cannot be deleted.")
             .Produces<DeletePayrollLineResponse>()
-            .RequirePermission("Permissions.PayrollLines.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

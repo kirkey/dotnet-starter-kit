@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Regularize.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
@@ -23,8 +24,7 @@ public static class RegularizeEmployeeEndpoint
             .WithSummary("Regularizes a probationary employee")
             .WithDescription("Regularizes a probationary employee per Philippines Labor Code Article 280. Typically after probation period (6-12 months).")
             .Produces<RegularizeEmployeeResponse>()
-            .RequirePermission("Permissions.Employees.Regularize")
+            .RequirePermission(FshPermission.NameFor(FshActions.Regularize, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

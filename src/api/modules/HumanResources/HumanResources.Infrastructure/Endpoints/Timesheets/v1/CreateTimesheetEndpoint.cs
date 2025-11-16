@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Create.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets.v1;
@@ -16,7 +17,7 @@ public static class CreateTimesheetEndpoint
             .WithSummary("Creates a new timesheet")
             .WithDescription("Creates a timesheet for an employee for a pay period")
             .Produces<CreateTimesheetResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Timesheets.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

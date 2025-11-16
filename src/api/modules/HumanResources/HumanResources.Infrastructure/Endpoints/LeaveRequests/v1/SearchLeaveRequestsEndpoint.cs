@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Get.v1.LeaveRequestResponse;
+using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests.v1;
 
@@ -19,7 +20,7 @@ public static class SearchLeaveRequestsEndpoint
             .WithName(nameof(SearchLeaveRequestsEndpoint))
             .WithSummary("Searches leave requests")
             .WithDescription("Searches and filters leave requests by employee, leave type, status, and date range with pagination support. Supports advanced filtering per Philippines Labor Code compliance requirements.")
-            .Produces<PagedList<Resp>>()
+            .Produces<PagedList<LeaveRequestResponse>>()
             .RequirePermission("Permissions.LeaveRequests.View")
             .MapToApiVersion(1);
     }

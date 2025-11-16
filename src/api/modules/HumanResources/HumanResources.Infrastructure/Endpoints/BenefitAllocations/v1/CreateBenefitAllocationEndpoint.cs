@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations.v1;
 
@@ -19,7 +20,7 @@ public static class CreateBenefitAllocationEndpoint
             .WithSummary("Creates a new benefit allocation")
             .WithDescription("Creates a new benefit allocation for an employee. Allocates specific benefit amounts with optional HR approval.")
             .Produces<CreateBenefitAllocationResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.BenefitAllocations.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

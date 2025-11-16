@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Complete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews.v1;
@@ -20,7 +21,7 @@ public static class CompletePerformanceReviewEndpoint
             .WithSummary("Completes a performance review")
             .WithDescription("Marks the performance review as complete. Final step after all approvals and acknowledgments.")
             .Produces<CompletePerformanceReviewResponse>()
-            .RequirePermission("Permissions.PerformanceReviews.Complete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

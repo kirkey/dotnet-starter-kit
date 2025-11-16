@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
@@ -10,7 +11,7 @@ public static class GetPayrollEndpoint
     internal static RouteHandlerBuilder MapGetPayrollEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new GetPayrollRequest(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -20,7 +21,7 @@ public static class GetPayrollEndpoint
             .WithSummary("Gets a payroll period by ID")
             .WithDescription("Retrieves detailed information about a specific payroll period including totals, status, and GL posting details.")
             .Produces<PayrollResponse>()
-            .RequirePermission("Permissions.Payrolls.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

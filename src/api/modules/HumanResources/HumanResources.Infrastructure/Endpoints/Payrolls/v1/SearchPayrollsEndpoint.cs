@@ -1,5 +1,6 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.Payrolls.Get.v1.PayrollResponse;
+using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
 
@@ -19,8 +20,8 @@ public static class SearchPayrollsEndpoint
             .WithName(nameof(SearchPayrollsEndpoint))
             .WithSummary("Searches payroll periods")
             .WithDescription("Searches and filters payroll periods by date range, status, and pay frequency with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.Payrolls.View")
+            .Produces<PagedList<PayrollResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

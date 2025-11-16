@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees.v1;
 
@@ -19,8 +20,7 @@ public static class UpdateEmployeeEndpoint
             .WithSummary("Updates an employee")
             .WithDescription("Updates employee information")
             .Produces<UpdateEmployeeResponse>()
-            .RequirePermission("Permissions.Employees.Edit")
+            .RequirePermission(FshPermission.NameFor(FshActions.Edit, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

@@ -7,7 +7,7 @@ public static class GetHolidayEndpoint
     internal static RouteHandlerBuilder MapGetHolidayEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetHolidayRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

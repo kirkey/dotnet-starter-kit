@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Create.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts.v1;
@@ -19,7 +20,7 @@ public static class CreateEmployeeContactEndpoint
             .WithSummary("Creates a new employee contact")
             .WithDescription("Creates a new employee contact (emergency, reference, family)")
             .Produces<CreateEmployeeContactResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

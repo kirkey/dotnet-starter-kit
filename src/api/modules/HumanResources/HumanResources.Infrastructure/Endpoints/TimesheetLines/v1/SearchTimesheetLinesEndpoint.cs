@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Get.v1;
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.TimesheetLines.Search.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines.v1;
@@ -20,7 +21,7 @@ public static class SearchTimesheetLinesEndpoint
             .WithSummary("Searches timesheet lines")
             .WithDescription("Searches and filters timesheet lines with pagination")
             .Produces<PagedList<TimesheetLineResponse>>()
-            .RequirePermission("Permissions.TimesheetLines.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

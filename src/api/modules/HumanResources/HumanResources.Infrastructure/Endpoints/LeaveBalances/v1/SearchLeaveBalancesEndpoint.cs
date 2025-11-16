@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Get.v1.LeaveBalanceResponse;
+using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances.v1;
 
@@ -16,7 +17,7 @@ public static class SearchLeaveBalancesEndpoint
             .WithName(nameof(SearchLeaveBalancesEndpoint))
             .WithSummary("Searches leave balances")
             .WithDescription("Searches and filters leave balances by employee, leave type, year with pagination support")
-            .Produces<PagedList<Resp>>()
+            .Produces<PagedList<LeaveBalanceResponse>>()
             .RequirePermission("Permissions.LeaveBalances.View")
             .MapToApiVersion(1);
     }

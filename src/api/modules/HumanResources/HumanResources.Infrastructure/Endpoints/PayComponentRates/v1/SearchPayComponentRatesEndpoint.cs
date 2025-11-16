@@ -1,5 +1,6 @@
+using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Get.v1.PayComponentRateResponse;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates.v1;
 
@@ -19,8 +20,8 @@ public static class SearchPayComponentRatesEndpoint
             .WithName(nameof(SearchPayComponentRatesEndpoint))
             .WithSummary("Searches pay component rates")
             .WithDescription("Searches and filters pay component rates (tax brackets, SSS rates, etc.) by component, year, amount range with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.PayComponentRates.View")
+            .Produces<PagedList<PayComponentRateResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

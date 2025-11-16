@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.GeneratedDocuments.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.GeneratedDocuments.Search.v1;
 
@@ -17,7 +18,7 @@ public static class SearchGeneratedDocumentsEndpoint
             .WithSummary("Searches generated documents")
             .WithDescription("Searches generated documents with pagination and filters")
             .Produces<PagedList<GeneratedDocumentResponse>>()
-            .RequirePermission("Permissions.Documents.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

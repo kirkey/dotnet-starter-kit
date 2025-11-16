@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Get.v1.BenefitEnrollmentResponse;
+using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments.v1;
 
@@ -19,8 +20,8 @@ public static class SearchBenefitEnrollmentsEndpoint
             .WithName(nameof(SearchBenefitEnrollmentsEndpoint))
             .WithSummary("Searches benefit enrollments")
             .WithDescription("Searches and filters benefit enrollments by employee, benefit, status with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.BenefitEnrollments.View")
+            .Produces<PagedList<BenefitEnrollmentResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

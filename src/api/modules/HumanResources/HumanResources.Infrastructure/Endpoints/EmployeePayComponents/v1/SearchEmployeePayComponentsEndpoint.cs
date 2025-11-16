@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Search.v1;
-using Resp = FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Get.v1.EmployeePayComponentResponse;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents.v1;
 
@@ -19,8 +20,8 @@ public static class SearchEmployeePayComponentsEndpoint
             .WithName(nameof(SearchEmployeePayComponentsEndpoint))
             .WithSummary("Searches employee pay components")
             .WithDescription("Searches and filters employee pay component assignments by employee, component, type, and active status with pagination support.")
-            .Produces<PagedList<Resp>>()
-            .RequirePermission("Permissions.EmployeePayComponents.View")
+            .Produces<PagedList<EmployeePayComponentResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

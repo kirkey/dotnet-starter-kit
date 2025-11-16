@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Submit.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews.v1;
@@ -20,7 +21,7 @@ public static class SubmitPerformanceReviewEndpoint
             .WithSummary("Submits a performance review")
             .WithDescription("Submits a draft performance review to the employee. Once submitted, review cannot be edited by reviewer.")
             .Produces<SubmitPerformanceReviewResponse>()
-            .RequirePermission("Permissions.PerformanceReviews.Submit")
+            .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

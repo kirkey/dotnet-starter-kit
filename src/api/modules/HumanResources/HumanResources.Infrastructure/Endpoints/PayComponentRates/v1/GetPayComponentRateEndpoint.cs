@@ -1,6 +1,7 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Get.v1;
+using Shared.Authorization;
 
-namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates.v1;
 
 public static class GetPayComponentRateEndpoint
 {
@@ -15,7 +16,7 @@ public static class GetPayComponentRateEndpoint
         .WithSummary("Get a pay component rate by ID")
         .WithDescription("Retrieves a specific pay component rate/bracket by its unique identifier")
         .Produces<PayComponentRateResponse>()
-        .RequirePermission("Permissions.PayComponentRates.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

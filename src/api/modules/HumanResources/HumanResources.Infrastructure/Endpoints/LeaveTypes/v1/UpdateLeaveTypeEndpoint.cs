@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes.v1;
@@ -19,7 +20,7 @@ public static class UpdateLeaveTypeEndpoint
             .WithSummary("Updates a leave type")
             .WithDescription("Updates leave type information including accrual allowance, frequency, and approval requirements")
             .Produces<UpdateLeaveTypeResponse>()
-            .RequirePermission("Permissions.LeaveTypes.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }

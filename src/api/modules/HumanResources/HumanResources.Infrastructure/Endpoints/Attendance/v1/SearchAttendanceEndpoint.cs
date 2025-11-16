@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Attendances.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Attendances.Search.v1;
 
@@ -17,7 +18,7 @@ public static class SearchAttendanceEndpoint
             .WithSummary("Searches attendance records")
             .WithDescription("Searches attendance records with pagination and filters")
             .Produces<PagedList<AttendanceResponse>>()
-            .RequirePermission("Permissions.Attendance.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Attendance))
             .MapToApiVersion(1);
     }
 }

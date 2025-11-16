@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
@@ -21,7 +22,7 @@ public static class DeletePayrollEndpoint
             .WithSummary("Deletes a payroll period")
             .WithDescription("Deletes a payroll period. Only Draft payrolls can be deleted. Processed or posted payrolls cannot be deleted.")
             .Produces<DeletePayrollResponse>()
-            .RequirePermission("Permissions.Payrolls.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

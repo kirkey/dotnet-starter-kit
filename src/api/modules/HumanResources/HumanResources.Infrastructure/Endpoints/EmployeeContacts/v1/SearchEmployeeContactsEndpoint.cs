@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Search.v1;
 
@@ -20,7 +21,7 @@ public static class SearchEmployeeContactsEndpoint
             .WithSummary("Searches employee contacts")
             .WithDescription("Searches employee contacts with pagination and filters")
             .Produces<PagedList<EmployeeContactResponse>>()
-            .RequirePermission("Permissions.Employees.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

@@ -1,6 +1,7 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Create.v1;
+using Shared.Authorization;
 
-namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates.v1;
 
 public static class CreatePayComponentRateEndpoint
 {
@@ -15,7 +16,7 @@ public static class CreatePayComponentRateEndpoint
         .WithSummary("Create a new pay component rate")
         .WithDescription("Creates a new rate/bracket for pay component")
         .Produces<CreatePayComponentRateResponse>()
-        .RequirePermission("Permissions.PayComponentRates.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

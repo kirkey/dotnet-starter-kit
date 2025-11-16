@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Post.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
@@ -21,7 +22,7 @@ public static class PostPayrollEndpoint
             .WithSummary("Posts a payroll to the general ledger")
             .WithDescription("Posts a processed payroll to the GL with the specified journal entry ID. Locks payroll from further editing. Transitions to Posted status.")
             .Produces<PostPayrollResponse>()
-            .RequirePermission("Permissions.Payrolls.Post")
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts.v1;
 
@@ -16,7 +17,7 @@ public static class CreateShiftEndpoint
             .WithSummary("Creates a new shift")
             .WithDescription("Creates a new shift template (morning, evening, night, etc.)")
             .Produces<CreateShiftResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

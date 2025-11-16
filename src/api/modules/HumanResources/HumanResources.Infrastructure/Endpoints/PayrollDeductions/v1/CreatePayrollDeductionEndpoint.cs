@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Create.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
@@ -15,7 +16,7 @@ public static class CreatePayrollDeductionEndpoint
         .WithSummary("Create a new payroll deduction")
         .WithDescription("Creates a new payroll deduction configuration for employees per Philippine Labor Code")
         .Produces<CreatePayrollDeductionResponse>()
-        .RequirePermission("Permissions.PayrollDeductions.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

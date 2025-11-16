@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts.v1;
@@ -20,7 +21,7 @@ public static class DeleteBankAccountEndpoint
             .WithSummary("Deletes a bank account")
             .WithDescription("Deletes a bank account. Cannot delete if it's the primary account.")
             .Produces<DeleteBankAccountResponse>()
-            .RequirePermission("Permissions.BankAccounts.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

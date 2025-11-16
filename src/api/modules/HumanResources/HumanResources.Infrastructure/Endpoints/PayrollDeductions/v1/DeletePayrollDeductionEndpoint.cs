@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
@@ -16,7 +17,7 @@ public static class DeletePayrollDeductionEndpoint
             .WithSummary("Delete a payroll deduction")
             .WithDescription("Deletes a payroll deduction by its unique identifier")
             .Produces<DeletePayrollDeductionResponse>()
-            .RequirePermission("Permissions.PayrollDeductions.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

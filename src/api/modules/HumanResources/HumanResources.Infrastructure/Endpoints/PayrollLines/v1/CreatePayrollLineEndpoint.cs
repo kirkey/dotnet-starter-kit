@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines.v1;
 
@@ -19,7 +20,7 @@ public static class CreatePayrollLineEndpoint
             .WithSummary("Creates a new payroll line")
             .WithDescription("Creates a new payroll line for an employee within a payroll period. Contains hours worked and pay calculations.")
             .Produces<CreatePayrollLineResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.PayrollLines.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

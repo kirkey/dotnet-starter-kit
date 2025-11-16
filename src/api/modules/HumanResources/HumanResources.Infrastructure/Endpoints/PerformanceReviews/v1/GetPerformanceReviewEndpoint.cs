@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Get.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews.v1;
@@ -10,7 +11,7 @@ public static class GetPerformanceReviewEndpoint
     internal static RouteHandlerBuilder MapGetPerformanceReviewEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new GetPerformanceReviewRequest(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -20,7 +21,7 @@ public static class GetPerformanceReviewEndpoint
             .WithSummary("Gets a performance review by ID")
             .WithDescription("Retrieves detailed information about a specific performance review including scores, feedback, and status.")
             .Produces<PerformanceReviewResponse>()
-            .RequirePermission("Permissions.PerformanceReviews.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

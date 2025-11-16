@@ -1,4 +1,5 @@
 using FSH.Framework.Core.Identity.Users.Abstractions;
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Reject.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations.v1;
@@ -21,7 +22,7 @@ public static class RejectBenefitAllocationEndpoint
             .WithSummary("Rejects a benefit allocation")
             .WithDescription("Rejects a pending benefit allocation. Marks as rejected with optional reason.")
             .Produces<RejectBenefitAllocationResponse>()
-            .RequirePermission("Permissions.BenefitAllocations.Reject")
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

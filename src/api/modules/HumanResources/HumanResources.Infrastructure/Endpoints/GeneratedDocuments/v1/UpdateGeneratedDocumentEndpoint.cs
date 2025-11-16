@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.GeneratedDocuments.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments.v1;
@@ -19,7 +20,7 @@ public static class UpdateGeneratedDocumentEndpoint
             .WithSummary("Updates a generated document")
             .WithDescription("Updates generated document status and information")
             .Produces<UpdateGeneratedDocumentResponse>()
-            .RequirePermission("Permissions.Documents.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

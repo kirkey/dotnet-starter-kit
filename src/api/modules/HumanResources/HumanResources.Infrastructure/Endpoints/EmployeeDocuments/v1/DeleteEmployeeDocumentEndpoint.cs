@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteEmployeeDocumentEndpoint
             .WithSummary("Deletes an employee document")
             .WithDescription("Deletes an employee document record")
             .Produces<DeleteEmployeeDocumentResponse>()
-            .RequirePermission("Permissions.Employees.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

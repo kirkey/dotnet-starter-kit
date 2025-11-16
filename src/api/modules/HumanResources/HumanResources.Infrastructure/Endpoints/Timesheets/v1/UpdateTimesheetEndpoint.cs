@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets.v1;
@@ -19,7 +20,7 @@ public static class UpdateTimesheetEndpoint
             .WithSummary("Updates a timesheet")
             .WithDescription("Updates timesheet status and approval information")
             .Produces<UpdateTimesheetResponse>()
-            .RequirePermission("Permissions.Timesheets.Edit")
+            .RequirePermission(FshPermission.NameFor(FshActions.Edit, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments.v1;
 
@@ -19,7 +20,7 @@ public static class CreateBenefitEnrollmentEndpoint
             .WithSummary("Creates a new benefit enrollment")
             .WithDescription("Creates a new benefit enrollment for an employee. Requires approval from HR.")
             .Produces<CreateBenefitEnrollmentResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.BenefitEnrollments.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

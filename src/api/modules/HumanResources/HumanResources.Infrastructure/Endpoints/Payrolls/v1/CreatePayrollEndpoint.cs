@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Create.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls.v1;
@@ -19,7 +20,7 @@ public static class CreatePayrollEndpoint
             .WithSummary("Creates a new payroll period")
             .WithDescription("Creates a new payroll period for processing employee pay. Payroll is created in Draft status and must be processed before GL posting.")
             .Produces<CreatePayrollResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Payrolls.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

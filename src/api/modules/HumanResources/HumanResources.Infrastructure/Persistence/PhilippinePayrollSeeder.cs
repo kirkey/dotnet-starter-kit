@@ -1,6 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 

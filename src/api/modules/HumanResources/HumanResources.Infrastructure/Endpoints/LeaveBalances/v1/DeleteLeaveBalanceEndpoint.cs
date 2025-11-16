@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteLeaveBalanceEndpoint
             .WithSummary("Deletes a leave balance")
             .WithDescription("Removes a leave balance from the system")
             .Produces<DeleteLeaveBalanceResponse>()
-            .RequirePermission("Permissions.LeaveBalances.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }

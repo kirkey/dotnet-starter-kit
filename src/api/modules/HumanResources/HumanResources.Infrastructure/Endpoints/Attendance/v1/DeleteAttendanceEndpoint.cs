@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Attendances.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance.v1;
@@ -16,7 +17,7 @@ public static class DeleteAttendanceEndpoint
             .WithSummary("Deletes an attendance record")
             .WithDescription("Deletes an attendance record")
             .Produces<DeleteAttendanceResponse>()
-            .RequirePermission("Permissions.Attendance.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Attendance))
             .MapToApiVersion(1);
     }
 }

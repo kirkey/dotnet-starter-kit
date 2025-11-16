@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
 
@@ -15,7 +16,7 @@ public static class CreateTaxBracketEndpoint
         .WithSummary("Create tax bracket")
         .WithDescription("Creates new tax bracket for income taxation")
         .Produces<CreateTaxBracketResponse>()
-        .RequirePermission("Permissions.TaxBrackets.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll))
         .MapToApiVersion(1);
     }
 }

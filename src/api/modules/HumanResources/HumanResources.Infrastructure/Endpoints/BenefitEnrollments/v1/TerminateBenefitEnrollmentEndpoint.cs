@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Terminate.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments.v1;
 
@@ -20,7 +21,7 @@ public static class TerminateBenefitEnrollmentEndpoint
             .WithSummary("Terminates a benefit enrollment")
             .WithDescription("Terminates an active benefit enrollment, effective immediately or on a specified date.")
             .Produces<TerminateBenefitEnrollmentResponse>()
-            .RequirePermission("Permissions.BenefitEnrollments.Terminate")
+            .RequirePermission(FshPermission.NameFor(FshActions.Terminate, FshResources.Benefits))
             .MapToApiVersion(1);
     }
 }

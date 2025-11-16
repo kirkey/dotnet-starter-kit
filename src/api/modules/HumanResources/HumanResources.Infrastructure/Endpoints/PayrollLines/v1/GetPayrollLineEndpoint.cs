@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines.v1;
 
@@ -10,7 +11,7 @@ public static class GetPayrollLineEndpoint
     internal static RouteHandlerBuilder MapGetPayrollLineEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new GetPayrollLineRequest(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -20,7 +21,7 @@ public static class GetPayrollLineEndpoint
             .WithSummary("Gets a payroll line by ID")
             .WithDescription("Retrieves detailed information about a specific payroll line including hours, earnings, taxes, and deductions.")
             .Produces<PayrollLineResponse>()
-            .RequirePermission("Permissions.PayrollLines.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
     }
 }

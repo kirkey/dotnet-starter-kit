@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.GeneratedDocuments.Delete.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments.v1;
@@ -16,7 +17,7 @@ public static class DeleteGeneratedDocumentEndpoint
             .WithSummary("Deletes a generated document")
             .WithDescription("Deletes a generated document")
             .Produces<DeleteGeneratedDocumentResponse>()
-            .RequirePermission("Permissions.Documents.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

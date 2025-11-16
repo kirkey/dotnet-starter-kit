@@ -1,3 +1,4 @@
+using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Acknowledge.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews.v1;
@@ -20,7 +21,7 @@ public static class AcknowledgePerformanceReviewEndpoint
             .WithSummary("Acknowledges a performance review")
             .WithDescription("Employee acknowledges receipt of the performance review. Can add comments or disputes.")
             .Produces<AcknowledgePerformanceReviewResponse>()
-            .RequirePermission("Permissions.PerformanceReviews.Acknowledge")
+            .RequirePermission(FshPermission.NameFor(FshActions.Acknowledge, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
