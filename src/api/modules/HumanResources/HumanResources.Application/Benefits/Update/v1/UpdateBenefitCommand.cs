@@ -1,21 +1,20 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Benefits.Update.v1;
 
 /// <summary>
-/// Command to update benefit details.
+/// Command to update a benefit.
 /// </summary>
 public sealed record UpdateBenefitCommand(
     DefaultIdType Id,
-    [property: DefaultValue(null)] decimal? EmployeeContribution = null,
-    [property: DefaultValue(null)] decimal? EmployerContribution = null,
-    [property: DefaultValue(null)] string? CoverageType = null,
-    [property: DefaultValue(null)] string? ProviderName = null,
-    [property: DefaultValue(null)] decimal? CoverageAmount = null,
-    [property: DefaultValue(null)] string? Description = null,
-    [property: DefaultValue(null)] bool? IsActive = null
-) : IRequest<UpdateBenefitResponse>;
+    decimal? EmployeeContribution = null,
+    decimal? EmployerContribution = null,
+    string? CoverageType = null,
+    string? ProviderName = null,
+    decimal? CoverageAmount = null,
+    string? Description = null,
+    bool? IsActive = null) : IRequest<UpdateBenefitResponse>;
 
 /// <summary>
-/// Response for benefit update.
+/// Response for update benefit.
 /// </summary>
 public sealed record UpdateBenefitResponse(
     DefaultIdType Id,

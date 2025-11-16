@@ -1,8 +1,10 @@
+// ensure ArgumentNullException available
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Benefits; // add benefits endpoints
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
@@ -54,6 +56,8 @@ public static class HumanResourcesModule
             app.MapBankAccountsEndpoints();
             app.MapBenefitEnrollmentsEndpoints();
             app.MapBenefitAllocationsEndpoints();
+            // Add Benefit master endpoints mapping
+            app.MapBenefitEndpoints();
             app.MapTimesheetsEndpoints();
             app.MapTimesheetLinesEndpoints();
             app.MapLeaveTypesEndpoints();
@@ -79,7 +83,7 @@ public static class HumanResourcesModule
     /// </summary>
     public static WebApplicationBuilder RegisterHumanResourcesServices(this WebApplicationBuilder builder)
     {
-        ArgumentNullException.ThrowIfNull(builder);
+        System.ArgumentNullException.ThrowIfNull(builder);
 
         // Register DbContext
         builder.Services.BindDbContext<HumanResourcesDbContext>();

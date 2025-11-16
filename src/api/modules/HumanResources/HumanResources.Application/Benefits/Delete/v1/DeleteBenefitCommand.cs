@@ -1,14 +1,13 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Benefits.Delete.v1;
 
 /// <summary>
-/// Command to delete benefit.
+/// Command to delete a benefit.
 /// </summary>
 public sealed record DeleteBenefitCommand(
-    DefaultIdType Id
-) : IRequest<DeleteBenefitResponse>;
+    DefaultIdType Id) : IRequest<DeleteBenefitResponse>;
 
 /// <summary>
-/// Response for benefit deletion.
+/// Response for delete benefit.
 /// </summary>
 public sealed record DeleteBenefitResponse(
     DefaultIdType Id,
