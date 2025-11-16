@@ -11,7 +11,7 @@ public static class UpdateTimesheetLineEndpoint
     internal static RouteHandlerBuilder MapUpdateTimesheetLineEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateTimesheetLineCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateTimesheetLineCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("ID mismatch");

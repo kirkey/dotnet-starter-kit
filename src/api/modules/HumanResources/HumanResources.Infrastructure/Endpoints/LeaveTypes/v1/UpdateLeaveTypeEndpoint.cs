@@ -8,7 +8,7 @@ public static class UpdateLeaveTypeEndpoint
     internal static RouteHandlerBuilder MapUpdateLeaveTypeEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateLeaveTypeCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateLeaveTypeCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("Route ID and request ID do not match.");

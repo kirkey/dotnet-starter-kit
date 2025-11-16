@@ -18,8 +18,7 @@ public static class SearchHolidaysEndpoint
             .WithSummary("Searches holidays")
             .WithDescription("Searches and filters holidays with pagination support")
             .Produces<PagedList<HolidayResponse>>()
-            .RequirePermission("Permissions.Holidays.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

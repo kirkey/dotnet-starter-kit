@@ -8,7 +8,7 @@ public static class UpdateGeneratedDocumentEndpoint
     internal static RouteHandlerBuilder MapUpdateGeneratedDocumentEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateGeneratedDocumentCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateGeneratedDocumentCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("ID mismatch");

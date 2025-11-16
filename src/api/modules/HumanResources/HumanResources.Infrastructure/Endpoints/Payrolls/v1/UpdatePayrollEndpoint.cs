@@ -12,7 +12,7 @@ public static class UpdatePayrollEndpoint
     internal static RouteHandlerBuilder MapUpdatePayrollEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdatePayrollCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdatePayrollCommand request, ISender mediator) =>
             {
                 var updateRequest = request with { Id = id };
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);

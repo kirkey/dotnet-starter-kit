@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Cancel.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests.v1;
 
@@ -21,8 +22,7 @@ public static class CancelLeaveRequestEndpoint
             .WithSummary("Cancels a leave request")
             .WithDescription("Cancels a Draft or Submitted leave request by the employee. Approved requests cannot be cancelled. Reserved pending balance is released per Philippines Labor Code.")
             .Produces<CancelLeaveRequestResponse>()
-            .RequirePermission("Permissions.LeaveRequests.Cancel")
+            .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

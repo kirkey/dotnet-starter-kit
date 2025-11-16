@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays.v1;
 
@@ -16,8 +17,7 @@ public static class DeleteHolidayEndpoint
             .WithSummary("Deletes a holiday")
             .WithDescription("Removes a holiday from the system")
             .Produces<DeleteHolidayResponse>()
-            .RequirePermission("Permissions.Holidays.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

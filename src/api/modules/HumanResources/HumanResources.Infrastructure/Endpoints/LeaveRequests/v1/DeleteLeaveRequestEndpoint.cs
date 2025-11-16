@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests.v1;
 
@@ -21,8 +22,7 @@ public static class DeleteLeaveRequestEndpoint
             .WithSummary("Deletes a leave request")
             .WithDescription("Deletes a leave request. Only Draft and Rejected requests can be deleted. Approved or Submitted requests cannot be deleted without proper workflow steps.")
             .Produces<DeleteLeaveRequestResponse>()
-            .RequirePermission("Permissions.LeaveRequests.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

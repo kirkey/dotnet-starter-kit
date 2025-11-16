@@ -21,8 +21,7 @@ public static class SearchLeaveRequestsEndpoint
             .WithSummary("Searches leave requests")
             .WithDescription("Searches and filters leave requests by employee, leave type, status, and date range with pagination support. Supports advanced filtering per Philippines Labor Code compliance requirements.")
             .Produces<PagedList<LeaveRequestResponse>>()
-            .RequirePermission("Permissions.LeaveRequests.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

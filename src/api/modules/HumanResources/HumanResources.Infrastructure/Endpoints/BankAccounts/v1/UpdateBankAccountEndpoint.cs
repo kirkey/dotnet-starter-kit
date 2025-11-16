@@ -11,7 +11,7 @@ public static class UpdateBankAccountEndpoint
     internal static RouteHandlerBuilder MapUpdateBankAccountEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateBankAccountCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateBankAccountCommand request, ISender mediator) =>
             {
                 var updateRequest = request with { Id = id };
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);

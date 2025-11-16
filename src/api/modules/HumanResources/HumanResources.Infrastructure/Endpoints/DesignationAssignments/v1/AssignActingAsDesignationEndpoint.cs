@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments.v1;
 
@@ -19,8 +20,7 @@ public static class AssignActingAsDesignationEndpoint
             .WithSummary("Assigns an acting as designation to an employee")
             .WithDescription("Assigns a temporary acting designation to an employee")
             .Produces<AssignDesignationResponse>()
-            .RequirePermission("Permissions.EmployeeDesignations.Assign")
+            .RequirePermission(FshPermission.NameFor(FshActions.Assign, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations.v1;
 
@@ -10,7 +11,7 @@ public static class UpdateEmployeeEducationEndpoint
     internal static RouteHandlerBuilder MapUpdateEmployeeEducationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateEmployeeEducationCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeEducationCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("ID mismatch");
@@ -22,8 +23,7 @@ public static class UpdateEmployeeEducationEndpoint
             .WithSummary("Updates employee education record")
             .WithDescription("Updates education details for an existing employee education record")
             .Produces<UpdateEmployeeEducationResponse>()
-            .RequirePermission("Permissions.EmployeeEducations.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

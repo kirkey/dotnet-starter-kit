@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays.v1;
 
@@ -16,7 +17,7 @@ public static class CreateHolidayEndpoint
             .WithSummary("Creates a new holiday")
             .WithDescription("Creates a new holiday with Philippines Labor Code compliance including holiday type, pay rate multiplier, and regional applicability")
             .Produces<CreateHolidayResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Holidays.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Submit.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests.v1;
 
@@ -21,8 +22,7 @@ public static class SubmitLeaveRequestEndpoint
             .WithSummary("Submits a leave request for approval")
             .WithDescription("Submits a Draft leave request for manager approval. Validates leave balance and eligibility per Philippines Labor Code. Request transitions to Submitted status.")
             .Produces<SubmitLeaveRequestResponse>(StatusCodes.Status202Accepted)
-            .RequirePermission("Permissions.LeaveRequests.Submit")
+            .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

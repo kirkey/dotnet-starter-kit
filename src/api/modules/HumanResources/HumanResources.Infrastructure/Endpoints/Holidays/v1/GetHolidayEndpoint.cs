@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays.v1;
 
@@ -16,8 +17,7 @@ public static class GetHolidayEndpoint
             .WithSummary("Gets holiday by ID")
             .WithDescription("Retrieves detailed information about a specific holiday including Philippines Labor Code classification")
             .Produces<HolidayResponse>()
-            .RequirePermission("Permissions.Holidays.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

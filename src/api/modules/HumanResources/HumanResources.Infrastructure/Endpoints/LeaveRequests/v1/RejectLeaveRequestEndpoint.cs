@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Reject.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests.v1;
 
@@ -21,8 +22,7 @@ public static class RejectLeaveRequestEndpoint
             .WithSummary("Rejects a leave request")
             .WithDescription("Rejects a Submitted leave request with a required reason. Request transitions to Rejected status and reserved pending balance is released per Philippines Labor Code.")
             .Produces<RejectLeaveRequestResponse>()
-            .RequirePermission("Permissions.LeaveRequests.Reject")
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

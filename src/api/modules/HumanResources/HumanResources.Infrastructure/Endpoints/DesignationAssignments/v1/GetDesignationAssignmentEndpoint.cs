@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments.v1;
 
@@ -22,8 +23,7 @@ public static class GetDesignationAssignmentEndpoint
             .WithSummary("Gets designation assignment by ID")
             .WithDescription("Retrieves designation assignment details including tenure and status")
             .Produces<DesignationAssignmentResponse>()
-            .RequirePermission("Permissions.EmployeeDesignations.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

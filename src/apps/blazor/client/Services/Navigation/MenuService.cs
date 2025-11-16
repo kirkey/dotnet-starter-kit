@@ -208,7 +208,7 @@ public class MenuService : IMenuService
                 
                 new MenuSectionItemModel
                 {
-                    Title = "HR and Payroll",
+                    Title = "Human Resource",
                     Icon = Icons.Material.Filled.People,
                     IsParent = true,
                     MenuItems =

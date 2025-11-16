@@ -8,7 +8,7 @@ public static class UpdateShiftAssignmentEndpoint
     internal static RouteHandlerBuilder MapUpdateShiftAssignmentEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateShiftAssignmentCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateShiftAssignmentCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("Route ID and request ID do not match.");

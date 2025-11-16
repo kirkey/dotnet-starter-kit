@@ -11,7 +11,7 @@ public static class UpdateDesignationEndpoint
     internal static RouteHandlerBuilder MapDesignationUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateDesignationCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateDesignationCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("ID mismatch");

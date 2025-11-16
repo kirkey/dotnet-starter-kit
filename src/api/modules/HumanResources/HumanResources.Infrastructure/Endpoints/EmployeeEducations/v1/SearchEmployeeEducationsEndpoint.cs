@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Search.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations.v1;
 
@@ -20,8 +21,7 @@ public static class SearchEmployeeEducationsEndpoint
             .WithSummary("Searches employee education records")
             .WithDescription("Searches and filters employee education records with pagination")
             .Produces<PagedList<EmployeeEducationResponse>>()
-            .RequirePermission("Permissions.EmployeeEducations.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits.v1;
 
@@ -10,7 +11,7 @@ public static class UpdateOrganizationalUnitEndpoint
     internal static RouteHandlerBuilder MapOrganizationalUnitUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateOrganizationalUnitCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateOrganizationalUnitCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("ID mismatch");
@@ -22,8 +23,7 @@ public static class UpdateOrganizationalUnitEndpoint
             .WithSummary("Updates an organizational unit")
             .WithDescription("Updates organizational unit information")
             .Produces<UpdateOrganizationalUnitResponse>()
-            .RequirePermission("Permissions.OrganizationalUnits.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Organization))
             .MapToApiVersion(1);
     }
 }
-

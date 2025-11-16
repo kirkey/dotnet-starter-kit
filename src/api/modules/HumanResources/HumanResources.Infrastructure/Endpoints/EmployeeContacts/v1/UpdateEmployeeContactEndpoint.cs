@@ -11,7 +11,7 @@ public static class UpdateEmployeeContactEndpoint
     internal static RouteHandlerBuilder MapUpdateEmployeeContactEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateEmployeeContactCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeContactCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                     return Results.BadRequest("ID mismatch");

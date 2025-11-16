@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Get.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests.v1;
 
@@ -20,8 +21,7 @@ public static class GetLeaveRequestEndpoint
             .WithSummary("Gets a leave request by ID")
             .WithDescription("Retrieves detailed information about a specific leave request including status, dates, approval details, and attachments")
             .Produces<LeaveRequestResponse>()
-            .RequirePermission("Permissions.LeaveRequests.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

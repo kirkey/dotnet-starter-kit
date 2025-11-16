@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.End.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments.v1;
 
@@ -38,8 +39,7 @@ public static class EndDesignationAssignmentEndpoint
             .WithSummary("Ends a designation assignment")
             .WithDescription("Ends an active designation assignment on a specified date")
             .Produces<EndDesignationAssignmentResponse>()
-            .RequirePermission("Permissions.EmployeeDesignations.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations.v1;
 
@@ -19,8 +20,7 @@ public static class CreateEmployeeEducationEndpoint
             .WithSummary("Creates a new employee education record")
             .WithDescription("Creates a new employee education record with qualification details")
             .Produces<CreateEmployeeEducationResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.EmployeeEducations.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-

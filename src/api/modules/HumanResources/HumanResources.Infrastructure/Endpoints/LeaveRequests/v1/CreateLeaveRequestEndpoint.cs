@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Create.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests.v1;
 
@@ -20,8 +21,7 @@ public static class CreateLeaveRequestEndpoint
             .WithSummary("Creates a new leave request")
             .WithDescription("Creates a new leave request for an employee. The request is created in Draft status and must be submitted for approval. Validates employee leave balance and leave type eligibility per Philippines Labor Code.")
             .Produces<CreateLeaveRequestResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.LeaveRequests.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves))
             .MapToApiVersion(1);
     }
 }
-

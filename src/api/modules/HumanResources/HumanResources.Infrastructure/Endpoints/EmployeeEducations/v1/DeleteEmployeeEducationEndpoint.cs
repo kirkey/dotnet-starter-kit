@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Delete.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations.v1;
 
@@ -19,8 +20,7 @@ public static class DeleteEmployeeEducationEndpoint
             .WithSummary("Deletes an employee education record")
             .WithDescription("Deletes a specific employee education record from the system")
             .Produces<DeleteEmployeeEducationResponse>()
-            .RequirePermission("Permissions.EmployeeEducations.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }
-
