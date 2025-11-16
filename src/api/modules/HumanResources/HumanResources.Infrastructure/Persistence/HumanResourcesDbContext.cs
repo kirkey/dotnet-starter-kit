@@ -34,6 +34,8 @@ public sealed class HumanResourcesDbContext(
     public DbSet<Payroll> Payrolls { get; set; } = null!;
     public DbSet<PayrollLine> PayrollLines { get; set; } = null!;
     public DbSet<PayComponent> PayComponents { get; set; } = null!;
+    public DbSet<PayComponentRate> PayComponentRates { get; set; } = null!;
+    public DbSet<EmployeePayComponent> EmployeePayComponents { get; set; } = null!;
     public DbSet<TaxBracket> TaxBrackets { get; set; } = null!;
     public DbSet<Benefit> Benefits { get; set; } = null!;
     public DbSet<BenefitEnrollment> BenefitEnrollments { get; set; } = null!;

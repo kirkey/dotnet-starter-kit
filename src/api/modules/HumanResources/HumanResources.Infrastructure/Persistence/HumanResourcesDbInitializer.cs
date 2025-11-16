@@ -8,7 +8,8 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 /// </summary>
 internal sealed class HumanResourcesDbInitializer(
     ILogger<HumanResourcesDbInitializer> logger,
-    HumanResourcesDbContext context) : IDbInitializer
+    HumanResourcesDbContext context,
+    ILogger<PhilippinePayrollSeeder> payrollLogger) : IDbInitializer
 {
     public async Task MigrateAsync(CancellationToken cancellationToken)
     {
@@ -86,5 +87,9 @@ internal sealed class HumanResourcesDbInitializer(
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             logger.LogInformation("[{Tenant}] seeding default designations", context.TenantInfo!.Identifier);
         }
+
+        // Seed Philippine payroll components and rates
+        var payrollSeeder = new PhilippinePayrollSeeder(payrollLogger, context);
+        await payrollSeeder.SeedAsync(cancellationToken).ConfigureAwait(false);
     }
 }

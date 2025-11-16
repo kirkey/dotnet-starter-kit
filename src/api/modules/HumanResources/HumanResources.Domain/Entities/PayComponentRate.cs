@@ -119,6 +119,25 @@ public class PayComponentRate : AuditableEntity, IAggregateRoot
     public string? Description { get; private set; }
 
     /// <summary>
+    /// Creates a new pay component rate.
+    /// </summary>
+    public static PayComponentRate Create(
+        DefaultIdType payComponentId,
+        decimal minAmount,
+        decimal maxAmount,
+        int year)
+    {
+        var rate = new PayComponentRate(
+            DefaultIdType.NewGuid(),
+            payComponentId,
+            minAmount,
+            maxAmount,
+            year);
+
+        return rate;
+    }
+
+    /// <summary>
     /// Creates a new pay component rate for SSS/PhilHealth/Pag-IBIG.
     /// </summary>
     public static PayComponentRate CreateContributionRate(

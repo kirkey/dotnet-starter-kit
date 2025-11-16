@@ -149,7 +149,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging", "api\modules\Messaging\Messaging.csproj", "{A43115EA-98A5-4E1D-8F92-1817E0E254A7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HumanResources", "HumanResources", "{942E9F85-8B86-37BE-B991-648BB8660014}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hr", "Hr", "{942E9F85-8B86-37BE-B991-648BB8660014}"
 	ProjectSection(SolutionItems) = preProject
 		api\modules\HumanResources\README.md = api\modules\HumanResources\README.md
 		api\modules\HumanResources\SETUP_COMPLETE.md = api\modules\HumanResources\SETUP_COMPLETE.md

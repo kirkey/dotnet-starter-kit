@@ -146,8 +146,9 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<PayrollLine>, HumanResourcesRepository<PayrollLine>>("hr:payrolllines");
         builder.Services.AddKeyedScoped<IReadRepository<PayrollLine>, HumanResourcesRepository<PayrollLine>>("hr:payrolllines");
 
-        builder.Services.AddKeyedScoped<IRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("humanresources:payrolldeductions");
-        builder.Services.AddKeyedScoped<IReadRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("humanresources:payrolldeductions");
+        // Fix: align key prefix with convention 'hr:' instead of 'humanresources:'
+        builder.Services.AddKeyedScoped<IRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("hr:payrolldeductions");
+        builder.Services.AddKeyedScoped<IReadRepository<PayrollDeduction>, HumanResourcesRepository<PayrollDeduction>>("hr:payrolldeductions");
 
         builder.Services.AddKeyedScoped<IRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
         builder.Services.AddKeyedScoped<IReadRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
@@ -167,11 +168,19 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:benefitenrollments");
         builder.Services.AddKeyedScoped<IReadRepository<BenefitEnrollment>, HumanResourcesRepository<BenefitEnrollment>>("hr:benefitenrollments");
 
+        // New: BenefitAllocation repositories to support endpoints
+        builder.Services.AddKeyedScoped<IRepository<BenefitAllocation>, HumanResourcesRepository<BenefitAllocation>>("hr:benefitallocations");
+        builder.Services.AddKeyedScoped<IReadRepository<BenefitAllocation>, HumanResourcesRepository<BenefitAllocation>>("hr:benefitallocations");
+
         builder.Services.AddKeyedScoped<IRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
         builder.Services.AddKeyedScoped<IReadRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
 
         builder.Services.AddKeyedScoped<IRepository<GeneratedDocument>, HumanResourcesRepository<GeneratedDocument>>("hr:generateddocuments");
         builder.Services.AddKeyedScoped<IReadRepository<GeneratedDocument>, HumanResourcesRepository<GeneratedDocument>>("hr:generateddocuments");
+
+        // New: PerformanceReview repositories to support endpoints
+        builder.Services.AddKeyedScoped<IRepository<PerformanceReview>, HumanResourcesRepository<PerformanceReview>>("hr:performancereviews");
+        builder.Services.AddKeyedScoped<IReadRepository<PerformanceReview>, HumanResourcesRepository<PerformanceReview>>("hr:performancereviews");
 
         return builder;
     }
