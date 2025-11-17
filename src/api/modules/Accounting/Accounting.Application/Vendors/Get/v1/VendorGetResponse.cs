@@ -10,5 +10,6 @@ public record VendorGetResponse(
     string? Tin,
     string? Phone,
     string? Description,
-    string? Notes
+    string? Notes,
+    string? ImageUrl
 );

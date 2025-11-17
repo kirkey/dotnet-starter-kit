@@ -54,7 +54,8 @@ public class GetCustomerHandler(
             IsOnCreditHold = customer.IsOnCreditHold,
             Description = customer.Description,
             Notes = customer.Notes,
-            AccountOpenDate = customer.CreatedOn.DateTime
+            ImageUrl = customer.ImageUrl,
+            AccountOpenDate = customer.CreatedOn
         };
     }
 }

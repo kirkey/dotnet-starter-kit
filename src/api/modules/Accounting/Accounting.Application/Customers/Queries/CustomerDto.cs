@@ -17,6 +17,7 @@ public record CustomerDto
     public bool IsOnCreditHold { get; init; }
     public string? Email { get; init; }
     public string? Phone { get; init; }
+    public string? ImageUrl { get; init; }
 }
 
 /// <summary>
@@ -34,7 +35,7 @@ public record CustomerDetailsDto : CustomerDto
     public bool TaxExempt { get; init; }
     public string? TaxId { get; init; }
     public decimal DiscountPercentage { get; init; }
-    public DateTime AccountOpenDate { get; init; }
+    public DateTimeOffset AccountOpenDate { get; init; }
     public DateTime? LastTransactionDate { get; init; }
     public DateTime? LastPaymentDate { get; init; }
     public decimal? LastPaymentAmount { get; init; }
