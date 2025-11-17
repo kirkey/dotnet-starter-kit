@@ -24,7 +24,7 @@ public static class SearchTaxesEndpoint
         .WithSummary("Search tax master configurations")
         .WithDescription("Searches and filters tax master configurations with pagination support. " +
                          "Supports filtering by code, tax type, jurisdiction, and active status.")
-        .Produces<PagedList<TaxDto>>(StatusCodes.Status200OK)
+        .Produces<PagedList<TaxDto>>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)

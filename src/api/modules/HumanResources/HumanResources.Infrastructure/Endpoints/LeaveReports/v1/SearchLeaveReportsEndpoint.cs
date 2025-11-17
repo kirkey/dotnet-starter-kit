@@ -21,7 +21,7 @@ public static class SearchLeaveReportsEndpoint
         .WithName(nameof(SearchLeaveReportsEndpoint))
         .WithSummary("Search leave reports")
         .WithDescription("Searches and filters leave reports with pagination support")
-        .Produces<PagedList<LeaveReportDto>>(StatusCodes.Status200OK)
+        .Produces<PagedList<LeaveReportDto>>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)

@@ -22,7 +22,7 @@ public static class GetAttendanceReportEndpoint
         .WithName(nameof(GetAttendanceReportEndpoint))
         .WithSummary("Get attendance report")
         .WithDescription("Retrieves an attendance report by ID with all details")
-        .Produces<AttendanceReportResponse>(StatusCodes.Status200OK)
+        .Produces<AttendanceReportResponse>()
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)
         .ProducesProblem(StatusCodes.Status404NotFound)

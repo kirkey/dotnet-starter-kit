@@ -11,6 +11,8 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDashboards;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations;
@@ -78,7 +80,8 @@ public static class HumanResourcesModule
             app.MapOrganizationalUnitsEndpoints();
             app.MapShiftAssignmentEndpoints();
             app.MapDocumentTemplatesEndpoints();
-            app.MapGeneratedDocumentsEndpoints();
+            app.MapEmployeeDashboardsEndpoints();
+            app.MapEmployeeDocumentsEndpoints();
             app.MapPayComponentsEndpoints();
             app.MapPayComponentRatesEndpoints();
             app.MapEmployeePayComponentsEndpoints();

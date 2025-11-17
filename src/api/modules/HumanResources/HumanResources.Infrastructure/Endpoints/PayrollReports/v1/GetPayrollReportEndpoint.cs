@@ -22,7 +22,7 @@ public static class GetPayrollReportEndpoint
         .WithName(nameof(GetPayrollReportEndpoint))
         .WithSummary("Get payroll report")
         .WithDescription("Retrieves a payroll report by ID with all details")
-        .Produces<PayrollReportResponse>(StatusCodes.Status200OK)
+        .Produces<PayrollReportResponse>()
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)
         .ProducesProblem(StatusCodes.Status404NotFound)

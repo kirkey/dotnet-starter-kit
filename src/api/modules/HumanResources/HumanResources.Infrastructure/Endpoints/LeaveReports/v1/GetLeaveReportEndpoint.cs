@@ -22,7 +22,7 @@ public static class GetLeaveReportEndpoint
         .WithName(nameof(GetLeaveReportEndpoint))
         .WithSummary("Get leave report")
         .WithDescription("Retrieves a leave report by ID with all details")
-        .Produces<LeaveReportResponse>(StatusCodes.Status200OK)
+        .Produces<LeaveReportResponse>()
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)
         .ProducesProblem(StatusCodes.Status404NotFound)

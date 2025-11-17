@@ -26,7 +26,7 @@ public static class UpdateTaxEndpoint
         .WithName(nameof(UpdateTaxEndpoint))
         .WithSummary("Update tax master configuration")
         .WithDescription("Updates an existing tax master configuration. Only provided fields are updated.")
-        .Produces<DefaultIdType>(StatusCodes.Status200OK)
+        .Produces<DefaultIdType>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)

@@ -24,7 +24,7 @@ public static class DeleteTaxEndpoint
         .WithName(nameof(DeleteTaxEndpoint))
         .WithSummary("Delete tax master configuration")
         .WithDescription("Deletes a tax master configuration by ID.")
-        .Produces<DefaultIdType>(StatusCodes.Status200OK)
+        .Produces<DefaultIdType>()
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)
         .ProducesProblem(StatusCodes.Status404NotFound)

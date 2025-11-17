@@ -24,7 +24,7 @@ public static class GetTaxEndpoint
         .WithName(nameof(GetTaxEndpoint))
         .WithSummary("Get tax master configuration")
         .WithDescription("Retrieves a tax master configuration by ID with all details.")
-        .Produces<TaxResponse>(StatusCodes.Status200OK)
+        .Produces<TaxResponse>()
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)
         .ProducesProblem(StatusCodes.Status404NotFound)

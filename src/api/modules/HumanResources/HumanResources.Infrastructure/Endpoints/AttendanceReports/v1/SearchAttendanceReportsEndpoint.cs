@@ -21,7 +21,7 @@ public static class SearchAttendanceReportsEndpoint
         .WithName(nameof(SearchAttendanceReportsEndpoint))
         .WithSummary("Search attendance reports")
         .WithDescription("Searches and filters attendance reports with pagination support")
-        .Produces<PagedList<AttendanceReportDto>>(StatusCodes.Status200OK)
+        .Produces<PagedList<AttendanceReportDto>>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)
