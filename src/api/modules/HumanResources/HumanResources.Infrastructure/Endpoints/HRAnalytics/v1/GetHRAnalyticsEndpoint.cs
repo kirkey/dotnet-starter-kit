@@ -6,24 +6,27 @@ using Shared.Authorization;
 /// <summary>
 /// Endpoint for retrieving company-wide HR analytics.
 /// </summary>
-public static class GetHRAnalyticsEndpoint
+public static class GetHrAnalyticsEndpoint
 {
     /// <summary>
     /// Maps the get HR analytics endpoint.
     /// </summary>
-    public static RouteHandlerBuilder MapGetHRAnalyticsEndpoint(this RouteGroupBuilder group)
+    public static RouteHandlerBuilder MapGetHrAnalyticsEndpoint(this RouteGroupBuilder group)
     {
         return group.MapGet("/", async (
-            [AsParameters] GetHrAnalyticsRequest request,
+            DateTime? fromDate,
+            DateTime? toDate,
+            DefaultIdType? departmentId,
             ISender mediator) =>
         {
+            var request = new GetHrAnalyticsRequest(fromDate, toDate, departmentId);
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName(nameof(GetHRAnalyticsEndpoint))
+        .WithName(nameof(GetHrAnalyticsEndpoint))
         .WithSummary("Get HR analytics")
         .WithDescription("Retrieves comprehensive HR metrics and KPIs including headcount, attendance, payroll, performance, and more")
-        .Produces<HrAnalyticsResponse>(StatusCodes.Status200OK)
+        .Produces<HrAnalyticsResponse>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)

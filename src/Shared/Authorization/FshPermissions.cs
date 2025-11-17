@@ -56,6 +56,7 @@ public static class FshPermissions
 
          new("View Hangfire", FshActions.View, FshResources.Hangfire),
          new("View Dashboard", FshActions.View, FshResources.Dashboard),
+         new("View Analytics", FshActions.View, FshResources.Analytics),
 
         //audit
         new("View Audit Trails", FshActions.View, FshResources.AuditTrails),

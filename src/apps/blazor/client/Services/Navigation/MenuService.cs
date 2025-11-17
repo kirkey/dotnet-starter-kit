@@ -298,6 +298,8 @@ public class MenuService : IMenuService
                     Title = "Analytics",
                     Icon = Icons.Material.Filled.Analytics,
                     Href = "/analytics",
+                    Action = FshActions.View,
+                    Resource = FshResources.Analytics,
                     PageStatus = PageStatus.ComingSoon
                 },
                 

@@ -1,6 +1,7 @@
+using FSH.Starter.WebApi.HumanResources.Domain.Entities;
+
 namespace FSH.Starter.WebApi.HumanResources.Domain.Events;
 
-using Entities;
 
 /// <summary>
 /// Event raised when a deduction is created.

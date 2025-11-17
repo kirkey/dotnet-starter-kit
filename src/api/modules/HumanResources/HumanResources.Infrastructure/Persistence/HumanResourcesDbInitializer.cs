@@ -10,7 +10,7 @@ internal sealed class HumanResourcesDbInitializer(
     ILogger<HumanResourcesDbInitializer> logger,
     HumanResourcesDbContext context,
     ILogger<PhilippinePayrollSeeder> payrollLogger,
-    ILogger<HRDemoDataSeeder> demoLogger) : IDbInitializer
+    ILogger<HrDemoDataSeeder> demoLogger) : IDbInitializer
 {
     public async Task MigrateAsync(CancellationToken cancellationToken)
     {
@@ -94,7 +94,7 @@ internal sealed class HumanResourcesDbInitializer(
         await payrollSeeder.SeedAsync(cancellationToken).ConfigureAwait(false);
 
         // Seed demo/sample data for all HR entities
-        var demoSeeder = new HRDemoDataSeeder(demoLogger, context);
+        var demoSeeder = new HrDemoDataSeeder(demoLogger, context);
         await demoSeeder.SeedAsync(cancellationToken).ConfigureAwait(false);
     }
 }

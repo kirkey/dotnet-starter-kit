@@ -113,24 +113,24 @@ internal sealed class PhilippinePayrollSeeder
         sssEmployer.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
 
         // Employees Compensation (EC)
-        var sssEC = PayComponent.Create(
+        var sssEc = PayComponent.Create(
             code: "SSS_EC",
             componentName: "SSS EC (Employees Compensation)",
             componentType: "EmployerContribution",
             calculationMethod: "Bracket",
             glAccountCode: "6151");
 
-        sssEC.Update(
+        sssEc.Update(
             description: "SSS Employees Compensation contribution (1.0% of monthly salary credit)",
             displayOrder: 102);
 
-        sssEC.SetAutoCalculated();
-        sssEC.SetMandatory("SSS Law RA 11199, SSS Circular No. 2024-006");
-        sssEC.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
-        sssEC.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
+        sssEc.SetAutoCalculated();
+        sssEc.SetMandatory("SSS Law RA 11199, SSS Circular No. 2024-006");
+        sssEc.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
+        sssEc.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
 
         await _context.PayComponents.AddRangeAsync(
-            new[] { sssEmployee, sssEmployer, sssEC },
+            new[] { sssEmployee, sssEmployer, sssEc },
             cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 

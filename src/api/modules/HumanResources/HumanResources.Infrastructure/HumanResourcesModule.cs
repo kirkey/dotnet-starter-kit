@@ -63,31 +63,25 @@ public static class HumanResourcesModule
             app.MapBankAccountsEndpoints();
             app.MapBenefitEnrollmentsEndpoints();
             app.MapBenefitAllocationsEndpoints();
-            // Add Benefit master endpoints mapping
             app.MapBenefitEndpoints();
-            app.MapDeductionEndpoints(); // Add Deduction master endpoints
+            app.MapDeductionEndpoints();
             app.MapTimesheetsEndpoints();
             app.MapTimesheetLinesEndpoints();
             app.MapLeaveTypesEndpoints();
             app.MapLeaveBalancesEndpoints();
             app.MapLeaveRequestsEndpoints();
             app.MapLeaveReportsEndpoints();
-            app.MapOrganizationalUnitsEndpoints();
             app.MapShiftAssignmentEndpoints();
             app.MapDocumentTemplatesEndpoints();
             app.MapEmployeeDashboardsEndpoints();
-            app.MapEmployeeDocumentsEndpoints();
-            app.MapEmployeesEndpoints();
-            app.MapHRAnalyticsEndpoints();
+            // app.MapHrAnalyticsEndpoints();
             app.MapPayComponentRatesEndpoints();
             app.MapEmployeePayComponentsEndpoints();
             app.MapPerformanceReviewsEndpoints();
-            app.MapPayrollsEndpoints();
             app.MapPayrollLinesEndpoints();
             app.MapPayrollDeductionsEndpoints();
-            app.MapPayrollReportsEndpoints();
             app.MapTaxBracketEndpoints();
-            app.MapTaxEndpoints(); // Add Tax Master Configuration endpoints
+            app.MapTaxEndpoints();
         }
     }
 
@@ -121,7 +115,6 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:contacts");
         builder.Services.AddKeyedScoped<IReadRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:contacts");
 
-        // Add alias for handlers that use hr:employeecontacts key
         builder.Services.AddKeyedScoped<IRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:employeecontacts");
         builder.Services.AddKeyedScoped<IReadRepository<EmployeeContact>, HumanResourcesRepository<EmployeeContact>>("hr:employeecontacts");
 
@@ -181,9 +174,9 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
         builder.Services.AddKeyedScoped<IReadRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:paycomponents");
 
-        // Add alias for Deductions endpoints that use hr:deductions key
-        builder.Services.AddKeyedScoped<IRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:deductions");
-        builder.Services.AddKeyedScoped<IReadRepository<PayComponent>, HumanResourcesRepository<PayComponent>>("hr:deductions");
+        // New: Deduction repositories to support deductions master endpoints
+        builder.Services.AddKeyedScoped<IRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
+        builder.Services.AddKeyedScoped<IReadRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
 
         builder.Services.AddKeyedScoped<IRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("hr:paycomponentrates");
         builder.Services.AddKeyedScoped<IReadRepository<PayComponentRate>, HumanResourcesRepository<PayComponentRate>>("hr:paycomponentrates");
@@ -201,11 +194,7 @@ public static class HumanResourcesModule
         // Add TaxMaster repositories for new Tax Master Configuration endpoints
         builder.Services.AddKeyedScoped<IRepository<TaxMaster>, HumanResourcesRepository<TaxMaster>>("hr:taxes");
         builder.Services.AddKeyedScoped<IReadRepository<TaxMaster>, HumanResourcesRepository<TaxMaster>>("hr:taxes");
-
-        // Add alias for TaxBrackets endpoints that use hr:taxbrackets key (kept for backwards compatibility)
-        builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
-        builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
-
+        
         builder.Services.AddKeyedScoped<IRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");
         builder.Services.AddKeyedScoped<IReadRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");
 
@@ -220,9 +209,6 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<BenefitAllocation>, HumanResourcesRepository<BenefitAllocation>>("hr:benefitallocations");
         builder.Services.AddKeyedScoped<IReadRepository<BenefitAllocation>, HumanResourcesRepository<BenefitAllocation>>("hr:benefitallocations");
 
-        // New: Deduction repositories to support deductions master endpoints
-        builder.Services.AddKeyedScoped<IRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
-        builder.Services.AddKeyedScoped<IReadRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
 
         // New: PayrollReport repositories to support payroll reports endpoints
         builder.Services.AddKeyedScoped<IRepository<PayrollReport>, HumanResourcesRepository<PayrollReport>>("hr:payrollreports");
@@ -236,9 +222,6 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<LeaveReport>, HumanResourcesRepository<LeaveReport>>("hr:leavereports");
         builder.Services.AddKeyedScoped<IReadRepository<LeaveReport>, HumanResourcesRepository<LeaveReport>>("hr:leavereports");
 
-        // New: PayrollReport repositories to support payroll reports endpoints
-        builder.Services.AddKeyedScoped<IRepository<PayrollReport>, HumanResourcesRepository<PayrollReport>>("hr:payrollreports");
-        builder.Services.AddKeyedScoped<IReadRepository<PayrollReport>, HumanResourcesRepository<PayrollReport>>("hr:payrollreports");
 
         builder.Services.AddKeyedScoped<IRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
         builder.Services.AddKeyedScoped<IReadRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");

@@ -7,13 +7,13 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 /// Seeds sample/demo data for all HR entities for testing and development.
 /// Adds Philippine-compliant sample data when real data is not available.
 /// </summary>
-internal sealed class HRDemoDataSeeder
+internal sealed class HrDemoDataSeeder
 {
-    private readonly ILogger<HRDemoDataSeeder> _logger;
+    private readonly ILogger<HrDemoDataSeeder> _logger;
     private readonly HumanResourcesDbContext _context;
 
-    public HRDemoDataSeeder(
-        ILogger<HRDemoDataSeeder> logger,
+    public HrDemoDataSeeder(
+        ILogger<HrDemoDataSeeder> logger,
         HumanResourcesDbContext context)
     {
         _logger = logger;

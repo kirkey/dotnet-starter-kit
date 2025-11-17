@@ -1,7 +1,7 @@
 Implement CQRS and DRY principles.
 Each class should have a separate file.
 Implement stricter and tighter validations on each validator and handler.
-Follow Catalog and Todo Projects for code structure, patterns for consistency.
+Follow Catalog and Todo Projects for code structure, patterns to ensure code consistency.
 Add documentation for each Entity, fields, methods, functions and classes.
 Only use string as enums.
 

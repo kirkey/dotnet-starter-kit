@@ -5,17 +5,17 @@ using v1;
 /// <summary>
 /// HR Analytics endpoints coordinator.
 /// </summary>
-public static class HRAnalyticsEndpoints
+public static class HrAnalyticsEndpoints
 {
     /// <summary>
     /// Maps all HR analytics endpoints.
     /// </summary>
-    public static void MapHRAnalyticsEndpoints(this IEndpointRouteBuilder app)
+    public static void MapHrAnalyticsEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr-analytics").WithTags("HR Analytics");
-        group.MapGetHRAnalyticsEndpoint();
+        group.MapGetHrAnalyticsEndpoint();
         group.MapGetDepartmentAnalyticsEndpoint();
-        group.MapExportHRAnalyticsEndpoint();
+        group.MapExportHrAnalyticsEndpoint();
     }
 }
 
