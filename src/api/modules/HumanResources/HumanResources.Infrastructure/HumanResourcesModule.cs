@@ -1,6 +1,7 @@
 // ensure ArgumentNullException available
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.AttendanceReports;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments;
@@ -22,6 +23,8 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollReports;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines;
@@ -57,6 +60,7 @@ public static class HumanResourcesModule
             app.MapEmployeeDocumentsEndpoints();
             app.MapEmployeeEducationsEndpoints();
             app.MapAttendanceEndpoints();
+            app.MapAttendanceReportsEndpoints();
             app.MapBankAccountsEndpoints();
             app.MapBenefitEnrollmentsEndpoints();
             app.MapBenefitAllocationsEndpoints();
@@ -79,6 +83,7 @@ public static class HumanResourcesModule
             app.MapPayrollsEndpoints();
             app.MapPayrollLinesEndpoints();
             app.MapPayrollDeductionsEndpoints();
+            app.MapPayrollReportsEndpoints();
             app.MapTaxBracketEndpoints();
             app.MapTaxEndpoints(); // Add Tax Master Configuration endpoints
         }
@@ -216,6 +221,14 @@ public static class HumanResourcesModule
         // New: Deduction repositories to support deductions master endpoints
         builder.Services.AddKeyedScoped<IRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
         builder.Services.AddKeyedScoped<IReadRepository<Deduction>, HumanResourcesRepository<Deduction>>("hr:deductions");
+
+        // New: PayrollReport repositories to support payroll reports endpoints
+        builder.Services.AddKeyedScoped<IRepository<PayrollReport>, HumanResourcesRepository<PayrollReport>>("hr:payrollreports");
+        builder.Services.AddKeyedScoped<IReadRepository<PayrollReport>, HumanResourcesRepository<PayrollReport>>("hr:payrollreports");
+
+        // New: AttendanceReport repositories to support attendance reports endpoints
+        builder.Services.AddKeyedScoped<IRepository<AttendanceReport>, HumanResourcesRepository<AttendanceReport>>("hr:attendancereports");
+        builder.Services.AddKeyedScoped<IReadRepository<AttendanceReport>, HumanResourcesRepository<AttendanceReport>>("hr:attendancereports");
 
         builder.Services.AddKeyedScoped<IRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
         builder.Services.AddKeyedScoped<IReadRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
