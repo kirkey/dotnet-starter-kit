@@ -243,7 +243,8 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         string? dimensionUnit,
         DefaultIdType categoryId,
         DefaultIdType supplierId,
-        string unitOfMeasure)
+        string unitOfMeasure,
+        string? imageUrl = null)
     {
         // domain validations
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
@@ -293,6 +294,9 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         if (string.IsNullOrWhiteSpace(unitOfMeasure)) unitOfMeasure = "EA";
         if (unitOfMeasure.Length > 20) throw new ArgumentException("UnitOfMeasure must not exceed 20 characters", nameof(unitOfMeasure));
 
+        if (imageUrl is { Length: > 500 })
+            throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+        
         Id = id;
         Name = name;
         Description = description;
@@ -321,6 +325,7 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         CategoryId = categoryId;
         SupplierId = supplierId;
         UnitOfMeasure = unitOfMeasure;
+        ImageUrl = imageUrl;
 
         QueueDomainEvent(new ItemCreated { Item = this });
     }
@@ -355,7 +360,8 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         decimal? length = null,
         decimal? width = null,
         decimal? height = null,
-        string? dimensionUnit = null)
+        string? dimensionUnit = null,
+        string? imageUrl = null)
     {
         return new Item(
             DefaultIdType.NewGuid(),
@@ -385,7 +391,8 @@ public sealed class Item : AuditableEntity, IAggregateRoot
             dimensionUnit,
             categoryId,
             supplierId,
-            unitOfMeasure ?? "EA");
+            unitOfMeasure ?? "EA",
+            imageUrl);
     }
 
     /// <summary>
@@ -404,7 +411,8 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         string? brand,
         string? manufacturer,
         string? manufacturerPartNumber,
-        string? unitOfMeasure)
+        string? unitOfMeasure,
+        string? imageUrl = null)
     {
         bool isUpdated = false;
         decimal oldPrice = UnitPrice;
@@ -503,6 +511,13 @@ public sealed class Item : AuditableEntity, IAggregateRoot
         {
             if (unitOfMeasure.Length > 20) throw new ArgumentException("UnitOfMeasure must not exceed 20 characters", nameof(unitOfMeasure));
             UnitOfMeasure = unitOfMeasure;
+            isUpdated = true;
+        }
+
+        if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
+        {
+            if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+            ImageUrl = imageUrl;
             isUpdated = true;
         }
 

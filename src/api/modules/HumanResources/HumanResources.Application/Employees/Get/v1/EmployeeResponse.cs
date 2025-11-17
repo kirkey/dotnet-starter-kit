@@ -48,6 +48,9 @@ public sealed record EmployeeResponse
     public bool IsSoloParent { get; init; }
     public string? SoloParentIdNumber { get; init; }
     
+    // Profile & Display
+    public string? ImageUrl { get; init; }
+    
     // Status
     public bool IsActive { get; init; }
 }

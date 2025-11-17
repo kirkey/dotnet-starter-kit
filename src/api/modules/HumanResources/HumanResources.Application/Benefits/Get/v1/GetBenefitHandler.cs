@@ -40,7 +40,8 @@ public sealed class GetBenefitHandler(
             benefit.ProviderName,
             benefit.CoverageAmount,
             benefit.WaitingPeriodDays,
-            benefit.Description);
+            benefit.Description,
+            benefit.ImageUrl);
     }
 }
 

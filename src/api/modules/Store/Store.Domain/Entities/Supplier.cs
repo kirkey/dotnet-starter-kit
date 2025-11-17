@@ -85,8 +85,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// Default: 0.
     /// </summary>
     public decimal Rating { get; private set; }
-
-
+    
     /// <summary>
     /// Navigation property to items supplied by this supplier.
     /// </summary>
@@ -116,7 +115,8 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         int paymentTermsDays,
         bool isActive,
         decimal rating,
-        string? notes)
+        string? notes,
+        string? imageUrl = null)
     {
         // Validate required fields and lengths
         if (string.IsNullOrWhiteSpace(name))
@@ -167,6 +167,9 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         if (rating is < 0m or > 5m)
             throw new ArgumentException("Rating must be between 0 and 5", nameof(rating));
 
+        if (imageUrl is { Length: > 500 })
+            throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+
         Id = id;
         Name = name;
         Description = description;
@@ -182,6 +185,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         IsActive = isActive;
         Rating = rating;
         Notes = notes;
+        ImageUrl = imageUrl;
 
         QueueDomainEvent(new SupplierCreated { Supplier = this });
     }
@@ -219,7 +223,8 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         int paymentTermsDays = 30,
         bool isActive = true,
         decimal rating = 0,
-        string? notes = null)
+        string? notes = null,
+        string? imageUrl = null)
     {
         return new Supplier(
             DefaultIdType.NewGuid(),
@@ -236,7 +241,8 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
             paymentTermsDays,
             isActive,
             rating,
-            notes);
+            notes,
+            imageUrl);
     }
 
     /// <summary>
@@ -268,7 +274,8 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         decimal? creditLimit,
         int? paymentTermsDays,
         decimal? rating,
-        string? notes)
+        string? notes,
+        string? imageUrl = null)
     {
         bool isUpdated = false;
 
@@ -353,6 +360,13 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         {
             if (notes is { Length: > 2000 }) throw new ArgumentException("Notes must not exceed 2000 characters", nameof(notes));
             Notes = notes;
+            isUpdated = true;
+        }
+
+        if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
+        {
+            if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+            ImageUrl = imageUrl;
             isUpdated = true;
         }
 

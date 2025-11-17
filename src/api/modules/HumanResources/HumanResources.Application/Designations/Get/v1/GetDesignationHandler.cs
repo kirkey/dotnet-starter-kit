@@ -30,6 +30,7 @@ public sealed class GetDesignationHandler(
             Description = designation.Description,
             MinSalary = designation.MinSalary,
             MaxSalary = designation.MaxSalary,
+            ImageUrl = designation.ImageUrl,
             IsActive = designation.IsActive
         };
     }

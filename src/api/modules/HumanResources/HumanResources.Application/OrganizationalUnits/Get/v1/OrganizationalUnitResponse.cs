@@ -17,6 +17,7 @@ public sealed record OrganizationalUnitResponse
     public string? ManagerName { get; init; }
     public string? CostCenter { get; init; }
     public string? Location { get; init; }
+    public string? ImageUrl { get; init; }
     public bool IsActive { get; init; }
 }
 

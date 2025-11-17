@@ -226,6 +226,7 @@ public sealed class Category : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
         {
+            if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
             ImageUrl = imageUrl;
             isUpdated = true;
         }

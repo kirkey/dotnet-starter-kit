@@ -52,6 +52,7 @@ public sealed class GetEmployeeHandler(
             PwdIdNumber = employee.PwdIdNumber,
             IsSoloParent = employee.IsSoloParent,
             SoloParentIdNumber = employee.SoloParentIdNumber,
+            ImageUrl = employee.ImageUrl,
             IsActive = employee.IsActive
         };
     }

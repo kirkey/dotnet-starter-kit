@@ -13,6 +13,7 @@ public sealed record DesignationResponse
     public string? Description { get; init; }
     public decimal? MinSalary { get; init; }
     public decimal? MaxSalary { get; init; }
+    public string? ImageUrl { get; init; }
     public bool IsActive { get; init; }
 }
 

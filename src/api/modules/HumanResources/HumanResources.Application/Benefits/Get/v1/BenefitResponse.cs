@@ -17,5 +17,6 @@ public sealed record BenefitResponse(
     string? ProviderName,
     decimal? CoverageAmount,
     int? WaitingPeriodDays,
-    string? Description);
+    string? Description,
+    string? ImageUrl);
 
