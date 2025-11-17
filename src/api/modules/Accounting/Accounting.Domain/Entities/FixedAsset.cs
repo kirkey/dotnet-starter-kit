@@ -207,7 +207,7 @@ public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
         string? gpsCoordinates = null, string? substationName = null, DefaultIdType? assetUsoaId = null,
         string? regulatoryClassification = null, decimal? voltageRating = null, decimal? capacity = null,
         string? manufacturer = null, string? modelNumber = null, bool requiresUsoaReporting = true,
-        string? description = null, string? notes = null)
+        string? description = null, string? notes = null, string? imageUrl = null)
     {
         AssetName = assetName.Trim();
         PurchaseDate = purchaseDate;
@@ -233,6 +233,7 @@ public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
         RequiresUsoaReporting = requiresUsoaReporting;
         Description = description?.Trim();
         Notes = notes?.Trim();
+        ImageUrl = imageUrl?.Trim();
         CurrentBookValue = purchasePrice;
         QueueDomainEvent(new FixedAssetCreated(Id, AssetName, PurchaseDate, PurchasePrice, AssetType, Description, Notes));
     }
@@ -247,7 +248,7 @@ public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
         string? gpsCoordinates = null, string? substationName = null, DefaultIdType? assetUsoaId = null,
         string? regulatoryClassification = null, decimal? voltageRating = null, decimal? capacity = null,
         string? manufacturer = null, string? modelNumber = null, bool requiresUsoaReporting = true,
-        string? description = null, string? notes = null)
+        string? description = null, string? notes = null, string? imageUrl = null)
     {
         if (string.IsNullOrWhiteSpace(assetName))
             throw new ArgumentException("Asset name cannot be empty");
@@ -268,7 +269,7 @@ public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
             depreciationMethodId, serviceLife, salvageValue, accumulatedDepreciationAccountId,
             depreciationExpenseAccountId, assetType, serialNumber, location, department,
             gpsCoordinates, substationName, assetUsoaId, regulatoryClassification, voltageRating,
-            capacity, manufacturer, modelNumber, requiresUsoaReporting, description, notes);
+            capacity, manufacturer, modelNumber, requiresUsoaReporting, description, notes, imageUrl);
     }
 
     /// <summary>
@@ -278,7 +279,7 @@ public class FixedAsset : AuditableEntityWithApproval, IAggregateRoot
         string? serialNumber = null, string? gpsCoordinates = null, string? substationName = null,
         string? regulatoryClassification = null, decimal? voltageRating = null, decimal? capacity = null,
         string? manufacturer = null, string? modelNumber = null, bool requiresUsoaReporting = false,
-        string? description = null, string? notes = null)
+        string? description = null, string? notes = null, string? imageUrl = null)
     {
         if (IsDisposed)
             throw new FixedAssetCannotBeModifiedException(Id);

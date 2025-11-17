@@ -26,5 +26,6 @@ public sealed record CreateFixedAssetCommand(
     string? ModelNumber = null,
     bool RequiresUsoaReporting = true,
     string? Description = null,
-    string? Notes = null
+    string? Notes = null,
+    string? ImageUrl = null
 ) : IRequest<CreateFixedAssetResponse>;

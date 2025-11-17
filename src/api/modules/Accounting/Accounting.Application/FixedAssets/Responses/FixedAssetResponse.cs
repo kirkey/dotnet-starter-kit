@@ -31,7 +31,8 @@ public class FixedAssetResponse(
     string? modelNumber,
     DateTime? lastMaintenanceDate,
     DateTime? nextMaintenanceDate,
-    bool requiresUsoaReporting) : BaseDto
+    bool requiresUsoaReporting,
+    string? imageUrl = null) : BaseDto
 {
     /// <summary>
     /// Unique identifier for the fixed asset.
@@ -172,4 +173,9 @@ public class FixedAssetResponse(
     /// Whether this asset requires USOA reporting in regulatory filings.
     /// </summary>
     public bool RequiresUsoaReporting { get; set; } = requiresUsoaReporting;
+
+    /// <summary>
+    /// URL to the asset image for visual documentation and identification.
+    /// </summary>
+    public string? ImageUrl { get; set; } = imageUrl;
 }

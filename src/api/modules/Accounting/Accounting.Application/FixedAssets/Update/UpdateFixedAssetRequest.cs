@@ -94,4 +94,9 @@ public class UpdateFixedAssetCommand : IRequest<DefaultIdType>
     /// Notes.
     /// </summary>
     public string? Notes { get; set; }
+    
+    /// <summary>
+    /// Image URL for visual documentation.
+    /// </summary>
+    public string? ImageUrl { get; set; }
 }

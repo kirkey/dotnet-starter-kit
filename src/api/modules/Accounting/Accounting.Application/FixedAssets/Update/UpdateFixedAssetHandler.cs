@@ -27,7 +27,8 @@ public sealed class UpdateFixedAssetHandler(
             request.ModelNumber,
             request.RequiresUsoaReporting,
             request.Description,
-            request.Notes);
+            request.Notes,
+            request.ImageUrl);
 
         await repository.UpdateAsync(asset, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

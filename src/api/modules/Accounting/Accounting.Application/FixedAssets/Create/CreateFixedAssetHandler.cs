@@ -31,7 +31,8 @@ public sealed class CreateFixedAssetHandler(
             request.ModelNumber,
             request.RequiresUsoaReporting,
             request.Description,
-            request.Notes);
+            request.Notes,
+            request.ImageUrl);
 
         await repository.AddAsync(fixedAsset, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
