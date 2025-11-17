@@ -264,6 +264,14 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Documents & Reports", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Document Templates", Icon = Icons.Material.Filled.Article, Href = "/hr/document-templates", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.ComingSoon },
                         new MenuSectionSubItemModel { Title = "Generated Documents", Icon = Icons.Material.Filled.FileCopy, Href = "/hr/generated-documents", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.ComingSoon },
+                        
+                        // ========== ANALYTICS & INSIGHTS ==========
+                        new MenuSectionSubItemModel { Title = "Analytics & Insights", IsGroupHeader = true },
+                        new MenuSectionSubItemModel { Title = "HR Analytics", Icon = Icons.Material.Filled.Analytics, Href = "/hr/analytics", Action = FshActions.View, Resource = FshResources.Analytics, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Employee Dashboard", Icon = Icons.Material.Filled.Dashboard, Href = "/hr/employee-dashboard", Action = FshActions.View, Resource = FshResources.Dashboard, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Attendance Reports", Icon = Icons.Material.Filled.BarChart, Href = "/hr/attendance-reports", Action = FshActions.View, Resource = FshResources.Attendance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Leave Reports", Icon = Icons.Material.Filled.EventNote, Href = "/hr/leave-reports", Action = FshActions.View, Resource = FshResources.Leaves, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Payroll Reports", Icon = Icons.Material.Filled.Receipt, Href = "/hr/payroll-reports", Action = FshActions.View, Resource = FshResources.Leaves, PageStatus = PageStatus.InProgress },
                     ]
                 },
 
