@@ -15,6 +15,50 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 name: "humanresources");
 
             migrationBuilder.CreateTable(
+                name: "AttendanceReport",
+                schema: "humanresources",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReportType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    FromDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    GeneratedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DepartmentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TotalWorkingDays = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    TotalEmployees = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    PresentCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    AbsentCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    LateCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    HalfDayCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    OnLeaveCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    AttendancePercentage = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false, defaultValue: 0m),
+                    LatePercentage = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false, defaultValue: 0m),
+                    ReportData = table.Column<string>(type: "jsonb", nullable: true),
+                    ExportPath = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AttendanceReport", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Benefits",
                 schema: "humanresources",
                 columns: table => new
@@ -51,6 +95,43 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Benefits", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Deductions",
+                schema: "humanresources",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DeductionName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    DeductionType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    RecoveryMethod = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    RecoveryFixedAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: true),
+                    RecoveryPercentage = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: true),
+                    InstallmentCount = table.Column<int>(type: "integer", nullable: true),
+                    MaxRecoveryPercentage = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
+                    RequiresApproval = table.Column<bool>(type: "boolean", nullable: false),
+                    IsRecurring = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    GlAccountCode = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    TenantId = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deductions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,6 +202,50 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Holidays", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LeaveReport",
+                schema: "humanresources",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReportType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    FromDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    GeneratedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DepartmentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TotalEmployees = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    TotalLeaveTypes = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    TotalLeaveRequests = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    ApprovedLeaveCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    PendingLeaveCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    RejectedLeaveCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    TotalLeaveConsumed = table.Column<decimal>(type: "numeric(8,2)", precision: 8, scale: 2, nullable: false, defaultValue: 0m),
+                    AverageLeavePerEmployee = table.Column<decimal>(type: "numeric(8,2)", precision: 8, scale: 2, nullable: false, defaultValue: 0m),
+                    HighestLeaveType = table.Column<int>(type: "integer", nullable: false),
+                    ReportData = table.Column<string>(type: "jsonb", nullable: true),
+                    ExportPath = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeaveReport", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,6 +377,51 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 });
 
             migrationBuilder.CreateTable(
+                name: "PayrollReport",
+                schema: "humanresources",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReportType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    FromDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    GeneratedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DepartmentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: true),
+                    PayrollPeriod = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    TotalEmployees = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    TotalPayrollRuns = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    TotalGrossPay = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    TotalNetPay = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    TotalDeductions = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    TotalTaxes = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    TotalBenefits = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    AverageGrossPerEmployee = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    AverageNetPerEmployee = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    ReportData = table.Column<string>(type: "jsonb", nullable: true),
+                    ExportPath = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Notes = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    Name = table.Column<string>(type: "VARCHAR(1024)", nullable: false),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PayrollReport", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payrolls",
                 schema: "humanresources",
                 columns: table => new
@@ -353,6 +523,44 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TaxBrackets", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaxMaster",
+                schema: "humanresources",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    TaxType = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Rate = table.Column<decimal>(type: "numeric(5,4)", precision: 5, scale: 4, nullable: false),
+                    IsCompound = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    Jurisdiction = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    EffectiveDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    TaxCollectedAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TaxPaidAccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TaxAuthority = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    TaxRegistrationNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    ReportingCategory = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    Description = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    Notes = table.Column<string>(type: "VARCHAR(2048)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModifiedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedByUserName = table.Column<string>(type: "VARCHAR(64)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaxMaster", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -518,9 +726,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     TaxRate = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: true),
                     BaseAmount = table.Column<decimal>(type: "numeric(15,2)", precision: 15, scale: 2, nullable: true),
                     ExcessRate = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: true),
-                    Year = table.Column<int>(type: "integer", nullable: false),
-                    EffectiveStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EffectiveStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EffectiveEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Year = table.Column<int>(type: "integer", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     TenantId = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
@@ -819,7 +1027,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeDocuments",
+                name: "EmployeeDocument",
                 schema: "humanresources",
                 columns: table => new
                 {
@@ -852,9 +1060,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeDocuments", x => x.Id);
+                    table.PrimaryKey("PK_EmployeeDocument", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EmployeeDocuments_Employees_EmployeeId",
+                        name: "FK_EmployeeDocument_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalSchema: "humanresources",
                         principalTable: "Employees",
@@ -863,7 +1071,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeEducation",
+                name: "EmployeeEducations",
                 schema: "humanresources",
                 columns: table => new
                 {
@@ -897,9 +1105,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeEducation", x => x.Id);
+                    table.PrimaryKey("PK_EmployeeEducations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EmployeeEducation_Employees_EmployeeId",
+                        name: "FK_EmployeeEducations_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalSchema: "humanresources",
                         principalTable: "Employees",
@@ -1388,7 +1596,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 });
 
             migrationBuilder.CreateTable(
-                name: "BenefitAllocation",
+                name: "BenefitAllocations",
                 schema: "humanresources",
                 columns: table => new
                 {
@@ -1421,15 +1629,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BenefitAllocation", x => x.Id);
+                    table.PrimaryKey("PK_BenefitAllocations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BenefitAllocation_BenefitEnrollments_BenefitEnrollmentId",
+                        name: "FK_BenefitAllocations_BenefitEnrollments_BenefitEnrollmentId",
                         column: x => x.BenefitEnrollmentId,
                         principalSchema: "humanresources",
                         principalTable: "BenefitEnrollments",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_BenefitAllocation_BenefitEnrollments_EnrollmentId",
+                        name: "FK_BenefitAllocations_BenefitEnrollments_EnrollmentId",
                         column: x => x.EnrollmentId,
                         principalSchema: "humanresources",
                         principalTable: "BenefitEnrollments",
@@ -1516,6 +1724,42 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "idx_attendance_report_department_id",
+                schema: "humanresources",
+                table: "AttendanceReport",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_attendance_report_employee_id",
+                schema: "humanresources",
+                table: "AttendanceReport",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_attendance_report_generated_on",
+                schema: "humanresources",
+                table: "AttendanceReport",
+                column: "GeneratedOn");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_attendance_report_is_active",
+                schema: "humanresources",
+                table: "AttendanceReport",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_attendance_report_period",
+                schema: "humanresources",
+                table: "AttendanceReport",
+                columns: new[] { "FromDate", "ToDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "idx_attendance_report_type",
+                schema: "humanresources",
+                table: "AttendanceReport",
+                column: "ReportType");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_AccountType",
                 schema: "humanresources",
                 table: "BankAccount",
@@ -1554,38 +1798,38 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_AllocationDate",
                 schema: "humanresources",
-                table: "BenefitAllocation",
+                table: "BenefitAllocations",
                 column: "AllocationDate");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BenefitAllocation_BenefitEnrollmentId",
-                schema: "humanresources",
-                table: "BenefitAllocation",
-                column: "BenefitEnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_Enrollment_Date",
                 schema: "humanresources",
-                table: "BenefitAllocation",
+                table: "BenefitAllocations",
                 columns: new[] { "EnrollmentId", "AllocationDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_EnrollmentId",
                 schema: "humanresources",
-                table: "BenefitAllocation",
+                table: "BenefitAllocations",
                 column: "EnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_ReferenceNumber",
                 schema: "humanresources",
-                table: "BenefitAllocation",
+                table: "BenefitAllocations",
                 column: "ReferenceNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_Status",
                 schema: "humanresources",
-                table: "BenefitAllocation",
+                table: "BenefitAllocations",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BenefitAllocations_BenefitEnrollmentId",
+                schema: "humanresources",
+                table: "BenefitAllocations",
+                column: "BenefitEnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitEnrollment_BenefitId",
@@ -1634,6 +1878,30 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "humanresources",
                 table: "Benefits",
                 columns: new[] { "BenefitName", "BenefitType" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deduction_DeductionName",
+                schema: "humanresources",
+                table: "Deductions",
+                column: "DeductionName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deduction_DeductionType",
+                schema: "humanresources",
+                table: "Deductions",
+                column: "DeductionType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deduction_IsActive",
+                schema: "humanresources",
+                table: "Deductions",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deduction_Type_Active",
+                schema: "humanresources",
+                table: "Deductions",
+                columns: new[] { "DeductionType", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EDA_Designations",
@@ -1740,61 +2008,61 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_DocumentType",
                 schema: "humanresources",
-                table: "EmployeeDocuments",
+                table: "EmployeeDocument",
                 column: "DocumentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_EmployeeId",
                 schema: "humanresources",
-                table: "EmployeeDocuments",
+                table: "EmployeeDocument",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_EmployeeId_DocumentType",
                 schema: "humanresources",
-                table: "EmployeeDocuments",
+                table: "EmployeeDocument",
                 columns: new[] { "EmployeeId", "DocumentType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_ExpiryDate",
                 schema: "humanresources",
-                table: "EmployeeDocuments",
+                table: "EmployeeDocument",
                 column: "ExpiryDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_IsActive",
                 schema: "humanresources",
-                table: "EmployeeDocuments",
+                table: "EmployeeDocument",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_EducationLevel",
                 schema: "humanresources",
-                table: "EmployeeEducation",
+                table: "EmployeeEducations",
                 column: "EducationLevel");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_EmployeeId",
                 schema: "humanresources",
-                table: "EmployeeEducation",
+                table: "EmployeeEducations",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_EmployeeId_EducationLevel",
                 schema: "humanresources",
-                table: "EmployeeEducation",
+                table: "EmployeeEducations",
                 columns: new[] { "EmployeeId", "EducationLevel" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_IsActive",
                 schema: "humanresources",
-                table: "EmployeeEducation",
+                table: "EmployeeEducations",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_IsVerified",
                 schema: "humanresources",
-                table: "EmployeeEducation",
+                table: "EmployeeEducations",
                 column: "IsVerified");
 
             migrationBuilder.CreateIndex(
@@ -1930,6 +2198,42 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "humanresources",
                 table: "LeaveBalances",
                 column: "LeaveTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_leave_report_department_id",
+                schema: "humanresources",
+                table: "LeaveReport",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_leave_report_employee_id",
+                schema: "humanresources",
+                table: "LeaveReport",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_leave_report_generated_on",
+                schema: "humanresources",
+                table: "LeaveReport",
+                column: "GeneratedOn");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_leave_report_is_active",
+                schema: "humanresources",
+                table: "LeaveReport",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_leave_report_period",
+                schema: "humanresources",
+                table: "LeaveReport",
+                columns: new[] { "FromDate", "ToDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "idx_leave_report_type",
+                schema: "humanresources",
+                table: "LeaveReport",
+                column: "ReportType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_EmployeeId",
@@ -2103,6 +2407,48 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "idx_payroll_report_date_range",
+                schema: "humanresources",
+                table: "PayrollReport",
+                columns: new[] { "FromDate", "ToDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "idx_payroll_report_department_id",
+                schema: "humanresources",
+                table: "PayrollReport",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_payroll_report_employee_id",
+                schema: "humanresources",
+                table: "PayrollReport",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_payroll_report_generated_on",
+                schema: "humanresources",
+                table: "PayrollReport",
+                column: "GeneratedOn");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_payroll_report_is_active",
+                schema: "humanresources",
+                table: "PayrollReport",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_payroll_report_period",
+                schema: "humanresources",
+                table: "PayrollReport",
+                column: "PayrollPeriod");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_payroll_report_type",
+                schema: "humanresources",
+                table: "PayrollReport",
+                column: "ReportType");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Payroll_DateRange",
                 schema: "humanresources",
                 table: "Payrolls",
@@ -2237,6 +2583,37 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 columns: new[] { "TaxType", "Year", "MinIncome", "MaxIncome" });
 
             migrationBuilder.CreateIndex(
+                name: "idx_tax_master_code",
+                schema: "humanresources",
+                table: "TaxMaster",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "idx_tax_master_is_active",
+                schema: "humanresources",
+                table: "TaxMaster",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_tax_master_jurisdiction",
+                schema: "humanresources",
+                table: "TaxMaster",
+                column: "Jurisdiction");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_tax_master_tax_type",
+                schema: "humanresources",
+                table: "TaxMaster",
+                column: "TaxType");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_tax_master_type_jurisdiction_date",
+                schema: "humanresources",
+                table: "TaxMaster",
+                columns: new[] { "TaxType", "Jurisdiction", "EffectiveDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TimesheetLine_IsBillable",
                 schema: "humanresources",
                 table: "TimesheetLines",
@@ -2300,11 +2677,19 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
+                name: "AttendanceReport",
+                schema: "humanresources");
+
+            migrationBuilder.DropTable(
                 name: "BankAccount",
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
-                name: "BenefitAllocation",
+                name: "BenefitAllocations",
+                schema: "humanresources");
+
+            migrationBuilder.DropTable(
+                name: "Deductions",
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
@@ -2320,11 +2705,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
-                name: "EmployeeDocuments",
+                name: "EmployeeDocument",
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
-                name: "EmployeeEducation",
+                name: "EmployeeEducations",
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
@@ -2344,6 +2729,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
+                name: "LeaveReport",
+                schema: "humanresources");
+
+            migrationBuilder.DropTable(
                 name: "LeaveRequests",
                 schema: "humanresources");
 
@@ -2360,6 +2749,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "humanresources");
 
             migrationBuilder.DropTable(
+                name: "PayrollReport",
+                schema: "humanresources");
+
+            migrationBuilder.DropTable(
                 name: "PerformanceReview",
                 schema: "humanresources");
 
@@ -2373,6 +2766,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.DropTable(
                 name: "TaxBrackets",
+                schema: "humanresources");
+
+            migrationBuilder.DropTable(
+                name: "TaxMaster",
                 schema: "humanresources");
 
             migrationBuilder.DropTable(

@@ -19,6 +19,7 @@
   <ItemGroup>
     <Folder Include="Accounting\" />
     <Folder Include="Catalog\" />
+    <Folder Include="Hr\" />
     <Folder Include="Identity\" />
     <Folder Include="Store\" />
     <Folder Include="Tenant\" />

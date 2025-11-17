@@ -146,6 +146,160 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.AttendanceReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("AbsentCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("AttendancePercentage")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DepartmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ExportPath")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("GeneratedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("HalfDayCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("LateCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("LatePercentage")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("OnLeaveCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("PresentCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("ReportData")
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("ReportType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TotalEmployees")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("TotalWorkingDays")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId")
+                        .HasDatabaseName("idx_attendance_report_department_id");
+
+                    b.HasIndex("EmployeeId")
+                        .HasDatabaseName("idx_attendance_report_employee_id");
+
+                    b.HasIndex("GeneratedOn")
+                        .HasDatabaseName("idx_attendance_report_generated_on");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("idx_attendance_report_is_active");
+
+                    b.HasIndex("ReportType")
+                        .HasDatabaseName("idx_attendance_report_type");
+
+                    b.HasIndex("FromDate", "ToDate")
+                        .HasDatabaseName("idx_attendance_report_period");
+
+                    b.ToTable("AttendanceReport", "humanresources");
+                });
+
             modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BankAccount", b =>
                 {
                     b.Property<Guid>("Id")
@@ -507,7 +661,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EnrollmentId", "AllocationDate")
                         .HasDatabaseName("IX_BenefitAllocation_Enrollment_Date");
 
-                    b.ToTable("BenefitAllocation", "humanresources");
+                    b.ToTable("BenefitAllocations", "humanresources");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
@@ -612,6 +766,120 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .HasDatabaseName("IX_BenefitEnrollment_Effective");
 
                     b.ToTable("BenefitEnrollments", "humanresources");
+
+                    b.HasAnnotation("Finbuckle:MultiTenant", true);
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Deduction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeductionName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("DeductionType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("GlAccountCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("InstallmentCount")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsRecurring")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("MaxRecoveryPercentage")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal?>("RecoveryFixedAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("RecoveryMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<decimal?>("RecoveryPercentage")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<bool>("RequiresApproval")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeductionName")
+                        .HasDatabaseName("IX_Deduction_DeductionName");
+
+                    b.HasIndex("DeductionType")
+                        .HasDatabaseName("IX_Deduction_DeductionType");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_Deduction_IsActive");
+
+                    b.HasIndex("DeductionType", "IsActive")
+                        .HasDatabaseName("IX_Deduction_Type_Active");
+
+                    b.ToTable("Deductions", "humanresources");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
@@ -1419,7 +1687,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "DocumentType")
                         .HasDatabaseName("IX_EmployeeDocuments_EmployeeId_DocumentType");
 
-                    b.ToTable("EmployeeDocuments", "humanresources");
+                    b.ToTable("EmployeeDocument", "humanresources");
                 });
 
             modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation", b =>
@@ -1540,7 +1808,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "EducationLevel")
                         .HasDatabaseName("IX_EmployeeEducations_EmployeeId_EducationLevel");
 
-                    b.ToTable("EmployeeEducation", "humanresources");
+                    b.ToTable("EmployeeEducations", "humanresources");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
@@ -1999,6 +2267,158 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .HasDatabaseName("IX_LeaveBalance_EmployeeId_LeaveTypeId_Year");
 
                     b.ToTable("LeaveBalances", "humanresources");
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ApprovedLeaveCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("AverageLeavePerEmployee")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(8, 2)
+                        .HasColumnType("numeric(8,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DepartmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ExportPath")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("GeneratedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("HighestLeaveType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("PendingLeaveCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("RejectedLeaveCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("ReportData")
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("ReportType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TotalEmployees")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("TotalLeaveConsumed")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(8, 2)
+                        .HasColumnType("numeric(8,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<int>("TotalLeaveRequests")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("TotalLeaveTypes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId")
+                        .HasDatabaseName("idx_leave_report_department_id");
+
+                    b.HasIndex("EmployeeId")
+                        .HasDatabaseName("idx_leave_report_employee_id");
+
+                    b.HasIndex("GeneratedOn")
+                        .HasDatabaseName("idx_leave_report_generated_on");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("idx_leave_report_is_active");
+
+                    b.HasIndex("ReportType")
+                        .HasDatabaseName("idx_leave_report_type");
+
+                    b.HasIndex("FromDate", "ToDate")
+                        .HasDatabaseName("idx_leave_report_period");
+
+                    b.ToTable("LeaveReport", "humanresources");
                 });
 
             modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveRequest", b =>
@@ -2512,7 +2932,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Property<DateTime?>("EffectiveEndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("EffectiveStartDate")
+                    b.Property<DateTime>("EffectiveStartDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal?>("EmployeeAmount")
@@ -2996,6 +3416,172 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayrollReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("AverageGrossPerEmployee")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("AverageNetPerEmployee")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DepartmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ExportPath")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("GeneratedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1024)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("PayrollPeriod")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ReportData")
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("ReportType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("TotalBenefits")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("TotalDeductions")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<int>("TotalEmployees")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("TotalGrossPay")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("TotalNetPay")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<int>("TotalPayrollRuns")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("TotalTaxes")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId")
+                        .HasDatabaseName("idx_payroll_report_department_id");
+
+                    b.HasIndex("EmployeeId")
+                        .HasDatabaseName("idx_payroll_report_employee_id");
+
+                    b.HasIndex("GeneratedOn")
+                        .HasDatabaseName("idx_payroll_report_generated_on");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("idx_payroll_report_is_active");
+
+                    b.HasIndex("PayrollPeriod")
+                        .HasDatabaseName("idx_payroll_report_period");
+
+                    b.HasIndex("ReportType")
+                        .HasDatabaseName("idx_payroll_report_type");
+
+                    b.HasIndex("FromDate", "ToDate")
+                        .HasDatabaseName("idx_payroll_report_date_range");
+
+                    b.ToTable("PayrollReport", "humanresources");
+                });
+
             modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PerformanceReview", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3452,6 +4038,126 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.ToTable("TaxBrackets", "humanresources");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.TaxMaster", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DeletedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<DateTime>("EffectiveDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("IsCompound")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Jurisdiction")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastModifiedByUserName")
+                        .HasColumnType("VARCHAR(64)");
+
+                    b.Property<DateTimeOffset>("LastModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("VARCHAR(2048)");
+
+                    b.Property<decimal>("Rate")
+                        .HasPrecision(5, 4)
+                        .HasColumnType("numeric(5,4)");
+
+                    b.Property<string>("ReportingCategory")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("TaxAuthority")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("TaxCollectedAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TaxPaidAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TaxRegistrationNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("TaxType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("idx_tax_master_code");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("idx_tax_master_is_active");
+
+                    b.HasIndex("Jurisdiction")
+                        .HasDatabaseName("idx_tax_master_jurisdiction");
+
+                    b.HasIndex("TaxType")
+                        .HasDatabaseName("idx_tax_master_tax_type");
+
+                    b.HasIndex("TaxType", "Jurisdiction", "EffectiveDate")
+                        .HasDatabaseName("idx_tax_master_type_jurisdiction_date");
+
+                    b.ToTable("TaxMaster", "humanresources");
                 });
 
             modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Timesheet", b =>
