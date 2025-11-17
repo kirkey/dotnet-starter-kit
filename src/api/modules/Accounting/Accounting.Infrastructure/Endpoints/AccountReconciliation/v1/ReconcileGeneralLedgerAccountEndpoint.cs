@@ -20,7 +20,7 @@ public static class ReconcileGeneralLedgerAccountEndpoint
             .WithSummary("Reconcile a general ledger account")
             .WithDescription("Run account reconciliation for a chart of account and its reconciliation lines")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

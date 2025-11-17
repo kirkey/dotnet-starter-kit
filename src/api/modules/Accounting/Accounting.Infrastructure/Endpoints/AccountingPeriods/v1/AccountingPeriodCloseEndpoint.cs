@@ -1,5 +1,6 @@
 using Accounting.Application.AccountingPeriods.Close.v1;
 using Accounting.Application.AccountingPeriods.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 
@@ -16,6 +17,8 @@ public static class AccountingPeriodCloseEndpoint
             .WithName(nameof(AccountingPeriodCloseEndpoint))
             .WithSummary("Close accounting period")
             .WithDescription("Closes an accounting period")
-            .Produces<AccountingPeriodTransitionResponse>();
+            .Produces<AccountingPeriodTransitionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 }
 
