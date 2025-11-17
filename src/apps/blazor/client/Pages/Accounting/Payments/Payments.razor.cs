@@ -1,5 +1,9 @@
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payments;
 
+/// <summary>
+/// Payments page for managing cash receipts from customers/members.
+/// Supports Create, Update, Delete, Allocate, Refund, and Void operations.
+/// </summary>
 public partial class Payments
 {
     protected EntityServerTableContext<PaymentSearchResponse, DefaultIdType, PaymentViewModel> Context { get; set; } = null!;
@@ -87,6 +91,30 @@ public partial class Payments
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Shows payment details in a side drawer.
+    /// </summary>
+    private async Task OnViewDetails(DefaultIdType paymentId)
+    {
+        try
+        {
+            var payment = await Client.PaymentGetEndpointAsync("1", paymentId);
+            
+            var parameters = new DialogParameters
+            {
+                { nameof(PaymentDetailsDialog.Payment), payment }
+            };
+            await DialogService.ShowAsync<PaymentDetailsDialog>("Payment Details", parameters, _dialogOptions);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading payment details: {ex.Message}", Severity.Error);
+        }
+    }
+
+    /// <summary>
+    /// Opens the allocation dialog for splitting payment across invoices.
+    /// </summary>
     private async Task OnAllocate(DefaultIdType paymentId, decimal unappliedAmount)
     {
         var parameters = new DialogParameters
@@ -102,6 +130,9 @@ public partial class Payments
         }
     }
 
+    /// <summary>
+    /// Opens the refund dialog to process refunds.
+    /// </summary>
     private async Task OnRefund(DefaultIdType paymentId)
     {
         var parameters = new DialogParameters
@@ -117,6 +148,9 @@ public partial class Payments
         }
     }
 
+    /// <summary>
+    /// Opens the void dialog to reverse entire payment transaction.
+    /// </summary>
     private async Task OnVoid(DefaultIdType paymentId)
     {
         var parameters = new DialogParameters
@@ -130,5 +164,17 @@ public partial class Payments
             Snackbar.Add("Payment voided successfully", Severity.Success);
             await _table.ReloadDataAsync();
         }
+    }
+
+    /// <summary>
+    /// Shows help information about the Payments module.
+    /// </summary>
+    private async Task ShowPaymentInfo()
+    {
+        await DialogService.ShowAsync<PaymentHelpDialog>("Payment Help", new DialogParameters(), new DialogOptions 
+        { 
+            MaxWidth = MaxWidth.Medium, 
+            FullWidth = true 
+        });
     }
 }

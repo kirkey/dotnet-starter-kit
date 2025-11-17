@@ -1,0 +1,161 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Payment Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Recording Payments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record a Payment</MudText>
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>Click the "New Payment" button</li>
+                                <li>Enter a unique payment number (e.g., PAY-2025-001)</li>
+                                <li>Select the customer/member (optional - leave blank for unallocated)</li>
+                                <li>Enter the payment date and amount</li>
+                                <li>Choose payment method: Cash, Check, Credit Card, or EFT</li>
+                                <li>Add reference number if applicable (check#, transaction ID, etc)</li>
+                                <li>Specify deposit account</li>
+                                <li>Click Save</li>
+                            </ol>
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Allocating Payments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Allocate Payment to Invoices</MudText>
+                        <MudText Typo="Typo.body2">
+                            Payments can be allocated to customer invoices to reduce outstanding receivables:
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>Find the payment in the list with "Unapplied" amount greater than zero</li>
+                                <li>Click "Allocate" from the row actions menu</li>
+                                <li>In the allocation dialog, select invoices to pay</li>
+                                <li>Enter amounts for each invoice (total cannot exceed unapplied amount)</li>
+                                <li>Click Allocate to apply</li>
+                            </ol>
+                        </MudText>
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Payments with $0 unapplied amount are fully allocated.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payment Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Supported Payment Methods</MudText>
+                        <MudList>
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                                <MudText Typo="Typo.body2"><strong>Cash:</strong> Physical currency payments</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                                <MudText Typo="Typo.body2"><strong>Check:</strong> Paper check payments (include check number)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CreditCard">
+                                <MudText Typo="Typo.body2"><strong>Credit Card:</strong> Card payments (include auth code)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.SwapHoriz">
+                                <MudText Typo="Typo.body2"><strong>EFT:</strong> Electronic bank transfers (include confirmation #)</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payment Workflows">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Available Payment Actions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>View Details</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Display complete payment information including amount breakdown, allocations, and audit trail.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Allocate</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Apply unapplied payment amount to one or more outstanding invoices. Only available if payment has unapplied amount.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Refund</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Process a refund from unapplied amount. Useful for overpayments or customer returns.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Void</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Completely reverse a payment transaction and all its allocations. Used for incorrect payments.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Searching & Filtering">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Filter Payments</MudText>
+                        <MudText Typo="Typo.body2">
+                            Use the Advanced Search options to find payments by:
+                        </MudText>
+                        <MudList>
+                            <MudListItem>Payment Number</MudListItem>
+                            <MudListItem>Payment Method (Cash, Check, Credit Card, EFT)</MudListItem>
+                            <MudListItem>Payment Date Range</MudListItem>
+                            <MudListItem>Unapplied Amount (pending allocation)</MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudList Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Always include a unique payment number for tracking</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Record check numbers for paper checks</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Include transaction IDs for electronic payments</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Allocate payments promptly to keep AR current</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Use notes for internal comments about payments</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Void payments within same day of entry if incorrect</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+
+            <MudAlert Severity="Severity.Warning" Dense="true">
+                <strong>Important:</strong> Voids affect all related allocations. Ensure invoices are re-entered if needed.
+            </MudAlert>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

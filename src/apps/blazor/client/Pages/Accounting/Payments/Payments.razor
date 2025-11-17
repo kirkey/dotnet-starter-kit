@@ -2,16 +2,83 @@
 
 <PageHeader Title="Payments" Header="Payments" SubHeader="Record and manage customer/member payments and allocations." />
 
+<!-- Dashboard Summary -->
+<MudGrid Class="mb-4">
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Total Payments</MudText>
+                    <MudText Typo="Typo.h5">--</MudText>
+                    <MudText Typo="Typo.caption">This Period</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Unapplied Amount</MudText>
+                    <MudText Typo="Typo.h5">--</MudText>
+                    <MudText Typo="Typo.caption">Awaiting Allocation</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Allocated Payments</MudText>
+                    <MudText Typo="Typo.h5">--</MudText>
+                    <MudText Typo="Typo.caption">Fully Applied</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Payment Methods</MudText>
+                    <MudText Typo="Typo.h5">4</MudText>
+                    <MudText Typo="Typo.caption">Supported</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<!-- Action Bar -->
 <MudPaper Elevation="2" Class="pa-4 mb-4">
-    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
         <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
             <MudButton StartIcon="@Icons.Material.Filled.Calculate" Disabled>
                 Batch Apply (Coming Soon)
             </MudButton>
         </MudButtonGroup>
+        
+        <MudButtonGroup Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.FileDownload" Disabled>
+                Export
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Assessment" Disabled>
+                Reports
+            </MudButton>
+        </MudButtonGroup>
+        
+        <MudSpacer />
+        
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Info" OnClick="@ShowPaymentInfo">
+                Help
+            </MudButton>
+        </MudButtonGroup>
     </MudStack>
 </MudPaper>
 
+<!-- Payments Table -->
 <EntityTable @ref="_table" TEntity="PaymentSearchResponse" TId="DefaultIdType" TRequest="PaymentViewModel" Context="@Context">
     <AdvancedSearchContent>
         <MudItem xs="12" sm="6" md="4">
@@ -54,12 +121,23 @@
     </AdvancedSearchContent>
 
     <ExtraActions Context="payment">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => OnViewDetails(payment.Id))">
+            View Details
+        </MudMenuItem>
+        <MudDivider />
         @if (payment.UnappliedAmount > 0)
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Link" OnClick="@(() => OnAllocate(payment.Id, payment.UnappliedAmount))">
-                Allocate
+                Allocate (@payment.UnappliedAmount.ToString("N2"))
             </MudMenuItem>
         }
+        else
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" Disabled>
+                Fully Allocated ✓
+            </MudMenuItem>
+        }
+        <MudDivider />
         <MudMenuItem Icon="@Icons.Material.Filled.Receipt" OnClick="@(() => OnRefund(payment.Id))">
             Refund
         </MudMenuItem>
@@ -81,7 +159,8 @@
                           For="@(() => context.PaymentNumber)"
                           Label="Payment Number"
                           Variant="Variant.Filled"
-                          Required="true" />
+                          Required="true"
+                          HelperText="Unique receipt/transaction identifier" />
         </MudItem>
 
         <MudItem xs="12">
@@ -89,7 +168,8 @@
                                     For="@(() => context.MemberId)"
                                     Label="Customer/Member"
                                     Variant="Variant.Filled"
-                                    Required="true" />
+                                    Required="true"
+                                    HelperText="Select customer or leave blank for unallocated payment" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4">
@@ -105,7 +185,9 @@
                              Label="Amount"
                              Variant="Variant.Filled"
                              Format="N2"
-                             Required />
+                             Required
+                             Min="0.01m"
+                             HelperText="Payment amount must be positive" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4">
@@ -117,7 +199,7 @@
                 <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
                 <MudSelectItem Value="@("Check")">Check</MudSelectItem>
                 <MudSelectItem Value="@("CreditCard")">Credit Card</MudSelectItem>
-                <MudSelectItem Value="@("EFT")">EFT</MudSelectItem>
+                <MudSelectItem Value="@("EFT")">EFT / Bank Transfer</MudSelectItem>
             </MudSelect>
         </MudItem>
 
@@ -125,14 +207,16 @@
             <MudTextField @bind-Value="context.ReferenceNumber"
                           For="@(() => context.ReferenceNumber)"
                           Label="Reference #"
-                          Variant="Variant.Filled" />
+                          Variant="Variant.Filled"
+                          HelperText="Check#, Transaction ID, etc" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="context.DepositToAccountCode"
                           For="@(() => context.DepositToAccountCode)"
-                          Label="Deposit To Account Code"
-                          Variant="Variant.Filled" />
+                          Label="Deposit To Account"
+                          Variant="Variant.Filled"
+                          HelperText="Bank or cash account code" />
         </MudItem>
 
         <MudItem xs="12">
@@ -140,7 +224,8 @@
                           For="@(() => context.Description)"
                           Label="Description"
                           Lines="2"
-                          Variant="Variant.Filled" />
+                          Variant="Variant.Filled"
+                          HelperText="Payment description or reason" />
         </MudItem>
 
         <MudItem xs="12">
@@ -148,7 +233,8 @@
                           For="@(() => context.Notes)"
                           Label="Notes"
                           Lines="3"
-                          Variant="Variant.Filled" />
+                          Variant="Variant.Filled"
+                          HelperText="Internal notes (not visible to customer)" />
         </MudItem>
     </EditFormContent>
 </EntityTable>
