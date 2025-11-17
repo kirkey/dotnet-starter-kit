@@ -1,6 +1,7 @@
 global using System.Net.Http;
 global using FSH.Starter.Blazor.Client;
 global using FSH.Starter.Blazor.Client.Components;
+global using FSH.Starter.Blazor.Client.Components.Autocompletes.HumanResources;
 global using FSH.Starter.Blazor.Client.Components.Common;
 global using FSH.Starter.Blazor.Client.Components.Connectivity;
 global using FSH.Starter.Blazor.Client.Components.Dialogs;

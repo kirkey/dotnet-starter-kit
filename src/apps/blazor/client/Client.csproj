@@ -31,6 +31,7 @@
 	   </ItemGroup>
 	 
    <ItemGroup>
+     <Folder Include="Pages\HumanResources\" />
      <Folder Include="Shared\" />
    </ItemGroup>
 
@@ -50,5 +51,16 @@
 
    <ItemGroup>
      <Compile Remove="Pages\Store\Items\ItemResponseExtension.cs" />
+     <Compile Remove="Pages\HumanResources\DesignationViewModel.cs" />
+     <Compile Remove="Pages\HumanResources\OrganizationalUnitViewModel.cs" />
+     <Compile Remove="Pages\HumanResources\TaxBracketViewModel.cs" />
+     <Compile Remove="Pages\HumanResources\Shifts.razor.cs" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <Content Remove="Pages\HumanResources\Designations.razor" />
+     <Content Remove="Pages\HumanResources\OrganizationalUnits.razor" />
+     <Content Remove="Pages\HumanResources\TaxBrackets.razor" />
+     <Content Remove="Pages\HumanResources\Shifts.razor" />
    </ItemGroup>
  </Project>
