@@ -1,5 +1,6 @@
 using Accounting.Application.AccountingPeriods.Reopen.v1;
 using Accounting.Application.AccountingPeriods.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 
@@ -16,6 +17,8 @@ public static class AccountingPeriodReopenEndpoint
             .WithName(nameof(AccountingPeriodReopenEndpoint))
             .WithSummary("Reopen accounting period")
             .WithDescription("Reopens a previously closed accounting period")
-            .Produces<AccountingPeriodTransitionResponse>();
+            .Produces<AccountingPeriodTransitionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 }
 

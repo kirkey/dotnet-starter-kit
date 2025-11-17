@@ -31,7 +31,7 @@ public static class CompleteBankReconciliationEndpoint
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

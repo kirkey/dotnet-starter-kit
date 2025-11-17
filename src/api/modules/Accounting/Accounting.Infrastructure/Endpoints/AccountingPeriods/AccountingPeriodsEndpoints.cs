@@ -14,6 +14,7 @@ public static class AccountingPeriodsEndpoints
     {
         var accountingPeriodsGroup = app.MapGroup("/accounting/periods")
             .WithTags("Accounting-Periods")
+            .WithName(nameof(AccountingPeriodsEndpoints))
             .WithDescription("Endpoints for managing accounting periods");
 
         // Version 1 endpoints will be added here when implemented

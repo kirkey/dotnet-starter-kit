@@ -1,4 +1,5 @@
 using Accounting.Application.Accruals.Approve;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
@@ -15,6 +16,8 @@ public static class AccrualApproveEndpoint
             .WithName(nameof(AccrualApproveEndpoint))
             .WithSummary("Approve accrual")
             .WithDescription("Approves accrual entry")
-            .Produces<DefaultIdType>();
+            .Produces<DefaultIdType>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .MapToApiVersion(1);
 }
 

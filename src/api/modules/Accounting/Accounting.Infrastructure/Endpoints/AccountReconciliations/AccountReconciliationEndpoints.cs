@@ -1,9 +1,11 @@
-namespace Accounting.Infrastructure.Endpoints.AccountReconciliations.v1;
+using Accounting.Infrastructure.Endpoints.AccountReconciliations.v1;
+
+namespace Accounting.Infrastructure.Endpoints.AccountReconciliations;
 
 /// <summary>
 /// Extension methods for mapping account reconciliation endpoints.
 /// </summary>
-public static class AccountReconciliationEndpointsExtension
+public static class AccountReconciliationEndpoints
 {
     /// <summary>
     /// Maps all account reconciliation endpoints.
@@ -13,7 +15,7 @@ public static class AccountReconciliationEndpointsExtension
         var group = endpoints
             .MapGroup("/account-reconciliations")
             .WithTags("Account Reconciliations")
-            .WithName("AccountReconciliations")
+            .WithName(nameof(AccountReconciliationEndpoints))
             .WithOpenApi();
 
         group.MapCreateAccountReconciliationEndpoint();
@@ -22,6 +24,7 @@ public static class AccountReconciliationEndpointsExtension
         group.MapUpdateAccountReconciliationEndpoint();
         group.MapApproveAccountReconciliationEndpoint();
         group.MapDeleteAccountReconciliationEndpoint();
+        group.MapReconcileGeneralLedgerAccountEndpoint();
 
         return endpoints;
     }

@@ -1,4 +1,5 @@
 using Accounting.Application.Accruals.Reject;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
@@ -15,6 +16,7 @@ public static class AccrualRejectEndpoint
             .WithName(nameof(AccrualRejectEndpoint))
             .WithSummary("Reject accrual")
             .WithDescription("Rejects accrual entry")
-            .Produces<DefaultIdType>();
+            .Produces<DefaultIdType>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
 }
-

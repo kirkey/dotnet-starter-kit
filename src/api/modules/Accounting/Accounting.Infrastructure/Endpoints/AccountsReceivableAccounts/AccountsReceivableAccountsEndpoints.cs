@@ -8,6 +8,7 @@ public static class AccountsReceivableAccountsEndpoints
     {
         var group = app.MapGroup("/accounts-receivable")
             .WithTags("Accounts Receivable")
+            .WithName(nameof(AccountsReceivableAccountsEndpoints))
             .WithDescription("Endpoints for managing AR accounts")
             .MapToApiVersion(1);
 

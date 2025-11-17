@@ -2,7 +2,7 @@ using Accounting.Application;
 using Accounting.Application.ChartOfAccounts.Import;
 using Accounting.Application.Payees.Import;
 using Accounting.Infrastructure.Endpoints.AccountingPeriods;
-using Accounting.Infrastructure.Endpoints.AccountReconciliation;
+using Accounting.Infrastructure.Endpoints.AccountReconciliations;
 using Accounting.Infrastructure.Endpoints.AccountsPayableAccounts;
 using Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts;
 using Accounting.Infrastructure.Endpoints.Accruals;

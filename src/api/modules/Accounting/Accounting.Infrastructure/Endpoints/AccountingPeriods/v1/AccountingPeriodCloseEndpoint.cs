@@ -18,7 +18,7 @@ public static class AccountingPeriodCloseEndpoint
             .WithSummary("Close accounting period")
             .WithDescription("Closes an accounting period")
             .Produces<AccountingPeriodTransitionResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
             .MapToApiVersion(1);
 }
 

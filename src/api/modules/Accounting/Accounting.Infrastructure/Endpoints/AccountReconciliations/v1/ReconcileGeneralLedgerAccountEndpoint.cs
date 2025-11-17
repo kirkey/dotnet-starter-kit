@@ -1,7 +1,7 @@
 using Accounting.Application.AccountReconciliations.Commands.ReconcileAccount.v1;
 using Shared.Authorization;
 
-namespace Accounting.Infrastructure.Endpoints.AccountReconciliation.v1;
+namespace Accounting.Infrastructure.Endpoints.AccountReconciliations.v1;
 
 /// <summary>
 /// Endpoint for reconciling general ledger accounts.

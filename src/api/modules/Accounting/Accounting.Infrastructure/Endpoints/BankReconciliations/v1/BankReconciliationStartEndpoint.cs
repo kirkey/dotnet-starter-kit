@@ -27,7 +27,7 @@ public static class StartBankReconciliationEndpoint
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -23,7 +23,7 @@ public static class ArAccountRecordCollectionEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Receive, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

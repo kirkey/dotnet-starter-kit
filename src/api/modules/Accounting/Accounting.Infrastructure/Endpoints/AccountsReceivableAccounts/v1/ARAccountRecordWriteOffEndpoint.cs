@@ -23,7 +23,7 @@ public static class ArAccountRecordWriteOffEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }
