@@ -44,6 +44,7 @@ public sealed class HumanResourcesDbContext(
     public DbSet<Deduction> Deductions { get; set; } = null!;
     public DbSet<PayrollReport> PayrollReports { get; set; } = null!;
     public DbSet<AttendanceReport> AttendanceReports { get; set; } = null!;
+    public DbSet<LeaveReport> LeaveReports { get; set; } = null!;
     public DbSet<DocumentTemplate> DocumentTemplates { get; set; } = null!;
     public DbSet<GeneratedDocument> GeneratedDocuments { get; set; } = null!;
 

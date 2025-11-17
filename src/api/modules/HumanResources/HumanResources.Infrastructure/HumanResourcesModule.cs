@@ -19,6 +19,8 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComp
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveReports;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
@@ -72,7 +74,8 @@ public static class HumanResourcesModule
             app.MapLeaveTypesEndpoints();
             app.MapLeaveBalancesEndpoints();
             app.MapLeaveRequestsEndpoints();
-            app.MapShiftsEndpoints();
+            app.MapLeaveReportsEndpoints();
+            app.MapOrganizationalUnitsEndpoints();
             app.MapShiftAssignmentEndpoints();
             app.MapDocumentTemplatesEndpoints();
             app.MapGeneratedDocumentsEndpoints();
@@ -229,6 +232,10 @@ public static class HumanResourcesModule
         // New: AttendanceReport repositories to support attendance reports endpoints
         builder.Services.AddKeyedScoped<IRepository<AttendanceReport>, HumanResourcesRepository<AttendanceReport>>("hr:attendancereports");
         builder.Services.AddKeyedScoped<IReadRepository<AttendanceReport>, HumanResourcesRepository<AttendanceReport>>("hr:attendancereports");
+
+        // New: LeaveReport repositories to support leave reports endpoints
+        builder.Services.AddKeyedScoped<IRepository<LeaveReport>, HumanResourcesRepository<LeaveReport>>("hr:leavereports");
+        builder.Services.AddKeyedScoped<IReadRepository<LeaveReport>, HumanResourcesRepository<LeaveReport>>("hr:leavereports");
 
         builder.Services.AddKeyedScoped<IRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
         builder.Services.AddKeyedScoped<IReadRepository<DocumentTemplate>, HumanResourcesRepository<DocumentTemplate>>("hr:documenttemplates");
