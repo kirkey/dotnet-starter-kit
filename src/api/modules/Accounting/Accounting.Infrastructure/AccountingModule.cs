@@ -219,6 +219,8 @@ public static class AccountingModule
         builder.Services.AddScoped<IReadRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>();
         builder.Services.AddScoped<IRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>();
         builder.Services.AddScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>();
+        builder.Services.AddScoped<IRepository<AccountReconciliation>, AccountingRepository<AccountReconciliation>>();
+        builder.Services.AddScoped<IReadRepository<AccountReconciliation>, AccountingRepository<AccountReconciliation>>();
         builder.Services.AddScoped<IRepository<Bank>, AccountingRepository<Bank>>();
         builder.Services.AddScoped<IReadRepository<Bank>, AccountingRepository<Bank>>();
         builder.Services.AddScoped<IRepository<BankReconciliation>, AccountingRepository<BankReconciliation>>();
@@ -319,6 +321,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting");
+        builder.Services.AddKeyedScoped<IRepository<AccountReconciliation>, AccountingRepository<AccountReconciliation>>("accounting");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountReconciliation>, AccountingRepository<AccountReconciliation>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<Bank>, AccountingRepository<Bank>>("accounting");
         builder.Services.AddKeyedScoped<IReadRepository<Bank>, AccountingRepository<Bank>>("accounting");
         builder.Services.AddKeyedScoped<IRepository<BankReconciliation>, AccountingRepository<BankReconciliation>>("accounting");
@@ -407,6 +411,8 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IReadRepository<AccountsPayableAccount>, AccountingRepository<AccountsPayableAccount>>("accounting:apaccounts");
         builder.Services.AddKeyedScoped<IRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting:araccounts");
         builder.Services.AddKeyedScoped<IReadRepository<AccountsReceivableAccount>, AccountingRepository<AccountsReceivableAccount>>("accounting:araccounts");
+        builder.Services.AddKeyedScoped<IRepository<AccountReconciliation>, AccountingRepository<AccountReconciliation>>("accounting:account-reconciliations");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountReconciliation>, AccountingRepository<AccountReconciliation>>("accounting:account-reconciliations");
         builder.Services.AddKeyedScoped<IRepository<Bank>, AccountingRepository<Bank>>("accounting:banks");
         builder.Services.AddKeyedScoped<IReadRepository<Bank>, AccountingRepository<Bank>>("accounting:banks");
         builder.Services.AddKeyedScoped<IRepository<BillLineItem>, AccountingRepository<BillLineItem>>("accounting:bill-line-items");
