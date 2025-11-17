@@ -12,7 +12,7 @@ public sealed class GetHrAnalyticsHandler(
     [FromKeyedServices("hr:payrolls")] IReadRepository<Payroll> payrollRepository,
     [FromKeyedServices("hr:performancereviews")] IReadRepository<PerformanceReview> performanceReviewRepository,
     [FromKeyedServices("hr:leavebalances")] IReadRepository<LeaveBalance> leaveBalanceRepository,
-    [FromKeyedServices("hr:leaveTypes")] IReadRepository<LeaveType> leaveTypeRepository)
+    [FromKeyedServices("hr:leavetypes")] IReadRepository<LeaveType> leaveTypeRepository)
     : IRequestHandler<GetHrAnalyticsRequest, HrAnalyticsResponse>
 {
     /// <summary>
