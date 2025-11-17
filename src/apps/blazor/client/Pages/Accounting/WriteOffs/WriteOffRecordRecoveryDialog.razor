@@ -20,7 +20,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton OnClick="Record" Color="Color.Success" Variant="Variant.Filled" Disabled="@(_recoveryAmount <= 0)">
             Record Recovery
         </MudButton>

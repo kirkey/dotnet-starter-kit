@@ -169,7 +169,7 @@ OnClick="@(() => Cancel())"
 
 ### Cancel with Variant
 ```razor
-<MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+<MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
 ```
 
 ### Close Button (same pattern)

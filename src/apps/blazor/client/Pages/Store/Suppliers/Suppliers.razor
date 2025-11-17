@@ -32,30 +32,30 @@
             <MudTextField Label="Address" For="@(() => context.Address)" @bind-Value="context.Address" Required="true" Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="6" sm="4" md="3" lg="2">
-            <MudTextField Label="Postal Code" For="@(() => context.PostalCode)" @bind-Value="context.PostalCode" Variant="Variant.Text" />
+            <MudTextField Label="Postal Code" For="@(() => context.PostalCode)" @bind-Value="context.PostalCode" />
         </MudItem>
         <MudItem xs="12" sm="6" md="6" lg="4">
-            <MudTextField Label="Website" For="@(() => context.Website)" @bind-Value="context.Website" Variant="Variant.Text" />
+            <MudTextField Label="Website" For="@(() => context.Website)" @bind-Value="context.Website" />
         </MudItem>
         <MudDivider/>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="decimal?" @bind-Value="context.CreditLimit" For="@(() => context.CreditLimit)" Format="N2" Label="Credit Limit" Immediate="true" Variant="Variant.Text" />
+            <MudNumericField T="decimal?" @bind-Value="context.CreditLimit" For="@(() => context.CreditLimit)" Format="N2" Label="Credit Limit" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int?" @bind-Value="context.PaymentTermsDays" For="@(() => context.PaymentTermsDays)" Format="N2" Label="Payment Terms (Days)" Immediate="true" Variant="Variant.Text" />
+            <MudNumericField T="int?" @bind-Value="context.PaymentTermsDays" For="@(() => context.PaymentTermsDays)" Format="N2" Label="Payment Terms (Days)" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch Class="mt-3" T="bool?" @bind-Value="context.IsActive" Color="Color.Primary">Active</MudSwitch>
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="decimal?" @bind-Value="context.Rating" For="@(() => context.Rating)" Label="Rating (0-5)" Immediate="true" Variant="Variant.Text" />
+            <MudNumericField T="decimal?" @bind-Value="context.Rating" For="@(() => context.Rating)" Label="Rating (0-5)" Immediate="true" />
         </MudItem>
 
         <MudItem xs="12">
-            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" Variant="Variant.Text" />
+            <MudTextField Label="Description" For="@(() => context.Description)" @bind-Value="context.Description" Lines="3" />
         </MudItem>
         <MudItem xs="12">
-            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" Variant="Variant.Text" />
+            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
         </MudItem>
 
         <!-- Image Management -->

@@ -16,7 +16,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton OnClick="Recognize" Color="Color.Success" Variant="Variant.Filled" Disabled="@(!_recognizedDate.HasValue)">
             Recognize Revenue
         </MudButton>

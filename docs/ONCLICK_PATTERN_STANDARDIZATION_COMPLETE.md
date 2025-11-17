@@ -244,7 +244,7 @@ OnClick="@(async () => await ProcessAsync(model))"
 ### Sample File Checks
 ```razor
 <!-- InventoryItemAddStockDialog.razor -->
-<MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+<MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
 <MudButton OnClick="@(() => AddStock())" Color="Color.Success">Add Stock</MudButton>
 
 <!-- GoodsReceiptItemDialog.razor -->

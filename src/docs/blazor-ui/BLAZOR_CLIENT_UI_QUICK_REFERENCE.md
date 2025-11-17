@@ -363,7 +363,7 @@ Context = new EntityServerTableContext<...>(
 
 ```razor
 <!-- Variant Options -->
-<MudButton Variant="Variant.Text">Text</MudButton>
+<MudButton>Text</MudButton>
 <MudButton Variant="Variant.Filled">Filled</MudButton>
 <MudButton Variant="Variant.Outlined">Outlined</MudButton>
 

@@ -16,7 +16,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="@(() => Cancel())" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton OnClick="@(() => ReduceStock())" Color="Color.Warning" Variant="Variant.Filled" Disabled="@(_quantity <= 0)">
             Reduce Stock
         </MudButton>

@@ -37,19 +37,19 @@
 
                 <!-- Details Grid -->
                 <MudItem xs="12" sm="6" md="4">
-                    <MudField Label="Date" Variant="Variant.Text">
+                    <MudField Label="Date">
                         @_entry.Date.ToString("MMM dd, yyyy")
                     </MudField>
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="4">
-                    <MudField Label="Source" Variant="Variant.Text">
+                    <MudField Label="Source">
                         @_entry.Source
                     </MudField>
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="4">
-                    <MudField Label="Original Amount" Variant="Variant.Text">
+                    <MudField Label="Original Amount">
                         @_entry.OriginalAmount.ToString("C")
                     </MudField>
                 </MudItem>
@@ -57,13 +57,13 @@
                 @if (_entry.ApprovedBy != null)
                 {
                     <MudItem xs="12" sm="6" md="4">
-                        <MudField Label="Approved/Rejected By" Variant="Variant.Text">
+                        <MudField Label="Approved/Rejected By">
                             @_entry.ApprovedBy
                         </MudField>
                     </MudItem>
 
                     <MudItem xs="12" sm="6" md="4">
-                        <MudField Label="Approval Date" Variant="Variant.Text">
+                        <MudField Label="Approval Date">
                             @_entry.ApprovedDate?.ToString("MMM dd, yyyy hh:mm tt")
                         </MudField>
                     </MudItem>
