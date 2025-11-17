@@ -17,7 +17,7 @@ public sealed class UpdateInventoryItemHandler(
         var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (item == null) throw new InventoryItemNotFoundException(request.Id);
 
-        item.Update(request.Sku, request.Name, request.Quantity, request.UnitPrice, request.Description);
+        item.Update(request.Sku, request.Name, request.Quantity, request.UnitPrice, request.Description, request.ImageUrl);
         await _repository.UpdateAsync(item, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 

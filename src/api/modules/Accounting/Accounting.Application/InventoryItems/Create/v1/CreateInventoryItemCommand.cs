@@ -5,5 +5,6 @@ public sealed record CreateInventoryItemCommand(
     string Name,
     decimal Quantity,
     decimal UnitPrice,
-    string? Description = null
+    string? Description = null,
+    string? ImageUrl = null
 ) : IRequest<DefaultIdType>;

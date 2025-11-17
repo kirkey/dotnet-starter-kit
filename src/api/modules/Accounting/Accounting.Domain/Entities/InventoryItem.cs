@@ -74,7 +74,7 @@ public class InventoryItem : AuditableEntity, IAggregateRoot
         IsActive = true;
     }
 
-    private InventoryItem(string sku, string name, decimal quantity, decimal unitPrice, string? description)
+    private InventoryItem(string sku, string name, decimal quantity, decimal unitPrice, string? description = null, string? imageUrl = null)
     {
         var s = sku.Trim();
         if (string.IsNullOrWhiteSpace(s))
@@ -96,6 +96,7 @@ public class InventoryItem : AuditableEntity, IAggregateRoot
         Quantity = quantity;
         UnitPrice = unitPrice;
         Description = description?.Trim(); if (Description?.Length > MaxDescriptionLength) Description = Description.Substring(0, MaxDescriptionLength);
+        ImageUrl = imageUrl?.Trim();
         IsActive = true;
 
         QueueDomainEvent(new InventoryItemCreated(Id, Sku, Name, Quantity, UnitPrice, Description));
@@ -104,13 +105,13 @@ public class InventoryItem : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Factory to create a new inventory item with initial quantity and unit price.
     /// </summary>
-    public static InventoryItem Create(string sku, string name, decimal quantity, decimal unitPrice, string? description = null)
-        => new InventoryItem(sku, name, quantity, unitPrice, description);
+    public static InventoryItem Create(string sku, string name, decimal quantity, decimal unitPrice, string? description = null, string? imageUrl = null)
+        => new InventoryItem(sku, name, quantity, unitPrice, description, imageUrl);
 
     /// <summary>
-    /// Update SKU, name, quantity, unit price, or description; enforces non-negative values and length limits.
+    /// Update SKU, name, quantity, unit price, description, or image URL; enforces non-negative values and length limits.
     /// </summary>
-    public InventoryItem Update(string? sku, string? name, decimal? quantity, decimal? unitPrice, string? description)
+    public InventoryItem Update(string? sku, string? name, decimal? quantity, decimal? unitPrice, string? description, string? imageUrl = null)
     {
         bool isUpdated = false;
 
@@ -142,6 +143,11 @@ public class InventoryItem : AuditableEntity, IAggregateRoot
         {
             var d = description?.Trim(); if (d?.Length > MaxDescriptionLength) d = d.Substring(0, MaxDescriptionLength);
             Description = d; isUpdated = true;
+        }
+
+        if (imageUrl != ImageUrl)
+        {
+            ImageUrl = imageUrl?.Trim(); isUpdated = true;
         }
 
         if (isUpdated) QueueDomainEvent(new InventoryItemUpdated(Id, Sku, Name, Quantity, UnitPrice, Description));

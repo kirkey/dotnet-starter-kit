@@ -10,7 +10,7 @@ public sealed class CreateInventoryItemHandler(
         ArgumentNullException.ThrowIfNull(request);
         logger.LogInformation("Creating inventory item {Sku}", request.Sku);
 
-        var item = InventoryItem.Create(request.Sku, request.Name, request.Quantity, request.UnitPrice, request.Description);
+        var item = InventoryItem.Create(request.Sku, request.Name, request.Quantity, request.UnitPrice, request.Description, request.ImageUrl);
         
         await repository.AddAsync(item, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

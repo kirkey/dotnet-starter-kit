@@ -6,6 +6,7 @@ public sealed record UpdateInventoryItemCommand(
     string? Name = null,
     decimal? Quantity = null,
     decimal? UnitPrice = null,
-    string? Description = null
+    string? Description = null,
+    string? ImageUrl = null
 ) : IRequest<DefaultIdType>;
 
