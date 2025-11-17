@@ -26,5 +26,6 @@ public static class FshResources
     public const string Leaves = nameof(Leaves);
     public const string Payroll = nameof(Payroll);
     public const string Benefits = nameof(Benefits);
+    public const string Taxes = nameof(Taxes);
     public const string Organization = nameof(Organization);
 }

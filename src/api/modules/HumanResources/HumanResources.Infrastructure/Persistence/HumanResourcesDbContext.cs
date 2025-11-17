@@ -20,7 +20,7 @@ public sealed class HumanResourcesDbContext(
     public DbSet<DesignationAssignment> DesignationAssignments { get; set; } = null!;
     public DbSet<EmployeeContact> EmployeeContacts { get; set; } = null!;
     public DbSet<EmployeeDependent> EmployeeDependents { get; set; } = null!;
-    public DbSet<EmployeeDocument> EmployeeDocuments { get; set; } = null!;
+    public DbSet<EmployeeEducation> EmployeeEducations { get; set; } = null!;
     public DbSet<Attendance> Attendance { get; set; } = null!;
     public DbSet<Timesheet> Timesheets { get; set; } = null!;
     public DbSet<TimesheetLine> TimesheetLines { get; set; } = null!;
@@ -37,8 +37,11 @@ public sealed class HumanResourcesDbContext(
     public DbSet<PayComponentRate> PayComponentRates { get; set; } = null!;
     public DbSet<EmployeePayComponent> EmployeePayComponents { get; set; } = null!;
     public DbSet<TaxBracket> TaxBrackets { get; set; } = null!;
+    public DbSet<TaxMaster> TaxMasters { get; set; } = null!;
     public DbSet<Benefit> Benefits { get; set; } = null!;
+    public DbSet<BenefitAllocation> BenefitAllocations { get; set; } = null!;
     public DbSet<BenefitEnrollment> BenefitEnrollments { get; set; } = null!;
+    public DbSet<Deduction> Deductions { get; set; } = null!;
     public DbSet<DocumentTemplate> DocumentTemplates { get; set; } = null!;
     public DbSet<GeneratedDocument> GeneratedDocuments { get; set; } = null!;
 

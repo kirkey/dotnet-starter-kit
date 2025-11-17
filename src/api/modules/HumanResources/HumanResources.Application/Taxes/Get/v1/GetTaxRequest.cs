@@ -1,7 +1,8 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Get.v1;
 
 /// <summary>
-/// Request to get a tax bracket by its identifier.
+/// Query to retrieve a tax master configuration by ID.
 /// </summary>
-public sealed record GetTaxRequest(DefaultIdType Id) : IRequest<TaxResponse>;
+public sealed record GetTaxRequest(
+    [property: DefaultValue("00000000-0000-0000-0000-000000000000")] DefaultIdType Id) : IRequest<TaxResponse>;
 

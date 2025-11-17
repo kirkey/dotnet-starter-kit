@@ -1,35 +1,48 @@
-using FSH.Starter.WebApi.HumanResources.Application.Taxes.Get.v1;
-
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Search.v1;
 
 /// <summary>
-/// Request to search tax brackets with filtering and pagination.
+/// Query to search tax master configurations.
+/// Supports filtering and pagination.
 /// </summary>
-public class SearchTaxesRequest : PaginationFilter, IRequest<PagedList<TaxResponse>>
+public sealed class SearchTaxesRequest : PaginationFilter, IRequest<PagedList<TaxDto>>
 {
     /// <summary>
-    /// Gets or sets the tax type filter (Federal, State, FICA, etc).
+    /// Optional tax code to filter by.
+    /// </summary>
+    public string? Code { get; set; }
+
+    /// <summary>
+    /// Optional tax type to filter by (SalesTax, VAT, GST, etc.).
     /// </summary>
     public string? TaxType { get; set; }
 
     /// <summary>
-    /// Gets or sets the year filter.
+    /// Optional jurisdiction to filter by.
     /// </summary>
-    public int? Year { get; set; }
+    public string? Jurisdiction { get; set; }
 
     /// <summary>
-    /// Gets or sets the filing status filter (Single, Married, etc).
+    /// Optional flag to filter by active status.
     /// </summary>
-    public string? FilingStatus { get; set; }
+    public bool? IsActive { get; set; }
 
     /// <summary>
-    /// Gets or sets the income range start (minimum for filtering).
+    /// Optional flag to filter by compound status.
     /// </summary>
-    public decimal? MinIncomeFilter { get; set; }
-
-    /// <summary>
-    /// Gets or sets the income range end (maximum for filtering).
-    /// </summary>
-    public decimal? MaxIncomeFilter { get; set; }
+    public bool? IsCompound { get; set; }
 }
 
+/// <summary>
+/// DTO for tax search results.
+/// </summary>
+public sealed record TaxDto(
+    DefaultIdType Id,
+    string Code,
+    string Name,
+    string TaxType,
+    decimal Rate,
+    bool IsCompound,
+    string? Jurisdiction,
+    DateTime EffectiveDate,
+    DateTime? ExpiryDate,
+    bool IsActive);

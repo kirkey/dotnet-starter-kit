@@ -1,50 +1,61 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Create.v1;
 
 /// <summary>
-/// Validator for creating a tax bracket.
+/// Validator for CreateTaxCommand.
+/// Ensures all tax configuration parameters are valid before processing.
 /// </summary>
-public class CreateTaxValidator : AbstractValidator<CreateTaxCommand>
+public sealed class CreateTaxValidator : AbstractValidator<CreateTaxCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CreateTaxValidator"/> class.
+    /// Initializes the validator with validation rules.
     /// </summary>
     public CreateTaxValidator()
     {
+        RuleFor(x => x.Code)
+            .NotEmpty().WithMessage("Tax code is required")
+            .MaximumLength(50).WithMessage("Tax code cannot exceed 50 characters")
+            .Matches(@"^[A-Z0-9\-_]+$").WithMessage("Tax code must be uppercase alphanumeric with hyphens/underscores only");
+
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Tax name is required")
+            .MaximumLength(200).WithMessage("Tax name cannot exceed 200 characters");
+
         RuleFor(x => x.TaxType)
-            .NotEmpty()
-            .WithMessage("Tax type is required")
-            .MaximumLength(50)
-            .WithMessage("Tax type cannot exceed 50 characters");
-
-        RuleFor(x => x.Year)
-            .GreaterThan(1999)
-            .WithMessage("Year must be 2000 or later")
-            .LessThan(2100)
-            .WithMessage("Year must be before 2100");
-
-        RuleFor(x => x.MinIncome)
-            .GreaterThanOrEqualTo(0)
-            .WithMessage("Minimum income cannot be negative");
-
-        RuleFor(x => x.MaxIncome)
-            .GreaterThan(x => x.MinIncome)
-            .WithMessage("Maximum income must be greater than minimum income");
+            .NotEmpty().WithMessage("Tax type is required")
+            .Must(x => IsValidTaxType(x)).WithMessage("Invalid tax type. Must be one of: SalesTax, VAT, GST, UseTax, Excise, Withholding, Property, Other");
 
         RuleFor(x => x.Rate)
-            .GreaterThanOrEqualTo(0)
-            .WithMessage("Rate cannot be negative")
-            .LessThanOrEqualTo(1)
-            .WithMessage("Rate cannot exceed 100%");
+            .GreaterThanOrEqualTo(0).WithMessage("Tax rate cannot be negative")
+            .LessThanOrEqualTo(1).WithMessage("Tax rate cannot exceed 100%");
 
-        RuleFor(x => x.FilingStatus)
-            .MaximumLength(50)
-            .WithMessage("Filing status cannot exceed 50 characters")
-            .When(x => !string.IsNullOrWhiteSpace(x.FilingStatus));
+        RuleFor(x => x.TaxCollectedAccountId)
+            .NotEmpty().WithMessage("Tax collected account is required");
 
-        RuleFor(x => x.Description)
-            .MaximumLength(500)
-            .WithMessage("Description cannot exceed 500 characters")
-            .When(x => !string.IsNullOrWhiteSpace(x.Description));
+        RuleFor(x => x.ExpiryDate)
+            .GreaterThan(x => x.EffectiveDate ?? DateTime.MinValue)
+            .WithMessage("Expiry date must be after effective date")
+            .When(x => x.ExpiryDate.HasValue && x.EffectiveDate.HasValue);
+
+        RuleFor(x => x.Jurisdiction)
+            .MaximumLength(100).WithMessage("Jurisdiction cannot exceed 100 characters");
+
+        RuleFor(x => x.TaxAuthority)
+            .MaximumLength(200).WithMessage("Tax authority cannot exceed 200 characters");
+
+        RuleFor(x => x.TaxRegistrationNumber)
+            .MaximumLength(100).WithMessage("Tax registration number cannot exceed 100 characters");
+
+        RuleFor(x => x.ReportingCategory)
+            .MaximumLength(100).WithMessage("Reporting category cannot exceed 100 characters");
+    }
+
+    /// <summary>
+    /// Validates that the tax type is one of the supported values.
+    /// </summary>
+    private static bool IsValidTaxType(string taxType)
+    {
+        var validTypes = new[] { "SalesTax", "VAT", "GST", "UseTax", "Excise", "Withholding", "Property", "Other" };
+        return validTypes.Contains(taxType);
     }
 }
 

@@ -12,6 +12,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplat
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
@@ -27,6 +28,7 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Taxes;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
@@ -53,6 +55,7 @@ public static class HumanResourcesModule
             app.MapEmployeeContactsEndpoints();
             app.MapEmployeeDependentsEndpoints();
             app.MapEmployeeDocumentsEndpoints();
+            app.MapEmployeeEducationsEndpoints();
             app.MapAttendanceEndpoints();
             app.MapBankAccountsEndpoints();
             app.MapBenefitEnrollmentsEndpoints();
@@ -77,6 +80,7 @@ public static class HumanResourcesModule
             app.MapPayrollLinesEndpoints();
             app.MapPayrollDeductionsEndpoints();
             app.MapTaxBracketEndpoints();
+            app.MapTaxEndpoints(); // Add Tax Master Configuration endpoints
         }
     }
 
@@ -187,9 +191,13 @@ public static class HumanResourcesModule
         builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
         builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
 
-        // Add alias for Taxes endpoints that use hr:taxes key
-        builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxes");
-        builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxes");
+        // Add TaxMaster repositories for new Tax Master Configuration endpoints
+        builder.Services.AddKeyedScoped<IRepository<TaxMaster>, HumanResourcesRepository<TaxMaster>>("hr:taxes");
+        builder.Services.AddKeyedScoped<IReadRepository<TaxMaster>, HumanResourcesRepository<TaxMaster>>("hr:taxes");
+
+        // Add alias for TaxBrackets endpoints that use hr:taxbrackets key (kept for backwards compatibility)
+        builder.Services.AddKeyedScoped<IRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
+        builder.Services.AddKeyedScoped<IReadRepository<TaxBracket>, HumanResourcesRepository<TaxBracket>>("hr:taxbrackets");
 
         builder.Services.AddKeyedScoped<IRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");
         builder.Services.AddKeyedScoped<IReadRepository<Benefit>, HumanResourcesRepository<Benefit>>("hr:benefits");

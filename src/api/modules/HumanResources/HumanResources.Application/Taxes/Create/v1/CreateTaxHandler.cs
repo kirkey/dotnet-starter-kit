@@ -1,39 +1,49 @@
 namespace FSH.Starter.WebApi.HumanResources.Application.Taxes.Create.v1;
 
 /// <summary>
-/// Handler for creating a tax bracket.
+/// Handler for CreateTaxCommand.
+/// Persists new tax master configuration to the database.
 /// </summary>
 public sealed class CreateTaxHandler(
     ILogger<CreateTaxHandler> logger,
-    [FromKeyedServices("hr:taxes")] IRepository<TaxBracket> repository)
+    [FromKeyedServices("hr:taxes")] IRepository<TaxMaster> repository)
     : IRequestHandler<CreateTaxCommand, CreateTaxResponse>
 {
-    public async Task<CreateTaxResponse> Handle(
-        CreateTaxCommand request,
-        CancellationToken cancellationToken)
+    /// <summary>
+    /// Handles the create tax command.
+    /// </summary>
+    /// <param name="request">Create tax command with configuration details.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Response with the created tax ID.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when request is null.</exception>
+    public async Task<CreateTaxResponse> Handle(CreateTaxCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var tax = TaxBracket.Create(
-            request.TaxType,
-            request.Year,
-            request.MinIncome,
-            request.MaxIncome,
-            request.Rate);
-
-        if (!string.IsNullOrWhiteSpace(request.FilingStatus) || !string.IsNullOrWhiteSpace(request.Description))
-            tax.Update(
-                filingStatus: request.FilingStatus,
-                description: request.Description);
+        var tax = TaxMaster.Create(
+            code: request.Code,
+            name: request.Name,
+            taxType: request.TaxType,
+            rate: request.Rate,
+            taxCollectedAccountId: request.TaxCollectedAccountId!.Value,
+            effectiveDate: request.EffectiveDate,
+            isCompound: request.IsCompound,
+            jurisdiction: request.Jurisdiction,
+            expiryDate: request.ExpiryDate,
+            taxPaidAccountId: request.TaxPaidAccountId,
+            taxAuthority: request.TaxAuthority,
+            taxRegistrationNumber: request.TaxRegistrationNumber,
+            reportingCategory: request.ReportingCategory);
 
         await repository.AddAsync(tax, cancellationToken).ConfigureAwait(false);
+        await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Tax bracket created with ID {TaxId}, Type {TaxType}, Year {Year}, Rate {Rate}",
+            "Tax master created with ID {TaxId}, Code {TaxCode}, Type {TaxType}, Rate {Rate}%",
             tax.Id,
+            request.Code,
             request.TaxType,
-            request.Year,
-            request.Rate);
+            request.Rate * 100);
 
         return new CreateTaxResponse(tax.Id);
     }
