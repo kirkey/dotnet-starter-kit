@@ -2,6 +2,7 @@ using System.ComponentModel;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveReports.v1;
 
+using FSH.Starter.WebApi.HumanResources.Application.LeaveReports.Export.v1;
 using Shared.Authorization;
 
 /// <summary>
@@ -31,10 +32,4 @@ public static class ExportLeaveReportEndpoint
     }
 }
 
-/// <summary>
-/// Request to export a leave report.
-/// </summary>
-public record ExportLeaveReportRequest(
-    [property: DefaultValue("Excel")] string Format = "Excel",
-    [property: DefaultValue(null)] bool? IncludeDetails = null);
 

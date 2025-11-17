@@ -2,6 +2,7 @@ using System.ComponentModel;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.HRAnalytics.v1;
 
+using FSH.Starter.WebApi.HumanResources.Application.HRAnalytics.Export.v1;
 using Shared.Authorization;
 
 /// <summary>
@@ -31,12 +32,4 @@ public static class ExportHRAnalyticsEndpoint
     }
 }
 
-/// <summary>
-/// Request to export analytics data.
-/// </summary>
-public record ExportAnalyticsRequest(
-    [property: DefaultValue("Excel")] string Format = "Excel", // Excel, PDF, CSV
-    [property: DefaultValue(null)] DateTime? FromDate = null,
-    [property: DefaultValue(null)] DateTime? ToDate = null,
-    [property: DefaultValue(null)] DefaultIdType? DepartmentId = null);
 

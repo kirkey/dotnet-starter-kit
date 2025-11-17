@@ -36,23 +36,41 @@ public sealed class PayrollReportConfiguration : IEntityTypeConfiguration<Payrol
 
         builder.Property(x => x.EmployeeId);
 
-        builder.Property(x => x.RecordCount)
+        builder.Property(x => x.PayrollPeriod)
+            .HasMaxLength(50);
+
+        builder.Property(x => x.TotalEmployees)
             .HasDefaultValue(0);
 
-        builder.Property(x => x.TotalGrossSalary)
-            .HasPrecision(16, 2)
+        builder.Property(x => x.TotalPayrollRuns)
+            .HasDefaultValue(0);
+
+        builder.Property(x => x.TotalGrossPay)
+            .HasPrecision(18, 2)
+            .HasDefaultValue(0m);
+
+        builder.Property(x => x.TotalNetPay)
+            .HasPrecision(18, 2)
             .HasDefaultValue(0m);
 
         builder.Property(x => x.TotalDeductions)
-            .HasPrecision(16, 2)
+            .HasPrecision(18, 2)
             .HasDefaultValue(0m);
 
-        builder.Property(x => x.TotalNetSalary)
-            .HasPrecision(16, 2)
+        builder.Property(x => x.TotalTaxes)
+            .HasPrecision(18, 2)
             .HasDefaultValue(0m);
 
-        builder.Property(x => x.TotalTax)
-            .HasPrecision(16, 2)
+        builder.Property(x => x.TotalBenefits)
+            .HasPrecision(18, 2)
+            .HasDefaultValue(0m);
+
+        builder.Property(x => x.AverageGrossPerEmployee)
+            .HasPrecision(18, 2)
+            .HasDefaultValue(0m);
+
+        builder.Property(x => x.AverageNetPerEmployee)
+            .HasPrecision(18, 2)
             .HasDefaultValue(0m);
 
         builder.Property(x => x.ReportData)
@@ -74,7 +92,8 @@ public sealed class PayrollReportConfiguration : IEntityTypeConfiguration<Payrol
         builder.HasIndex(x => x.IsActive).HasDatabaseName("idx_payroll_report_is_active");
         builder.HasIndex(x => x.DepartmentId).HasDatabaseName("idx_payroll_report_department_id");
         builder.HasIndex(x => x.EmployeeId).HasDatabaseName("idx_payroll_report_employee_id");
-        builder.HasIndex(x => new { x.FromDate, x.ToDate }).HasDatabaseName("idx_payroll_report_period");
+        builder.HasIndex(x => x.PayrollPeriod).HasDatabaseName("idx_payroll_report_period");
+        builder.HasIndex(x => new { x.FromDate, x.ToDate }).HasDatabaseName("idx_payroll_report_date_range");
 
         // Table configuration
         builder.ToTable(nameof(PayrollReport), SchemaNames.HumanResources);

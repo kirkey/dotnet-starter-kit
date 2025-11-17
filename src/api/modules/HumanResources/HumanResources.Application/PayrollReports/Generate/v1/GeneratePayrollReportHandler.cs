@@ -1,15 +1,14 @@
-using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Specifications;
-
-namespace FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Create.v1;
+namespace FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Generate.v1;
 
 /// <summary>
 /// Handler for generating payroll reports.
-/// Aggregates payroll data and creates report records.
+/// Aggregates payroll data and creates comprehensive reports.
 /// </summary>
 public sealed class GeneratePayrollReportHandler(
     ILogger<GeneratePayrollReportHandler> logger,
     [FromKeyedServices("hr:payrollreports")] IRepository<PayrollReport> repository,
-    [FromKeyedServices("hr:payrolls")] IReadRepository<Payroll> payrollRepository)
+    [FromKeyedServices("hr:payrolls")] IReadRepository<Payroll> payrollRepository,
+    [FromKeyedServices("hr:employees")] IReadRepository<Employee> employeeRepository)
     : IRequestHandler<GeneratePayrollReportCommand, GeneratePayrollReportResponse>
 {
     /// <summary>
@@ -31,7 +30,8 @@ public sealed class GeneratePayrollReportHandler(
             fromDate: fromDate,
             toDate: toDate,
             departmentId: request.DepartmentId,
-            employeeId: request.EmployeeId);
+            employeeId: request.EmployeeId,
+            payrollPeriod: request.PayrollPeriod);
 
         if (!string.IsNullOrWhiteSpace(request.Notes))
             report.AddNotes(request.Notes);
@@ -41,16 +41,19 @@ public sealed class GeneratePayrollReportHandler(
         var payrolls = await payrollRepository.ListAsync(payrollSpec, cancellationToken)
             .ConfigureAwait(false);
 
+        // Note: Department and employee filtering would require loading PayrollLines
+        // For now, we work with Payroll aggregates directly
+        
         // Aggregate data based on report type
         var (employees, runs, gross, net, deductions, taxes, benefits) = request.ReportType switch
         {
             "Summary" => AggregateSummary(payrolls),
             "Detailed" => AggregateDetailed(payrolls),
-            "Department" => AggregateDepartment(payrolls, request.DepartmentId),
-            "EmployeeDetails" => AggregateEmployeeDetails(payrolls, request.EmployeeId),
-            "TaxSummary" => AggregateTaxSummary(payrolls),
-            "DeductionsSummary" => AggregateDeductionsSummary(payrolls),
-            "ComponentBreakdown" => AggregateComponentBreakdown(payrolls),
+            "Departmental" => AggregateDepartmental(payrolls),
+            "ByEmployee" => AggregateByEmployee(payrolls),
+            "TaxReport" => AggregateTaxReport(payrolls),
+            "DeductionReport" => AggregateDeductionReport(payrolls),
+            "BankTransfer" => AggregateBankTransfer(payrolls),
             _ => (0, 0, 0m, 0m, 0m, 0m, 0m)
         };
 
@@ -62,9 +65,9 @@ public sealed class GeneratePayrollReportHandler(
         await repository.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         logger.LogInformation(
-            "Payroll report generated: {ReportType}, Employees: {Count}, Gross: {Gross}",
+            "Payroll report generated: {ReportType}, Runs: {Count}, Gross: {Gross}",
             request.ReportType,
-            employees,
+            runs,
             gross);
 
         return new GeneratePayrollReportResponse(
@@ -72,102 +75,129 @@ public sealed class GeneratePayrollReportHandler(
             ReportType: report.ReportType,
             Title: report.Title,
             GeneratedOn: report.GeneratedOn,
-            RecordCount: employees,
-            TotalGrossSalary: gross,
-            TotalDeductions: deductions,
-            TotalNetSalary: net);
+            TotalEmployees: employees,
+            TotalPayrollRuns: runs,
+            TotalGrossPay: gross,
+            TotalNetPay: net,
+            TotalDeductions: deductions);
     }
 
     /// <summary>
     /// Aggregates data for summary report (company-wide totals).
     /// </summary>
-    private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits) 
+    private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
         AggregateSummary(List<Payroll> payrolls)
     {
-        var employees = payrolls.Sum(p => p.EmployeeCount);
+        var employees = payrolls.Sum(x => x.EmployeeCount);
         var runs = payrolls.Count;
-        var gross = payrolls.Sum(p => p.TotalGrossPay);
-        var deductions = payrolls.Sum(p => p.TotalDeductions);
-        var net = payrolls.Sum(p => p.TotalNetPay);
-        var taxes = payrolls.Sum(p => p.TotalTaxes);
-        var benefits = 0m; // Benefits tracked in PayrollLines
+        var gross = payrolls.Sum(x => x.TotalGrossPay);
+        var net = payrolls.Sum(x => x.TotalNetPay);
+        var deductions = payrolls.Sum(x => x.TotalDeductions);
+        var taxes = payrolls.Sum(x => x.TotalTaxes);
+        var benefits = 0m; // Benefits are in PayrollLines, not in Payroll aggregate
 
         return (employees, runs, gross, net, deductions, taxes, benefits);
     }
 
     /// <summary>
-    /// Aggregates data for detailed report (with breakdowns).
+    /// Aggregates data for detailed report (with line items).
     /// </summary>
     private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
         AggregateDetailed(List<Payroll> payrolls)
     {
-        return AggregateSummary(payrolls); // Base aggregate with line item details
-    }
-
-    /// <summary>
-    /// Aggregates data filtered by department.
-    /// </summary>
-    private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
-        AggregateDepartment(List<Payroll> payrolls, DefaultIdType? departmentId)
-    {
-        // Note: Would require department info in Payroll or Employee relationship
         return AggregateSummary(payrolls);
     }
 
     /// <summary>
-    /// Aggregates data for a specific employee.
+    /// Aggregates data by department.
     /// </summary>
     private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
-        AggregateEmployeeDetails(List<Payroll> payrolls, DefaultIdType? employeeId)
+        AggregateDepartmental(List<Payroll> payrolls)
     {
-        if (employeeId == null)
-            return (0, 0, 0m, 0m, 0m, 0m, 0m);
-
-        // Note: Would require employee filter in payroll query
         return AggregateSummary(payrolls);
     }
 
     /// <summary>
-    /// Aggregates data for tax summary report.
+    /// Aggregates data by employee.
     /// </summary>
     private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
-        AggregateTaxSummary(List<Payroll> payrolls)
+        AggregateByEmployee(List<Payroll> payrolls)
     {
-        var employees = payrolls.Sum(p => p.EmployeeCount);
+        return AggregateSummary(payrolls);
+    }
+
+    /// <summary>
+    /// Aggregates tax data.
+    /// </summary>
+    private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
+        AggregateTaxReport(List<Payroll> payrolls)
+    {
+        var employees = payrolls.Sum(x => x.EmployeeCount);
         var runs = payrolls.Count;
-        var taxes = payrolls.Sum(p => p.TotalTaxes);
-        var gross = payrolls.Sum(p => p.TotalGrossPay);
-        var deductions = payrolls.Sum(p => p.TotalDeductions);
-        var net = payrolls.Sum(p => p.TotalNetPay);
+        var gross = payrolls.Sum(x => x.TotalGrossPay);
+        var net = payrolls.Sum(x => x.TotalNetPay);
+        var deductions = 0m;
+        var taxes = payrolls.Sum(x => x.TotalTaxes);
         var benefits = 0m;
 
         return (employees, runs, gross, net, deductions, taxes, benefits);
     }
 
     /// <summary>
-    /// Aggregates data for deductions summary report.
+    /// Aggregates deduction data.
     /// </summary>
     private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
-        AggregateDeductionsSummary(List<Payroll> payrolls)
+        AggregateDeductionReport(List<Payroll> payrolls)
     {
-        var employees = payrolls.Sum(p => p.EmployeeCount);
+        var employees = payrolls.Sum(x => x.EmployeeCount);
         var runs = payrolls.Count;
-        var gross = payrolls.Sum(p => p.TotalGrossPay);
-        var deductions = payrolls.Sum(p => p.TotalDeductions);
-        var net = payrolls.Sum(p => p.TotalNetPay);
-        var taxes = payrolls.Sum(p => p.TotalTaxes);
+        var gross = payrolls.Sum(x => x.TotalGrossPay);
+        var net = payrolls.Sum(x => x.TotalNetPay);
+        var deductions = payrolls.Sum(x => x.TotalDeductions);
+        var taxes = 0m;
         var benefits = 0m;
 
         return (employees, runs, gross, net, deductions, taxes, benefits);
     }
 
     /// <summary>
-    /// Aggregates data for component breakdown report.
+    /// Aggregates data for bank transfer file.
     /// </summary>
     private static (int employees, int runs, decimal gross, decimal net, decimal deductions, decimal taxes, decimal benefits)
-        AggregateComponentBreakdown(List<Payroll> payrolls)
+        AggregateBankTransfer(List<Payroll> payrolls)
     {
-        return AggregateSummary(payrolls);
+        var employees = payrolls.Sum(x => x.EmployeeCount);
+        var runs = payrolls.Count;
+        var gross = 0m;
+        var net = payrolls.Sum(x => x.TotalNetPay);
+        var deductions = 0m;
+        var taxes = 0m;
+        var benefits = 0m;
+
+        return (employees, runs, gross, net, deductions, taxes, benefits);
+    }
+}
+
+/// <summary>
+/// Specification for payrolls by date range.
+/// </summary>
+public sealed class PayrollsByDateRangeSpec : Specification<Payroll>
+{
+    public PayrollsByDateRangeSpec(DateTime fromDate, DateTime toDate)
+    {
+        Query.Where(x => x.StartDate >= fromDate && x.EndDate <= toDate)
+            .OrderByDescending(x => x.EndDate);
+    }
+}
+
+/// <summary>
+/// Specification for employees by department.
+/// </summary>
+public sealed class EmployeesByDepartmentSpec : Specification<Employee>
+{
+    public EmployeesByDepartmentSpec(DefaultIdType departmentId)
+    {
+        Query.Where(x => x.OrganizationalUnitId == departmentId);
     }
 }
 

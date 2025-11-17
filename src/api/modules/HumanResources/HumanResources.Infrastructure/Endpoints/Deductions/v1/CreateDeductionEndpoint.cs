@@ -1,4 +1,3 @@
-using FSH.Framework.Core.Domain;
 using FSH.Starter.WebApi.HumanResources.Application.Deductions.Create.v1;
 using Shared.Authorization;
 

@@ -2,6 +2,7 @@ using System.ComponentModel;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.AttendanceReports.v1;
 
+using FSH.Starter.WebApi.HumanResources.Application.AttendanceReports.Export.v1;
 using Shared.Authorization;
 
 /// <summary>
@@ -33,10 +34,4 @@ public static class ExportAttendanceReportEndpoint
     }
 }
 
-/// <summary>
-/// Request to export an attendance report.
-/// </summary>
-public record ExportAttendanceReportRequest(
-    [property: DefaultValue("Excel")] string Format = "Excel", // Excel, CSV, PDF, JSON
-    [property: DefaultValue(null)] bool? IncludeDetails = null);
 

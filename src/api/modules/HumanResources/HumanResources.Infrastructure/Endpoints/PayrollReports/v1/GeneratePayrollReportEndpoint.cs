@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollReports.v1;
 
-using FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Create.v1;
+using FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Generate.v1;
 using Shared.Authorization;
 
 /// <summary>
@@ -20,7 +20,7 @@ public static class GeneratePayrollReportEndpoint
         })
         .WithName(nameof(GeneratePayrollReportEndpoint))
         .WithSummary("Generate payroll report")
-        .WithDescription("Generates a payroll report based on specified criteria and report type")
+        .WithDescription("Generates a payroll report based on specified criteria and report type (Summary, Detailed, Departmental, ByEmployee, TaxReport, DeductionReport, BankTransfer)")
         .Produces<GeneratePayrollReportResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status401Unauthorized)

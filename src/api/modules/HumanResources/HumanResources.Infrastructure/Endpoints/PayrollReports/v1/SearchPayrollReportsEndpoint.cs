@@ -21,7 +21,7 @@ public static class SearchPayrollReportsEndpoint
         .WithName(nameof(SearchPayrollReportsEndpoint))
         .WithSummary("Search payroll reports")
         .WithDescription("Searches and filters payroll reports with pagination support")
-        .Produces<PagedList<PayrollReportDto>>()
+        .Produces<PagedList<PayrollReportDto>>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status403Forbidden)

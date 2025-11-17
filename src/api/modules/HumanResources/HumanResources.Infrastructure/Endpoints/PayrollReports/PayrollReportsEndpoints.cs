@@ -16,7 +16,6 @@ public static class PayrollReportsEndpoints
         group.MapGeneratePayrollReportEndpoint();
         group.MapGetPayrollReportEndpoint();
         group.MapSearchPayrollReportsEndpoint();
-        group.MapDownloadPayrollReportEndpoint();
         group.MapExportPayrollReportEndpoint();
     }
 }

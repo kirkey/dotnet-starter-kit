@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 
 /// <summary>
-/// Represents a payroll report with consolidated payroll data for analysis and export.
-/// Supports multiple report types: Summary, Detailed, Department, etc.
+/// Represents a payroll report with aggregated payroll data for analysis.
+/// Supports multiple report types: Summary, Detailed, Departmental, ByEmployee, TaxReport, DeductionReport, BankTransfer.
 /// </summary>
 public class PayrollReport : AuditableEntity, IAggregateRoot
 {
@@ -29,7 +29,7 @@ public class PayrollReport : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
-    /// Gets the report type (Summary, Detailed, Department, EmployeeDetails, TaxSummary, etc.).
+    /// Gets the report type (Summary, Detailed, Departmental, ByEmployee, TaxReport, DeductionReport, BankTransfer).
     /// </summary>
     public string ReportType { get; private set; } = default!;
 
@@ -66,33 +66,58 @@ public class PayrollReport : AuditableEntity, IAggregateRoot
     public DefaultIdType? EmployeeId { get; private set; }
 
     /// <summary>
-    /// Gets the total number of records in the report.
+    /// Gets the payroll period identifier (e.g., "2025-11", "Q4-2025").
     /// </summary>
-    public int RecordCount { get; private set; }
+    public string? PayrollPeriod { get; private set; }
 
     /// <summary>
-    /// Gets the total gross salary amount in the report.
+    /// Gets the total number of employees included in the report.
     /// </summary>
-    public decimal TotalGrossSalary { get; private set; }
+    public int TotalEmployees { get; private set; }
 
     /// <summary>
-    /// Gets the total deductions amount in the report.
+    /// Gets the total number of payroll runs included.
+    /// </summary>
+    public int TotalPayrollRuns { get; private set; }
+
+    /// <summary>
+    /// Gets the total gross pay amount.
+    /// </summary>
+    public decimal TotalGrossPay { get; private set; }
+
+    /// <summary>
+    /// Gets the total net pay amount.
+    /// </summary>
+    public decimal TotalNetPay { get; private set; }
+
+    /// <summary>
+    /// Gets the total deductions amount.
     /// </summary>
     public decimal TotalDeductions { get; private set; }
 
     /// <summary>
-    /// Gets the total net salary amount in the report.
+    /// Gets the total taxes amount.
     /// </summary>
-    public decimal TotalNetSalary { get; private set; }
+    public decimal TotalTaxes { get; private set; }
 
     /// <summary>
-    /// Gets the total tax amount in the report.
+    /// Gets the total benefits amount.
     /// </summary>
-    public decimal TotalTax { get; private set; }
+    public decimal TotalBenefits { get; private set; }
 
     /// <summary>
-    /// Gets the JSON data containing the actual report data.
-    /// Stores flattened report structure for flexibility.
+    /// Gets the average gross pay per employee.
+    /// </summary>
+    public decimal AverageGrossPerEmployee { get; private set; }
+
+    /// <summary>
+    /// Gets the average net pay per employee.
+    /// </summary>
+    public decimal AverageNetPerEmployee { get; private set; }
+
+    /// <summary>
+    /// Gets the JSON data containing detailed report data.
+    /// Stores payroll breakdown by employee, department, component.
     /// </summary>
     public string? ReportData { get; private set; }
 
@@ -120,6 +145,7 @@ public class PayrollReport : AuditableEntity, IAggregateRoot
     /// <param name="toDate">End date of reporting period.</param>
     /// <param name="departmentId">Optional department filter.</param>
     /// <param name="employeeId">Optional employee filter.</param>
+    /// <param name="payrollPeriod">Optional payroll period identifier.</param>
     /// <returns>New PayrollReport instance.</returns>
     /// <exception cref="ArgumentException">Thrown when parameters are invalid.</exception>
     public static PayrollReport Create(
@@ -128,7 +154,8 @@ public class PayrollReport : AuditableEntity, IAggregateRoot
         DateTime fromDate,
         DateTime toDate,
         DefaultIdType? departmentId = null,
-        DefaultIdType? employeeId = null)
+        DefaultIdType? employeeId = null,
+        string? payrollPeriod = null)
     {
         if (string.IsNullOrWhiteSpace(reportType))
             throw new ArgumentException("Report type cannot be empty", nameof(reportType));
@@ -140,27 +167,38 @@ public class PayrollReport : AuditableEntity, IAggregateRoot
         var report = new PayrollReport(reportType, title, fromDate, toDate)
         {
             DepartmentId = departmentId,
-            EmployeeId = employeeId
+            EmployeeId = employeeId,
+            PayrollPeriod = payrollPeriod
         };
 
         return report;
     }
 
     /// <summary>
-    /// Sets the aggregated totals for the report.
+    /// Sets the aggregated payroll metrics for the report.
     /// </summary>
-    public PayrollReport SetTotals(
-        int recordCount,
-        decimal grossSalary,
+    public PayrollReport SetMetrics(
+        int employees,
+        int runs,
+        decimal gross,
+        decimal net,
         decimal deductions,
-        decimal netSalary,
-        decimal tax)
+        decimal taxes,
+        decimal benefits)
     {
-        RecordCount = recordCount;
-        TotalGrossSalary = grossSalary;
+        TotalEmployees = employees;
+        TotalPayrollRuns = runs;
+        TotalGrossPay = gross;
+        TotalNetPay = net;
         TotalDeductions = deductions;
-        TotalNetSalary = netSalary;
-        TotalTax = tax;
+        TotalTaxes = taxes;
+        TotalBenefits = benefits;
+
+        if (employees > 0)
+        {
+            AverageGrossPerEmployee = Math.Round(gross / employees, 2);
+            AverageNetPerEmployee = Math.Round(net / employees, 2);
+        }
 
         return this;
     }

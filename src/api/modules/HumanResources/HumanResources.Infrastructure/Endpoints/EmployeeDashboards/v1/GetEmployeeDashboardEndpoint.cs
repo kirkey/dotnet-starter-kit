@@ -3,7 +3,6 @@ using FSH.Framework.Core.Identity.Users.Abstractions;
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDashboards.v1;
 
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDashboards.Get.v1;
-using Shared.Authorization;
 
 /// <summary>
 /// Endpoint for retrieving personal employee dashboard.

@@ -1,4 +1,3 @@
-using FSH.Framework.Core.Domain;
 using FSH.Starter.WebApi.HumanResources.Application.Deductions.Delete.v1;
 using Shared.Authorization;
 

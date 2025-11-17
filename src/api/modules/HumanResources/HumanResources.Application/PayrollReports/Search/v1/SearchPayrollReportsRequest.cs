@@ -26,6 +26,11 @@ public sealed class SearchPayrollReportsRequest : PaginationFilter, IRequest<Pag
     public DefaultIdType? EmployeeId { get; set; }
 
     /// <summary>
+    /// Optional payroll period filter.
+    /// </summary>
+    public string? PayrollPeriod { get; set; }
+
+    /// <summary>
     /// Optional active status filter.
     /// </summary>
     public bool? IsActive { get; set; }
@@ -51,9 +56,10 @@ public sealed record PayrollReportDto(
     DateTime FromDate,
     DateTime ToDate,
     DateTime GeneratedOn,
-    int RecordCount,
-    decimal TotalGrossSalary,
-    decimal TotalNetSalary,
+    int TotalEmployees,
+    int TotalPayrollRuns,
+    decimal TotalGrossPay,
+    decimal TotalNetPay,
     string? ExportPath,
     bool IsActive);
 
