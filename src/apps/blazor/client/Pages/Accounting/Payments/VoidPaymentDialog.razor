@@ -1,0 +1,14 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.h6">Void Payment</MudText>
+            <MudTextField @bind-Value="_reason" Label="Reason (optional)" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Error" OnClick="Void">Void</MudButton>
+        <MudButton OnClick="MudDialog.Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>

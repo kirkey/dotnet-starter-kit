@@ -114,6 +114,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Banks", Icon = Icons.Material.Filled.AccountBalance, Href = "/accounting/banks", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Bank Reconciliations", Icon = Icons.Material.Filled.AccountBalanceWallet, Href = "/accounting/bank-reconciliations", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Checks", Icon = Icons.Material.Filled.Payment, Href = "/accounting/checks", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Payments", Icon = Icons.Material.Filled.Payments, Href = "/accounting/payments", Action = FshActions.View, Resource = FshResources.Accounting, PageStatus = PageStatus.InProgress },
                         
                         // ========== PLANNING & TRACKING ==========
                         new MenuSectionSubItemModel { Title = "Planning & Tracking", IsGroupHeader = true },

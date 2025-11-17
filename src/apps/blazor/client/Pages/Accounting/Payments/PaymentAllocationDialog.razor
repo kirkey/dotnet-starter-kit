@@ -1,0 +1,33 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Allocate Payment</MudText>
+            <MudAlert Severity="Severity.Info" Dense="true">
+                Unapplied Amount: @UnappliedAmount.ToString("N2")
+            </MudAlert>
+
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    Enter the amount to allocate. Remaining amount will stay unapplied.
+                </MudText>
+                <MudNumericField T="decimal" 
+                                 @bind-Value="_allocationAmount" 
+                                 Label="Amount to Allocate" 
+                                 Min="0" 
+                                 Max="@UnappliedAmount" 
+                                 Format="N2"
+                                 Variant="Variant.Outlined" />
+                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                    Note: Invoice selection will be available in a future update.
+                </MudText>
+            </MudStack>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Allocate">Allocate</MudButton>
+        <MudButton OnClick="MudDialog.Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>

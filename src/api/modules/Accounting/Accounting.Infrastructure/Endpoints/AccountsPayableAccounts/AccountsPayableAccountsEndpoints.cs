@@ -14,6 +14,8 @@ public static class AccountsPayableAccountsEndpoints
         // CRUD operations
         group.MapApAccountCreateEndpoint();
         group.MapApAccountGetEndpoint();
+        group.MapApAccountUpdateEndpoint();
+        group.MapApAccountDeleteEndpoint();
         group.MapApAccountSearchEndpoint();
 
         // Workflow operations

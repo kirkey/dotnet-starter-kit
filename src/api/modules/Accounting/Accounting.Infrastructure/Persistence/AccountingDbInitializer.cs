@@ -271,7 +271,7 @@ internal sealed class AccountingDbInitializer(
 
                 // Cash flow budget details
                 var cf = budgetsToSeed[2];
-                if (acctDict.TryGetValue("1120", out var id1120cf)) details.Add(BudgetDetail.Create(cf.Id, id1120cf, 1000000m, "Operating account cash"));
+                if (acctDict.TryGetValue("1120", out var id1120Cf)) details.Add(BudgetDetail.Create(cf.Id, id1120Cf, 1000000m, "Operating account cash"));
                 if (acctDict.TryGetValue("4100", out var id4100)) details.Add(BudgetDetail.Create(cf.Id, id4100, 8000000m, "Residential sales revenue"));
 
                 if (details.Count > 0)

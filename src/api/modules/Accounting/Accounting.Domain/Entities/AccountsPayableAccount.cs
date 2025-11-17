@@ -91,6 +91,33 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
             periodId, description, notes);
     }
 
+    /// <summary>
+    /// Updates the AP account basic information.
+    /// </summary>
+    public AccountsPayableAccount Update(string? accountNumber = null, string? accountName = null,
+        DefaultIdType? generalLedgerAccountId = null, DefaultIdType? periodId = null,
+        string? description = null, string? notes = null, bool? isActive = null)
+    {
+        if (!string.IsNullOrWhiteSpace(accountNumber))
+            AccountNumber = accountNumber.Trim();
+        if (!string.IsNullOrWhiteSpace(accountName))
+            AccountName = accountName.Trim();
+        if (!string.IsNullOrWhiteSpace(accountName))
+            Name = accountName.Trim();
+        if (generalLedgerAccountId.HasValue)
+            GeneralLedgerAccountId = generalLedgerAccountId;
+        if (periodId.HasValue)
+            PeriodId = periodId;
+        if (!string.IsNullOrWhiteSpace(description))
+            Description = description.Trim();
+        if (!string.IsNullOrWhiteSpace(notes))
+            Notes = notes.Trim();
+        if (isActive.HasValue)
+            IsActive = isActive.Value;
+
+        return this;
+    }
+
     public AccountsPayableAccount UpdateBalance(decimal current0To30, decimal days31To60,
         decimal days61To90, decimal over90Days)
     {
@@ -168,4 +195,3 @@ public class AccountsPayableAccount : AuditableEntity, IAggregateRoot
         ? (YearToDateDiscountsTaken / (YearToDateDiscountsTaken + YearToDateDiscountsLost)) * 100
         : 0m;
 }
-

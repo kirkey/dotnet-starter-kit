@@ -1,0 +1,154 @@
+@page "/accounting/payments"
+
+<PageHeader Title="Payments" Header="Payments" SubHeader="Record and manage customer/member payments and allocations." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Calculate" Disabled>
+                Batch Apply (Coming Soon)
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="PaymentSearchResponse" TId="DefaultIdType" TRequest="PaymentViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@PaymentNumber"
+                          Label="Payment Number"
+                          Placeholder="Search by payment number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@PaymentMethod"
+                       Label="Payment Method"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
+                <MudSelectItem Value="@("Check")">Check</MudSelectItem>
+                <MudSelectItem Value="@("CreditCard")">Credit Card</MudSelectItem>
+                <MudSelectItem Value="@("EFT")">EFT</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@StartDate"
+                           Label="Payment Date From"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@EndDate"
+                           Label="Payment Date To"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@HasUnappliedAmount"
+                       Label="Has Unapplied Amount"
+                       Color="Color.Primary" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="payment">
+        @if (payment.UnappliedAmount > 0)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Link" OnClick="@(() => OnAllocate(payment.Id, payment.UnappliedAmount))">
+                Allocate
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Receipt" OnClick="@(() => OnRefund(payment.Id))">
+            Refund
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => OnVoid(payment.Id))">
+            Void
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Payment Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PaymentNumber"
+                          For="@(() => context.PaymentNumber)"
+                          Label="Payment Number"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <AutocompleteCustomerId @bind-Value="context.MemberId"
+                                    For="@(() => context.MemberId)"
+                                    Label="Customer/Member"
+                                    Variant="Variant.Filled"
+                                    Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.PaymentDate"
+                           DateFormat="MMMM dd, yyyy"
+                           Label="Payment Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" @bind-Value="context.Amount"
+                             Label="Amount"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Required />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.PaymentMethod"
+                       For="@(() => context.PaymentMethod)"
+                       Label="Payment Method"
+                       Variant="Variant.Filled"
+                       Required>
+                <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
+                <MudSelectItem Value="@("Check")">Check</MudSelectItem>
+                <MudSelectItem Value="@("CreditCard")">Credit Card</MudSelectItem>
+                <MudSelectItem Value="@("EFT")">EFT</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ReferenceNumber"
+                          For="@(() => context.ReferenceNumber)"
+                          Label="Reference #"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.DepositToAccountCode"
+                          For="@(() => context.DepositToAccountCode)"
+                          Label="Deposit To Account Code"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Lines="2"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Lines="3"
+                          Variant="Variant.Filled" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
