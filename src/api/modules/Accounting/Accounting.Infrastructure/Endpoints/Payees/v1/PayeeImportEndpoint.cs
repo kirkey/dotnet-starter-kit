@@ -22,7 +22,7 @@ public static class PayeeImportEndpoint
             .WithDescription("Imports payees from an Excel (.xlsx) file with validation, duplicate checking, and TIN validation")
             .Produces<object>()
             .ProducesValidationProblem()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Import, FshResources.Accounting))
             .DisableAntiforgery()
             .MapToApiVersion(1);
     }

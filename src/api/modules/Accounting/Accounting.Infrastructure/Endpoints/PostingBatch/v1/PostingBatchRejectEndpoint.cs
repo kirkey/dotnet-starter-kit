@@ -20,7 +20,7 @@ public static class PostingBatchRejectEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

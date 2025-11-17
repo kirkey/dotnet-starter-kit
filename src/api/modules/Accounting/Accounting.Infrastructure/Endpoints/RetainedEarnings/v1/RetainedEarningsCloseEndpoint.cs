@@ -19,7 +19,7 @@ public static class RetainedEarningsCloseEndpoint
             .WithDescription("Closes the fiscal year for retained earnings")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

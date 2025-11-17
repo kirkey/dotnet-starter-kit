@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.CycleCounts.RecordCount.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.CycleCounts.v1;
 
@@ -27,6 +28,7 @@ public static class RecordCycleCountItemEndpoint
         .Produces<RecordCycleCountItemResponse>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

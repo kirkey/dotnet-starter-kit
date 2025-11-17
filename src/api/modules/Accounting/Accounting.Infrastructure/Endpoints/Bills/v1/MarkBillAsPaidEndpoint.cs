@@ -26,7 +26,7 @@ public static class MarkBillAsPaidEndpoint
             .Produces<MarkBillAsPaidResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.MarkAsPaid, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

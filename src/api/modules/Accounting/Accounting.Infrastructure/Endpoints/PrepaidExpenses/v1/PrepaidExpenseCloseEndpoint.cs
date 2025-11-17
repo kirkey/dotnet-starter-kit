@@ -22,7 +22,7 @@ public static class PrepaidExpenseCloseEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

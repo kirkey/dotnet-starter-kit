@@ -22,7 +22,7 @@ public static class ChartOfAccountImportEndpoint
             .WithDescription("Imports chart of accounts from an Excel (.xlsx) file with validation and duplicate checking")
             .Produces<object>()
             .ProducesValidationProblem()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Import, FshResources.Accounting))
             .DisableAntiforgery()
             .MapToApiVersion(1);
     }

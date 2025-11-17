@@ -29,7 +29,7 @@ public static class JournalEntryRejectEndpoint
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

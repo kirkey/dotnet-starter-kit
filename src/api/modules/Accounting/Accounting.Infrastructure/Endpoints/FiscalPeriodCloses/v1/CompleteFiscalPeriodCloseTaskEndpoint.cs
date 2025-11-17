@@ -21,7 +21,7 @@ public static class CompleteFiscalPeriodCloseTaskEndpoint
             .WithDescription("Marks a task as complete in the fiscal period close checklist")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

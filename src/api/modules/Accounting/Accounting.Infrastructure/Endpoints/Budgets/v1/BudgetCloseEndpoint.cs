@@ -1,4 +1,5 @@
 using Accounting.Application.Budgets.Close;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Budgets.v1;
 
@@ -15,6 +16,8 @@ public static class BudgetCloseEndpoint
             .WithName(nameof(BudgetCloseEndpoint))
             .WithSummary("Close budget")
             .WithDescription("Closes a budget")
-            .Produces<DefaultIdType>();
+            .Produces<DefaultIdType>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
 }
 

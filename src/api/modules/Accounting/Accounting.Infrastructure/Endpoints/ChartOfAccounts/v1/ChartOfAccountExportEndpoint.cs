@@ -22,7 +22,7 @@ public static class ChartOfAccountExportEndpoint
             .WithDescription("Exports chart of accounts to Excel (.xlsx) file with optional filtering by account type, USOA category, and search criteria")
             .Produces<FileResult>()
             .ProducesValidationProblem()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

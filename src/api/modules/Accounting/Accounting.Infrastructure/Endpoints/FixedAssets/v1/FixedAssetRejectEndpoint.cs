@@ -1,4 +1,5 @@
 using Accounting.Application.FixedAssets.Reject.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 
@@ -15,6 +16,8 @@ public static class FixedAssetRejectEndpoint
             .WithName(nameof(FixedAssetRejectEndpoint))
             .WithSummary("Reject fixed asset")
             .WithDescription("Rejects a fixed asset")
-            .Produces<DefaultIdType>();
+            .Produces<DefaultIdType>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
 }
 

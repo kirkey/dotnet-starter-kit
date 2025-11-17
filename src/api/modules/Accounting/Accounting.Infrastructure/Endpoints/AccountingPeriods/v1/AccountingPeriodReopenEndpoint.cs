@@ -18,7 +18,7 @@ public static class AccountingPeriodReopenEndpoint
             .WithSummary("Reopen accounting period")
             .WithDescription("Reopens a previously closed accounting period")
             .Produces<AccountingPeriodTransitionResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
 }
 

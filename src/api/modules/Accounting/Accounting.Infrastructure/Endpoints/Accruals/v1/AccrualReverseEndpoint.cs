@@ -18,7 +18,7 @@ public static class AccrualReverseEndpoint
             .WithSummary("Reverse an accrual")
             .WithDescription("Reverses an accrual entry by ID")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Void, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

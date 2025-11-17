@@ -16,7 +16,8 @@ public static class RegulatoryReportCreateEndpoint
             .WithSummary("Create a new regulatory report")
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .Produces<DefaultIdType>()
-            .WithOpenApi();
+            .WithOpenApi()
+            .MapToApiVersion(1);
 
         return group;
     }

@@ -22,7 +22,7 @@ public static class PayeeExportEndpoint
             .WithDescription("Exports payees to Excel (.xlsx) file with optional filtering by expense account, search criteria, TIN presence, and active status")
             .Produces<FileResult>()
             .ProducesValidationProblem()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

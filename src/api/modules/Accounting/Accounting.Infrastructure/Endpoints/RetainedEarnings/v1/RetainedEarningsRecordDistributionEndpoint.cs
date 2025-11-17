@@ -19,7 +19,7 @@ public static class RetainedEarningsRecordDistributionEndpoint
             .WithDescription("Records a distribution to members or shareholders")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }
