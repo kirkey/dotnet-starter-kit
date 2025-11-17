@@ -26,8 +26,7 @@ public sealed class ItemImportParser(
             // Use the framework's DataImport service directly to parse Excel to strongly-typed objects
             var rows = await dataImport.ToListAsync<ItemImportRow>(
                 file, 
-                FileType.Document, 
-                "Sheet1").ConfigureAwait(false);
+                FileType.Document).ConfigureAwait(false);
 
             logger.LogInformation("Successfully parsed {Count} rows from items import file", rows.Count);
             

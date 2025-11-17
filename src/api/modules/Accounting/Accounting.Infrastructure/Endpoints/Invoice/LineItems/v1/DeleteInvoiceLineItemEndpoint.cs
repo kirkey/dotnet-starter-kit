@@ -1,4 +1,5 @@
 using Accounting.Application.Invoices.LineItems.Delete.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Invoice.LineItems.v1;
 
@@ -24,7 +25,7 @@ public static class DeleteInvoiceLineItemEndpoint
             .Produces<DeleteInvoiceLineItemResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

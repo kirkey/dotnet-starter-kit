@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Catalog.Application.Products.Search.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 
@@ -16,7 +17,7 @@ public static class SearchProductsEndpoint
             .WithSummary("Gets a list of products")
             .WithDescription("Gets a list of products with pagination and filtering support")
             .Produces<PagedList<ProductResponse>>()
-            .RequirePermission("Permissions.Products.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Products))
             .MapToApiVersion(1);
     }
 }

@@ -490,7 +490,7 @@ API Request
         ▼
 ┌─────────────────────────────────────────┐
 │ Route Authorization Check               │
-│ .RequirePermission("Permissions...")    │
+│ .RequirePermission(FshPermission.NameFor(FshActions...")    │
 │                                         │
 │ Validates:                              │
 │ ├─ User is authenticated                │

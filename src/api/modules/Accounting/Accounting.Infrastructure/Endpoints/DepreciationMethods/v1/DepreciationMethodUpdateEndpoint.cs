@@ -1,4 +1,5 @@
 using Accounting.Application.DepreciationMethods.Update;
+using Shared.Authorization;
 
 // Endpoint for updating a depreciation method
 namespace Accounting.Infrastructure.Endpoints.DepreciationMethods.v1;
@@ -18,7 +19,7 @@ public static class DepreciationMethodUpdateEndpoint
             .WithSummary("Update a depreciation method")
             .WithDescription("Updates an existing depreciation method")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

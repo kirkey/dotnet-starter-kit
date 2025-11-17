@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Bins.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Bins.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteBinEndpoint
             .WithSummary("Delete a bin")
             .WithDescription("Deletes a storage bin")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Warehouse))
             .MapToApiVersion(1);
     }
 }

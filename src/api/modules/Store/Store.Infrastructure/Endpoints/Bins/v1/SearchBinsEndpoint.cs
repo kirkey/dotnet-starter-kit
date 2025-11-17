@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.Bins.Get.v1;
 using FSH.Starter.WebApi.Store.Application.Bins.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Bins.v1;
 
@@ -17,7 +18,7 @@ public static class SearchBinsEndpoint
             .WithSummary("Search bins")
             .WithDescription("Searches for storage bins with pagination and filtering")
             .Produces<PagedList<BinResponse>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Warehouse))
             .MapToApiVersion(1);
     }
 }

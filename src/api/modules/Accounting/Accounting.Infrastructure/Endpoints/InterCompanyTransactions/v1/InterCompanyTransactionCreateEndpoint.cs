@@ -1,4 +1,5 @@
 using Accounting.Application.InterCompanyTransactions.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.InterCompanyTransactions.v1;
 
@@ -16,7 +17,7 @@ public static class InterCompanyTransactionCreateEndpoint
             .WithSummary("Create inter-company transaction")
             .Produces<InterCompanyTransactionCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

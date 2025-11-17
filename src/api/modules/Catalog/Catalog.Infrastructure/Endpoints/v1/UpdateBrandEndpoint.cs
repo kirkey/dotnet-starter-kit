@@ -1,4 +1,5 @@
 ﻿using FSH.Starter.WebApi.Catalog.Application.Brands.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 public static class UpdateBrandEndpoint
@@ -16,7 +17,7 @@ public static class UpdateBrandEndpoint
             .WithSummary("update a brand")
             .WithDescription("update a brand")
             .Produces<UpdateBrandResponse>()
-            .RequirePermission("Permissions.Brands.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Brands))
             .MapToApiVersion(1);
     }
 }

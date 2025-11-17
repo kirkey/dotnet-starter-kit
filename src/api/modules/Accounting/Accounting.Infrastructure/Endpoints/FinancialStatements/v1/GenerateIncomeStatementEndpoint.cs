@@ -1,4 +1,5 @@
 using Accounting.Application.FinancialStatements.Queries.GenerateIncomeStatement.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
 
@@ -16,7 +17,7 @@ public static class GenerateIncomeStatementEndpoint
             .WithSummary("Generate Income Statement")
             .WithDescription("Generates an income statement for a given period")
             .Produces<IncomeStatementDto>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

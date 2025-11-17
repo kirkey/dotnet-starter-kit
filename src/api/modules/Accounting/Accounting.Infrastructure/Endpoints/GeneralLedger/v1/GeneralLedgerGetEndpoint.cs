@@ -1,4 +1,5 @@
 using Accounting.Application.GeneralLedgers.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.GeneralLedger.v1;
 
@@ -23,7 +24,7 @@ public static class GeneralLedgerGetEndpoint
             .WithDescription("Retrieves a general ledger entry by its unique identifier")
             .Produces<GeneralLedgerGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

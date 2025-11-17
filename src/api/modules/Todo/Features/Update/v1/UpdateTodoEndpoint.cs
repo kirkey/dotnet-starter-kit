@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Todo.Features.Update.v1;
 public static class UpdateTodoEndpoint
@@ -20,8 +21,8 @@ public static class UpdateTodoEndpoint
             .WithName(nameof(UpdateTodoEndpoint))
             .WithSummary("Updates a todo item")
             .WithDescription("Updated a todo item")
-            .Produces<UpdateTodoResponse>(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Todos.Update")
+            .Produces<UpdateTodoResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Todos))
             .MapToApiVersion(new ApiVersion(1, 0));
 
     }

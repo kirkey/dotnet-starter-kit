@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Approve.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -16,7 +17,7 @@ public static class ApproveInventoryTransferEndpoint
         .WithSummary("Approve inventory transfer")
         .WithDescription("Approves an inventory transfer")
         .Produces<ApproveInventoryTransferResponse>()
-        .RequirePermission("Permissions.InventoryTransfers.Approve")
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

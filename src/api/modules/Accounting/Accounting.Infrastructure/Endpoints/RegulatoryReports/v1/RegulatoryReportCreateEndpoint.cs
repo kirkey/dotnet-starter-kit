@@ -1,4 +1,5 @@
 using Accounting.Application.RegulatoryReports.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
@@ -13,7 +14,7 @@ public static class RegulatoryReportCreateEndpoint
             })
             .WithName(nameof(RegulatoryReportCreateRequest))
             .WithSummary("Create a new regulatory report")
-            .RequirePermission("Permissions.RegulatoryReports.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .Produces<DefaultIdType>()
             .WithOpenApi();
 

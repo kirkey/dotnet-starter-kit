@@ -1,3 +1,5 @@
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 public static class GetProductEndpoint
 {
@@ -13,7 +15,7 @@ public static class GetProductEndpoint
             .WithSummary("gets product by id")
             .WithDescription("gets prodct by id")
             .Produces<ProductResponse>()
-            .RequirePermission("Permissions.Products.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Products))
             .MapToApiVersion(1);
     }
 }

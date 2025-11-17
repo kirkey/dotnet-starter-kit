@@ -77,7 +77,7 @@ global using FSH.Starter.WebApi.Messaging;
 .MapPost("/", async (CreateTodoCommand request, ISender mediator) => {...})
 .WithName(nameof(CreateTodoEndpoint))
 .WithSummary("Creates a todo item")
-.RequirePermission("Permissions.Todos.Create")
+.RequirePermission(FshPermission.NameFor(FshActions.Todos.Create")
 .MapToApiVersion(new ApiVersion(1, 0));
 ```
 
@@ -86,7 +86,7 @@ global using FSH.Starter.WebApi.Messaging;
 .MapPost("/", async (CreateConversationCommand request, ISender mediator) => {...})
 .WithName(nameof(CreateConversationEndpoint))
 .WithSummary("creates a new conversation")
-.RequirePermission("Permissions.Messaging.Create")
+.RequirePermission(FshPermission.NameFor(FshActions.Messaging.Create")
 .MapToApiVersion(new ApiVersion(1, 0));
 ```
 

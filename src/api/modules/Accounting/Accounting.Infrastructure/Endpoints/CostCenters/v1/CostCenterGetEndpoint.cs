@@ -1,5 +1,6 @@
 using Accounting.Application.CostCenters.Get;
 using Accounting.Application.CostCenters.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CostCenters.v1;
 
@@ -18,7 +19,7 @@ public static class CostCenterGetEndpoint
             .WithDescription("Retrieves a cost center by its unique identifier")
             .Produces<CostCenterResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

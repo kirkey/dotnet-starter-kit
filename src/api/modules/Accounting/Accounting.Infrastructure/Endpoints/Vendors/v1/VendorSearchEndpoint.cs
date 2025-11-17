@@ -1,4 +1,5 @@
 using Accounting.Application.Vendors.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Vendors.v1;
 
@@ -17,7 +18,7 @@ public static class VendorSearchEndpoint
             .WithDescription("Searches vendors with pagination and filtering support")
             .Produces<PagedList<VendorSearchResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.LotNumbers.v1;
 
@@ -15,9 +16,9 @@ public static class GetLotNumberEndpoint
             .WithName(nameof(GetLotNumberEndpoint))
             .WithSummary("Get a lot number by ID")
             .WithDescription("Retrieves detailed information about a specific lot/batch number")
-            .RequirePermission("Permissions.Store.View")
-            .Produces<LotNumberResponse>(StatusCodes.Status200OK)
+            .Produces<LotNumberResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

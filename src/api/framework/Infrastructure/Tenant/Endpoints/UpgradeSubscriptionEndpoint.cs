@@ -9,7 +9,7 @@ public static class UpgradeSubscriptionEndpoint
         return endpoints.MapPost("/upgrade", (UpgradeSubscriptionCommand command, ISender mediator) => mediator.Send(command))
                                 .WithName(nameof(UpgradeSubscriptionEndpoint))
                                 .WithSummary("upgrade tenant subscription")
-                                .RequirePermission("Permissions.Tenants.Update")
+                                .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Tenants))
                                 .WithDescription("upgrade tenant subscription");
     }
 }

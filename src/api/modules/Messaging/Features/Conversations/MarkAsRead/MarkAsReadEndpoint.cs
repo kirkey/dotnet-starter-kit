@@ -1,3 +1,5 @@
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.Messaging.Features.Conversations.MarkAsRead;
 
 /// <summary>
@@ -16,7 +18,7 @@ public static class MarkAsReadEndpoint
         .WithSummary("marks messages as read in a conversation")
         .WithDescription("updates the last read timestamp for the current user")
         .Produces(StatusCodes.Status200OK)
-        .RequirePermission("Permissions.Messaging.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Messaging))
         .MapToApiVersion(1);
     }
 }

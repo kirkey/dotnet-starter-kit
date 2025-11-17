@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Categories.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Categories.v1;
 
@@ -22,7 +23,7 @@ public static class UpdateCategoryEndpoint
         .WithSummary("Update category")
         .WithDescription("Updates an existing category")
         .Produces<UpdateCategoryResponse>()
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

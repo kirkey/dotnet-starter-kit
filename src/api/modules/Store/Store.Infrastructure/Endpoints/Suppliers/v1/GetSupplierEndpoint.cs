@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -15,7 +16,7 @@ public static class GetSupplierEndpoint
         .WithSummary("Get a supplier")
         .WithDescription("Retrieves a supplier by id")
         .Produces<SupplierResponse>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

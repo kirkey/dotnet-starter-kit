@@ -1,4 +1,5 @@
 using Accounting.Application.CostCenters.RecordActual.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CostCenters.v1;
 
@@ -22,7 +23,7 @@ public static class CostCenterRecordActualEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

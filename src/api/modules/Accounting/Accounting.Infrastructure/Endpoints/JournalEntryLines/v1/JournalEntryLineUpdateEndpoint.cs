@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Lines.Update;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntryLines.v1;
 
@@ -20,7 +21,7 @@ public static class JournalEntryLineUpdateEndpoint
             .WithDescription("updates journal entry line")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

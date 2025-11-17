@@ -1,3 +1,5 @@
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.Messaging.Features.Messages.Delete;
 
 public static class DeleteMessageEndpoint
@@ -13,7 +15,7 @@ public static class DeleteMessageEndpoint
         .WithSummary("deletes a message")
         .WithDescription("soft deletes a message")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Messaging.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Messaging))
         .MapToApiVersion(1);
     }
 }

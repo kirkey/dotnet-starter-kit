@@ -1,5 +1,6 @@
 using Accounting.Application.Budgets.Responses;
 using Accounting.Application.Budgets.Search;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Budgets.v1;
 
@@ -17,7 +18,7 @@ public static class BudgetSearchEndpoint
             .WithSummary("Gets a list of budgets")
             .WithDescription("Gets a list of budgets with pagination and filtering support")
             .Produces<PagedList<BudgetResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

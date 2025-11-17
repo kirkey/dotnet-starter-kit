@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Items.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -16,7 +17,7 @@ public static class CreateItemEndpoint
             .WithSummary("Create a new item")
             .WithDescription("Creates a new inventory item")
             .Produces<CreateItemResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

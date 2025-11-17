@@ -1,5 +1,6 @@
 using Accounting.Application.PaymentAllocations.Queries;
 using Accounting.Application.PaymentAllocations.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 
@@ -16,7 +17,7 @@ public static class PaymentAllocationSearchEndpoint
             .WithName(nameof(PaymentAllocationSearchEndpoint))
             .WithSummary("Searches payment allocations")
             .Produces<List<PaymentAllocationResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

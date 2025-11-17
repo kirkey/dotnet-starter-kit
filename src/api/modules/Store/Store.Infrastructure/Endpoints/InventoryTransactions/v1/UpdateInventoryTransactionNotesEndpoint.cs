@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.UpdateNotes.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransactions.v1;
 
@@ -22,7 +23,7 @@ public static class UpdateInventoryTransactionNotesEndpoint
             .Produces<UpdateInventoryTransactionNotesResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

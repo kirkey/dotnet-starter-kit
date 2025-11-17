@@ -1,4 +1,5 @@
 using Accounting.Application.Payments.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payments.v1;
 
@@ -24,7 +25,7 @@ public static class PaymentUpdateEndpoint
             .WithDescription("Updates payment details (reference, deposit account, description, notes)")
             .Produces<PaymentUpdateResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

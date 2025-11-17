@@ -1,5 +1,6 @@
 using Accounting.Application.Projects.Costing.Get;
 using Accounting.Application.Projects.Costing.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.Costing.v1;
 
@@ -18,7 +19,7 @@ public static class ProjectCostingGetEndpoint
             .WithDescription("Gets a single project costing entry by ID")
             .Produces<ProjectCostingResponse>()
             .Produces(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.SecurityDeposits.Commands;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.SecurityDeposits.v1;
 
@@ -20,7 +21,7 @@ public static class SecurityDepositCreateEndpoint
             .WithDescription("Creates a new security deposit for a member")
             .Produces<CreateSecurityDepositResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 

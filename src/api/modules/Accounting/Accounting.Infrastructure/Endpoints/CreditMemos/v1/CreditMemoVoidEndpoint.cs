@@ -1,4 +1,5 @@
 using Accounting.Application.CreditMemos.Void;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -19,7 +20,7 @@ public static class CreditMemoVoidEndpoint
             .WithSummary("Void a credit memo")
             .WithDescription("Void a credit memo and reverse any applications or refunds")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

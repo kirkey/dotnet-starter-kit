@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payees.v1;
 
@@ -27,7 +28,7 @@ public static class PayeeGetEndpoint
             .Produces<PayeeResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

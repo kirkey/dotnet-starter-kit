@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SerialNumbers.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteSerialNumberEndpoint
             .WithSummary("Delete a serial number")
             .WithDescription("Deletes an existing serial number from the system.")
             .Produces<DeleteSerialNumberResponse>()
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

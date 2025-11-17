@@ -309,7 +309,7 @@ public static class CreateCompanyEndpoint
             .WithSummary("Creates a new company")
             .WithDescription("Creates a new company in the system for multi-entity support")
             .Produces<CreateCompanyResponse>()
-            .RequirePermission("Permissions.Companies.Create") // ✅ Permission-based
+            .RequirePermission(FshPermission.NameFor(FshActions.Companies.Create") // ✅ Permission-based
             .MapToApiVersion(1); // ✅ Versioned
     }
 }

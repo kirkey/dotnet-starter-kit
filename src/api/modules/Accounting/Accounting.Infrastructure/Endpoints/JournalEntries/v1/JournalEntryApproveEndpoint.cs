@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Approve;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 
@@ -28,7 +29,7 @@ public static class JournalEntryApproveEndpoint
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Approve")
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

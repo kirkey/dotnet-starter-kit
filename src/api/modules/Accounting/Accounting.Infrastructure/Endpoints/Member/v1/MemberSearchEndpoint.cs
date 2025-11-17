@@ -1,4 +1,5 @@
 using Accounting.Application.Members.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
@@ -17,7 +18,7 @@ public static class MemberSearchEndpoint
         .WithName(nameof(MemberSearchEndpoint))
         .WithSummary("Search members")
         .WithDescription("Search members with filters and pagination")
-        .RequirePermission("Permissions.Accounting.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

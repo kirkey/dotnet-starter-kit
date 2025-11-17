@@ -109,7 +109,7 @@ public static class CreateLeaveBalanceEndpoint
             .WithSummary(...)
             .WithDescription(...)
             .Produces<CreateLeaveBalanceResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.LeaveBalances.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.LeaveBalances.Create")
             .MapToApiVersion(1);
     }
 }

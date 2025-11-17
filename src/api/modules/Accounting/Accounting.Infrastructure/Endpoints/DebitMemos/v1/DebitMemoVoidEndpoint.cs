@@ -1,4 +1,5 @@
 using Accounting.Application.DebitMemos.Void;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
@@ -19,7 +20,7 @@ public static class DebitMemoVoidEndpoint
             .WithSummary("Void a debit memo")
             .WithDescription("Void a debit memo and reverse any applications")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

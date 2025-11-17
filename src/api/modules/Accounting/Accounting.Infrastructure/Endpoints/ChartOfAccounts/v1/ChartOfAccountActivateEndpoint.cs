@@ -1,4 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Activate.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
@@ -18,7 +19,7 @@ public static class ChartOfAccountActivateEndpoint
         .WithName(nameof(ChartOfAccountActivateEndpoint))
         .WithSummary("Activate chart of account")
         .WithDescription("Activates a chart of account")
-        .RequirePermission("Permissions.Accounting.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

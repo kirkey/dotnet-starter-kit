@@ -135,7 +135,7 @@ public static class [Operation]EmployeeEndpoint
             .WithSummary("Summary")
             .WithDescription("Description")
             .Produces<[Operation]EmployeeResponse>()
-            .RequirePermission("Permissions.Employees.[Operation]")
+            .RequirePermission(FshPermission.NameFor(FshActions.Employees.[Operation]")
             .MapToApiVersion(1);
     }
 }

@@ -17,7 +17,7 @@ public static class UpdateRolePermissionsEndpoint
         })
         .WithName(nameof(UpdateRolePermissionsEndpoint))
         .WithSummary("update role permissions")
-        .RequirePermission("Permissions.Roles.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Roles))
         .WithDescription("update role permissions");
     }
 }

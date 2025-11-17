@@ -380,7 +380,7 @@ public static class CreateEntityEndpoint
             .WithSummary("Create entity")
             .WithDescription("Detailed description")
             .Produces<CreateEntityResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Store.Create")
             .MapToApiVersion(1);
     }
 }

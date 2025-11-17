@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Categories.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Categories.v1;
 
@@ -15,7 +16,7 @@ public static class GetCategoryEndpoint
         .WithSummary("Get category by ID")
         .WithDescription("Retrieves a category by its unique identifier")
         .Produces<CategoryResponse>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

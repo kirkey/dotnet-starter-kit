@@ -12,7 +12,7 @@ public static class CreateOrUpdateRoleEndpoint
         })
         .WithName(nameof(CreateOrUpdateRoleEndpoint))
         .WithSummary("Create or update a role")
-        .RequirePermission("Permissions.Roles.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Roles))
         .WithDescription("Create a new role or update an existing role.");
     }
 }

@@ -261,7 +261,7 @@ public static class CreateProductEndpoint
             .WithSummary("Create a product")
             .WithDescription("Create a new product in the catalog")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Catalog.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Catalog.Create")
             .MapToApiVersion(1);
     }
 }
@@ -299,7 +299,7 @@ public static class DebitMemoCreateEndpoint
             .WithSummary("Create a debit memo")
             .WithDescription("Create a new debit memo for receivable/payable adjustments")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Accounting.Create")
             .MapToApiVersion(1);
     }
 }
@@ -359,7 +359,7 @@ public static class DebitMemoApproveEndpoint
             .WithSummary("Approve a debit memo")
             .WithDescription("Approve a draft debit memo for application")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Approve")
+            .RequirePermission(FshPermission.NameFor(FshActions.Accounting.Approve")
             .MapToApiVersion(1);
     }
 }

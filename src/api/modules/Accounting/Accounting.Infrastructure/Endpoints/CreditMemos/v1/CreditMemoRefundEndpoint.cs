@@ -1,4 +1,5 @@
 using Accounting.Application.CreditMemos.Refund;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -19,7 +20,7 @@ public static class CreditMemoRefundEndpoint
             .WithSummary("Issue refund for credit memo")
             .WithDescription("Issue a direct refund for an approved credit memo")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PutAwayTasks.v1;
 
@@ -15,8 +16,8 @@ public static class SearchPutAwayTasksEndpoint
             .WithName(nameof(SearchPutAwayTasksEndpoint))
             .WithSummary("Search put-away tasks")
             .WithDescription("Searches put-away tasks with filtering, sorting, and pagination.")
-            .Produces<PagedList<PutAwayTaskResponse>>(200)
-            .RequirePermission("Permissions.Store.View")
+            .Produces<PagedList<PutAwayTaskResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

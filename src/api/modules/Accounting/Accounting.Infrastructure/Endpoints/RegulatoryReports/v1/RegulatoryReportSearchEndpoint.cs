@@ -1,5 +1,6 @@
 using Accounting.Application.RegulatoryReports.Responses;
 using Accounting.Application.RegulatoryReports.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
@@ -14,7 +15,7 @@ public static class RegulatoryReportSearchEndpoint
         })
         .WithName(nameof(SearchRegulatoryReportsRequest))
         .WithSummary("Search regulatory reports")
-        .RequirePermission("Permissions.RegulatoryReports.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .Produces<List<RegulatoryReportResponse>>()
         .WithOpenApi();
 

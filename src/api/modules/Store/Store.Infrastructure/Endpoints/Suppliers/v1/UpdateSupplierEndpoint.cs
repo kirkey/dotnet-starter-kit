@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -22,7 +23,7 @@ public static class UpdateSupplierEndpoint
         .WithSummary("Update a supplier")
         .WithDescription("Updates an existing supplier")
         .Produces<UpdateSupplierResponse>()
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

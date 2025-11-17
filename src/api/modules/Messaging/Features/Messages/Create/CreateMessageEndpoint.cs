@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Messaging.Features.Messages.Create;
 
@@ -18,7 +19,7 @@ public static class CreateMessageEndpoint
                 .WithSummary("creates a new message")
                 .WithDescription("creates a new message in a conversation with optional file attachments")
                 .Produces<CreateMessageResponse>(StatusCodes.Status201Created)
-                .RequirePermission("Permissions.Messaging.Create")
+                .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Messaging))
                 .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.GetItemsNeedingReorder.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -27,7 +28,7 @@ public static class GetItemsNeedingReorderEndpoint
         .WithSummary("Get items needing reorder for a supplier")
         .WithDescription("Returns a list of items that are at or below their reorder point for the specified supplier, with suggested order quantities based on current stock levels")
         .Produces<List<ItemNeedingReorderResponse>>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

@@ -364,7 +364,7 @@ public static class GetDesignationAssignmentEndpoint
             .WithSummary("Gets designation assignment by ID")
             .WithDescription("Retrieves designation assignment details including tenure")
             .Produces<DesignationAssignmentResponse>()
-            .RequirePermission("Permissions.EmployeeDesignations.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.EmployeeDesignations.View")
             .MapToApiVersion(1);
     }
 }
@@ -387,7 +387,7 @@ public static class EndDesignationAssignmentEndpoint
             .WithSummary("Ends a designation assignment")
             .WithDescription("Ends an active designation assignment on a specified date")
             .Produces<EndDesignationAssignmentResponse>()
-            .RequirePermission("Permissions.EmployeeDesignations.Manage")
+            .RequirePermission(FshPermission.NameFor(FshActions.EmployeeDesignations.Manage")
             .MapToApiVersion(1);
     }
 }

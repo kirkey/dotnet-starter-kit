@@ -1,5 +1,6 @@
 using Accounting.Application.DepreciationMethods.Responses;
 using Accounting.Application.DepreciationMethods.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DepreciationMethods.v1;
 
@@ -18,7 +19,7 @@ public static class DepreciationMethodSearchEndpoint
             .WithDescription("Searches depreciation methods with filtering and pagination")
             .Produces<PagedList<DepreciationMethodResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

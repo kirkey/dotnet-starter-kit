@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Cancel.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -16,7 +17,7 @@ public static class CancelInventoryTransferEndpoint
         .WithSummary("Cancel inventory transfer")
         .WithDescription("Cancels a pending or approved inventory transfer with optional reason")
         .Produces<CancelInventoryTransferResponse>()
-        .RequirePermission("Permissions.InventoryTransfers.Cancel")
+        .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

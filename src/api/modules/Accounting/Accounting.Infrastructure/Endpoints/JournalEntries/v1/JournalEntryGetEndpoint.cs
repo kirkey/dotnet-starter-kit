@@ -1,5 +1,6 @@
 using Accounting.Application.JournalEntries.Get;
 using Accounting.Application.JournalEntries.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 
@@ -25,7 +26,7 @@ public static class JournalEntryGetEndpoint
             .WithDescription("Retrieve a specific journal entry by its identifier")
             .Produces<JournalEntryResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

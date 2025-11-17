@@ -45,7 +45,7 @@ public static class GetItemsNeedingReorderEndpoint
             .WithSummary("Get items needing reorder for a supplier")
             .WithDescription("...")
             .Produces<List<ItemNeedingReorderResponse>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.Store.View")
             .MapToApiVersion(1);
     }
 }

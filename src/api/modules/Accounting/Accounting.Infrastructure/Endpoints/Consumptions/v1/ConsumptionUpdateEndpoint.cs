@@ -1,4 +1,5 @@
 using Accounting.Application.Consumptions.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Consumptions.v1;
 
@@ -20,7 +21,7 @@ public static class ConsumptionUpdateEndpoint
         .WithName(nameof(ConsumptionUpdateEndpoint))
         .WithSummary("Update consumption record")
         .WithDescription("Updates a consumption record")
-        .RequirePermission("Permissions.Accounting.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

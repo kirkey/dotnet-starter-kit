@@ -10,7 +10,7 @@ public static class GetRoleByIdEndpoint
         })
         .WithName(nameof(GetRoleByIdEndpoint))
         .WithSummary("Get role details by ID")
-        .RequirePermission("Permissions.Roles.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Roles))
         .WithDescription("Retrieve the details of a role by its ID.");
     }
 }

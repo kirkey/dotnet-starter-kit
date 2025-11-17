@@ -1,4 +1,5 @@
 using Accounting.Application.DepreciationMethods.Delete;
+using Shared.Authorization;
 
 // Endpoint for deleting a depreciation method
 namespace Accounting.Infrastructure.Endpoints.DepreciationMethods.v1;
@@ -16,7 +17,7 @@ public static class DepreciationMethodDeleteEndpoint
             .WithName(nameof(DepreciationMethodDeleteEndpoint))
             .WithSummary("Delete a depreciation method")
             .WithDescription("Deletes a depreciation method by its ID")
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

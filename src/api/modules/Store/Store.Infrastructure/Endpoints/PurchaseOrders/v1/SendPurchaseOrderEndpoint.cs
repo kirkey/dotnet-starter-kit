@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Send.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -25,7 +26,7 @@ public static class SendPurchaseOrderEndpoint
         .WithSummary("Send an approved purchase order to supplier")
         .WithDescription("Sends an approved purchase order to the supplier, changing status from Approved to Sent")
         .Produces<SendPurchaseOrderResponse>()
-        .RequirePermission("Permissions.Store.Send")
+        .RequirePermission(FshPermission.NameFor(FshActions.Send, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

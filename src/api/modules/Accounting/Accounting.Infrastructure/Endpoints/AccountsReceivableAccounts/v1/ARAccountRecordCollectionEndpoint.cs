@@ -1,4 +1,5 @@
 using Accounting.Application.AccountsReceivableAccounts.RecordCollection.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 
@@ -22,7 +23,7 @@ public static class ArAccountRecordCollectionEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

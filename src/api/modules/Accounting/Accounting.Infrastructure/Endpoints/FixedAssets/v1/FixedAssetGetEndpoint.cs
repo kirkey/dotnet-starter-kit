@@ -1,5 +1,6 @@
 using Accounting.Application.FixedAssets.Get;
 using Accounting.Application.FixedAssets.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 
@@ -18,7 +19,7 @@ public static class FixedAssetGetEndpoint
             .WithDescription("get a fixed asset by id")
             .Produces<FixedAssetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

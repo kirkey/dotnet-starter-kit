@@ -1,4 +1,5 @@
 using Accounting.Application.Vendors.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Vendors.v1;
 
@@ -17,7 +18,7 @@ public static class VendorCreateEndpoint
             .WithDescription("create a vendor")
             .WithTags("Vendors")
             .Produces<VendorCreateResponse>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

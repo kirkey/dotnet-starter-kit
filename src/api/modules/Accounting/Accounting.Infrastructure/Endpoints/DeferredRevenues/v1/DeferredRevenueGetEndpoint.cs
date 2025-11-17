@@ -1,5 +1,6 @@
 using Accounting.Application.DeferredRevenues.Get;
 using Accounting.Application.DeferredRevenues.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DeferredRevenues.v1;
 
@@ -18,7 +19,7 @@ public static class DeferredRevenueGetEndpoint
             .WithDescription("Retrieves a deferred revenue entry by its unique identifier")
             .Produces<DeferredRevenueResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

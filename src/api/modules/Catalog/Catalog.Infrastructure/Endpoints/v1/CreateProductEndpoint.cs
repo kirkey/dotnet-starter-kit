@@ -1,4 +1,6 @@
-﻿namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
+﻿using Shared.Authorization;
+
+namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 public static class CreateProductEndpoint
 {
     internal static RouteHandlerBuilder MapProductCreateEndpoint(this IEndpointRouteBuilder endpoints)
@@ -13,7 +15,7 @@ public static class CreateProductEndpoint
             .WithSummary("creates a product")
             .WithDescription("creates a product")
             .Produces<CreateProductResponse>()
-            .RequirePermission("Permissions.Products.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Products))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Import.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
@@ -21,7 +22,7 @@ public static class ChartOfAccountImportEndpoint
             .WithDescription("Imports chart of accounts from an Excel (.xlsx) file with validation and duplicate checking")
             .Produces<object>()
             .ProducesValidationProblem()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .DisableAntiforgery()
             .MapToApiVersion(1);
     }

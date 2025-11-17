@@ -1,5 +1,6 @@
 using Accounting.Application.Budgets.Get;
 using Accounting.Application.Budgets.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Budgets.v1;
 
@@ -17,7 +18,7 @@ public static class BudgetGetEndpoint
             .WithSummary("get a budget by id")
             .WithDescription("get a budget by id")
             .Produces<BudgetResponse>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

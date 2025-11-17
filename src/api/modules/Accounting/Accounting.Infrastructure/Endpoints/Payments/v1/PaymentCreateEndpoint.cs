@@ -1,4 +1,5 @@
 using Accounting.Application.Payments.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payments.v1;
 
@@ -24,7 +25,7 @@ public static class PaymentCreateEndpoint
             .Produces<PaymentCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

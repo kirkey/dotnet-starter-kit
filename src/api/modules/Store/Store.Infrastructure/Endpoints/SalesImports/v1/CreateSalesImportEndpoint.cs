@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SalesImports.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SalesImports.v1;
 
@@ -19,7 +20,7 @@ public static class CreateSalesImportEndpoint
             .WithSummary("Import POS sales data")
             .WithDescription("Creates and processes a sales import from POS CSV file to update inventory levels")
             .Produces<CreateSalesImportResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

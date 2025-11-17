@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.LotNumbers.v1;
 
@@ -20,7 +21,7 @@ public static class UpdateLotNumberEndpoint
             .WithName(nameof(UpdateLotNumberEndpoint))
             .WithSummary("Update a lot number")
             .WithDescription("Updates lot status and quality notes")
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .Produces<UpdateLotNumberResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

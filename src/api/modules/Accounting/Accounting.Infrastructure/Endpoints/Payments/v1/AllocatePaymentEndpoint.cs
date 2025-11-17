@@ -1,4 +1,5 @@
 using Accounting.Application.Payments.Commands;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payments.v1;
 
@@ -15,7 +16,7 @@ public static class AllocatePaymentEndpoint
             .WithName(nameof(AllocatePaymentEndpoint))
             .WithSummary("Allocate a payment")
             .WithDescription("Allocate a payment to invoices")
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

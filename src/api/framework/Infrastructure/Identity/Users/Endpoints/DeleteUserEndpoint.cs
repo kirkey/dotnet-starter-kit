@@ -9,7 +9,7 @@ public static class DeleteUserEndpoint
         })
         .WithName(nameof(DeleteUserEndpoint))
         .WithSummary("delete user profile")
-        .RequirePermission("Permissions.Users.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Users))
         .WithDescription("delete user profile");
     }
 }

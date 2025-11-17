@@ -1,5 +1,6 @@
 using Accounting.Application.InterCompanyTransactions.Responses;
 using Accounting.Application.InterCompanyTransactions.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.InterCompanyTransactions.v1;
 
@@ -17,7 +18,7 @@ public static class InterCompanyTransactionSearchEndpoint
             .WithSummary("Search inter-company transactions")
             .Produces<List<InterCompanyTransactionResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

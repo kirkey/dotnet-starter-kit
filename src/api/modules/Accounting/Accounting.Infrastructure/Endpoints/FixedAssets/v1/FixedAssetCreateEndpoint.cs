@@ -1,4 +1,5 @@
 using Accounting.Application.FixedAssets.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 
@@ -17,7 +18,7 @@ public static class FixedAssetCreateEndpoint
             .WithDescription("create a fixed asset")
             .Produces<CreateFixedAssetResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

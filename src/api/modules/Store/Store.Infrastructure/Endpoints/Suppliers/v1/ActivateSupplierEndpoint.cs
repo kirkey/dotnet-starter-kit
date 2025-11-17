@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Activate.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -20,7 +21,7 @@ public static class ActivateSupplierEndpoint
             .WithSummary("Activate a supplier")
             .WithDescription("Activates a supplier to allow transactions")
             .Produces<ActivateSupplierResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

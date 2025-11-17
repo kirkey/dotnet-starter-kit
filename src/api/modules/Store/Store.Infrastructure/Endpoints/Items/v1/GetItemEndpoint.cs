@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Items.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -16,7 +17,7 @@ public static class GetItemEndpoint
             .WithSummary("Get item by ID")
             .WithDescription("Retrieves a specific inventory item by its ID")
             .Produces<ItemResponse>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

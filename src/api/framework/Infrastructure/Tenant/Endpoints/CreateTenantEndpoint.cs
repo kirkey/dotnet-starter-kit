@@ -8,7 +8,7 @@ public static class CreateTenantEndpoint
         return endpoints.MapPost("/", (CreateTenantCommand request, ISender mediator) => mediator.Send(request))
                                 .WithName(nameof(CreateTenantEndpoint))
                                 .WithSummary("creates a tenant")
-                                .RequirePermission("Permissions.Tenants.Create")
+                                .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Tenants))
                                 .WithDescription("creates a tenant");
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.Projects.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 
@@ -17,7 +18,7 @@ public static class ProjectUpdateEndpoint
             .WithSummary("update a project")
             .WithDescription("update a project")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

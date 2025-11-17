@@ -1,4 +1,5 @@
 using Accounting.Application.Checks.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Checks.v1;
 
@@ -26,7 +27,7 @@ public static class CheckSearchEndpoint
             .WithDescription("Search and filter checks with pagination, status filtering, date ranges, and amount ranges. Supports advanced filtering by check number, bank account, payee name, and print/stop payment status.")
             .Produces<PagedList<CheckSearchResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

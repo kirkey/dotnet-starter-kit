@@ -1,4 +1,5 @@
 using Accounting.Application.Projects.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 
@@ -16,7 +17,7 @@ public static class ProjectCreateEndpoint
             .WithSummary("create a project")
             .WithDescription("create a project")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

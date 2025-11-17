@@ -1,5 +1,6 @@
 using Accounting.Application.Projects.Responses;
 using Accounting.Application.Projects.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 
@@ -17,7 +18,7 @@ public static class ProjectSearchEndpoint
             .WithSummary("Gets a list of projects")
             .WithDescription("Gets a list of projects with pagination and filtering support")
             .Produces<PagedList<ProjectResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

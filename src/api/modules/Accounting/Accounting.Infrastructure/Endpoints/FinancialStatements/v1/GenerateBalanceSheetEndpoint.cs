@@ -1,4 +1,5 @@
 using Accounting.Application.FinancialStatements.Queries.GenerateBalanceSheet.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
 
@@ -16,7 +17,7 @@ public static class GenerateBalanceSheetEndpoint
             .WithSummary("Generate Balance Sheet")
             .WithDescription("Generates a balance sheet for a given date/period")
             .Produces<BalanceSheetDto>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

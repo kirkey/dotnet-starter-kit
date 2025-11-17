@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Start.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PutAwayTasks.v1;
 
@@ -20,8 +21,8 @@ public static class StartPutAwayEndpoint
             .WithName(nameof(StartPutAwayEndpoint))
             .WithSummary("Start a put-away task")
             .WithDescription("Marks a put-away task as started and records the start time.")
-            .Produces<StartPutAwayResponse>(200)
-            .RequirePermission("Permissions.Store.Update")
+            .Produces<StartPutAwayResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

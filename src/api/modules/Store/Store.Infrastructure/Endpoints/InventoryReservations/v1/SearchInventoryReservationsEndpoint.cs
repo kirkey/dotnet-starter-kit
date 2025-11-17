@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryReservations.v1;
 
@@ -16,7 +17,7 @@ public static class SearchInventoryReservationsEndpoint
             .WithSummary("Search inventory reservations")
             .WithDescription("Searches for inventory reservations with pagination and filtering by reservation number, item, warehouse, type, status, dates, and more.")
             .Produces<PagedList<InventoryReservationDto>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

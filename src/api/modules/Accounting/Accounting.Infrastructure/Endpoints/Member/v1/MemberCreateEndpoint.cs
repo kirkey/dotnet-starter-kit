@@ -1,4 +1,5 @@
 using Accounting.Application.Members.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
@@ -17,7 +18,7 @@ public static class MemberCreateEndpoint
         .WithName(nameof(MemberCreateEndpoint))
         .WithSummary("Create member")
         .WithDescription("Creates a new member account")
-        .RequirePermission("Permissions.Accounting.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

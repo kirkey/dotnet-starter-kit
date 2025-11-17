@@ -1,4 +1,5 @@
 using Accounting.Application.Customers.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Customers.v1;
 
@@ -24,7 +25,7 @@ public static class CustomerUpdateEndpoint
             .WithDescription("Updates an existing customer's information.")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

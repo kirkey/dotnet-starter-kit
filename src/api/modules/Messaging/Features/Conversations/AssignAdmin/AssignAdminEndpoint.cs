@@ -1,3 +1,5 @@
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.Messaging.Features.Conversations.AssignAdmin;
 
 /// <summary>
@@ -21,7 +23,7 @@ public static class AssignAdminEndpoint
         .WithSummary("updates a member's role in a conversation")
         .WithDescription("assigns or revokes admin role for a member")
         .Produces(StatusCodes.Status200OK)
-        .RequirePermission("Permissions.Messaging.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Messaging))
         .MapToApiVersion(1);
     }
 }

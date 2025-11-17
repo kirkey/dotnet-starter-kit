@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.AutoAddItems.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -27,7 +28,7 @@ public static class AutoAddItemsToPurchaseOrderEndpoint
             .WithSummary("Auto-add items needing reorder to purchase order")
             .WithDescription("Automatically adds items that are at or below their reorder point to the specified purchase order based on the order's supplier. Only works on Draft status purchase orders.")
             .Produces<AutoAddItemsToPurchaseOrderResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

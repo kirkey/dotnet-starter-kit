@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.Approve.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -25,7 +26,7 @@ public static class ApproveBillEndpoint
             .Produces<ApproveBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Approve")
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

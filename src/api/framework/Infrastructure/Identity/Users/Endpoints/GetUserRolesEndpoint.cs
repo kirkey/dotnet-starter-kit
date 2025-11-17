@@ -9,7 +9,7 @@ public static class GetUserRolesEndpoint
         })
         .WithName(nameof(GetUserRolesEndpoint))
         .WithSummary("get user roles")
-        .RequirePermission("Permissions.Users.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Users))
         .WithDescription("get user roles");
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.DebitMemos.Get;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
@@ -17,7 +18,7 @@ public static class DebitMemoGetEndpoint
             .WithSummary("Get debit memo by ID")
             .WithDescription("Retrieve a specific debit memo by its identifier")
             .Produces<Accounting.Application.DebitMemos.Responses.DebitMemoResponse>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

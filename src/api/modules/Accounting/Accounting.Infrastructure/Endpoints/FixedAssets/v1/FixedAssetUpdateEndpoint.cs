@@ -1,4 +1,5 @@
 using Accounting.Application.FixedAssets.Update;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 
@@ -17,7 +18,7 @@ public static class FixedAssetUpdateEndpoint
             .WithSummary("update a fixed asset")
             .WithDescription("update a fixed asset")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

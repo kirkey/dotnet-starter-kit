@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Items.Remove.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -15,7 +16,7 @@ public static class RemoveInventoryTransferItemEndpoint
         .WithSummary("Remove item from inventory transfer")
         .WithDescription("Removes a grocery item line from an existing inventory transfer")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.InventoryTransfers.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

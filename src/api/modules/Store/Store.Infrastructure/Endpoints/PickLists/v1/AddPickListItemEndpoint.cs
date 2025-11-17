@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PickLists.AddItem.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PickLists.v1;
 
@@ -27,7 +28,7 @@ public static class AddPickListItemEndpoint
             .Produces<AddPickListItemResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

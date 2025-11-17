@@ -14,7 +14,7 @@ public static class {Operation}{Module}Endpoint
     {
         return endpoints
             .Map{Method}("/{route}", async (...) => { ... })
-            .RequirePermission("Permissions.{OldResource}.{Action}")  // ❌ String literal
+            .RequirePermission(FshPermission.NameFor(FshActions.{OldResource}.{Action}")  // ❌ String literal
             .MapToApiVersion(1);
     }
 }
@@ -113,7 +113,7 @@ public static class {Operation}{Module}Endpoint
 ### Example 1: Timesheets Create
 ```csharp
 // Before:
-.RequirePermission("Permissions.Timesheets.Create")
+.RequirePermission(FshPermission.NameFor(FshActions.Timesheets.Create")
 
 // After:
 .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Timesheets))
@@ -122,7 +122,7 @@ public static class {Operation}{Module}Endpoint
 ### Example 2: Leave Request Approve
 ```csharp
 // Before:
-.RequirePermission("Permissions.LeaveRequests.Approve")
+.RequirePermission(FshPermission.NameFor(FshActions.LeaveRequests.Approve")
 
 // After:
 .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Leaves))
@@ -131,7 +131,7 @@ public static class {Operation}{Module}Endpoint
 ### Example 3: Payroll Process
 ```csharp
 // Before:
-.RequirePermission("Permissions.Payrolls.Process")
+.RequirePermission(FshPermission.NameFor(FshActions.Payrolls.Process")
 
 // After:
 .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.Payroll))
@@ -140,7 +140,7 @@ public static class {Operation}{Module}Endpoint
 ### Example 4: Employee Contacts View
 ```csharp
 // Before:
-.RequirePermission("Permissions.Employees.View")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.View")
 
 // After:
 .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
@@ -149,7 +149,7 @@ public static class {Operation}{Module}Endpoint
 ### Example 5: Organizational Unit Manage
 ```csharp
 // Before:
-.RequirePermission("Permissions.OrganizationalUnits.Manage")
+.RequirePermission(FshPermission.NameFor(FshActions.OrganizationalUnits.Manage")
 
 // After:
 .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Organization))

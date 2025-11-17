@@ -1,5 +1,6 @@
 using Accounting.Application.BankReconciliations.Get.v1;
 using Accounting.Application.BankReconciliations.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
@@ -25,7 +26,7 @@ public static class GetBankReconciliationEndpoint
                 "adjustments, and audit information.")
             .Produces<BankReconciliationResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

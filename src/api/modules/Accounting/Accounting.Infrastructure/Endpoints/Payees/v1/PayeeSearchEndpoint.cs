@@ -1,5 +1,6 @@
 using Accounting.Application.Payees.Get.v1;
 using Accounting.Application.Payees.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payees.v1;
 
@@ -27,7 +28,7 @@ public static class PayeeSearchEndpoint
             .WithDescription("Searches payees with comprehensive filtering capabilities including keyword search, payee code, name, expense account code, and TIN filters with pagination support.")
             .Produces<PagedList<PayeeResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

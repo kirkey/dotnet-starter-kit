@@ -1,4 +1,5 @@
 using Accounting.Application.Consumptions.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Consumptions.v1;
 
@@ -17,7 +18,7 @@ public static class ConsumptionSearchEndpoint
         .WithName(nameof(ConsumptionSearchEndpoint))
         .WithSummary("Search consumption records")
         .WithDescription("Search consumption records with filters and pagination")
-        .RequirePermission("Permissions.Accounting.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

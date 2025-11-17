@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Get.v1;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -24,7 +25,7 @@ public static class SearchPurchaseOrdersEndpoint
         .WithSummary("Search purchase orders")
         .WithDescription("Search and filter purchase orders with pagination support")
         .Produces<PagedList<PurchaseOrderResponse>>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

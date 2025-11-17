@@ -20,7 +20,7 @@ public static class UpdateEmployeeEndpoint
             .WithSummary("Updates an employee")
             .WithDescription("Updates employee information")
             .Produces<UpdateEmployeeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Edit, FshResources.Employees))
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Employees))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.Accruals.Update;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
@@ -23,7 +24,7 @@ public static class AccrualUpdateEndpoint
             .WithSummary("Update an accrual")
             .WithDescription("Updates an accrual's mutable fields")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

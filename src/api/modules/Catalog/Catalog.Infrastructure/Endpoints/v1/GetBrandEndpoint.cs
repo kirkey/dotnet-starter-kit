@@ -1,4 +1,6 @@
-﻿namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
+﻿using Shared.Authorization;
+
+namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 public static class GetBrandEndpoint
 {
     internal static RouteHandlerBuilder MapGetBrandEndpoint(this IEndpointRouteBuilder endpoints)
@@ -13,7 +15,7 @@ public static class GetBrandEndpoint
             .WithSummary("gets brand by id")
             .WithDescription("gets brand by id")
             .Produces<BrandResponse>()
-            .RequirePermission("Permissions.Brands.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Brands))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Complete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -16,7 +17,7 @@ public static class CompleteInventoryTransferEndpoint
         .WithSummary("Complete inventory transfer")
         .WithDescription("Marks an in-transit inventory transfer as completed and records actual arrival")
         .Produces<CompleteInventoryTransferResponse>()
-        .RequirePermission("Permissions.InventoryTransfers.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.Items.Get.v1;
 using FSH.Starter.WebApi.Store.Application.Items.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -17,7 +18,7 @@ public static class SearchItemsEndpoint
             .WithSummary("Search items")
             .WithDescription("Searches for inventory items with pagination and filtering")
             .Produces<PagedList<ItemResponse>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

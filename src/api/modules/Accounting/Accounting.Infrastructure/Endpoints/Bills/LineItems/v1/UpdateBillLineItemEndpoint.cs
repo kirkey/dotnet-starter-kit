@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.LineItems.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.LineItems.v1;
 
@@ -27,7 +28,7 @@ public static class UpdateBillLineItemEndpoint
             .Produces<UpdateBillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Edit")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

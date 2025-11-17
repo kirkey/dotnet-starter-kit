@@ -1,5 +1,6 @@
 using Accounting.Application.Bills.Get.v1;
 using Accounting.Application.Bills.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -21,7 +22,7 @@ public static class SearchBillsEndpoint
             .WithDescription("Search and filter bills with pagination.")
             .Produces<PagedList<BillResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

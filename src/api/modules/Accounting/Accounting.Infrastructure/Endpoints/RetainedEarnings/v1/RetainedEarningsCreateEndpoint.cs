@@ -1,4 +1,5 @@
 using Accounting.Application.RetainedEarnings.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RetainedEarnings.v1;
 
@@ -16,7 +17,7 @@ public static class RetainedEarningsCreateEndpoint
             .WithSummary("Create retained earnings record")
             .Produces<RetainedEarningsCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

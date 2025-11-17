@@ -1,4 +1,5 @@
 using Accounting.Application.PostingBatches.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;
 
@@ -17,7 +18,7 @@ public static class PostingBatchCreateEndpoint
             .WithDescription("Creates a new posting batch")
             .Produces<PostingBatchCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

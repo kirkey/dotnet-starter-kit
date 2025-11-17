@@ -1,4 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
@@ -16,7 +17,7 @@ public static class ChartOfAccountCreateEndpoint
             .WithSummary("create a chart of account")
             .WithDescription("create a chart of account")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

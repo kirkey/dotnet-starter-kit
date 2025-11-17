@@ -79,9 +79,9 @@ Build Status:                       ✅ SUCCESS
 
 ### Before
 ```csharp
-.RequirePermission("Permissions.Employees.Create")
-.RequirePermission("Permissions.Payrolls.Process")
-.RequirePermission("Permissions.LeaveRequests.Approve")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Create")
+.RequirePermission(FshPermission.NameFor(FshActions.Payrolls.Process")
+.RequirePermission(FshPermission.NameFor(FshActions.LeaveRequests.Approve")
 ```
 
 ### After

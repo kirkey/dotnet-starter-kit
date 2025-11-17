@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransactions.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteInventoryTransactionEndpoint
             .WithSummary("Delete an inventory transaction")
             .WithDescription("Deletes an existing inventory transaction from the system.")
             .Produces<DeleteInventoryTransactionResponse>()
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

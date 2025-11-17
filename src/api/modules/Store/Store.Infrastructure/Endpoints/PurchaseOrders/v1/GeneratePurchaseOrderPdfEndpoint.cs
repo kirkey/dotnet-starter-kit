@@ -25,7 +25,7 @@ public static class GeneratePurchaseOrderPdfEndpoint
             .WithName(nameof(GeneratePurchaseOrderPdfEndpoint))
             .WithSummary("Generate PDF report for a purchase order")
             .WithDescription("Generates a professional PDF report for the specified purchase order including all items and approval information.")
-            .Produces<FileResult>(StatusCodes.Status200OK)
+            .Produces<FileResult>()
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
             .MapToApiVersion(1);
 

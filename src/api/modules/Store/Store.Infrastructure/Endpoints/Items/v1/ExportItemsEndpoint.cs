@@ -1,5 +1,6 @@
 using FSH.Framework.Core.Storage.Queries;
 using FSH.Starter.WebApi.Store.Application.Items.Export.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -23,9 +24,9 @@ public static class ExportItemsEndpoint
             .WithSummary("Export items to Excel file")
             .WithDescription(
                 "Exports items to Excel format with optional filtering by category, supplier, price range, and other criteria. Returns an ExportResponse with file data.")
-            .Produces<ExportResponse>(200)
+            .Produces<ExportResponse>()
             .Produces<ExportResponse>(400)
-            .RequirePermission("Permissions.Store.Export")
+            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

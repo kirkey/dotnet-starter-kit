@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Queries;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.GoodsReceipts.v1;
 
@@ -27,7 +28,7 @@ public static class GetPurchaseOrderItemsForReceivingEndpoint
             .WithSummary("Get PO items available for receiving")
             .WithDescription("Returns purchase order items with their ordered, received, and remaining quantities for partial receiving support")
             .Produces<GetPurchaseOrderItemsForReceivingResponse>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

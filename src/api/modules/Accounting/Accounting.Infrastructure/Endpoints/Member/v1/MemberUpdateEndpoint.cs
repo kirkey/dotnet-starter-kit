@@ -1,4 +1,5 @@
 using Accounting.Application.Members.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
@@ -20,7 +21,7 @@ public static class MemberUpdateEndpoint
         .WithName(nameof(MemberUpdateEndpoint))
         .WithSummary("Update member")
         .WithDescription("Updates a member account")
-        .RequirePermission("Permissions.Accounting.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

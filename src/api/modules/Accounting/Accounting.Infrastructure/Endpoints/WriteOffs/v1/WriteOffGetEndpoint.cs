@@ -1,5 +1,6 @@
 using Accounting.Application.WriteOffs.Get;
 using Accounting.Application.WriteOffs.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.WriteOffs.v1;
 
@@ -18,7 +19,7 @@ public static class WriteOffGetEndpoint
             .WithDescription("Retrieves a write-off by its unique identifier")
             .Produces<WriteOffResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

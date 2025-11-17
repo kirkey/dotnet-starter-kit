@@ -192,7 +192,7 @@ public static class DeferredRevenueCreateEndpoint
             .WithDescription("Creates a new deferred revenue entry for revenue recognition tracking")
             .Produces<object>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

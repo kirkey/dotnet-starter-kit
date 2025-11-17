@@ -1,4 +1,5 @@
 using Accounting.Application.BankReconciliations.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
@@ -29,7 +30,7 @@ public static class UpdateBankReconciliationEndpoint
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

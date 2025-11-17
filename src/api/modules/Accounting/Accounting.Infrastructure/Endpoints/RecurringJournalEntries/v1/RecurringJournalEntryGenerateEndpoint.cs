@@ -1,4 +1,5 @@
 using Accounting.Application.RecurringJournalEntries.Generate.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RecurringJournalEntries.v1;
 
@@ -19,7 +20,7 @@ public static class RecurringJournalEntryGenerateEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

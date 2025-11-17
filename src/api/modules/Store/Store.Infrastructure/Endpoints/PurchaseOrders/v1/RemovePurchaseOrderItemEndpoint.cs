@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Items.Remove.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -21,7 +22,7 @@ internal static class RemovePurchaseOrderItemEndpoint
         .WithName(nameof(RemovePurchaseOrderItemEndpoint))
         .WithSummary("Remove an item from a purchase order")
         .WithDescription("Removes an item line from a purchase order. Only allowed for modifiable orders.")
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

@@ -1,5 +1,6 @@
 using Accounting.Application.PrepaidExpenses.Get;
 using Accounting.Application.PrepaidExpenses.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.PrepaidExpenses.v1;
 
@@ -18,7 +19,7 @@ public static class PrepaidExpenseGetEndpoint
             .WithDescription("Retrieves a prepaid expense by its unique identifier")
             .Produces<PrepaidExpenseResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

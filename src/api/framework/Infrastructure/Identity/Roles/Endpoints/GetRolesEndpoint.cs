@@ -9,7 +9,7 @@ public static class GetRolesEndpoint
         })
         .WithName(nameof(GetRolesEndpoint))
         .WithSummary("Get a list of all roles")
-        .RequirePermission("Permissions.Roles.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Roles))
         .WithDescription("Retrieve a list of all roles available in the system.");
     }
 }

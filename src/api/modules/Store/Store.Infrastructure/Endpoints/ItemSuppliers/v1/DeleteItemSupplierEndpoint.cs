@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.ItemSuppliers.v1;
 
@@ -15,9 +16,9 @@ public static class DeleteItemSupplierEndpoint
             .WithName(nameof(DeleteItemSupplierEndpoint))
             .WithSummary("Delete an item-supplier relationship")
             .WithDescription("Removes an item-supplier relationship from the system")
-            .RequirePermission("Permissions.Store.Delete")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

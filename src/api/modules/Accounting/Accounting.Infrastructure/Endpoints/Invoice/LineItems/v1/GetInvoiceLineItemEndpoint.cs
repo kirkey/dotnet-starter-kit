@@ -1,4 +1,5 @@
 using Accounting.Application.Invoices.LineItems.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Invoice.LineItems.v1;
 
@@ -23,7 +24,7 @@ public static class GetInvoiceLineItemEndpoint
             .WithDescription("Retrieves a specific invoice line item by its unique identifier.")
             .Produces<InvoiceLineItemResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

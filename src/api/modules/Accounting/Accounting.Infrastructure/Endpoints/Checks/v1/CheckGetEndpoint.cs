@@ -1,4 +1,5 @@
 using Accounting.Application.Checks.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Checks.v1;
 
@@ -26,7 +27,7 @@ public static class CheckGetEndpoint
             .WithDescription("Retrieve detailed information about a specific check including current status, payment details, and complete audit trail.")
             .Produces<CheckGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.RecurringJournalEntries.Approve.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RecurringJournalEntries.v1;
 
@@ -19,7 +20,7 @@ public static class RecurringJournalEntryApproveEndpoint
             .WithSummary("Approve a recurring journal entry template")
             .WithDescription("Approve a recurring journal entry template for use")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Approve")
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

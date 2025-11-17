@@ -1,4 +1,5 @@
 using Accounting.Application.Invoices.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Invoice.v1;
 
@@ -23,7 +24,7 @@ public static class GetInvoiceEndpoint
             .WithDescription("Retrieves a specific invoice by its unique identifier.")
             .Produces<InvoiceResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

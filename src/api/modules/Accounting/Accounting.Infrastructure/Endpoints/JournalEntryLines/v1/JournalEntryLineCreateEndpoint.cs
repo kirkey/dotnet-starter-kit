@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Lines.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntryLines.v1;
 
@@ -16,7 +17,7 @@ public static class JournalEntryLineCreateEndpoint
             .WithSummary("create journal entry line")
             .WithDescription("creates a new journal entry line")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

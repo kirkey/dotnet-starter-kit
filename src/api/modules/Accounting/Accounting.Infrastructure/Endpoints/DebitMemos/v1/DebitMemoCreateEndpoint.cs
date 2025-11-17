@@ -1,4 +1,5 @@
 using Accounting.Application.DebitMemos.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
@@ -16,7 +17,7 @@ public static class DebitMemoCreateEndpoint
             .WithSummary("Create a debit memo")
             .WithDescription("Create a new debit memo for receivable/payable adjustments")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

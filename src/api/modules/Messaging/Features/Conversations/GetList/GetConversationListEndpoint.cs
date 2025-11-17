@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Messaging.Features.Conversations.GetList;
 
@@ -18,7 +19,7 @@ public static class GetConversationListEndpoint
         .WithSummary("gets a list of conversations with paging support")
         .WithDescription("gets a list of conversations for the current user with paging support")
         .Produces<PagedList<ConversationDto>>()
-        .RequirePermission("Permissions.Messaging.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Messaging))
         .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Delete.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payees.v1;
 
@@ -28,7 +29,7 @@ public static class PayeeDeleteEndpoint
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

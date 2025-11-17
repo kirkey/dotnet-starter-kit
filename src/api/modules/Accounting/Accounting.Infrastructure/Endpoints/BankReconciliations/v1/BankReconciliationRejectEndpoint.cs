@@ -1,4 +1,5 @@
 using Accounting.Application.BankReconciliations.Reject.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
@@ -30,7 +31,7 @@ public static class RejectBankReconciliationEndpoint
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Approve")
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

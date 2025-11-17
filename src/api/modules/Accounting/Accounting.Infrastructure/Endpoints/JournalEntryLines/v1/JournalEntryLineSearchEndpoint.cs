@@ -1,5 +1,6 @@
 using Accounting.Application.JournalEntries.Lines.Responses;
 using Accounting.Application.JournalEntries.Lines.Search;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntryLines.v1;
 
@@ -17,7 +18,7 @@ public static class JournalEntryLineSearchEndpoint
             .WithSummary("list journal entry lines by journal entry id")
             .WithDescription("retrieves all journal entry lines for a specific journal entry")
             .Produces<List<JournalEntryLineResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

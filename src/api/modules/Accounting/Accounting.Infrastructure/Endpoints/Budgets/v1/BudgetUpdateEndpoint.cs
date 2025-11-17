@@ -1,4 +1,5 @@
 using Accounting.Application.Budgets.Update;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Budgets.v1;
 
@@ -17,7 +18,7 @@ public static class BudgetUpdateEndpoint
             .WithSummary("update a budget")
             .WithDescription("update a budget")
             .Produces<UpdateBudgetResponse>()
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

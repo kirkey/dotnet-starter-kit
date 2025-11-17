@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Categories.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Categories.v1;
 
@@ -15,7 +16,7 @@ public static class DeleteCategoryEndpoint
         .WithSummary("Delete category")
         .WithDescription("Deletes a category by its unique identifier")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Store.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

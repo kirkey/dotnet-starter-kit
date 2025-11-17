@@ -1,4 +1,5 @@
 using Accounting.Application.InventoryItems.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.InventoryItems.v1;
 
@@ -17,7 +18,7 @@ public static class InventoryItemCreateEndpoint
             .WithDescription("Creates a new inventory item")
             .Produces<object>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransactions.v1;
 
@@ -16,7 +17,7 @@ public static class CreateInventoryTransactionEndpoint
             .WithSummary("Create a new inventory transaction")
             .WithDescription("Creates a new inventory transaction for stock movement tracking and audit trail.")
             .Produces<CreateInventoryTransactionResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

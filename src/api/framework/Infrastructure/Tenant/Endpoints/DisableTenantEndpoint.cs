@@ -8,7 +8,7 @@ public static class DisableTenantEndpoint
         return endpoints.MapPost("/{id}/deactivate", (ISender mediator, string id) => mediator.Send(new DisableTenantCommand(id)))
                                 .WithName(nameof(DisableTenantEndpoint))
                                 .WithSummary("activate tenant")
-                                .RequirePermission("Permissions.Tenants.Update")
+                                .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Tenants))
                                 .WithDescription("activate tenant");
     }
 }

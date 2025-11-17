@@ -1,4 +1,6 @@
-﻿namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
+﻿using Shared.Authorization;
+
+namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 public static class DeleteProductEndpoint
 {
     internal static RouteHandlerBuilder MapProductDeleteEndpoint(this IEndpointRouteBuilder endpoints)
@@ -13,7 +15,7 @@ public static class DeleteProductEndpoint
             .WithSummary("deletes product by id")
             .WithDescription("deletes product by id")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission("Permissions.Products.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Products))
             .MapToApiVersion(1);
     }
 }

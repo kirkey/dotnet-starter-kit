@@ -1,5 +1,6 @@
 using Accounting.Application.Banks.Get.v1;
 using Accounting.Application.Banks.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Banks.v1;
 
@@ -27,7 +28,7 @@ public static class BankSearchEndpoint
             .WithDescription("Searches banks with filtering by bank code, name, routing number, SWIFT code, and active status. Supports pagination and sorting.")
             .Produces<PagedList<BankResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -647,7 +647,7 @@ public static class CreateShiftEndpoint
         return endpoints
             .MapPost("/", Handler)
             .WithName(nameof(CreateShiftEndpoint))
-            .RequirePermission("Permissions.Shifts.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Shifts.Create")
             .Produces<CreateShiftResponse>(StatusCodes.Status201Created);
     }
 }
@@ -782,10 +782,10 @@ RuleFor(x => x.EndTime)
 
 ✅ **Permission-Based Authorization**
 ```csharp
-.RequirePermission("Permissions.Employees.Create")
-.RequirePermission("Permissions.Employees.View")
-.RequirePermission("Permissions.Employees.Edit")
-.RequirePermission("Permissions.Employees.Delete")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Create")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.View")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Edit")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Delete")
 ```
 
 ✅ **Data Protection**

@@ -1,4 +1,5 @@
 using Accounting.Application.WriteOffs.Post.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.WriteOffs.v1;
 
@@ -19,7 +20,7 @@ public static class WriteOffPostEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

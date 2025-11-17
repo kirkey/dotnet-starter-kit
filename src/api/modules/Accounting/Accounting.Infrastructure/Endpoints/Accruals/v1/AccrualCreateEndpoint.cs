@@ -1,4 +1,5 @@
 using Accounting.Application.Accruals.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
@@ -17,7 +18,7 @@ public static class AccrualCreateEndpoint
             .WithDescription("Creates a new accrual entry")
             .Produces<CreateAccrualResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

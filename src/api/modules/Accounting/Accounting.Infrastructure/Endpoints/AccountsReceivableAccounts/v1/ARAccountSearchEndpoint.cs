@@ -1,5 +1,6 @@
 using Accounting.Application.AccountsReceivableAccounts.Responses;
 using Accounting.Application.AccountsReceivableAccounts.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 
@@ -17,7 +18,7 @@ public static class ArAccountSearchEndpoint
             .WithSummary("Search AR accounts")
             .Produces<List<ArAccountResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

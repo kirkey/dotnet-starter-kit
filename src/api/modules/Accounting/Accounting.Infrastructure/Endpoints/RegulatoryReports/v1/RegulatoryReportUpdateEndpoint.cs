@@ -1,4 +1,5 @@
 using Accounting.Application.RegulatoryReports.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
@@ -16,7 +17,7 @@ public static class RegulatoryReportUpdateEndpoint
         })
         .WithName(nameof(UpdateRegulatoryReportRequest))
         .WithSummary("Update regulatory report")
-        .RequirePermission("Permissions.RegulatoryReports.Edit")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .Produces<DefaultIdType>()
         .WithOpenApi();
 

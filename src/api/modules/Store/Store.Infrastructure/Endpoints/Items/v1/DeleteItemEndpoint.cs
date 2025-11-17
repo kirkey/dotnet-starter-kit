@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Items.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteItemEndpoint
             .WithSummary("Delete an item")
             .WithDescription("Deletes an inventory item")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

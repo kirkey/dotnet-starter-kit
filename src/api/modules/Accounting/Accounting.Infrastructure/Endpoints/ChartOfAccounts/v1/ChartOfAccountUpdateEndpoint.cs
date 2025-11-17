@@ -1,4 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
@@ -18,7 +19,7 @@ public static class ChartOfAccountUpdateEndpoint
             .WithDescription("Updates an existing chart of account")
             .Produces<DefaultIdType>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

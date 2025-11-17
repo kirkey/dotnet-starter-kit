@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.Post.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -25,7 +26,7 @@ public static class PostBillEndpoint
             .Produces<PostBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Post")
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

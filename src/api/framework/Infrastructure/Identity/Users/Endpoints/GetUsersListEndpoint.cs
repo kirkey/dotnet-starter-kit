@@ -9,7 +9,7 @@ public static class GetUsersListEndpoint
         })
         .WithName(nameof(GetUsersListEndpoint))
         .WithSummary("get users list")
-        .RequirePermission("Permissions.Users.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Users))
         .WithDescription("get users list");
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Todo.Features.GetList.v1;
 
@@ -21,7 +22,7 @@ public static class GetTodoListEndpoint
         .WithSummary("Gets a list of todo items with paging support")
         .WithDescription("Gets a list of todo items with paging support")
         .Produces<PagedList<TodoDto>>()
-        .RequirePermission("Permissions.Todos.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Todos))
         .MapToApiVersion(1);
     }
 }

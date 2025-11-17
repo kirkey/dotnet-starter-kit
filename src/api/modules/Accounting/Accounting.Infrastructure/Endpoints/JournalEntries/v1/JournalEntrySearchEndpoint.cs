@@ -1,5 +1,6 @@
 using Accounting.Application.JournalEntries.Responses;
 using Accounting.Application.JournalEntries.Search;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 
@@ -18,7 +19,7 @@ public static class JournalEntrySearchEndpoint
             .WithDescription("Searches journal entries with pagination and filtering support")
             .Produces<PagedList<JournalEntryResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

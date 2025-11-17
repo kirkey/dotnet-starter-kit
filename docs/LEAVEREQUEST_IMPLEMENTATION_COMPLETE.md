@@ -176,7 +176,7 @@ internal static RouteHandlerBuilder MapCreateLeaveRequestEndpoint(this IEndpoint
         .WithSummary("Creates a new leave request")
         .WithDescription("...")
         .Produces<CreateLeaveRequestResponse>(StatusCodes.Status201Created)
-        .RequirePermission("Permissions.LeaveRequests.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.LeaveRequests.Create")
         .MapToApiVersion(1);
 }
 ```

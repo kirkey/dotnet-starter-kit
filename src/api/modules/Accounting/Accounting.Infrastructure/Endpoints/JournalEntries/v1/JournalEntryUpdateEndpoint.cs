@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Update;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 
@@ -27,7 +28,7 @@ public static class JournalEntryUpdateEndpoint
             .Produces<UpdateJournalEntryResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

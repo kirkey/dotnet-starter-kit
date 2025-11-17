@@ -1,0 +1,199 @@
+@page "/accounting/account-reconciliations"
+
+<PageHeader Title="Account Reconciliations" Header="Account Reconciliations" SubHeader="Reconcile GL accounts with subsidiary ledgers" />
+
+<!-- Status Summary -->
+<MudGrid Class="mb-4">
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption">Total Reconciliations</MudText>
+                    <MudText Typo="Typo.h5">--</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption">Reconciled</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Success">--</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption">With Variance</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Warning">--</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="1">
+            <MudCardContent>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.caption">Approved</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Info">--</MudText>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<!-- Action Bar -->
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Add" OnClick="@(() => _table.AddEditModal.AddAsync())">
+                New Reconciliation
+            </MudButton>
+        </MudButtonGroup>
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Info" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<!-- Reconciliations Table -->
+<EntityTable @ref="_table" TEntity="AccountReconciliationResponse" TId="DefaultIdType" TRequest="AccountReconciliationViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@ReconciliationStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("Reconciled")">Reconciled</MudSelectItem>
+                <MudSelectItem Value="@("Adjusted")">Adjusted</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("Rejected")">Rejected</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SubsidiaryLedgerSource"
+                          Label="Subsidiary Ledger Source"
+                          Placeholder="AP, AR, Inventory..."
+                          Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@HasVariance"
+                       Label="Has Variance"
+                       Color="Color.Warning" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="reconciliation">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => OnViewDetails(reconciliation.Id))">
+            View Details
+        </MudMenuItem>
+        <MudDivider />
+        @if (reconciliation.Variance == 0 && reconciliation.ReconciliationStatus != "Approved")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnApprove(reconciliation.Id))">
+                Approve
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OnEdit(reconciliation.Id))">
+            Edit
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Delete" OnClick="@(() => OnDelete(reconciliation.Id))">
+            Delete
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="ID" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ReconciliationStatus"
+                          For="@(() => context.ReconciliationStatus)"
+                          Label="Status"
+                          ReadOnly
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.ReconciliationDate"
+                           DateFormat="MMM dd, yyyy"
+                           Label="Reconciliation Date"
+                           Variant="Variant.Filled"
+                           Required />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" @bind-Value="context.GlBalance"
+                             Label="GL Balance"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Required />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" @bind-Value="context.SubsidiaryLedgerBalance"
+                             Label="Subsidiary Ledger Balance"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Required />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" @bind-Value="context.Variance"
+                             Label="Variance"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             ReadOnly />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.SubsidiaryLedgerSource"
+                          For="@(() => context.SubsidiaryLedgerSource)"
+                          Label="Source"
+                          Variant="Variant.Filled"
+                          Required />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int" @bind-Value="context.LineItemCount"
+                             Label="Line Items"
+                             Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.AdjustingEntriesRecorded"
+                         Label="Adjusting Entries Recorded"
+                         Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.VarianceExplanation"
+                          For="@(() => context.VarianceExplanation)"
+                          Label="Variance Explanation"
+                          Lines="3"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Remarks"
+                          For="@(() => context.Remarks)"
+                          Label="Remarks"
+                          Lines="2"
+                          Variant="Variant.Filled" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

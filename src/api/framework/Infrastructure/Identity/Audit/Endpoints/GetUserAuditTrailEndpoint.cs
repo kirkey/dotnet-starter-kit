@@ -10,7 +10,7 @@ public static class GetUserAuditTrailEndpoint
         })
         .WithName(nameof(GetUserAuditTrailEndpoint))
         .WithSummary("Get user's audit trail details")
-        .RequirePermission("Permissions.AuditTrails.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.AuditTrails))
         .WithDescription("Get user's audit trail details.");
     }
 }

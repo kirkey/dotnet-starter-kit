@@ -67,8 +67,7 @@ public sealed class CreateMessageHandler(
                         fileUri.ToString(),
                         attachment.Name,
                         attachment.Extension,
-                        attachment.Size ?? attachment.GetEstimatedSizeFromData(),
-                        null); // Can add thumbnail logic later
+                        attachment.Size ?? attachment.GetEstimatedSizeFromData()); // Can add thumbnail logic later
                 }
             }
         }

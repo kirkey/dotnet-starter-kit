@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockLevels.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 
@@ -20,7 +21,7 @@ public static class UpdateStockLevelEndpoint
             .WithName(nameof(UpdateStockLevelEndpoint))
             .WithSummary("Update a stock level record")
             .WithDescription("Updates location/bin/lot/serial assignments for a stock level record")
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .Produces<UpdateStockLevelResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

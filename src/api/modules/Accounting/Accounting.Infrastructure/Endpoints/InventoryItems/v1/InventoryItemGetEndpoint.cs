@@ -1,5 +1,6 @@
 using Accounting.Application.InventoryItems.Get;
 using Accounting.Application.InventoryItems.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.InventoryItems.v1;
 
@@ -18,7 +19,7 @@ public static class InventoryItemGetEndpoint
             .WithDescription("Gets the details of an inventory item by its ID")
             .Produces<InventoryItemResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

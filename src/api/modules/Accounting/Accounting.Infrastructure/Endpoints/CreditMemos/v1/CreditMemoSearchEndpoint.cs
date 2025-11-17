@@ -1,5 +1,6 @@
 using Accounting.Application.CreditMemos.Responses;
 using Accounting.Application.CreditMemos.Search;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -20,7 +21,7 @@ public static class CreditMemoSearchEndpoint
             .WithSummary("Search credit memos")
             .WithDescription("Search and filter credit memos with pagination")
             .Produces<PagedList<CreditMemoResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -16,7 +17,7 @@ public static class CreateSupplierEndpoint
             .WithSummary("Create a new supplier")
             .WithDescription("Creates a new supplier")
             .Produces<CreateSupplierResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

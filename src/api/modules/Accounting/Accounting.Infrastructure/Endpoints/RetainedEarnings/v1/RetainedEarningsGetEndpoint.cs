@@ -1,5 +1,6 @@
 using Accounting.Application.RetainedEarnings.Get;
 using Accounting.Application.RetainedEarnings.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RetainedEarnings.v1;
 
@@ -17,7 +18,7 @@ public static class RetainedEarningsGetEndpoint
             .WithSummary("Get retained earnings details by ID")
             .Produces<RetainedEarningsDetailsResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

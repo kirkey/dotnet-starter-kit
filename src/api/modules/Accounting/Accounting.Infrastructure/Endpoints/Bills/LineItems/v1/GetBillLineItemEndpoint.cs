@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.LineItems.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.LineItems.v1;
 
@@ -24,7 +25,7 @@ public static class GetBillLineItemEndpoint
             .WithTags("Bill Line Items")
             .Produces<BillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

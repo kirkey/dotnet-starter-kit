@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payees.v1;
 
@@ -27,7 +28,7 @@ public static class PayeeCreateEndpoint
             .Produces<PayeeCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

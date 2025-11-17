@@ -1,4 +1,5 @@
 using Accounting.Application.PostingBatches.Delete.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.PostingBatch.v1;
 
@@ -18,7 +19,7 @@ public static class PostingBatchDeleteEndpoint
         .WithName(nameof(PostingBatchDeleteEndpoint))
         .WithSummary("Delete posting batch")
         .WithDescription("Deletes a draft or pending posting batch with no journal entries")
-        .RequirePermission("Permissions.Accounting.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

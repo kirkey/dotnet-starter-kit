@@ -15,7 +15,7 @@ public static class UpdateUserEndpoint
         })
         .WithName(nameof(UpdateUserEndpoint))
         .WithSummary("update user profile")
-        .RequirePermission("Permissions.Users.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Users))
         .WithDescription("update user profile");
     }
 }

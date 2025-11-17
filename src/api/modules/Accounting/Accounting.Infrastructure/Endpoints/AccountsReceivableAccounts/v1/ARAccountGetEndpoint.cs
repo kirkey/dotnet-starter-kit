@@ -1,5 +1,6 @@
 using Accounting.Application.AccountsReceivableAccounts.Get;
 using Accounting.Application.AccountsReceivableAccounts.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 
@@ -17,7 +18,7 @@ public static class ArAccountGetEndpoint
             .WithSummary("Get AR account by ID")
             .Produces<ArAccountResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

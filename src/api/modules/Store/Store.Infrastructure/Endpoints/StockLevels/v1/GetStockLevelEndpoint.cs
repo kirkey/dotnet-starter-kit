@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockLevels.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 
@@ -15,7 +16,7 @@ public static class GetStockLevelEndpoint
             .WithName(nameof(GetStockLevelEndpoint))
             .WithSummary("Get a stock level by ID")
             .WithDescription("Retrieves detailed information about a specific stock level record")
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .Produces<StockLevelResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .MapToApiVersion(1);

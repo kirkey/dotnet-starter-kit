@@ -1,4 +1,5 @@
 using Accounting.Application.Meters.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Meter.v1;
 
@@ -18,7 +19,7 @@ public static class MeterGetEndpoint
         .WithName(nameof(MeterGetEndpoint))
         .WithSummary("Get meter")
         .WithDescription("Retrieves a meter by ID")
-        .RequirePermission("Permissions.Accounting.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

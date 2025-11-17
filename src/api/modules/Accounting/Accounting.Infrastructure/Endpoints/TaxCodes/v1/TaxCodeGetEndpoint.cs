@@ -1,5 +1,6 @@
 using Accounting.Application.TaxCodes.Get.v1;
 using Accounting.Application.TaxCodes.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.TaxCodes.v1;
 
@@ -17,7 +18,7 @@ public static class TaxCodeGetEndpoint
             .WithSummary("Get a tax code")
             .WithDescription("Get a tax code by ID")
             .Produces<TaxCodeResponse>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

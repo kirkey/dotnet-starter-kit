@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
@@ -16,7 +17,7 @@ public static class SearchStockAdjustmentsEndpoint
         .WithSummary("Search stock adjustments")
         .WithDescription("Retrieves a paginated list of stock adjustments with optional filtering")
         .Produces<PagedList<StockAdjustmentResponse>>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

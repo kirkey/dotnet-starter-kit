@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -22,7 +23,7 @@ public static class UpdateInventoryTransferEndpoint
         .WithSummary("Update inventory transfer")
         .WithDescription("Updates an existing inventory transfer with the provided details")
         .Produces<UpdateInventoryTransferResponse>()
-        .RequirePermission("Permissions.InventoryTransfers.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

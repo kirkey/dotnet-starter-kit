@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Items.ReceiveQuantity.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -21,7 +22,7 @@ internal static class ReceivePurchaseOrderItemQuantityEndpoint
         .WithName(nameof(ReceivePurchaseOrderItemQuantityEndpoint))
         .WithSummary("Record received quantity for an item")
         .WithDescription("Sets the received quantity for a purchase order line item (can be partial or complete).")
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Messaging.Features.Conversations.Create;
 
@@ -18,7 +19,7 @@ public static class CreateConversationEndpoint
                 .WithSummary("creates a new conversation")
                 .WithDescription("creates a new conversation (direct or group)")
                 .Produces<CreateConversationResponse>(StatusCodes.Status201Created)
-                .RequirePermission("Permissions.Messaging.Create")
+                .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Messaging))
                 .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

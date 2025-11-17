@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.Categories.Get.v1;
 using FSH.Starter.WebApi.Store.Application.Categories.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Categories.v1;
 
@@ -17,7 +18,7 @@ public static class SearchCategoriesEndpoint
             .WithSummary("Search categories")
             .WithDescription("Searches categories with pagination and filters")
             .Produces<PagedList<CategoryResponse>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

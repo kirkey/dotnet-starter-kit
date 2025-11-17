@@ -1,4 +1,5 @@
 using Accounting.Application.Projects.Costing.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.Costing.v1;
 
@@ -16,7 +17,7 @@ public static class ProjectCostingCreateEndpoint
             .WithSummary("create project costing entry")
             .WithDescription("Creates a new project costing entry for tracking project expenses")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

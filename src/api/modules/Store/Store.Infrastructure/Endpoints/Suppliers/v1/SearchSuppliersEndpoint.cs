@@ -1,5 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Get.v1;
 using FSH.Starter.WebApi.Store.Application.Suppliers.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -17,7 +18,7 @@ public static class SearchSuppliersEndpoint
             .WithSummary("Search Suppliers")
             .WithDescription("Searches Suppliers with pagination and filters")
             .Produces<PagedList<SupplierResponse>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -23,7 +24,7 @@ public static class DeletePurchaseOrderEndpoint
         .WithSummary("Delete a purchase order")
         .WithDescription("Deletes a purchase order by ID")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Store.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

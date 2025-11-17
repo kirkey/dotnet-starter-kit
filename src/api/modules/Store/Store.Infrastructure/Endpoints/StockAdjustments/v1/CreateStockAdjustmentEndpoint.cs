@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
@@ -15,7 +16,7 @@ public static class CreateStockAdjustmentEndpoint
         .WithSummary("Create a new stock adjustment")
         .WithDescription("Creates a stock adjustment for inventory")
         .Produces<CreateStockAdjustmentResponse>()
-        .RequirePermission("Permissions.Store.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

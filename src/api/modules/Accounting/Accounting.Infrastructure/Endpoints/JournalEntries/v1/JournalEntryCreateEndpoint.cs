@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 
@@ -26,7 +27,7 @@ public static class JournalEntryCreateEndpoint
             .Produces<CreateJournalEntryResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

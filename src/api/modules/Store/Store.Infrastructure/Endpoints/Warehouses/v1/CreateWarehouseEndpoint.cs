@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Warehouses.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Warehouses.v1;
 
@@ -15,7 +16,7 @@ public static class CreateWarehouseEndpoint
         .WithSummary("Create a new warehouse")
         .WithDescription("Creates a new warehouse")
         .Produces<CreateWarehouseResponse>()
-        .RequirePermission("Permissions.Warehouses.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.DepreciationMethods.Activate.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DepreciationMethods.v1;
 
@@ -18,7 +19,7 @@ public static class DepreciationMethodActivateEndpoint
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

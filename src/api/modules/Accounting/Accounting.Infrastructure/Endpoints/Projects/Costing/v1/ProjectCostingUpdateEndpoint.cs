@@ -1,4 +1,5 @@
 using Accounting.Application.Projects.Costing.Update;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.Costing.v1;
 
@@ -20,7 +21,7 @@ public static class ProjectCostingUpdateEndpoint
             .WithDescription("Updates an existing project costing entry")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.FinancialStatements.Queries.GenerateCashFlowStatement.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FinancialStatements.v1;
 
@@ -16,7 +17,7 @@ public static class GenerateCashFlowStatementEndpoint
             .WithSummary("Generate Cash Flow Statement")
             .WithDescription("Generates a cash flow statement for a given period")
             .Produces<CashFlowStatementDto>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Approve.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransactions.v1;
 
@@ -21,7 +22,7 @@ public static class ApproveInventoryTransactionEndpoint
             .WithSummary("Approve an inventory transaction")
             .WithDescription("Approves a pending inventory transaction for authorization and compliance.")
             .Produces<ApproveInventoryTransactionResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

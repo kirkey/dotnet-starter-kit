@@ -1,4 +1,5 @@
 using Accounting.Application.PaymentAllocations.Commands;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.PaymentAllocations.v1;
 
@@ -23,7 +24,7 @@ public static class PaymentAllocationCreateEndpoint
             .WithDescription("Allocates a payment amount to a specific invoice")
             .Produces<object>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

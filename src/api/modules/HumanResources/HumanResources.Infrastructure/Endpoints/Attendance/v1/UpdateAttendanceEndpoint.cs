@@ -20,7 +20,7 @@ public static class UpdateAttendanceEndpoint
             .WithSummary("Updates an attendance record")
             .WithDescription("Updates attendance information")
             .Produces<UpdateAttendanceResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Edit, FshResources.Attendance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Attendance))
             .MapToApiVersion(1);
     }
 }

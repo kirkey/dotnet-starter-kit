@@ -1,4 +1,5 @@
 using Accounting.Application.DeferredRevenues.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DeferredRevenues.v1;
 
@@ -18,7 +19,7 @@ public static class DeferredRevenueCreateEndpoint
             .Produces<object>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

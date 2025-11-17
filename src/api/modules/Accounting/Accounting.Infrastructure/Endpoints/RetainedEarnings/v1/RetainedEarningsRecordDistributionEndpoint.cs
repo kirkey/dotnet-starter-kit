@@ -1,4 +1,5 @@
 using Accounting.Application.RetainedEarnings.RecordDistribution.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RetainedEarnings.v1;
 
@@ -18,7 +19,7 @@ public static class RetainedEarningsRecordDistributionEndpoint
             .WithDescription("Records a distribution to members or shareholders")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,5 +1,6 @@
 using Accounting.Application.FiscalPeriodCloses.Responses;
 using Accounting.Application.FiscalPeriodCloses.Search;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FiscalPeriodCloses.v1;
 
@@ -17,7 +18,7 @@ public static class FiscalPeriodCloseSearchEndpoint
             .WithSummary("Search fiscal period closes")
             .Produces<PagedList<FiscalPeriodCloseResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

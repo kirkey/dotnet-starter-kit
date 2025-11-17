@@ -1,4 +1,5 @@
 using Accounting.Application.Meters.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Meter.v1;
 
@@ -17,7 +18,7 @@ public static class MeterSearchEndpoint
         .WithName(nameof(MeterSearchEndpoint))
         .WithSummary("Search meters")
         .WithDescription("Search meters with filters and pagination")
-        .RequirePermission("Permissions.Accounting.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

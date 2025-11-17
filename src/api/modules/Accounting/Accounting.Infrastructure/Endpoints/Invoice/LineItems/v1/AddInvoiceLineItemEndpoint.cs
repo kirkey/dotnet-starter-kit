@@ -1,4 +1,5 @@
 using Accounting.Application.Invoices.LineItems.Add.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Invoice.LineItems.v1;
 
@@ -29,7 +30,7 @@ public static class AddInvoiceLineItemEndpoint
             .Produces<AddInvoiceLineItemResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

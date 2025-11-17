@@ -1,5 +1,6 @@
 using Accounting.Application.ChartOfAccounts.Responses;
 using Accounting.Application.ChartOfAccounts.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
@@ -18,7 +19,7 @@ public static class ChartOfAccountSearchEndpoint
             .WithDescription("Searches chart of accounts with pagination and filtering support")
             .Produces<PagedList<ChartOfAccountResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

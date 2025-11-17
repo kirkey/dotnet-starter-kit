@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PickLists.Assign.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PickLists.v1;
 
@@ -21,7 +22,7 @@ public static class AssignPickListEndpoint
             .WithSummary("Assign pick list to picker")
             .WithDescription("Assigns a pick list to a warehouse picker.")
             .Produces<AssignPickListResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

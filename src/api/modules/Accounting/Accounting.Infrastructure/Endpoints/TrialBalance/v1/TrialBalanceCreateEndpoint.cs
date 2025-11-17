@@ -1,4 +1,5 @@
 using Accounting.Application.TrialBalance.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.TrialBalance.v1;
 
@@ -21,7 +22,7 @@ public static class TrialBalanceCreateEndpoint
             .Produces<TrialBalanceCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

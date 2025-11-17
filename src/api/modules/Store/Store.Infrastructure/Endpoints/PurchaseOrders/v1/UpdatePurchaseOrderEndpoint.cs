@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -24,7 +25,7 @@ public static class UpdatePurchaseOrderEndpoint
         .WithSummary("Update a purchase order")
         .WithDescription("Updates an existing purchase order")
         .Produces<UpdatePurchaseOrderResponse>()
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

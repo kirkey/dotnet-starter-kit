@@ -57,7 +57,7 @@ public static class {Operation}{Module}Endpoint
     {
         return endpoints
             .Map{Method}("/{route}", async (...) => { ... })
-            .RequirePermission("Permissions.{OldResource}.{Action}")  // ❌ String literal
+            .RequirePermission(FshPermission.NameFor(FshActions.{OldResource}.{Action}")  // ❌ String literal
             .MapToApiVersion(1);
     }
 }

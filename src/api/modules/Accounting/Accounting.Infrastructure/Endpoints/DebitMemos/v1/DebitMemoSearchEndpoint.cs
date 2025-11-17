@@ -1,5 +1,6 @@
 using Accounting.Application.DebitMemos.Responses;
 using Accounting.Application.DebitMemos.Search;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
@@ -20,7 +21,7 @@ public static class DebitMemoSearchEndpoint
             .WithSummary("Search debit memos")
             .WithDescription("Search and filter debit memos with pagination")
             .Produces<PagedList<DebitMemoResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

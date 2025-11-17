@@ -492,7 +492,7 @@ public static class CreateShiftEndpoint
             .WithSummary("Creates a new shift")
             .WithDescription("Creates a shift template (morning, evening, etc.)")
             .Produces<CreateShiftResponse>(StatusCodes.Status201Created)
-            .RequirePermission("Permissions.Shifts.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Shifts.Create")
             .MapToApiVersion(1);
     }
     
@@ -666,10 +666,10 @@ public async Task<CreateEmployeeResponse> Handle(
 
 ```csharp
 // In endpoint configuration
-.RequirePermission("Permissions.Employees.Create")
-.RequirePermission("Permissions.Employees.View")
-.RequirePermission("Permissions.Employees.Edit")
-.RequirePermission("Permissions.Employees.Delete")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Create")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.View")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Edit")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Delete")
 
 // Permission hierarchy
 - Permissions.HR.Admin           # Full access
@@ -883,7 +883,7 @@ Storage: ~2.5GB over 5 years
 ### 1. Authentication & Authorization
 ```csharp
 // Permission requirement
-.RequirePermission("Permissions.Employees.Create")
+.RequirePermission(FshPermission.NameFor(FshActions.Employees.Create")
 
 // Multi-role support
 - Administrator    → All access

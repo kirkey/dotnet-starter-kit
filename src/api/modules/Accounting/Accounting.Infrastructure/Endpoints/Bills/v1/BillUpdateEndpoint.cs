@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -24,7 +25,7 @@ public static class BillUpdateEndpoint
             .WithDescription("Updates an existing bill in the accounts payable system with validation.")
             .Produces<UpdateBillResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Edit")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

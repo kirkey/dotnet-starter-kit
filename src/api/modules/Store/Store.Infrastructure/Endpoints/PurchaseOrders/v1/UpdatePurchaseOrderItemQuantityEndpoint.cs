@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Items.UpdateQuantity.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -21,7 +22,7 @@ internal static class UpdatePurchaseOrderItemQuantityEndpoint
         .WithName(nameof(UpdatePurchaseOrderItemQuantityEndpoint))
         .WithSummary("Update item quantity")
         .WithDescription("Updates the ordered quantity for a specific purchase order line item. Quantity cannot be less than already received quantity.")
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

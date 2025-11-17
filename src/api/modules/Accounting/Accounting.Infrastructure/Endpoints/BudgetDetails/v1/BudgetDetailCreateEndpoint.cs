@@ -1,4 +1,5 @@
 using Accounting.Application.Budgets.Details.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 
@@ -15,7 +16,7 @@ public static class BudgetDetailCreateEndpoint
             .WithName(nameof(BudgetDetailCreateEndpoint))
             .WithSummary("create budget detail")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

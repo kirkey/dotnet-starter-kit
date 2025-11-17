@@ -1,5 +1,6 @@
 using Accounting.Application.AccountsPayableAccounts.Get;
 using Accounting.Application.AccountsPayableAccounts.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsPayableAccounts.v1;
 
@@ -17,7 +18,7 @@ public static class ApAccountGetEndpoint
             .WithSummary("Get AP account by ID")
             .Produces<APAccountResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Items.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -23,7 +24,7 @@ public static class UpdateItemEndpoint
             .WithSummary("Update an existing item")
             .WithDescription("Updates an existing inventory item")
             .Produces<UpdateItemResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

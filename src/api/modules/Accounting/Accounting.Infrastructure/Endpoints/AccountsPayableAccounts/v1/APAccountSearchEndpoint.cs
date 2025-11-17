@@ -1,5 +1,6 @@
 using Accounting.Application.AccountsPayableAccounts.Responses;
 using Accounting.Application.AccountsPayableAccounts.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsPayableAccounts.v1;
 
@@ -17,7 +18,7 @@ public static class ApAccountSearchEndpoint
             .WithSummary("Search AP accounts")
             .Produces<List<APAccountResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

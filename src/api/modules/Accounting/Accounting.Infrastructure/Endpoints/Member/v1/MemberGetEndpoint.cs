@@ -1,4 +1,5 @@
 using Accounting.Application.Members.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
@@ -18,7 +19,7 @@ public static class MemberGetEndpoint
         .WithName(nameof(MemberGetEndpoint))
         .WithSummary("Get member")
         .WithDescription("Retrieves a member by ID")
-        .RequirePermission("Permissions.Accounting.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Export.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payees.v1;
 
@@ -21,7 +22,7 @@ public static class PayeeExportEndpoint
             .WithDescription("Exports payees to Excel (.xlsx) file with optional filtering by expense account, search criteria, TIN presence, and active status")
             .Produces<FileResult>()
             .ProducesValidationProblem()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

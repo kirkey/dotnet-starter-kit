@@ -1,5 +1,6 @@
 using Accounting.Application.CostCenters.Responses;
 using Accounting.Application.CostCenters.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CostCenters.v1;
 
@@ -17,7 +18,7 @@ public static class CostCenterSearchEndpoint
             .WithSummary("Search cost centers")
             .Produces<List<CostCenterResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

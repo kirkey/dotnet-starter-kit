@@ -1,4 +1,5 @@
 using Accounting.Application.DepreciationMethods.Get;
+using Shared.Authorization;
 
 // Endpoint for getting a depreciation method
 namespace Accounting.Infrastructure.Endpoints.DepreciationMethods.v1;
@@ -16,7 +17,7 @@ public static class DepreciationMethodGetEndpoint
             .WithName(nameof(DepreciationMethodGetEndpoint))
             .WithSummary("Get a depreciation method by ID")
             .WithDescription("Gets the details of a depreciation method by its ID")
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

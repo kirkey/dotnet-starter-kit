@@ -1,4 +1,5 @@
 using Accounting.Application.RecurringJournalEntries.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RecurringJournalEntries.v1;
 
@@ -17,7 +18,7 @@ public static class RecurringJournalEntryCreateEndpoint
             .WithDescription("Create a new recurring journal entry template")
             .Produces<DefaultIdType>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

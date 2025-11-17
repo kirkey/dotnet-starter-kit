@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Items.Add.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -23,7 +24,7 @@ internal static class AddPurchaseOrderItemEndpoint
         .WithSummary("Add an item to a purchase order")
         .WithDescription("Adds a grocery item line to an existing purchase order. If the item already exists the aggregate will increase the quantity.")
         .Produces<AddPurchaseOrderItemResponse>()
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

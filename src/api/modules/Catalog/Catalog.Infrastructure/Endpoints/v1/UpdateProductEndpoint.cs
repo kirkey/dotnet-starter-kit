@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Catalog.Application.Products.Update.v1;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 
@@ -17,7 +18,7 @@ public static class UpdateProductEndpoint
             .WithSummary("update a product")
             .WithDescription("update a product")
             .Produces<UpdateProductResponse>()
-            .RequirePermission("Permissions.Products.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Products))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
@@ -24,7 +25,7 @@ public static class UpdateStockAdjustmentEndpoint
         .WithSummary("Update a stock adjustment")
         .WithDescription("Updates an existing stock adjustment")
         .Produces<UpdateStockAdjustmentResponse>()
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

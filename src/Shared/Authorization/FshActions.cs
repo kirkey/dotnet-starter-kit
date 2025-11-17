@@ -14,7 +14,7 @@ public static class FshActions
 
     public const string Regularize = nameof(Regularize);
     public const string Terminate = nameof(Terminate);
-    public const string Edit = nameof(Edit);
+    // public const string Edit = nameof(Edit);
     public const string Assign = nameof(Assign);
     public const string Manage = nameof(Manage);
     public const string Approve = nameof(Approve);
@@ -23,7 +23,10 @@ public static class FshActions
     public const string Process = nameof(Process);
     public const string Complete = nameof(Complete);
     public const string Cancel = nameof(Cancel);
+    public const string Void = nameof(Void);
     public const string Post = nameof(Post);
+    public const string Send = nameof(Send);
+    public const string Receive = nameof(Receive);
     public const string MarkAsPaid = nameof(MarkAsPaid);
     public const string Accrue = nameof(Accrue);
     public const string Acknowledge = nameof(Acknowledge);

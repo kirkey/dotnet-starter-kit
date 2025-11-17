@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.Reject.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -25,7 +26,7 @@ public static class RejectBillEndpoint
             .Produces<RejectBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Reject")
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

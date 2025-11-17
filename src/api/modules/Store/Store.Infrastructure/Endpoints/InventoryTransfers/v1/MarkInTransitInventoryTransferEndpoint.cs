@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.MarkInTransit.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -16,7 +17,7 @@ public static class MarkInTransitInventoryTransferEndpoint
         .WithSummary("Mark inventory transfer as in-transit")
         .WithDescription("Marks an approved inventory transfer as InTransit")
         .Produces<MarkInTransitInventoryTransferResponse>()
-        .RequirePermission("Permissions.InventoryTransfers.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Items.UpdatePrice.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -21,7 +22,7 @@ internal static class UpdatePurchaseOrderItemPriceEndpoint
         .WithName(nameof(UpdatePurchaseOrderItemPriceEndpoint))
         .WithSummary("Update item price and discount")
         .WithDescription("Updates the unit price and optional discount on a specific purchase order line item.")
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

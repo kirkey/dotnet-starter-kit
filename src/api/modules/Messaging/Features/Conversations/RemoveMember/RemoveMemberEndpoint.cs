@@ -1,3 +1,5 @@
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.Messaging.Features.Conversations.RemoveMember;
 
 /// <summary>
@@ -16,7 +18,7 @@ public static class RemoveMemberEndpoint
         .WithSummary("removes a member from a conversation")
         .WithDescription("removes a member from a conversation")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Messaging.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Messaging))
         .MapToApiVersion(1);
     }
 }

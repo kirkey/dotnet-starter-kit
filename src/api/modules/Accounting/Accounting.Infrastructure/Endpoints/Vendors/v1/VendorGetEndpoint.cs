@@ -1,4 +1,5 @@
 using Accounting.Application.Vendors.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Vendors.v1;
 
@@ -17,7 +18,7 @@ public static class VendorGetEndpoint
             .WithDescription("Retrieves a vendor by its unique identifier")
             .Produces<VendorGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

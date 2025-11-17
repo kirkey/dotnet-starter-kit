@@ -1,5 +1,6 @@
 using Accounting.Application.Projects.Get.v1;
 using Accounting.Application.Projects.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.v1;
 
@@ -17,7 +18,7 @@ public static class ProjectGetEndpoint
             .WithSummary("get a project by id")
             .WithDescription("get a project by id")
             .Produces<ProjectResponse>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

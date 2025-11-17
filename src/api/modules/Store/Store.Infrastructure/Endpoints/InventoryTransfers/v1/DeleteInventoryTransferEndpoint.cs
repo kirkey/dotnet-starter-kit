@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -23,7 +24,7 @@ public static class DeleteInventoryTransferEndpoint
         .WithSummary("Delete an inventory transfer")
         .WithDescription("Deletes an inventory transfer by ID")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.InventoryTransfers.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

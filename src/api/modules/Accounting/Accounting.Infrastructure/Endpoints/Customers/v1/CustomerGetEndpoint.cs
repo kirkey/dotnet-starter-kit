@@ -1,5 +1,6 @@
 using Accounting.Application.Customers.Get;
 using Accounting.Application.Customers.Queries;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Customers.v1;
 
@@ -24,7 +25,7 @@ public static class CustomerGetEndpoint
             .WithDescription("Retrieves detailed information about a specific customer.")
             .Produces<CustomerDetailsDto>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

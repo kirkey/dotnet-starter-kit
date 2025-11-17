@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Search.v1;
+using Shared.Authorization;
 using LotNumberResponse = FSH.Starter.WebApi.Store.Application.LotNumbers.Get.v1.LotNumberResponse;
 
 namespace Store.Infrastructure.Endpoints.LotNumbers.v1;
@@ -16,9 +17,9 @@ public static class SearchLotNumbersEndpoint
             .WithName(nameof(SearchLotNumbersEndpoint))
             .WithSummary("Search lot numbers")
             .WithDescription("Search and filter lot numbers with expiration tracking and pagination support")
-            .RequirePermission("Permissions.Store.View")
-            .Produces<PagedList<LotNumberResponse>>(StatusCodes.Status200OK)
+            .Produces<PagedList<LotNumberResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

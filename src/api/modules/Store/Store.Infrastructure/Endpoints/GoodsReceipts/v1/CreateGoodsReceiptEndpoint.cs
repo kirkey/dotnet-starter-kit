@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.GoodsReceipts.v1;
 
@@ -16,7 +17,7 @@ public static class CreateGoodsReceiptEndpoint
             .WithSummary("Create a new goods receipt")
             .WithDescription("Creates a new goods receipt for tracking inbound deliveries from suppliers.")
             .Produces<CreateGoodsReceiptResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

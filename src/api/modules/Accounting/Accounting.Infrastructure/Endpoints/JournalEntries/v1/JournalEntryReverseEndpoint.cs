@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Reverse;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntries.v1;
 
@@ -28,7 +29,7 @@ public static class JournalEntryReverseEndpoint
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission("Permissions.Accounting.Post")
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -9,7 +9,7 @@ public static class GetRolePermissionsEndpoint
         })
         .WithName(nameof(GetRolePermissionsEndpoint))
         .WithSummary("get role permissions")
-        .RequirePermission("Permissions.Roles.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Roles))
         .WithDescription("get role permissions");
     }
 }

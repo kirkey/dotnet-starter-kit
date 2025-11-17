@@ -1,4 +1,5 @@
 using Accounting.Application.Invoices.Send.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Invoice.v1;
 
@@ -24,7 +25,7 @@ public static class SendInvoiceEndpoint
             .Produces<SendInvoiceResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

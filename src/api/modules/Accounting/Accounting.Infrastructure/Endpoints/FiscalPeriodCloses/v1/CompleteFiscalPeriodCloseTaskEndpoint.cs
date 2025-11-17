@@ -1,4 +1,5 @@
 using Accounting.Application.FiscalPeriodCloses.Commands.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FiscalPeriodCloses.v1;
 
@@ -20,7 +21,7 @@ public static class CompleteFiscalPeriodCloseTaskEndpoint
             .WithDescription("Marks a task as complete in the fiscal period close checklist")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.FixedAssets.Delete;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FixedAssets.v1;
 
@@ -15,7 +16,7 @@ public static class FixedAssetDeleteEndpoint
             .WithName(nameof(FixedAssetDeleteEndpoint))
             .WithSummary("delete fixed asset by id")
             .WithDescription("delete fixed asset by id")
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -102,7 +102,7 @@ Every operation follows the Command Query Responsibility Segregation pattern:
 - Extension methods for route mapping: `MapDebitMemoCreateEndpoint()`
 - MapGroup for logical organization: `/accounting/debit-memos`
 - Fluent configuration: `.WithName()`, `.WithSummary()`, `.WithDescription()`
-- Permission-based authorization: `.RequirePermission("Permissions.Accounting.Create")`
+- Permission-based authorization: `.RequirePermission(FshPermission.NameFor(FshActions.Accounting.Create")`
 - API versioning: `.MapToApiVersion(1)`
 
 ### 4. **Blazor UI Integration**

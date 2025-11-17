@@ -1,4 +1,5 @@
 using Accounting.Application.Payments.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payments.v1;
 
@@ -23,7 +24,7 @@ public static class PaymentSearchEndpoint
             .WithDescription("Searches payments with filtering and pagination")
             .Produces<PagedList<PaymentSearchResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryReservations.v1;
 
@@ -16,7 +17,7 @@ public static class CreateInventoryReservationEndpoint
             .WithSummary("Create a new inventory reservation")
             .WithDescription("Creates a new inventory reservation to prevent overselling and support order fulfillment.")
             .Produces<CreateInventoryReservationResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

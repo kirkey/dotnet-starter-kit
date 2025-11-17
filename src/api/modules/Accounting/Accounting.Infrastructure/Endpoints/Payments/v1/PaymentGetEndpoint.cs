@@ -1,4 +1,5 @@
 using Accounting.Application.Payments.Get.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payments.v1;
 
@@ -23,7 +24,7 @@ public static class PaymentGetEndpoint
             .WithDescription("Retrieves a payment by its unique identifier")
             .Produces<PaymentGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

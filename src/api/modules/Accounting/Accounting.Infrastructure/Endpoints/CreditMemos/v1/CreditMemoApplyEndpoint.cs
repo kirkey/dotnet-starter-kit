@@ -1,4 +1,5 @@
 using Accounting.Application.CreditMemos.Apply;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -19,7 +20,7 @@ public static class CreditMemoApplyEndpoint
             .WithSummary("Apply a credit memo")
             .WithDescription("Apply an approved credit memo to an invoice or bill")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

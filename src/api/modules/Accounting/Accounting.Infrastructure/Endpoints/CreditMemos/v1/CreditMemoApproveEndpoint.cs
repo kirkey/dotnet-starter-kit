@@ -1,4 +1,5 @@
 using Accounting.Application.CreditMemos.Approve;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -19,7 +20,7 @@ public static class CreditMemoApproveEndpoint
             .WithSummary("Approve a credit memo")
             .WithDescription("Approve a draft credit memo for application or refund")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Approve")
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

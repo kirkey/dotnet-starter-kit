@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Reject.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransactions.v1;
 
@@ -26,7 +27,7 @@ public static class RejectInventoryTransactionEndpoint
             .Produces<RejectInventoryTransactionResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers.v1;
 
@@ -15,7 +16,7 @@ public static class GetInventoryTransferEndpoint
         .WithSummary("Get inventory transfer by ID")
         .WithDescription("Retrieves an inventory transfer by its unique identifier")
         .Produces<GetInventoryTransferResponse>()
-        .RequirePermission("Permissions.InventoryTransfers.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Warehouse))
         .MapToApiVersion(1);
     }
 }

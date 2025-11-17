@@ -1,4 +1,5 @@
 using Accounting.Application.ChartOfAccounts.Export.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
@@ -21,7 +22,7 @@ public static class ChartOfAccountExportEndpoint
             .WithDescription("Exports chart of accounts to Excel (.xlsx) file with optional filtering by account type, USOA category, and search criteria")
             .Produces<FileResult>()
             .ProducesValidationProblem()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

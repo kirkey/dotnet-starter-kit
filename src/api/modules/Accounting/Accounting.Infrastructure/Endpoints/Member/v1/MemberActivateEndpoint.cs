@@ -1,4 +1,5 @@
 using Accounting.Application.Members.Activate.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
@@ -18,7 +19,7 @@ public static class MemberActivateEndpoint
         .WithName(nameof(MemberActivateEndpoint))
         .WithSummary("Activate member")
         .WithDescription("Activates a member account")
-        .RequirePermission("Permissions.Accounting.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

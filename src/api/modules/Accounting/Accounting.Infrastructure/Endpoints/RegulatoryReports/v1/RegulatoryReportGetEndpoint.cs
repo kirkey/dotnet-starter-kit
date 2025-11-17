@@ -1,5 +1,6 @@
 using Accounting.Application.RegulatoryReports.Get.v1;
 using Accounting.Application.RegulatoryReports.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
@@ -14,7 +15,7 @@ public static class RegulatoryReportGetEndpoint
         })
         .WithName(nameof(GetRegulatoryReportRequest))
         .WithSummary("Get regulatory report by ID")
-        .RequirePermission("Permissions.RegulatoryReports.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .Produces<RegulatoryReportResponse>()
         .WithOpenApi();
 

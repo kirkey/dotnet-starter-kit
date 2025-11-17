@@ -1,4 +1,5 @@
 using Accounting.Application.Payees.Import.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Payees.v1;
 
@@ -21,7 +22,7 @@ public static class PayeeImportEndpoint
             .WithDescription("Imports payees from an Excel (.xlsx) file with validation, duplicate checking, and TIN validation")
             .Produces<object>()
             .ProducesValidationProblem()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .DisableAntiforgery()
             .MapToApiVersion(1);
     }

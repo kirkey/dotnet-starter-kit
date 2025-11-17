@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockLevels.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 
@@ -15,7 +16,7 @@ public static class CreateStockLevelEndpoint
             .WithName(nameof(CreateStockLevelEndpoint))
             .WithSummary("Create a new stock level record")
             .WithDescription("Creates a new stock level tracking record for an item at a specific warehouse/location/bin")
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .Produces<CreateStockLevelResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .MapToApiVersion(1);

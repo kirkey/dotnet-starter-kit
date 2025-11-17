@@ -1,5 +1,6 @@
 using FSH.Framework.Core.Storage.Commands;
 using FSH.Starter.WebApi.Store.Application.Items.Import.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Items.v1;
 
@@ -25,8 +26,8 @@ public static class ImportItemsEndpoint
             .WithName(nameof(ImportItemsEndpoint))
             .WithSummary("Import items from Excel file")
             .WithDescription("Imports items from an Excel file with validation. Returns ImportResponse with successful/failed counts and detailed error messages.")
-            .Produces<ImportResponse>(200)
-            .RequirePermission("Permissions.Store.Import")
+            .Produces<ImportResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Import, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

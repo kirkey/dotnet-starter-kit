@@ -1,5 +1,6 @@
 using Accounting.Application.InterCompanyTransactions.Get;
 using Accounting.Application.InterCompanyTransactions.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.InterCompanyTransactions.v1;
 
@@ -18,7 +19,7 @@ public static class InterCompanyTransactionGetEndpoint
             .WithDescription("Retrieves an inter-company transaction by its unique identifier")
             .Produces<InterCompanyTransactionResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PickLists.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PickLists.v1;
 
@@ -17,7 +18,7 @@ public static class DeletePickListEndpoint
             .WithSummary("Delete a pick list")
             .WithDescription("Deletes an existing pick list.")
             .Produces<DeletePickListResponse>()
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

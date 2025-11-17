@@ -1,4 +1,5 @@
 using Accounting.Application.Bills.Void.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Bills.v1;
 
@@ -25,7 +26,7 @@ public static class VoidBillEndpoint
             .Produces<VoidBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Void")
+            .RequirePermission(FshPermission.NameFor(FshActions.Void, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

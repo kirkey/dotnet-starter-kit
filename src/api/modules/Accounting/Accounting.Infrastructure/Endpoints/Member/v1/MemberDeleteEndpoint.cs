@@ -1,4 +1,5 @@
 using Accounting.Application.Members.Delete.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
@@ -18,7 +19,7 @@ public static class MemberDeleteEndpoint
         .WithName(nameof(MemberDeleteEndpoint))
         .WithSummary("Delete member")
         .WithDescription("Deletes an inactive member with no balance")
-        .RequirePermission("Permissions.Accounting.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

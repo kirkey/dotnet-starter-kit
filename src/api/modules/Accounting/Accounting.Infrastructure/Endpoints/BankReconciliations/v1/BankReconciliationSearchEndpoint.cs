@@ -1,5 +1,6 @@
 using Accounting.Application.BankReconciliations.Responses;
 using Accounting.Application.BankReconciliations.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
@@ -25,7 +26,7 @@ public static class SearchBankReconciliationsEndpoint
                 "Supports pagination. Results are ordered by reconciliation date (most recent first).")
             .Produces<PagedList<BankReconciliationResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

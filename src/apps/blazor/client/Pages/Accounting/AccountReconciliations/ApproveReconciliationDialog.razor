@@ -1,0 +1,52 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountReconciliations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Approve Reconciliation</MudText>
+
+            <MudAlert Severity="Severity.Info">
+                This reconciliation has a zero variance and is ready for approval.
+            </MudAlert>
+
+            <MudTextField @bind-Value="_remarks"
+                          Label="Remarks (Optional)"
+                          Lines="3"
+                          Variant="Variant.Outlined"
+                          HelperText="Add any notes about this reconciliation" />
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Approve" Variant="Variant.Filled">Approve</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType ReconciliationId { get; set; }
+
+    private string? _remarks;
+
+    private async Task Approve()
+    {
+        try
+        {
+            var command = new ApproveAccountReconciliationCommand(ReconciliationId, DefaultIdType.Empty, null, _remarks);
+            await Client.ApproveAccountReconciliationEndpointAsync("1", ReconciliationId, command);
+            Snackbar.Add("Reconciliation approved successfully", Severity.Success);
+            await MudDialog.CloseAsync(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error approving reconciliation: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

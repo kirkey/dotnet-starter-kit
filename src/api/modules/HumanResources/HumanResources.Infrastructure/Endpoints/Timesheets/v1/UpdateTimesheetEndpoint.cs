@@ -20,7 +20,7 @@ public static class UpdateTimesheetEndpoint
             .WithSummary("Updates a timesheet")
             .WithDescription("Updates timesheet status and approval information")
             .Produces<UpdateTimesheetResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Edit, FshResources.Timesheets))
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Timesheets))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.Meters.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Meter.v1;
 
@@ -20,7 +21,7 @@ public static class MeterUpdateEndpoint
         .WithName(nameof(MeterUpdateEndpoint))
         .WithSummary("Update meter")
         .WithDescription("Updates a meter")
-        .RequirePermission("Permissions.Accounting.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

@@ -1,4 +1,5 @@
 using Accounting.Application.CostCenters.Delete.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CostCenters.v1;
 
@@ -18,7 +19,7 @@ public static class CostCenterDeleteEndpoint
         .WithName(nameof(CostCenterDeleteEndpoint))
         .WithSummary("Delete cost center")
         .WithDescription("Deletes an inactive cost center with no transactions")
-        .RequirePermission("Permissions.Accounting.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

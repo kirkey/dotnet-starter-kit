@@ -1,4 +1,5 @@
 using Accounting.Application.AccountReconciliations.Commands.ReconcileAccount.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountReconciliation.v1;
 
@@ -19,7 +20,7 @@ public static class ReconcileGeneralLedgerAccountEndpoint
             .WithSummary("Reconcile a general ledger account")
             .WithDescription("Run account reconciliation for a chart of account and its reconciliation lines")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

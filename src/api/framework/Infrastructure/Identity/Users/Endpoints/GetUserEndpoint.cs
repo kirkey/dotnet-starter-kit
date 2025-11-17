@@ -9,7 +9,7 @@ public static class GetUserEndpoint
         })
         .WithName(nameof(GetUserEndpoint))
         .WithSummary("Get user profile by ID")
-        .RequirePermission("Permissions.Users.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Users))
         .WithDescription("Get another user's profile details by user ID.");
     }
 }

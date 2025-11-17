@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
@@ -23,7 +24,7 @@ public static class DeleteStockAdjustmentEndpoint
         .WithSummary("Delete a stock adjustment")
         .WithDescription("Deletes a stock adjustment by ID")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Store.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

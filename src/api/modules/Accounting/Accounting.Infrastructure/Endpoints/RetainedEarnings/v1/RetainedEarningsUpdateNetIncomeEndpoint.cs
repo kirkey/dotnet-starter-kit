@@ -1,4 +1,5 @@
 using Accounting.Application.RetainedEarnings.UpdateNetIncome.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RetainedEarnings.v1;
 
@@ -18,7 +19,7 @@ public static class RetainedEarningsUpdateNetIncomeEndpoint
             .WithDescription("Updates the net income for the fiscal year")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

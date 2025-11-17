@@ -1,3 +1,5 @@
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.Messaging.Features.Conversations.Get;
 
 /// <summary>
@@ -16,7 +18,7 @@ public static class GetConversationEndpoint
                 .WithSummary("gets conversation by id")
                 .WithDescription("gets conversation details by id")
                 .Produces<GetConversationResponse>()
-                .RequirePermission("Permissions.Messaging.View")
+                .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Messaging))
                 .MapToApiVersion(1);
     }
 }

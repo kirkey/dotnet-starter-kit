@@ -1,5 +1,6 @@
 using Accounting.Application.Budgets.Details.Responses;
 using Accounting.Application.Budgets.Details.Search;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.BudgetDetails.v1;
 
@@ -16,7 +17,7 @@ public static class BudgetDetailSearchEndpoint
             .WithName(nameof(BudgetDetailSearchEndpoint))
             .WithSummary("list budget details by budget id")
             .Produces<List<BudgetDetailResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

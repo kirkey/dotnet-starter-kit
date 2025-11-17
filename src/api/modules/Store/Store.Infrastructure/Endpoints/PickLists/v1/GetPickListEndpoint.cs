@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PickLists.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PickLists.v1;
 
@@ -17,7 +18,7 @@ public static class GetPickListEndpoint
             .WithSummary("Get pick list by ID")
             .WithDescription("Retrieves a specific pick list with all items.")
             .Produces<GetPickListResponse>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

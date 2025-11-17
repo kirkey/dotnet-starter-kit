@@ -1,4 +1,5 @@
 using Accounting.Application.PrepaidExpenses.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.PrepaidExpenses.v1;
 
@@ -16,7 +17,7 @@ public static class PrepaidExpenseCreateEndpoint
             .WithSummary("Create prepaid expense")
             .Produces<PrepaidExpenseCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

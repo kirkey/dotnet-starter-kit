@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransactions.v1;
 
@@ -16,7 +17,7 @@ public static class GetInventoryTransactionEndpoint
             .WithSummary("Get an inventory transaction by ID")
             .WithDescription("Retrieves a specific inventory transaction by its unique identifier.")
             .Produces<InventoryTransactionResponse>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

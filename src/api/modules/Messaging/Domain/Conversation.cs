@@ -73,8 +73,8 @@ public sealed class Conversation : AuditableEntity, IAggregateRoot
     public static Conversation CreateDirect(DefaultIdType userId1, DefaultIdType userId2, DefaultIdType createdByUserId)
     {
         var conversation = new Conversation(null, ConversationTypes.Direct, createdByUserId);
-        conversation.AddMember(userId1, MemberRoles.Member);
-        conversation.AddMember(userId2, MemberRoles.Member);
+        conversation.AddMember(userId1);
+        conversation.AddMember(userId2);
         return conversation;
     }
 

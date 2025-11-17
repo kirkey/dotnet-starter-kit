@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryReservations.v1;
 
@@ -16,7 +17,7 @@ public static class DeleteInventoryReservationEndpoint
             .WithSummary("Delete an inventory reservation")
             .WithDescription("Deletes an existing inventory reservation from the system.")
             .Produces<DeleteInventoryReservationResponse>()
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

@@ -1,5 +1,6 @@
 using Accounting.Application.AccountingPeriods.Get.v1;
 using Accounting.Application.AccountingPeriods.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountingPeriods.v1;
 
@@ -17,7 +18,7 @@ public static class AccountingPeriodGetEndpoint
             .WithSummary("get accounting period by id")
             .WithDescription("get accounting period by id")
             .Produces<AccountingPeriodResponse>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SalesImports.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SalesImports.v1;
 
@@ -19,7 +20,7 @@ public static class SearchSalesImportsEndpoint
             .WithSummary("Search sales imports")
             .WithDescription("Searches sales imports with filtering and pagination")
             .Produces<PagedList<SalesImportResponse>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

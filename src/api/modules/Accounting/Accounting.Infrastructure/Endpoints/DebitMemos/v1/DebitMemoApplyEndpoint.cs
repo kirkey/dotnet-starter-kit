@@ -1,4 +1,5 @@
 using Accounting.Application.DebitMemos.Apply;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
@@ -19,7 +20,7 @@ public static class DebitMemoApplyEndpoint
             .WithSummary("Apply a debit memo")
             .WithDescription("Apply an approved debit memo to an invoice or bill")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

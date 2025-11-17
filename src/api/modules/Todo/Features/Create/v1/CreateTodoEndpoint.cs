@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Todo.Features.Create.v1;
 public static class CreateTodoEndpoint
@@ -19,7 +20,7 @@ public static class CreateTodoEndpoint
                 .WithSummary("Creates a todo item")
                 .WithDescription("Creates a todo item")
                 .Produces<CreateTodoResponse>(StatusCodes.Status201Created)
-                .RequirePermission("Permissions.Todos.Create")
+                .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Todos))
                 .MapToApiVersion(new ApiVersion(1, 0));
 
     }

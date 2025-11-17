@@ -1,4 +1,5 @@
 using Accounting.Application.Accruals.Reverse;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
 
@@ -17,7 +18,7 @@ public static class AccrualReverseEndpoint
             .WithSummary("Reverse an accrual")
             .WithDescription("Reverses an accrual entry by ID")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

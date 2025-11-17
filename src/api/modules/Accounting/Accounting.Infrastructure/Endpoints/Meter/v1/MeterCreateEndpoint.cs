@@ -1,4 +1,5 @@
 using Accounting.Application.Meters.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Meter.v1;
 
@@ -17,7 +18,7 @@ public static class MeterCreateEndpoint
         .WithName(nameof(MeterCreateEndpoint))
         .WithSummary("Create meter")
         .WithDescription("Creates a new meter")
-        .RequirePermission("Permissions.Accounting.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

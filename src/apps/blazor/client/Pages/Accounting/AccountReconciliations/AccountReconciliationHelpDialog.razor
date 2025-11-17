@@ -1,0 +1,132 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountReconciliations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Account Reconciliation Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Account Reconciliation?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            Account reconciliation is the process of verifying that the General Ledger (GL) balance 
+                            for an account matches the balance in the related subsidiary ledger (such as Accounts Payable, 
+                            Accounts Receivable, or Inventory).
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            This reconciliation ensures the accuracy of financial records and helps identify and correct discrepancies.
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="How to Create a Reconciliation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>Click "New Reconciliation" button</li>
+                                <li>Enter the GL account to reconcile</li>
+                                <li>Enter the accounting period</li>
+                                <li>Input the GL balance from the General Ledger</li>
+                                <li>Input the subsidiary ledger balance</li>
+                                <li>System will automatically calculate variance</li>
+                                <li>If variance is zero, reconciliation is complete</li>
+                                <li>Click Save</li>
+                            </ol>
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Handling Variance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            If the GL balance does not equal the subsidiary ledger balance, there is a variance:
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li><strong>Investigate</strong> the cause of the difference</li>
+                                <li><strong>Document</strong> the explanation in the variance explanation field</li>
+                                <li><strong>Correct</strong> errors if found (update GL or subsidiary records)</li>
+                                <li><strong>Record</strong> adjusting journal entries if needed</li>
+                                <li><strong>Re-enter</strong> the corrected balances</li>
+                                <li><strong>Verify</strong> variance is now zero</li>
+                            </ul>
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Approval Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            Once reconciliation is complete (variance = zero):
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>The reconciliation shows as "Reconciled"</li>
+                                <li>An "Approve" button becomes available</li>
+                                <li>Review all details and variance explanation</li>
+                                <li>Click "Approve" to finalize the reconciliation</li>
+                                <li>Add optional remarks about the approval</li>
+                                <li>Approved reconciliations are locked and cannot be modified</li>
+                            </ol>
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reconciliation Statuses">
+                    <MudList Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                            <strong>Pending:</strong> Initial state when first created
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                            <strong>Reconciled:</strong> GL and subsidiary balances match (variance = 0)
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Edit">
+                            <strong>Adjusted:</strong> Adjusting entries have been recorded
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Verified">
+                            <strong>Approved:</strong> Reconciliation has been reviewed and approved
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                            <strong>Rejected:</strong> Reconciliation was rejected and needs revision
+                        </MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudList Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            Reconcile accounts monthly, ideally within 5 business days of period end
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            Document all variances with clear explanations
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            Record adjusting entries immediately when discovered
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            Never approve a reconciliation with outstanding variance
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            Have a manager or different person review and approve reconciliations
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            Keep reconciliation documentation for audit trail
+                        </MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}
+

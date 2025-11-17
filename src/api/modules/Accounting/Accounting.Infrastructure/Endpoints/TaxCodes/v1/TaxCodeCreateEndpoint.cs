@@ -1,4 +1,5 @@
 using Accounting.Application.TaxCodes.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.TaxCodes.v1;
 
@@ -16,7 +17,7 @@ public static class TaxCodeCreateEndpoint
             .WithSummary("Create a tax code")
             .WithDescription("Create a new tax code with rate and jurisdiction")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

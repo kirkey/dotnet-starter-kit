@@ -1,4 +1,5 @@
 using Accounting.Application.RecurringJournalEntries.Suspend.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RecurringJournalEntries.v1;
 
@@ -19,7 +20,7 @@ public static class RecurringJournalEntrySuspendEndpoint
             .WithSummary("Suspend a recurring journal entry template")
             .WithDescription("Temporarily suspend a recurring journal entry template")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

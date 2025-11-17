@@ -15,7 +15,7 @@ public static class RegisterUserEndpoint
         })
         .WithName(nameof(RegisterUserEndpoint))
         .WithSummary("register user")
-        .RequirePermission("Permissions.Users.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Users))
         .WithDescription("register user");
     }
 }

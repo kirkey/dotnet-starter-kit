@@ -1,4 +1,6 @@
-﻿namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
+﻿using Shared.Authorization;
+
+namespace FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 
 public static class SearchBrandsEndpoint
 {
@@ -14,7 +16,7 @@ public static class SearchBrandsEndpoint
             .WithSummary("Gets a list of brands")
             .WithDescription("Gets a list of brands with pagination and filtering support")
             .Produces<PagedList<BrandResponse>>()
-            .RequirePermission("Permissions.Brands.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Brands))
             .MapToApiVersion(1);
     }
 }

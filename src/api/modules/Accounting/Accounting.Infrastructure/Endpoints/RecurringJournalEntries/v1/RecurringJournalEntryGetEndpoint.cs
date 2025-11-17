@@ -1,5 +1,6 @@
 using Accounting.Application.RecurringJournalEntries.Get.v1;
 using Accounting.Application.RecurringJournalEntries.Responses;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RecurringJournalEntries.v1;
 
@@ -18,7 +19,7 @@ public static class RecurringJournalEntryGetEndpoint
             .WithDescription("Get a recurring journal entry template by ID")
             .Produces<RecurringJournalEntryResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

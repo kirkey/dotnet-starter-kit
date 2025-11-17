@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -23,7 +24,7 @@ public static class GetPurchaseOrderEndpoint
         .WithSummary("Get a purchase order")
         .WithDescription("Retrieves a purchase order by ID")
         .Produces<PurchaseOrderResponse>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

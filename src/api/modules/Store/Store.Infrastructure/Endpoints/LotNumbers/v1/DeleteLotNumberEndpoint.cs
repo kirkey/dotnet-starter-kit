@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.LotNumbers.v1;
 
@@ -15,9 +16,9 @@ public static class DeleteLotNumberEndpoint
             .WithName(nameof(DeleteLotNumberEndpoint))
             .WithSummary("Delete a lot number")
             .WithDescription("Removes a lot number from the system")
-            .RequirePermission("Permissions.Store.Delete")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

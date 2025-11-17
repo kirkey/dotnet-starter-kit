@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments.v1;
 
@@ -15,7 +16,7 @@ public static class GetStockAdjustmentEndpoint
         .WithSummary("Get stock adjustment by ID")
         .WithDescription("Retrieves a stock adjustment by its unique identifier")
         .Produces<StockAdjustmentResponse>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

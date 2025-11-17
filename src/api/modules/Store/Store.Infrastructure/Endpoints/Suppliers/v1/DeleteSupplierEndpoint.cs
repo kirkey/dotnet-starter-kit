@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -15,7 +16,7 @@ public static class DeleteSupplierEndpoint
         .WithSummary("Delete a supplier")
         .WithDescription("Deletes a supplier by id")
         .Produces(StatusCodes.Status204NoContent)
-        .RequirePermission("Permissions.Store.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

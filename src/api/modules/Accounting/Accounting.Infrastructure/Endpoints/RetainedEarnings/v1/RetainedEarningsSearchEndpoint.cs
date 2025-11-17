@@ -1,5 +1,6 @@
 using Accounting.Application.RetainedEarnings.Responses;
 using Accounting.Application.RetainedEarnings.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.RetainedEarnings.v1;
 
@@ -17,7 +18,7 @@ public static class RetainedEarningsSearchEndpoint
             .WithSummary("Search retained earnings")
             .Produces<List<RetainedEarningsResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

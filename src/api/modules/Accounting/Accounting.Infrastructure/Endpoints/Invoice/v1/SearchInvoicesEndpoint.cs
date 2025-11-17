@@ -1,5 +1,6 @@
 using Accounting.Application.Invoices.Get.v1;
 using Accounting.Application.Invoices.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Invoice.v1;
 
@@ -21,7 +22,7 @@ public static class SearchInvoicesEndpoint
             .WithDescription("Search and filter invoices with pagination.")
             .Produces<PagedList<InvoiceResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

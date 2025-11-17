@@ -1,4 +1,5 @@
 using Accounting.Application.CreditMemos.Create;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -17,7 +18,7 @@ public static class CreditMemoCreateEndpoint
             .WithDescription("Create a new credit memo for receivable/payable adjustments")
             .WithTags("Credit Memos")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

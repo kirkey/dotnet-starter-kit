@@ -1,4 +1,5 @@
 using Accounting.Application.TrialBalance.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.TrialBalance.v1;
 
@@ -20,7 +21,7 @@ public static class TrialBalanceSearchEndpoint
             .WithDescription("Searches trial balance reports with filtering and pagination")
             .Produces<PagedList<TrialBalanceSearchResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

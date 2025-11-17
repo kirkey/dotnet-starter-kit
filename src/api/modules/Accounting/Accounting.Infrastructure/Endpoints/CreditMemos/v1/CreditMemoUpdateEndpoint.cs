@@ -1,4 +1,5 @@
 using Accounting.Application.CreditMemos.Update;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -19,7 +20,7 @@ public static class CreditMemoUpdateEndpoint
             .WithSummary("Update a credit memo")
             .WithDescription("Update an existing credit memo (draft only)")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

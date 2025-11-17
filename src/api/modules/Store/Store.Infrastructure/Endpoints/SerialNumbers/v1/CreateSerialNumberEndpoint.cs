@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SerialNumbers.v1;
 
@@ -16,7 +17,7 @@ public static class CreateSerialNumberEndpoint
             .WithSummary("Create a new serial number")
             .WithDescription("Creates a new serial number for unit-level tracking of inventory items.")
             .Produces<CreateSerialNumberResponse>()
-            .RequirePermission("Permissions.Store.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

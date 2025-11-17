@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SalesImports.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SalesImports.v1;
 
@@ -19,7 +20,7 @@ public static class GetSalesImportEndpoint
             .WithSummary("Get sales import details")
             .WithDescription("Retrieves detailed information about a sales import including all items")
             .Produces<SalesImportDetailResponse>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

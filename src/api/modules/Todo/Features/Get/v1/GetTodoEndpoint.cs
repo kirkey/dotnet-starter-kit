@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Todo.Features.Get.v1;
 public static class GetTodoEndpoint
@@ -18,7 +19,7 @@ public static class GetTodoEndpoint
                         .WithSummary("gets todo item by id")
                         .WithDescription("gets todo item by id")
                         .Produces<GetTodoResponse>()
-                        .RequirePermission("Permissions.Todos.View")
+                        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Todos))
                         .MapToApiVersion(1);
     }
 }

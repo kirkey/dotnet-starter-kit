@@ -1,5 +1,6 @@
 using Accounting.Application.TaxCodes.Responses;
 using Accounting.Application.TaxCodes.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.TaxCodes.v1;
 
@@ -17,7 +18,7 @@ public static class TaxCodeSearchEndpoint
             .WithSummary("Search tax codes")
             .WithDescription("Search and filter tax codes with pagination")
             .Produces<PagedList<TaxCodeResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

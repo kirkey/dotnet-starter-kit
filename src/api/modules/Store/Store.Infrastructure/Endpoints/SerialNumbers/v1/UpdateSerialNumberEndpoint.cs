@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SerialNumbers.v1;
 
@@ -23,7 +24,7 @@ public static class UpdateSerialNumberEndpoint
             .WithSummary("Update a serial number")
             .WithDescription("Updates an existing serial number's status, location, or other properties.")
             .Produces<UpdateSerialNumberResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

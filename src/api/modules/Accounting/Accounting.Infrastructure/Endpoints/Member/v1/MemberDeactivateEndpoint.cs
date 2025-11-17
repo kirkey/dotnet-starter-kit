@@ -1,4 +1,5 @@
 using Accounting.Application.Members.Deactivate.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
@@ -18,7 +19,7 @@ public static class MemberDeactivateEndpoint
         .WithName(nameof(MemberDeactivateEndpoint))
         .WithSummary("Deactivate member")
         .WithDescription("Deactivates a member account")
-        .RequirePermission("Permissions.Accounting.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

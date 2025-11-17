@@ -16,7 +16,7 @@ public static class SelfRegisterUserEndpoint
         })
         .WithName(nameof(SelfRegisterUserEndpoint))
         .WithSummary("self register user")
-        .RequirePermission("Permissions.Users.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Users))
         .WithDescription("self register user")
         .AllowAnonymous();
     }

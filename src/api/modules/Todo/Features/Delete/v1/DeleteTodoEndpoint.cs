@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Todo.Features.Delete.v1;
 public static class DeleteTodoEndpoint
@@ -20,7 +21,7 @@ public static class DeleteTodoEndpoint
             .WithSummary("Deletes a todo item")
             .WithDescription("Deleted a todo item")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission("Permissions.Todos.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Todos))
             .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

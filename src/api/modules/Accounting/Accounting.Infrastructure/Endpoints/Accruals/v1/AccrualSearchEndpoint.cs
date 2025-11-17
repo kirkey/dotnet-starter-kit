@@ -1,5 +1,6 @@
 using Accounting.Application.Accruals.Responses;
 using Accounting.Application.Accruals.Search;
+using Shared.Authorization;
 
 // Endpoint for searching accruals
 namespace Accounting.Infrastructure.Endpoints.Accruals.v1;
@@ -18,7 +19,7 @@ public static class AccrualSearchEndpoint
             .WithSummary("Search accruals")
             .WithDescription("Search accrual entries with filters and pagination")
             .Produces<PagedList<AccrualResponse>>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

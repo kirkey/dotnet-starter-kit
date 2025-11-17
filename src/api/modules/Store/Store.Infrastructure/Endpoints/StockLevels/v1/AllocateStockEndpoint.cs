@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockLevels.Allocate.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 
@@ -20,7 +21,7 @@ public static class AllocateStockEndpoint
             .WithName(nameof(AllocateStockEndpoint))
             .WithSummary("Allocate reserved stock")
             .WithDescription("Allocates reserved quantity to pick lists (hard allocation)")
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .Produces<AllocateStockResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

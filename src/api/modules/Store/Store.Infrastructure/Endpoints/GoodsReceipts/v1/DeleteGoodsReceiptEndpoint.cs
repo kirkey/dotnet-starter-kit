@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.GoodsReceipts.v1;
 
@@ -17,7 +18,7 @@ public static class DeleteGoodsReceiptEndpoint
             .WithSummary("Delete a goods receipt")
             .WithDescription("Deletes an existing goods receipt.")
             .Produces<DeleteGoodsReceiptResponse>()
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

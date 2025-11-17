@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.ItemSuppliers.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.ItemSuppliers.v1;
 
@@ -20,10 +21,10 @@ public static class UpdateItemSupplierEndpoint
             .WithName(nameof(UpdateItemSupplierEndpoint))
             .WithSummary("Update an item-supplier relationship")
             .WithDescription("Updates pricing, lead time, and other details for an existing item-supplier relationship")
-            .RequirePermission("Permissions.Store.Update")
-            .Produces<UpdateItemSupplierResponse>(StatusCodes.Status200OK)
+            .Produces<UpdateItemSupplierResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

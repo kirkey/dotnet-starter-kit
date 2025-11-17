@@ -1,4 +1,5 @@
 using Accounting.Application.TaxCodes.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.TaxCodes.v1;
 
@@ -23,7 +24,7 @@ public static class TaxCodeUpdateEndpoint
             .WithSummary("Update a tax code")
             .WithDescription("Update tax code information (non-rate fields)")
             .Produces<UpdateTaxCodeResponse>()
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

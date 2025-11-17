@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockLevels.Reserve.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 
@@ -20,7 +21,7 @@ public static class ReserveStockEndpoint
             .WithName(nameof(ReserveStockEndpoint))
             .WithSummary("Reserve stock quantity")
             .WithDescription("Reserves quantity from available stock for orders or transfers (soft allocation)")
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .Produces<ReserveStockResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

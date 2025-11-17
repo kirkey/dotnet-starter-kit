@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Create.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -23,7 +24,7 @@ public static class CreatePurchaseOrderEndpoint
         .WithSummary("Create a new purchase order")
         .WithDescription("Creates a new purchase order")
         .Produces<CreatePurchaseOrderResponse>()
-        .RequirePermission("Permissions.Store.Create")
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.Messaging.Features.OnlineUsers;
 
@@ -17,8 +18,8 @@ public static class GetOnlineUsersEndpoint
                 .WithName(nameof(GetOnlineUsersEndpoint))
                 .WithSummary("get online users")
                 .WithDescription("retrieves the list of currently online users")
-                .Produces<GetOnlineUsersResponse>(StatusCodes.Status200OK)
-                .RequirePermission("Permissions.Messaging.View")
+                .Produces<GetOnlineUsersResponse>()
+                .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Messaging))
                 .MapToApiVersion(new ApiVersion(1, 0));
     }
 }

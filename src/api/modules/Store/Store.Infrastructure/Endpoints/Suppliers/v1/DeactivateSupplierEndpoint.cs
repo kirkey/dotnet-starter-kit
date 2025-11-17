@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Suppliers.Deactivate.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Suppliers.v1;
 
@@ -20,7 +21,7 @@ public static class DeactivateSupplierEndpoint
         .WithSummary("Deactivate a supplier")
         .WithDescription("Deactivates a supplier to block transactions")
         .Produces<DeactivateSupplierResponse>()
-        .RequirePermission("Permissions.Store.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

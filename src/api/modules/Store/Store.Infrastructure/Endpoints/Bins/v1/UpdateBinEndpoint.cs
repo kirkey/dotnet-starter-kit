@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Bins.Update.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.Bins.v1;
 
@@ -17,7 +18,7 @@ public static class UpdateBinEndpoint
             .WithSummary("Update an existing bin")
             .WithDescription("Updates an existing storage bin")
             .Produces<UpdateBinResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Warehouse))
             .MapToApiVersion(1);
     }
 }

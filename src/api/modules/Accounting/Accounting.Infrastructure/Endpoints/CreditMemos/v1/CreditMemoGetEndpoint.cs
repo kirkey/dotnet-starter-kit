@@ -1,4 +1,5 @@
 using Accounting.Application.CreditMemos.Get;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.CreditMemos.v1;
 
@@ -17,7 +18,7 @@ public static class CreditMemoGetEndpoint
             .WithSummary("Get credit memo by ID")
             .WithDescription("Retrieve a specific credit memo by its identifier")
             .Produces<Accounting.Application.CreditMemos.Responses.CreditMemoResponse>()
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

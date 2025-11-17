@@ -1,3 +1,5 @@
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.Messaging.Features.Messages.Update;
 
 public static class UpdateMessageEndpoint
@@ -18,7 +20,7 @@ public static class UpdateMessageEndpoint
         .WithSummary("updates a message")
         .WithDescription("updates message content")
         .Produces<UpdateMessageResponse>()
-        .RequirePermission("Permissions.Messaging.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Messaging))
         .MapToApiVersion(1);
     }
 }

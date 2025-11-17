@@ -1,4 +1,5 @@
 using Accounting.Application.FiscalPeriodCloses.Create.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FiscalPeriodCloses.v1;
 
@@ -17,7 +18,7 @@ public static class FiscalPeriodCloseCreateEndpoint
             .WithDescription("Initiates a new fiscal period close process (MonthEnd, QuarterEnd, or YearEnd).")
             .Produces<FiscalPeriodCloseCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

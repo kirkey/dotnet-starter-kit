@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SalesImports.Reverse.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SalesImports.v1;
 
@@ -24,7 +25,7 @@ public static class ReverseSalesImportEndpoint
             .WithSummary("Reverse a sales import")
             .WithDescription("Reverses a completed sales import by creating offsetting inventory transactions")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

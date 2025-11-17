@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.StockLevels.Delete.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockLevels.v1;
 
@@ -15,7 +16,7 @@ public static class DeleteStockLevelEndpoint
             .WithName(nameof(DeleteStockLevelEndpoint))
             .WithSummary("Delete a stock level record")
             .WithDescription("Removes a stock level record (only allowed when quantity is zero)")
-            .RequirePermission("Permissions.Store.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)

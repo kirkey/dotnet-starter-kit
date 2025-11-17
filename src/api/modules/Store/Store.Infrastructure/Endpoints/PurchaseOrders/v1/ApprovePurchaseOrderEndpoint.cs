@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Approve.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -25,7 +26,7 @@ public static class ApprovePurchaseOrderEndpoint
         .WithSummary("Approve a submitted purchase order")
         .WithDescription("Approves a submitted purchase order, changing status from Submitted to Approved")
         .Produces<ApprovePurchaseOrderResponse>()
-        .RequirePermission("Permissions.Store.Approve")
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

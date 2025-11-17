@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Receive.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -25,7 +26,7 @@ public static class ReceivePurchaseOrderEndpoint
         .WithSummary("Receive a purchase order delivery")
         .WithDescription("Marks a sent purchase order as received and records the actual delivery date")
         .Produces<ReceivePurchaseOrderResponse>()
-        .RequirePermission("Permissions.Store.Receive")
+        .RequirePermission(FshPermission.NameFor(FshActions.Receive, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

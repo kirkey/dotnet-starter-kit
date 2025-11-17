@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SerialNumbers.v1;
 
@@ -16,7 +17,7 @@ public static class GetSerialNumberEndpoint
             .WithSummary("Get a serial number by ID")
             .WithDescription("Retrieves a specific serial number by its unique identifier.")
             .Produces<SerialNumberResponse>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using Accounting.Application.JournalEntries.Lines.Delete;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.JournalEntryLines.v1;
 
@@ -16,7 +17,7 @@ public static class JournalEntryLineDeleteEndpoint
             .WithSummary("delete journal entry line")
             .WithDescription("deletes journal entry line")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

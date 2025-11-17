@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Search.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.GoodsReceipts.v1;
 
@@ -16,7 +17,7 @@ public static class SearchGoodsReceiptsEndpoint
             .WithSummary("Search goods receipts")
             .WithDescription("Searches goods receipts with pagination and filtering options.")
             .Produces<PagedList<GoodsReceiptResponse>>()
-            .RequirePermission("Permissions.Store.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

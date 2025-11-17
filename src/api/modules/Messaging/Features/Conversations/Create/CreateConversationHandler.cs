@@ -47,7 +47,7 @@ public sealed class CreateConversationHandler(
                 {
                     if (memberId != currentUserId)
                     {
-                        conversation.AddMember(memberId, MemberRoles.Member);
+                        conversation.AddMember(memberId);
                     }
                 }
             }

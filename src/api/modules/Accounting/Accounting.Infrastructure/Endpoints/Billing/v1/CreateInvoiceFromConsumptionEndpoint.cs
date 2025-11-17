@@ -1,4 +1,5 @@
 using Accounting.Application.Billing.Commands;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Billing.v1;
 
@@ -16,7 +17,7 @@ public static class CreateInvoiceFromConsumptionEndpoint
             .WithSummary("Create invoice from consumption")
             .WithDescription("Creates an invoice for a consumption record")
             .Produces<DefaultIdType>()
-            .RequirePermission("Permissions.Accounting.Create")
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

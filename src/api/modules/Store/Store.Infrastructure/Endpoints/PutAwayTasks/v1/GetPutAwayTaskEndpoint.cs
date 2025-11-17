@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PutAwayTasks.v1;
 
@@ -16,8 +17,8 @@ public static class GetPutAwayTaskEndpoint
             .WithName(nameof(GetPutAwayTaskEndpoint))
             .WithSummary("Get a put-away task by ID")
             .WithDescription("Retrieves a specific put-away task with all items and details.")
-            .Produces<GetPutAwayTaskResponse>(200)
-            .RequirePermission("Permissions.Store.View")
+            .Produces<GetPutAwayTaskResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Warehouse))
             .MapToApiVersion(1);
     }
 }

@@ -10,7 +10,7 @@ public static class DeleteRoleEndpoint
         })
         .WithName(nameof(DeleteRoleEndpoint))
         .WithSummary("Delete a role by ID")
-        .RequirePermission("Permissions.Roles.Delete")
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Roles))
         .WithDescription("Remove a role from the system by its ID.");
     }
 }

@@ -1,5 +1,6 @@
 using Accounting.Application.InventoryItems.Responses;
 using Accounting.Application.InventoryItems.Search.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.InventoryItems.v1;
 
@@ -18,7 +19,7 @@ public static class InventoryItemSearchEndpoint
             .WithDescription("Searches inventory items with filters and pagination")
             .Produces<PagedList<InventoryItemResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission("Permissions.Accounting.View")
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

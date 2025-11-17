@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Items.Get.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -22,7 +23,7 @@ internal static class GetPurchaseOrderItemsEndpoint
         .WithSummary("Get all items for a purchase order")
         .WithDescription("Retrieves all line items associated with a purchase order, including grocery item details.")
         .Produces<List<PurchaseOrderItemResponse>>()
-        .RequirePermission("Permissions.Store.View")
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
         .MapToApiVersion(1);
     }
 }

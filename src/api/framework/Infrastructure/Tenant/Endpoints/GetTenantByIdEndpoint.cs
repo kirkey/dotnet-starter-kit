@@ -8,7 +8,7 @@ public static class GetTenantByIdEndpoint
         return endpoints.MapGet("/{id}", (ISender mediator, string id) => mediator.Send(new GetTenantByIdQuery(id)))
                                 .WithName(nameof(GetTenantByIdEndpoint))
                                 .WithSummary("get tenant by id")
-                                .RequirePermission("Permissions.Tenants.View")
+                                .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Tenants))
                                 .WithDescription("get tenant by id");
     }
 }

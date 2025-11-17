@@ -1,4 +1,5 @@
 using Accounting.Application.ChartOfAccounts.UpdateBalance.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts.v1;
 
@@ -20,7 +21,7 @@ public static class ChartOfAccountUpdateBalanceEndpoint
         .WithName(nameof(ChartOfAccountUpdateBalanceEndpoint))
         .WithSummary("Update chart of account balance")
         .WithDescription("Updates a chart of account balance")
-        .RequirePermission("Permissions.Accounting.Update")
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 
         return group;

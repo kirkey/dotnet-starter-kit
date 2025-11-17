@@ -1,4 +1,5 @@
 using Accounting.Application.GeneralLedgers.Update.v1;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.GeneralLedger.v1;
 
@@ -24,7 +25,7 @@ public static class GeneralLedgerUpdateEndpoint
             .WithDescription("Updates general ledger entry details (amounts, memo, USOA class)")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission("Permissions.Accounting.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

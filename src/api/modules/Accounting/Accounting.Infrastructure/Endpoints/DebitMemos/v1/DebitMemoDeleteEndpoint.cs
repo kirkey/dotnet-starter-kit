@@ -1,4 +1,5 @@
 using Accounting.Application.DebitMemos.Delete;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DebitMemos.v1;
 
@@ -17,7 +18,7 @@ public static class DebitMemoDeleteEndpoint
             .WithSummary("Delete a debit memo")
             .WithDescription("Delete a debit memo (draft status only)")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission("Permissions.Accounting.Delete")
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
             .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Release.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryReservations.v1;
 
@@ -21,7 +22,7 @@ public static class ReleaseInventoryReservationEndpoint
             .WithSummary("Release an inventory reservation")
             .WithDescription("Releases an active inventory reservation, returning the quantity to available stock.")
             .Produces<ReleaseInventoryReservationResponse>()
-            .RequirePermission("Permissions.Store.Update")
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
             .MapToApiVersion(1);
     }
 }

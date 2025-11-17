@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Cancel.v1;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders.v1;
 
@@ -25,7 +26,7 @@ public static class CancelPurchaseOrderEndpoint
         .WithSummary("Cancel a purchase order")
         .WithDescription("Cancels a purchase order that hasn't been received yet")
         .Produces<CancelPurchaseOrderResponse>()
-        .RequirePermission("Permissions.Store.Cancel")
+        .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.Store))
         .MapToApiVersion(1);
     }
 }
